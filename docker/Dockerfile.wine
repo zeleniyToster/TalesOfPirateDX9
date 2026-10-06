@@ -1,0 +1,40 @@
+FROM scottyhardy/docker-wine:latest
+
+USER root
+
+# Установка дополнительных зависимостей
+RUN apt-get update && apt-get install -y \
+    wget \
+    cabextract \
+    xdg-utils \
+    procps \
+    netcat-openbsd \
+    telnet \
+    && rm -rf /var/lib/apt/lists/*
+
+# Установка winetricks
+RUN wget -O /usr/local/bin/winetricks https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks \
+    && chmod +x /usr/local/bin/winetricks
+
+# Копирование файлов проекта
+COPY server/ /opt/server/
+COPY Client/ /opt/Client/
+COPY mssql/ /opt/mssql/
+
+# Создание скрипта инициализации Wine prefix
+RUN mkdir -p /opt/scripts
+
+COPY docker/init-wine.sh /opt/scripts/init-wine.sh
+COPY docker/start-servers.sh /opt/scripts/start-servers.sh
+COPY docker/setup-db.sh /opt/scripts/setup-db.sh
+
+RUN chmod +x /opt/scripts/*.sh
+
+# Создание пользователя для запуска серверов
+RUN useradd -m -s /bin wineuser || true
+
+USER wineuser
+WORKDIR /opt
+
+# Инициализация Wine prefix при первом запуске
+ENTRYPOINT ["/opt/scripts/start-servers.sh"]

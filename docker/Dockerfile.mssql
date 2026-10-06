@@ -1,0 +1,25 @@
+FROM mcr.microsoft.com/mssql/server:2019-latest
+
+USER root
+
+# Копирование SQL скриптов инициализации
+COPY mssql/[0]AccountServer.sql /opt/mssql-scripts/01-AccountServer.sql
+COPY mssql/[1]GameDB.sql /opt/mssql-scripts/02-GameDB.sql
+COPY mssql/[2]Guild.sql /opt/mssql-scripts/03-Guild.sql
+COPY mssql/[3]Create SQL Login.sql /opt/mssql-scripts/04-CreateLogin.sql
+COPY mssql/[4]Create Account.sql /opt/mssql-scripts/05-CreateAccount.sql
+COPY mssql/vip.sql /opt/mssql-scripts/06-vip.sql
+
+# Копирование скрипта инициализации БД
+COPY docker/init-db.sh /opt/mssql-scripts/init-db.sh
+RUN chmod +x /opt/mssql-scripts/init-db.sh
+
+# MSSQL environment variables
+ENV ACCEPT_EULA=Y
+ENV SA_PASSWORD=YourStrong!Passw0rd
+ENV MSSQL_PID=Express
+
+EXPOSE 1433
+
+ENTRYPOINT ["/opt/mssql/scripts/init-db.sh"]
+CMD ["/opt/mssql/bin/sqlservr"]

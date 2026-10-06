@@ -1,0 +1,28 @@
+FROM scottyhardy/docker-wine:latest
+
+USER root
+
+# Установка инструментов сборки
+RUN apt-get update && apt-get install -y \
+    wget \
+    cabextract \
+    procps \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
+# Установка winetricks
+RUN wget -O /usr/local/bin/winetricks https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks \
+    && chmod +x /usr/local/bin/winetricks
+
+# Копирование исходников
+COPY sources/ /opt/sources/
+COPY docker/build-project.sh /opt/scripts/build-project.sh
+RUN chmod +x /opt/scripts/build-project.sh
+
+# Создание пользователя
+RUN useradd -m -s /bin builder || true
+
+USER builder
+WORKDIR /opt
+
+ENTRYPOINT ["/opt/scripts/build-project.sh"]
