@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  mssql:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.mssql
+    container_name: top-mssql
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=YourStrong!Passw0rd
+      - MSSQL_PID=Express
+    ports:
+      - "1433:1433"
+    volumes:
+      - mssql-data:/var/opt/mssql
+    networks:
+      - top-network
+    healthcheck:
+      test: /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P 'YourStrong!Passw0rd' -Q "SELECT 1" || exit 1
+      interval: 10s
+      timeout: 3s
+      retries: 10
+      start_period: 30s
+
+  wine-server:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.wine
+    container_name: top-wine-server
+    depends_on:
+      mssql:
+        condition: service_healthy
+    environment:
+      - DISPLAY=:0
+      - WINEPREFIX=/home/wineuser/.wine
+    ports:
+      - "1973:1973"  # GateServer - клиентские подключения
+      - "1975:1975"  # GroupServer
+      - "1978:1978"  # AccountServer
+    volumes:
+      - wine-data:/home/wineuser/.wine
+      - ./logs:/opt/logs
+    networks:
+      - top-network
+    stdin_open: true
+    tty: true
+
+volumes:
+  mssql-data:
+    driver: local
+  wine-data:
+    driver: local
+
+networks:
+  top-network:
+    driver: bridge
