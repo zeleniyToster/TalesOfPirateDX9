@@ -1,4 +1,4 @@
-/**
+ï»¿/**
 *  @file db.h
 *
 *  db.h, v 2.0 2004/11/24 13:14:05 shanghai China
@@ -19,6 +19,13 @@
 #define DBOK(sr) ((sr == SQL_SUCCESS) || (sr == SQL_SUCCESS_WITH_INFO))
 #define DBNODATA(sr) (sr == SQL_NO_DATA)
 #define SQL_MAXLEN 8192
+
+// Unicode ODBC wrapper for Wine compatibility (MS ODBC Driver 17 exports only W functions)
+static inline SQLRETURN exec_direct_w(SQLHSTMT hstmt, const char* sql) {
+	SQLWCHAR wsql[8192];
+	MultiByteToWideChar(CP_UTF8, 0, sql, -1, (LPWSTR)wsql, sizeof(wsql) / sizeof(SQLWCHAR));
+	return SQLExecDirectW(hstmt, wsql, SQL_NTS);
+}
 
 class cfl_rs;
 class cfl_db
@@ -93,7 +100,6 @@ protected:
 
 public:
 
-	// ¼òµ¥½Ó¿Ú
     SQLRETURN exec_sql_direct(char const* sql, unsigned short timeout = 50);
 
     SQLRETURN exec_sql(char const* sql, char const* pdata, int len, unsigned short timeout = 50);
@@ -108,15 +114,15 @@ public:
 	bool _get_bin_field(char* field_text, int& len, char* param, char* filter, int* affect_rows = NULL);
 	// End
 
-	//@TableName	nvarchar(50),		-- ±íÃû
-	//@ReturnFields	nvarchar(200) = '*',	-- ÐèÒª·µ»ØµÄÁÐ 
-	//@PageSize	int = 10,		-- Ã¿Ò³¼ÇÂ¼Êý
-	//@PageIndex	int = 1,		-- µ±Ç°Ò³Âë
-	//@Where		nvarchar(200) = '',	-- ²éÑ¯Ìõ¼þ
-	//@Orderfld	nvarchar(200),		-- ÅÅÐò×Ö¶ÎÃû ×îºÃÎªÎ¨Ò»Ö÷¼ü
-	//@OrderType	int = 1,		-- ÅÅÐòÀàÐÍ 1:½µÐò ÆäËüÎªÉýÐò
-	//@TotalPage  int out,--×ÜÒ³Êý
-	//@TotalRecord int out --×Ü¼ÇÂ¼Êý
+	//@TableName	nvarchar(50),		-- ï¿½ï¿½ï¿½ï¿½
+	//@ReturnFields	nvarchar(200) = '*',	-- ï¿½ï¿½Òªï¿½ï¿½ï¿½Øµï¿½ï¿½ï¿½ 
+	//@PageSize	int = 10,		-- Ã¿Ò³ï¿½ï¿½Â¼ï¿½ï¿½
+	//@PageIndex	int = 1,		-- ï¿½ï¿½Ç°Ò³ï¿½ï¿½
+	//@Where		nvarchar(200) = '',	-- ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½
+	//@Orderfld	nvarchar(200),		-- ï¿½ï¿½ï¿½ï¿½ï¿½Ö¶ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ÎªÎ¨Ò»ï¿½ï¿½ï¿½ï¿½
+	//@OrderType	int = 1,		-- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 1:ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½
+	//@TotalPage  int out,--ï¿½ï¿½Ò³ï¿½ï¿½
+	//@TotalRecord int out --ï¿½Ü¼ï¿½Â¼ï¿½ï¿½
 	// Add by lark.li 20080809 begin
 	bool	get_page_data(char* tablename, char* param, int pagesize, int pageindex, char* filter, char* sort, int sorttype, int& totalpage, int& totalrecord, std::vector< std::vector< std::string > > &data, unsigned short timeout = 50);
 	// End
@@ -134,12 +140,10 @@ public:
 	bool	getalldata(const char* sql, std::vector< std::vector< std::string > > &data, unsigned short timeout = 50);
 	// End
 
-	// ¸ß¼¶½Ó¿Ú
 	bool begin_tran();
 	bool commit_tran();
 	bool rollback();
 
-	// ÆäËû½Ó¿Ú
 	int get_affected_rows();
 	int get_identity();
     char const* const get_table() const;

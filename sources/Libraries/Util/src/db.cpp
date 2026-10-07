@@ -1,4 +1,4 @@
-#include "util.h"
+ï»¿#include "util.h"
 #include "db.h"
 using namespace std;
 
@@ -8,6 +8,13 @@ using namespace std;
 
 #define SQL_SUC(sr) (((sr == SQL_SUCCESS) || (sr == SQL_SUCCESS_WITH_INFO) || (sr == SQL_NO_DATA_FOUND)) ? true : false)
 #define DBFAIL(sr) ((sr != SQL_SUCCESS) && (sr != SQL_SUCCESS_WITH_INFO))
+
+// Unicode ODBC wrapper for Wine compatibility (MS ODBC Driver 17 exports only W functions)
+static SQLRETURN exec_direct_w(SQLHSTMT hstmt, const char* sql) {
+    SQLWCHAR wsql[SQL_MAXLEN];
+    MultiByteToWideChar(CP_UTF8, 0, sql, -1, (LPWSTR)wsql, sizeof(wsql) / sizeof(SQLWCHAR));
+    return SQLExecDirectW(hstmt, wsql, SQL_NTS);
+}
 
 const char g_cchLogUtilDb = 0;
 
@@ -58,7 +65,13 @@ bool cfl_db::handle_err(SQLHANDLE h, SQLSMALLINT t,
 	SQLCHAR msg[SQL_MAX_MESSAGE_LENGTH + 1] = {0};
     SQLSMALLINT msg_len;
 
-	sqlret = SQLGetDiagRec(t, h, 1, state, &error, msg, SQL_MAX_MESSAGE_LENGTH, &msg_len);
+    // Unicode ODBC for Wine compatibility
+    SQLWCHAR wstate[SQL_SQLSTATE_SIZE + 1] = { 0 };
+    SQLWCHAR wmsg[SQL_MAX_MESSAGE_LENGTH + 1] = { 0 };
+    sqlret = SQLGetDiagRecW(t, h, 1, wstate, &error, wmsg, SQL_MAX_MESSAGE_LENGTH, &msg_len);
+    // Convert back to ANSI for logging
+    WideCharToMultiByte(CP_UTF8, 0, (LPCWSTR)wstate, -1, (char*)state, SQL_SQLSTATE_SIZE + 1, NULL, NULL);
+    WideCharToMultiByte(CP_UTF8, 0, (LPCWSTR)wmsg, -1, (char*)msg, SQL_MAX_MESSAGE_LENGTH + 1, NULL, NULL);
     if (sqlret == SQL_ERROR || sqlret == SQL_INVALID_HANDLE) return false;
 
 	if (_dump_errinfo)
@@ -134,7 +147,7 @@ bool cfl_db::_reconnt()
 		LG2("util_db_error", "reconnect database...\n");
 	}
 
-	printf( "reconnect database success£¡\n" );
+    printf("reconnect database successï¿½ï¿½\n");
 	LG2("util_db_error", "reconnect database success!\n");
 	if (g_cchLogUtilDb == 1)
 		LG2("util_db", "reconnect database successfully\n");
@@ -150,7 +163,7 @@ bool cfl_db::_reconnt()
 		++ it;
 	}
 
-	printf( "reconnect database ok£¡\n" );
+    printf("reconnect database okï¿½ï¿½\n");
 	LG2("util_db_error", "reconnect database ok!\n");
 	return true;
 }
@@ -197,9 +210,19 @@ bool cfl_db::_connect(string& errinfo)
 			break;
 		}
 
-		sqlret = SQLDriverConnect(_hdbc, NULL, (SQLCHAR *)_connstr.c_str(),
-								  SQL_NTS, (SQLCHAR *)outbuf, sizeof outbuf,
-								  &outlen, SQL_DRIVER_NOPROMPT);
+        // Convert connection string to UTF-16 for Unicode ODBC API (Wine compatibility)
+        SQLWCHAR wconn_str[1024];
+        SQLWCHAR woutbuf[2048];
+        SQLSMALLINT woutlen = 0;
+        int wlen = MultiByteToWideChar(CP_UTF8, 0, _connstr.c_str(), -1, (LPWSTR)wconn_str, sizeof(wconn_str) / sizeof(SQLWCHAR));
+        if (wlen == 0) {
+            errinfo = "Failed to convert connection string to UTF-16\n";
+            SQLFreeHandle(SQL_HANDLE_DBC, _hdbc);
+            SQLFreeHandle(SQL_HANDLE_ENV, _henv);
+            ret = false;
+            break;
+        }
+        sqlret = SQLDriverConnectW(_hdbc, NULL, wconn_str, SQL_NTS, woutbuf, sizeof(woutbuf) / sizeof(SQLWCHAR), &woutlen, SQL_DRIVER_NOPROMPT);
 		if (DBFAIL(sqlret))
 		{
 			handle_err(_hdbc, SQL_HANDLE_DBC, sqlret);
@@ -299,9 +322,12 @@ bool cfl_db::connect(const char* source, const char* userid, const char* passwd,
             break;
         }
 
-        sqlret = SQLConnect(_hdbc, (SQLCHAR *)source, SQL_NTS,
-                            (SQLCHAR *)userid, SQL_NTS,
-						    (SQLCHAR *)passwd, SQL_NTS);
+        // Unicode ODBC for Wine compatibility
+        SQLWCHAR wsource[256], wuserid[256], wpasswd[256];
+        MultiByteToWideChar(CP_UTF8, 0, source, -1, (LPWSTR)wsource, 256);
+        MultiByteToWideChar(CP_UTF8, 0, userid, -1, (LPWSTR)wuserid, 256);
+        MultiByteToWideChar(CP_UTF8, 0, passwd, -1, (LPWSTR)wpasswd, 256);
+        sqlret = SQLConnectW(_hdbc, wsource, SQL_NTS, wuserid, SQL_NTS, wpasswd, SQL_NTS);
         if (DBFAIL(sqlret))
         {
             handle_err(_hdbc, SQL_HANDLE_DBC, sqlret);
@@ -385,7 +411,7 @@ RECONNECT:
 			break;
 		}
 
-		sqlret = SQLExecDirect(hstmt, (SQLCHAR *)sql, SQL_NTS);
+        sqlret = exec_direct_w(hstmt, sql);
 		switch (sqlret)
 		{
 		case SQL_SUCCESS_WITH_INFO:
@@ -530,10 +556,10 @@ int cfl_rs::get_affected_rows()
 	_tbl_name			=l_tbl_name;
 	if(!l_ret)
 	{
-		return -1;	//SQL´íÎó
+        return -1;	//SQLï¿½ï¿½ï¿½ï¿½
 	}else if(l_affected_rows !=1)
 	{
-		return -2;	//»ñÈ¡ÖµÐÐÊý´íÎó
+        return -2;	//ï¿½ï¿½È¡Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	}
 	return atoi(l_buf[0].c_str());
 }
@@ -548,10 +574,10 @@ int cfl_rs::get_identity()
 	_tbl_name			=l_tbl_name;
 	if(!l_ret)
 	{
-		return -1;	//SQL´íÎó
+        return -1;	//SQLï¿½ï¿½ï¿½ï¿½
 	}else if(l_affected_rows !=1)
 	{
-		return -2;	//»ñÈ¡ÖµÐÐÊý´íÎó
+        return -2;	//ï¿½ï¿½È¡Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	}
 	return atoi(l_buf[0].c_str());
 }
@@ -597,7 +623,7 @@ bool cfl_rs::_get_bin_field(char* field_text, int& len, char* param, char* filte
 
 RECONNECT:
 
-    // Ö´ÐÐ²éÑ¯²Ù×÷
+    // Ö´ï¿½Ð²ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½
     SQLRETURN sqlret;
     SQLHSTMT hstmt = SQL_NULL_HSTMT;
     SQLSMALLINT col_num = 0;
@@ -622,7 +648,7 @@ RECONNECT:
                 break;
             }
 
-            sqlret = SQLExecDirect(hstmt, (SQLCHAR *)sql, SQL_NTS);
+            sqlret = exec_direct_w(hstmt, sql);
             if (DBFAIL(sqlret))
             {
                 if( handle_err(hstmt, SQL_HANDLE_STMT, sqlret, sql, true) )
@@ -668,10 +694,10 @@ RECONNECT:
         } catch (...) {if (g_cchLogUtilDb == 1) LG2("util_db", "exception raised from _get_row fetch\n"); break;}
 
         try {
-            // ¿½±´Êý¾Ý
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             if (found)
             {
-                // È¡Êý¾Ý
+                // È¡ï¿½ï¿½ï¿½ï¿½
 				len = _buf_len[0];
                 if (len == SQL_NULL_DATA)
                 {
@@ -687,7 +713,7 @@ RECONNECT:
             }
             else
             {
-                // Ã»ÓÐÈ¡µ½Êý¾Ý
+                // Ã»ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 if (affect_rows != NULL)
                     *affect_rows = 0;
             }
@@ -752,7 +778,7 @@ bool cfl_rs::_get_row(string field_text[], int field_max_cnt, const char* param,
 
 RECONNECT:
 
-    // Ö´ÐÐ²éÑ¯²Ù×÷
+    // Ö´ï¿½Ð²ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½
     SQLRETURN sqlret;
     SQLHSTMT hstmt = SQL_NULL_HSTMT;
     SQLSMALLINT col_num = 0;
@@ -777,7 +803,7 @@ RECONNECT:
                 break;
             }
 
-            sqlret = SQLExecDirect(hstmt, (SQLCHAR *)sql, SQL_NTS);
+            sqlret = exec_direct_w(hstmt, sql);
             if (DBFAIL(sqlret))
             {
                 if( handle_err(hstmt, SQL_HANDLE_STMT, sqlret, sql, true) )
@@ -828,10 +854,10 @@ RECONNECT:
         } catch (...) {if (g_cchLogUtilDb == 1) LG2("util_db", "exception raised from _get_row fetch\n"); break;}
 
         try {
-            // ¿½±´Êý¾Ý
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             if (found)
             {
-                // È¡Êý¾Ý
+                // È¡ï¿½ï¿½ï¿½ï¿½
                 for (i = 0; i < col_num; ++ i)
                 {
                     if (_buf_len[i] == SQL_NULL_DATA)
@@ -849,7 +875,7 @@ RECONNECT:
             }
             else
             {
-                // Ã»ÓÐÈ¡µ½Êý¾Ý
+                // Ã»ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 if (affect_rows != NULL)
                     *affect_rows = 0;
             }
@@ -910,7 +936,7 @@ bool cfl_rs::_get_row3(string field_text[], int field_max_cnt, const char* param
 
 RECONNECT:
 
-    // Ö´ÐÐ²éÑ¯²Ù×÷
+    // Ö´ï¿½Ð²ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½
     SQLRETURN sqlret;
     SQLHSTMT hstmt = SQL_NULL_HSTMT;
     SQLSMALLINT col_num = 0;
@@ -936,7 +962,7 @@ RECONNECT:
                 break;
             }
 
-            sqlret = SQLExecDirect(hstmt, (SQLCHAR *)sql, SQL_NTS);
+            sqlret = exec_direct_w(hstmt, sql);
             if (DBFAIL(sqlret))
             {
                 if( handle_err(hstmt, SQL_HANDLE_STMT, sqlret, sql, true) )
@@ -987,10 +1013,10 @@ RECONNECT:
         } catch (...) {if (g_cchLogUtilDb == 1) LG2("util_db", "exception raised from _get_row3 fetch\n"); break;}
 
         try {
-            // ¿½±´Êý¾Ý
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             if (found)
             {
-                // È¡Êý¾Ý
+                // È¡ï¿½ï¿½ï¿½ï¿½
                 for (i = 0; i < col_num; ++ i)
                 {
                     if (_buf_len[i] == SQL_NULL_DATA)
@@ -1014,7 +1040,7 @@ RECONNECT:
             }
             else
             {
-                // Ã»ÓÐÈ¡µ½Êý¾Ý
+                // Ã»ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 if (affect_rows != NULL)
                     *affect_rows = 0;
             }
@@ -1076,7 +1102,7 @@ bool cfl_rs::_get_rowOderby(string field_text[], int field_max_cnt, const char* 
 
 RECONNECT:
 
-    // Ö´ÐÐ²éÑ¯²Ù×÷
+    // Ö´ï¿½Ð²ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½
     SQLRETURN sqlret;
     SQLHSTMT hstmt = SQL_NULL_HSTMT;
     SQLSMALLINT col_num = 0;
@@ -1102,7 +1128,7 @@ RECONNECT:
                 break;
             }
 
-            sqlret = SQLExecDirect(hstmt, (SQLCHAR *)sql, SQL_NTS);
+            sqlret = exec_direct_w(hstmt, sql);
             if (DBFAIL(sqlret))
             {
                 if( handle_err(hstmt, SQL_HANDLE_STMT, sqlret, sql, true) )
@@ -1153,10 +1179,10 @@ RECONNECT:
         } catch (...) {if (g_cchLogUtilDb == 1) LG2("util_db", "exception raised from _get_row3 fetch\n"); break;}
 
         try {
-            // ¿½±´Êý¾Ý
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             if (found)
             {
-                // È¡Êý¾Ý
+                // È¡ï¿½ï¿½ï¿½ï¿½
                 for (i = 0; i < col_num; ++ i)
                 {
                     if (_buf_len[i] == SQL_NULL_DATA)
@@ -1180,7 +1206,7 @@ RECONNECT:
             }
             else
             {
-                // Ã»ÓÐÈ¡µ½Êý¾Ý
+                // Ã»ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 if (affect_rows != NULL)
                     *affect_rows = 0;
             }
@@ -1228,7 +1254,7 @@ RECONNECT:
 			break;
 		}
 
-		sqlret = SQLExecDirect(hstmt, (SQLCHAR *)sql, SQL_NTS);
+        sqlret = exec_direct_w(hstmt, sql);
 		switch (sqlret)
 		{
 		case SQL_SUCCESS_WITH_INFO:
@@ -1426,7 +1452,7 @@ bool cfl_rs::getalldata(const char* sql, vector< vector< string > >& data, unsig
 {
 	bool ret;
 
-    // Ö´ÐÐ²éÑ¯²Ù×÷
+    // Ö´ï¿½Ð²ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½
     SQLRETURN sqlret;
     SQLHSTMT hstmt = SQL_NULL_HSTMT;
     SQLSMALLINT col_num = 0;
@@ -1450,7 +1476,7 @@ bool cfl_rs::getalldata(const char* sql, vector< vector< string > >& data, unsig
                 break;
             }
 
-            sqlret = SQLExecDirect(hstmt, (SQLCHAR *)sql, SQL_NTS);
+            sqlret = exec_direct_w(hstmt, sql);
             if (sqlret != SQL_SUCCESS)
             {
                 handle_err(hstmt, SQL_HANDLE_STMT, sqlret, sql);
@@ -1511,7 +1537,7 @@ bool cfl_rs::get_page_data(char* tablename, char* param, int pagesize, int pagei
 {
 	bool ret;
 
-    // Ö´ÐÐ²éÑ¯²Ù×÷
+    // Ö´ï¿½Ð²ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½
     SQLRETURN sqlret;
     SQLHSTMT hstmt = SQL_NULL_HSTMT;
     SQLSMALLINT col_num = 0;
@@ -1558,7 +1584,7 @@ bool cfl_rs::get_page_data(char* tablename, char* param, int pagesize, int pagei
                 break;
 			}
 
-            sqlret = SQLExecDirect(hstmt, (SQLCHAR *) "{call sys_Paging(?,?,?,?,?,?,?)}", SQL_NTS);
+            sqlret = exec_direct_w(hstmt, "{call sys_Paging(?,?,?,?,?,?,?)}");
             if (sqlret != SQL_SUCCESS)
             {
                 handle_err(hstmt, SQL_HANDLE_STMT, sqlret, "{call sys_Paging(?,?,?,?,?,?,?)}");
@@ -1647,7 +1673,7 @@ RECONNECT:
 	if (g_cchLogUtilDb == 1)
 	    LG2("util_db", "get() [SQL]: [%s]\n", sql);
 
-    // Ö´ÐÐ²éÑ¯²Ù×÷
+    // Ö´ï¿½Ð²ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½
     SQLRETURN sqlret;
     SQLHSTMT hstmt = SQL_NULL_HSTMT;
     SQLSMALLINT col_num = 0;
@@ -1673,7 +1699,7 @@ RECONNECT:
                 break;
             }
 
-            sqlret = SQLExecDirect(hstmt, (SQLCHAR *)sql, SQL_NTS);
+            sqlret = exec_direct_w(hstmt, sql);
             if (DBFAIL(sqlret))
             {
                 if( handle_err(hstmt, SQL_HANDLE_STMT, sqlret, sql, true) )
@@ -1719,10 +1745,10 @@ RECONNECT:
         } catch (...) {if (g_cchLogUtilDb == 1) LG2("util_db", "exception raised from _get_row fetch\n"); break;}
 
         try {
-            // ¿½±´Êý¾Ý
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             if (found)
             {
-                // È¡Êý¾Ý
+                // È¡ï¿½ï¿½ï¿½ï¿½
                 memcpy((void *)pdata, _buf[0], len);
             }
             else
@@ -1767,7 +1793,7 @@ RECONNECT:
             break;
         }
 
-        sqlret = SQLExecDirect(_hstmt, (SQLCHAR *)sql, SQL_NTS);
+        sqlret = exec_direct_w(_hstmt, sql);
         switch (sqlret)
         {
         case SQL_SUCCESS_WITH_INFO:
@@ -1859,7 +1885,7 @@ bool friend_tbl::get_friend_dat(friend_dat* farray, int& array_num, unsigned int
     char sql[SQL_MAXLEN];
 	sprintf(sql, query_friend_format, atorID, atorID, atorID, atorID);
 
-    // Ö´ÐÐ²éÑ¯²Ù×÷
+    // Ö´ï¿½Ð²ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½
     SQLRETURN sqlret;
     SQLHSTMT hstmt = SQL_NULL_HSTMT;
     SQLSMALLINT col_num = 0;
@@ -1883,7 +1909,7 @@ bool friend_tbl::get_friend_dat(friend_dat* farray, int& array_num, unsigned int
                 break;
             }
 
-            sqlret = SQLExecDirect(hstmt, (SQLCHAR *)sql, SQL_NTS);
+            sqlret = exec_direct_w(hstmt, sql);
             if (sqlret != SQL_SUCCESS)
             {
                 handle_err(hstmt, SQL_HANDLE_STMT, sqlret, sql);
@@ -1961,7 +1987,7 @@ bool friend_tbl::get_friend_dat(friend_dat* farray, int& array_num, unsigned int
 	char sql[SQL_MAXLEN];
 	sprintf(sql, query_friend_format, atorID, atorID, atorID);
 
-	// Ö´ÐÐ²éÑ¯²Ù×÷
+    // Ö´ï¿½Ð²ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½
 	SQLRETURN sqlret = exec_sql_direct(sql, false);
 	if (DBOK(sqlret))
 	{
@@ -2046,7 +2072,7 @@ bool friend_tbl::get_gm_dat(friend_dat* farray, int& array_num, bool* drop)
                 break;
             }
 
-            sqlret = SQLExecDirect(hstmt, (SQLCHAR*)sql, SQL_NTS);
+            sqlret = exec_direct_w(hstmt, sql);
             if (sqlret != SQL_SUCCESS)
             {
                 handle_err(hstmt, SQL_HANDLE_STMT, sqlret, sql);
@@ -2086,7 +2112,7 @@ bool friend_tbl::get_gm_dat(friend_dat* farray, int& array_num, bool* drop)
                 farray[i].motto = (char const*)_buf[4];
             }
 
-            array_num = i; // È¡³öµÄÐÐÊý
+            array_num = i; // È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
             SQLFreeStmt(hstmt, SQL_CLOSE);
             SQLFreeStmt(hstmt, SQL_RESET_PARAMS);

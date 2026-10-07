@@ -205,7 +205,7 @@ bool CTableCha::ShowExpRank(CCharacter* pCha, int count)
 			throw 1;
 		}
 
-		sqlret = SQLExecDirect(hstmt, (SQLCHAR *)sql, SQL_NTS);
+		sqlret = exec_direct_w(hstmt, sql);
 		if (sqlret != SQL_SUCCESS)
 		{
 			handle_err(hstmt, SQL_HANDLE_STMT, sqlret);
@@ -1143,7 +1143,7 @@ BOOL CTableCha::IsChaOnline(DWORD atorID, BOOL &bOnline)
 			throw 1;
 		}
 
-		sqlret = SQLExecDirect(hstmt, (SQLCHAR *)sql, SQL_NTS);
+		sqlret = exec_direct_w(hstmt, sql);
 		if (sqlret != SQL_SUCCESS)
 		{
 			handle_err(hstmt, SQL_HANDLE_STMT, sqlret);
@@ -1225,7 +1225,7 @@ Long CTableCha::GetChaAddr(DWORD atorID)
 
 			throw 1;
 		}
-		sqlret = SQLExecDirect(hstmt, (SQLCHAR *)sql, SQL_NTS);
+		sqlret = exec_direct_w(hstmt, sql);
 		if (sqlret != SQL_SUCCESS)
 		{
 			handle_err(hstmt, SQL_HANDLE_STMT, sqlret);
@@ -2657,7 +2657,7 @@ bool CTableResource::ReadKitbagTmpData(long lRecDBID, string& strData)
 			throw 1;
 		}
 
-		sqlret = SQLExecDirect(hstmt, (SQLCHAR *)sql, SQL_NTS);
+		sqlret = exec_direct_w(hstmt, sql);
 		if (sqlret != SQL_SUCCESS)
 		{
 			handle_err(hstmt, SQL_HANDLE_STMT, sqlret);
@@ -4306,7 +4306,7 @@ bool CTableGuild::ListAll(CCharacter* pCha ,char disband_days)
 			throw 1;
 		}
 
-		sqlret = SQLExecDirect(hstmt, (SQLCHAR *)sql, SQL_NTS);
+		sqlret = exec_direct_w(hstmt, sql);
 		if (sqlret != SQL_SUCCESS)
 		{
 			handle_err(hstmt, SQL_HANDLE_STMT, sqlret);
@@ -4773,7 +4773,7 @@ bool CTableGuild::ListTryPlayer(CCharacter* pCha, char disband_days)
 			throw 1;
 		}
 
-		sqlret = SQLExecDirect(hstmt, (SQLCHAR *)sql, SQL_NTS);
+		sqlret = exec_direct_w(hstmt, sql);
 		if (sqlret != SQL_SUCCESS)
 		{
 			handle_err(hstmt, SQL_HANDLE_STMT, sqlret);

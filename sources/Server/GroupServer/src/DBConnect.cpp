@@ -780,7 +780,7 @@ bool TBLMaster::InitMasterRelation(map<uLong, uLong> &mapMasterRelation)
 				throw 1;
 			}
 
-			sqlret = SQLExecDirect(hstmt, (SQLCHAR *)sql, SQL_NTS);
+			sqlret = exec_direct_w(hstmt, sql);
 			if (sqlret != SQL_SUCCESS)
 			{
 				handle_err(hstmt, SQL_HANDLE_STMT, sqlret);
@@ -872,7 +872,7 @@ bool TBLMaster::GetMasterData(master_dat* farray, int& array_num, unsigned int a
 				throw 1;
 			}
 
-			sqlret = SQLExecDirect(hstmt, (SQLCHAR *)sql, SQL_NTS);
+			sqlret = exec_direct_w(hstmt, sql);
 			if (sqlret != SQL_SUCCESS)
 			{
 				handle_err(hstmt, SQL_HANDLE_STMT, sqlret);
@@ -976,7 +976,7 @@ bool TBLMaster::GetPrenticeData(master_dat* farray, int& array_num, unsigned int
 				throw 1;
 			}
 
-			sqlret = SQLExecDirect(hstmt, (SQLCHAR *)sql, SQL_NTS);
+			sqlret = exec_direct_w(hstmt, sql);
 			if (sqlret != SQL_SUCCESS)
 			{
 				handle_err(hstmt, SQL_HANDLE_STMT, sqlret);
@@ -1153,7 +1153,7 @@ bool TBLGuilds::InitAllGuilds(char disband_days)
 			throw 1;
 		}
 
-		sqlret = SQLExecDirect(hstmt, (SQLCHAR *)sql, SQL_NTS);
+		sqlret = exec_direct_w(hstmt, sql);
 		if (sqlret != SQL_SUCCESS)
 		{
 			handle_err(hstmt, SQL_HANDLE_STMT, sqlret);
@@ -1261,7 +1261,7 @@ bool TBLGuilds::InitGuildMember(Player *ply,uLong chaid,uLong gldid,int mode)
 				throw 1;
 			}
 
-			sqlret = SQLExecDirect(hstmt, (SQLCHAR *)sql, SQL_NTS);
+			sqlret = exec_direct_w(hstmt, sql);
 			if (sqlret != SQL_SUCCESS)
 			{
 				handle_err(hstmt, SQL_HANDLE_STMT, sqlret);
@@ -1444,7 +1444,7 @@ bool TBLParam::InitParam(void)
 		SQLBindCol(hstmt, 8, SQL_C_LONG, &m_nOrder[2].nfightpoint, 0, &buf_len[7]);
 		SQLBindCol(hstmt, 9, SQL_C_LONG, &m_nOrder[3].nfightpoint, 0, &buf_len[8]);
 		SQLBindCol(hstmt, 10,SQL_C_LONG, &m_nOrder[4].nfightpoint, 0, &buf_len[9]);
-		sqlret = SQLExecDirect(hstmt,(SQLCHAR *)const_cast<char*>(strSQL.c_str()),SQL_NTS);
+		sqlret = exec_direct_w(hstmt, strSQL.c_str());
 		if (sqlret != SQL_SUCCESS)
 		{
 			handle_err(hstmt, SQL_HANDLE_STMT, sqlret);
@@ -1490,7 +1490,7 @@ bool TBLParam::InitParam(void)
 		{
 			sprintf(buff,"select atorNome,job,degree from character where atorID = %d ",m_nOrder[n].nid);
 
-			sqlret = SQLExecDirect(hstmt,(SQLCHAR *)buff,SQL_NTS);
+			sqlret = exec_direct_w(hstmt, buff);
 			if (sqlret != SQL_SUCCESS)
 			{
 				handle_err(hstmt, SQL_HANDLE_STMT, sqlret);

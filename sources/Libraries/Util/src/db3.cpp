@@ -1246,8 +1246,12 @@ bool CSQLDatabase::SQLConnect( const char * a_szDSN,
         return false; 
     //////////////////// end former constructor code ////////////////// 
 
-    _rc = ::SQLConnect( _hdbc,( SQLCHAR* )a_szDSN, SQL_NTS, 
-        ( SQLCHAR* )a_szUserName, SQL_NTS,( SQLCHAR* )a_szPassword, SQL_NTS );
+    // Unicode ODBC for Wine compatibility
+    SQLWCHAR wdsn[256], wuser[256], wpwd[256];
+    MultiByteToWideChar(CP_UTF8, 0, a_szDSN, -1, (LPWSTR)wdsn, 256);
+    MultiByteToWideChar(CP_UTF8, 0, a_szUserName, -1, (LPWSTR)wuser, 256);
+    MultiByteToWideChar(CP_UTF8, 0, a_szPassword, -1, (LPWSTR)wpwd, 256);
+    _rc = ::SQLConnectW(_hdbc, wdsn, SQL_NTS, wuser, SQL_NTS, wpwd, SQL_NTS);
     _isOpen = ( _rc == SQL_SUCCESS || _rc == SQL_SUCCESS_WITH_INFO );
     return _isOpen;
 }
@@ -1279,8 +1283,12 @@ bool CSQLDatabase::SQLConnect(char const* conn_instr)
         return false;
 
     //////////////////// end former constructor code ////////////////// 
-    _rc = ::SQLDriverConnect(_hdbc, NULL, (SQLCHAR *)conn_instr, SQL_NTS,
-        (SQLCHAR *)conn_outstr, SQL_NTS, &outstr_len, SQL_DRIVER_NOPROMPT);
+    // Unicode ODBC for Wine compatibility
+    SQLWCHAR wconn_in[1024], wconn_out[2048];
+    SQLSMALLINT wout_len = 0;
+    MultiByteToWideChar(CP_UTF8, 0, conn_instr, -1, (LPWSTR)wconn_in, sizeof(wconn_in) / sizeof(SQLWCHAR));
+    _rc = ::SQLDriverConnectW(_hdbc, NULL, wconn_in, SQL_NTS,
+        wconn_out, sizeof(wconn_out) / sizeof(SQLWCHAR), &wout_len, SQL_DRIVER_NOPROMPT);
     
     _isOpen = ( _rc == SQL_SUCCESS || _rc == SQL_SUCCESS_WITH_INFO );
     return _isOpen;
@@ -1296,7 +1304,7 @@ bool CSQLDatabase::ExecuteSQL( const char* a_szStmt )
 
     // returns: SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_NEED_DATA, 
     // SQL_STILL_EXECUTING, SQL_ERROR, SQL_NO_DATA, or SQL_INVALID_HANDLE   
-    _rc = ::SQLExecDirect( _hstmt,( unsigned char* )a_szStmt, SQL_NTS );
+    _rc = exec_direct_w_db3(_hstmt, a_szStmt);
     if ( _rc == SQL_SUCCESS || _rc == SQL_SUCCESS_WITH_INFO )
     {
         // COMMIT the transaction
@@ -1397,8 +1405,16 @@ void CSQLDatabase::ThrowError( SQLSMALLINT handleType )
     default: return;
     }
 
-    rc = SQLGetDiagRec( handleType, theHandle, 1 /*recnumber?*/, szSQLState, 
-        &nNativeError, szErrorMsg, cbErrorMsgMax, &cbErrorMsg );
+    // Unicode ODBC for Wine
+    {
+        SQLWCHAR wstate[7], wmsg[256];
+        SQLINTEGER werr;
+        SQLSMALLINT wmsglen;
+        rc = SQLGetDiagRecW(handleType, theHandle, 1, wstate, &werr, wmsg, 256, &wmsglen);
+        WideCharToMultiByte(CP_ACP, 0, (LPCWSTR)wstate, -1, szSQLState, 6, NULL, NULL);
+        WideCharToMultiByte(CP_ACP, 0, (LPCWSTR)wmsg, -1, szErrorMsg, 255, NULL, NULL);
+        *pfNativeError = werr;
+    }
     szSQLState[sizeof( szSQLState )-1]=0; // insurance
     szErrorMsg[cbErrorMsg] = 0;         // more insurance
 
@@ -1789,7 +1805,7 @@ bool CSQLRecordset::SQLExecDirect()
 
 	_rc = SQLSetStmtOption(_hstmt, SQL_QUERY_TIMEOUT, 30);
 
-    _rc = ::SQLExecDirect( _hstmt,( unsigned char* )( const char* )_stmt.c_str(), SQL_NTS );
+    _rc = exec_direct_w_db3(_hstmt, _stmt.c_str());
     if ( _rc != SQL_SUCCESS && _rc != SQL_SUCCESS_WITH_INFO )
         ThrowError();
 
@@ -1941,13 +1957,27 @@ void CSQLRecordset::ThrowError( bool useDbHandle )
 
     if ( useDbHandle )
     {
-        rc = SQLGetDiagRec( SQL_HANDLE_DBC, _hdbc, 1, szSQLState, 
-            &nNativeError, szErrorMsg, cbErrorMsgMax, &cbErrorMsg );
+        // Unicode ODBC for Wine
+        {
+            SQLWCHAR wstate[7], wmsg[256];
+            SQLINTEGER werr;
+            SQLSMALLINT wmsglen;
+            rc = SQLGetDiagRecW(SQL_HANDLE_DBC, _hdbc, 1, wstate, &werr, wmsg, 256, &wmsglen);
+            WideCharToMultiByte(CP_ACP, 0, (LPCWSTR)wstate, -1, szSQLState, 6, NULL, NULL);
+            *pfNativeError = werr;
+        }
     }
     else
     {
-        rc = SQLGetDiagRec( SQL_HANDLE_STMT, _hstmt, 1, szSQLState, 
-            &nNativeError, szErrorMsg, cbErrorMsgMax, &cbErrorMsg );
+        // Unicode ODBC for Wine
+        {
+            SQLWCHAR wstate[7], wmsg[256];
+            SQLINTEGER werr;
+            SQLSMALLINT wmsglen;
+            rc = SQLGetDiagRecW(SQL_HANDLE_STMT, _hstmt, 1, wstate, &werr, wmsg, 256, &wmsglen);
+            WideCharToMultiByte(CP_ACP, 0, (LPCWSTR)wstate, -1, szSQLState, 6, NULL, NULL);
+            *pfNativeError = werr;
+        }
     }
     szSQLState[sizeof( szSQLState )-1]=0; // insurance
 
@@ -2003,6 +2033,14 @@ int CSQLRecordset::GetColumnType( int a_nColumn )
 
 #include <sstream>
 #include <iomanip>
+
+
+// Unicode ODBC wrappers for Wine compatibility (MS ODBC Driver 17 exports only W functions)
+static SQLRETURN exec_direct_w_db3(SQLHSTMT hstmt, const char* sql) {
+    SQLWCHAR wsql[8192];
+    MultiByteToWideChar(CP_UTF8, 0, sql, -1, (LPWSTR)wsql, sizeof(wsql) / sizeof(SQLWCHAR));
+    return SQLExecDirectW(hstmt, wsql, SQL_NTS);
+}
 using namespace std;
 
 CSQLUpdate::CSQLUpdate()
