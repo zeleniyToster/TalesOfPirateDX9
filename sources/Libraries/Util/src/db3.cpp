@@ -1407,13 +1407,13 @@ void CSQLDatabase::ThrowError( SQLSMALLINT handleType )
 
     // Unicode ODBC for Wine
     {
-        SQLWCHAR wstate[7], wmsg[256];
+        SQLWCHAR wstate[SQL_SQLSTATE_SIZE + 1], wmsg[SQL_MAX_MESSAGE_LENGTH + 1];
         SQLINTEGER werr;
         SQLSMALLINT wmsglen;
-        rc = SQLGetDiagRecW(handleType, theHandle, 1, wstate, &werr, wmsg, 256, &wmsglen);
-        WideCharToMultiByte(CP_ACP, 0, (LPCWSTR)wstate, -1, szSQLState, 6, NULL, NULL);
-        WideCharToMultiByte(CP_ACP, 0, (LPCWSTR)wmsg, -1, szErrorMsg, 255, NULL, NULL);
-        *pfNativeError = werr;
+        rc = SQLGetDiagRecW(handleType, theHandle, 1, wstate, &werr, wmsg, SQL_MAX_MESSAGE_LENGTH, &wmsglen);
+        WideCharToMultiByte(CP_ACP, 0, (LPCWSTR)wstate, -1, (LPSTR)szSQLState, sizeof(szSQLState), NULL, NULL);
+        cbErrorMsg = (SQLSMALLINT)WideCharToMultiByte(CP_ACP, 0, (LPCWSTR)wmsg, -1, (LPSTR)szErrorMsg, cbErrorMsgMax, NULL, NULL);
+        nNativeError = werr;
     }
     szSQLState[sizeof( szSQLState )-1]=0; // insurance
     szErrorMsg[cbErrorMsg] = 0;         // more insurance
@@ -1959,27 +1959,30 @@ void CSQLRecordset::ThrowError( bool useDbHandle )
     {
         // Unicode ODBC for Wine
         {
-            SQLWCHAR wstate[7], wmsg[256];
+            SQLWCHAR wstate[SQL_SQLSTATE_SIZE + 1], wmsg[SQL_MAX_MESSAGE_LENGTH + 1];
             SQLINTEGER werr;
             SQLSMALLINT wmsglen;
-            rc = SQLGetDiagRecW(SQL_HANDLE_DBC, _hdbc, 1, wstate, &werr, wmsg, 256, &wmsglen);
-            WideCharToMultiByte(CP_ACP, 0, (LPCWSTR)wstate, -1, szSQLState, 6, NULL, NULL);
-            *pfNativeError = werr;
+            rc = SQLGetDiagRecW(SQL_HANDLE_DBC, _hdbc, 1, wstate, &werr, wmsg, SQL_MAX_MESSAGE_LENGTH, &wmsglen);
+            WideCharToMultiByte(CP_ACP, 0, (LPCWSTR)wstate, -1, (LPSTR)szSQLState, sizeof(szSQLState), NULL, NULL);
+            cbErrorMsg = (SQLSMALLINT)WideCharToMultiByte(CP_ACP, 0, (LPCWSTR)wmsg, -1, (LPSTR)szErrorMsg, cbErrorMsgMax, NULL, NULL);
+            nNativeError = werr;
         }
     }
     else
     {
         // Unicode ODBC for Wine
         {
-            SQLWCHAR wstate[7], wmsg[256];
+            SQLWCHAR wstate[SQL_SQLSTATE_SIZE + 1], wmsg[SQL_MAX_MESSAGE_LENGTH + 1];
             SQLINTEGER werr;
             SQLSMALLINT wmsglen;
-            rc = SQLGetDiagRecW(SQL_HANDLE_STMT, _hstmt, 1, wstate, &werr, wmsg, 256, &wmsglen);
-            WideCharToMultiByte(CP_ACP, 0, (LPCWSTR)wstate, -1, szSQLState, 6, NULL, NULL);
-            *pfNativeError = werr;
+            rc = SQLGetDiagRecW(SQL_HANDLE_STMT, _hstmt, 1, wstate, &werr, wmsg, SQL_MAX_MESSAGE_LENGTH, &wmsglen);
+            WideCharToMultiByte(CP_ACP, 0, (LPCWSTR)wstate, -1, (LPSTR)szSQLState, sizeof(szSQLState), NULL, NULL);
+            cbErrorMsg = (SQLSMALLINT)WideCharToMultiByte(CP_ACP, 0, (LPCWSTR)wmsg, -1, (LPSTR)szErrorMsg, cbErrorMsgMax, NULL, NULL);
+            nNativeError = werr;
         }
     }
     szSQLState[sizeof( szSQLState )-1]=0; // insurance
+    szErrorMsg[cbErrorMsg] = 0;         // more insurance
 
     CSQLException* pException = new CSQLException();
     pException->m_nRetCode = (SQLRETURN)nNativeError;
