@@ -1412,7 +1412,7 @@ void CSQLDatabase::ThrowError( SQLSMALLINT handleType )
         SQLSMALLINT wmsglen;
         rc = SQLGetDiagRecW(handleType, theHandle, 1, wstate, &werr, wmsg, SQL_MAX_MESSAGE_LENGTH, &wmsglen);
         WideCharToMultiByte(CP_ACP, 0, (LPCWSTR)wstate, -1, (LPSTR)szSQLState, sizeof(szSQLState), NULL, NULL);
-        WideCharToMultiByte(CP_ACP, 0, (LPCWSTR)wmsg, -1, (LPSTR)szErrorMsg, cbErrorMsgMax, &cbErrorMsg, NULL, NULL);
+        cbErrorMsg = (SQLSMALLINT)WideCharToMultiByte(CP_ACP, 0, (LPCWSTR)wmsg, -1, (LPSTR)szErrorMsg, cbErrorMsgMax, NULL, NULL);
         nNativeError = werr;
     }
     szSQLState[sizeof( szSQLState )-1]=0; // insurance
@@ -1964,7 +1964,7 @@ void CSQLRecordset::ThrowError( bool useDbHandle )
             SQLSMALLINT wmsglen;
             rc = SQLGetDiagRecW(SQL_HANDLE_DBC, _hdbc, 1, wstate, &werr, wmsg, SQL_MAX_MESSAGE_LENGTH, &wmsglen);
             WideCharToMultiByte(CP_ACP, 0, (LPCWSTR)wstate, -1, (LPSTR)szSQLState, sizeof(szSQLState), NULL, NULL);
-            WideCharToMultiByte(CP_ACP, 0, (LPCWSTR)wmsg, -1, (LPSTR)szErrorMsg, cbErrorMsgMax, &cbErrorMsg, NULL, NULL);
+            cbErrorMsg = (SQLSMALLINT)WideCharToMultiByte(CP_ACP, 0, (LPCWSTR)wmsg, -1, (LPSTR)szErrorMsg, cbErrorMsgMax, NULL, NULL);
             nNativeError = werr;
         }
     }
@@ -1977,7 +1977,7 @@ void CSQLRecordset::ThrowError( bool useDbHandle )
             SQLSMALLINT wmsglen;
             rc = SQLGetDiagRecW(SQL_HANDLE_STMT, _hstmt, 1, wstate, &werr, wmsg, SQL_MAX_MESSAGE_LENGTH, &wmsglen);
             WideCharToMultiByte(CP_ACP, 0, (LPCWSTR)wstate, -1, (LPSTR)szSQLState, sizeof(szSQLState), NULL, NULL);
-            WideCharToMultiByte(CP_ACP, 0, (LPCWSTR)wmsg, -1, (LPSTR)szErrorMsg, cbErrorMsgMax, &cbErrorMsg, NULL, NULL);
+            cbErrorMsg = (SQLSMALLINT)WideCharToMultiByte(CP_ACP, 0, (LPCWSTR)wmsg, -1, (LPSTR)szErrorMsg, cbErrorMsgMax, NULL, NULL);
             nNativeError = werr;
         }
     }
