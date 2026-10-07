@@ -2045,6 +2045,8 @@ int CSQLRecordset::GetColumnType( int a_nColumn )
 #include <iomanip>
 
 
+using namespace std;
+
 CSQLUpdate::CSQLUpdate()
 :CSQLBaseWhere()
 {
