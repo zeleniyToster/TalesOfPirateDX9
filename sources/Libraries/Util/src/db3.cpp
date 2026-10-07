@@ -9,6 +9,13 @@
 
 using namespace std;
 
+// Unicode ODBC wrapper for Wine compatibility (MS ODBC Driver 17 exports only W functions)
+static SQLRETURN exec_direct_w_db3(SQLHSTMT hstmt, const char* sql) {
+    SQLWCHAR wsql[8192];
+    MultiByteToWideChar(CP_UTF8, 0, sql, -1, (LPWSTR)wsql, sizeof(wsql) / sizeof(SQLWCHAR));
+    return SQLExecDirectW(hstmt, wsql, SQL_NTS);
+}
+
 const int TDt::FULL       =  1;
 const int TDt::EUROPEAN   =  2;
 const int TDt::MMDDYYYY   =  3;
@@ -2038,12 +2045,6 @@ int CSQLRecordset::GetColumnType( int a_nColumn )
 #include <iomanip>
 
 
-// Unicode ODBC wrappers for Wine compatibility (MS ODBC Driver 17 exports only W functions)
-static SQLRETURN exec_direct_w_db3(SQLHSTMT hstmt, const char* sql) {
-    SQLWCHAR wsql[8192];
-    MultiByteToWideChar(CP_UTF8, 0, sql, -1, (LPWSTR)wsql, sizeof(wsql) / sizeof(SQLWCHAR));
-    return SQLExecDirectW(hstmt, wsql, SQL_NTS);
-}
 using namespace std;
 
 CSQLUpdate::CSQLUpdate()
