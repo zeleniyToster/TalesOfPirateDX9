@@ -333,7 +333,7 @@ bool cfl_db::connect(const char* servername, const char* database, const char* u
     }
 
 	char conn_str[1024];    
-    sprintf(conn_str, "DRIVER={ODBC Driver 17 for SQL Server};SERVER=%s;UID=%s;PWD=%s;DATABASE=%s",
+    sprintf(conn_str, "DRIVER={ODBC Driver 17 for SQL Server};SERVER=%s;UID=%s;PWD=%s;DATABASE=%s;Encrypt=no;TrustServerCertificate=yes",
             servername, userid, passwd, database);
 
 	// Save connect string
