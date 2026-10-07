@@ -1,4 +1,4 @@
-﻿#include "util.h"
+#include "util.h"
 #include "db.h"
 using namespace std;
 
@@ -9,12 +9,7 @@ using namespace std;
 #define SQL_SUC(sr) (((sr == SQL_SUCCESS) || (sr == SQL_SUCCESS_WITH_INFO) || (sr == SQL_NO_DATA_FOUND)) ? true : false)
 #define DBFAIL(sr) ((sr != SQL_SUCCESS) && (sr != SQL_SUCCESS_WITH_INFO))
 
-// Unicode ODBC wrapper for Wine compatibility (MS ODBC Driver 17 exports only W functions)
-static SQLRETURN exec_direct_w(SQLHSTMT hstmt, const char* sql) {
-    SQLWCHAR wsql[SQL_MAXLEN];
-    MultiByteToWideChar(CP_UTF8, 0, sql, -1, (LPWSTR)wsql, sizeof(wsql) / sizeof(SQLWCHAR));
-    return SQLExecDirectW(hstmt, wsql, SQL_NTS);
-}
+// exec_direct_w() is defined as static inline in db.h
 
 const char g_cchLogUtilDb = 0;
 
