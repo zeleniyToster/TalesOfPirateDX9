@@ -17,6 +17,14 @@ _DBC_USING
 
 #define DEBUG_RECEIVER 1  // Enable debug output for Receiver
 
+#if DEBUG_RECEIVER
+#include <fstream>
+static std::ofstream debug_log("receiver_debug.log", std::ios::app);
+#define DEBUG_LOG debug_log
+#else
+#define DEBUG_LOG if (false) std::cerr
+#endif
+
 extern PreAllocHeap<rbuf>	__bufheap;
 PreAllocHeapPtr<OnProcessData>	Receiver::m_HeapProcData(0,30);
 
@@ -58,21 +66,16 @@ void Receiver::Init()
 	m_rpk		=RPacket(m_datasock->GetTcpApp());
 
 	#if DEBUG_RECEIVER
-	printf("[RECEIVER INIT] __tca: %p, m_datasock->GetTcpApp(): %p\n", __tca, m_datasock->GetTcpApp());
-	printf("[RECEIVER INIT] m_rpk valid: %d, m_rpk.__tca: %p, m_rpk.Size(): %lu\n",
-	       (bool)m_rpk, m_rpk.__tca, m_rpk.Size());
-	fflush(stdout);
+	DEBUG_LOG << "[RECEIVER INIT] __tca: " << __tca << ", m_datasock->GetTcpApp(): " << m_datasock->GetTcpApp() << std::endl;
+	DEBUG_LOG << "[RECEIVER INIT] m_rpk valid: " << (bool)m_rpk << ", m_rpk.__tca: " << m_rpk.__tca << ", m_rpk.Size(): " << m_rpk.Size() << std::endl;
 	#endif
 }
 //--------------------------------------------------
 long Receiver::Process()
 {
 	#if DEBUG_RECEIVER
-	printf("[RECEIVER PROCESS START] m_datasock: %p, __tca: %p, m_p: %lu\n",
-	       m_datasock, __tca, m_p);
-	printf("[RECEIVER PROCESS START] m_rpk valid: %d, m_rpk.__tca: %p, m_rpk.Size(): %lu\n",
-	       (bool)m_rpk, m_rpk.__tca, m_rpk.Size());
-	fflush(stdout);
+	DEBUG_LOG << "[RECEIVER PROCESS START] m_datasock: " << m_datasock << ", __tca: " << __tca << ", m_p: " << m_p << std::endl;
+	DEBUG_LOG << "[RECEIVER PROCESS START] m_rpk valid: " << (bool)m_rpk << ", m_rpk.__tca: " << m_rpk.__tca << ", m_rpk.Size(): " << m_rpk.Size() << std::endl;
 	#endif
 
 	int			l_reallen	=0;
@@ -89,19 +92,14 @@ long Receiver::Process()
 
 		// l_reallen is the n bytes received, and the data is written to the buffer in m_rpk
 		#if DEBUG_RECEIVER
-		printf("[RECEIVER RECV] BEFORE recv() -> m_rpk valid: %d, GetPktAddr: %p, m_p: %lu, HasSpace: %lu\n",
-		       (bool)m_rpk, m_rpk.GetPktAddr(), m_p, HasSpace());
-		printf("[RECEIVER RECV] __bufheap.unit: %lu, __bufheap.used: %lu\n",
-		       __bufheap.GetUnitSize(), __bufheap.GetUsedNum());
-		fflush(stdout);
+		DEBUG_LOG << "[RECEIVER RECV] BEFORE recv() -> m_rpk valid: " << (bool)m_rpk << ", GetPktAddr: " << m_rpk.GetPktAddr() << ", m_p: " << m_p << ", HasSpace: " << HasSpace() << std::endl;
+		DEBUG_LOG << "[RECEIVER RECV] __bufheap.unit: " << __bufheap.GetUnitSize() << ", __bufheap.used: " << __bufheap.GetUsedNum() << std::endl;
 		#endif
 
 		l_reallen	=recv(m_datasock->m_socket,const_cast<char*>(m_rpk.GetPktAddr()) + m_p,int(HasSpace()),0);
 
 		#if DEBUG_RECEIVER
-		printf("[RECEIVER RECV] AFTER recv() -> l_reallen: %d, WSAGetLastError: %d\n",
-		       l_reallen, WSAGetLastError());
-		fflush(stdout);
+		DEBUG_LOG << "[RECEIVER RECV] AFTER recv() -> l_reallen: " << l_reallen << ", WSAGetLastError: " << WSAGetLastError() << std::endl;
 		#endif
 
 		if(l_reallen >0)
@@ -237,22 +235,21 @@ long Receiver::Process()
 dbc::uLong dbc::Receiver::HasSpace() const
 {
 	#if DEBUG_RECEIVER
-	printf("[RECEIVER HasSpace] m_rpk valid: %d, m_p: %lu, m_rpk.GetOffset(): %lu\n",
-	       (bool)m_rpk, m_p, m_rpk.GetOffset());
+	DEBUG_LOG << "[RECEIVER HasSpace] m_rpk valid: " << (bool)m_rpk << ", m_p: " << m_p << ", m_rpk.GetOffset(): " << m_rpk.GetOffset() << std::endl;
 	#endif
 
 	auto current_size = m_rpk.Size();
 	auto used_size = m_rpk.GetOffset() + m_p;
 
 	#if DEBUG_RECEIVER
-	printf("[RECEIVER HasSpace] current_size: %lu, used_size: %lu\n", current_size, used_size);
+	DEBUG_LOG << "[RECEIVER HasSpace] current_size: " << current_size << ", used_size: " << used_size << std::endl;
 	#endif
 
 	if (current_size > used_size)
 	{
 		auto remain_size = m_rpk->Size() - m_rpk.GetOffset() - m_p;
 		#if DEBUG_RECEIVER
-		printf("[RECEIVER HasSpace] remain_size: %lu\n", remain_size);
+		DEBUG_LOG << "[RECEIVER HasSpace] remain_size: " << remain_size << std::endl;
 		#endif
 		return remain_size;
 	}
