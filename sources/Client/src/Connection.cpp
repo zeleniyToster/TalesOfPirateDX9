@@ -145,7 +145,6 @@ int  Connection::GetConnStat()
 	//end
 
 		WPacket pk	=g_NetIF->GetWPacket();;
-		pk.WritePktLen();			// ← **Добавлено: записываем длину пакета**
 		pk.WriteCmd(CMD_CM_SELROLE);			//����
 		pk.WriteLong(m_cat);
 		pk.WriteSequence(m_name, uShort(strlen(m_name) + 1));
