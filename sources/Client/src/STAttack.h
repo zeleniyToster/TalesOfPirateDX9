@@ -48,7 +48,7 @@ protected:
 	virtual void	_End();
     virtual bool	_IsAllowCancel()				{ return false;						}
 
-	void	CalcSkillSpeed();		// 开始时执行
+	void	CalcSkillSpeed();		// executed at the start
 
 protected:
 	virtual void    _UseSkill();
@@ -61,15 +61,15 @@ protected:
     void    _PopThis();
 
 protected:
-	CCharacter		*_pTarget;				// 攻击的目标
-	CSkillRecord	*_pSkillInfo;			// 当前对应的技能
-	int				_nAttackX,  _nAttackY;	// 攻击时攻击中心点
-	CCharacter		*_pSelf;				// 自己,用于快速访问
+	CCharacter		*_pTarget;				// the attack target
+	CSkillRecord	*_pSkillInfo;			// the skill currently corresponding to it
+	int				_nAttackX,  _nAttackY;	// the centre point of the attack
+	CCharacter		*_pSelf;				// itself, for quick access
     int             _nAngle;
     bool            _IsHaveAngle;
     int             _nKeyFrameNum;
-    int             _nSkillPoseID;          // 当前使用的Pose,用于有一个技能有多个pose，确定是那个pose
-	int				_nSkillActionIndex;		// 有多个Pose时,用于顺序播放
+    int             _nSkillPoseID;          // the Pose currently in use; a skill can have several poses, so this settles which one
+	int				_nSkillActionIndex;		// when there are several poses, used to play them in order
 	float			_fSkillSpeed[ defSKILL_POSE_NUM ];
 	float			_fSkillRate;
 
@@ -95,7 +95,7 @@ namespace GUI
 class CCommandObj;
 };
 
-// 攻击
+// attack
 class CAttackState : public CWaitAttackState
 {
 public:
@@ -137,12 +137,12 @@ protected:
 protected:
 	virtual void    _UseSkill();
 
-	static stLastAttack  _sLastTarget;	// 上次攻击的人
+	static stLastAttack  _sLastTarget;	// the last one to attack
 	static DWORD		 _dwLastAttackTime;
 
 protected:
 	CServerMoveState*	_pMove;
-    int					_nTotalDis;     // 技能可使用的距离
+    int					_nTotalDis;     // the distance within which the skill can be used
 	bool				_IsForce;
 
     bool				_IsMoveOver;
@@ -155,7 +155,7 @@ protected:
 
 };
 
-// 追杀
+// pursuit
 class CTraceAttackState : public CAttackState
 {
 public:
@@ -175,11 +175,11 @@ protected:
 
 protected:
 	bool		_IsTrace;
-	bool		_IsSuccess;		// 是否成功追击
+	bool		_IsSuccess;		// whether the pursuit succeeded
 
 };
 
-// 测试五连击
+// tests a five hit combo
 class CHitAttackState : public CActionState
 {
 public:
@@ -208,12 +208,12 @@ private:
 	CCharacter*		_pSelf;
 	float			_fSpeed;
 
-	int				_nIndex;		// 正在播放的索引
+	int				_nIndex;		// the index currently playing
 	int				_nCurPose;
 
 };
 
-// 测试所有pose,并且自动选择下一个角色
+// tests all poses and automatically picks the next character
 class CAllPoseState : public CActionState
 {
 public:
@@ -246,7 +246,7 @@ private:
 
 };
 
-// 内联函数
+// inline function
 inline bool CWaitAttackState::_IsPoseValid( DWORD pose_id )
 {
     return _nSkillPoseID==pose_id;

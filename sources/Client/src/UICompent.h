@@ -1,8 +1,8 @@
 ﻿//--------------------------------------------------------------
-// 名称:控件接口类
-// 作者:lh 2004-07-08
-// 用途:决定所属表单,当前激活控件,键盘鼠标的支持,焦点事件
-// 最后修改日期:2004-10-09
+// Name: control interface class
+// Author: lh 2004-07-08
+// Purpose: determines the owning form, the currently active control, keyboard and mouse support, and focus events
+// Last modified date: 2004-10-09
 //--------------------------------------------------------------
 #pragma once
 #include "uiguidata.h"
@@ -16,18 +16,18 @@ typedef void (*UseComandEvent)(CCommandObj* pItem,bool& isUse);
 
 enum eAccept
 {
-	enumAccept,		// 接收
-	enumRefuse,		// 拒绝
-	enumFast,		// 仅接收快捷方式
+	enumAccept,		// accept
+	enumRefuse,		// reject
+	enumFast,		// only accept shortcuts
 };
 
 enum eMouseAction
 {
-	enumMA_None,		// 没有点在控件上
+	enumMA_None,		// not clicked on the control
 
-	enumMA_Gui,			// 正常点击的GUI上
-	enumMA_Skill,		// 可使用技能,但不能点穿
-	enumMA_Drill,		// 控件可被点穿
+	enumMA_Gui,			// an ordinary click on the GUI
+	enumMA_Skill,		// the skill can be used but the click does not pass through
+	enumMA_Drill,		// the control can be clicked through
 };
 
 class CCommandObj;
@@ -62,20 +62,20 @@ public:
 
 	virtual CCompent* Find( const char* str )   { return _frmOwn->Find( str ); }
 
-    virtual CCompent* GetHintCompent( int x, int y );                       // 返回有提示的控件
+    virtual CCompent* GetHintCompent( int x, int y );                       // returns the control that has a tooltip
 
-    virtual CCompent*       GetHitCommand(int x, int y)     { return NULL;  }   // 为了兼容是容器的情况下,返回最底层的Compent
-    virtual UseComandEvent  GetUseCommantEvent()            { return NULL;  }   // 这个事件在item执行时，从item里回调
-    virtual eAccept	        SetCommand( CCommandObj* p, int x, int y )	{ return enumRefuse;    }   // 是否可接受拖动来的command
+    virtual CCompent*       GetHitCommand(int x, int y)     { return NULL;  }   // to stay compatible when it is a container, returns the bottom-most Compent
+    virtual UseComandEvent  GetUseCommantEvent()            { return NULL;  }   // this event is called back from the item while the item is executed
+    virtual eAccept	        SetCommand( CCommandObj* p, int x, int y )	{ return enumRefuse;    }   // whether a dragged command can be accepted
 
 public:
-	virtual void	OnActive();		// 当激活时
-	virtual void	OnLost() { if ( evtLost ) evtLost(this );	}		// 当失去焦点时
+	virtual void	OnActive();		// when it becomes active
+	virtual void	OnLost() { if ( evtLost ) evtLost(this );	}		// when it loses focus
 
 	virtual bool	OnKeyDown( int key )	{ return false;		}
 	virtual bool	OnChar( char c )		{ return false;		}
 
-	virtual bool	IsHandleMouse()			{ return false;		}		// 是否响应鼠标
+	virtual bool	IsHandleMouse()			{ return false;		}		// whether it responds to the mouse
 
 	static void		SetActive(CCompent* v);
 	static CCompent* GetActive()			{ return _pActive;	}
@@ -91,33 +91,33 @@ public:
 	static CCompent* GetLastMouseCompent()					{ return _pLastMouseCompent;	}
 
 public:
-	GuiEvent		evtLost;		// 丢失焦点的事件
-	GuiEvent		evtActive;		// 得到焦点的事件
+	GuiEvent		evtLost;		// the event of losing focus
+	GuiEvent		evtActive;		// the event of gaining focus
 
 protected:
-	virtual void	_AddForm();		// 将自己加入到所属的Form中
+	virtual void	_AddForm();		// adds itself to the Form it belongs to
 	void			_SetActive();
 
 private:
 	void			_Copy( const CCompent& rhs );
 
 protected:
-	static CCompent*	_pActive;	// 所有控件中仅能有一个控件能被激活
+	static CCompent*	_pActive;	// among all controls only one may be active
 
 protected:
-	CForm			*_frmOwn;		// 所属的表单,由这个表单负责显示，处理事件
+	CForm			*_frmOwn;		// the form it belongs to; that form is responsible for displaying it and handling its events
 
-	bool			_IsFocus;		// 是否响应键盘焦点
+	bool			_IsFocus;		// whether it responds to keyboard focus
 
 	eCompentAlign	_align;
-	bool			_isChild;		// 当前控件是子控件
-	eMouseAction	_eMouseAction;	// 鼠标行为
+	bool			_isChild;		// whether the current control is a child control
+	eMouseAction	_eMouseAction;	// mouse behaviour
 
 	static CCompent*	_pLastMouseCompent;
 
 };
 
-// 容器类,用于同步显示其上的许多CCompent
+// container class, used to display the many CCompent on it together
 class CContainer : public CCompent
 {
 public:
@@ -140,7 +140,7 @@ public:
 	bool			AddCompent( CCompent* p );
 	CCompent*		GetIndex( unsigned int index );
 
-	int				GetIndex( CCompent* p );		// 根据p,得到它在容器中的索引号,失败返回-1
+	int				GetIndex( CCompent* p );		// given p, gets its index in the container; returns -1 on failure
 	int				GetSize() { return (int)_items.size(); }
 
 	void			ForEach( CompentFun pFun );
@@ -153,11 +153,11 @@ private:
 protected:
 	typedef std::vector<CCompent*>	items;
 	items			_items;
-	items			_mouse;				// 处理控件的鼠标
+	items			_mouse;				// handles the control's mouse
 
 };
 
-// 类内联函数
+// inline function in the class
 inline void CCompent::_SetActive() 
 {
     if( !_isChild && _IsFocus && GetActive()!=this )

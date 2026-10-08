@@ -48,7 +48,7 @@ BOOL MC_LISTGUILD(LPRPACKET pk)
 	}
 	return TRUE;
 }
-void CM_GUILD_TRYFOR(uLong	guildid)	//申请加入公会
+void CM_GUILD_TRYFOR(uLong	guildid)	//applies to join a guild
 {
 	WPacket l_wpk	=g_NetIF->GetWPacket();
 	l_wpk.WriteCmd(CMD_CM_GUILD_TRYFOR);
@@ -69,7 +69,7 @@ void CM_GUILD_TRYFORCFM(bool confirm)	//确认加入confirm =true;
 
 	g_NetIF->SendPacketMessage(l_wpk);
 }
-void CM_GUILD_LISTTRYPLAYER()			//管理
+void CM_GUILD_LISTTRYPLAYER()			//management
 {
 	WPacket	l_wpk	=g_NetIF->GetWPacket();
 	l_wpk.WriteCmd(CMD_CM_GUILD_LISTTRYPLAYER);
@@ -144,11 +144,11 @@ BOOL PC_GUILD(LPRPACKET pk)
 	case MSG_GUILD_START:
 		{
 			uChar l_num		=pk.ReverseReadChar();
-			uLong lPacketIndex = pk.ReverseReadLong(); // 报文编号(从0开始)
+			uLong lPacketIndex = pk.ReverseReadLong(); // packet number (starting from 0)
 			static int nGuildCount = 0;
 
 			//if(!g_guild_start_begin)
-			if(lPacketIndex == 0 && l_num > 0)	// 第一个数据包
+			if(lPacketIndex == 0 && l_num > 0)	// the first data packet
 			{
 				//g_guild_start_begin	=true;
 				uLong	l_guildid	=pk.ReadLong();
@@ -182,7 +182,7 @@ BOOL PC_GUILD(LPRPACKET pk)
 
 				//NetPC_GUILD_START(l_online,l_chaid,l_chaname,l_motto,l_job,l_degree,l_icon,l_permission);
 			}
-			if(l_num <20)	// 最后一个数据包
+			if(l_num <20)	// the last data packet
 			{
 				nGuildCount = 20 * lPacketIndex + l_num;
 			//	NetPC_GUILD_START_END();

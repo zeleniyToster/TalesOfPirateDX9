@@ -78,8 +78,8 @@ __END_TRY
 
 LogMgr::LogMgr()
 {
-    mkdir(LOG_FOLDER);                  //  创建log目录
-    getcwd(m_path, 260);   //  获取工作目录
+    mkdir(LOG_FOLDER);                  //  creates the log directory
+    getcwd(m_path, 260);   //  gets the working directory
 }
 
 

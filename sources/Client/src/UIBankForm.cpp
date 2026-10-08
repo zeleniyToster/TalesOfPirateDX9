@@ -22,11 +22,11 @@ namespace GUI
 	//	CBankMgr 's Members
 	//=======================================================================
 
-	bool CBankMgr::Init()  //用户银行信息初始化
+	bool CBankMgr::Init()  //user bank information initialisation
 	{
 		CFormMgr &mgr = CFormMgr::s_Mgr;
 
-		frmBank = mgr.Find("frmNPCstorage");// 查找NPC银行存储表单 
+		frmBank = mgr.Find("frmNPCstorage");// looks up the NPC bank storage form
 		if ( !frmBank)
 		{
 			LG("gui", g_oLangRec.GetString(438));
@@ -38,7 +38,7 @@ namespace GUI
 		if (!grdBank) 
 			return Error(g_oLangRec.GetString(439),
 						 frmBank->GetName(), "grdNPCstorage");
-		grdBank->evtBeforeAccept = CUIInterface::_evtDragToGoodsEvent;// 消息的处理 有拖入银行就会调用 CUIInterface::_evtDragToGoodsEvent
+		grdBank->evtBeforeAccept = CUIInterface::_evtDragToGoodsEvent;// message handling; dragging into the bank calls CUIInterface::_evtDragToGoodsEvent
 		grdBank->evtSwapItem = _evtBankToBank;
 		labCharName = dynamic_cast<CLabel*>(frmBank->Find("labOwnerName"));
 		if (!grdBank) 
@@ -48,41 +48,41 @@ namespace GUI
 		return true;
 	}
 
-	void CBankMgr::_evtOnClose( CForm* pForm, bool& IsClose )  // 关闭用户银行
+	void CBankMgr::_evtOnClose( CForm* pForm, bool& IsClose )  // closes the user bank
 	{
 		CS_BeginAction(g_stUIBoat.GetHuman(), enumACTION_CLOSE_BANK, NULL); 
 
-		CFormMgr::s_Mgr.SetEnableHotKey(HOTKEY_BANK, true);		// 西门文档修改
+		CFormMgr::s_Mgr.SetEnableHotKey(HOTKEY_BANK, true);		// revised per the Ximen document
 	}
 
 
 	//-------------------------------------------------------------------------
-	void CBankMgr::ShowBank() // 显示物品
+	void CBankMgr::ShowBank() // shows the items
 	{
-		// 保存服务器传来的物品
+		// saves the items sent by the server
 
-		if (!g_stUIBoat.GetHuman()) // 找人物 
+		if (!g_stUIBoat.GetHuman()) // finds the character
 			return;
 
 		char szBuf[32];
-		sprintf(szBuf, "%s%s", g_stUIBoat.GetHuman()->getName(), g_oLangRec.GetString(440));//显示人物名及专用
-		labCharName->SetCaption(szBuf);//设置标题名字
+		sprintf(szBuf, "%s%s", g_stUIBoat.GetHuman()->getName(), g_oLangRec.GetString(440));//shows the character name and the exclusive item
+		labCharName->SetCaption(szBuf);//sets the title name
 
 		frmBank->Show();
 
-		// 打开玩家的物品栏
+		// opens the player's item slot
 		if (!g_stUIEquip.GetItemForm()->GetIsShow())
 		{
 			int nLeft, nTop;
 			nLeft = frmBank->GetX2();
 			nTop = frmBank->GetY();
 
-			g_stUIEquip.GetItemForm()->SetPos(nLeft, nTop); //物品放置位置
-			g_stUIEquip.GetItemForm()->Refresh(); //更新物品栏		
-			g_stUIEquip.GetItemForm()->Show();  //保存在物品栏
+			g_stUIEquip.GetItemForm()->SetPos(nLeft, nTop); //item placement position
+			g_stUIEquip.GetItemForm()->Refresh(); //updates the item slot
+			g_stUIEquip.GetItemForm()->Show();  //saves in the item slot
 		}
 
-		CFormMgr::s_Mgr.SetEnableHotKey(HOTKEY_BANK, false);		// 西门文档修改
+		CFormMgr::s_Mgr.SetEnableHotKey(HOTKEY_BANK, false);		// revised per the Ximen document
 	}
 
 	//-------------------------------------------------------------------------
@@ -91,14 +91,14 @@ namespace GUI
 #define EQUIP_TYPE 0
 #define BANK_TYPE 1
 
-		// 设置发送拖动物品的服务器信息
+		// sets the server information for sending a dragged item
 		m_kNetBank.chSrcType = EQUIP_TYPE;
 		m_kNetBank.sSrcID = rkDrag.GetDragIndex();
 		//m_kNetBank.sSrcNum = ; 数量在回调函数中设置
 		m_kNetBank.chTarType = BANK_TYPE;
 		m_kNetBank.sTarID = nGridID;
 
-		// 判断物品是否是可重叠的物品
+		// decides whether the item is stackable
 		CItemCommand* pkItemCmd = dynamic_cast<CItemCommand*>(&rkItem);
 		if (!pkItemCmd)	return false;
 		CItemRecord* pkItemRecord = pkItemCmd->GetItemInfo();
@@ -114,7 +114,7 @@ namespace GUI
 		if( pkItemRecord->lID == 2520 || pkItemRecord->lID == 2521 || pkItemRecord->lID == 6341 || pkItemRecord->lID == 6343
 		 || pkItemRecord->lID == 6347 || pkItemRecord->lID == 6359 || pkItemRecord->lID == 6370 || pkItemRecord->lID == 6371
 		 || pkItemRecord->lID == 6373 || pkItemRecord->lID >= 6376 && pkItemRecord->lID <= 6378
-		 || pkItemRecord->lID >= 6383 && pkItemRecord->lID <= 6385 )// modify by ning.yan 20080820 策划绵羊、李恒等提需求，增加一些道具不准存银行
+		 || pkItemRecord->lID >= 6383 && pkItemRecord->lID <= 6385 )// modify by ning.yan 20080820 the designers Mianyang, Li Heng and others asked for some items that may not be stored in the bank
 		{
 			//g_pGameApp->MsgBox(g_oLangRec.GetString(958));	// "该道具不允许存入银行！请重新选择"
 			g_pGameApp->MsgBox(g_oLangRec.GetString(958));	// "该道具不允许存入银行！请重新选择"
@@ -145,7 +145,7 @@ namespace GUI
 	//-------------------------------------------------------------------------
 	bool CBankMgr::PopFromBank(CGoodsGrid& rkDrag, CGoodsGrid& rkSelf, int nGridID, CCommandObj& rkItem)
 	{
-		// 设置发送拖动物品的服务器信息
+		// sets the server information for sending a dragged item
 		m_kNetBank.chSrcType = BANK_TYPE ;
 		m_kNetBank.sSrcID = rkDrag.GetDragIndex();
 		//m_kNetBank.sSrcNum = ; 数量在回掉函数中设置
@@ -153,7 +153,7 @@ namespace GUI
 		m_kNetBank.sTarID = nGridID;
 
 
-		// 判断物品是否是可重叠的物品
+		// decides whether the item is stackable
 		CItemCommand* pkItemCmd = dynamic_cast<CItemCommand*>(&rkItem);
 		if (!pkItemCmd)	return false;
 
@@ -181,13 +181,13 @@ namespace GUI
 	}
 
 	//-------------------------------------------------------------------------
-	void CBankMgr::_MoveItemsEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey) // 多个物品移动
+	void CBankMgr::_MoveItemsEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey) // moves several items
 	{
-		if(nMsgType != CForm::mrYes)  // 玩家是否同意拖动
+		if(nMsgType != CForm::mrYes)  // whether the player agrees to the drag
 			return;
 
 
-		int num =  g_stUIBank.m_pkNumberBox->GetNumber();// 拖动物品数 
+		int num =  g_stUIBank.m_pkNumberBox->GetNumber();// number of dragged items
 		if ( num > 0 )
 		{
 			g_stUIBank.m_kNetBank.sSrcNum = num;
@@ -196,17 +196,17 @@ namespace GUI
 	}
 
 	//-------------------------------------------------------------------------
-	void CBankMgr::_MoveAItemEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey) // 单个道具移动
+	void CBankMgr::_MoveAItemEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey) // moves a single item
 	{
 		if(nMsgType != CForm::mrYes) 
 			return;
 
 		g_stUIBank.m_kNetBank.sSrcNum = 1;
-		CS_BeginAction(g_stUIBoat.GetHuman(), enumACTION_BANK, (void*)&(g_stUIBank.m_kNetBank));//更新银行信息
+		CS_BeginAction(g_stUIBoat.GetHuman(), enumACTION_BANK, (void*)&(g_stUIBank.m_kNetBank));//updates the bank information
 	}
 	
 	//-------------------------------------------------------------------------
-	void CBankMgr::CloseForm()  // 关闭道具栏表单 
+	void CBankMgr::CloseForm()  // closes the item slot form
 	{
 		if (frmBank->GetIsShow())
 		{
@@ -216,7 +216,7 @@ namespace GUI
 	}
 
 	//-------------------------------------------------------------------------
-	void CBankMgr::_evtBankToBank(CGuiData *pSender,int nFirst, int nSecond, bool& isSwap) // 用于用户银行表单中道具互换
+	void CBankMgr::_evtBankToBank(CGuiData *pSender,int nFirst, int nSecond, bool& isSwap) // used to swap items inside the user bank form
 	{
 		isSwap = false;
 		if( !g_stUIBoat.GetHuman() ) return;

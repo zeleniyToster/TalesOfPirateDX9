@@ -1,8 +1,8 @@
 ﻿#pragma once
 //----------------------------------------------------------------------
-// 名称:道具精练总表
-// 作者:lh 2005-11-03
-// 最后修改日期:
+// Name: item refining master table
+// Author: lh 2005-11-03
+// Last modified date:
 //----------------------------------------------------------------------
 #include "TableData.h"
 
@@ -16,7 +16,7 @@ public:
 		memset( fChaEffectScale, 0, sizeof(fChaEffectScale) );
     }
 	short Value[ITEM_REFINE_NUM];
-	float fChaEffectScale[4];			// 道具角色特效缩放表
+	float fChaEffectScale[4];			// item character effect scaling table
 	
 };
 
@@ -33,7 +33,7 @@ public:
 	}
 
 protected:
-	static CItemRefineSet* _Instance; // 相当于单键, 把自己记住
+	static CItemRefineSet* _Instance; // like a single key, remembers itself
    
 	virtual CRawDataInfo* _CreateRawDataArray(int nCnt)
 	{

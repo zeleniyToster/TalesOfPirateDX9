@@ -12,8 +12,8 @@ public:
 		nIndex = 0;
     }
 
-	int		nIndex;		// 能力编号
-	int		nTypeID;	// 能力类型
+	int		nIndex;		// ability number
+	int		nTypeID;	// ability type
 };
 
 
@@ -30,7 +30,7 @@ public:
 	}
 
 protected:
-	static CElfSkillSet* _Instance; // 相当于单键, 把自己记住
+	static CElfSkillSet* _Instance; // like a single key, remembers itself
    
 	virtual CRawDataInfo* _CreateRawDataArray(int nCnt)
 	{

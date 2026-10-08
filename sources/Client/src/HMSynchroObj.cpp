@@ -71,7 +71,7 @@ void CSynchroManage::FrameMove( DWORD dwTime )
 			static CCharacter* pCha = NULL;
 			if( p->_isExec || dwTime >= p->_dwExecTime )
 			{
-				// 如果前面有未执行的同角色伤害包，则暂不执行
+				// if there is an unexecuted damage packet for the same character ahead, do not execute yet
 				pCha = p->GetHarmCha();
 				if( pCha && find( noexec.begin(), noexec.end(), pCha )!=noexec.end() )
 					continue;

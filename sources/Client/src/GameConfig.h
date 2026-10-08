@@ -14,14 +14,14 @@ class CGameConfig
 public:	
 	CGameConfig();
 	
-	void	Load(const char *pszFileName); // 读配置文件
-	void	SetDefault();  //默认配置
-	void	SetMoveClient( bool v ); //是否与客户端同步
+	void	Load(const char *pszFileName); // read the configuration file
+	void	SetDefault();  //default configuration
+	void	SetMoveClient( bool v ); //whether it is synchronised with the client
 	
 public:
 
-	// 请注意此处不要放置任何非固定内存尺寸的变量, 比如模板, string之类的,
-	// 此类将被直接写盘和读盘
+	// note: do not place any variable of non-fixed memory size here, such as templates or strings,
+	// those are written to and read from disk verbatim
 	BOOL		m_bAutoLogin;
 	BOOL		m_bFullScreen;
 	SPlaceCha	m_ChaList[20];
@@ -46,13 +46,13 @@ public:
     BOOL        m_bEnableMusic;
 	BOOL		m_bCheckOvermax;
 
-	// 网络
-    BOOL        m_nSendHeartbeat;       // 多少时间发送一次心跳,单位:s,最小值10s,关闭0
-	DWORD		m_nConnectTimeOut;		// 网络连接超时
+	// network
+    BOOL        m_nSendHeartbeat;       // how often a heartbeat is sent, in seconds; minimum 10s, 0 disables it
+	DWORD		m_nConnectTimeOut;		// network connection timeout
 
-    BOOL        m_bEnableLG;            // 是否允许输出LG信息
-    BOOL        m_bEnableLGMsg;         // 是否允许弹出LG-Box
-	BOOL		m_bMThreadRes;			// 多线程资源载入
+    BOOL        m_bEnableLG;            // whether LG output is allowed
+    BOOL        m_bEnableLGMsg;         // whether the LG-Box may pop up
+	BOOL		m_bMThreadRes;			// multithreaded resource loading
 
 
 	int		m_nCreateScene;
@@ -61,7 +61,7 @@ public:
 	float	m_fCameraVel;
 	float	m_fCameraAccl;
 
-	//lemon add@2004.11.26, 登陆专用
+	//lemon add@2004.11.26, login only
 	float	eyeX;
 	float   eyeY;      
 	float	eyeZ;      
@@ -78,7 +78,7 @@ public:
     float   m_fLgtFactor;
     DWORD   m_dwLgtBkColor;
 
-    // lh add@2004.12.8用于单机可以拿武器
+    // lh add@2004.12.8 used so a standalone game can still get a weapon
     int     nLeftHand;
     int     nRightHand;
 
@@ -93,26 +93,26 @@ public:
 
     DWORD   m_dwFullScreenAntialias;
 
-	// 用于网络切换地图时的参数
+	// parameters used when switching maps over the network
 	DWORD	m_dwMaxCha;
 	DWORD	m_dwMaxEff;
 	DWORD	m_dwMaxItem;
 	DWORD	m_dwMaxObj;
 
-	char	m_szMD5Pass[48];	// 填写的MD5密码
+	char	m_szMD5Pass[48];	// the MD5 password entered
 
-	bool	m_IsShowConsole;	// 是否可以操作控件台
-	bool	m_IsTomServer;		// 登陆Tom服务器
+	bool	m_IsShowConsole;	// whether the console may be operated
+	bool	m_IsTomServer;		// log in to the Tom server
 
-	bool	m_IsMoveClient;		// 是否客户端非同步走路
+	bool	m_IsMoveClient;		// whether the client walks without synchronisation
 
-	char	m_szVerErrorHTTP[256];	// 版本不匹配时，调用的网页
+	char	m_szVerErrorHTTP[256];	// the web page called when the versions do not match
 
 	bool	m_IsBill;
 
-	bool	IsPower()		{ return m_IsShowConsole;	}		// 如果是编辑器模式,自动可以操作控件台
+	bool	IsPower()		{ return m_IsShowConsole;	}		// in editor mode the console can be operated automatically
 
-	bool	m_IsDoublePwd;	// 是否有二次密码
+	bool	m_IsDoublePwd;	// whether there is a secondary password
 
 	// Add by lark.li 20080429 for res
 	char   m_szLocale[256];

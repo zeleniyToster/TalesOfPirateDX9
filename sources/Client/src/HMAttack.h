@@ -3,7 +3,7 @@
 #include "Tools.h"
 #include "NetProtocol.h"
 
-enum eAttackEffectType   // 特效显示方式
+enum eAttackEffectType   // how the effect is displayed
 {    
 	enumAddLife=0,		// "加血.tga";
 	enumSubLife,		// "减血.tga";
@@ -73,17 +73,17 @@ protected:
 protected:
 
 protected:
-	CAttackRepSynchro*	_pRepSynchro;	// 用于执行时通知表现包
-	CCharacter*     _pTarget;	// 被攻击方
-	CCharacter*     _pAttack;	// 攻击方
+	CAttackRepSynchro*	_pRepSynchro;	// used to notify the presentation packet when it is executed
+	CCharacter*     _pTarget;	// the one being attacked
+	CCharacter*     _pAttack;	// the attacker
     CSkillRecord*   _pSkill;
     
-    // 伤害包
+    // damage packet
 	bool	_isDoubleAttack;
     bool    _IsMiss;
     bool	_isTargetDied;
-    bool    _isBeatBack;        // 是否被击退
-    int     _nBeatX, _nBeatY;   // 被击退到的位置
+    bool    _isBeatBack;        // whether it is knocked back
+    int     _nBeatX, _nBeatY;   // the position it is knocked back to
     CSizeArray<stEffect>		_HarmValue;
     CSizeArray<stSkillState>	_HarmState;
 
@@ -110,12 +110,12 @@ protected:
 	virtual void _Exec();
 
 private:
-	CAttackEffect*	_pAttackEffect;		// 用于删除时通知受击包
-	CCharacter*     _pTarget;			// 被攻击方
-	CCharacter*     _pAttack;			// 攻击方
+	CAttackEffect*	_pAttackEffect;		// used to notify the hit packet when it is deleted
+	CCharacter*     _pTarget;			// the one being attacked
+	CCharacter*     _pAttack;			// the attacker
     CSkillRecord*   _pSkill;
 
-    // 表现包
+    // presentation packet
     bool    _IsAttackDied;
     CSizeArray<stSkillState>	_RepState;
     CSizeArray<stEffect>		_RepValue;
@@ -172,7 +172,7 @@ private:
 
 };
 
-// 内联函数
+// inline function
 inline void CAttackRepSynchro::SetAttackEffect( CAttackEffect* p )					
 { 
 	_pAttackEffect = p;

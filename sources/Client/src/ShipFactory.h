@@ -93,7 +93,7 @@ struct xShipBuilderForm
 	CLabelEx* lbl_ship_level; 
 	CLabelEx* lbl_ship_exp;
 
-	//打开关闭船只货舱UI(Michael Chen 2005-05-26)
+	//opens and closes the boat cargo hold UI(Michael Chen 2005-05-26)
 	CCheckBox* chkShip;
 	CTextButton* btn_room_open;
 	CTextButton* btn_room_close;
@@ -151,12 +151,12 @@ public:
 	static void __Proc3DView(C3DCompent *pSender, int x, int y);
     static void __ProcShipName(CGuiData *pSender);
 
-	//打开关闭船只货舱UI事件(Michael Chen 2005-05-26)
+	//open and close boat cargo hold UI event(Michael Chen 2005-05-26)
     static void __ButtonOpenRoom(CGuiData *pSender, int x, int y, DWORD dwKey);
 	static void __ButtonCloseRoom(CGuiData *pSender, int x, int y, DWORD dwKey);
-	//chkShip点击选中事件(Michael Chen 2005-05-26)
+	//chkShip click selection event(Michael Chen 2005-05-26)
 	static void __CheckShip(CGuiData *pSender);
-	//造船时关闭表单通知取消造船(Michael Chen 2005-06-06)
+	//notifying boat construction cancelled closes the form(Michael Chen 2005-06-06)
 	static void __HideForm(CGuiData *pSender);
 
 private:
@@ -183,7 +183,7 @@ public:
     BOOL CheckShipName();
     BOOL Close(CGuiData* sender);
     BOOL IsVisible();
-	//根据船的ID得到船舱 Michael Chen (2005-05-26).
+	//gets the cargo hold from the boat ID Michael Chen (2005-05-26).
 	void SetBoatID(DWORD dwBoatID)	{ m_dwBoatID = dwBoatID; }
 	DWORD GetBoatID() { return m_dwBoatID; }
 	BOOL GetCabinByID();
@@ -238,7 +238,7 @@ public:
 
     void Test();
 
-	// 关闭选择船只界面，留给 xShipMgr 内部调用   add by Philip.Wu  2006-06-02
+	// closes the boat selection screen, for internal use by xShipMgr   add by Philip.Wu  2006-06-02
 	void CloseForm(void);
 	
 private:
@@ -261,7 +261,7 @@ public:
     BOOL Init(CGameScene* s);
     void FrameMove();
 
-	// 关闭选择船只界面，留给外部调用   add by Philip.Wu  2006-06-02
+	// closes the boat selection screen, for external use   add by Philip.Wu  2006-06-02
 	void	CloseForm();
 };
 

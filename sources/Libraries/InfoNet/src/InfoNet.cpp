@@ -17,7 +17,7 @@ using std::deque;
 #define INFO_STOPPED        3
 
 
-#define MAX_NET_SIZE        1048576     //  封包大于这个数则无效
+#define MAX_NET_SIZE        1048576     //  a packet larger than this is invalid
 
 
 template <class T>
@@ -83,7 +83,7 @@ public:
 };
 
 
-//  客户端信息
+//  client information
 typedef struct _InfoClient_
 {
     SOCKET              sock;
@@ -97,7 +97,7 @@ typedef struct _InfoClient_
 typedef _AnyQueue<pNetMessage>  NetSndList;
 
 
-//  获取消息头
+//  gets the message header
 int GetMessageHead(pNetMessageHead mh, unsigned char* msg, int size)
 {
 __BEGIN_TRY
@@ -106,10 +106,10 @@ __BEGIN_TRY
         return PNM_FAILED;
     }
 
-    //  读取消息头
+    //  reads the message header
     memcpy(mh, msg, sizeof(NetMessageHead));
 
-    //  验证协议报头
+    //  validates the protocol header
     if((0x4A != mh->msgChk[0]) || (0x4D != mh->msgChk[1]) || (0x50 != mh->msgChk[2]) || (0x53 != mh->msgChk[3]))
     {
         return PNM_UNKNOWN;
@@ -130,34 +130,34 @@ __BEGIN_TRY
 
     int     bdSize;
 
-    if(tmpsize)  //  拆包处理
+    if(tmpsize)  //  packet splitting handling
     {
         (*nm) = ((pNetMessage)(*tmpbuf));
-        if(tmpsize < (int)sizeof(NetMessageHead))        //  消息头被截断
+        if(tmpsize < (int)sizeof(NetMessageHead))        //  the message header was truncated
         {
-            memcpy((((unsigned char*)(*tmpbuf)) + tmpsize), (*buf), ((int)sizeof(NetMessageHead) - tmpsize));   //  读取未读取的消息头
-            (*buf) += (sizeof(NetMessageHead) - tmpsize);     //  指针后移
-            bufsize -= (sizeof(NetMessageHead) - tmpsize);    //  长度减去移动长度
-            bdSize = ((*nm)->msgHead.msgSize > (*nm)->msgHead.msgEncSize) ? ((*nm)->msgHead.msgSize) : ((*nm)->msgHead.msgEncSize);   //  计算缓存长度
+            memcpy((((unsigned char*)(*tmpbuf)) + tmpsize), (*buf), ((int)sizeof(NetMessageHead) - tmpsize));   //  reads the part of the message header not yet read
+            (*buf) += (sizeof(NetMessageHead) - tmpsize);     //  advances the pointer
+            bufsize -= (sizeof(NetMessageHead) - tmpsize);    //  subtracts the advanced length
+            bdSize = ((*nm)->msgHead.msgSize > (*nm)->msgHead.msgEncSize) ? ((*nm)->msgHead.msgSize) : ((*nm)->msgHead.msgEncSize);   //  computes the buffer length
             if(bdSize)
             {
-                if(bdSize > MAX_NET_SIZE)    //  大于1m则认为是错误的封包
+                if(bdSize > MAX_NET_SIZE)    //  larger than 1m is taken to be a faulty packet
                 {
                     return PNM_EXCEPTION;
                 }
-                (*nm)->msgBody = new unsigned char[bdSize];    //  分配空间
+                (*nm)->msgBody = new unsigned char[bdSize];    //  allocates the space
                 memset((*nm)->msgBody, 0, bdSize);
-                memcpy((*nm)->msgBody, (*buf), (*nm)->msgHead.msgEncSize);    //  读取消息体
-                (*buf) += (*nm)->msgHead.msgEncSize;   //  指针后移
-                bufsize -= (*nm)->msgHead.msgEncSize;  //  长度减去移动长度
+                memcpy((*nm)->msgBody, (*buf), (*nm)->msgHead.msgEncSize);    //  reads the message body
+                (*buf) += (*nm)->msgHead.msgEncSize;   //  advances the pointer
+                bufsize -= (*nm)->msgHead.msgEncSize;  //  subtracts the advanced length
             }
         }
-        else        //  消息体被截断
+        else        //  the message body was truncated
         {
             unsigned char* tmpPtr = (unsigned char*)(*nm)->msgBody;
             int bodySize = tmpsize - sizeof(NetMessageHead);
-            tmpPtr += bodySize;   //  指针跳过已读取部分
-            if(((*nm)->msgHead.msgEncSize - bodySize) > bufsize)    //  消息体如果又被截断
+            tmpPtr += bodySize;   //  the pointer skips the part already read
+            if(((*nm)->msgHead.msgEncSize - bodySize) > bufsize)    //  in case the message body is truncated again
             {
                 memcpy(tmpPtr, (*buf), bufsize);
                 tmpsize += bufsize;
@@ -165,7 +165,7 @@ __BEGIN_TRY
             }
             memcpy(tmpPtr, (*buf), ((*nm)->msgHead.msgEncSize - bodySize));
             //
-            //  这里编写解密代码
+            //  the decryption code goes here
             //
             (*buf) += (*nm)->msgHead.msgEncSize - bodySize;
             bufsize -= (*nm)->msgHead.msgEncSize - bodySize;
@@ -177,7 +177,7 @@ __BEGIN_TRY
 
     int ret;
 
-    for(;;) //  数据包解析
+    for(;;) //  data packet parsing
     {
         if(bufsize <= 0)
         {
@@ -194,7 +194,7 @@ __BEGIN_TRY
             return PNM_UNKNOWN;
         }
 
-        if(PNM_FAILED == ret)   //  消息头被截断
+        if(PNM_FAILED == ret)   //  the message header was truncated
         {
             (*tmpbuf) = (*nm);
             tmpsize = bufsize;
@@ -205,17 +205,17 @@ __BEGIN_TRY
         (*buf) += sizeof(NetMessageHead);
         bufsize -= sizeof(NetMessageHead);
 
-        bdSize = ((*nm)->msgHead.msgSize > (*nm)->msgHead.msgEncSize) ? ((*nm)->msgHead.msgSize) : ((*nm)->msgHead.msgEncSize);   //  计算缓存长度
+        bdSize = ((*nm)->msgHead.msgSize > (*nm)->msgHead.msgEncSize) ? ((*nm)->msgHead.msgSize) : ((*nm)->msgHead.msgEncSize);   //  computes the buffer length
 
         if(bdSize)
         {
-            if(bdSize > MAX_NET_SIZE)    //  大于1m则认为是错误的封包
+            if(bdSize > MAX_NET_SIZE)    //  larger than 1m is taken to be a faulty packet
             {
                 return PNM_EXCEPTION;
             }
             (*nm)->msgBody = new unsigned char[bdSize];
             memset((*nm)->msgBody, 0, bdSize);
-            if(bdSize > bufsize)    //  粘包处理
+            if(bdSize > bufsize)    //  packet joining handling
             {
                 memcpy((*nm)->msgBody, (*buf), bufsize);
                 (*tmpbuf) = (*nm);
@@ -224,14 +224,14 @@ __BEGIN_TRY
             }
             memcpy((*nm)->msgBody, (*buf), (*nm)->msgHead.msgEncSize);
             //
-            //  这里编写解密代码
+            //  the decryption code goes here
             //
-            (*buf) += (*nm)->msgHead.msgEncSize;   //  指针后移
-            bufsize -= (*nm)->msgHead.msgEncSize;  //  长度减去移动长度
+            (*buf) += (*nm)->msgHead.msgEncSize;   //  advances the pointer
+            bufsize -= (*nm)->msgHead.msgEncSize;  //  subtracts the advanced length
         }
         else
         {
-            (*nm)->msgBody = 0;    //  消息置空
+            (*nm)->msgBody = 0;    //  clears the message
         }
         return PNM_SUCCESS;
     }
@@ -241,7 +241,7 @@ __END_TRY
 }
 
 
-//  释放消息
+//  frees the message
 void FreeNetMessage(pNetMessage msg)
 {
 __BEGIN_TRY
@@ -258,7 +258,7 @@ __END_TRY
 
 
 int g_count = 0;
-//  生成消息
+//  builds the message
 bool BuildNetMessage(pNetMessage nm, long msgID, long subID, long extend, long section, unsigned char* body, long size)
 {
 __BEGIN_TRY
@@ -267,7 +267,7 @@ __BEGIN_TRY
         return false;
     }
 
-    //  消息标识码
+    //  message identifier
     nm->msgHead.msgChk[0] = 0x4A;
     nm->msgHead.msgChk[1] = 0x4D;
     nm->msgHead.msgChk[2] = 0x50;
@@ -283,7 +283,7 @@ __BEGIN_TRY
     if(size)
     {
         //
-        //  这里编写加密代码
+        //  the encryption code goes here
         //
         nm->msgBody = new unsigned char[size];
         memset(nm->msgBody, 0, size);
@@ -341,7 +341,7 @@ unsigned InfoThread::Run()
     pNetMessage pNM = 0;
     int ret = 0;
     fd_set fdread;
-    timeval tv = {0, 0};        //  立即返回(不阻塞select)，用闲置系统资源进行发送队列重发
+    timeval tv = {0, 0};        //  returns immediately (without blocking in select), using idle system resources to resend from the send queue
     clock_t sndTime = 0;
     clock_t chkTime = clock();
 
@@ -352,11 +352,11 @@ __BEGIN_TRY
         if(!inb->IsConnect())
         {
             inb->Connect();
-            Sleep(10000);   //  避免重连占用太多cpu资源。10秒重连一次
+            Sleep(10000);   //  avoids reconnecting too aggressively and taking up too much CPU. Reconnect once every 10 seconds
             continue;
         }
 
-        //  Select轮询开始
+        //  Select polling begins
         FD_ZERO(&fdread);
         FD_SET(cli->sock, &fdread);
 
@@ -385,10 +385,10 @@ __BEGIN_TRY
                 }
             }
         }
-        //  Select轮询结束
+        //  Select polling ends
 
-        //  检测服务器是否存活(是否异常断线检测)
-        if((clock() - chkTime) > 300000)    //  5分钟检测一次
+        //  checks whether the server is alive (abnormal disconnect detection)
+        if((clock() - chkTime) > 300000)    //  checked once every 5 minutes
         {
             chkTime = clock();
             LG("InfoNet", "Ping: Timestamp: %li...\n", time(0));
@@ -401,7 +401,7 @@ __BEGIN_TRY
             }
         }
 
-        //  开始重发
+        //  begins the resend
         sndTime = clock();
         for(;;)
         {
@@ -424,7 +424,7 @@ __BEGIN_TRY
                 inb->OnResend(pNM);
                 FreeNetMessage(pNM);
             }
-            if((clock() - sndTime) > 50)    //  重发占用50毫秒以上时，释放资源
+            if((clock() - sndTime) > 50)    //  when the resend occupies more than 50 milliseconds, frees the resources
             {
                 Sleep(1);
                 break;
@@ -438,7 +438,7 @@ __END_TRY
 
 
 
-//  客户端接口
+//  client interface
 InfoNetBase::InfoNetBase()
 :   m_state(INFO_INIT), m_client(0), m_list(0)
 {
@@ -519,7 +519,7 @@ bool InfoNetBase::StopInfoService()
 bool InfoNetBase::PostInfoSend(long msgID, long subID, long extend, long section, unsigned char* body, long size, bool resnd /* = false */)
 {
 __BEGIN_TRY
-    pNetMessage pNM = new NetMessage;   //  新消息
+    pNetMessage pNM = new NetMessage;   //  new message
     BuildNetMessage(pNM, msgID, subID, extend, section, body, size);
     bool ret = PostInfoSend(pNM, resnd);
     FreeNetMessage(pNM);
@@ -559,7 +559,7 @@ __BEGIN_TRY
         if(resnd)
         {
             LG("InfoNet", "Ready For Resend...\n");
-            pNetMessage newNM = new NetMessage;     //  新建一份copy放入发送队列，等待重发
+            pNetMessage newNM = new NetMessage;     //  makes a new copy and puts it in the send queue, waiting to be resent
             memcpy(&newNM->msgHead, &msg->msgHead, sizeof(NetMessageHead));
             if(msg->msgHead.msgEncSize)
             {
@@ -689,15 +689,15 @@ __BEGIN_TRY
     {
         ret = PeekNetMessage(&nm, &bufPtr, bufSize, &__cli->tmpbuf, __cli->tmpsize);
 
-        if(PNM_SUCCESS == ret)             //  成功
+        if(PNM_SUCCESS == ret)             //  success
         {
             OnNetMessage(nm);
         }
-        else if(PNM_FAILED == ret)         //  被拆包
+        else if(PNM_FAILED == ret)         //  was split into packets
         {
             break;
         }
-        else if(PNM_UNKNOWN == ret)        //  解析消息头失败
+        else if(PNM_UNKNOWN == ret)        //  parsing the message header failed
         {
             LG("InfoNet", "Bad Packet Head...\n");
             if(__cli->tmpbuf)
@@ -707,7 +707,7 @@ __BEGIN_TRY
             }
             break;
         }
-        else if(PNM_EXCEPTION ==ret)      //  异常（多数情况是因空指针引起）
+        else if(PNM_EXCEPTION ==ret)      //  exception (in most cases caused by a null pointer)
         {
             LG("InfoNet", "Bad Packet...\n");
             if(__cli->tmpbuf)
@@ -717,7 +717,7 @@ __BEGIN_TRY
             }
             break;
         }
-        else    //  未知情况
+        else    //  unknown case
         {
             LG("InfoNet", "Unknown Packet...\n");
             if(__cli->tmpbuf)

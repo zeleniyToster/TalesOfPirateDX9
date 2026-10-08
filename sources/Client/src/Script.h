@@ -24,7 +24,7 @@ public:
 	static bool		Clear();
 
 private:
-	DWORD		_dwScriptID;			// 注册的ID-即索引，用于脚本引用
+	DWORD		_dwScriptID;			// the registered ID, that is the index, used by scripts to refer to it
 
 private:
 	static CScript**		_AllObj;

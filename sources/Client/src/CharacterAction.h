@@ -2,65 +2,65 @@
 
 enum EActionNumber
 {
-    POSE_WAITING =       01,//	普通waiting	
-    POSE_SHOW =          02,//	摆酷pose	
-    POSE_SLEEP =         03,//	休眠
-    POSE_WAITING2 =      04,//	戒备waiting	
-    POSE_RUN =           05,//	普通奔跑	
-    POSE_RUN2 =          06,//	戒备奔跑	
-    POSE_ATTACK =        07,//	普通攻击1
-    POSE_ATTACK1 =       8, //	普通攻击2
-    POSE_ATTACK2 =       9, //	普通攻击3
-    POSE_POWER_ATTACK =  10,//  重击
-    POSE_SKILL1 =        11,//	技能１
-    POSE_SKILL2 =        12,//	技能２
-    POSE_SKILL3 =        13,//	技能３
-    POSE_SKILL4 =        14,//	技能４	011	
-    POSE_SKILL5 =        15,//	技能５	012	
-    POSE_SEAT =          16,//	普通坐下	
-    POSE_DIE =           17,//	死亡(通用)	
-    POSE_WAVE =          18,//	挥手(通用)	
-    POSE_CRY =           19,//	大哭(通用)	
-    POSE_JUMP =          20,//	雀跃(通用)	
-    POSE_ANGER =         21,//	生气(通用)	
-    POSE_DARE =          22,//	挑衅(通用)	
-    POSE_GAY =           23,//	自恋(男通用)
-    POSE_EMOTE7 =        24,//	表情动作7	
-    POSE_EMOTE8 =        25,//	表情动作8	
-    POSE_EMOTE9 =        26,//	表情动作9	
-    POSE_EMOTE10 =       27,//	表情动作10	
-    POSE_MINE =          28,//	挖矿(场景互动
-    POSE_COLLECT =       29,//	采集(场景互动
-    POSE_SEAT2 =         30,//	坐凳子(场景互
-    POSE_LEAN =          31,//	靠墙(场景互动
-    POSE_LEAN2 =         32,//	靠树(场景互动
-    POSE_HAPPY =         33,//	角色互动(场景互动)
-    POSE_HAPPY7 =        34,//	场景互动动作7
-    POSE_HAPPY8 =        35,//	场景互动动作8
-    POSE_HAPPY9 =        36,//	场景互动动作9
-    POSE_HAPPY10 =       37,//	场景互动动作10
-    POSE_RESERVED1 =     38,//	备用动作1	
-    POSE_FALLDOWN =      39,//	备用动作2	
-    POSE_SKILL6 =        40,//	技能动作6	
-    POSE_SKILL7 =        41,//	技能动作7	
-    POSE_FLY_WAITING =   42,//	飞行				//POSE_SKILL8 =        42,//	技能动作8	
-    POSE_FLY_RUN =       43,//	飞行移动			//POSE_SKILL9 =        43,//	技能动作9	
-    POSE_FLY_SHOW =      44,//	空中摆酷			//POSE_SKILL10 =       44,//	技能动作10	
-    POSE_FLY_SEAT =      45,//	悬空坐下			//POSE_SKILL11 =       45,//	技能动作11	
-    POSE_SKILL12 =       46,//	技能动作12	
-    POSE_SKILL13 =       47,//	技能动作13	
-    POSE_SKILL14 =       48,//	技能动作14	
-    POSE_SKILL15 =       49,//	技能动作15	
-    POSE_SKILL16 =       50,//	技能动作16	
-    POSE_SKILL17 =       51,//	技能动作17	
-    POSE_SKILL18 =       52,//	技能动作18	
-    POSE_SKILL19 =       53,//	技能动作19	
-    POSE_SKILL20 =       54,//	技能动作20	
+    POSE_WAITING =       01,//	ordinary waiting
+    POSE_SHOW =          02,//	cool pose
+    POSE_SLEEP =         03,//	hibernation
+    POSE_WAITING2 =      04,//	alert waiting
+    POSE_RUN =           05,//	ordinary running
+    POSE_RUN2 =          06,//	alert running
+    POSE_ATTACK =        07,//	ordinary attack 1
+    POSE_ATTACK1 =       8, //	ordinary attack 2
+    POSE_ATTACK2 =       9, //	ordinary attack 3
+    POSE_POWER_ATTACK =  10,//	heavy attack
+    POSE_SKILL1 =        11,//	skill 1
+    POSE_SKILL2 =        12,//	skill 2
+    POSE_SKILL3 =        13,//	skill 3
+    POSE_SKILL4 =        14,//	skill 4	011
+    POSE_SKILL5 =        15,//	skill 5	012
+    POSE_SEAT =          16,//	ordinary sitting
+    POSE_DIE =           17,//	death (common)
+    POSE_WAVE =          18,//	waving (common)
+    POSE_CRY =           19,//	heavy crying (common)
+    POSE_JUMP =          20,//	gleeful (common)
+    POSE_ANGER =         21,//	angry (common)
+    POSE_DARE =          22,//	taunting (common)
+    POSE_GAY =           23,//	narcissistic (male common)
+    POSE_EMOTE7 =        24,//	emote action 7
+    POSE_EMOTE8 =        25,//	emote action 8
+    POSE_EMOTE9 =        26,//	emote action 9
+    POSE_EMOTE10 =       27,//	emote action 10
+    POSE_MINE =          28,//	mining (scene interaction)
+    POSE_COLLECT =       29,//	gathering (scene interaction)
+    POSE_SEAT2 =         30,//	sitting on a stool (scene interaction)
+    POSE_LEAN =          31,//	leaning against a wall (scene interaction)
+    POSE_LEAN2 =         32,//	leaning against a tree (scene interaction)
+    POSE_HAPPY =         33,//	character interaction (scene interaction)
+    POSE_HAPPY7 =        34,//	scene interaction action 7
+    POSE_HAPPY8 =        35,//	scene interaction action 8
+    POSE_HAPPY9 =        36,//	scene interaction action 9
+    POSE_HAPPY10 =       37,//	scene interaction action 10
+    POSE_RESERVED1 =     38,//	spare action 1
+    POSE_FALLDOWN =      39,//	spare action 2
+    POSE_SKILL6 =        40,//	skill action 6
+    POSE_SKILL7 =        41,//	skill action 7
+    POSE_FLY_WAITING =   42,//	flight				//POSE_SKILL8 =        42,//	技能动作8	
+    POSE_FLY_RUN =       43,//	flight movement			//POSE_SKILL9 =        43,//	技能动作9	
+    POSE_FLY_SHOW =      44,//	cool pose in the air			//POSE_SKILL10 =       44,//	技能动作10	
+    POSE_FLY_SEAT =      45,//	sitting suspended in the air			//POSE_SKILL11 =       45,//	技能动作11	
+    POSE_SKILL12 =       46,//	skill action 12
+    POSE_SKILL13 =       47,//	skill action 13
+    POSE_SKILL14 =       48,//	skill action 14
+    POSE_SKILL15 =       49,//	skill action 15
+    POSE_SKILL16 =       50,//	skill action 16
+    POSE_SKILL17 =       51,//	skill action 17
+    POSE_SKILL18 =       52,//	skill action 18
+    POSE_SKILL19 =       53,//	skill action 19
+    POSE_SKILL20 =       54,//	skill action 20
 };
 
 struct SActionInfo
 {
-	short		m_sActionNO;	// 动作编号
+	short		m_sActionNO;	// action number
 	//short		m_sStartFrame;	// 起始帧
 	//short		m_sEndFrame;	// 结束帧
 
@@ -71,10 +71,10 @@ struct SActionInfo
 
 struct SCharacterAction
 {
-	short		m_iCharacterType;	// 角色类型
-	short		m_iMaxActionNum;	// 角色的最大动作数(从文件中读到的角色的最大动作号)
-	short		m_iActualActionNum;	// 角色的有效动作数(从文件中读到的角色的动作个数)
-	SActionInfo	*m_SActionInfo;		// 角色单个动作信息
+	short		m_iCharacterType;	// character type
+	short		m_iMaxActionNum;	// maximum number of actions of the character (the highest action number read from the file)
+	short		m_iActualActionNum;	// number of valid actions of the character (the number of actions read from the file)
+	SActionInfo	*m_SActionInfo;		// single action information of the character
 };
 
 class	CGameCharacterAction
@@ -94,8 +94,8 @@ public:
 	bool		GetCharAction(int iCharType, SCharacterAction *SCharAct);
 
 protected:
-	short		m_iMaxCharacterType;		// 最大角色类型数(从文件中读到的最大的角色类型号)
-	short		m_iActualCharacterType;		// 有效角色类型数(从文件中读到的角色个数)
+	short		m_iMaxCharacterType;		// maximum number of character types (the highest character type number read from the file)
+	short		m_iActualCharacterType;		// number of valid character types (the number of characters read from the file)
 	SCharacterAction	*m_SCharacterAction;
 };
 

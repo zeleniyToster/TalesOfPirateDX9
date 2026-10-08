@@ -24,14 +24,14 @@ CThreadBase::~CThreadBase()
 
 bool CThreadBase::Begin(int flag)
 {
-    // 创建的时候先挂起
+    // suspended when it is created
     m_thread = (HANDLE)_beginthreadex(NULL, 0, ThreadFunc, this, CREATE_SUSPENDED, &m_threadid);
 
 	LG( "threadid", "%d:%s\n", m_threadid, "CThreadBase" );
 
     if(m_thread)
     {
-        // 指定 CPU 运行后再开始运行
+        // starts running only after the CPU is specified
         SetThreadAffinityMask(m_thread, 1);
         ResumeThread(m_thread);
     }

@@ -271,7 +271,7 @@ void NetPC_GUILD_STOP()
 
 void NetMC_GUILD_MOTTO(cChar *motto)
 {
-	//此回调函数已经无效(被取消)-Arcol 2005.10.9
+	//this callback function is no longer used (cancelled) - Arcol 2005.10.9
 	CGuildData::SetGuildMottoName(motto);
 	CUIGuildMgr::RefreshAttribute();
 }

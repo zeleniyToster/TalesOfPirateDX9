@@ -48,7 +48,7 @@ void CActionState::FrameMove()
 void CActionState::End()
 {
 	if( _IsInit )
-		_End();				// 执行收尾工作,如再次产生一个攻击等
+		_End();				// runs the wrap-up work, such as producing another attack
 
 #ifdef _STATE_DEBUG
 	if( GetActor()->GetCha()->IsMainCha() )	

@@ -26,7 +26,7 @@ bool CChatRecord::Save(const string name, DWORD number, const string chatData)
 	CreateDirectory("chats",NULL);
 	CreateDirectory(folder,NULL);
 	ofstream chatLog;
-	// 改变保存聊天记录方式  modify by ning.yan  20080725 Begin
+	// changes how the chat log is stored  modify by ning.yan  20080725 Begin
 	//int i=1;
 	//for (;i<1000;i++)
 	//{
@@ -42,7 +42,7 @@ bool CChatRecord::Save(const string name, DWORD number, const string chatData)
 	//}
 	sprintf(buf,"\\%s.txt",name.c_str());
 	m_strPath=folder+string(buf);
-	chatLog.open(m_strPath.c_str(),ios_base::app); // 以附加模式打开文件，新建文件或将数据写到文件尾部
+	chatLog.open(m_strPath.c_str(),ios_base::app); // opens the file in append mode, creating it or writing the data at the end of the file
 	// End
 	chatLog<<chatData.c_str();
 	chatLog.close();

@@ -45,7 +45,7 @@ string ConvertNumToChinese( int num )
 	
 	char nChar = 0;
 	int nZeroNum = 0;				
-	bool IsBigMark = false;		// 用于万，亿的特殊处理，在全是零时
+	bool IsBigMark = false;		// special handling for ten thousand and a hundred million, when every digit is zero
 	int nHigh = 0;
 	int nLen = 0;
 	while( *pszPos )
@@ -53,7 +53,7 @@ string ConvertNumToChinese( int num )
 		nChar = *pszPos++;
 		nLen = (int)strlen(pszPos);
 
-		// 中部的多个零合并为一个零,且尾部的零也不显示
+		// several zeroes in the middle are merged into one, and the trailing zeroes are not shown either
 		if( nChar=='0' )
 		{
 			nZeroNum++;
@@ -67,7 +67,7 @@ string ConvertNumToChinese( int num )
 		else
 		{
 			IsBigMark = true;
-			if( nZeroNum>0 )    // 从零开始后,碰到的第一个非零
+			if( nZeroNum>0 )    // after starting from zero, the first non-zero digit met
 			{
 				nZeroNum = 0;
 				str << g_oLangRec.GetString(421);
@@ -86,7 +86,7 @@ string ConvertNumToChinese( int num )
 				}
 				str << szHigh[nHigh];
 
-				// 万，亿的特殊处理
+				// special handling for ten thousand and a hundred million
 				if( nHigh==3 || nHigh==7 )
 				{
 					IsBigMark = false;
@@ -96,7 +96,7 @@ string ConvertNumToChinese( int num )
 	}
     str << ends;
 
-	// 头为一十,省略一
+	// the tens are written 一十 in formal Chinese numerals, so the leading 一 is omitted
 	string rv = str.str();
 	if( rv.length()>=4 && rv.substr( 0, 4 ) == g_oLangRec.GetString(437) )
 		return rv.substr( 2, rv.length() );

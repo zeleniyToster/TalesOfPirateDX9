@@ -23,28 +23,28 @@ public:
 	
     char	szName[16];
 	
-    int     nType;              // 类型
-   	BYTE    btPointColor[3];    // 点光源的颜色
-    BYTE    btEnvColor[3];      // 环境光的颜色
-    BYTE    btFogColor[3];      // 雾的颜色
+    int     nType;              // type
+   	BYTE    btPointColor[3];    // colour of the point light
+    BYTE    btEnvColor[3];      // colour of the ambient light
+    BYTE    btFogColor[3];      // colour of the fog
     int     nRange;
     float   Attenuation1;
-    int     nAnimCtrlID;        //点光源动画类型id
-    // .... 其他参数
+    int     nAnimCtrlID;        //point light animation type ID
+    // .... other parameters
     
 
-    int     nStyle;             //  风格
+    int     nStyle;             //  style
     int		nAttachEffectID;
-    BOOL    bEnablePointLight;  //  是否收点光源影响
-	BOOL    bEnableEnvLight;    //  是否收环境光影响    
-    int		nFlag;              //  其它标记
-    int     nSizeFlag;          //  尺寸标记, 如果物件是超大尺寸, 则可见性判断特殊
+    BOOL    bEnablePointLight;  //  whether it is affected by the point light
+	BOOL    bEnableEnvLight;    //  whether it is affected by the ambient light
+    int		nFlag;              //  other flags
+    int     nSizeFlag;          //  size flag; if the object is oversized the visibility test is special
 
     char    szEnvSound[11];	
-	int		nEnvSoundDis;		// 单位:厘米
-	int		nPhotoTexID;        //  图标贴图ID
+	int		nEnvSoundDis;		// unit: centimetres
+	int		nPhotoTexID;        //  icon texture ID
     BOOL    bShadeFlag;
-	BOOL	bIsReallyBig;		// 是否特大物件,Added by clp
+	BOOL	bIsReallyBig;		// whether it is an oversized object, added by clp
 
     int     nFadeObjNum;
     int     nFadeObjSeq[16];
@@ -68,7 +68,7 @@ public:
 
 protected:
 
-	static CSceneObjSet* _Instance; // 相当于单键, 把自己记住
+	static CSceneObjSet* _Instance; // like a single key, remembers itself
    
 	virtual CRawDataInfo* _CreateRawDataArray(int nCnt)
 	{
@@ -103,7 +103,7 @@ protected:
 		
 		strncpy(pInfo->szName, ParamList[0].c_str(), sizeof(pInfo->szName));
 
-        // 获得物件类型 0 普通物体 1 场景互动物体 2 障碍标记物体....
+        // gets the object type: 0 ordinary object, 1 scene interactive object, 2 obstacle marker object, and so on
         pInfo->nType             = Str2Int(ParamList[1]);
         
         // 类型参数1 = ParamList[2];
@@ -127,7 +127,7 @@ protected:
             pInfo->btEnvColor[1] = Str2Int(strList1[1]);
             pInfo->btEnvColor[2] = Str2Int(strList1[2]);
             break;
-        case 6: // 环境音效
+        case 6: // ambient sound
 			strcpy(pInfo->szEnvSound, strList1[0].c_str());
 			pInfo->nEnvSoundDis = Str2Int( strList2[0] );
             LG("sceneobj", "Read Enviroment Sound [%s]\n", pInfo->szEnvSound);

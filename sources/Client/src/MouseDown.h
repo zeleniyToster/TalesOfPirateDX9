@@ -23,7 +23,7 @@ public:
 
 	void	FrameMove();
 
-	// 设置鼠标移动时的变量
+	// sets the variables used while the mouse moves
 	void	SetPickItem( CSceneItem* pItem, DWORD dwTime );
 	void	SetAttackCha( CSkillRecord* pSkill, CCharacter* pCha, DWORD dwTime );
 
@@ -34,24 +34,24 @@ public:
 	void	SetDummyObj( int x, int y, int h, int t_angle, int action );
 	void	SetFollow( CCharacter* pCha );
 
-	// 场景操作
+	// scene interaction
 	bool	ActMove( CCharacter* pCha, int nScrX, int nScrY, bool isAdd=false, bool isLine=false, bool IsCompart=true );
 	bool	ActAttackCha( CCharacter* pMain, CSkillRecord* pSkill, CCharacter* pTarget, bool isTrace=true, bool IsForce=false, bool IsCompart=true );
 	bool	ActTalkNpc( CCharacter* pCha, CCharacter* pNpc );
 	bool	ActPickItem( CCharacter* pCha, CSceneItem* pItem, bool IsMove=true );
 	bool	ActAttackArea( CCharacter* pCha, CSkillRecord* pSkill, int nScrX, int nScrY, bool IsForce=false, bool IsCompart=true );
 	bool	ActEvent( CCharacter* pCha, CSceneNode* pNode, CEvent* pEvent );
-    bool    ActDummyObj( CCharacter* pCha, int x, int y, int h, int t_angle, int action );      // 坐靠虚拟物件
+    bool    ActDummyObj( CCharacter* pCha, int x, int y, int h, int t_angle, int action );      // sitting or leaning against a virtual object
 
-	// 综合操作
+	// combined interaction
 	bool	ActCha( CCharacter* pCha, CCharacter* pTarget );
 
-	// 买东西
+	// buying something
 	bool	ActShop( CCharacter* pCha, CCharacter* pTarget );
 
 	bool	PickItem( CCharacter* pMain );
 
-	// 测试操作
+	// test interaction
 	bool	ActBackMove( CCharacter* pCha, int nScrX, int nScrY, bool isAdd=false );
 
 	CAutoAttack*	GetAutoAttack()	{ return _pAutoAttack;	}
@@ -77,7 +77,7 @@ private:
 		eLastNpc,
 		eLastArea,
 		eLastMove,
-		eLastDummy,		// 虚拟物件
+		eLastDummy,		// virtual object
 		eLastFollow,
 	};
 	eLastType		_eLastType;

@@ -1,8 +1,8 @@
 ﻿#pragma once
 //----------------------------------------------------------------------
-// 名称:道具精练效果表
-// 作者:lh 2005-11-03
-// 最后修改日期:
+// Name: item refining effect table
+// Author: lh 2005-11-03
+// Last modified date:
 //----------------------------------------------------------------------
 #include "TableData.h"
 
@@ -21,8 +21,8 @@ public:
 		memset( chDummy, 0, sizeof(chDummy) );
     }
 
-	int		nLightID;													// 流光编号
-	short	sEffectID[REFINE_EFFECT_CHA_NUM][REFINE_EFFECT_NUM];		// 特效编号
+	int		nLightID;													// light effect number
+	short	sEffectID[REFINE_EFFECT_CHA_NUM][REFINE_EFFECT_NUM];		// effect number
 	char	chDummy[REFINE_EFFECT_NUM];
 
 	int		GetEffectNum(int nCharID)		{ return _sEffectNum[nCharID];			}
@@ -45,7 +45,7 @@ public:
 	}
 
 protected:
-	static CItemRefineEffectSet* _Instance; // 相当于单键, 把自己记住
+	static CItemRefineEffectSet* _Instance; // like a single key, remembers itself
    
 	virtual CRawDataInfo* _CreateRawDataArray(int nCnt)
 	{

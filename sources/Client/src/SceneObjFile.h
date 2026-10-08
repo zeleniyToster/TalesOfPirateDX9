@@ -14,12 +14,12 @@ struct ReallyBigObjectInfo;
 
 struct SSceneObjInfo
 {
-    short	sTypeID;	// 高2位是type(0: 场景物件, 1: 特效物件), 其余是ID
-	int     nX;			// 相对坐标
+    short	sTypeID;	// the top 2 bits are the type (0: scene object, 1: effect object), the rest is the ID
+	int     nX;			// relative coordinates
 	int  	nY;
 	short	sHeightOff;
 	short	sYawAngle;
-    short	sScale;		// 保留未使用
+    short	sScale;		// reserved, unused
 
 	short GetType()
 	{
@@ -40,11 +40,11 @@ class	CSceneObjFile
 		int		lVersion;
 		long	lFileSize;
 
-		int		iSectionCntX;	// 地图的横向区域数
-		int		iSectionCntY;	// 地图的纵向区域数
-		int		iSectionWidth;	// 区域的宽度（单位：Tile）
-		int		iSectionHeight; // 区域的高度（单位：Tile）
-		int		iSectionObjNum;	// 区域允许的最大物件数
+		int		iSectionCntX;	// number of horizontal regions of the map
+		int		iSectionCntY;	// number of vertical regions of the map
+		int		iSectionWidth;	// width of a region (unit: Tile)
+		int		iSectionHeight; // height of a region (unit: Tile)
+		int		iSectionObjNum;	// maximum number of objects allowed in a region
 	};
 
 	struct SSectionIndex
@@ -62,7 +62,7 @@ public:
 	void	Free(void);
 	long	CreateFile(const char*ptcsFileName, int iSectionCntX = 512, int iSectionCntY = 512,
 			int iSectionWidth = 8, int iSectionHeight = 8, int iSectionObjNum = MAX_MAP_SECTION_OBJ);
-	long	ConvertObjFileVer(const char* ptcsFile, bool bBackUp = true); // 从版本300转换到400
+	long	ConvertObjFileVer(const char* ptcsFile, bool bBackUp = true); // converts from version 300 to 400
 	long	ReadSectionObjInfo(int nSectionNO, SSceneObjInfo* SSceneObj, long* lSectionObjNum);
 	long	WriteSectionObjInfo(int nSectionNO, SSceneObjInfo* SSceneObj, long lSectionObjNum);
 	long	TrimFile(const char* ptcsFileName, bool bBackUp);

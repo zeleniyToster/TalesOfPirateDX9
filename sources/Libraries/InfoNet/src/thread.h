@@ -20,13 +20,13 @@ public:
     Thread();
     virtual ~Thread();
 
-    virtual bool Begin(int flag = 0);  //  开始线程
-    virtual bool Resume();  //  恢复线程
-    virtual bool Suspend(); //  挂起线程
-    virtual bool Terminate();   //  强制终止线程
-    virtual bool SetPriority(int priority);     //  设置优先级
-    virtual int GetPriority();  //  获取优先级
-    virtual int Wait(int time = INFINITE);  //  等待时间
+    virtual bool Begin(int flag = 0);  //  starts the thread
+    virtual bool Resume();  //  resumes the thread
+    virtual bool Suspend(); //  suspends the thread
+    virtual bool Terminate();   //  force terminates the thread
+    virtual bool SetPriority(int priority);     //  sets the priority
+    virtual int GetPriority();  //  gets the priority
+    virtual int Wait(int time = INFINITE);  //  wait time
     virtual unsigned Run() = 0;
 
 public:

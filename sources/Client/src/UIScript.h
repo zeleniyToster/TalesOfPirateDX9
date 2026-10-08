@@ -1,9 +1,9 @@
 ﻿//----------------------------------------------------------------------
-// 名称:UI脚本类
-// 作者:lh 2004-10-26
-// 用途:辅助类,用于支持其它对象能够用于外部脚本
-//   注:目前不能在程序中动态删除
-// 最后修改日期:
+// Name: UI script class
+// Author: lh 2004-10-26
+// Purpose: a helper class so other objects can be used by external scripts
+//   note: cannot currently be deleted dynamically at runtime
+// Last modified date:
 //----------------------------------------------------------------------
 #pragma once
 #include "uiguidata.h"

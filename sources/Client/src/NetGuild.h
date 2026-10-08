@@ -10,11 +10,11 @@
 		调用:客户端开发人员
 		代码体请填入文件"NetPkXXX.cpp"(注意:有Pk,意为网络包处理的cpp文件)
 *****************************************************************/
-extern void	CM_GUILD_PUTNAME(bool confirm,cChar *guildname,cChar *passwd);	//发送创建公会的名字
-extern void CM_GUILD_TRYFOR(uLong	guildid);	//申请加入公会
+extern void	CM_GUILD_PUTNAME(bool confirm,cChar *guildname,cChar *passwd);	//sends the name used to create a guild
+extern void CM_GUILD_TRYFOR(uLong	guildid);	//applies to join a guild
 extern void CM_GUILD_TRYFORCFM(bool confirm);	//确认加入confirm =true;
-extern void CM_GUILD_LISTTRYPLAYER();			//管理CMD_CM_GUILD_LISTTRYMEMBER
-extern void CM_GUILD_APPROVE(uLong	chaid);		//管理人员批准申请人加入
+extern void CM_GUILD_LISTTRYPLAYER();			//handles CMD_CM_GUILD_LISTTRYMEMBER
+extern void CM_GUILD_APPROVE(uLong	chaid);		//handles the administrator approving an applicant to join
 extern void CM_GUILD_REJECT(uLong	chaid);
 extern void CM_GUILD_KICK(uLong		chaid);
 extern void CM_GUILD_LEAVE();

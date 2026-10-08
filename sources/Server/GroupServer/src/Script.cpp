@@ -52,7 +52,7 @@ BOOL RegisterScript()
 {
 	lua_State *L = g_pLuaState;
 
-	//注册Lua函数
+	//registers the Lua function
 	if( !RegisterLuaFunc() )
 		return FALSE;
 
@@ -71,7 +71,7 @@ void ReloadLuaSdk()
 
 void ReloadScript()
 {
-	// 装载NPC任务数据信息
+	// loads the NPC mission data information
 	luaL_dofile( g_pLuaState, GetResPath("script/Script01.lua") );
 }
 
@@ -86,7 +86,7 @@ BOOL LoadScript()
 	ReloadLuaSdk();
 	ReloadScript();
 
-	//执行Lua脚本
+	//runs the Lua script
 
 	return TRUE;
 }

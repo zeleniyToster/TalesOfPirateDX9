@@ -123,7 +123,7 @@ long CSceneArea::CreateFileFromMap(_TCHAR *ptcsMapFile, _TCHAR *ptcsAreaFile)
 	return lRet;
 }
 
-// lUnitNO 从零开始
+// lUnitNO starts at zero
 long CSceneArea::ReadAreaInfo(long lUnitNO, SAreaUnit *pUnitData, long *lpUnitNum)
 {
 	if (!m_bInitSuccess)

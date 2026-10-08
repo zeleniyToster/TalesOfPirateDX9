@@ -12,7 +12,7 @@ public:
 	{
         for(int i=0; i<7; i++)  sRealPoseID[i] = 0;
     }
-    short sRealPoseID[7]; // 5种动作类型, 空手, 单手武器, 双手武器, 弓箭.....
+    short sRealPoseID[7]; // 5 action types: bare handed, one handed weapon, two handed weapon, bow and arrow, and so on
 };
 
 
@@ -32,7 +32,7 @@ public:
 
 protected:
 
-	static CPoseSet* _Instance; // 相当于单键, 把自己记住
+	static CPoseSet* _Instance; // like a single key, remembers itself
    
 	virtual CRawDataInfo* _CreateRawDataArray(int nCnt)
 	{

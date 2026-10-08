@@ -109,7 +109,7 @@ int CHA_SetClientAttr(int nScriptID, int nAngle, float fDis, float fHei)
 //CameraShowSize(45, 45)
 
 //scripts/cameraconf.clu
-//对应c的全局变量 CameraMode[].xxxx
+//corresponds to the c global variable CameraMode[].xxxx
 
 int CameraRangeXY(int nMode, float fMin, float fMax)
 {

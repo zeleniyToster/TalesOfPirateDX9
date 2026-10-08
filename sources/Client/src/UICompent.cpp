@@ -1,5 +1,5 @@
 ﻿//------------------------------------------------------------------------
-//	2005/3/24	Arcol	加入定时器
+//	2005/3/24	Arcol	added the timer
 //------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "uicompent.h"
@@ -175,7 +175,7 @@ void CCompent::OnActive()
 
 void CCompent::SetActive(CCompent* v) 
 { 
-    // 判断激活状态
+    // decides the active state
     if(_pActive==v ) return;
 
     if( _pActive ) _pActive->OnLost();
@@ -194,7 +194,7 @@ void CCompent::SetParent( CGuiData* p )
 
 void CCompent::SetIsDrag( bool v )
 {
-	// 子控件无拖动
+	// the child control is not draggable
 	if( _isChild ) return;
 
 	CGuiData::SetIsDrag(v);
@@ -298,7 +298,7 @@ bool CContainer::AddCompent( CCompent* p )
 	{
 		_items.push_back(p);
 
-		// 此处仅改变_pParnet,不改变_isChild,所以不调用SetParent
+		// only _Parnet is changed here, not _isChild, so SetParent is not called
 		p->_pParent = this;		
 
 		if( p->IsHandleMouse() || p->GetIsFocus() ) _mouse.push_back( p );

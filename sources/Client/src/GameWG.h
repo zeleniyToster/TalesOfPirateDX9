@@ -5,34 +5,34 @@
 #include <string>
 
 
-// 游戏外挂类  add by Philip.Wu  2006-07-06
+// game cheat class  add by Philip.Wu  2006-07-06
 class CGameWG
 {
 public:
 	CGameWG(void);
 	~CGameWG(void);
 
-	// 刷新当前进程里的模块
+	// refreshes the modules in the current process
 	bool RefreshModule(void);
 
-	// 是否使用了“海盗天使”外挂
+	// the 'Pirate Angel' cheat was used
 	bool IsUseHdts(void);
 
-	// 启动线程
+	// starts the thread
 	void BeginThread(void);
 
-	// 安全终止线程
+	// terminates the thread safely
 	void SafeTerminateThread();
 
 private:
 
-	// 存放模块列表
+	// holds the module list
 	std::unordered_set<std::string> m_lstModule;
 
-	// 线程句柄
+	// thread handle
 	HANDLE m_hThread;
 
-	// 线程回调
+	// thread callback
 	static UINT CALLBACK Run(void* param);
 
 };

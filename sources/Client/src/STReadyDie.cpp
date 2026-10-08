@@ -31,7 +31,7 @@ bool CReadyDieState::_Start()
     GetActor()->SetState( _state );
 	_pCha->GetScene()->GetSign()->ChaDisappear( _pCha );	
 
-    // 有攻击方时,计算从攻击方反方向飞出
+    // when there is an attacker, fly out in the direction away from it
 	if( _pCha->IsMainCha() )
 	{
 		g_stUIStart.MainChaDied();

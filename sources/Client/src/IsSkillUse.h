@@ -1,30 +1,30 @@
 ﻿//----------------------------------------------------------------------
-// 名称:游戏事件
-// 作者:lh 2004-05-26
-// 用途:用于响应事件
-// 实现:事件必须依附于角色或道具存在
+// Name: game event
+// Author: lh 2004-05-26
+// Purpose: used to respond to events
+// Implementation: an event must exist attached to a character or an item
 //----------------------------------------------------------------------
 #pragma once
 
 class CSkillRecord;
 class CCharacter;
 
-// 小工具,用于判断攻击单体的技能是否可使用
+// a small helper that decides whether a single target skill can be used
 class CIsSkillUse
 {
 public:
 	CIsSkillUse();
 
-	// 仅判断技能是否可用
+	// only decides whether the skill is available
 	bool		IsValid( CSkillRecord* pSkill, CCharacter* pSelf );
 
-	// 用于综合判断是否可用
+	// used for the combined availability decision
 	bool		IsUse( CSkillRecord* pSkill, CCharacter* pSelf, CCharacter* pTarget );
 
-	// 判断技能是否可对某玩家使用
+	// decides whether the skill can be used on a given player
 	bool		IsAttack( CSkillRecord* pSkill, CCharacter* pSelf, CCharacter* pTarget );		
 
-	// 如果不能使用,得到错误原因
+	// if it cannot be used, gives the reason
 	const char*	GetError();	
 
 private:

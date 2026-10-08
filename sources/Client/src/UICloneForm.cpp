@@ -62,7 +62,7 @@ bool CCloneForm::Release( CForm* p )
 
 			if( i!=_nCount )
 			{
-				// 不是最后一个，要交换两个表单
+				// not the last one, the two forms have to be swapped
 				CForm* tmp = _vfrm[i];
 				_vfrm[i] = _vfrm[_nCount];
 				_vfrm[_nCount] = tmp;

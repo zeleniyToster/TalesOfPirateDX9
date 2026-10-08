@@ -4,7 +4,7 @@ class CSynchroManage;
 class CServerHarm;
 class CCharacter;
 
-// 用于客户端同步与服务器的显示
+// used to keep the client synchronised with what the server displays
 class CStateSynchro
 {
     friend class CSynchroManage;
@@ -12,7 +12,7 @@ public:
     CStateSynchro();
     virtual ~CStateSynchro();
 
-    // 将当前包按参数比例分隔出(创建)另一个包
+    // splits the current packet off into another packet (create) by the given proportion
     virtual CStateSynchro*   Gouge( float fRate )    { return NULL;  }
 
     void    Exec();
@@ -36,13 +36,13 @@ protected:
 	CServerHarm*	_pServerHarm;
 
 private:
-    int				_nID;				// CSynchroManage的索引
-	DWORD			_dwExecTime;		// 执行时间
+    int				_nID;				// index into CSynchroManage
+	DWORD			_dwExecTime;		// execution time
 	DWORD			_dwCreateTime;
 
 };
 
-// 用于管理同步包，使其按一定顺序执行
+// used to manage synchronised packets so they run in a fixed order
 class CSynchroManage
 {
     friend class CStateSynchro;
@@ -57,7 +57,7 @@ public:
     static CSynchroManage* I() { return _pInstance;     }
 
 private:
-    void    _CollectEmpty();        // 由于头尾已经相接，但实际仍有空间，收集剩余空间
+    void    _CollectEmpty();        // the head and tail are already joined, but there is still room, so collect the remaining room
 
 private:
     int     _AddState( CStateSynchro* pState );
@@ -71,15 +71,15 @@ private:
     };
 
     CStateSynchro*  _All[MAX_SIZE];
-    DWORD           _dwHead, _dwTail;       // 头尾有效区
-    DWORD           _nSynchroNum;           // 有效状态个数
+    DWORD           _dwHead, _dwTail;       // valid region at the head and tail
+    DWORD           _nSynchroNum;           // number of valid states
 
 private:
     static CSynchroManage* _pInstance;
 
 };
 
-// 内联函数
+// inline function
 inline void CStateSynchro::Exec()
 { 
     _isExec = true; 

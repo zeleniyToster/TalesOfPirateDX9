@@ -27,7 +27,7 @@ void CGameScene::HandleSceneMsg(int nMsgType, int nParam1, int nParam2, int nPar
 	
     switch(nMsgType)
 	{
-        // 更新各种类型的场景物件索引
+        // updates the indices of the various types of scene objects
         case SCENEMSG_SCENEOBJ_UPDATEVALID:
         {
             BOOL bValid = nParam1;
@@ -168,7 +168,7 @@ void CGameScene::HandleSceneMsg(int nMsgType, int nParam1, int nParam2, int nPar
 			pCha->RemoveEffect();
 			_cSceenSign.ChaDisappear( pCha );
 
-			//删除shade
+			//deletes the shade
 			CShadeEff *pShade;
 			size = pCha->GetShadeNum();
 			for(n = 0; n < size; n++)
@@ -360,7 +360,7 @@ void CGameScene::HandleSceneMsg(int nMsgType, int nParam1, int nParam2, int nPar
 				}
 			}
 			pObj->RemoveEffect();
-			//删除shade
+			//deletes the shade
 			CShadeEff *pShade;
 			size = pObj->GetShadeNum();
 			for(n = 0; n < size; n++)
@@ -381,12 +381,12 @@ void CGameScene::HandleSceneMsg(int nMsgType, int nParam1, int nParam2, int nPar
 		{
 			break;
 		}
-		//如果打中目标
+		//if the target is hit
 		case SCENEMSG_EFFECT_HIT:
 		{
 			break;
 		}
-		//如果特效对象无效
+		//if the effect object is invalid
 		case SCENEMSG_EFFECT_VALID:
 		{
 			CEffectObj * eff = GetEffect( nParam2 );
@@ -412,7 +412,7 @@ void CGameScene::HandleSceneMsg(int nMsgType, int nParam1, int nParam2, int nPar
 			eff->RemoveEffect();
 			break;
 		}
-		//创建特效
+		//creates the effect
 		case SCENEMSG_EFFECT_CREATE:
 		{
 			CEffectObj * eff = GetEffect( nParam2 );
@@ -452,13 +452,13 @@ void CGameScene::HandleSceneMsg(int nMsgType, int nParam1, int nParam2, int nPar
 			}
 			break;
 		}
-		//创建道具特效
+		//creates the item effect
 		case SCENEMSG_SCENEITEM_CREATE:
 		{
 			pItem = GetSceneItem(nParam1);
 			if( nParam2!=0 )
 			{
-				// 在人身上
+				// on the character
 				CItemRecord *pInfo = pItem->GetItemInfo();
 				for (int n = 0; n < pInfo->sEffNum; n++)
 				{
@@ -472,7 +472,7 @@ void CGameScene::HandleSceneMsg(int nMsgType, int nParam1, int nParam2, int nPar
 					//pEffect = GetFirstInvalidEffObj();
 					//if( !pEffect ) continue;
 
-					//// 使用道具表里的dummy
+					////// uses the dummy from the item table
 					//if(!pEffect->Create( pInfo->sEffect[n][0] ))
 					//{
 					//	LG("ERROR","create cha`s effect fail,ID %d", pInfo->sEffect[n][0]);
@@ -486,9 +486,9 @@ void CGameScene::HandleSceneMsg(int nMsgType, int nParam1, int nParam2, int nPar
 			}
 			else
 			{
-				// 在地上
+				// on the ground
 				CShadeEff *pShade = NULL;
-				//光圈
+				//halo
 				pShade = GetFirstInvalidShadeObj();
 				if( pShade )
 				{
@@ -500,7 +500,7 @@ void CGameScene::HandleSceneMsg(int nMsgType, int nParam1, int nParam2, int nPar
 					pItem->AddShade(pShade->getID());
 				}
 
-				//影子
+				//shadow
 				pShade = GetFirstInvalidShadeObj();
 				if( pShade )
 				{
@@ -515,7 +515,7 @@ void CGameScene::HandleSceneMsg(int nMsgType, int nParam1, int nParam2, int nPar
 			}
 			break;
 		}
-		//删除道具特效
+		//deletes the item effect
 		case SCENEMSG_SCENEITEM_DESTROY:
 		{
 			pItem = GetSceneItem(nParam1);
@@ -537,7 +537,7 @@ void CGameScene::HandleSceneMsg(int nMsgType, int nParam1, int nParam2, int nPar
 				}
 			}
 			pItem->RemoveEffect();
-			//删除shade
+			//deletes the shade
 			CShadeEff *pShade;
 			size = pItem->GetShadeNum();
 			for(n = 0; n < size; n++)

@@ -26,7 +26,7 @@ CGameMovie::~CGameMovie(void)
 }
 
 
-// 播放
+// play
 bool CGameMovie::Play(HWND hWnd, const char* pszFileName)
 {
 	/*	yangyinyu	2008-10-14	add	begin!
@@ -119,7 +119,7 @@ bool CGameMovie::Play(HWND hWnd, const char* pszFileName)
 }
 
 
-// 停止播放
+// stop playing
 void CGameMovie::Stop(void)
 {
 	/*	yangyinyu	2008-10-14	add	begin!
@@ -133,7 +133,7 @@ void CGameMovie::Stop(void)
 }
 
 
-// 清除
+// clear
 void CGameMovie::Cleanup()
 {
 	/*	yangyinyu	2008-10-14	add	begin!
@@ -151,7 +151,7 @@ void CGameMovie::Cleanup()
 }
 
 
-// 是否正在播放
+// whether it is currently playing
 bool CGameMovie::IsPlaying(void)
 {
 	/*	yangyinyu	2008-10-14	add	begin!

@@ -1,6 +1,6 @@
 ﻿
-// 与一个隐藏的Window Edit控件绑定来处理文字输入
-// 依靠windows控件来完成文字的添加,删除,退格,剪切,粘贴,光标位置计算等繁琐的处理
+// bound to a hidden Window Edit control to handle text input
+// relies on the windows control to deal with the tedious handling of adding, deleting, backspacing, cutting, pasting text and computing the cursor position
 class CInputBox 
 {
 
@@ -18,26 +18,26 @@ public:
 	void	HandleWindowMsg(DWORD dwMsgType, DWORD dwParam1, DWORD dwParam2);
 	
 	
-	void	SetAccountMode(BOOL bAccount);		// 设置为帐号输入模式, 屏蔽掉空格, 逗号等
-	void	SetPasswordMode(BOOL bPassword);	// 设置为密码模式, 得到*号字符串
-	void	SetDigitalMode(BOOL bDigitalMode);	// 设置为数字模式, 只接受数字输入
-	void	SetMaxNum(int nMaxNum);				// 设置最大输入的文字数量
-	void	SetMultiMode(BOOL bMultiLine);		// 设置为多行模式	
+	void	SetAccountMode(BOOL bAccount);		// sets account entry mode, blocking spaces, commas and so on
+	void	SetPasswordMode(BOOL bPassword);	// sets password mode, producing a string of '*'
+	void	SetDigitalMode(BOOL bDigitalMode);	// sets numeric mode, accepting only digits
+	void	SetMaxNum(int nMaxNum);				// sets the maximum number of characters
+	void	SetMultiMode(BOOL bMultiLine);		// sets multi-line mode
 	void	SetSel(int nStartChar, int nEndChar);
 
 
-	void	SetCursorTail();					// 将光标设置到文字尾部
+	void	SetCursorTail();					// moves the cursor to the end of the text
 	char*	RefreshText();
 	int		RefreshCursor();
 	void	ClearText();
 	char*	SetText(const char *pszText);
-	void	ReplaceSel(const char *pszRplText, BOOL bCanUndo = TRUE);	//替换当前选择内容 - added by Arcol
+	void	ReplaceSel(const char *pszRplText, BOOL bCanUndo = TRUE);	//replaces the current selection - added by Arcol
 
 protected:
 
-	char	_szText[1024];	// 输入的文字
-	int		_nCursorPos;	// 光标在文字串中的位置
-	BOOL	_bAccountMode;	// 是否是帐号模式
+	char	_szText[1024];	// the entered text
+	int		_nCursorPos;	// the position of the cursor in the string
+	BOOL	_bAccountMode;	// whether it is in account mode
 	HWND	_hEdit;
 };
 
@@ -85,14 +85,14 @@ inline void CInputBox::SetSel(int nStartChar, int nEndChar)
 
 inline void CInputBox::HandleWindowMsg(DWORD dwMsgType, DWORD dwParam1, DWORD dwParam2)
 {
-	// 把游戏窗口的windows的键盘输入传递到edit控件
+	// passes the windows keyboard input of the game window on to the edit control
 	// if(!(dwMsgType==WM_KEYDOWN || dwMsgType==WM_CHAR)) return;
 
 	// if(dwMsgType==WM_IME_NOTIFY || dwMsgType==WM_IME_STARTCOMPOSITION) return;
 
 	if(dwMsgType==WM_KEYDOWN || dwMsgType==WM_KEYUP)
 	{
-		if(dwParam1==VK_UP) return; // 屏蔽掉UP键, 避免触发Edit控件的对应操作
+		if(dwParam1==VK_UP) return; // blocks the UP key so the corresponding operation of the Edit control is not triggered
 		// ::SendMessage(_hEdit, WM_KEYDOWN, dwParam1, dwParam2);
 	}
 	else if(dwMsgType==WM_CHAR)

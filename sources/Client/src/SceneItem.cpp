@@ -300,7 +300,7 @@ void CSceneItem::FrameMove(DWORD dwTimeParam)
 	{
 		if( _nCharacterID == -1 )
 		{			
-			// 更新高度
+			// updates the height
 			if( _pSceneHeight->FrameMove(dwTimeParam) )
 			{
                 _UpdatePos();			
@@ -330,7 +330,7 @@ void CSceneItem::FrameMove(DWORD dwTimeParam)
 	//	_pCurScene->HandleSceneMsg(SCENEMSG_SCENEOBJ_DESTROY,_nEffID,getID());
 
     // by lsh
-    // 注意，这里的FrameMove必需放在最后调用，否则会有位置误差
+    // note: the FrameMove here must be called last, otherwise there will be a position error
 	MPSceneItem::FrameMove();	
 }
 
@@ -432,7 +432,7 @@ void CSceneItem::SetForgeEffect( DWORD value, int nCharID )
 	{
 		LitUnresetTexture();
 
-		// 卸下				
+		// takes off
 		int nCount = GetEffectNum();
 		CEffectObj* pEffect = NULL;
 		for( int i=0; i<nCount; i++ )
@@ -453,11 +453,11 @@ void CSceneItem::SetForgeEffect( DWORD value, int nCharID )
 
 	CSceneItem* pItem = this;
 	if( pInfo->nLightID!=0 )
-		pItem->LitResetTexture( pInfo->nLightID, Level );		// 加载流光
+		pItem->LitResetTexture( pInfo->nLightID, Level );		// loads the light effect
 	else
 		pItem->LitUnresetTexture();
 
-	// 先取消之前的特效
+	// cancel the previous effect first
 	int nCount = pItem->GetEffectNum();
 	CEffectObj	*pEffect = NULL;
 	for( int i=0; i<nCount; i++ )
@@ -481,7 +481,7 @@ void CSceneItem::SetForgeEffect( DWORD value, int nCharID )
 			continue;
 		}
 
-		// 使用道具表里的dummy
+		// uses the dummy from the item table
 		if( !pEffect->Create( nEffectID ) )
 		{
 			LG("ERROR","msgSceneItem SetForgeEffect effect fail,ID %d", nEffectID );

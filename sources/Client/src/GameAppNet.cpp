@@ -102,11 +102,11 @@ void CGameApp::_HandleMsg(DWORD dwTypeID, DWORD dwParam1, DWORD dwParam2)
 					{
 						if( !g_ChaExitOnTime.TimeArrived() )
 						{
-							//非登陆场景断开连接
+							//disconnect in a scene other than the login scene
 							char szBuf[256] = { 0 };
 							if( g_NetIF )
 							{
-								// modify by Philip.Wu  2006-06-09  非收费系统不提示用户充值
+								// modify by Philip.Wu  2006-06-09  a free system does not prompt the user to top up
 								if(g_Config.m_IsBill)
 								{
 									sprintf( szBuf, g_oLangRec.GetString(136), g_oLangRec.GetString(137), dwParam1 );
@@ -134,8 +134,8 @@ void CGameApp::_HandleMsg(DWORD dwTypeID, DWORD dwParam1, DWORD dwParam2)
 						}
 					}
 					else
-					{	//登陆场景内断开连接
-						//判断密码是否错误
+					{	//disconnect inside the login scene
+						//checks whether the password is wrong
 						CLoginScene *pkLogin = dynamic_cast<CLoginScene*>(scene);
 						if (pkLogin && pkLogin->IsPasswordError())
 						{

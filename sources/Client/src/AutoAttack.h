@@ -1,7 +1,7 @@
 ﻿//----------------------------------------------------------------------
-// 名称:自动攻击
-// 作者:lh 2004-06-15
-// 用途:用于船到达攻击时间自动攻击，并且尽可能不影响玩家的移动
+// Name: auto attack
+// Author: lh 2004-06-15
+// Purpose: attacks automatically once a boat reaches its attack time, while disturbing the player's movement as little as possible
 //----------------------------------------------------------------------
 
 #pragma once
@@ -23,12 +23,12 @@ public:
 	void			SetIsStart( bool v )	{ _IsStart=v;		}
 	bool			GetIsStart()			{ return _IsStart;	}
 
-	// 自动攻击
+	//  auto attack
 	bool			AttackStart( CCharacter* pMain, CSkillRecord* pSkill, CCharacter* pCha );
 	bool			AttackStart( CCharacter* pMain, CSkillRecord* pSkill, int nScrX, int nScrY );
 	bool			AttackMoveTo( int nScrX, int nScrY );
 
-	// 自动跟随
+	//  auto follow
 	bool			Follow( CCharacter* pMain, CCharacter* pTarget );
 
 private:

@@ -27,7 +27,7 @@ CForm* CBoxMgr::_cfrmError = NULL;
 //---------------------------------------------------------------------------
 bool CBoxMgr::Init()
 {
-	// 交易对话框
+	// trade dialog box
     CForm* frmTrade  = _FindForm("frmTrade");   
 	if ( !frmTrade ) return false;
 
@@ -43,7 +43,7 @@ bool CBoxMgr::Init()
 
 	_cTrade.Init( frmTrade );
 
-	// 选择对话框
+	// selection dialog box
     CForm* frmSelect  = _FindForm("frmSelect");   
 	if ( !frmSelect ) return false;
 	//frmSelect->SetPos( g_Render.GetScrWidth(), g_Render.GetScrHeight() - 151 );
@@ -53,7 +53,7 @@ bool CBoxMgr::Init()
 
 	_cSelect.Init( frmSelect );
 
-	// 输入数量对话框
+	// quantity input dialog
     CForm* frmNumber = _FindForm("frmNumber");
     if( !frmNumber ) return false;
 
@@ -67,7 +67,7 @@ bool CBoxMgr::Init()
 	_cNumber.Init( frmNumber );
 
 
-	// 输入密码对话框
+	// password input dialog
 	CForm* frmPassword = _FindForm("frmPass");
 	if( !frmPassword ) return false;
 
@@ -80,7 +80,7 @@ bool CBoxMgr::Init()
 	_cPassword.Init( frmPassword );
 
 
-	// 一个信息对话框
+	// an information dialog box
     CForm* frmError  = _FindForm("frmError");   
 	if ( !frmError ) return false;
 
@@ -120,7 +120,7 @@ void CBoxMgr::_ClearBox( CHideForm& list )
 
 		if(frm->GetPointer())
 		{
-			delete frm->GetPointer(); // UI当机处理
+			delete frm->GetPointer(); // UI freeze handling
 			frm->SetPointer( NULL );
 		}
 	}
@@ -171,7 +171,7 @@ stTradeBox* CBoxMgr::ShowTradeBox( FormMouseEvent evtForm, float fUnitMoney, int
 		t->edtNumber->SetCaption( "" );
 	}
 	t->nTotalNum = nTotalNum;
-	t->fUnitMoney = (float)(int)fUnitMoney;				// 游戏仅显示取整后的数字 call 罗威
+	t->fUnitMoney = (float)(int)fUnitMoney;				// the game only shows the truncated number, call Luo Wei
 	return t;
 }
 

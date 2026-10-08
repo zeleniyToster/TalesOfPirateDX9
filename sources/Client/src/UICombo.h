@@ -1,8 +1,8 @@
 ﻿//----------------------------------------------------------------------
-// 名称:组合框
-// 作者:lh 2004-07-08
-// 设计思想:由CEdit,CTextButton,CList组合
-// 最后修改日期:2004-10-09
+// Name: combo box
+// Author: lh 2004-07-08
+// Design: composed of CEdit, CTextButton and CList
+// Last modified date: 2004-10-09
 //----------------------------------------------------------------------
 #pragma once
 #include "uicompent.h"
@@ -17,8 +17,8 @@ class CCombo : public CCompent
 public:
 	enum eListStyle
 	{
-		lsUp,		// List在上面
-		lsDown,		// List在下面
+		lsUp,		// the List is on top
+		lsDown,		// the List is underneath
 	};
 
 	CCombo(CForm& frmOwn);
@@ -52,8 +52,8 @@ public:
 	const char*		GetText()				{ return _pEdit->GetCaption();	}
 
 public:
-	GuiEvent		evtSelectChange;	// 选择发生了变化
-	GuiMouseEvent	evtMouseClick;		// 鼠标点击按钮事件
+	GuiEvent		evtSelectChange;	// the selection changed
+	GuiMouseEvent	evtMouseClick;		// mouse button click event
 
 protected:
 	static void		_OnButtonClick(CGuiData *pSender, int x, int y, DWORD key) {

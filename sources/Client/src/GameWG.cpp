@@ -22,7 +22,7 @@ CGameWG::~CGameWG(void)
 }
 
 
-// 刷新当前进程里的模块
+// refreshes the modules in the current process
 bool CGameWG::RefreshModule(void)
 {
     bool          bRet        = false;
@@ -40,7 +40,7 @@ bool CGameWG::RefreshModule(void)
 
 		if(Module32First(hModuleSnap.get(), &me32)) 
 		{
-			// 遍历当前进程里的所有模块
+			// walks every module in the current process
 			do
 			{
 				strModule = me32.szModule;
@@ -52,7 +52,7 @@ bool CGameWG::RefreshModule(void)
 		}
 		else
 		{
-			// 枚举失败
+			// enumeration failed
 			bRet = false;
 		}
 	}
@@ -65,7 +65,7 @@ bool CGameWG::RefreshModule(void)
 }
 
 
-// 是否使用了“海盗天使”外挂
+// the 'Pirate Angel' cheat was used
 bool CGameWG::IsUseHdts(void)
 {
 	if (m_lstModule.contains("hookit.dll"))
@@ -77,14 +77,14 @@ bool CGameWG::IsUseHdts(void)
 }
 
 
-// 启动线程
+// starts the thread
 void CGameWG::BeginThread(void)
 {
     m_hThread = (HANDLE)_beginthreadex(0, 0, Run, this, 0, 0);
 }
 
 
-// 安全终止线程
+// terminates the thread safely
 void CGameWG::SafeTerminateThread()
 {
 	if(m_hThread)
@@ -97,30 +97,30 @@ void CGameWG::SafeTerminateThread()
 }
 
 
-// 线程回调
+// thread callback
 UINT CALLBACK CGameWG::Run(void* param)
 {
 	CGameWG* pGameWG = (CGameWG*)(param);
 
 	for(;;)
 	{
-		Sleep(60 * 1000);	// 一分钟刷一次
+		Sleep(60 * 1000);	// refreshed once a minute
 
 		if(! g_NetIF || ! g_NetIF->IsConnected())
 		{
-			// 网络未连接
+			// not connected to the network
 			continue;
 		}
 
 		if(! pGameWG->RefreshModule())
 		{
-			// 刷新模块列表
+			// refreshes the module list
 			continue;
 		}
 
 		if(pGameWG->IsUseHdts())
 		{
-			// 使用了外挂“海盗天使”
+			// the 'Pirate Angel' cheat was used
 
 			CS_ReportWG(g_oLangRec.GetString(143));
 			break;

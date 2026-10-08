@@ -37,7 +37,7 @@ protected:
 };
 
 class CSceneItem;
-class CPickState : public CActionState		// 捡道具
+class CPickState : public CActionState		// picking up an item
 {
 public:
 	CPickState(CActor* p);
@@ -74,7 +74,7 @@ private:
 
 };
 
-// 修正状态,服务器返回时产生,开始时改变鼠标状态,点右键时取消本状态
+// correction state; produced when the server replies, changes the mouse state at the start and is cancelled when the right button is clicked
 class CRepairState : public CActionState
 {
 public:
@@ -91,7 +91,7 @@ protected:
 
 };
 
-// 给宠物喂食
+// feeding a pet
 class CFeedState : public CActionState
 {
 public:
@@ -113,7 +113,7 @@ protected:
 };
 
 
-// 祭祀状态    add by Philip.Wu  2006-06-20  祭祀状态
+// sacrifice state    add by Philip.Wu  2006-06-20  sacrifice state
 class CFeteState : public CActionState
 {
 public:

@@ -5,7 +5,7 @@ class CChaCreateInfo : public CRawDataInfo
 
 public:
 
-    //序号	类型名称	头发， 脸， 身体， 手， 脚
+    //index	type name	hair, face, body, hands, feet
 	CChaCreateInfo()
 	{
 	}
@@ -42,7 +42,7 @@ public:
 
 protected:
 
-	static CChaCreateSet* _Instance; // 相当于单键, 把自己记住
+	static CChaCreateSet* _Instance; // like a single key, remembers itself
 
 	virtual CRawDataInfo* _CreateRawDataArray(int nCnt)
 	{

@@ -60,7 +60,7 @@ void CGameScene::_FrameMove(DWORD dwTimeParam)
 		_nMouseX = (int)(_vMousePos.x * 100.0f);
 		_nMouseY = (int)(_vMousePos.y * 100.0f);
 
-		// 镜头非跟随模式下, 以屏幕中间映射到地表上的位置为镜头焦点
+		// in camera non-follow mode, the position mapped from the centre of the screen onto the ground is the camera focus
 		if( g_Config.m_bEditor && !g_pGameApp->IsCameraFollow() )
 		{
 			static D3DXVECTOR3 vecPos; 

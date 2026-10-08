@@ -5,7 +5,7 @@ class CSceneItem;
 class CCharacter;
 class CShadeEff;
 
-// 场景的用户标志
+// the user flag of the scene
 class CSceneSign
 {
 public:
@@ -35,10 +35,10 @@ private:
 
 	CGameScene*		_pScene;
 
-	CSceneItem*		_pAttack;		// 攻击时显示的光环
+	CSceneItem*		_pAttack;		// the halo shown while attacking
 	CShadeEff*		_pAttackShade;
-	CSceneItem*		_pMove;         // 移动或拾取时显示的光环
-	CCharacter*		_pCha;			// 被攻击的角色
+	CSceneItem*		_pMove;         // the halo shown while moving or picking up
+	CCharacter*		_pCha;			// the character being attacked
 
 	int	_nX, nY, _nH;	
 

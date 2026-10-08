@@ -33,27 +33,27 @@ public:
     CSelectChaScene(stSceneInitParam& param);
     ~CSelectChaScene();
 
-    virtual void        LoadingCall();          // 在装载loading后,刷新
+    virtual void        LoadingCall();          // refreshed after loading finishes
     virtual void		SetMainCha(int nChaID);
 
     static CSelectChaScene& GetCurrScene();
 
-    //删除当前选中的角色
+    //deletes the currently selected character
     void                DelCurrentSelCha();
-    //显示现有角色
+    //shows the existing characters
 	bool                SelectCharacters(std::span<const NetChaBehave> characters);
-    //新增角色
+    //adds a character
     bool                CreateCha(const std::string& sName, int nChaIndex, stNetChangeChaPart* part);
 
     void                SelectChaError( int error_no, const char* error_info );
 
-    //向服务器发送删除角色消息
+    //sends the delete character message to the server
     void SendDelChaToServer(const char szPassword2[]);
 
-	// 更新按钮状态
+	// updates the button states
     void UpdateButton();
 
-	// 获得角色个数
+	// gets the number of characters
 	int GetChaCount();
 
 	void ShowWelcomeNotice(bool bShow = true);
@@ -61,7 +61,7 @@ public:
 	void UpdatePageLabel();
 	int GetMaxPage() const;
 protected:
-    //场景相关函数
+    //scene related functions
     virtual void		_FrameMove(DWORD dwTimeParam);
     virtual void		_Render();
 
@@ -74,7 +74,7 @@ protected:
     virtual bool		_Clear();
     virtual void        _RenderUI();
 
-    //UI相关函数
+    //UI related functions
     bool                _InitUI();
 	static void			_OnClickUpdatePass(CGuiData *pSender, int x, int y, DWORD key);
     static void         _SelChaFrmMouseEvent(CCompent *pSender, int nMsgType, 
@@ -84,21 +84,21 @@ protected:
 //                                           int x, int y, DWORD dwKey);
 
     static void         _evtCreateDoublePwdEvent(CCompent *pSender, int nMsgType, 
-                                            int x, int y, DWORD dwKey);		// 询问是否要创建二次密码
+                                            int x, int y, DWORD dwKey);		// asks whether to create a secondary password
 
     static void         _evtWelcomeNoticeEvent(CCompent *pSender, int nMsgType, 
-                                            int x, int y, DWORD dwKey);		// 欢迎界面 事件处理
+                                            int x, int y, DWORD dwKey);		// welcome screen event handling
 
     static void         _evtCreateOKNoticeEvent(CCompent *pSender, int nMsgType, 
-                                            int x, int y, DWORD dwKey);		// 首次创建角色成功提示界面 事件处理
+                                            int x, int y, DWORD dwKey);		// first character creation success prompt screen event handling
 
     static void         _evtChaNameAlterMouseEvent(CCompent *pSender, int nMsgType, 
-                                            int x, int y, DWORD dwKey);		// 首次创建角色成功提示界面 事件处理
+                                            int x, int y, DWORD dwKey);		// first character creation success prompt screen event handling
 
-	//~ 逻辑函数: ============================================================
+	//~ logic functions: =================================================================
 
 
-    //向服务器发送开始游戏消息
+    //sends the start game message to the server
     void SendBeginPlayToServer();
 
     void SetChaDark(CCharacter* pCha);
@@ -126,14 +126,14 @@ private:
     std::vector<int>         m_ZPositions;
     std::vector<int>         m_Yaws;                 //The rotation of the characters in the scene
 	std::vector<uint8_t> m_FreePositions;        //The index of the empty position of the scene
-    BYTE                m_ChaColors[3][3];      //人物的颜色
-	int					m_nChaRotates[3];       //人物的偏移角度(-180~+180)
+    BYTE                m_ChaColors[3][3];      //the colour of the character
+	int					m_nChaRotates[3];       //the offset angle of the character (-180~+180)
 
-    //场景渲染和动画相关的
-    BYTE            _loadtex_flag;          //保存场景渲染和动画的设置
-    BYTE            _loadmesh_flag;         //保存场景渲染和动画的设置
+    //scene rendering and animation related
+    BYTE            _loadtex_flag;          //stores the scene rendering and animation settings
+    BYTE            _loadmesh_flag;         //stores the scene rendering and animation settings
 
-    CSceneObj*	    pObj;                   //场景对象
+    CSceneObj*	    pObj;                   //scene object
     lwIPrimitive*   pAure[3];
 
 
@@ -151,7 +151,7 @@ private:
 
     CForm*          frmCheck;
 
-    //逻辑
+    //logic
 public:
 	uint8_t         m_nCurChaIndex{ static_cast<decltype(m_nCurChaIndex)>(-1) };
 	uint8_t             m_iCurPage;
@@ -162,7 +162,7 @@ private:
 
 	bool			m_isCreateCha;
 
-	CForm*			frmWelcomeNotice;	// 定义欢迎界面  该界面仅在当前帐号内无角色时出现
-	CForm*			frmCreateOKNotice;	// 定义首次创建角色成功提示界面  该界面仅在该帐号走完第一个角色的创建流程后显示
-	CForm*			frmChaNameAlter;	// 定义改名界面  该界面仅对台湾版本有效，请做好备份工作
+	CForm*			frmWelcomeNotice;	// defines the welcome screen; it appears only when the current account has no character
+	CForm*			frmCreateOKNotice;	// defines the first character creation success prompt screen; it is shown only once this account has gone through the creation flow for its first character
+	CForm*			frmChaNameAlter;	// defines the rename screen; it is only valid for the Taiwan version, please back up your work
 };

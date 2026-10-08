@@ -10,14 +10,14 @@
 
 enum	Effect_Type
 {
-	EFF_SCENE,  //场景特效	
-	EFF_CHA,	//角色绑定,需要角色ID
-	EFF_ITEM,	//武器绑定,需要item dummy和item id
-	EFF_STRIP,	//刀光
-	EFF_SELF,	//自身特效
-	EFF_HIT,	//受击特效,需要起始点
-	EFF_MAGIC,	//飞行特效,需要起始点，目标点
-	EFF_FONT,	//飞行特效,需要起始点，目标点
+	EFF_SCENE,  //scene effect
+	EFF_CHA,	//bound to a character, needs a character ID
+	EFF_ITEM,	//bound to a weapon, needs an item dummy and an item ID
+	EFF_STRIP,	//blade flash
+	EFF_SELF,	//effect on self
+	EFF_HIT,	//hit effect, needs a start point
+	EFF_MAGIC,	//flying effect, needs a start point and a target point
+	EFF_FONT,	//flying effect, needs a start point and a target point
 };
 class CCharacter;
 class CGameScene;
@@ -221,7 +221,7 @@ class  CMagicEff;
 ///*CMagicEff*/
 ///************************************************************************/
 
-//定义粒子发出的消息，由CMPEffectCtrl来发出这些消息，
+//defines the messages emitted by particles, emitted by CMPEffectCtrl,
 #define				PARTCTRL_MSG_PLAY			1
 #define				PARTCTRL_MSG_STOP			2	
 #define				PARTCTRL_MSG_MOVE			3	
@@ -229,16 +229,16 @@ class  CMagicEff;
 #define				PARTCTRL_MSG_RENDER			5	
 
 
-//创建一个特效所需的参数
+//parameters needed to create an effect
 struct Eff_Property
 {
-	int			m_iEffType; //0 =场景特效，1为角色绑定特效,2为物件绑定特效,3为武器特效,4为魔法攻击特效
-	s_string	m_strName;  //特效文件名
+	int			m_iEffType; //0 = scene effect, 1 character bound effect, 2 object bound effect, 3 weapon effect, 4 magic attack effect
+	s_string	m_strName;  //effect file name
 
-	int			m_iIdxRender;//算法索引
+	int			m_iIdxRender;//algorithm index
 };
 
-//!控制运动规迹的算法
+//!algorithm that controls the motion path
 inline  void	Part_bind(CMagicEff* pEffCtrl);
 inline  void	Part_follow(CMagicEff* pEffCtrl);
 inline  void	Part_foldir(CMagicEff* pEffCtrl);
@@ -290,7 +290,7 @@ public:
 protected:
 	void			RenderMagic();
 public:
-	//指向算法的函数指针
+	//pointer to the algorithm function
 	void				(*RenderUpdate)(CMagicEff* pEffCtrl);
 
 	friend	void		Part_bind(CMagicEff* pEffCtrl);
@@ -321,7 +321,7 @@ public:
 	int				getOwerID()			 { return _iOwnerID;}
 
 
-	//iType  0: 角色对象， 1：Item对象
+	//iType  0: character object, 1: Item object
 	void			setFollowObj(CSceneNode* pObj, NODE_TYPE eType = NODE_CHA, int iDummy = -1, int iDummy2 = -1);
 
 	BOOL            IsSceneEffect()             { return getTypeID() == 0; }
@@ -427,7 +427,7 @@ public:
 
 	DWORD	GetStartTime()					{ return _dwStartTime;		}
 
-	// 设置缩放特效因子 Michael 2005.12.8
+	// sets the scaling effect factor Michael 2005.12.8
 	void	SetScale(float fX, float fY, float fZ) { _UpdateScale(fX, fY, fZ); }
 	void	SetAlpha(float fAlpha) { 	_pEffCtrl->GetPartCtrl()->SetAlpha(fAlpha); }
 
@@ -448,7 +448,7 @@ protected:
 protected:
 	Effect_Type			_eType;
     CEffDelay*          _pEffDelay;
-	CSceneNode*			_pObj;//跟随的对象
+	CSceneNode*			_pObj;//the object being followed
 
 	MPTerrain*			_pTerrain;
 	long				_nTag;
@@ -500,7 +500,7 @@ protected:
 	int					_isID;
 	D3DXVECTOR3			_vsBegin;
 	D3DXVECTOR3			_vsEnd;
-	DWORD				_dwStartTime;		// 记录飞行特效的起始时间
+	DWORD				_dwStartTime;		// records the start time of a flying effect
 
 };
 
@@ -562,7 +562,7 @@ protected:
 	
     //CGameScene*		_pScene;
 	MPTerrain*      _pTerrain;
-	int				_iChaID;//有可能是角色，或物件，或武器或特效的ID
+	int				_iChaID;//may be the ID of a character, an object, a weapon or an effect
 
 	int				_iIdxID;
 

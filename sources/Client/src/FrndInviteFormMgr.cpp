@@ -34,7 +34,7 @@ bool CFrndInviteFormMgr::AddInviteForm(DWORD id,string inviterName)
 	if (!frmAcceptFrnd)
 	{
 		//delete node;
-		SAFE_DELETE(node); // UI当机处理
+		SAFE_DELETE(node); // UI freeze handling
 		return false;
 	}
 	node->id=id;
@@ -87,7 +87,7 @@ bool CFrndInviteFormMgr::RemoveInviteForm(DWORD id)
 	dupe.Release(node->pForm);
 	m_FormLink.erase(Iter);
 	//delete node;
-	SAFE_DELETE(node); // UI当机处理
+	SAFE_DELETE(node); // UI freeze handling
 	return true;
 }
 

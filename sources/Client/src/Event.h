@@ -1,8 +1,8 @@
 ﻿//----------------------------------------------------------------------
-// 名称:游戏事件
-// 作者:lh 2004-05-26
-// 用途:用于响应事件
-// 实现:事件必须依附于角色或道具存在
+// Name: game event
+// Author: lh 2004-05-26
+// Purpose: used to respond to events
+// Implementation: an event must exist attached to a character or an item
 //----------------------------------------------------------------------
 #pragma once
 
@@ -42,17 +42,17 @@ public:
 
 private:
 	CGameScene*		_pScene;
-	std::string			_strName;			// 事件显示的名称
+	std::string			_strName;			// the name shown for the event
 
 	bool			_IsValid;
 	bool			_IsEnabled;			
 
 	CEventRecord*   _pEvent;
-    CSceneNode*     _pNode;              // 事件所属Node
+    CSceneNode*     _pNode;              // the Node the event belongs to
 
 private: // run time
-    bool            _IsActive;           // 是否已经激活
-	DWORD			_dwLastTime;		 // 上次激活时间
+    bool            _IsActive;           // whether it is already active
+	DWORD			_dwLastTime;		 // time of the last activation
 
 };
 

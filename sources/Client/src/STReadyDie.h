@@ -5,7 +5,7 @@
 class CCharacter;
 class CArcTrack;
 class CMonsterItem;
-class CReadyDieState : public CActionState		// 捡道具
+class CReadyDieState : public CActionState		// picking up an item
 {
 public:
 	CReadyDieState(CActor* p);
@@ -38,13 +38,13 @@ private:
 
     eDieState       _eDieState;
 	eActorState		_state;	
-	bool			_IsActionEnd;			// 当前动作已经播放完毕，用于一次性动作
+	bool			_IsActionEnd;			// the current action has finished playing; used for one-shot actions
     CCharacter*     _pCha;
-    CCharacter*     _pAttack;               // 攻击方
+    CCharacter*     _pAttack;               // the attacker
     bool            _isFlyOff;
 
     int             _nFallDownTime;    
-    bool            _IsAlreadyEffect;       // 已经播放特效
+    bool            _IsAlreadyEffect;       // the effect has already been played
     int             _nDelayTime;
 
     CArcTrack*		_pArcTrack;

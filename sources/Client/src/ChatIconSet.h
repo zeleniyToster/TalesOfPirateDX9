@@ -17,7 +17,7 @@ public:
 	int		nSmallX;
 	int		nSmallY;
 
-    char	szSmallOff[16];		// 离线时的图标
+    char	szSmallOff[16];		// icon shown while offline
 	int		nSmallOffX;
 	int		nSmallOffY;
 
@@ -43,7 +43,7 @@ public:
     }
 
 protected:
-    static CChatIconSet* _Instance; // 相当于单键, 把自己记住
+    static CChatIconSet* _Instance; // like a single key, remembers itself
 
     virtual CRawDataInfo* _CreateRawDataArray(int nCnt)
     {

@@ -44,7 +44,7 @@ void MPEditor::Init(int nMapID)
 	m_bSmooth                   = false; 
 
 	_AttribIndex = 0;	
-	_IslandIndex = TILE_ISLAND_MAX_VALUE + 1; // 置个非法值
+	_IslandIndex = TILE_ISLAND_MAX_VALUE + 1; // put an illegal value there
     _is_erase = false;
     
     
@@ -273,7 +273,7 @@ void MPEditor::PlaceTerrain(int nType, int nX, int nY, int nTexNo)
 
 	if (nType == 1)
 		{
-		// 1号刷, 四个角
+		// brush 1, the four corners
 		int nAlphaNo[4] = { 1, 2, 4, 8 };
 		for (int i = 0; i < 4; i++)
 			{
@@ -284,7 +284,7 @@ void MPEditor::PlaceTerrain(int nType, int nX, int nY, int nTexNo)
 		}
 	else if (nType == 2)
 		{
-		// 2号刷，画4个Tile
+		// brush 2, draws 4 tiles
 		for (int i = 0; i < 2; ++ i)
 			for (int j = 0; j < 2; ++ j)
 				{
@@ -296,7 +296,7 @@ void MPEditor::PlaceTerrain(int nType, int nX, int nY, int nTexNo)
 
 				pTile->AddTexLayer(nTexNo, 15);
 
-				if (m_bEnableTextureAlphaBlend == FALSE) continue; // 不产生过渡
+				if (m_bEnableTextureAlphaBlend == FALSE) continue; // produces no transition
 
 				pTile = pCurTerrain->GetTile(x - 1, y - 1);
 				if(pTile) pTile->AddTexLayer(nTexNo, 1);
@@ -325,7 +325,7 @@ void MPEditor::PlaceTerrain(int nType, int nX, int nY, int nTexNo)
 		}
 	else if (nType == 3)
 		{
-		// 3号刷，画16个Tile
+		// brush 3, draws 16 tiles
 		for (int i = 0; i < 4; ++ i)
 			for (int j = 0; j < 4; ++ j)
 				{
@@ -337,7 +337,7 @@ void MPEditor::PlaceTerrain(int nType, int nX, int nY, int nTexNo)
 
 				pTile->AddTexLayer(nTexNo, 15);
 
-				if (m_bEnableTextureAlphaBlend == FALSE) continue; // 不产生过渡
+				if (m_bEnableTextureAlphaBlend == FALSE) continue; // produces no transition
 
 				pTile = pCurTerrain->GetTile(x - 1, y - 1);
 				if(pTile) pTile->AddTexLayer(nTexNo, 1);
@@ -384,7 +384,7 @@ void MPEditor::SetTerrainInvalid(int nType)
 		}
 	else if (nType == 2)
 		{
-		// 2号刷，画4个Tile
+		// brush 2, draws 4 tiles
 		for (int i = 0; i < 2; ++ i)
 			for (int j = 0; j < 2; ++ j)
 				{
@@ -396,7 +396,7 @@ void MPEditor::SetTerrainInvalid(int nType)
 		}
 	else if (nType == 3)
 		{
-		// 3号刷，画16个Tile
+		// brush 3, draws 16 tiles
 		for (int i = 0; i < 4; ++ i)
 			for (int j = 0; j < 4; ++ j)
 				{
@@ -552,22 +552,22 @@ void MPEditor::SystemReport(DWORD dwTimeParam)
 
     MPTerrain *pCurTerrain = GetCurTerrain();
     
-    // 输出项目列表
+    // outputs the item list
     
     // Performance :
     
     // FPS 
-    // 系统总多边形数量  FrameMove时间  渲染时间
-    // 场景物件总数  多边形数量  渲染时间
-    // 角色总数      多边形数量  渲染时间
+    // total number of polygons in the system  FrameMove time  render time
+    // total number of scene objects  polygons  render time
+    // total number of characters      polygons  render time
 
-    // 特效总数      渲染时间
-    // 系统占用内存  占用显存
+    // total number of effects      render time
+    // memory used by the system  video memory used
 
     // GameLogic :
     
-    // 主角名字 坐标  方向
-    // 模型信息 装备   
+    // main character name  coordinates  direction
+    // model information equipment
     static DWORD g_dwLastReportTick = 0;
     DWORD dwTerrainTime = 0;
     DWORD dwSeaTime     = 0;
@@ -703,12 +703,12 @@ void MPEditor::FrameMove(DWORD dwTimeParam)
 	SystemReport(dwTimeParam);
     HandleKeyContinue();
 	
-	// 对怪物进行统计
+	// gathers statistics over the monsters
 
 	if(g_Config.m_bEditor)
 	{
 		//g_Render.EnablePrint(INFO_DEBUG, TRUE);
-		short sMonsterStatus[1000]; // 1000怪的数量
+		short sMonsterStatus[1000]; // the number of level 1000 monsters
 		memset(sMonsterStatus, 0, 1000 * 2);
 
 		CGameScene *pScene = GetCurScene();
@@ -805,14 +805,14 @@ void MPEditor::Render()
     float fX = pCurScene->GetMouseMapX();
 	float fY = pCurScene->GetMouseMapY();
 	
-	float const fTileSize = 1.0f; // 长宽一样
-	float const fTileMod = fTileSize / 2; // 半长
+	float const fTileSize = 1.0f; // same length and width
+	float const fTileMod = fTileSize / 2; // half the length
 	int tx = int(fX);
 	int ty = int(fY);
 
 	if ((m_bModifyHeight && m_nBrushNo == 1)
 		|| (!m_bModifyHeight && m_nBrushNo == 2)
-		|| m_nBrushNo == 3) // 2号刷和3号刷是需要修正坐标的
+		|| m_nBrushNo == 3) // brushes 2 and 3 need their coordinates corrected
 		{
 		if (fX - tx > fTileMod)
 			tx += 1;
@@ -826,7 +826,7 @@ void MPEditor::Render()
 	m_nSelectX = nX;
 	m_nSelectY = nY;
 	
-    // 如果处在下面条件的编辑状态，不需要渲染刷子
+    // when in an edit state meeting the condition below, the brush is not rendered
     if(m_nSelTypeID) return;
 
     g_Render.SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_DIFFUSE );
@@ -839,7 +839,7 @@ void MPEditor::Render()
 	g_Render.SetFVF(D3DFVF_XYZ | D3DFVF_DIFFUSE);			
 	g_Render.EnableZBuffer(FALSE);
 	g_Render.EnableAlpha(TRUE);
-	g_Render.SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW); // 单面渲染
+	g_Render.SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW); // single sided rendering
    	g_Render.SetRenderState( D3DRS_LIGHTING, FALSE );
     g_Render.SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 	g_Render.SetRenderState(D3DRS_SRCBLEND,  D3DBLEND_SRCALPHA);	 // blend the colors based on the
@@ -855,19 +855,19 @@ void MPEditor::Render()
 	{
 		if (m_nBrushNo == 1)
 		{
-			// 画1个Tile
+			// draws 1 tile
 			_RenderSelTile(nX, nY);
 		}
 		else if (m_nBrushNo == 2)
 		{
-			// 画4个Tile
+			// draws 4 tiles
 			for (int i = 0; i < 2; ++ i)
 				for (int j = 0; j < 2; ++ j)
                     _RenderSelTile(nX + (j - 1), nY + (i - 1));
 		}
 		else if (m_nBrushNo == 3)
 		{
-			// 画16个Tile
+			// draws 16 tiles
 			for (int i = 0; i < 4; ++ i)
 				for (int j = 0; j < 4; ++ j)
 					_RenderSelTile(nX + (j - 2), nY + (i - 2));
@@ -969,12 +969,12 @@ void MPEditor::Render()
 			}
 		}
 
-		// 渲染刷子
+		// renders the brush
 		if (m_nBrushNo == 1)
 		{
 			if (m_bModifyHeight)
 			{
-				// 拉高，要画4个Tile
+				// raised, must draw 4 tiles
 				for (int i = 0; i < 2; ++ i)
 					for (int j = 0; j < 2; ++ j)
 						_RenderSelTile(nX + (j - 1), nY + (i - 1));
@@ -985,7 +985,7 @@ void MPEditor::Render()
 		{
 			if (m_bModifyHeight)
 			{
-				// 拉高，要画9个Tile
+				// raised, must draw 9 tiles
 				for (int i = 0; i < 3; ++ i)
 					for (int j = 0; j < 3; ++ j)
 						_RenderSelTile(nX + (j - 1), nY + (i - 1));
@@ -1001,7 +1001,7 @@ void MPEditor::Render()
 		{
 			if (m_bModifyHeight)
 			{
-				// 拉高，要画16个Tile
+				// raised, must draw 16 tiles
 				for (int i = 0; i < 4; ++ i)
 					for (int j = 0; j < 4; ++ j)
 						_RenderSelTile(nX + (j - 2), nY + (i - 2));
@@ -1201,7 +1201,7 @@ BOOL MPEditor::MouseButtonDown(int nButton)
 		    _SetAttrib();
         }
     }
-	else // 右键按下
+	else // right button pressed
 	{
 	    if(g_pGameApp->IsShiftPress())
         {
@@ -1216,7 +1216,7 @@ BOOL MPEditor::MouseButtonDown(int nButton)
 	}
 
 
-    // 原UP事件
+    // the original UP event
 	if(nButton==0)
 	{
 		//if(IsEnable()==FALSE) return FALSE;
@@ -1251,7 +1251,7 @@ BOOL MPEditor::MouseButtonDown(int nButton)
 							}
 							pCha->ResetAITick();
 
-                            // 测试NPC状态道具
+                            // tests the NPC state item
                             //DWORD state = ROLE_MIS_DELIVERY;
                             //switch( rand() % 3 )
                             //{
@@ -1624,7 +1624,7 @@ void MPEditor::MouseMove(int nOffsetX, int nOffsetY)
         {
             if(m_bIsBrushColor)
             {
-                // 吸颜色
+                // picks up the colour
                 MPTile *pTile = pCurScene->GetTerrain()->GetTile(m_nSelectX, m_nSelectY);
                 // pTile->dwColor;
                 extern CEditor g_stUIEditor;
@@ -1775,7 +1775,7 @@ void MPEditor::_RenderHeightmap()
     MPTerrain *pCurTerrain = GetCurTerrain();
     if(!pCurTerrain) return;
 
-    //渲染高度盒子
+    //renders the height box
 	int iRadius = 10;
 	D3DXVECTOR3	vpos;
 	vpos.x = int(pCurTerrain->GetShowCenterX()) - iRadius + 0.25f;
@@ -2114,7 +2114,7 @@ void MPEditor::CancelProperty(void)
 unsigned char MPEditor::_getTileAttribMask(unsigned char attrib_btn_index)
 	{
 	//switch (attrib_btn_index)
-	//	// attrib_btn_index是Editor上区域属性按钮的索引，从1到16
+	//	// attrib_btn_index is the index of the area attribute button on the Editor, from 1 to 16
 	//	{
 	//	case 1:
 	//		return enumAREA_TYPE_SEA; // 第一个按钮是海洋属性
@@ -2159,7 +2159,7 @@ void MPEditor::_renderTileAttrib(int nX, int nY, int nAttribIndex)
 		int k = 140;
 		switch(nAttribIndex)
 		{
-			case 1:  // 陆地属性
+			case 1:  // land attribute
 				v[i].dwColor = D3DCOLOR_ARGB(k, 100, 255, 25);
 				break;
 			case 2:

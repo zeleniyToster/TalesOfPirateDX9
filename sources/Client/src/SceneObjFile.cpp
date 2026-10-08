@@ -158,10 +158,10 @@ long CSceneObjFile::Init(const char *ptcsFileName, bool bSilence)
 		lRet = 0;
 		goto end;
 	}
-	if (m_SFileHead.lVersion == OBJ_FILE_VER500) //需要版本转换
+	if (m_SFileHead.lVersion == OBJ_FILE_VER500) //a version conversion is needed
 	{
 		fclose(fFile);
-		if (ConvertObjFileVer(ptcsFileName) <= 0) //版本转换失败
+		if (ConvertObjFileVer(ptcsFileName) <= 0) //the version conversion failed
 		{
 			lRet = 0;
 			goto end;
@@ -323,7 +323,7 @@ long CSceneObjFile::CreateFile(const char* ptcsFileName,
 	return 1;
 }
 
-long CSceneObjFile::ConvertObjFileVer(const char* ptcsFileName, bool bBackUp) // 从版本500转换到600(物件的绝对坐标转换成相对section的相对坐标)
+long CSceneObjFile::ConvertObjFileVer(const char* ptcsFileName, bool bBackUp) // converts from version 500 to 600 (the absolute coordinates of an object become coordinates relative to its section)
 {
 	long			lRet = 2;
 	char			tcsBackUpName[_MAX_FNAME] = "";
@@ -351,19 +351,19 @@ long CSceneObjFile::ConvertObjFileVer(const char* ptcsFileName, bool bBackUp) //
 	}
 	if (i >= _MAX_FNAME - (long)_tcslen(ptcsFileName))
 	{
-		lRet = -1; // 建立临时文件失败
+		lRet = -1; // failed to create the temporary file
 		goto end;
 	}
 	if (_trename(ptcsFileName, tcsBackUpName) != 0) // 
 	{
-		lRet = -2; // 文件重命名失败
+		lRet = -2; // failed to rename the file
 		goto end;
 	}
 
 	fFileOld = _tfopen(tcsBackUpName, "rb");
 	if (fFileOld == NULL)
 	{
-		lRet = -3; // 打开源文件失败
+		lRet = -3; // failed to open the file
 		goto end;
 	}
 
@@ -373,7 +373,7 @@ long CSceneObjFile::ConvertObjFileVer(const char* ptcsFileName, bool bBackUp) //
 		fFileNew = _tfopen(ptcsFileName, "rb");
 	if (fFileNew == NULL)
 	{
-		lRet = -1; // 建立新文件失败
+		lRet = -1; // failed to create the new file
 		goto end;
 	}
 
@@ -381,7 +381,7 @@ long CSceneObjFile::ConvertObjFileVer(const char* ptcsFileName, bool bBackUp) //
 	ulFileSize = ftell(fFileOld);
 	fseek(fFileOld, 0, SEEK_SET);
 	fread(&SHead, sizeof(SFileHead), 1, fFileOld);
-	if (SHead.lVersion != OBJ_FILE_VER500) // 不需要转换
+	if (SHead.lVersion != OBJ_FILE_VER500) // no conversion needed
 	{
 		lRet = 1;
 		goto end;
@@ -394,7 +394,7 @@ long CSceneObjFile::ConvertObjFileVer(const char* ptcsFileName, bool bBackUp) //
 	pSSectionIndex = new (SSectionIndex[lMaxSectionNum]);
 	if (pSSectionIndex == NULL)
 	{
-		lRet = -4; // 内存分配错误
+		lRet = -4; // memory allocation error
 		goto end;
 	}
 
@@ -411,7 +411,7 @@ long CSceneObjFile::ConvertObjFileVer(const char* ptcsFileName, bool bBackUp) //
 	int nSectionX, nSectionY;
 	for (i = 0; i < lMaxSectionNum && ulFileSize >= (unsigned long)ftell(fFileOld); i ++)
 	{
-	    if (pSSectionIndex[i].iObjNum > 0) //存在有效数据
+	    if (pSSectionIndex[i].iObjNum > 0) // valid data exists
 		{
 			fseek(fFileOld, pSSectionIndex[i].lObjInfoPos, SEEK_SET);
 			fread(pSObjInfo, sizeof(SSceneObjInfo) * SHead.iSectionObjNum, 1, fFileOld);
@@ -479,7 +479,7 @@ long CSceneObjFile::ReadSectionObjInfo(int nSectionNO, SSceneObjInfo *SSceneObj,
 		fseek(m_fRdWr, m_SSectionIndex[nSectionNO].lObjInfoPos, SEEK_SET);
         LG("readmap", "Seek Offset [%d %d] = %d\n", nSectionNO % m_SFileHead.iSectionCntX, nSectionNO / m_SFileHead.iSectionCntX, m_SSectionIndex[nSectionNO].lObjInfoPos);
         fread(SSceneObj, sizeof(SSceneObjInfo), m_SSectionIndex[nSectionNO].iObjNum, m_fRdWr);
-		// 转换成绝对坐标
+		// converts to absolute coordinates
 		int nSectionX, nSectionY;
 		for (int i = 0; i < m_SSectionIndex[nSectionNO].iObjNum; i++)
 		{
@@ -532,7 +532,7 @@ long CSceneObjFile::WriteSectionObjInfo(int nSectionNO, SSceneObjInfo *SSceneObj
 
 			fFile = m_fAppend;
 		}
-		// 转换成相对坐标
+		// converts to relative coordinates
 		int nSectionX, nSectionY;
 		for (int j = 0; j < m_SSectionIndex[nSectionNO].iObjNum; j++)
 		{
@@ -542,7 +542,7 @@ long CSceneObjFile::WriteSectionObjInfo(int nSectionNO, SSceneObjInfo *SSceneObj
 			SSceneObj[j].nY -= nSectionY;
 		}
 		//
-		// 写入obj信息
+		// writes the obj information
 		fwrite((const void *)SSceneObj, sizeof(SSceneObjInfo), m_SFileHead.iSectionObjNum, fFile);
 		fflush(fFile);
 	}
@@ -555,7 +555,7 @@ long CSceneObjFile::WriteSectionObjInfo(int nSectionNO, SSceneObjInfo *SSceneObj
 	fwrite((const void *)(m_SSectionIndex + nSectionNO), sizeof(SSectionIndex), 1, m_fRdWr);
 	fflush(m_fRdWr);
 
-	// 临时代码。。。
+	// temporary code...
 	// 
 	long	lFileSize;
 	fseek(m_fRdWr, 0, SEEK_END);
@@ -597,19 +597,19 @@ long CSceneObjFile::TrimFile(const char* ptcsFileName, bool bBackUp)
 	}
 	if (i >= _MAX_FNAME - (long)_tcslen(ptcsFileName))
 	{
-		lRet = -1; // 建立临时文件失败
+		lRet = -1; // failed to create the temporary file
 		goto end;
 	}
 	if (_trename(ptcsFileName, tcsBackUpName) != 0) // 
 	{
-		lRet = -2; // 文件重命名失败
+		lRet = -2; // failed to rename the file
 		goto end;
 	}
 
 	fFileOld = _tfopen(tcsBackUpName, _TEXT("rb"));
 	if (fFileOld == NULL)
 	{
-		lRet = -3; // 打开文件失败
+		lRet = -3; // failed to open the file
 		goto end;
 	}
 
@@ -619,7 +619,7 @@ long CSceneObjFile::TrimFile(const char* ptcsFileName, bool bBackUp)
 		fFileNew = _tfopen(ptcsFileName, _TEXT("rb"));
 	if (fFileNew == NULL)
 	{
-		lRet = -3; // 打开文件失败
+		lRet = -3; // failed to open the file
 		goto end;
 	}
 
@@ -630,7 +630,7 @@ long CSceneObjFile::TrimFile(const char* ptcsFileName, bool bBackUp)
 	if (_tcscmp(SHead.tcsTitle, _TEXT("HF Object File!")) != 0
 		|| SHead.lVersion != OBJ_FILE_VER600)// || SHead.lFileSize != i)
 	{
-		lRet = -4; // 源文件已被破坏或版本错误
+		lRet = -4; // the source file is corrupted or the version is wrong
 		goto end;
 	}
 
@@ -638,7 +638,7 @@ long CSceneObjFile::TrimFile(const char* ptcsFileName, bool bBackUp)
 	pSSectionIndex = new (SSectionIndex[lMaxSectionNum]);
 	if (pSSectionIndex == NULL)
 	{
-		lRet = -5; // 内存分配错误
+		lRet = -5; // memory allocation error
 		goto end;
 	}
 	fread((void *)pSSectionIndex, sizeof(SSectionIndex), lMaxSectionNum, fFileOld);
@@ -653,7 +653,7 @@ long CSceneObjFile::TrimFile(const char* ptcsFileName, bool bBackUp)
 
 	for (i = 0; i < lMaxSectionNum && ulFileSize >= (unsigned long)ftell(fFileOld); i ++)
 	{
-	    if (pSSectionIndex[i].iObjNum > 0) //存在有效数据
+	    if (pSSectionIndex[i].iObjNum > 0) // valid data exists
 		{
 			fseek(fFileOld, pSSectionIndex[i].lObjInfoPos, SEEK_SET);
 			fread(pszSectionInfo, sizeof(SSceneObjInfo) * SHead.iSectionObjNum, 1, fFileOld);

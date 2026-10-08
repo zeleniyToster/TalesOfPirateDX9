@@ -21,7 +21,7 @@ struct stTradeBox;
 class CMemo;
 class COneCommand;
 
-// 货舱交易所
+// cargo hold exchange
 class CBourseMgr : public CUIInterface
 {
 public:
@@ -62,7 +62,7 @@ protected:
     virtual void End();
 	virtual void CloseForm();
 
-	//~ 回掉函数
+	//~ callbacks
 	static void _MainMouseSeaTradeEvent(CCompent *pSender, int nMsgType, 
 										int x, int y, DWORD dwKey);
 	static void __gui_event_left_rotate(CGuiData *sender,
@@ -96,9 +96,9 @@ private:
 
 	struct ItemInfo_T
 	{
-		USHORT		sId;		//物品ID号
-		DWORD		dwPrice;	//物品价格
-		WORD		wNum;		//物品数量
+		USHORT		sId;		//item ID
+		DWORD		dwPrice;	//item price
+		WORD		wNum;		//item quantity
 		BYTE		byLevel;
 
 
@@ -108,7 +108,7 @@ private:
 	typedef ItemList::iterator ItemListIter;
 
 
-	// 逻辑函数
+	// logic functions
 	void            ChangeItem(eDirectType enumDirect = LEFT);
 
 	void			SetItems();
@@ -125,28 +125,28 @@ private:
 
 private:
 
-	//~ 界面 =================================================================
+	//~ interface ============================================================================
 	CForm*			frmSeaTrade;
 	CForm*			frmBoatRoom;
 
 	CTextButton*	btnItemLeft;
 	CTextButton*	btnItemRight;
 
-	//买卖货物的表格
+	//the table holding the goods traded and bought
 	CGoodsGrid*		grdItemSale;
 	CGoodsGrid*		grdItemBuy; 
 
 	CGoodsGrid*		grdShipRoom;
 
-	//NPC界面显示选择船的界面
+	//the NPC screen showing the boat selection
 	CForm*			frmNPCchat;
 	CMemo*			memCtrl;
 
-	//~ 逻辑 ==================================================================
-	static const BYTE ITEM_TYPE;			//物品类型,这里约定为0
-	static const float SALE_RATE;			//物品卖出的折减数目前约定为50%
-	static const int BUY_PAGE_INDEX;		//买入物品的页索引号
-	static const int SALE_PAGE_INDEX;		//卖出物品的页索引号
+	//~ logic ==============================================================================
+	static const BYTE ITEM_TYPE;			//item type; 0 is agreed here
+	static const float SALE_RATE;			//the discount for selling an item is currently set at 50%
+	static const int BUY_PAGE_INDEX;		//page index of the items being bought
+	static const int SALE_PAGE_INDEX;		//page index of the items being sold
 
 	DWORD			 m_dwNpcID;
 	DWORD			 m_dwBoatID;
@@ -155,7 +155,7 @@ private:
 	stTradeBox*		 m_pkTradeBox;
 
 
-	//物品的个数
+	//the count of the items
 	int				 m_iItemSelIndex;
 
 	ItemList		 m_BuyList;
@@ -166,7 +166,7 @@ private:
 
 ////////////////////////////////////////////////////////////////////////////////
 //
-//  黑市商人
+//  black market merchant
 //
 class CBlackTradeMgr : public CUIInterface
 {
@@ -204,13 +204,13 @@ private:
 
 	BlackTradeVec	m_vecBlackTrade;
 
-	// 刷新购买条件
+	// refreshes the purchase conditions
 	void RefreshSaleGrid();
 
-	// 兑换确认
+	// exchange confirmation
 	static void		_TradeExchangeEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey);
 
-	// 关闭窗体事件
+	// close window event
 	static void		_evtCloseForm(CForm* pForm, bool& IsClose);
 };
 

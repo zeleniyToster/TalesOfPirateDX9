@@ -81,18 +81,18 @@ namespace GUI
                     {
                         switch(pItemCommand->GetItemInfo()->sType)
                         {
-                        case 1:     //  剑
-                        case 2:     //  巨剑
-                        case 3:     //  弓
-                        case 4:     //  火枪
-                        case 7:     //  匕首
-                        case 9:     //  法杖
-                        case 11:     //  盾牌
-                        case 20:     //  帽子
-                        case 22:     //  衣服
-                        case 23:     //  手套
-                        case 24:     //  鞋子
-                        case 27:     //  纹身
+                        case 1:     //  sword
+                        case 2:     //  greatsword
+                        case 3:     //  bow
+                        case 4:     //  musket
+                        case 7:     //  dagger
+                        case 9:     //  staff
+                        case 11:     //  shield
+                        case 20:     //  hat
+                        case 22:     //  clothing
+                        case 23:     //  gloves
+                        case 24:     //  boots
+                        case 27:     //  tattoo
                             {
                                 PushItem(i, *pItemCommand, true);
                             }  break;
@@ -246,7 +246,7 @@ namespace GUI
 
     void CBreakMgr::PopItem(int iIndex, bool bRetry/* = false*/)
     {
-        //  是否锁定
+        //  whether it is locked
         if(bLock)
         {
             return;
@@ -256,16 +256,16 @@ namespace GUI
 		if (! pItemCommand)
             return;
 
-		cmdBreak[iIndex]->DelCommand();	// 该函数将删除delete Item
+		cmdBreak[iIndex]->DelCommand();	// this function deletes the Item
 
-		// 将Item相应的物品栏恢复成可用
+		// puts the item slot of the Item back to usable
 		CCommandObj* pItem = g_stUIEquip.GetGoodsGrid()->GetItem(iBreakPos[iIndex]);
 		if (pItem)
 		{
 			pItem->SetIsValid(true);
 		}
 
-		// 记录Item在物品栏中的位置
+		// records the position of the Item in the item slot
         if(!bRetry)
         {
             iBreakPos[iIndex] = NO_USE;
@@ -274,31 +274,31 @@ namespace GUI
 
     void CBreakMgr::PushItem(int iIndex, CItemCommand& rItem, bool bRetry/* = false*/)
     {
-        //  是否锁定
+        //  whether it is locked
         if(bLock)
         {
             return;
         }
-        // 判断道具是否可以拖
+        // decides whether the item can be dragged
 		if(! rItem.GetIsValid())
 		{
 			return;
 		}
 
-		// 查看原来的Cmd中是否已经有Item了，如果有则移出
+		// checks whether the original Cmd already has an Item and removes it if so
 		CItemCommand* pItemCommand =  dynamic_cast<CItemCommand*>(cmdBreak[iIndex]->GetCommand());
 		if (pItemCommand)
 		{
 			PopItem(iIndex);
 		}
 
-		// 记录Item在物品栏中的位置
+		// records the position of the Item in the item slot
         if(!bRetry)
         {
             iBreakPos[iIndex] = g_stUIEquip.GetGoodsGrid()->GetDragIndex();
         }
 
-		// 将Item相应的物品栏灰调
+		// greys out the item slot of the Item
 		rItem.SetIsValid(false);
 
 		// 将创建的Item放入Cmd中，这里用new将会在PopItem()中删除
@@ -413,18 +413,18 @@ namespace GUI
             return;
         switch(pItemCommand->GetItemInfo()->sType)
         {
-        case 1:     //  剑
-        case 2:     //  巨剑
-        case 3:     //  弓
-        case 4:     //  火枪
-        case 7:     //  匕首
-        case 9:     //  法杖
-        case 11:     //  盾牌
-        case 20:     //  帽子
-        case 22:     //  衣服
-        case 23:     //  手套
-        case 24:     //  鞋子
-        case 27:     //  纹身
+        case 1:     //  sword
+        case 2:     //  greatsword
+        case 3:     //  bow
+        case 4:     //  musket
+        case 7:     //  dagger
+        case 9:     //  staff
+        case 11:     //  shield
+        case 20:     //  hat
+        case 22:     //  clothing
+        case 23:     //  gloves
+        case 24:     //  boots
+        case 27:     //  tattoo
             {}  break;
         default:
             {

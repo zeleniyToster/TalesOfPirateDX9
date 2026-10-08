@@ -80,7 +80,7 @@ bool CShopState::_Start()
 CPickState::CPickState(CActor* p)
 : CActionState(p), _pItem(NULL)
 {
-	_IsOver = true;		// 动作直接结束了
+	_IsOver = true;		// the action ended directly
     _IsSend = true;
 }
 
@@ -108,7 +108,7 @@ bool CPickState::_Start()
 CEventState::CEventState(CActor* p)
 : CActionState(p), _pNode(NULL), _pEvent(0)
 {
-	_IsOver = true;		// 动作直接结束了
+	_IsOver = true;		// the action ended directly
 }
 
 bool CEventState::_Start()
@@ -175,7 +175,7 @@ void CFeedState::End()
 
 
 //---------------------------------------------------------------------------
-// CFeteState		 add by Philip.Wu  2006-06-20  祭祀状态
+// CFeteState		 add by Philip.Wu  2006-06-20  sacrifice state
 //---------------------------------------------------------------------------
 CFeteState::CFeteState(CActor* p)
 : CActionState(p)
@@ -186,7 +186,7 @@ bool CFeteState::_Start()
 {
 	_IsBeforeShow = g_stUIEquip.GetItemForm()->GetIsShow();
 	if( !_IsBeforeShow ) g_stUIEquip.GetItemForm()->Show();
-	CCursor::I()->SetCursor( CCursor::stRepair );	// 图标待修改
+	CCursor::I()->SetCursor( CCursor::stRepair );	// the icon still needs changing
 	return true;
 }
 

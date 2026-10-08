@@ -83,7 +83,7 @@ void CWaitAttackState::SetSkill( CSkillRecord* p )
 
 void CWaitAttackState::CalcSkillSpeed()
 {
-	// 计算动作速度
+	// computes the action speed
 	if( !_pSkillInfo->IsPlayRand() )
 	{
 		static int nCount = 0;
@@ -113,7 +113,7 @@ void CWaitAttackState::CalcSkillSpeed()
 
 bool CWaitAttackState::_Start()
 {
-	// 状态开始执行
+	// the state starts executing
 	CalcSkillSpeed();
 	_StartActor();
 	return true;
@@ -216,10 +216,10 @@ void CWaitAttackState::_UseSkill()
 
 void CWaitAttackState::ActionFrame( DWORD pose_id, int key_frame )
 {	
-	// 关键帧调用，其中key_frame的值意义如下：
-	// ACTION_BEGIN_HIT = -1 动作开始
-	// ACTION_END_HIT = -2 动作结束
-	// 大于零，关键帧
+	// key frame callback, where key_frame means the following:
+	// ACTION_BEGIN_HIT = -1 the action begins
+	// ACTION_END_HIT = -2 the action ends
+	// greater than zero, a key frame
 
 	//if( !_IsPoseValid(pose_id) )
 	//{
@@ -228,13 +228,13 @@ void CWaitAttackState::ActionFrame( DWORD pose_id, int key_frame )
 	
 	if( key_frame>0 ) key_frame=0;
 
-	// 特定技能的镜头抖动效果
+	// the camera shake effect of a specific skill
 	if( _pSkillInfo->nID==83 && key_frame>=0 )
 	{
 		g_pGameApp->GetMainCam()->SetCameraDither( TRUE );
 	}
 
-	// 动作关键帧
+	// action key frame
 	if( _pSkillInfo->sActionKeyFrme==key_frame ) 
 	{
 		if( _pSkillInfo->sWhop!=-1 )	CGameScene::PlayEnvSound( _pSkillInfo->sWhop, _pSelf->GetCurX(), _pSelf->GetCurY() );
@@ -262,7 +262,7 @@ void CWaitAttackState::ActionFrame( DWORD pose_id, int key_frame )
 	if( _pSkillInfo->sItemEffect1[0]>0 && _pSkillInfo->sItemEffect1[1]==key_frame )	_pSelf->ItemEffect( _pSkillInfo->sItemEffect1[0], _pSkillInfo->sItemDummyLink, _pSelf->getYaw() );
 	if( _pSkillInfo->sItemEffect2[0]>0 && _pSkillInfo->sItemEffect2[1]==key_frame )	_pSelf->ItemEffect( _pSkillInfo->sItemEffect2[0], _pSkillInfo->sItemDummyLink, _pSelf->getYaw() );
 
-	// 播放特效
+	// plays the effect
 	if( _pSkillInfo->sSkyEffect!=0 && _pSkillInfo->sSkyEffectActionKeyFrame==key_frame ) 
 	{
 		int nTargetID = -1;
@@ -285,21 +285,21 @@ void CWaitAttackState::ActionFrame( DWORD pose_id, int key_frame )
 
 		if( CEffectObj* pEff = _pSelf->SkyEffect( _pSkillInfo->sSkyEffect, _pSkillInfo->sSkyEffectActionDummyLink, _pSkillInfo->sSkyEffectItemDummyLink, _pSkillInfo->sSkySpd, &pos, nTargetID, _pSkillInfo ) )
 		{
-			// 播放了一个飞行特效,就有一个对应的着地的特效效果
-			// 设置特效播放完毕时要执行的伤害包
+			// every flying effect that is played has a matching ground impact effect
+			// sets the damage packet to run once the effect has finished playing
 			pEff->GetEffDelay()->SetServerHarm( _cHit, _pHarm );
 		}
 		else
 		{
-			// 特效创建失败，直接播放特效伤害包
+			// the effect could not be created, play the effect damage packet directly
 			_cHit.EffectExec( _pHarm );
 		}
 	}
 
-	// 执行动作伤害包
+	// runs the action damage packet
 	_cHit.ActionExec( _pHarm, key_frame );
 
-	// 如果是砍树
+	// if it is chopping a tree
 	if( _pTarget && key_frame>=0 && _pTarget->getChaCtrlType()==enumCHACTRL_MONS_TREE )
 	{
 		_pTarget->PlayPose( 7, PLAY_ONCE_SMOOTH );
@@ -313,7 +313,7 @@ void CWaitAttackState::ActionFrame( DWORD pose_id, int key_frame )
 
 void CWaitAttackState::ActionBegin( DWORD pose_id )
 {
-	// 动作开始
+	// the action begins
 
     //if( !_IsPoseValid(pose_id) )
     //{
@@ -341,7 +341,7 @@ void CWaitAttackState::_PopThis()
 
 void CWaitAttackState::ActionEnd( DWORD pose_id )
 {
-	// 动作结束
+	// the action ends
 
     //if( !_IsPoseValid(pose_id) )
 	//{
@@ -412,7 +412,7 @@ void CWaitAttackState::FrameMove()
 
 void CWaitAttackState::MoveEnd(int x, int y, int nState)
 {
-	// 被动端不响应MoveEnd
+	// the passive side does not respond to MoveEnd
 }
 
 void CWaitAttackState::ServerEnd(int nState)
@@ -480,7 +480,7 @@ bool CAttackState::_Start()
 	
 	if( _pSelf->IsMainCha() )
 	{
-		// 设置技能cooldown，初始化主角准备技能为空
+		// sets the skill cooldown, initialises the main character's prepared skill to empty
         _pSelf->ResetReadySkill();
 	}
 
@@ -496,7 +496,7 @@ bool CAttackState::_Start()
 			return false;
 		}
 
-		// 摆滩技能
+		// stall skill
 		g_stUIBooth.ShowSetupBoothForm( _pSkillInfo->GetLevel() );
 		PopState();
 		return true;
@@ -526,7 +526,7 @@ bool CAttackState::_Start()
 		return false;
 	}
 
-	// 计算技能攻击距离
+	// computes the skill attack distance
     if( _pSkillInfo->GetDistance()>0 )
     {
         _nTotalDis = _pSelf->GetDefaultChaInfo()->sRadii + _pSkillInfo->GetDistance();
@@ -537,7 +537,7 @@ bool CAttackState::_Start()
         _nTotalDis = 0;
     }
 
-	// 设置技能动作速度
+	// sets the skill action speed
 	if( strcmp( _pSkillInfo->szFireSpeed, "0" )==0 )
 	{
 		SetSkillSpeed( _pSelf->getAttackSpeed() );
@@ -556,7 +556,7 @@ bool CAttackState::_Start()
 	param.lSkillID = _pSkillInfo->sID;
     bool isFindPath = false;
 
-	// 攻击距离,距离为零,直接释放
+	// attack distance; when the distance is zero, release immediately
 	if( _pSkillInfo->GetDistance()==0 )
 	{
         _nAttackX = _pSelf->GetServerX();
@@ -569,7 +569,7 @@ bool CAttackState::_Start()
 		{
 			if( _pSkillInfo->IsAttackArea() )
 			{
-				// 如果是攻击范围，取目标者的前方
+				// if it is an area attack, take the position ahead of the target
 				int dis = GetDistance( _pTarget->GetCurX(), _pTarget->GetCurY(), _pTarget->GetServerX(), _pTarget->GetServerY() );
 				int PRE_ATTACK = 100;
 				if( dis <= PRE_ATTACK )
@@ -636,12 +636,12 @@ bool CAttackState::_Start()
 	CS_BeginAction( _pSelf, enumACTION_SKILL, (void*)&param, this );
 
 	LG( _pSelf->getLogName(), "FireSpeed:%d\n", _nSkillSpeed );
-	_pSkillInfo->SetAttackTime( CGameApp::GetCurTick() + _nSkillSpeed );	// 设置当前技能下一次可用的时间
+	_pSkillInfo->SetAttackTime( CGameApp::GetCurTick() + _nSkillSpeed );	// sets the time the current skill can be used again
 	CalcSkillSpeed();
 
 	_dwLastAttackTime = CGameApp::GetCurTick();
 
-	// 判断是攻击范围内，转发为攻击状态
+	// if it is inside the attack range, switch to the attack state
 	if( _pSkillInfo->IsAttackArea() )
 	{
 		if( GetDistance(_nAttackX, _nAttackY, _pSelf->GetServerX(), _pSelf->GetServerY())<=_nTotalDis )
@@ -657,7 +657,7 @@ bool CAttackState::_Start()
 		}
 	}
 
-	// 如果不在攻击距离内，开始移动
+	// if outside the attack distance, start moving
 	if( _eUseSkill==enumInit )
 	{
 		_pMove->ChaRun();
@@ -670,7 +670,7 @@ void CAttackState::FrameMove()
 {
 	if( !_pMove->GetIsExecEnd() )
 	{
-		// 玩家正在移动
+		// the player is moving
 		_pMove->FrameMove();
 		if( _pMove->GetIsExecEnd() )
 		{
@@ -734,7 +734,7 @@ void CAttackState::FrameMove()
 
 void CAttackState::PushPoint( int x, int y )
 {
-	// 主角移动
+	// the main character moves
 	if( _eUseSkill==enumInit )
 	{
 		_pMove->PushPoint( x, y );
@@ -787,7 +787,7 @@ void CAttackState::MoveEnd(int x, int y, int nState)
 {
     _pMove->MoveEnd(x, y, nState);
 
-    // 当且仅当返回enumMSTATE_INRANGE时,才开始转入攻击状态,有任何其它状态,停止当前状态 
+    // only when enumMSTATE_INRANGE is returned does it switch to the attack state; on any other state the current state is stopped
     if( nState==enumMSTATE_INRANGE )
     {
 		_pSkillInfo->SetAttackTime( CGameApp::GetCurTick() + _nSkillSpeed );
@@ -880,7 +880,7 @@ void CTraceAttackState::StartFailed()
 
 void CTraceAttackState::_End()
 { 
-	// 攻击状态结束时，检查是否要生成新的攻击状态，即追击
+	// when the attack state ends, checks whether a new attack state is needed, that is, the pursuit
 	CAttackState::_End();
 	CheckTrace();
 }
@@ -889,7 +889,7 @@ void CTraceAttackState::CheckTrace()
 {
 	if( _pSelf->GetDefaultSkillInfo()==_pSkillInfo && _IsTrace && _pTarget && _pTarget->IsEnabled() && _pTarget->IsValid() )
 	{
-		// 如果区域限制不同，且不可走，则不追击
+		// if the area restriction differs and it is not walkable, do not pursue
 		if( _pSelf->GetDefaultChaInfo()->chTerritory != _pTarget->GetDefaultChaInfo()->chTerritory )
 		{	
 			if( !g_IsMoveAble( _pSelf->getChaCtrlType()

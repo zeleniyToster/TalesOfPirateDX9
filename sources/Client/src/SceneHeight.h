@@ -2,7 +2,7 @@
 
 #include "Scene.h"
 
-// 用于在角色或道具类的FrameMove里更新高度
+// used to update the height in the FrameMove of a character or item class
 class CSceneHeight
 {
 public:

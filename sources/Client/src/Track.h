@@ -40,7 +40,7 @@ protected:
     float        _fProgressRate;
     float        _fSpeed;
 
-	float		 _fheight;//平滑处理高度
+	float		 _fheight;//smooths the height
 	bool		 _bUpdateHei;
 
     std::list<STrackPoint> _PointList;

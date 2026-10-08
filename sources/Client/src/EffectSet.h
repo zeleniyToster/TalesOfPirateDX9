@@ -165,7 +165,7 @@ public:
 
 protected:
 
-	static CMagicSet* _Instance; // 相当于单键, 把自己记住
+	static CMagicSet* _Instance; // like a single key, remembers itself
 
 	virtual CRawDataInfo* _CreateRawDataArray(int nCnt)
 	{
@@ -257,10 +257,10 @@ public:
 		nAni = 0;
 		nRow = 0;
 		nCol  = 0;
-		nUseAlphaTest = 0;//是否使用透明色
-		nAlphaType = 0;//alpha  类型
+		nUseAlphaTest = 0;// whether the colour key is used
+		nAlphaType = 0;// alpha type
 
-		nColorR = 0;//颜色
+		nColorR = 0;// colour
 		nColorG = 0;
 		nColorB = 0;
 		nColorA = 0;
@@ -275,15 +275,15 @@ public:
 	int		nRow;
 	int		nCol;
 
-	int		nUseAlphaTest;//是否使用透明色
-	int		nAlphaType;//alpha  类型
+	int		nUseAlphaTest;// whether the colour key is used
+	int		nAlphaType;// alpha type
 
-	int		nColorR;//颜色
+	int		nColorR;// colour
 	int		nColorG;
 	int		nColorB;
 	int		nColorA;
 
-	int		nType;//0是跟随角色的，1是跟随特效的，
+	int		nType;//0 follows the character, 1 follows the effect,
 };
 
 
@@ -303,7 +303,7 @@ public:
 
 protected:
 
-	static CShadeSet* _Instance; // 相当于单键, 把自己记住
+	static CShadeSet* _Instance; // like a single key, remembers itself
 
 	virtual CRawDataInfo* _CreateRawDataArray(int nCnt)
 	{
@@ -347,10 +347,10 @@ protected:
 		pInfo->nRow   	= Str2Int(ParamList[3].c_str());
 		pInfo->nCol     = Str2Int(ParamList[4].c_str());
 
-		pInfo->nUseAlphaTest = Str2Int(ParamList[5].c_str());//是否使用透明色
-		pInfo->nAlphaType = Str2Int(ParamList[6].c_str());//alpha  类型
+		pInfo->nUseAlphaTest = Str2Int(ParamList[5].c_str());// whether the colour key is used
+		pInfo->nAlphaType = Str2Int(ParamList[6].c_str());// alpha type
 
-		pInfo->nColorR = Str2Int(ParamList[7].c_str());//颜色
+		pInfo->nColorR = Str2Int(ParamList[7].c_str());// colour
 		pInfo->nColorG = Str2Int(ParamList[8].c_str());
 		pInfo->nColorB = Str2Int(ParamList[9].c_str());
 		pInfo->nColorA = Str2Int(ParamList[10].c_str());

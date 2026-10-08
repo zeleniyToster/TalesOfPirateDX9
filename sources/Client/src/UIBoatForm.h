@@ -7,26 +7,26 @@ class CCharacter;
 
 namespace GUI
 {
-#define defMaxBoat 3 // 可获得最大船只数
+#define defMaxBoat 3 // maximum number of boats obtainable
 
-class CBoat // 船信息类
+class CBoat // boat information class
 {
 public:
 	CBoat();
 	bool Init( int n, CForm* ship, GuiDragInGridEvent evt );
 
-	void		Reset(); // 重新设置船
-	void		Link( CCharacter* pBoat )	{ _chtBoat = pBoat;			}  // 船人物和角色人物对应
-	bool		GetIsValid()				{ return _chtBoat!=NULL;	}  // 获得角色信息
+	void		Reset(); // resets the boat
+	void		Link( CCharacter* pBoat )	{ _chtBoat = pBoat;			}  // the boat character corresponds to the character character
+	bool		GetIsValid()				{ return _chtBoat!=NULL;	}  // gets the character information
 	void		UnLink()					{ _chtBoat=NULL;			}  
 
-	CCharacter* GetCha()			{ return _chtBoat;		}  // 找人物
-	CGoodsGrid*	GetGoodsGrid()		{ return _grdHold;		}  // 获得角色道具
-	CForm*		GetForm()			{ return _frmShipRoom;	}  // 找船道具栏信息
+	CCharacter* GetCha()			{ return _chtBoat;		}  // finds the character
+	CGoodsGrid*	GetGoodsGrid()		{ return _grdHold;		}  // gets the character item
+	CForm*		GetForm()			{ return _frmShipRoom;	}  // looks up the boat item slot information
 
 private:
 	static void _evtHoldGridRMouse(CGuiData *pSender,CCommandObj* pItem,int nGridID);
-	static void _evtEscClose( CForm* pForm );	// 按 ESC 关闭窗体事件  add by Philip.Wu  2006-06-22
+	static void _evtEscClose( CForm* pForm );	// ESC close window event  add by Philip.Wu  2006-06-22
 
 private:
 	int				_nIndex;
@@ -42,33 +42,33 @@ class CBoatMgr : public CUIInterface
 public:
 	void	Clear();
 
-	bool	AddBoat( CCharacter* pBoat );  // 用户添加船只
-	CBoat*	GetBoat( unsigned int n )		{ return &_cBoats[n];	} // 获取船只
-	CBoat*	FindBoat( unsigned int ulWorldID );  // 找到用户全部船只
+	bool	AddBoat( CCharacter* pBoat );  // the user adds a boat
+	CBoat*	GetBoat( unsigned int n )		{ return &_cBoats[n];	} // gets the boat
+	CBoat*	FindBoat( unsigned int ulWorldID );  // finds every boat of the user
 
 	void	SetHuman( CCharacter* p )		{ _pHuman = p;			} 
-	CCharacter*		GetHuman()				{ return _pHuman;		} // 查找当前角色
+	CCharacter*		GetHuman()				{ return _pHuman;		} // looks up the current character
 
-	CGoodsGrid*		FindGoodsGrid( unsigned int ulWorldID );	// 根据ID查找对应的道具栏
-	CCharacter*		FindCha( unsigned int ulWorldID );         // 查找船主人
-	CCharacter*		FindCha( CGoodsGrid* pGoods );   // 由装备匹配查找船只的主人
+	CGoodsGrid*		FindGoodsGrid( unsigned int ulWorldID );	// looks up the matching item slot by ID
+	CCharacter*		FindCha( unsigned int ulWorldID );         // looks up the boat owner
+	CCharacter*		FindCha( CGoodsGrid* pGoods );   // finds the boat owner by matching equipment
 
-	CCharacter*		ChangeMainCha( unsigned int ulWorldID );	// 切换主角
+	CCharacter*		ChangeMainCha( unsigned int ulWorldID );	// switches the main character
 
-	CBoat*	GetOtherBoat()					{ return &_cOther;		}  // 查看别人船
+	CBoat*	GetOtherBoat()					{ return &_cOther;		}  // views another player's boat
 
 protected:
-	virtual bool Init(); //用户船信息初始化
+	virtual bool Init(); //user boat information initialisation
     virtual void End(); 
-	virtual void SwitchMap()				{	Clear();			} // 跳转地图时清除船信息
+	virtual void SwitchMap()				{	Clear();			} // clears the boat information when jumping to another map
 
 private:
-	CBoat*		GetFreeBoat(); // 获得免费船只
+	CBoat*		GetFreeBoat(); // obtains a free boat
 
 private:
 	CCharacter*	_pHuman;
-	CBoat		_cBoats[defMaxBoat];        // 当前角色可拥有的船数量
-	CBoat		_cOther;					// 一个用于查看别人的船舱，货物时的临时变量　
+	CBoat		_cBoats[defMaxBoat];        // number of boats the current character may own
+	CBoat		_cOther;					// a temporary variable used to view another player's cargo hold and goods
 
 };
 

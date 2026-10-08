@@ -188,12 +188,12 @@ void CServerHarm::SetIsOuter( bool v )
 		{
 			if( _pSkill->IsHarmRange() )
 			{
-				// 范围技能，下一次能执行完
+				// an area skill; the next execution will complete
 				return;
 			}
 			else if( _nReadyExec<(int)_harm.size() )
 			{
-				// 单个技能将多余部分执行掉
+				// a single skill executes the leftover part
 				ExecAll( (int)_harm.size() - _nReadyExec );
 				return;
 			}
@@ -201,7 +201,7 @@ void CServerHarm::SetIsOuter( bool v )
 
 		if( !_harm.empty() ) ExecAll();
 
-		// 有外部执行时,由外部执行结束
+		// when there is an external execution, it is ended by the external side
 		if( _nReadyExec<=0 )
 		{
 			LG( _pCha->getLogName(), "CServerHarm Over(Outer), FightID[%d]\n", GetFightID() );

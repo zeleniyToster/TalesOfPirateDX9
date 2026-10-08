@@ -4,8 +4,8 @@
 #include "Script.h"
 #include "ChaAttrType.h"
 
-// 传递给SetShadeShow(int iIdx, bool bShow)的iIdx
-#define SCENENODE_SHADOW  0  // Scene Node的阴影
+// the iIdx passed to SetShadeShow(int iIdx, bool bShow)
+#define SCENENODE_SHADOW  0  // the shadow of the Scene Node
 
 #define	EFFECT_RIPPLE1	  97
 #define	EFFECT_RIPPLE2	  98
@@ -147,8 +147,8 @@ protected:
     int         _nHeightOff;
 	int			_nPoseHeightOff;
     
-    BOOL        _bHide; // 隐藏 (比如编辑器里做临时隐藏, 方便编辑)
-    int         _nSize; // 逻辑上的尺寸
+    BOOL        _bHide; // hidden (for example temporarily hidden in the editor, to ease editing)
+    int         _nSize; // the logical size
 
 	//lemon add@2004.9.27 for  bind effect;
 	int						_iEffNum;
@@ -158,7 +158,7 @@ protected:
 
     SGameAttr               _Attr;
 
-	D3DXVECTOR3		_vPos;				// 用于外部快速访问
+	D3DXVECTOR3		_vPos;				// used for quick access from outside
 
 protected:
 

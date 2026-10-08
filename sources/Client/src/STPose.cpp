@@ -60,7 +60,7 @@ CInsertState::~CInsertState()
 
 bool CInsertState::_Start()
 {
-	// 此函数第二次时不能返回false,否则会已经坐下时,第二次快速发送时,调用失败,从而删除本状态
+	// this function must not return false the second time, otherwise when already sitting a second fast send would fail and delete this state
 	int rv = true;
 	if( GetActor()->GetCha()->GetChaState()->IsFalse( enumChaStateMove ) ) 
 		rv = false;
@@ -164,8 +164,8 @@ bool CEquipState::_Start()
 	case enumUseItem:
 		CS_BeginAction( GetActor()->GetCha(), enumACTION_ITEM_USE, (void*)_pUseItem );
 		//	2008-7-30	yangyinyu	add	begin!
-		//	增加对锁定道具的逻辑。
-		//	1	在
+		//	adds the logic for locked items.
+		//	1	(the original note is unfinished here)
 		//	2008-7-30	yangyinyu	add	end!
 		break;
 	case enumUnfix:

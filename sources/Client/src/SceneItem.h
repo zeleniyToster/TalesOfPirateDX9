@@ -37,7 +37,7 @@ public:
     HRESULT         LitResetTexture(DWORD item_id, DWORD lit_id);
     HRESULT         LitUnresetTexture();
 
-	void			SetForgeEffect( DWORD value, int nCharID=1 );		// 设置精炼效果表现,本函数在创建道具成功后调用
+	void			SetForgeEffect( DWORD value, int nCharID=1 );		// sets the refining effect presentation; this function is called after the item is created successfully
 
 public:
 	void			setIsSystem( bool v )			{ _IsSystem = v; 			}
@@ -80,7 +80,7 @@ protected:
     DWORD           _nCharacterID;
 
 protected:
-	bool			_IsSystem;					// 道具用于系统，不可操作
+	bool			_IsSystem;					// the item is used by the system and cannot be operated
 	bool			_IsShowName;
 	CItemRecord*	_pItemInfo;
     int             _nDrapID;

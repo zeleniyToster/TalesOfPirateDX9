@@ -18,7 +18,7 @@
 using namespace GUI;
 
 //---------------------------------------------------------------------------
-// class CBoat  用户船类
+// class CBoat  user boat class
 //---------------------------------------------------------------------------
 CBoat::CBoat() 
 : _chtBoat(0), _frmShipRoom(0)
@@ -26,7 +26,7 @@ CBoat::CBoat()
 {
 }
 
-bool CBoat::Init( int n, CForm* ship, GuiDragInGridEvent evt )  // 用户船信息初始化
+bool CBoat::Init( int n, CForm* ship, GuiDragInGridEvent evt )  // user boat information initialisation
 {
 	_frmShipRoom = ship;
 	if( !_frmShipRoom ) return false;
@@ -42,9 +42,9 @@ bool CBoat::Init( int n, CForm* ship, GuiDragInGridEvent evt )  // 用户船信�
 
 	_grdHold->SetIsHint(false);
 	_grdHold->SetParent(ship);
-	_frmShipRoom->evtEscClose = _evtEscClose;	// 按 ESC 关闭事件 add by Philip.Wu  2006-06-22
+	_frmShipRoom->evtEscClose = _evtEscClose;	// ESC close event add by Philip.Wu  2006-06-22
 
-	// 如果没有事件，则为临时船，不能做任何操作
+	// with no event it is a temporary boat and nothing can be done with it
 	if( evt )
 	{
 		_grdHold->evtBeforeAccept = evt;
@@ -59,7 +59,7 @@ void CBoat::_evtHoldGridRMouse(CGuiData *pSender,CCommandObj* pItem,int nGridID)
 {
 	if (!pItem) return;  
 
-	//交易所右键
+	// exchange right click
 	if (g_stUIBourse.GetForm()->GetIsShow())
 	{
 		CItemCommand* pkItemCmd = dynamic_cast<CItemCommand*>(pItem);
@@ -69,14 +69,14 @@ void CBoat::_evtHoldGridRMouse(CGuiData *pSender,CCommandObj* pItem,int nGridID)
 	}
 }
 
-void CBoat::Reset()  //  如果角色不存在就清除用户船信息
+void CBoat::Reset()  //  if the character does not exist the user boat information is cleared
 {
 	_chtBoat = NULL;
 	_grdHold->Clear();
 }
 
 
-// 按 ESC 关闭窗体事件，将父窗体也设置为不显示  add by Philip.Wu  2006-06-22
+// ESC close window event; the parent window is set to not shown as well  add by Philip.Wu  2006-06-22
 void CBoat::_evtEscClose( CForm* pForm )
 {
 	if(pForm)
@@ -92,12 +92,12 @@ void CBoat::_evtEscClose( CForm* pForm )
 
 
 //---------------------------------------------------------------------------
-// class CBoatMgr 用户船管理类
+// class CBoatMgr user boat management class
 //---------------------------------------------------------------------------
-bool CBoatMgr::Init() // 用户船管理信息初始化
+bool CBoatMgr::Init() // user boat management information initialisation
 {
 	CForm* frm[defMaxBoat+1] = { 0 }; 
-	CForm* frmShipRoom = _FindForm("frmShipRoom"); // 查找船表单
+	CForm* frmShipRoom = _FindForm("frmShipRoom"); // looks up the boat form
 	if(!frmShipRoom) return false;
 	frm[0] = frmShipRoom;
 
@@ -138,22 +138,22 @@ void CBoatMgr::End()
 bool CBoatMgr::AddBoat( CCharacter* pBoat )
 {
 	CBoat* p = GetFreeBoat();
-	if( !p ) return false; //已经得到最大数量 不能再获得免费的船只
+	if( !p ) return false; //already have the maximum count, no more free boats can be obtained
 
 	p->Link( pBoat );
 	return true;
 }
 
-CBoat*	CBoatMgr::GetFreeBoat()   // 获得免费船只
+CBoat*	CBoatMgr::GetFreeBoat()   // obtains a free boat
 { 
-	for( int i=0; i<defMaxBoat; i++ ) // 可最大获得船只
+	for( int i=0; i<defMaxBoat; i++ ) // the maximum number of boats obtainable
 		if( !_cBoats[i].GetIsValid() )
 			return &_cBoats[i];
 
 	return NULL;
 }
 
-CBoat* CBoatMgr::FindBoat( unsigned int ulWorldID )  // 查找用户有的全部船
+CBoat* CBoatMgr::FindBoat( unsigned int ulWorldID )  // looks up every boat the user has
 {
 	for( int i=0; i<defMaxBoat; i++ )
 	{
@@ -166,7 +166,7 @@ CBoat* CBoatMgr::FindBoat( unsigned int ulWorldID )  // 查找用户有的全部
 	return NULL;
 }
 
-CGoodsGrid*	CBoatMgr::FindGoodsGrid( unsigned int ulWorldID ) // 查找船物品
+CGoodsGrid*	CBoatMgr::FindGoodsGrid( unsigned int ulWorldID ) // looks up the boat item
 {
 	if( _pHuman && _pHuman->getAttachID()==ulWorldID )
 		return g_stUIEquip.GetGoodsGrid();
@@ -177,7 +177,7 @@ CGoodsGrid*	CBoatMgr::FindGoodsGrid( unsigned int ulWorldID ) // 查找船物品
 	return NULL;
 }
 
-CCharacter*	CBoatMgr::FindCha( unsigned int ulWorldID ) // 查找船只主人
+CCharacter*	CBoatMgr::FindCha( unsigned int ulWorldID ) // looks up the boat owner
 {
 	if( _pHuman && _pHuman->getAttachID()==ulWorldID ) return _pHuman;
 
@@ -187,7 +187,7 @@ CCharacter*	CBoatMgr::FindCha( unsigned int ulWorldID ) // 查找船只主人
 	return NULL;
 }
 
-CCharacter* CBoatMgr::ChangeMainCha( unsigned int ulWorldID ) // 切换主角
+CCharacter* CBoatMgr::ChangeMainCha( unsigned int ulWorldID ) // switches the main character
 {
 	CCharacter* pCha = FindCha( ulWorldID );
 	if( pCha ) 
@@ -200,7 +200,7 @@ CCharacter* CBoatMgr::ChangeMainCha( unsigned int ulWorldID ) // 切换主角
 			pScene->SetMainCha( pCha->getID() );
 			g_stUIStart.ShowShipSailForm( pCha->IsBoat() );
 
-			// add by Philip.Wu  2006-07-03  切换地图时关闭交易和装备窗体（BUG处理）
+			// add by Philip.Wu  2006-07-03  closes the trade and equipment windows when switching maps (BUG fix)
 			g_stUITrade.CloseAllForm();
 			g_stUIEquip.CloseAllForm();
 		}
@@ -212,7 +212,7 @@ CCharacter* CBoatMgr::ChangeMainCha( unsigned int ulWorldID ) // 切换主角
 	return pCha;
 }
 
-void CBoatMgr::Clear()  //  清除用户所有船信息
+void CBoatMgr::Clear()  //  clears every boat of the user
 {
 	_pHuman = NULL;
 	for( int i=0; i<defMaxBoat; i++ )
@@ -221,7 +221,7 @@ void CBoatMgr::Clear()  //  清除用户所有船信息
 	}
 }
 
-CCharacter* CBoatMgr::FindCha( CGoodsGrid* pGoods ) // 由装备匹配查找船只的主人
+CCharacter* CBoatMgr::FindCha( CGoodsGrid* pGoods ) // finds the boat owner by matching equipment
 {
 	if( pGoods==g_stUIEquip.GetGoodsGrid() )
 		return _pHuman;

@@ -20,7 +20,7 @@ public:
 
 protected:
 
-	static CItemPreSet* _Instance; // 相当于单键, 把自己记住
+	static CItemPreSet* _Instance; // like a single key, remembers itself
    
 	virtual CRawDataInfo* _CreateRawDataArray(int nCnt)
 	{

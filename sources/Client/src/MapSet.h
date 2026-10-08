@@ -24,7 +24,7 @@ public:
     int   nInitY;
     float fLightDir[3];
     BYTE  btLightColor[3];
-	bool  IsShowSwitch;		// 是否要显示切换地图
+	bool  IsShowSwitch;		// whether to show the map switch
 
 };
 
@@ -45,7 +45,7 @@ public:
 
 protected:
 
-	static CMapSet* _Instance; // 相当于单键, 把自己记住
+	static CMapSet* _Instance; // like a single key, remembers itself
    
 	virtual CRawDataInfo* _CreateRawDataArray(int nCnt)
 	{

@@ -39,7 +39,7 @@ bool CEvent::DistanceTrigger( int x, int y )
 		}
 		else
 		{
-			// 如果已经激活的,过10秒后取消激活
+			// if it is already active, cancel the activation after 10 seconds
 			if( CGameApp::GetCurTick()>_dwLastTime )
 			{
 				_IsActive = false;

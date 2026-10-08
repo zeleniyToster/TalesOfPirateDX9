@@ -1,8 +1,8 @@
 ﻿//----------------------------------------------------------------------
-// 名称:检查框
-// 作者:lh 2004-07-27
-// 用途:响应是与否的状态 
-// 最后修改日期:2004-10-09
+// Name: check box
+// Author: lh 2004-07-27
+// Purpose: responds to a yes or no state
+// Last modified date: 2004-10-09
 //----------------------------------------------------------------------
 
 #pragma once
@@ -11,7 +11,7 @@
 namespace GUI
 {
 
-// 单个检查框,也可用于选择框
+// a single check box, also usable as a selection box
 class CCheckBox : public CCompent
 {
 public:
@@ -48,14 +48,14 @@ public:
 public:
 	GuiEvent		evtCheckChange;
 
-	static int		s_nMarginLeft;		// 文字距离左面图片的位置
+	static int		s_nMarginLeft;		// position of the text relative to the image on the left
 
 protected:
 	void			_SetSelf();
 
 protected:
 	DWORD			_TextColor;
-	CGuiPic*		_pImage;			// 背景图,共二帧，分别对应：bsChecked,bsUnChecked
+	CGuiPic*		_pImage;			// background image, two frames, corresponding to bsChecked and bsUnChecked
 	std::string			_strCaption;
 
 	bool			_isChecked;
@@ -67,7 +67,7 @@ private:
 
 };
 
-// 将单个检查框分成组
+// groups single check boxes
 class CCheckGroup : public CContainer
 {
 public:
@@ -107,7 +107,7 @@ private:
 
 };
 
-// 内联函数
+// inline function
 inline void CCheckBox::SetIsChecked( bool v ) 
 {
 	_isChecked = v;

@@ -1,7 +1,7 @@
 ﻿//----------------------------------------------------------------------
-// 名称:用于实现聊天界面
-// 作者:lh 2005-02-26
-// 最后修改日期:2004-10-20
+// Name: implements the chat screen
+// Author: lh 2005-02-26
+// Last modified date: 2004-10-20
 //----------------------------------------------------------------------
 #pragma once
 #include "UIGlobalVar.h"
@@ -20,13 +20,13 @@ class CItemObj;
 
 enum eSendTeamMsg
 {
-	enumSTM_ADD_GROUP,  // 新增组,参数1:CTeam*
-	enumSTM_DEL_GROUP,  // 删除组,参数1:CTeam*
-	enumSTM_ADD_MEMBER, // 新增组成员,参数:CMember*
-	enumSTM_DEL_MEMBER, // 删除组成员,参数:CMember*
+	enumSTM_ADD_GROUP,  // group added, parameter 1: CTeam*
+	enumSTM_DEL_GROUP,  // group removed, parameter 1: CTeam*
+	enumSTM_ADD_MEMBER, // group member added, parameter: CMember*
+	enumSTM_DEL_MEMBER, // group member removed, parameter: CMember*
 	enumSTM_AFTER_DEL_MEMBER,
-	enumSTM_NODE_CHANGE,// 当前节点发生变化,参数:CMember*
-	enumSTM_NODE_DATA_CHANGE,   // 节点扩展内容发生变化,用于组队的血,魔法,级别等发生变化时通知,参数:CMember*
+	enumSTM_NODE_CHANGE,// the current node changed, parameter: CMember*
+	enumSTM_NODE_DATA_CHANGE,   // the expanded content of the node changed; used to notify changes to the party health, mana, level and the like, parameter: CMember*
 };
 
 class CGuiTime;
@@ -37,7 +37,7 @@ class CChat : public CUIInterface
 public:
     enum 
     {
-        MAX_MEMBER = 4,         // 最多成员数
+        MAX_MEMBER = 4,         // maximum number of members
     };
 
     CChat();
@@ -45,12 +45,12 @@ public:
     bool Init();
     void End();
 
-    void RefreshTeam();         // 刷新组队界面
+    void RefreshTeam();         // refreshes the party screen
 
-	// 刷新组队成员数据
+	// refreshes the party member data
 	void RefreshTeamData( CMember* pCurMember );		
 
-    void ClearTeam();           // 清除组队界面
+    void ClearTeam();           // clears the party screen
     int  TeamSend( DWORD dwMsg, void* pData=NULL, DWORD dwParam=0 );
 
 	void SortOnlineFrnd();
@@ -71,18 +71,18 @@ public:
 	static bool		_UpdateFrndInfo(CMember *pMember);
 	//static void		LoadFilterText(const char *text);
 	static bool		_UpdateSelfInfo();
-	static DWORD	_dwSelfID;			// 自己的ID
-	static DWORD	_dwSelfIcon;			// 自己的头像
-	static std::string	_strSelfMottoName;		// 自己的座右铭
+	static DWORD	_dwSelfID;			// your own ID
+	static DWORD	_dwSelfIcon;			// your own portrait
+	static std::string	_strSelfMottoName;		// your own motto
 	static CMember* _curSelectMember;
 
 
 public:
-	CForm*          frmChatManage;          // Chat界面
+	CForm*          frmChatManage;          // Chat screen
 	//static CForm*	_frmDetails;
 	CForm*       GetDetailsForm()    { return _frmDetails;    }
-	//组队界面
-	static CForm*          frmTeamMenber[MAX_MEMBER];		// nTag记录HummanID
+	//party screen
+	static CForm*          frmTeamMenber[MAX_MEMBER];		// nTag records the HummanID
 	static CProgressBar*   proTeamMenberHP[MAX_MEMBER];
 	static CProgressBar*   proTeamMenberSP[MAX_MEMBER];
 	static CLabelEx*       labMenberName[MAX_MEMBER];
@@ -104,30 +104,30 @@ private:
 
 private:
 
-	static CForm*          _frmQQ;			 // QQ界面
+	static CForm*          _frmQQ;			 // QQ screen
 
 	static CForm*          _frmAddFriend;	 
 	static CForm*          _frmChangeSytle;
 	static CForm*			_frmEditMotto;
 	static CForm*          _frmDetails;
 	static CForm*          _frmBlockPlayer;
-    static CTeamMgr*       _pTeamMgr;        // 组队管理器
+    static CTeamMgr*       _pTeamMgr;        // party manager
 	CTreeView*		m_pQQTreeView;
-	CTreeGridNode*  _pFrndNode;              // 好友节点
+	CTreeGridNode*  _pFrndNode;              // friend node
 
-    CTreeGridNode*  _pGroupNode;             // 队伍节点
-	//屏蔽路人聊天
+    CTreeGridNode*  _pGroupNode;             // party node
+	//blocks bystander chat
 
     //CTreeGridNode*  _pRoadNode;              // 路人节点
-	static CTreeGridNode*  _pGuildNode;      // 公会节点
+	static CTreeGridNode*  _pGuildNode;      // guild node
 	static CTreeGridNode*  _pSessionNode;
-	static CTreeGridNode*  _pMasterNode;	// 师傅
-	static CTreeGridNode*  _pPrenticeNode;	// 徒弟
+	static CTreeGridNode*  _pMasterNode;	// mentor
+	static CTreeGridNode*  _pPrenticeNode;	// apprentice
 	
-	static CTreeGridNode*  _pGMNode;	// 徒弟
+	static CTreeGridNode*  _pGMNode;	// apprentice
 	static CTreeGridNode*  _pBlockedNode;
 	
-	static CCharacter2D*   _pCharacter[MAX_MEMBER]; // 组队外观
+	static CCharacter2D*   _pCharacter[MAX_MEMBER]; // party appearance
 	static CEdit*	_pEditFrndName;
 
 	static CEdit*	_pEditMotto;

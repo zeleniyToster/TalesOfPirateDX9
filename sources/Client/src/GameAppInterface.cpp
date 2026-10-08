@@ -175,7 +175,7 @@ int CGameApp::Run()
             timer->OnTimer();
             #else
 
-            g_NetIF->PeekPacket(1); // 修正客户端CPU占用率100%
+            g_NetIF->PeekPacket(1); // fixes the client pegging the CPU at 100%
 
             if (_pSteady->Run()) {
                 LG("frame", "time:%u\n", GetTickCount() - _dwCurTick);

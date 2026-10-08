@@ -35,7 +35,7 @@ _Instance = this;
 
 protected:
 
-	static CMusicSet* _Instance; // 相当于单键, 把自己记住
+	static CMusicSet* _Instance; // like a single key, remembers itself
    
 	virtual CRawDataInfo* _CreateRawDataArray(int nCnt)
 	{

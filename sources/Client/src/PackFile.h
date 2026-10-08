@@ -12,29 +12,29 @@ public:
 	~CPackFile();
 	
 
-	struct FileData  // 文件数据
+	struct FileData  // file data
 	{
-		s_string strFileName; // 文件名
+		s_string strFileName; // file name
 		DWORD offset;   //
-		DWORD length;  // 文件长度
+		DWORD length;  // file length
 	};
 
-	struct DirectoryData // 文件路径数据
+	struct DirectoryData // file path data
 	{
-		s_string  strDirName; // 文件路径
-		DWORD dwDirNum;  // 文件目录数
-		DWORD dwFileNum; // 文件数
+		s_string  strDirName; // file path
+		DWORD dwDirNum;  // number of file directories
+		DWORD dwFileNum; // number of files
 		std::vector<DirectoryData>	vecSubDir; // 函数DirectoryData()自动应用在vecSubDir上
 		std::vector<FileData>	vecFile; // 函数FileData()自动应用在vecFile上
 	};
 
-	bool	SaveToPack(const char* pszDirName, const char* pszOutFile, const char* pszFilter = "*.bmp"); // 将文件保存打包
+	bool	SaveToPack(const char* pszDirName, const char* pszOutFile, const char* pszFilter = "*.bmp"); // saves the file into the pack
 
-	bool	LoadPackFile(char* pszFile); // 读打包文件数据
+	bool	LoadPackFile(char* pszFile); // reads the packed file data
 
 	void	Clear(); 
 
-	DirectoryData*	GetDir(char* pszDirName) // 获取打包文件的目录
+	DirectoryData*	GetDir(char* pszDirName) // gets a directory of the packed file
 	{
 		if(!_pPackFile)  
 			return NULL;
@@ -43,18 +43,18 @@ public:
 		return FindDir(pszDirName, &_RootDir);
 	}
 protected:
-	bool	PackDirectory(FILE* ptf,DirectoryData* pParentDir,const char* pszDir); // 打包后文件所在目录
-	long	AddFileToTempPack(FILE* pf, const char* pszFileName); // 加入文件到打包文件中
-	long	GetFileDataSize(FileData* pFileData); // 获取文件数据大小
-	void	SaveFileData(FILE* pf, FileData* pFileData, long offset); //保存文件数据
-	long	GetDirectorySize(DirectoryData* pDir); // 获得文件目录数据大小
-	void	SaveDirData(FILE* pf, DirectoryData* pDir, long offset); // 保存目录数据
+	bool	PackDirectory(FILE* ptf,DirectoryData* pParentDir,const char* pszDir); // the directory the packed file ends up in
+	long	AddFileToTempPack(FILE* pf, const char* pszFileName); // adds a file to the packed file
+	long	GetFileDataSize(FileData* pFileData); // gets the size of the file data
+	void	SaveFileData(FILE* pf, FileData* pFileData, long offset); //saves the file data
+	long	GetDirectorySize(DirectoryData* pDir); // gets the size of the file directory data
+	void	SaveDirData(FILE* pf, DirectoryData* pDir, long offset); // saves the directory data
 
 
-	bool	LoadFileData(FileData* pFileData); // 读文件数据				
-	bool	LoadDirData(DirectoryData* pDir);  // 读目录数据	
+	bool	LoadFileData(FileData* pFileData); // reads the file data
+	bool	LoadDirData(DirectoryData* pDir);  // reads the directory data
 
-	DirectoryData* FindDir(char* pszDirName, DirectoryData* pDir)  // 查找文件存放目录
+	DirectoryData* FindDir(char* pszDirName, DirectoryData* pDir)  // looks up the directory a file is stored in
 	{
 		if(pDir->strDirName == pszDirName)
 			return pDir;
@@ -68,18 +68,18 @@ protected:
 		return NULL;
 	}
 public:
-	//当前的pack文件名
+	//the name of the current pack file
 	s_string strName;
 	s_string strFilter;
 
 protected:
 
-	FILE*			_pPackFile; // 要打包的文件
-	DirectoryData	_RootDir; // 要到报的文件根目录
+	FILE*			_pPackFile; // the files to pack
+	DirectoryData	_RootDir; // the root directory the files go to
 }; 
 
 
-class CMiniPack : public CPackFile // 琐碎打包
+class CMiniPack : public CPackFile // the tedious work of packing
 {
 public:
 	CMiniPack();

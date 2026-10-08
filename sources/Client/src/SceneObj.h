@@ -71,7 +71,7 @@ protected:
 
 	//lemon add@2004.10.20 for light
 	MPTerrain*      _pTerrain;
-	int				_iChaID;//有可能是角色，或物件，或武器或特效的ID
+	int				_iChaID;//may be the ID of a character, an object, a weapon or an effect
 	int				_iOwerType;
 	float			_fRange;
 	D3DXCOLOR		_dwcolor;

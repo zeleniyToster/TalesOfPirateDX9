@@ -12,7 +12,7 @@ typedef std::map<int, ReginList> ReginListMap;
 
 extern std::string g_serverset;
 
-// 代表一组服务器
+// represents a group of servers
 class CServerGroupInfo : public CRawDataInfo
 {
 public:
@@ -70,7 +70,7 @@ public:
 
 public:
 
-	int		m_nCurGroupList[MAX_REGION][MAX_REGION_GROUP]; // 放置当前选中的区里面的所有Group
+	int		m_nCurGroupList[MAX_REGION][MAX_REGION_GROUP]; // holds every Group in the currently selected zone
 	int		m_nCurGroupCnt[MAX_REGION];
 
 	char    m_szRegionName[MAX_REGION][32];
@@ -80,7 +80,7 @@ public:
 
 protected:
     
-	static CServerSet* _Instance; // 相当于单键, 把自己记住
+	static CServerSet* _Instance; // like a single key, remembers itself
 
     virtual CRawDataInfo* _CreateRawDataArray(int nCnt)
     {
@@ -112,7 +112,7 @@ protected:
         CServerGroupInfo *pInfo = (CServerGroupInfo*)pRawDataInfo;
         
 		strcpy(pInfo->szRegion, ParamList[0].c_str());
-		for(int i = 0; i < MAX_GROUP_GATE; i++) // 读入5个可能的gate ip
+		for(int i = 0; i < MAX_GROUP_GATE; i++) // reads in 5 possible gate IPs
 		{
 			strcpy(pInfo->szGateIP[i], ParamList[i + 1].c_str());
 			if(strcmp(pInfo->szGateIP[i], "0")==0)
@@ -132,7 +132,7 @@ protected:
     
 		for (size_t i = 0; i < m_nRegionCnt; i++)
 		{
-			if (strcmp(m_szRegionName[i], pInfo->szRegion) == 0) // 区名符合
+			if (strcmp(m_szRegionName[i], pInfo->szRegion) == 0) // the zone name matches
 			{
 				m_nCurGroupList[i][m_nCurGroupCnt[i]] = pInfo->nID;
 				m_nCurGroupCnt[i]++;
@@ -142,13 +142,13 @@ protected:
 	}
 };
 
-// 通过组编号, 取得组的GateIP信息
+// gets the GateIP information of a group by group number
 inline CServerGroupInfo* GetServerGroupInfo(int nGroupID)
 {
     return (CServerGroupInfo*)CServerSet::I()->GetRawDataInfo(nGroupID);
 }
 
-// 通过组名字, 取得组的GateIP信息
+// gets the GateIP information of a group by group name
 inline CServerGroupInfo* GetServerGroupInfo(const char *pszGroupName)
 {
     return (CServerGroupInfo*)CServerSet::I()->GetRawDataInfo(pszGroupName);
@@ -167,7 +167,7 @@ inline const char* GetCurServerGroupName(int nRegionNo, int nGroupNo)
 	return GetServerGroupInfo(nNo)->szDataName;
 }
 
-// 增加游戏区域信息 Michael Chen 2005-06-01
+// adds the game zone information Michael Chen 2005-06-01
 inline int GetRegionCnt()
 {
 	return CServerSet::I()->m_nRegionCnt;
@@ -181,7 +181,7 @@ inline const char* GetCurRegionName(int nRegionNo)
 	return CServerSet::I()->m_szRegionName[nRegionNo];
 }
 
-// 通过组编号, 选中一个GateIP
+// selects a GateIP by group number
 inline const char *SelectGroupIP(int nRegionNo, int nGroupNo)
 {
 	LG("connect", "Select Region %d Group %d\n", nRegionNo, nGroupNo);

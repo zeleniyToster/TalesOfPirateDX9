@@ -17,12 +17,12 @@ public:
 	int		nAttachEffectID;
     int     nCharacterID;
     BYTE    btWeaponType;  
-    //  武器类型
-    //  0   单手近战武器(同徒手共用)	
-    //  1   双手近战武器	
-    //  2   手持两把近战武器	
-    //  3   单手持枪械武器	
-    //  4   双手持弓箭类武器
+    //  weapon type
+    //  0   one handed melee weapon (shared with bare hands)
+    //  1   two handed melee weapon
+    //  2   two melee weapons, one in each hand
+    //  3   one handed firearm
+    //  4   two handed bow and arrow weapon
 
     //int     nShipLinkID;
     //int     nItemLinkID;
@@ -45,7 +45,7 @@ public:
 
 protected:
 
-	static CSceneItemSet* _Instance; // 相当于单键, 把自己记住
+	static CSceneItemSet* _Instance; // like a single key, remembers itself
    
 	virtual CRawDataInfo* _CreateRawDataArray(int nCnt)
 	{

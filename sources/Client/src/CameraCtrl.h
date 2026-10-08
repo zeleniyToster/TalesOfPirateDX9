@@ -200,7 +200,7 @@ public:
 	float	MIN_SCALE;
 
 public:
-	//缓冲跟随
+	// smoothed following
 	void	SetBufVel(DWORD	dwVel, int iCha)
 	{
 		//m_maxVel = ((float)dwVel ) / 100;
@@ -212,7 +212,7 @@ public:
 	void	BeginMove();
 	void	EndMove();
 
-	void	InitPos(float fX,float fY,float fZ,bool bRestoreCustom=true);	// bRestoreCustom参数为true，表示清除用户对镜头的改变
+	void	InitPos(float fX,float fY,float fZ,bool bRestoreCustom=true);	// bRestoreCustom being true means clearing the player's changes to the camera
 	void	AddPoint(float fX,float fY,float fZ);
 	void	Update();
 

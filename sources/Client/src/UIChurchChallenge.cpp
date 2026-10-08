@@ -75,7 +75,7 @@ void CChurchChallengeMgr::ShowForm(bool bShow)
 }
 
 
-// 询问竞拍价格
+// asks for the bidding price
 void CChurchChallengeMgr::ChallengePriceAsk(void)
 {
 	_pNumberBox = g_stUIBox.ShowNumberBox(_evtChallengeNumInput, -1, g_oLangRec.GetString(936), true);	// "请输入竟拍价格"
@@ -86,7 +86,7 @@ void CChurchChallengeMgr::ChallengePriceAsk(void)
 }
 
 
-// 确认竞拍价格
+// confirms the bidding price
 void CChurchChallengeMgr::CheckChallengePrice(void)
 {
 	if(_pNumberBox)
@@ -106,7 +106,7 @@ void CChurchChallengeMgr::CheckChallengePrice(void)
 }
 
 
-// 通知服务器
+// notifies the server
 void CChurchChallengeMgr::NetSendChallenge(void)
 {
 	CS_AutionBidup(g_stUINpcTalk.GetNpcId(), _stInfo.sChurchID, _nPrice);

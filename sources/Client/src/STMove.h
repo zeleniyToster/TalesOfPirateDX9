@@ -40,10 +40,10 @@ protected:
 	CCharacter*	_pCha;
 
 	static float			_fMoveRate;
-	static	unsigned long	_ulPreMoveTime;		// 预移动时间
+	static	unsigned long	_ulPreMoveTime;		// predicted movement time
 	static DWORD			_dwPreMoveDis;
 
-private:		// 统计的Ping值
+private:		// the ping value that was measured
 	enum  
 	{
 		LAST_NUM = 3,
@@ -52,13 +52,13 @@ private:		// 统计的Ping值
 	static int MinPing;
 	static int LastPing[LAST_NUM];
 	static int LastPingCnt;
-	static int LastPingShow[LAST_NUM];			// 用于显示最近的ping值
+	static int LastPingShow[LAST_NUM];			// used to show the most recent ping value
 	static int nTotalPing;
 	static int nTotalPingCnt;
 	static float fAveragePing;
 };
 
-// 自主移动
+// free movement
 class CMoveState : public CWaitMoveState
 {
 public:
@@ -89,13 +89,13 @@ protected:
 protected:
 	int			_nTargetX,		_nTargetY;
 
-    stNetMoveInfo   _stPathInfo;    // 用于服务器端的寻路列表
-	bool	        _IsWalkLine;	// 走直线
+    stNetMoveInfo   _stPathInfo;    // used for the server side path finding list
+	bool	        _IsWalkLine;	// walk in a straight line
 
 };
 
 
-// 听从服务器的移动
+// obey the movement given by the server
 class CServerMoveState : public CMoveState
 {
 public:
@@ -118,13 +118,13 @@ protected:
 	int			_nLocalTargetX, _nLocalTargetY;
 
 	static DWORD	_dwLastMoveTime;
-	static DWORD	_dwLastEndTime;	// 用于判断是否为静止状态
+	static DWORD	_dwLastEndTime;	// used to decide whether it is in a stationary state
 
 	bool		_IsClientMove;
 
 };
 
-// 向后走，不改变方向,仅用于单机测试　
+// walk backwards without changing direction; used only for standalone testing
 class CBackMoveState : public CMoveState
 {
 public:
@@ -136,7 +136,7 @@ protected:
 
 };
 
-// 一体化的移动
+// integrated movement
 class COneMoveState : public CWaitMoveState
 {
 public: 
@@ -155,8 +155,8 @@ public:
 	bool	IsSameServerPos( int x, int y );
 	void    SetRate(float r) { _fRate = r; }
 	float   GetRate() { return _fRate; }
-	// 对寻路路径分段
-	// 参数分别为:输入列表,输入路径,分段长度(小于零不分段)
+	// splits the path finding path into segments
+	// the parameters are: input list, input path, segment length (less than zero means no splitting)
 	static void	CompartMoveList( CMoveList& outlist, S_BVECTOR<D3DXVECTOR3>& path, int length );
 
 protected:
@@ -172,26 +172,26 @@ protected:
 	int		GetSyschroDistance();
 
 private:
-	int			_nStartX,	_nStartY;		// 开始移动时的目标点  
-	bool		_IsStartWalkLine;			// 开始移动时的参数
+	int			_nStartX,	_nStartY;		// the target point when the movement started
+	bool		_IsStartWalkLine;			// the parameters when the movement started
 
 	bool		_IsWalkLine;
 	int			_nTargetX,	_nTargetY;
 
-	CMoveList	_cLocalList;	// 本地移动序列
-	int			_nLocalDis;		// 本地距离
+	CMoveList	_cLocalList;	// the local movement sequence
+	int			_nLocalDis;		// the local distance
 
-	int			_nServerDis;		// 服务器需要行走的总距离
-	int			_nServerStepDis;	// 服务器已经行走的距离
+	int			_nServerDis;		// the total distance the server has to walk
+	int			_nServerStepDis;	// the distance the server has already walked
 
-	int			_nMoveCount;		// 请求移动次数
-	int			_nStartCount;		// 移动请求次数
+	int			_nMoveCount;		// number of movement requests
+	int			_nStartCount;		// number of movement request attempts
 	int			_nSendCount;
-	int			_nEndCount;			// 服务器返回的结束次数	
+	int			_nEndCount;			// number of completions returned by the server
 	bool		_IsSendCancel;
 
 	DWORD		_dwSendTime;
-	DWORD		_dwEndTime;			// 结束时的时间
+	DWORD		_dwEndTime;			// the time when it ended
 
 	float		_fRate;
 
@@ -204,7 +204,7 @@ private:
 		bool	IsLine;
 	};
 	typedef std::list<NeedPath> path;
-	path		_cNeedList;			// 需要移动的点
+	path		_cNeedList;			// the points that have to be walked
 
 	static CMoveList	_List;
 

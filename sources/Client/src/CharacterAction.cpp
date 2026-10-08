@@ -51,9 +51,9 @@ bool CGameCharacterAction::Init(const char* ptcsFileName)
 		lIndex = 0;
 		_fgetts(tcsLine, 1023, fFile);
 		StringSkipCompartment(tcsLine, &lIndex, " ", 1);
-		if (tcsLine[lIndex] == 0x0a || tcsLine[lIndex] == 0x0d) //回车, 换行
+		if (tcsLine[lIndex] == 0x0a || tcsLine[lIndex] == 0x0d) //enter, newline
 			continue;
-		if (tcsLine[lIndex] == _TEXT('/') && tcsLine[lIndex + 1] == _TEXT('/')) // 注释
+		if (tcsLine[lIndex] == _TEXT('/') && tcsLine[lIndex + 1] == _TEXT('/')) // comment
 			continue;
 		if (tcsLine[lIndex] == _TEXT('\t')) // tab键 (在该文本中用于"角色类型的一个动作"行的开始符号)
 			continue;
@@ -81,16 +81,16 @@ bool CGameCharacterAction::Init(const char* ptcsFileName)
 	}
 	memset((void *)m_SCharacterAction, 0, sizeof(SCharacterAction) * m_iMaxCharacterType);
 
-	// 获得单个角色信息
+	// gets the information of a single character
 	fseek(fFile, 0, SEEK_SET);
 	while (!feof(fFile))
 	{
 		lIndex = 0;
 		_fgetts(tcsLine, 1023, fFile);
 		StringSkipCompartment(tcsLine, &lIndex, _TEXT(" "), 1);
-		if (tcsLine[lIndex] == 0x0a || tcsLine[lIndex] == 0x0d) //回车, 换行
+		if (tcsLine[lIndex] == 0x0a || tcsLine[lIndex] == 0x0d) //enter, newline
 			continue;
-		if (tcsLine[lIndex] == _TEXT('/') && tcsLine[lIndex + 1] == _TEXT('/')) // 注释
+		if (tcsLine[lIndex] == _TEXT('/') && tcsLine[lIndex + 1] == _TEXT('/')) // comment
 			continue;
 		if (tcsLine[lIndex] == _TEXT('\t')) // tab键 (在该文本中用于"角色类型的一个动作行的开始符号)
 			continue;
@@ -99,7 +99,7 @@ bool CGameCharacterAction::Init(const char* ptcsFileName)
 		iCurType = _ttoi(tcsTemp) - 1;
 		if (iCurType < 0)
 			continue;
-		// 角色的动作数目
+		// number of actions of the character
 		m_SCharacterAction[iCurType].m_SActionInfo = NULL;
 		m_SCharacterAction[iCurType].m_iActualActionNum = 0;
 		m_SCharacterAction[iCurType].m_iCharacterType = iCurType + 1;
@@ -110,18 +110,18 @@ bool CGameCharacterAction::Init(const char* ptcsFileName)
 			lIndex = 0;
 			_fgetts(tcsLine, 1023, fFile);
 			StringSkipCompartment(tcsLine, &lIndex, _TEXT(" "), 1);
-			if (tcsLine[lIndex] == 0x0a || tcsLine[lIndex] == 0x0d) //回车, 换行
+			if (tcsLine[lIndex] == 0x0a || tcsLine[lIndex] == 0x0d) //enter, newline
 				continue;
-			if (tcsLine[lIndex] == _TEXT('/') && tcsLine[lIndex + 1] == _TEXT('/')) // 注释
+			if (tcsLine[lIndex] == _TEXT('/') && tcsLine[lIndex + 1] == _TEXT('/')) // comment
 				continue;
-			if (tcsLine[lIndex] == _TEXT('\t')) // tab键
+			if (tcsLine[lIndex] == _TEXT('\t')) // tab key
 			{
 				m_SCharacterAction[iCurType].m_iActualActionNum ++;
 
 				StringSkipCompartment(tcsLine, &lIndex, _TEXT(" ,\x09"), 3);
 				StringGet(tcsTemp, 1023, tcsLine, &lIndex, _TEXT(" ,\x09\x0a\x0d"), 5);
 
-				// 临时代码， 用于提示更新文件版本。
+				// temporary code, used to prompt for the file version update.
 				if (_ttoi(tcsTemp) < 1)
 				{
 					MessageBox(NULL, _TEXT(g_oLangRec.GetString(24)), _TEXT(g_oLangRec.GetString(25)), 0);
@@ -147,7 +147,7 @@ bool CGameCharacterAction::Init(const char* ptcsFileName)
 		}
 		memset((void *)(m_SCharacterAction[iCurType].m_SActionInfo), 0, sizeof(SActionInfo) * m_SCharacterAction[iCurType].m_iMaxActionNum);
 
-		// 单个动作信息
+		// single action information
         SActionInfo* s;
 		fseek(fFile, lFilePos, SEEK_SET);
 		while (!feof(fFile))
@@ -156,11 +156,11 @@ bool CGameCharacterAction::Init(const char* ptcsFileName)
 			lIndex = 0;
 			_fgetts(tcsLine, 1023, fFile);
 			StringSkipCompartment(tcsLine, &lIndex, _TEXT(" "), 1);
-			if (tcsLine[lIndex] == 0x0a || tcsLine[lIndex] == 0x0d) //回车, 换行
+			if (tcsLine[lIndex] == 0x0a || tcsLine[lIndex] == 0x0d) //enter, newline
 				continue;
-			if (tcsLine[lIndex] == _TEXT('/') && tcsLine[lIndex + 1] == _TEXT('/')) // 注释
+			if (tcsLine[lIndex] == _TEXT('/') && tcsLine[lIndex + 1] == _TEXT('/')) // comment
 				continue;
-			if (tcsLine[lIndex] == _TEXT('\t')) // tab键
+			if (tcsLine[lIndex] == _TEXT('\t')) // tab key
 			{
 				StringSkipCompartment(tcsLine, &lIndex, _TEXT("\x09"), 1);
 				StringGet(tcsTemp, 1023, tcsLine, &lIndex, _TEXT(" ,\x09\x0a\x0d"), 5);
@@ -185,7 +185,7 @@ bool CGameCharacterAction::Init(const char* ptcsFileName)
 
 				StringSkipCompartment(tcsLine, &lIndex, _TEXT(" ,\x09"), 3);
 				lOldIndex = lIndex;
-				// 关键帧数目
+				// number of key frames
 				iCurKeyFrame = 0;
 				while (StringGet(tcsTemp, 1023, tcsLine, &lIndex, _TEXT(" ,\x09\x0a\x0d"), 5))
 				{
@@ -211,7 +211,7 @@ bool CGameCharacterAction::Init(const char* ptcsFileName)
 				//}
 
 				lIndex = lOldIndex;
-				// 关键帧
+				// key frame
 				iCurKeyFrame = 0;
 				while (StringGet(tcsTemp, 1023, tcsLine, &lIndex, _TEXT(" ,\x09\x0a\x0d"), 5))
 				{
@@ -259,11 +259,11 @@ void CGameCharacterAction::Free(void)
 			
 			//delete [] m_SCharacterAction[i].m_SActionInfo;
 			//m_SCharacterAction[i].m_SActionInfo = NULL;
-			SAFE_DELETE_ARRAY(m_SCharacterAction[i].m_SActionInfo); // UI当机处理
+			SAFE_DELETE_ARRAY(m_SCharacterAction[i].m_SActionInfo); // UI freeze handling
 		}
 		//delete [] m_SCharacterAction;
 		//m_SCharacterAction = NULL;
-		SAFE_DELETE_ARRAY(m_SCharacterAction); // UI当机处理
+		SAFE_DELETE_ARRAY(m_SCharacterAction); // UI freeze handling
 	}
 }
 
@@ -327,8 +327,8 @@ bool CGameCharacterAction::GetCharAction(int iCharType, SCharacterAction *SCharA
 	return true;
 }
 
-// 从给定字符窜(_TCHAR *in)的给定位置(long *in_from)获取字符窜，
-// 直到遇到字符窜列表(_TCHAR *end_list)中的任一字符时结束
+// gets a string from the given position (long *in_from) of the given string (_TCHAR *in),
+// ending when any character of the string list (_TCHAR *end_list) is met
 long StringGet(char* out, long out_max, char* in, long* in_from, const char* end_list, long end_len)
 {
     long offset=-1;    // set offset of get string to -1 for the first do process
@@ -350,7 +350,7 @@ long StringGet(char* out, long out_max, char* in, long* in_from, const char* end
     return offset;
 }
 
-// 从给定字符窜(_TCHAR *in)的给定位置(long *in_from)剔除字符窜列表(_TCHAR *end_list)中的任一字符
+// removes any character of the string list (_TCHAR *end_list) from the given position (long *in_from) of the given string (_TCHAR *in)
 void StringSkipCompartment(char* in, long* in_from, const char* skip_list, long skip_len)
 {
     long i;    // temp variable

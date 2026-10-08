@@ -504,7 +504,7 @@ void	CCameraCtrl::ScrollToDefault()
 	m_fLastAngle = m_fAngle;
 }
 
-//左右旋转
+//rotate left and right
 void CCameraCtrl::RotationCameraLR(float Angle)
 {
 	if(!m_bEnableRota)
@@ -533,7 +533,7 @@ void CCameraCtrl::RotationCameraLR(float Angle)
 	}
 
 }
-//上下旋转
+//rotate up and down
 void CCameraCtrl::RotationCameraUD(float Angle)
 {
 }
@@ -711,7 +711,7 @@ void	CCameraCtrl::AddPoint(float fX,float fY,float fZ)
 }
 void	CCameraCtrl::Update()
 {
-	//更新高度
+	//update the height
 	if(m_fLastHei != m_listHei)
 	{
 		float dist = m_fLastHei - m_listHei;
@@ -723,7 +723,7 @@ void	CCameraCtrl::Update()
 
 
 
-	////改变速度和加速度
+	////change the speed and acceleration
 	//if(m_fTotalLen >= 1.0f) 
 	//{
 	//		//m_fStackAccel += 0.4f;
@@ -748,7 +748,7 @@ void	CCameraCtrl::Update()
 	//		m_fStackVel =   m_maxVel/10;
 
 	//}
-	////更新位置
+	////update the position
 	//D3DXVECTOR2 vpos, vnext;
 	//if(m_listDir.size() > 0)
 	//{
@@ -1013,7 +1013,7 @@ namespace Ninja
 		{
 			_myTarget = _my_targetController->GetValue(_myTarget, v, 0.15f);
 		}
-		else	// 距离过长，目标位置直接更改
+		else	// the distance is too long, the target position is changed directly
 		{
 			_myTarget = v;
 		}

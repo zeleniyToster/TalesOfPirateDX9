@@ -9,18 +9,18 @@ class CMoveList;
 class CActor;
 class CCharacter;
 
-// 动作基类
+// action base class
 class CActionState
 {
 	friend class CActor;
 public:
     CActionState(CActor* p);
 
-    void Start();								// 开始执行
+    void Start();								// starts executing
 
-	virtual void PushPoint( int x, int y ){}					// 用于可能有移动点的派生类
-	virtual void ServerEnd(int nState)      { _IsOver = true;	}	// 设置服务器通告执行完毕
-	virtual void MoveEnd(int x, int y, int nState)	{ _IsOver = true;	}	// 对于有移动的Action，仅结束移动
+	virtual void PushPoint( int x, int y ){}					// for derived classes that may have movement points
+	virtual void ServerEnd(int nState)      { _IsOver = true;	}	// sets the server notification that execution has finished
+	virtual void MoveEnd(int x, int y, int nState)	{ _IsOver = true;	}	// for an Action with movement, ends only the movement
     virtual void SetServerID( int n );
     virtual void Cancel();
 	virtual void MouseRightDown(){}
@@ -33,12 +33,12 @@ public:
 
 	CActor* GetActor() 			{ return _pActor;	}
 
-	bool	GetIsOver()			{ return _IsOver;	}			// 执行完剩余动作,动作就完毕了
-	bool	GetIsExecEnd()		{ return _isExecEnd;}			// 动作已经全部执行完毕,(服务器已通告执行完毕)
-	bool	GetIsCancel()		{ return _IsCancel;	}			// 这个动作已经被玩家取消掉		
+	bool	GetIsOver()			{ return _IsOver;	}			// once the remaining actions are done the action is complete
+	bool	GetIsExecEnd()		{ return _isExecEnd;}			// every action has finished executing (the server has notified that it is finished)
+	bool	GetIsCancel()		{ return _IsCancel;	}			// this action has been cancelled by the player
 	bool	GetIsWait()			{ return _isWait;	}
 
-	// 这个动作为其它动作的子类,注:在CActor中不知道这个动作
+	// this action is a subclass of another action; note that CActor does not know about this action
     void			SetParent( CActionState* p ){ _pParent=p;		}	
 	CActionState*	GetParent()				{ return _pParent;		}
 
@@ -57,19 +57,19 @@ protected:
     virtual void ActionFrame( DWORD pose_id, int key_frame ) {}	
     virtual void ActionEnd( DWORD pose_id )	{}
     virtual void BeforeNewState(){}
-    virtual bool IsKeepPose()       { return false;     }       // 动作执行完成后,是否回复到空闲状态
+    virtual bool IsKeepPose()       { return false;     }       // whether to return to the idle state once the action has finished
     virtual bool IsAllowUse()       { return true;      }
 	virtual void StartFailed()		{}
 
 	virtual bool	_Start()		{ return true;		}
-	virtual void	_End()			{}          // 执行结束
-    virtual bool    _IsAllowCancel();			// 是否可以被Cancel掉本状态
+	virtual void	_End()			{}          // execution finished
+    virtual bool    _IsAllowCancel();			// whether this state can be cancelled
 
 	bool			_AllowCancel()		{ return !_isWait && !_IsCancel && !_IsOver;	}
 
 private:
 	void			SetIsWait( bool v )		    { _isWait=v;		}
-    void			_StartFailed();		// 开始时失败时调用
+    void			_StartFailed();		// called when starting fails
 
 protected:
 	bool	_IsCancel;		
@@ -87,7 +87,7 @@ private:
 
 };
 
-// Actor要移动的列表
+// the list of points the Actor has to move to
 class CMoveList
 {
 public:
@@ -110,7 +110,7 @@ private:
 
 };
 
-// 内联函数
+// inline function
 inline void CActionState::SetServerID( int n )
 {
     if( _nServerID==INT_MAX )

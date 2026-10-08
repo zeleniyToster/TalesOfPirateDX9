@@ -5,7 +5,7 @@
 
 struct SAreaUnit
 {
-	short	siType;	// 1：普通陆地，2：普通海洋
+	short	siType;	// 1: ordinary land, 2: ordinary sea
 };
 
 class	CSceneArea
@@ -16,7 +16,7 @@ class	CSceneArea
 		int		lVersion;
 		long	lFileSize;
 
-		int		iSceneWidth;	// 单位：Tile
+		int		iSceneWidth;	// unit: Tile
 		int		iSceneHeight;
 	};
 

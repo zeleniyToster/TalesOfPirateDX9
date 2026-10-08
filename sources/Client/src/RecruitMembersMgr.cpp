@@ -31,7 +31,7 @@ bool CRecruitMembersMgr::DelRecruitMember(CRecruitMemberData* pRecruitMember)
 		if ((*Iter)==pRecruitMember)
 		{
 			//delete (*Iter);
-			SAFE_DELETE(*Iter); // UI当机处理
+			SAFE_DELETE(*Iter); // UI freeze handling
 			m_pRecruitMembers.erase(Iter);
 			return true;
 		}
@@ -47,7 +47,7 @@ bool CRecruitMembersMgr::DelRecruitMemberByID(DWORD dwID)
 		if ((*Iter)->GetID()==dwID)
 		{
 			//delete (*Iter);
-			SAFE_DELETE(*Iter); // UI当机处理
+			SAFE_DELETE(*Iter); // UI freeze handling
 			m_pRecruitMembers.erase(Iter);
 			return true;
 		}
@@ -63,7 +63,7 @@ bool CRecruitMembersMgr::DelRecruitMemberByName(string strName)
 		if ((*Iter)->GetName()==strName)
 		{
 			//delete (*Iter);
-			SAFE_DELETE(*Iter); // UI当机处理
+			SAFE_DELETE(*Iter); // UI freeze handling
 			m_pRecruitMembers.erase(Iter);
 			return true;
 		}
@@ -116,7 +116,7 @@ void CRecruitMembersMgr::ResetAll()
 		Iter=m_pRecruitMembers.begin();
 		CRecruitMemberData* pNode=*Iter;
 		//delete pNode;
-		SAFE_DELETE(pNode); // UI当机处理
+		SAFE_DELETE(pNode); // UI freeze handling
 		m_pRecruitMembers.erase(Iter);
 	}
 }

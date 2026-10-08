@@ -10,7 +10,7 @@ class CActor;
 class CSkillRecord;
 class CServerHarm;
 
-// 一次性的受击特效,如地面特效,受击音效,人物受击特效等
+// one shot hit effects, such as ground effects, hit sounds, character hit effects and the like
 class CHitRepresent 
 {
 public:
@@ -26,24 +26,24 @@ public:
 
 private:
 	CSkillRecord*	_pSkill;
-	CCharacter*		_pTarget;				// 攻击单人时的目标
-	int				_nAttackX,  _nAttackY;	// 攻击时攻击中心点
-	CCharacter*		_pAttack;				// 攻击方, 用于显示受击的方向,可能为空
+	CCharacter*		_pTarget;				// the target when attacking a single character
+	int				_nAttackX,  _nAttackY;	// the centre point of the attack
+	CCharacter*		_pAttack;				// the attacker, used to show the direction of the hit; may be empty
 
 private:
 	void	Exec( CServerHarm* pHarm );
 
 };
 
-// 用于飞行特效失效后播放延迟的受击特效,延迟特效,网络伤害包等
+// used to play delayed hit effects after a flying effect has expired, delayed effects, network damage packets and the like
 class CEffDelay
 {
 public:
     enum ePlayStyle
     {
-        enumNone,       // 什么事都不做 
-        enumPos,        // 在某地点播放
-        enumHitEffect,  // 受击特效
+        enumNone,       // does nothing
+        enumPos,        // plays at a given location
+        enumHitEffect,  // hit effect
     };
 
 public:
@@ -70,7 +70,7 @@ private:
 
 };
 
-// 内联函数
+// inline function
 inline void CHitRepresent::EffectExec( CServerHarm* pHarm )
 {
 	if( !_pSkill->IsEffectHarm() ) return;

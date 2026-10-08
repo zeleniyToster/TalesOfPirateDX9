@@ -1,10 +1,10 @@
 ﻿//----------------------------------------------------------------------
-// 名称:3D控件
-// 作者:lh 2004-09-13
-// 用途:在GUI系统中提供外部显示接口
-//		有二类接口:	一,外部继承C3DRenderObj实现Render函数
-//					二,注册回调函数显示:GUIRenderEvent,GUIRenderMsgEvent
-// 最后修改日期:2004-10-09
+// Name: 3D control
+// Author: lh 2004-09-13
+// Purpose: provides an external display interface in the GUI system
+//		there are two kinds of interface:	one, external classes derive from C3DRenderObj and implement Render
+//					two, register a callback to display: GUIRenderEvent, GUIRenderMsgEvent
+// Last modified date: 2004-10-09
 //----------------------------------------------------------------------
 #pragma once
 #include "uicompent.h"
@@ -27,7 +27,7 @@ public:
 
 	virtual void	Render();
 	virtual bool	MouseRun( int x, int y, DWORD key );
-	virtual bool	IsHandleMouse()		{ return true;			}		// 是否可以响应鼠标
+	virtual bool	IsHandleMouse()		{ return true;			}		// whether it responds to the mouse
 	virtual void	Refresh();
 
 	void			SetRenderEvent( GUIRenderEvent p )			{ _pRenderEvent=p;			}
@@ -40,8 +40,8 @@ public:
     void*           GetPointer()            { return _pPointer; }
 
 public:
-	GuiMouseEvent	evtMouseDown;		// 鼠标按下事件
-	GuiMouseEvent   evtMouseLDDown ;    //鼠标双击事件
+	GuiMouseEvent	evtMouseDown;		// mouse button pressed event
+	GuiMouseEvent   evtMouseLDDown ;    //mouse double click event
 
 protected:
 	void			_Copy( const C3DCompent& rhs );

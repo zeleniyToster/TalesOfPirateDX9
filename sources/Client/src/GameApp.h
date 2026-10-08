@@ -20,7 +20,7 @@
 
 extern DWORD g_dwCurMusicID;
 
-const DWORD MAX_ANI_CLOCK = 10;             // 时间沙漏个数
+const DWORD MAX_ANI_CLOCK = 10;             // number of hourglasses
 
 namespace Ninja
 {

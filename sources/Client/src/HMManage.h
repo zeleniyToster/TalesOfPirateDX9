@@ -23,11 +23,11 @@ public:
 	void	InitMemory();
 
     void    Exec();             
-    void    Gouge( int nGouge );                // 将一个包分隔成为几次执行
+    void    Gouge( int nGouge );                // splits one packet into several executions
 
-    bool    AddHarm( CAttackEffect* s, CSkillRecord *pSkill );        // 加入网络传来的伤害包,在伤害时执行
-    bool    AddRep( CAttackRepSynchro* s );         // 表现包,在开始执行时执行
-    bool    IsAllowStateOver();                 // 是否允许状态结束
+    bool    AddHarm( CAttackEffect* s, CSkillRecord *pSkill );        // adds the damage packets that came over the network, executed on damage
+    bool    AddRep( CAttackRepSynchro* s );         // presentation packets, executed when the execution starts
+    bool    IsAllowStateOver();                 // whether ending the state is allowed
 
     void    ReadyExec()             { _nReadyExec++;            }
 	void    SetIsOuter( bool v );
@@ -54,18 +54,18 @@ private:
 
 private:
     int         _nFightID;
-    CActor*     _pActor;            // 所属Actor
+    CActor*     _pActor;            // the Actor it belongs to
 	CCharacter* _pCha;
 
-    synchros    _harm;              // 伤害包,在关键帧播放
-    synchros    _rep;               // 表现包,在开始时播放
+    synchros    _harm;              // damage packets, played on key frames
+    synchros    _rep;               // presentation packets, played at the start
 
     CSkillRecord*   _pSkill;
 
-    int         _nReadyExec;        // 客户端正在准备执行的次数
+    int         _nReadyExec;        // the number of executions the client is preparing
 
-	bool		_IsOuter;			// 是否有外部调用
+	bool		_IsOuter;			// whether there is an external call
 
 };
 
-// 内联函数
+// inline function

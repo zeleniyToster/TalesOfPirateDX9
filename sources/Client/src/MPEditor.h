@@ -99,7 +99,7 @@ public:
 	
 	//lemon add@2004.11.4
 	bool		m_bShowLightBrush;
-public:		// 用于外部界面调用
+public:		// used by external screens to call
 
     DWORD       GetColor() { return _dwColor; }
 	void		SetColor( DWORD color ) { _dwColor=color; }
@@ -144,10 +144,10 @@ protected:
     FILE*           _fp;
     
 	// add by claude for terrain attrib
-	unsigned char _AttribIndex; // 区域属性按钮的编号 (1...16)
-	unsigned char _getTileAttribMask(unsigned char attrib_btn_index); // 参数是区域属性按钮的编号
-	unsigned char _IslandIndex; // 海岛的编号
-    bool _is_erase; // 是添加属性还是删除属性操作
+	unsigned char _AttribIndex; // number of the area attribute button (1...16)
+	unsigned char _getTileAttribMask(unsigned char attrib_btn_index); // the parameter is the number of the area attribute button
+	unsigned char _IslandIndex; // number of the island
+    bool _is_erase; // whether it adds an attribute or removes one
 
 	void _renderTileAttrib(int nX, int nY, int nAttribIndex);
 	void _renderTileIsland(int nX, int nY, int nIslandIndex);

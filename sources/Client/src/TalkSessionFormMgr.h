@@ -6,11 +6,11 @@
 
 enum  eTalkSessionStyle
 {
-	enumTalkSessionHidden,			// 隐藏样式
-	enumTalkSessionInform,			// 通知样式
-	enumTalkSessionNormal,			// 正常模式
-	enumTalkSessionSmall,			// 小窗口模式
-	enumTalkSessionMinimize,		// 最小模式
+	enumTalkSessionHidden,			// hidden style
+	enumTalkSessionInform,			// notification style
+	enumTalkSessionNormal,			// normal mode
+	enumTalkSessionSmall,			// small window mode
+	enumTalkSessionMinimize,		// minimised mode
 };
 
 struct stNetSessCreate;
@@ -32,8 +32,8 @@ public:
 	void*       GetSessionFormPointer()            { return _pPointer;     }
 
 private:
-	std::string          _strName;       // 名字
-	std::string          _strMotto;      // 名字
+	std::string          _strName;       // name
+	std::string          _strMotto;      // name
 	DWORD			_nID;			// ID
 	DWORD			_nIcon_id;
 	void*           _pPointer;

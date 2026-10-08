@@ -132,7 +132,7 @@ bool CChat::Init()
 
     CFormMgr& mgr = CFormMgr::s_Mgr;
 
-    // 初始化组队控件
+    // initialises the party control
     char szBuf[80] = { 0 };
     for( int i=0; i<MAX_MEMBER; i++ )
     {
@@ -186,7 +186,7 @@ bool CChat::Init()
         _pCharacter[i]->Create( rt );
     }
 
-	// 初始化QQ界面
+	// initialises the QQ screen
 	_frmQQ = mgr.Find("frmQQ");
 	if( !_frmQQ )
 	{
@@ -386,13 +386,13 @@ void CChat::End()
 {
     m_pQQTreeView = NULL;
     //delete _pTeamMgr;
-	SAFE_DELETE(_pTeamMgr); // UI当机处理
+	SAFE_DELETE(_pTeamMgr); // UI freeze handling
 
     for( int i=0; i<MAX_MEMBER; i++ )
     {
         //delete _pCharacter[i];
         //_pCharacter[i] = 0;
-		SAFE_DELETE(_pCharacter[i]); // UI当机处理
+		SAFE_DELETE(_pCharacter[i]); // UI freeze handling
     }
 }
 
@@ -435,7 +435,7 @@ void CChat::RefreshTeam()
 
 	if( CGameScene::GetMainCha() && CGameScene::GetMainCha()->getHumanID()==CTeamMgr::GetTeamLeaderID() )
 	{
-		// 在自已的头上显示队长标志
+		// shows the leader mark over your own head
 		g_stUIStart.SetIsLeader( true );
 	}
 	else
@@ -577,7 +577,7 @@ int CChat::TeamSend( DWORD dwMsg, void* pData, DWORD dwParam )
             CMember* pMember = (CMember*)pData;
             CTextGraph* pItem = (CTextGraph*)(pMember->GetPointer());
 			CChatIconInfo *pIconInfo=GetChatIconInfo(pMember->GetIconID());
-			if (pIconInfo && pItem)	// modify by Philip.Wu  2006-08-13  修改去除路人后的当机
+			if (pIconInfo && pItem)	// modify by Philip.Wu  2006-08-13  changed to remove the freeze after excluding bystanders
 			{
 				CGuiPic* pPic=pItem->GetImage();
 				string strPath="texture/ui/HEAD/";
@@ -655,7 +655,7 @@ void CChat::SortOnlineFrnd(CTreeGridNode* pNode)
 			pMember2=(CMember*)(pItem2->GetPointer());
 			if (pMember2->IsOnline())
 			{
-				//1和2项对换
+				//items 1 and 2 are swapped
 				pMember1->SetPointer(pItem2);
 				pMember2->SetPointer(pItem1);
 				pItem1->SetPointer(pMember2);
@@ -723,7 +723,7 @@ void CChat::SortOnlineFrnd()
 			pMember2=(CMember*)(pItem2->GetPointer());
 			if (pMember2->IsOnline())
 			{
-				//1和2项对换
+				//items 1 and 2 are swapped
 				pMember1->SetPointer(pItem2);
 				pMember2->SetPointer(pItem1);
 				pItem1->SetPointer(pMember2);
@@ -911,7 +911,7 @@ void CChat::_MainMouseClick(CGuiData *pSender, int x, int y, DWORD key)
 			}
 		}
 	}
-	else if (pSelectNode == _pTeamMgr->Find( enumTeamMaster )->GetPointer())	// 导师
+	else if (pSelectNode == _pTeamMgr->Find( enumTeamMaster )->GetPointer())	// mentor
 	{
 		CTeam *pTeam=_pTeamMgr->Find( enumTeamMaster );
 		for (DWORD i=0;i<pTeam->GetCount();i++)
@@ -936,7 +936,7 @@ void CChat::_MainMouseClick(CGuiData *pSender, int x, int y, DWORD key)
 			}
 		}
 	}
-	else if (pSelectNode == _pTeamMgr->Find( enumTeamPrentice )->GetPointer())		// 学徒
+	else if (pSelectNode == _pTeamMgr->Find( enumTeamPrentice )->GetPointer())		// apprentice
 	{
 		CTeam *pTeam=_pTeamMgr->Find( enumTeamPrentice );
 		for (DWORD i=0;i<pTeam->GetCount();i++)
@@ -1164,7 +1164,7 @@ void CChat::_OnMouseSessMenu(CGuiData *pSender, int x, int y, DWORD key)
 	CMenuItem* pItem=_sessMouseRight->GetSelectMenu();
 	if (!pItem) return;
 	string str=pItem->GetString();
-	if (str== g_oLangRec.GetString(485))	// 密语对方
+	if (str== g_oLangRec.GetString(485))	// whisper to the other party
 	{
 		CTalkSessionFormMgr::OnClickCloseSession( static_cast<CTalkSessionForm*>(_sessMouseRight->GetPointer()) );
 	}
@@ -1172,7 +1172,7 @@ void CChat::_OnMouseSessMenu(CGuiData *pSender, int x, int y, DWORD key)
 	_frmQQ->Refresh();
 }
 
-// 导师菜单
+// mentor menu
 void CChat::_OnMouseMasterMenu(CGuiData *pSender, int x, int y, DWORD key)
 {
 	_frmQQ->PopMenu(FALSE);
@@ -1182,7 +1182,7 @@ void CChat::_OnMouseMasterMenu(CGuiData *pSender, int x, int y, DWORD key)
 
 	string strCommand = pItem->GetString();
 
-	if(strCommand == g_oLangRec.GetString(482))			// 添加好友
+	if(strCommand == g_oLangRec.GetString(482))			// add friend
 	{
 		CCharacter* pMainCha = CGameScene::GetMainCha();
 		if(pMainCha && pMainCha->getGameAttr() && pMainCha->getGameAttr()->get(ATTR_LV) >= 7)
@@ -1191,11 +1191,11 @@ void CChat::_OnMouseMasterMenu(CGuiData *pSender, int x, int y, DWORD key)
 		}
 		else
 		{
-			// 七级以下禁止添加好友
+			// adding a friend is forbidden below level 7
 			g_pGameApp->SysInfo(g_oLangRec.GetString(865));
 		}
 	}
-	else if(strCommand == g_oLangRec.GetString(484))	// 邀请组队
+	else if(strCommand == g_oLangRec.GetString(484))	// invite to a party
 	{
 		CCharacter* pMainCha = CGameScene::GetMainCha();
 		if(pMainCha && (pMainCha->IsBoat() || (pMainCha->getGameAttr() && pMainCha->getGameAttr()->get(ATTR_LV) >= 8)))
@@ -1204,19 +1204,19 @@ void CChat::_OnMouseMasterMenu(CGuiData *pSender, int x, int y, DWORD key)
 		}
 		else
 		{
-			// 八级以下禁止组队
+			// partying is forbidden below level 8
 			g_pGameApp->SysInfo(g_oLangRec.GetString(866));
 		}
 	}
-	else if(strCommand == g_oLangRec.GetString(481))	// 密语对方
+	else if(strCommand == g_oLangRec.GetString(481))	// whisper to the other party
 	{
 		CCozeForm::GetInstance()->OnPrivateNameSet(_curSelectMember->GetName());
 	}
-	else if(strCommand == g_oLangRec.GetString(478))	// 发送消息
+	else if(strCommand == g_oLangRec.GetString(478))	// send a message
 	{
 		CTalkSessionFormMgr::ApplySession(&_curSelectMember);
 	}
-	else if(strCommand == g_oLangRec.GetString(854))	// 解除关系（徒弟解除师傅）
+	else if(strCommand == g_oLangRec.GetString(854))	// break the relation (an apprentice breaks with the mentor)
 	{
 		CCharacter* pMain = CGameScene::GetMainCha();
 		if( pMain && pMain->getGameAttr() )
@@ -1235,7 +1235,7 @@ void CChat::_OnMouseMasterMenu(CGuiData *pSender, int x, int y, DWORD key)
 	_frmQQ->Refresh();
 }
 
-// 学徒菜单
+// apprentice menu
 void CChat::_OnMouseStudentMenu(CGuiData *pSender, int x, int y, DWORD key)
 {
 	_frmQQ->PopMenu(FALSE);
@@ -1245,11 +1245,11 @@ void CChat::_OnMouseStudentMenu(CGuiData *pSender, int x, int y, DWORD key)
 
 	string strCommand = pItem->GetString();
 
-	if(strCommand == g_oLangRec.GetString(482))			// 添加好友
+	if(strCommand == g_oLangRec.GetString(482))			// add friend
 	{
 		CS_Frnd_Invite(_curSelectMember->GetName());
 	}
-	else if(strCommand == g_oLangRec.GetString(484))	// 邀请组队
+	else if(strCommand == g_oLangRec.GetString(484))	// invite to a party
 	{
 		if(_curSelectMember->GetLevel() >= 8)
 		{
@@ -1257,19 +1257,19 @@ void CChat::_OnMouseStudentMenu(CGuiData *pSender, int x, int y, DWORD key)
 		}
 		else
 		{
-			// 八级以下禁止组队
+			// partying is forbidden below level 8
 			g_pGameApp->SysInfo(g_oLangRec.GetString(866));
 		}
 	}
-	else if(strCommand == g_oLangRec.GetString(481))	// 密语对方
+	else if(strCommand == g_oLangRec.GetString(481))	// whisper to the other party
 	{
 		CCozeForm::GetInstance()->OnPrivateNameSet(_curSelectMember->GetName());
 	}
-	else if(strCommand == g_oLangRec.GetString(478))	// 发送消息
+	else if(strCommand == g_oLangRec.GetString(478))	// send a message
 	{
 		CTalkSessionFormMgr::ApplySession(&_curSelectMember);
 	}
-	else if(strCommand == g_oLangRec.GetString(854))	// 解除关系（师傅解除徒弟）
+	else if(strCommand == g_oLangRec.GetString(854))	// break the relation (the mentor breaks with the apprentice)
 	{
 		CCharacter* pMain = CGameScene::GetMainCha();
 		if( pMain && pMain->getGameAttr() )
@@ -1277,7 +1277,7 @@ void CChat::_OnMouseStudentMenu(CGuiData *pSender, int x, int y, DWORD key)
 			long nLevel = pMain->getGameAttr()->get(ATTR_LV);
 
 			char szBuffer[256] = {0};
-			sprintf(szBuffer, g_oLangRec.GetString(856), _curSelectMember->GetName(),nLevel * 5); // 解除徒弟 %s 您将扣除\n金钱:%d  声望:%d\n确定吗？
+			sprintf(szBuffer, g_oLangRec.GetString(856), _curSelectMember->GetName(),nLevel * 5); // break the apprentice link %s. You will lose\nmoney:%d  prestige:%d\nAre you sure?
 
 			stSelectBox* pSelectBox = g_stUIBox.ShowSelectBox(_OnStudentDeleteConfirm, szBuffer, true);
 			pSelectBox->dwTag = _curSelectMember->GetID();

@@ -21,7 +21,7 @@
 #define WM_GRAPHNOTIFY WM_USER + 1024
 
 
-// 简单视频播放
+// simple video playback
 class CGameMovie
 {
 public:
@@ -30,19 +30,19 @@ public:
 
 public:
 
-	// 播放
+	// play
 	bool Play(HWND hWnd, const char* pszFileName);
 
-	// 停止播放
+	// stop playing
 	void Stop(void);
 
-	// 是否正在播放
+	// whether it is currently playing
 	bool IsPlaying(void);
 
-	// 清除
+	// clear
 	void Cleanup(void);
 
-	// 获得最后的错误码
+	// gets the last error code
 	HRESULT GetLastError(void) { return _hResult; }
 
 	IMediaEventEx* GetEvent() { return _pEvent; }

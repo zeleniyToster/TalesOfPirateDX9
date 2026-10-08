@@ -22,7 +22,7 @@
 namespace GUI
 {
 
-// 教堂竟拍
+// church auction
 class CChurchChallengeMgr : public CUIInterface
 {
 public:

@@ -38,7 +38,7 @@ using namespace GUI;
 //////////////////////////////////////////////////////////////////////////
 const BYTE CBourseMgr::ITEM_TYPE = 0;
 
-const float CBourseMgr::SALE_RATE = 0.5;	//物品卖出的折减数目前约定为50%
+const float CBourseMgr::SALE_RATE = 0.5;	//the discount for selling an item is currently set at 50%
 
 const int CBourseMgr::BUY_PAGE_INDEX = 0;		
 
@@ -50,7 +50,7 @@ const BYTE ERR_TRADE_LEVEL = 100;
 
 
 //////////////////////////////////////////////////////////////////////////
-// CBourseMgr成员函数
+// CBourseMgr member function
 //////////////////////////////////////////////////////////////////////////
 CBourseMgr::CBourseMgr()
 : m_iItemSelIndex(-1), grdShipRoom(NULL), frmBoatRoom(NULL)
@@ -72,7 +72,7 @@ bool CBourseMgr::Init()
 		}
 		frmSeaTrade->evtEntrustMouseEvent = _MainMouseSeaTradeEvent ;
 
-		//交易买卖货物的表格
+		//the table holding the goods traded and bought
 		grdItemBuy = 
 			dynamic_cast<CGoodsGrid*>(frmSeaTrade->Find("grdItemSale"));
 		if (!grdItemBuy) 
@@ -122,20 +122,20 @@ void CBourseMgr::ShowBourse(const NET_TRADEINFO& TradeInfo, BYTE byCmd,
 	m_dwNpcID = dwNpcID;
 	m_dwBoatID = dwBoatID;
 
-	if ( frmSeaTrade )   //打开界面前，删除所有的道具，防具和其他
+	if ( frmSeaTrade )   //before opening the screen, delete every item, armour and the rest
 	{
 		ClearItemList(m_BuyList);
 		ClearItemList(m_SaleList);
 		frmSeaTrade->ClearChild();
 	}
 
-	// 查找船的货舱
+	// looks up the cargo hold of the boat
 	CBoat* pBoat = g_stUIBoat.FindBoat( dwBoatID );
 	if (!pBoat) return; 
 	CForm* pBoatRoom = pBoat->GetForm();
 	if (!pBoatRoom) return;
 
-	//如果船属性打开,关闭
+	//if the boat window is open, close it
 	CForm* pForm = dynamic_cast<CForm*>(pBoatRoom->GetParent());
 	xShipFactory* pkShip = ((CWorldScene*)g_pGameApp->GetCurScene())->GetShipMgr()->_factory;
 	if (pkShip && pkShip->sbf.wnd->GetIsShow() && pForm == pkShip->sbf.wnd)
@@ -151,7 +151,7 @@ void CBourseMgr::ShowBourse(const NET_TRADEINFO& TradeInfo, BYTE byCmd,
 	grdShipRoom = pBoat->GetGoodsGrid();
 	if (!grdShipRoom) return;
 
-	// 保存在本交易所可以买到的物品
+	// stores the items that can be bought at this exchange
 	int i(0);
 	ItemInfo_T* pkItemInfo(NULL);
 	for (; i<TradeInfo.TradePage[BUY_PAGE_INDEX].byCount; i++ )
@@ -173,7 +173,7 @@ void CBourseMgr::ShowBourse(const NET_TRADEINFO& TradeInfo, BYTE byCmd,
 		m_iItemSelIndex = 0;
 	}//end of if 
 
-	//保存本交易所可以高价买的物品
+	//stores the items that can be bought back at a higher price here
 	for (i=0; i<TradeInfo.TradePage[SALE_PAGE_INDEX].byCount; i++)
 	{
 		pkItemInfo = new ItemInfo_T();
@@ -217,7 +217,7 @@ void CBourseMgr::ClearItemList(ItemList& itemList)
 	for (; iter != end; ++iter)
 	{
 		//delete *iter;
-		SAFE_DELETE(*iter); // UI当机处理
+		SAFE_DELETE(*iter); // UI freeze handling
 	} //end of for 
 
 	itemList.clear();
@@ -242,10 +242,10 @@ void CBourseMgr::ChangeItem(eDirectType enumDirect/*= LEFT*/)
 	if (m_iItemSelIndex < 0 || m_iItemSelIndex > (int)m_BuyList.size() - 1)
 		return;
 
-	//判断目前的序号
+	//decides the current index
 	m_iItemSelIndex += ((int)(enumDirect));
 
-	// 循环移动
+	// cycles round
 	m_iItemSelIndex = (int)
 		((m_iItemSelIndex + m_BuyList.size()) % m_BuyList.size());
 
@@ -270,7 +270,7 @@ bool CBourseMgr::ShowBoat(unsigned int iBoatIndex /*= 0*/)
 		return false;
 	}
 
-	m_dwBoatID = pkBoat->GetCha()->getAttachID();		//船的ID
+	m_dwBoatID = pkBoat->GetCha()->getAttachID();		//the ID of the boat
 	
 
 	CGoodsGrid* pkGoodGrid = pkBoat->GetGoodsGrid();
@@ -349,12 +349,12 @@ void CBourseMgr::BuyGoods(CItemCommand& rkBuy, int nFreeCnt)
 
 #if (GOOD_DISTINGUISH_PILE == 1)
 	if( rkBuy.GetIsPile() )
-	{	// 买多个物品
+	{	// buys several items
 		m_pkTradeBox = g_stUIBox.ShowTradeBox(
 			_BuyGoodsEvent, (float)rkBuy.GetPrice(), nMax, rkBuy.GetItemInfo()->szName );
 	}
 	else
-	{	// 买单个物品
+	{	// buys a single item
 		char buf[256] = { 0 };
 		sprintf(buf, g_oLangRec.GetString(460), rkBuy.GetName());
 		g_stUIBox.ShowSelectBox(_BuyAGoodEvent, buf, true);
@@ -467,7 +467,7 @@ void CBourseMgr::SetItems()
 		LG("Error", "No GoodGrid.");
 	}
 
-	//增加买的货物
+	//adds a bought good
 	int iIndex(0);
 	for (; iIndex < (int)(m_BuyList.size()); ++iIndex)
 	{
@@ -487,7 +487,7 @@ void CBourseMgr::SetItems()
 		}
 	} //end of for 
 
-	//增加卖的货物
+	//adds a sold good
 	iIndex = 0;
 	for (iIndex=0; iIndex<(int)(m_SaleList.size()); ++iIndex)
 	{
@@ -526,19 +526,19 @@ BYTE CBourseMgr::GetTradeLevel()
 }
 
 
-//~ 回调函数 =================================================================
+//~ callbacks ==========================================================================
 void CBourseMgr::_MainMouseSeaTradeEvent(CCompent *pSender, int nMsgType, 
 										 int x, int y, DWORD dwKey)
 {
 	string name = pSender->GetName();
 	if( name=="btnNo"  || name == "btnClose" )  
 	{	
-		//关闭表单,取消交易
+		//closes the form and cancels the trade
 		return;
 	}
 	else if ( name == "btnYes")
 	{
-		//确定交易
+		//confirms the trade
 		return ;			
 	}
 }
@@ -770,7 +770,7 @@ void CBourseMgr::_SaleAGoodEvent(CCompent *pSender, int nMsgType,
 
 ////////////////////////////////////////////////////////////////////////////////
 //
-//  黑市商人
+//  black market merchant
 //
 
 bool CBlackTradeMgr::Init()
@@ -840,7 +840,7 @@ bool CBlackTradeMgr::SailToBuy(CGoodsGrid& rkDrag, CGoodsGrid& rkSelf, int nGrid
 	if(! pItem)
 		return false;
 
-	CBoxMgr::ShowSelectBox( _TradeExchangeEvent, g_oLangRec.GetString(832), true ); // 确认是否兑换
+	CBoxMgr::ShowSelectBox( _TradeExchangeEvent, g_oLangRec.GetString(832), true ); // confirms whether to exchange
 
 	//if(! pItem->GetIsValid())
 	//{
@@ -877,7 +877,7 @@ void CBlackTradeMgr::RefreshSaleGrid()
 		{
 			if(m_vecBlackTrade[i].sSrcNum > g_stUIEquip.GetItemCount(m_vecBlackTrade[i].sSrcID))
 			{
-				// 纳卡个数不满足，设置为不可用
+				// not enough naka cards, set as unavailable
 				pItem->SetIsValid(false);
 			}
 			else
@@ -896,7 +896,7 @@ void CBlackTradeMgr::SetItem(stBlackTrade* pBlackTrade)
 	pInfo = GetItemRecordInfo(pBlackTrade->sTarID);
 	if (!pInfo) return;
 	pItem = new CItemCommand(pInfo);
-	pItem->GetData().sNum = pBlackTrade->sTarNum;		 // 卖个数
+	pItem->GetData().sNum = pBlackTrade->sTarNum;		 // sell count
 
 	pInfo = GetItemRecordInfo(pBlackTrade->sSrcID);
 	if(pInfo)
@@ -915,7 +915,7 @@ void CBlackTradeMgr::ExchangeAnswerProc(bool bSuccess, stBlackTrade* pBlackTrade
 {
 	if(bSuccess)
 	{
-		// 将兑换成功的道具放入下面的 grid 中
+		// puts the successfully exchanged item into the grid below
 		int nCurNum = g_stUIBlackTrade.grdItemBuy->GetCurNum();
 		if( nCurNum < g_stUIBlackTrade.grdItemBuy->GetMaxNum())
 		{
@@ -925,31 +925,31 @@ void CBlackTradeMgr::ExchangeAnswerProc(bool bSuccess, stBlackTrade* pBlackTrade
 			pInfo = GetItemRecordInfo(pBlackTrade->sTarID);
 			if (!pInfo) return;
 			pItem = new CItemCommand(pInfo);
-			pItem->GetData().sNum = pBlackTrade->sTarNum;		 // 卖个数
+			pItem->GetData().sNum = pBlackTrade->sTarNum;		 // sell count
 			pInfo = GetItemRecordInfo(pBlackTrade->sSrcID);
 			if(pInfo)
 			{
 				char szBuffer[128] = {0};
-				sprintf(szBuffer, g_oLangRec.GetString(843), pBlackTrade->sSrcNum, pInfo->szName);	// x个纳卡
+				sprintf(szBuffer, g_oLangRec.GetString(843), pBlackTrade->sSrcNum, pInfo->szName);	// n naka cards
 				pItem->SetOwnDefText(szBuffer);
 			}
 			grdItemBuy->SetItem(nCurNum, pItem);
 		}
 
 		//
-		// 刷新购买表格
+		// refreshes the purchase table
 		//
 		RefreshSaleGrid();
-		CCozeForm::GetInstance()->OnSystemMsg(g_oLangRec.GetString(833)); // 兑换成功
+		CCozeForm::GetInstance()->OnSystemMsg(g_oLangRec.GetString(833)); // exchange succeeded
 	}
 	else
 	{
-		CCozeForm::GetInstance()->OnSystemMsg(g_oLangRec.GetString(834)); // 兑换失败
+		CCozeForm::GetInstance()->OnSystemMsg(g_oLangRec.GetString(834)); // exchange failed
 	}
 }
 
 
-// 兑换确认
+// exchange confirmation
 void CBlackTradeMgr::_TradeExchangeEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey)
 {
 	if(nMsgType != CForm::mrYes)
@@ -962,7 +962,7 @@ void CBlackTradeMgr::_TradeExchangeEvent(CCompent *pSender, int nMsgType, int x,
 	{
 		if(g_stUIBlackTrade.m_vecBlackTrade[i].sIndex == g_stUIBlackTrade.m_nDragIndex)
 		{
-			// 通知服务器
+			// notifies the server
 			CS_BlackMarketExchangeReq(  g_stUIBlackTrade.GetNpcID(), 
 										g_stUIBlackTrade.m_vecBlackTrade[i].sSrcID, 
 										g_stUIBlackTrade.m_vecBlackTrade[i].sSrcNum, 
@@ -977,7 +977,7 @@ void CBlackTradeMgr::_TradeExchangeEvent(CCompent *pSender, int nMsgType, int x,
 }
 
 
-// 关闭窗体事件
+// close window event
 void CBlackTradeMgr::_evtCloseForm(CForm* pForm, bool& IsClose)
 {
 	for(int i = 0; i < g_stUIBlackTrade.grdItemSale->GetMaxNum(); ++i)

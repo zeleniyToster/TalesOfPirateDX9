@@ -116,13 +116,13 @@ public:
         m_pkLastScene = pkLastScene; 
     }
 
-    virtual void        LoadingCall();          // 在装载loading后,刷新
+    virtual void        LoadingCall();          // refreshed after loading finishes
 
-	CForm*			frmRoleInfo;		// 定义角色初步介绍界面  该界面仅在进入创建角色界面时显示
+	CForm*			frmRoleInfo;		// defines the character introduction screen; it is shown only when entering the character creation screen
 
 
 protected:
-    //场景相关函数
+    //scene related functions
     virtual void		_FrameMove(DWORD dwTimeParam);
     virtual void		_Render();
 
@@ -132,13 +132,13 @@ protected:
     virtual bool		_Init();	
 	virtual bool		_Clear();
 
-    //UI相关函数
+    //UI related functions
     bool                _InitUI();
 
-    //渲染UI 3D模型
+    //renders the UI 3D model
     void                RenderCha(int x,int y) const;
 
-    //回掉函数
+    //callback function
     static void     _ChaFoundFrmMouseEvent(CCompent *pSender, int nMsgType, 
                                            int x, int y, DWORD dwKey);
     static void     _ChaCityFrmMouseEvent(CCompent *pSender, int nMsgType, 
@@ -173,7 +173,7 @@ protected:
     {
         LEFT = -1, RIGHT = 1,
     };
-    // 逻辑函数
+    // logic function
     void            ChangeFace(eDirectType enumDirect = LEFT);
     void            ChangeHair(eDirectType enumDirect = LEFT);
     void            ChangeCity(eDirectType enumDirect = LEFT) const;
@@ -217,19 +217,19 @@ private:
 	void			ShowCityZone(int index);
 
 private:
-    // 3D 场景
+    // 3D scene
     LoginScene_CreateCha m_LoginSceneCreateCha;
 
-    // UI 界面
+    // UI screen
 
-    // 角色创建界面
+    // character creation screen
     static CForm*			    frmChaFound; 
     static CEdit*               edtName;
     static CMemo*               memChaDescribe;
     static CLabel*              labHair;
     static CLabel*              labFace;
 
-    // 角色城市选择界面
+    // character city selection screen
     static CForm*               frmChaCity;
     static CMemo*               memChaDescribe2;
     static CLabel*              labCity;
@@ -240,24 +240,24 @@ private:
     static int					m_nCurCityIndex;   
 	static bool					bShowDialog;
 
-    // 退出菜单界面
+    // exit menu screen
     static CForm*               frmQuit;
 
-    static int  nHairTestCnt[MAX_HAIR_NUM];			//四个人物头发的开始编号
-    static int  nFaceTestCnt[MAX_FACE_NUM];			//四个人物脸形的开始编号
+    static int  nHairTestCnt[MAX_HAIR_NUM];			// start number of the hair for the four characters
+    static int  nFaceTestCnt[MAX_FACE_NUM];			// start number of the face shape for the four characters
     static int nSelHairNum[MAX_CHA_NUM];
     static int nSelFaceNum[MAX_CHA_NUM];
 
 
 private:
 
-    int m_nSelChaIndex;                     //选中人物的编号(同时作为当前角色描述序号)
-    std::string m_sName;                         //角色名
-    int m_nCurHairIndex;                    //当前的发型编号
-    int m_nCurFaceIndex;                    //当前的脸型编号
-    int m_nChaRotate;                       //上次人物的偏移角度(-180~+180)						
+    int m_nSelChaIndex;                     // number of the selected character (also used as the current character description index)
+    std::string m_sName;                         // character name
+    int m_nCurHairIndex;                    // current hairstyle number
+    int m_nCurFaceIndex;                    // current face shape number
+    int m_nChaRotate;                       // offset angle of the previous character (-180~+180)
 
-    CSelectChaScene* m_pkLastScene;           //上一个场景
+    CSelectChaScene* m_pkLastScene;           // the previous scene
 
 	static const int CHA_NUM = 4;
 	CCharacter* m_pChaForUI[CHA_NUM];
@@ -278,11 +278,11 @@ private:
 
 	CImage*			imgChaView[ROLE_ALL_INFO_COUNT];
 
-	CForm*			frmLanchInfo;		// 定义蓝琦转职路线介绍界面    该界面仅在进入创建角色界面后选择蓝琦后显示
-	CForm*			frmAimiInfo;		// 定义艾米转职路线介绍界面    该界面仅在进入创建角色界面后选择艾米后显示
-	CForm*			frmFelierInfo;		// 定义菲利而转职路线介绍界面    该界面仅在进入创建角色界面后选择菲利而后显示
-	CForm*			frmCaxiusInfo;		// 定义卡西斯转职路线介绍界面    该界面仅在进入创建角色界面后选择卡西斯后显示
-	CForm*			frmRoleAllInfo;		// 定义角色详细介绍界面    该界面仅在进入各角色转职路线介绍界面后点击任意一个角色后显示
+	CForm*			frmLanchInfo;		// defines the Blue transfer route introduction screen; it is shown only after Blue is selected in the character creation screen
+	CForm*			frmAimiInfo;		// defines the Amy transfer route introduction screen; it is shown only after Amy is selected in the character creation screen
+	CForm*			frmFelierInfo;		// defines the Philippe transfer route introduction screen; it is shown only after Philippe is selected in the character creation screen
+	CForm*			frmCaxiusInfo;		// defines the Cassis transfer route introduction screen; it is shown only after Cassis is selected in the character creation screen
+	CForm*			frmRoleAllInfo;		// defines the detailed character introduction screen; it is shown only after clicking any character on one of the transfer route introduction screens
 
 	CMemo*			memChaDescribeUp;
 	CMemo*			memChaDescribeDown;
