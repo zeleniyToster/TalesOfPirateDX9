@@ -79,8 +79,20 @@ void CGameApp::_HandleMsg(DWORD dwTypeID, DWORD dwParam1, DWORD dwParam2)
 
 				if( dwParam1==1000 )
 				{
+					// dwParam1 == 1000 is the client side login timeout sentinel raised by
+					// CLoginScene::_FrameMove. It is NOT a socket error code. WSAGetLastError()
+					// used to be printed here, but it samples the last Win32 error of the
+					// render thread, which has nothing to do with the connection and yields
+					// bogus values (0x0, or 0x5 = ERROR_ACCESS_DENIED from some unrelated
+					// Win32 call). Report the real timeout instead and log the state.
+					const int l_status			= g_NetIF ? g_NetIF->GetConnStat() : -1;
+					const int l_tcp_established	= ( g_NetIF && g_NetIF->m_connect.GetDatasock() ) ? 1 : 0;
+
+					LG( "connect", "login timeout: no handshake within %u ms, conn stat=%d, tcp established=%d\n",
+						g_Config.m_nConnectTimeOut, l_status, l_tcp_established );
+
 					char szBuf[128] = { 0 };
-					sprintf( szBuf, g_oLangRec.GetString(135), WSAGetLastError() );
+					sprintf( szBuf, g_oLangRec.GetString(135), g_Config.m_nConnectTimeOut / 1000 );
 					g_stUIBox.ShowMsgBox( _Disconnect, szBuf );
 					return;
 				}

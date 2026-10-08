@@ -147,12 +147,17 @@ long Receiver::Process()
 						}
 						catch (std::out_of_range const&) {
 							__tca->Disconnect(m_datasock, 0, -32);
+							// Every exit from Process() has to release m_recvflag, otherwise
+							// TcpCommApp::BeforeSel() never manages to schedule DelConnect and
+							// the DataSocket is leaked for good.
+							m_datasock->m_recvflag --;
 							return 0;
 						}
 						catch(...){
 
 							__tca->Disconnect(m_datasock, 0, -31);
 
+							m_datasock->m_recvflag --;
 							return 0;
 						}
 						l_rpk.DiscardLast(l_rpk.GetDataLen() -l_len);

@@ -19,6 +19,22 @@ class TcpCommApp;
 class RPacket;
 
 enum{em_cmdsize	=sizeof(uShort)};
+
+// WPE (anti packet editor) packet counter.
+// Commands below restart the counter. 355 == CMD_CM_SEND_PRIVATE_KEY,
+// 438 == CMD_CM_REGISTER (CMD_CM_ROLEBASE+55 / CMD_CM_CHARBASE+8 in
+// sources/Libraries/common/include/NetCommand.h).
+enum : uShort
+{
+	em_wpe_restart_privatekey	= 355,
+	em_wpe_restart_register		= 438,
+};
+
+// Restarts the counter that WPacket::WriteCmd() writes behind the command word.
+// Must be called whenever a new DataSocket is established: the server keeps a
+// per socket counter (DataSocket::m_pktn) restarting from 0, so a client side
+// counter that keeps growing makes GateServer drop the client as a WPE.
+void	ResetPacketCounter();
 //==============================================================================================
 class WPacket:private rptr<rbuf>
 {

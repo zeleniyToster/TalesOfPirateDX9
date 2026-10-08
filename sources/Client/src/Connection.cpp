@@ -29,6 +29,9 @@ bool Connection::Connect(dbc::cChar *hostname,dbc::uShort port,dbc::uLong timeou
 	m_status	=CNST_CONNECTING;
 	strcpy(m_hostname,hostname);
 	m_port		=port;
+	// GateServer keeps a per socket packet counter restarting from 0 for every
+	// new connection, so the client side counter has to be restarted as well.
+	dbc::ResetPacketCounter();
 	if(m_netif->GetProcessor())
 	{
 		m_netif->GetProcessor()->AddTask(this);
@@ -48,6 +51,7 @@ void Connection::OnDisconnect()
 {
 	m_datasock	=0;
 	m_status	=CNST_INVALID;
+	dbc::ResetPacketCounter();
 }
 
 long Connection::Process()

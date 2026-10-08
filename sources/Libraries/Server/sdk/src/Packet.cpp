@@ -20,8 +20,26 @@ inline std::pair<uint32_t, uint32_t> split_uint64_to_uint32(uint64_t value) {
 	return { high, low };
 }
 
-int count = 0;
+//=====WPE (anti packet editor) packet counter===========================================================
+// Every client -> server packet whose command falls into the (0,500] / [6000,6500] ranges
+// carries an extra 32 bit counter right behind the command word.
+// GateServer::ToClient::OnProcessData() validates it against a per socket counter
+// (DataSocket::m_pktn) and then physically memmove()s those 4 bytes out of the receive buffer.
+// Turning WpeProtection off on the server therefore shifts every single client payload by
+// 4 bytes - the three "protection" switches are part of the wire protocol, not optional
+// diagnostics.
+namespace
+{
+	int g_wpePacketCounter = 0;
+}
 _DBC_USING
+
+_DBC_BEGIN
+void ResetPacketCounter()
+{
+	g_wpePacketCounter = 0;
+}
+_DBC_END
 
 extern PreAllocHeap<rbuf>	__bufheap;
 
@@ -173,8 +191,12 @@ bool WPacket::WriteCmd(uShort cmd)
 	bool bClient = false;
 	if (((cmd > 0) && (cmd <= 500)) || (cmd >= 6000 && cmd <= 6500)) {
 		bClient = true;
-		if (cmd == 438 || cmd == 355) {
-			count = 0;
+		// Both commands below are the first ones a freshly (re)connected client emits, so they
+		// restart the counter to match the per socket DataSocket::m_pktn the server expects.
+		// 355 == CMD_CM_SEND_PRIVATE_KEY, 438 == CMD_CM_REGISTER
+		// (sources/Libraries/common/include/NetCommand.h: CMD_CM_ROLEBASE+55 / CMD_CM_CHARBASE+8)
+		if (cmd == em_wpe_restart_register || cmd == em_wpe_restart_privatekey) {
+			g_wpePacketCounter = 0;
 		}
 	}
 	if(!bool(*this))					return false;
@@ -182,8 +204,8 @@ bool WPacket::WriteCmd(uShort cmd)
 	cmd	=htons(cmd);
 	MemCpy(GetDataAddr(), reinterpret_cast<char const*>(&cmd), sizeof(uShort));
 	if(bClient){
-		this->WriteLong(count);
-		count++;
+		this->WriteLong(g_wpePacketCounter);
+		g_wpePacketCounter++;
 	}
 	
 	#if DEBUG_WPACKET
