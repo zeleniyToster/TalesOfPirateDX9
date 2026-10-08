@@ -5,7 +5,7 @@
 
 using namespace GUI;
 
-CTextButton* CTextButton::m_pCurButton = NULL;	// 当前激活的Button
+CTextButton* CTextButton::m_pCurButton = NULL;	// the currently active Button
 
 CTextButton::CTextButton(CForm& frmOwn)
 : CCompent(frmOwn), _isDown(false), _textColor( 0xffff0000), _eFormModal(CForm::mrNone)
@@ -45,12 +45,12 @@ CTextButton& CTextButton::operator=(const CTextButton& rhs)
 CTextButton::~CTextButton(void)
 {
 	//delete _pImage;
-	SAFE_DELETE(_pImage); // UI当机处理
+	SAFE_DELETE(_pImage); // UI freeze handling
 }
 
 void CTextButton::Render()
 {
-	// modify by Philip.Wu  2006-08-09  支持按钮闪烁
+	// modify by Philip.Wu  2006-08-09  supports button blinking
 	if( _dwFlashCycle > 0 && GetIsEnabled() && (g_pGameApp->GetCurTick() % _dwFlashCycle < _dwFlashCycle / 2))
 		_pImage->Render( GetX(), GetY(), BYTE(128) );
 	else
@@ -83,14 +83,14 @@ bool CTextButton::MouseRun( int x, int y, DWORD key )
 				};
 
 
-				if (evtMouseDBClick && isDoubleClick()) // 两次点击时间少于 500 毫秒，则认定为双击
+				if (evtMouseDBClick && isDoubleClick()) // if the two clicks are less than 500 milliseconds apart they count as a double click
 				{
-					_dwLastClick = 0;	// 双击后重置
+					_dwLastClick = 0;	// reset after the double click
 					DoClick(Mouse_LDB);
 				}
 				else
 				{
-					_dwLastClick = GetTickCount();	// 记录下当前点击时间，用于判断下一次点击间隔
+					_dwLastClick = GetTickCount();	// records the current click time, used to judge the interval to the next click
 					DoClick();
 				}
 
@@ -133,7 +133,7 @@ void CTextButton::DoClick(eMouseState state)
 {
 	g_pGameApp->PlaySound( 26 );
 
-	// modify by Philip.Wu  2007/01/23  扩展按钮功能，支持右键和双击
+	// modify by Philip.Wu  2007/01/23  extended the button to support the right button and double clicking
 	switch(state)
 	{
 	case Mouse_LUp:

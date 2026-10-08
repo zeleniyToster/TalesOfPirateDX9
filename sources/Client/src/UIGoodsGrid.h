@@ -1,8 +1,8 @@
 ﻿//----------------------------------------------------------------------
-// 名称:道具栏
-// 作者:lh 2004-10-27
-// 用途:道具栏中每一个道具,装备均可拖动,每一装备下都有数字代表个数
-// 最后修改日期:
+// Name: item slot
+// Author: lh 2004-10-27
+// Purpose: every item and every piece of equipment in the slot can be dragged, and each has a number showing the count
+// Last modified date:
 //----------------------------------------------------------------------
 #pragma once
 #include "UICommandCompent.h"
@@ -22,9 +22,9 @@ class CGoodsGrid : public CCommandCompent
 public:
 	enum eShowStyle
 	{
-		enumSmall,		// 正常显示图标方式
-		enumSale,		// 显示售出
-		enumOwnDef		// 自定义显示
+		enumSmall,		// normal icon display mode
+		enumSale,		// shows as sold
+		enumOwnDef		// custom display
 	};
 
 
@@ -79,7 +79,7 @@ public:
 	void ResetItemSelections();
 
 	int				GetFreeIndex();
-    void            GetFreeIndex( int* nFree, int& nCount, int nSize );     // nFree为int数组,nCount为数组中多少个值有效,nSize为nFree的缓冲个数
+    void            GetFreeIndex( int* nFree, int& nCount, int nSize );     // nFree is an int array, nCount is how many values in the array are valid, nSize is the buffer size of nFree
 	bool			DelItem( int nIndex );
 	bool			SetItem( unsigned int nIndex, CCommandObj* pItem );
 	bool			SwapItem( unsigned int nFirst, unsigned int nSecond );
@@ -97,16 +97,16 @@ public:
 	int				GetMaxNum() const { return _nMaxNum; }
 	int				GetCurNum()	const { return _nCurNum; }
 
-    int             FindCommand( CCommandObj* p );  // 返回大于零成功,失败返回-1 
+    int             FindCommand( CCommandObj* p );  // returns greater than zero on success, -1 on failure
 
 	void			SetItemValid( bool v );
 
 	int				GetFirstShow() const { return _nFirst; }
 
-	int				GetEmptyGridCount();	// 表格中空格格子个数
-	int				GetUsedGridCount();		// 表格中已使用格子个数
+	int				GetEmptyGridCount();	// number of empty cells in the grid
+	int				GetUsedGridCount();		// number of used cells in the grid
 
-public:	// 事件
+public:	// events
     GuiThrowItemEvent   evtThrowItem;
     GuiSwapItemEvent    evtSwapItem;
     GuiDragInGridEvent	evtBeforeAccept;
@@ -118,7 +118,7 @@ private:
 	void			_Copy( const CGoodsGrid& rhs );
 	void			_SetSelf();
 	void			_ClearItem();
-	int				_GetHitItem( int x, int y );		// 返回-1失败，否则返回索引
+	int				_GetHitItem( int x, int y );		// returns -1 on failure, otherwise the index
 
 protected:
 	static void		_OnScrollChange(CGuiData *pSender) {
@@ -127,22 +127,22 @@ protected:
 	void			_OnScrollChange();
 
 protected:
-	CGuiPic*		_pImage;					// 背景
+	CGuiPic*		_pImage;					// background
 	CScroll*		_pScroll;
-	CGuiPic*		_pUnit;						// 单元格图片
+	CGuiPic*		_pUnit;						// cell image
 
 	CCommandObj**	_pItems;
 
 protected:
 	eShowStyle		_eShowStyle;
 
-	int				_nUnitHeight, _nUnitWidth;	// 单元宽高 
-	int				_nSpaceX, _nSpaceY;			// 单元间距
+	int				_nUnitHeight, _nUnitWidth;	// cell width and height
+	int				_nSpaceX, _nSpaceY;			// cell spacing
 
-	int				_nRow, _nCol;				// 显示的行列
-	int				_nMaxNum;					// 格子数,行列的整数倍
+	int				_nRow, _nCol;				// the rows and columns displayed
+	int				_nMaxNum;					// number of cells, a whole multiple of the rows and columns
 
-	// 与周围边框的距离
+	// distance to the surrounding border
 	int				_nLeftMargin;
 	int				_nTopMargin;
 	int				_nRightMargin;
@@ -156,17 +156,17 @@ private:
 
 private:
 	int				_nStartX, _nStartY;
-	int				_nPageShowNum;				// 一页能显示的个数
+	int				_nPageShowNum;				// number shown on one page
 	int				_nTotalW, _nTotalH;
 
-	int				_nFirst, _nLast;			// 显示时的第一个和最后一个
+	int				_nFirst, _nLast;			// the first and last shown
 
 	CCommandObj*	_pDragItem;
-	int				_nDragIndex;				// 拖动时的索引
+	int				_nDragIndex;				// the index while dragging
 	int				_nDragOffX, _nDragOffY;
 	int				_nDragRow,	_nDragCol;
 
-	int				_nCurNum;					// 当前物品数量
+	int				_nCurNum;					// current item count
 	bool			_IsShowHint;
 
 private:
@@ -181,7 +181,7 @@ private:
 
 };
 
-// 内联函数
+// inline function
 inline void CGoodsGrid::SetSpace( int x, int y )	
 { 
 	if( x >= 0 )	_nSpaceX=x; 

@@ -1,5 +1,5 @@
-﻿// Scene 代表游戏场景, 包括地表, 角色, 物件, 特效, 相关界面等游戏元素的集合, 
-// 是玩家直接面对的游戏功能的基本单位, 比如登录Scene, 选角色Scene, 游戏世界Scene
+﻿// Scene represents a game scene: the collection of game elements such as the terrain, characters, objects, effects and the related screens,
+// it is the basic unit of the game functionality the player faces directly, such as the login Scene, the character selection Scene and the game world Scene
 // GameApp可以SwitchScene(),  而Scene可以SwitchMap
 #pragma once
 #include "Script.h"
@@ -7,23 +7,23 @@
 #include "BoolSet.h"
 #include "SceneSign.h"
 
-#define SCENEMSG_CHA_CREATE             1	// 参数1:数组ID,参数2:角色类型
-#define SCENEMSG_CHA_DESTROY            2	//  参数1:数组ID,参数2:角色类型
-#define SCENEMSG_CHA_BEGINMOVE          3	// 参数1:角色类型,参数2:数组ID
-#define SCENEMSG_CHA_ENDMOVE            4	// 参数同上
+#define SCENEMSG_CHA_CREATE             1	// parameter 1: array ID, parameter 2: character type
+#define SCENEMSG_CHA_DESTROY            2	// parameter 1: array ID, parameter 2: character type
+#define SCENEMSG_CHA_BEGINMOVE          3	// parameter 1: character type, parameter 2: array ID
+#define SCENEMSG_CHA_ENDMOVE            4	// parameters as above
 
-#define SCENEMSG_SCENEOBJ_CREATE        6	// 参数1:数组ID,参数2:物件类型
-#define SCENEMSG_SCENEOBJ_DESTROY       7	// 参数1:数组ID,参数2:物件类型
-#define SCENEMSG_SCENEOBJ_MOVE	        8	// 参数1:数组ID,参数2:物件类型
+#define SCENEMSG_SCENEOBJ_CREATE        6	// parameter 1: array ID, parameter 2: object type
+#define SCENEMSG_SCENEOBJ_DESTROY       7	// parameter 1: array ID, parameter 2: object type
+#define SCENEMSG_SCENEOBJ_MOVE	        8	// parameter 1: array ID, parameter 2: object type
 
-#define SCENEMSG_EFFECT_HIT		        9	// 打中目标
-#define SCENEMSG_EFFECT_VALID	        10	// 特效无效,参数1:数组ID,
-#define SCENEMSG_EFFECT_CREATE	        11	// 特效无效
+#define SCENEMSG_EFFECT_HIT		        9	// hits the target
+#define SCENEMSG_EFFECT_VALID	        10	// the effect is invalid, parameter 1: array ID,
+#define SCENEMSG_EFFECT_CREATE	        11	// the effect is invalid
 
-#define SCENEMSG_SCENEITEM_CREATE       12	// 参数1:数组ID,参数2:item类型
-#define SCENEMSG_SCENEITEM_DESTROY      13	// 参数1:数组ID,参数2:item类型
+#define SCENEMSG_SCENEITEM_CREATE       12	// parameter 1: array ID, parameter 2: item type
+#define SCENEMSG_SCENEITEM_DESTROY      13	// parameter 1: array ID, parameter 2: item type
 
-#define SCENEMSG_SCENEOBJ_UPDATEVALID   15  // 更新不同类型的场景物件有效索引
+#define SCENEMSG_SCENEOBJ_UPDATEVALID   15  // updates the valid indices of the various types of scene objects
 
 struct SceneTranspObjStateDesc
 {
@@ -51,15 +51,15 @@ struct stSceneInitParam
 {
 	stSceneInitParam() : nUITemplete(-1), nMaxCha(0), nMaxObj(0), nMaxItem(0), nMaxEff(0), nTypeID(0) {}
 
-	std::string  strName;		// 场景名称
-	int		nTypeID;		// 对应的地图类型
-	std::string	strMapFile;		// 地图名称
-	int		nUITemplete;	// 场景对应的UI模板号
+	std::string  strName;		// scene name
+	int		nTypeID;		// the corresponding map type
+	std::string	strMapFile;		// map name
+	int		nUITemplete;	// the UI template number the scene corresponds to
 
-	int		nMaxCha;		// 最大的角色数量,小于零,没有角色
-	int		nMaxObj;		// 最大物件数
-	int		nMaxItem;		// 最大道具数
-	int		nMaxEff;		// 最大效果数
+	int		nMaxCha;		// the maximum number of characters; less than zero means no characters
+	int		nMaxObj;		// maximum number of objects
+	int		nMaxItem;		// maximum number of items
+	int		nMaxEff;		// maximum number of effects
 };
 
 
@@ -72,23 +72,23 @@ enum
     SCENEOBJ_TYPE_ENVLIGHT   ,
     SCENEOBJ_TYPE_FOG        ,
     SCENEOBJ_TYPE_ENVSOUND	 ,
-	MAX_SCENEOBJ_TYPE		 ,		// 这为玫举最大值
+	MAX_SCENEOBJ_TYPE		 ,		// this is the enumeration maximum
 };
 
 enum e3DMouseState
 {
-	enum3DNone,						// 不跟随
-	enumFollow,						// 跟随鼠标状态
-	enumClick,						// 点击跟随状态
+	enum3DNone,						// does not follow
+	enumFollow,						// follows the mouse state
+	enumClick,						// follows on click state
 };
 
-enum eUserLevel						// 操作级别
+enum eUserLevel						// operation level
 {
-	LEVEL_CHA_RUN		= 0,		// 可操作角色行动
-    LEVEL_MOUSE_RUN,                // 是否可以操作鼠标走路
+	LEVEL_CHA_RUN		= 0,		// the operable character actions
+    LEVEL_MOUSE_RUN,                // whether walking with the mouse is allowed
 };
 
-// 容纳已经释放的对象，用于下次查找空闲对象时直接返回
+// holds the released objects, so that the next search for a free object can return one directly
 template <class T>
 class FreeArray
 {
@@ -157,7 +157,7 @@ class CMapInfo;
 
 class CGameScene : public CScript
 {
-protected:	// CGameApp 使用
+protected:	// used by CGameApp
 	friend class CGameApp;
 
 	CGameScene(stSceneInitParam& param);
@@ -180,11 +180,11 @@ protected:	// CGameApp 使用
 	virtual void		_KeyDownEvent( int key ){}
 	virtual void		_KeyUpEvent( int key ){}
 
-private:        // 创建内存
+private:        // creates the memory
     bool		_CreateMemory();        
     bool		_ClearMemory();
 
-protected:      // 运行时切换
+protected:      // switched at runtime
     virtual bool		_Init();
     virtual bool		_Clear();
 
@@ -193,7 +193,7 @@ public:
     const int			GetSceneTypeID() const		{ return _stInit.nTypeID;	}
 
 public:	
-    virtual void        LoadingCall();          // 在装载loading后,刷新
+    virtual void        LoadingCall();          // refreshed after loading finishes
 	virtual void		SetMainCha(int nChaID);
 	virtual void		SetScreen( int w, int h, bool IsFull ){}
 
@@ -222,7 +222,7 @@ public:
 	stSceneInitParam*	GetInitParam()    { return &_stInit;                      }
     const char*			GetTerrainName()  { return _stInit.strMapFile.c_str();    }   
 
-	bool				GetIsBlockWalk( CCharacter* pCha, int nX, int nY );	// 判断角色在X,Y是否不可走
+	bool				GetIsBlockWalk( CCharacter* pCha, int nX, int nY );	// decides whether the character cannot walk at X,Y
 
 	CEventMgr* GetEventMgr() { return _pEventMgr.get(); }
 
@@ -239,8 +239,8 @@ public:
 	CCharacter*		SelectCharacter();
     CCharacter*     AddCharacter( const LoadChaInfo* info );
 	CCharacter*		AddBoat( stNetChangeChaPart& part );
-	CCharacter*		AddCharacter(int nScriptID);	// 增加角色
-	CCharacter*		GetCha(int nArrayID);			// 通过ID(数组下标) 取得角色数据指针
+	CCharacter*		AddCharacter(int nScriptID);	// adds a character
+	CCharacter*		GetCha(int nArrayID);			// gets the character data pointer by ID (array index)
 	int				GetChaCnt()		    { return _nChaCnt;		}
 
 	static void		ResetMainCha()		{ _pMainCha = NULL;		}
@@ -248,7 +248,7 @@ public:
 
 	CSceneObj*		AddSceneObj(int nScriptID);
 
-    // nType: 道具表中模型文件的索引需要根据不同的角色类型来做调整
+    // nType: the index of the model file in the item table has to be adjusted depending on the character type
     // 目前定义 0:掉地上的模型; 1:男主角1号；2：男主角2号；3：女主角1号；4：女主角2号
     CSceneItem*     AddSceneItem(int nScriptID, int nType);
     CSceneItem*     AddSceneItem( const char* file );
@@ -259,7 +259,7 @@ public:
 	int				GetSceneObjCnt() { return _nSceneObjCnt; }
 	int				GetSceneItemCnt() { return _nSceneItemCnt; }
 
-    CSceneItem*     HitSceneItemText( int nScrX, int nScry );   // 得到点击的道具文字的道具
+    CSceneItem*     HitSceneItemText( int nScrX, int nScry );   // gets the item of the clicked item text
     CSceneItem*     HitTestSceneItem( int nScrX, int nScry );
     CSceneObj*      HitTestSceneObj( int nScrX, int nScrY );
     CCharacter*     HitTestCharacter( int nScrX, int nScrY );
@@ -324,10 +324,10 @@ public:
 	int				GetMouseX()			{ return _nMouseX;	   }
 	int				GetMouseY()			{ return _nMouseY;	   }
 
-    float           GetTerrainHeight(float fX, float fY);       // 精度较高,较慢,用于静态函数
-    float           GetGridHeight(float fX, float fY);          // 精度较低,较快,用于每帧都调用的函数
+    float           GetTerrainHeight(float fX, float fY);       // higher precision and slower, used for static functions
+    float           GetGridHeight(float fX, float fY);          // lower precision and faster, used for functions called every frame
 
-	int				GetGridRegion( int x, int y );				// 得到区域属性,单位:米
+	int				GetGridRegion( int x, int y );				// gets the area attribute, unit: metres
     
     BOOL            IsPointVisible(float fX, float fY);
     void            EnableSceneObjCulling(BOOL bEnable) { _bEnableSceneObjCulling = bEnable; }
@@ -335,11 +335,11 @@ public:
 
 	void			SetFrameMove(DWORD dwTime);
 
-	void			PlayEnvSound( int nX, int nY );					// 播放在x,y坐标处的环境音,帧调用
-	static void		PlayEnvSound( char* szFile, int nX, int nY );	// 事件调用
-	static void 	PlayEnvSound( int nSoundNo, int nX, int nY );   // 事件调用
+	void			PlayEnvSound( int nX, int nY );					// plays the ambient sound at the x,y coordinates; called every frame
+	static void		PlayEnvSound( char* szFile, int nX, int nY );	// called by the event
+	static void 	PlayEnvSound( int nSoundNo, int nX, int nY );   // called by the event
 
-    static void     SetSoundSize( float fVol );         // 0~1,0静音景,1最大音量
+    static void     SetSoundSize( float fVol );         // 0~1, 0 mutes the scene, 1 is the maximum volume
     static float    GetSoundSize()                      { return (float)_fSoundSize / 128.0f;   }
 
 	void			OnLostDevice();
@@ -349,7 +349,7 @@ public:
 
     void            RefreshLevel();
 
-    // 创建一个在地面上的特效
+    // creates an effect on the ground
     CEffectObj*     CreateEffect( int nEffectID, int nX, int nY, bool isLoop=false );
 	CPugMgr* GetPugMgr() { return _pcPugMgr.get(); }
 
@@ -367,9 +367,9 @@ public:
 	//CCharacter2D*	GetTeamList(int idx){ return _pCha2D[idx]; }
 
     void            AddAreaEff( CEffectObj* pEffectObj );
-    bool            DelAreaEff( long nAreaID, int nEffectID=0 );    // 如果nEffectID=0,清除这个格子所有特效
+    bool            DelAreaEff( long nAreaID, int nEffectID=0 );    // if nEffectID=0, clears every effect in this cell
 
-public:				// 报告场景状态
+public:				// reports the scene state
     DWORD           m_dwValidChaCnt;
     DWORD           m_dwChaPolyCnt;
     DWORD           m_dwChaRenderTime;
@@ -388,11 +388,11 @@ public:				// 报告场景状态
 
 	bool			m_bShowTerrain;
 protected:
-	void			_CreateChaArray(int nChaCnt);		// 创建角色集合
-	void			_CreateSceneObjArray(int nObjCnt);	// 创建场景物件集合
-	void			_CreateSceneItemArray(int nObjCnt);	// 创建场景道具集合
+	void			_CreateChaArray(int nChaCnt);		// creates the character collection
+	void			_CreateSceneObjArray(int nObjCnt);	// creates the scene object collection
+	void			_CreateSceneItemArray(int nObjCnt);	// creates the scene item collection
 	void			_CreateEffectArray(int nEffCnt);
-	void			_CreateShadeArray(int nShadeCnt);		// 创建影子集合
+	void			_CreateShadeArray(int nShadeCnt);		// creates the shadow collection
 	void			_ClearAllCha();
 	void			_ClearAllSceneObj();
 	void			_ClearAllSceneItem();
@@ -439,7 +439,7 @@ public:
 	std::size_t _nSceneLightCnt{};
 
 	D3DXVECTOR3		    _vMousePos;
-	int					_nMouseX,	_nMouseY;		// 鼠标在屏幕上的坐标,厘米
+	int					_nMouseX,	_nMouseY;		// the mouse coordinates on the screen, in cm
 
 	static e3DMouseState	_e3DMouseState;
 	static BOOL			_bShowMinimap;
@@ -450,7 +450,7 @@ public:
 	static	CLargerMap	*_pLargerMap;
 //#endif
 	static bool			_IsShowPath;
-    static float        _fSoundSize;                // 音效音量
+    static float        _fSoundSize;                // sound effect volume
     static bool         _IsUseSound;            
 
     BOOL            _bShowTerrain;
@@ -462,7 +462,7 @@ public:
     int             _nShowChair;
     POINT           _HitBuf;
 
-protected:	// 场景切换变量
+protected:	// scene switching variables
 	stSceneInitParam	_stInit;
 	int					_nSceneTypeID;	
 
@@ -472,12 +472,12 @@ protected:
 	//static CCharacter2D*	_pCha2D[4];
 
 	CCharacter*			_pSelCha;
-	CBoolSet			_UserLeve;				// 用户可以操作的级别
+	CBoolSet			_UserLeve;				// the level the user can operate at
 
-    BOOL                _IsShowItemName;    // 是否显示道具名字
-    CSceneItem*         _pMouseInItem;      // 鼠标移动在这个道具上,这道具需要显示名字
+    BOOL                _IsShowItemName;    // whether item names are shown
+    CSceneItem*         _pMouseInItem;      // the mouse is over this item, so the item needs to show its name
 
-    // 地面的特效
+    // ground effects
     typedef std::list<CEffectObj*>   areaeffs;
     areaeffs            _areaeffs;
 
@@ -485,7 +485,7 @@ protected:
 	std::unique_ptr<CEventMgr> _pEventMgr;//std::make_unique<CEventMgr>(this)
 	CMapInfo*			_pMapInfo;
 
-protected:	// 临时变量
+protected:	// temporary variables
 	D3DXVECTOR3			org, ray;
 
 	IDirect3DSurfaceX * windowRenderTarget;
@@ -520,7 +520,7 @@ private:
 	void _ReadRBO();
 };
 
-// 内联函数
+// inline function
 inline void CGameScene::PlayEnvSound( int nSoundNo, int nX, int nY )
 {
 	if( nSoundNo==-1 ) return;

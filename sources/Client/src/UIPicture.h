@@ -1,7 +1,7 @@
 ﻿//----------------------------------------------------------------------
-// 名称:用于隔离图片显示底层
-// 作者:lh 2004-07-15
-// 最后修改日期:2004-10-20
+// Name: used to isolate the image display lower layer
+// Author: lh 2004-07-15
+// Last modified date: 2004-10-20
 //----------------------------------------------------------------------
 #pragma once
 #include "UIRender.h"
@@ -13,10 +13,10 @@ namespace GUI
 class CGuiData;
 class CGuiPic
 {
-public:	// 以下坐标为屏幕上的坐标
+public:	// the coordinates below are screen coordinates
 	CGuiPic( CGuiData* pParent=NULL, unsigned int max=1 );
 	CGuiPic( const CGuiPic& rhs );
-	CGuiPic& operator=( const CGuiPic& rhs );		// 赋值不改变_pOwn
+	CGuiPic& operator=( const CGuiPic& rhs );		// assignment does not change _pOwn
 	~CGuiPic() { SAFE_DELETE_ARRAY(_pImage); } // UI当机处理 //delete [] _pImage; }
 
 	void	SetMax( int v );
@@ -30,11 +30,11 @@ public:	// 以下坐标为屏幕上的坐标
 	void	RenderAll( int x, int y , BYTE bAlpha);	
 	void	RenderAll( int x, int y , DWORD dwColor );	
 
-	void		SetFrame( unsigned int num )	{ if( num < _max ) _frame = num; }	// 设置当前显示的帧数
+	void		SetFrame( unsigned int num )	{ if( num < _max ) _frame = num; }	// sets the frame currently displayed
 	MPTexRect*	GetImage( unsigned int v=0 )	{ 	if( v < _max ) return &_pImage[v]; return NULL;	}
 
-	void	Next()		{ _frame++; if( _frame >= _max ) _frame=0;			}	// 下一张
-	void	Prior()		{ _frame--; if( _frame >= _max ) _frame=_max-1;		}	// 上一张
+	void	Next()		{ _frame++; if( _frame >= _max ) _frame=0;			}	// next image
+	void	Prior()		{ _frame--; if( _frame >= _max ) _frame=_max-1;		}	// previous image
 
 	void	SetScale(int w, int h);
 	void	SetScale(unsigned int frame, int w, int h);
@@ -77,29 +77,29 @@ private:
 	unsigned int	_frame;
 	unsigned int	_max;
 	CGuiData*		_pParent;
-	bool			_bIsScale;		// 缩放到窗口同样大小
+	bool			_bIsScale;		// scales to the same size as the window
 
 };
 
-// 带边框的图片
+// image with a border
 class CFramePic
 {
 public:
 	enum ePicPos
 	{
-		ppLeft=0,			// 放置在左边
+		ppLeft=0,			// placed on the left
 		ppUp,
 		ppRight,
 		ppBottom,
 		ppRightBottom,
 		ppLeftBottom,	
 		ppRightUp,
-		ppLeftUp,			// 放置在最左上角
-		ppClient,			// 中间的图片，拉伸充满全部
+		ppLeftUp,			// placed at the top left corner
+		ppClient,			// the middle image, stretched to fill everything
 		ppEnd,
 	};
 
-	// 平铺未完成
+	// tiling is unfinished
 
 public:
 	CFramePic( CGuiData *pOwn );
@@ -116,7 +116,7 @@ public:
 	void		SetAlpha( BYTE alpha );
 	bool		LoadImage( ePicPos p, int nTextureID, int tx, int ty, int tw, int th );
 
-	// w,h是指边框单元的宽高，client是平铺单元文件，cw,ch是平铺单元宽高，单位：像素
+	// w,h are the width and height of a border cell, client is the tiling cell file, cw,ch are the tiling cell width and height, in pixels
 	bool		LoadImage( const char* client, int cw, int ch, int tx, int ty, const char * file, int w, int h );	
 
 	void		SetIsTitle( bool v )		{ _bIsTitle = v;	}
@@ -131,18 +131,18 @@ public:
 	}
 
 private:
-	void			_ClientShow( int x, int y, DWORD color);	// 显示中间的图片
+	void			_ClientShow( int x, int y, DWORD color);	// shows the middle image
 
 private:
 	MPTexRect*		_pImage;
 	CGuiData*		_pOwn;
 	int				_nX[ppEnd], _nY[ppEnd];
-	bool			_bIsTitle;			// ppClient是否平铺
-	bool			_bIsShowFrame;		// 是否显示边线
+	bool			_bIsTitle;			// whether ppClient is tiled
+	bool			_bIsShowFrame;		// whether the border line is shown
 
 };
 
-// 内联函数
+// inline function
 inline void CGuiPic::SetScale(unsigned int frame, int w, int h) 
 {
 	if( frame < _max )

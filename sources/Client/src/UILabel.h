@@ -1,14 +1,14 @@
 ﻿//----------------------------------------------------------------------
-// 名称:静态文字
-// 作者:lh 2004-07-19
-// 最后修改日期:2004-10-09
+// Name: static text
+// Author: lh 2004-07-19
+// Last modified date: 2004-10-09
 //----------------------------------------------------------------------
 #pragma once
 #include "uicompent.h"
 
 namespace GUI
 {
-// 简单文字
+// simple text
 class CLabel : public CCompent
 {
 public:
@@ -27,12 +27,12 @@ public:
 	DWORD			GetTextColor() { return _color; }
 
 protected:
-	std::string			_caption;		// 显示在表面的名称
-	DWORD			_color;			// 字体颜色
+	std::string			_caption;		// the name shown on the surface
+	DWORD			_color;			// font colour
 
 };
 
-// 可带阴影,换字体
+// can have a shadow and a different font
 class CLabelEx : public CLabel
 {
 public:

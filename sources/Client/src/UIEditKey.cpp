@@ -26,7 +26,7 @@ CEditKey::CEditKey()
 CEditKey::~CEditKey()
 {
 	//delete _pParse;
-	SAFE_DELETE(_pParse); // UI当机处理
+	SAFE_DELETE(_pParse); // UI freeze handling
 }
 
 bool CEditKey::OnKeyDown( int key )
@@ -64,13 +64,13 @@ bool CEditKey::OnChar( char c )
 {
 	if( _IsReadyOnly ) return false;
 
-	// 有三种情况：一、英文字符，二、汉字，三、控制字符
+	// there are three cases: one, an English character; two, a Chinese character; three, a control character
 	switch( c )
 	{
-	case '\r':		// 回车
+	case '\r':		// enter
 		AddChar( new CEditControl( c ) );
 		break;
-	case '\b':		// 退格
+	case '\b':		// backspace
 		break;
 	case '\t':
 		break;
@@ -92,7 +92,7 @@ bool CEditKey::OnChar( char c )
 				if( _ismbslead( (unsigned char*)_szEnter, (unsigned char*)&_szEnter[0] )==0 
 					&& _ismbstrail( (unsigned char*)_szEnter, (unsigned char*)&_szEnter[0] )==0 )
 				{
-					// 为英文或控制字符
+					// it is English or a control character
 					_nEnterPos = 0;
 
 					AddChar( new CEditChar( c ) );
@@ -102,7 +102,7 @@ bool CEditKey::OnChar( char c )
 			{
 				if( _ismbslead( (unsigned char*)_szEnter, (unsigned char*)&_szEnter[0] )==-1 && _ismbstrail( (unsigned char*)_szEnter, (unsigned char*)&_szEnter[1] )==-1 )
 				{
-					// 汉字
+					// a Chinese character
 					AddChar( new CEditChar( _szEnter[0], _szEnter[1] ) );
 
 
@@ -114,7 +114,7 @@ bool CEditKey::OnChar( char c )
 
 			if( IsError )
 			{
-				// 错误
+				// error
 				_nEnterPos = 0;
 				_szEnter[1] = 0;
 			}
@@ -159,7 +159,7 @@ void CEditKey::AddChar( CEditObj* pObj )
 	if( rv==-1 )
 	{
 		//delete pObj;
-		SAFE_DELETE(pObj); // UI当机处理
+		SAFE_DELETE(pObj); // UI freeze handling
 	}
 	else
 	{

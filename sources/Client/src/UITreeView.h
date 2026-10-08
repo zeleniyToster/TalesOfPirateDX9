@@ -1,8 +1,8 @@
 ﻿//----------------------------------------------------------------------
-// 名称:树型控件
-// 作者:lh 2004-07-19
-// 设计思想:CTreeView中集合CTreeNodeObj
-// 最后修改日期:2004-10-09
+// Name: tree control
+// Author: lh 2004-07-19
+// Design: CTreeView holds CTreeNodeObj
+// Last modified date: 2004-10-09
 //----------------------------------------------------------------------
 #pragma once
 #include "uicompent.h"
@@ -25,10 +25,10 @@ public:
 	void			Render();
 	void			Refresh();
 
-	// 节点选择发生变化,节点不同,返回true
+	// the node selection changed; returns true when the node differs
 	bool			SetItem( CTreeNodeObj* parent, CItemObj* item );			
 
-	// 节点的子节点选择发生变化,不相同才赋值,相同则为空,节点不同,返回true
+	// the child node selection of a node changed; it is only assigned when it differs, otherwise it is cleared; returns true when the node differs
 	bool			SetDifferItem( CTreeNodeObj* parent, CItemObj* item );		
 
 	void			CancelSelect()			{ _pItem=NULL; _pParent=NULL;}
@@ -38,13 +38,13 @@ public:
 	CTreeView*		GetOwn()				{ return _pOwn;				}
 
 private:	
-	bool			_SetParent( CTreeNodeObj *node );		// 相同返回false
+	bool			_SetParent( CTreeNodeObj *node );		// returns false when they are the same
 
 	CTreeView*		_pOwn;
 	CTreeNodeObj*	_pParent;
 	CItemObj*		_pItem;
 
-private:    // 未实现
+private:    // not implemented
     CTreeSelectItem( const CTreeSelectItem& rhs );
 	CTreeSelectItem& operator=(const CTreeSelectItem& rhs);
 
@@ -67,7 +67,7 @@ public:
     virtual const char* GetCaption()                        { return "";    }
 	virtual void		SetCaption( const char* str )		{}
 
-	// 得到激活点的位置
+	// gets the position of the active point
 	virtual int			GetFocusX()							{ return _nX;	}		
 	virtual int			GetFocusY()							{ return _nY;	}
 
@@ -77,7 +77,7 @@ public:
 	// xuqin added
 	void				GetNumItems( int& Items );
 
-	// 对下级同级节点
+	// for lower level siblings
 	int					GetChildCount()						{ return (int)_ndChilds.size();		}
 	CTreeNodeObj*		GetChildNode( unsigned int v )		{ if(v<_ndChilds.size()) return _ndChilds[v]; return NULL;	}
 
@@ -109,7 +109,7 @@ public:
 	void				SetTag( DWORD v )					{ _dwTag = v;					}
 	DWORD				GetTag()							{ return _dwTag;				}
 
-public:	// 用于外部脚本
+public:	// used by external scripts
 	int							GetID()						{ return (int)_nodes.size() - 1;}
 	static CTreeNodeObj*		GetNode( unsigned int id )  { 
 		if( id < _nodes.size() ) return _nodes[id];
@@ -125,7 +125,7 @@ protected:
 
 protected:
 	int					_nX, _nY, _nX2, _nY2;
-	bool				_IsExpand;		// 是否已展开
+	bool				_IsExpand;		// whether it is already expanded
 	TreeNodes			_ndChilds;
 
 	CTreeView*			_pOwn;
@@ -135,7 +135,7 @@ protected:
 
 	static TreeNodes	_nodes;
 
-private:    // 未实现
+private:    // not implemented
     CTreeNodeObj( const CTreeNodeObj& rhs );
 	CTreeNodeObj& operator=(const CTreeNodeObj& rhs);
 
@@ -150,13 +150,13 @@ public:
 	void	RootRefresh(int x, int& y, int colwidth, int rowheight);
 	bool	RootMouseRun( int x, int y, DWORD key );
 
-private:    // 未实现
+private:    // not implemented
     CTreeNodeRoot( const CTreeNodeRoot& rhs );
 	CTreeNodeRoot& operator=(const CTreeNodeRoot& rhs);
 
 };
 
-// 单个node
+// a single node
 class CTreeNode : public CTreeNodeObj
 {
 public:
@@ -180,13 +180,13 @@ protected:
 protected:
 	CItemObj*		_pItem;
 
-private:    // 未实现
+private:    // not implemented
     CTreeNode( const CTreeNode& rhs );
 	CTreeNode& operator=(const CTreeNode& rhs);
 
 };
 
-// 一种特殊的node,将子节点按表格排列
+// a special node that arranges its children in a grid
 class CTreeGridNode : public CTreeNodeObj
 {
 public:
@@ -234,14 +234,14 @@ protected:
     virtual CItemObj*   _GetSelfHitItem( int x, int y );
 
 protected:
-	CItemObj*		_pItem;					        // 显示在表格上面,相当于表格的注释
+	CItemObj*		_pItem;					        // shown above the grid; effectively a comment on the grid
 
 	typedef std::vector<CItemObj*> vitems;
 	vitems			_items;
 
-	int				_nUnitWidth,	_nUnitHeight;	// 单个单元宽高
-	int				_nColMaxNum;					// 每列最大显示个数
-	int				_nRowNum;						// 现在的行数
+	int				_nUnitWidth,	_nUnitHeight;	// single cell width and height
+	int				_nColMaxNum;					// maximum number shown per column
+	int				_nRowNum;						// the current number of rows
 
 private:
 	void			_CaclRowNum();
@@ -252,7 +252,7 @@ private:
 	int		_nFocusCol,	_nFocusRow;
 	bool		_IsShowFocus;
 
-private:    // 未实现
+private:    // not implemented
     CTreeGridNode( const CTreeGridNode& rhs );
 	CTreeGridNode& operator=(const CTreeGridNode& rhs);
 
@@ -282,7 +282,7 @@ public:
 	virtual bool		IsHandleMouse()				{ return true;					}
 	virtual bool		OnKeyDown( int key );
 	virtual void		SetAlpha( BYTE alpha );
-    virtual CCompent*   GetHintCompent( int x, int y );                       // 返回有提示的控件
+    virtual CCompent*   GetHintCompent( int x, int y );                       // returns the control that has a tooltip
 	virtual void		DragRender();
 
 public:
@@ -322,13 +322,13 @@ public:
 	DWORD				GetSelectColor()			{ return _dwSelectColor;		}
 
 public:
-	GuiEvent			evtSelectChange;		// 选择发生了变化
-	GuiEvent			evtSelectLost;			// 上一次选择的节点丢失了焦点
-	GuiEvent			evtItemLost;			// 上一个Item丢失了焦点
-	GuiEvent			evtItemChange;			// Item发生了变化
-	GuiMouseEvent		evtMouseDown;			// 鼠标在有效区内按下
+	GuiEvent			evtSelectChange;		// the selection changed
+	GuiEvent			evtSelectLost;			// the previously selected node lost focus
+	GuiEvent			evtItemLost;			// the previous Item lost focus
+	GuiEvent			evtItemChange;			// the Item changed
+	GuiMouseEvent		evtMouseDown;			// the mouse is pressed inside the valid area
 	GuiMouseEvent		evtMouseDB;				//
-	GuiTreeDragEvent	evtMouseDragEnd;		// 拖动到了表单上
+	GuiTreeDragEvent	evtMouseDragEnd;		// dragged onto the form
 
 protected:
 	static void			_ScrollChange(CGuiData *pSender) {
@@ -346,21 +346,21 @@ private:
 	void			_Copy( const CTreeView& rhs );
 
 protected:
-	CScroll*			_pScroll;		// 滚动轴
-	CGuiPic*			_pImage;		// 背景图
+	CScroll*			_pScroll;		// scroll bar
+	CGuiPic*			_pImage;		// background image
 
-	CGuiPic*			_pAddImage;		// 加号
-	CGuiPic*			_pSubImage;		// 减号
+	CGuiPic*			_pAddImage;		// plus
+	CGuiPic*			_pSubImage;		// minus
 	std::unique_ptr<CGuiPic> _nodeImage = std::make_unique<CGuiPic>();
 	NodeOptions nodeOptions{};
 
-	int					_nColSpace, _nRowSpace;		// 列距,行距
-	bool				_IsAutoExpand;	// 自动展开
+	int					_nColSpace, _nRowSpace;		// column spacing, row spacing
+	bool				_IsAutoExpand;	// expand automatically
 
-	CTreeNodeRoot*		_pRoot;			// 根节点
-	CTreeSelectItem*	_pSelectItem;	// 被鼠标选择的item
+	CTreeNodeRoot*		_pRoot;			// root node
+	CTreeSelectItem*	_pSelectItem;	// the item selected by the mouse
 
-	CItemObj*			_pDragItem;		// 被拖动的item
+	CItemObj*			_pDragItem;		// the item being dragged
 	CTreeNodeObj*		_pDragNode;
 	int					_nDragOffX, _nDragOffY;
 
@@ -374,11 +374,11 @@ private:
 	int					_nItemsHeight;
 	float				_nScrollMax;
 
-	DWORD				_dwSelectColor;	// 选中的背景色
+	DWORD				_dwSelectColor;	// background colour of the selection
 
 };
 
-// 内联函数
+// inline function
 inline void CTreeSelectItem::Render()
 {
 	if( _pItem ) 

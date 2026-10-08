@@ -9,20 +9,20 @@ namespace GUI
 // 
 enum  eTeamStyle
 {
-	enumTeamFrnd,       // 好友
-    enumTeamGroup,      // 队伍
-    enumTeamGuild,      // 行会
-    enumTeamRoad,       // 路人
-	enumTeamMaster,		// 师傅
-	enumTeamPrentice,	// 徒弟
-	enumTeamGM,	// 徒弟
+	enumTeamFrnd,       // friend
+    enumTeamGroup,      // party
+    enumTeamGuild,      // guild
+    enumTeamRoad,       // bystander
+	enumTeamMaster,		// mentor
+	enumTeamPrentice,	// apprentice
+	enumTeamGM,	// apprentice
 	enumTeamBlocked,
 };
 
 enum  eShowStyle
 {
-	enumShowQQName,       // 显示名字
-	enumShowQQMotto,      // 显示座右铭
+	enumShowQQName,       // shows the name
+	enumShowQQMotto,      // shows the motto
 };
 
 
@@ -60,8 +60,8 @@ private:
 	bool	 _bOnline;
 	BYTE	 _byWork;
     long     _nMaxHp;   
-    long     _nHp;      // 血
-    long     _nSp;      // 魔法
+    long     _nHp;      // health
+    long     _nSp;      // mana
     long     _nLv;
     long     _nMaxSp;
 
@@ -112,7 +112,7 @@ public:
 	static eShowStyle _nShowStyle;
 
 private:
-    std::string          _strName;       // 名字
+    std::string          _strName;       // name
 	std::string			_strMotto;
 	std::string			_strJob;
 	std::string			_strShowName;
@@ -185,18 +185,18 @@ public:
 	static  void	SetTeamLeaderID( DWORD v )	{ _dwTeamLeaderID=v;	}
 
 private:
-	CTeam*  _pFrndTeam;				// 好友
-    CTeam*  _pGroupTeam;			// 队伍
-    CTeam*  _pRoadTeam;				// 路人
-	CTeam*	_pMasterTeam;			// 师傅
-	CTeam*	_pPrenticeTeam;			// 徒弟
-	CTeam*	_pGMTeam;			// 徒弟
+	CTeam*  _pFrndTeam;				// friend
+    CTeam*  _pGroupTeam;			// party
+    CTeam*  _pRoadTeam;				// bystander
+	CTeam*	_pMasterTeam;			// mentor
+	CTeam*	_pPrenticeTeam;			// apprentice
+	CTeam*	_pGMTeam;			// apprentice
 	CTeam*  _pBlockedTeam;
 
 	static DWORD	_dwTeamLeaderID;
 
 };
 
-// 内联函数
+// inline function
 
 }

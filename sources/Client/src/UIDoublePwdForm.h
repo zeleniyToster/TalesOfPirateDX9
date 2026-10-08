@@ -21,41 +21,41 @@ namespace GUI
 	class CEdit;
 	class CTextButton;
 
-	// 二次密码界面
+	// secondary password screen
 	class CDoublePwdMgr : public CUIInterface	
 	{
 	public:
 
 		CDoublePwdMgr();
 
-		// 显示创建表单
+		// shows the creation form
 		void ShowCreateForm();
 
-		// 显示修改表单
+		// shows the modification form
 		void ShowAlterForm();
 
-		// 显示输入表单
+		// shows the input form
 		void ShowDoublePwdForm();
 
-		// 关闭全部表单
+		// closes every form
 		void CloseAllForm();
 
-		// 获得表单是否已显示
+		// gets whether the form is already shown
 		bool GetIsShowCreateForm()    { return frmDoublePwdCreate->GetIsShow(); }
 		bool GetIsShowAlterForm()     { return frmDoublePwdAlter->GetIsShow();  }
 		bool GetIsShowDoublePwdForm() { return frmDoublePwd->GetIsShow();       }
 
-		// 设置输入二次密码后执行类型
+		// sets what runs after the secondary password is entered
 		void SetType(int nType) { m_nType = nType; }
 		int  GetType()          { return  m_nType; }
 
 		void SetLockGridID(int id) { lockGridID = id; }
 
 		static const int MC_REQUEST	= -1;
-		static const int DELETE_CHARACTOR	= 1;	// 删除当前角色
-		static const int PACKAGE_UNLOCK		= 2;	// 背包解锁
-		static const int STORE_OPEN_ASK		= 3;	// 商城打开
-		static const int ITEM_UNLOCK		= 4;	// 道具解锁  ning.yan 2008-11-10
+		static const int DELETE_CHARACTOR	= 1;	// deletes the current character
+		static const int PACKAGE_UNLOCK		= 2;	// bag unlock
+		static const int STORE_OPEN_ASK		= 3;	// shop open
+		static const int ITEM_UNLOCK		= 4;	// item unlock  ning.yan 2008-11-10
 		static const int MULTI_ITEM_UNLOCK = 5;
 		static const int SHOW_EXCHANGEFORM	= 5;
 
@@ -64,82 +64,82 @@ namespace GUI
 		virtual bool Init();
 		virtual void CloseForm();
 
-		// 显示二次密码软键盘
+		// shows the secondary password soft keyboard
 		void ShowDoublePwdKeyboardForm();
 
-		// 设置聚焦的密码编辑框
+		// sets the focused password edit box
 		void SetFocusEditBox(CEdit* edt) { edtFocusEditBox = edt; }
 
-		// 发送删除角色消息
+		// sends the delete character message
 		void SendDeleteCharactor();
 
-		// 发送背包解锁消息
+		// sends the bag unlock message
 		void SendPackageUnlock();
 
-		// 发送道具解锁消息
+		// sends the item unlock message
 		void SendItemUnlock(); //add by ning.yan 2008-11-11
 
 		void SendUnlockSelectedItems();
-		// 发送商城打开消息
+		// sends the shop open message
 		void SendPackageStoreOpen();
 
 		void SendGameRequest();
 
-		// 对软键盘按钮进行随机排列
+		// shuffles the soft keyboard buttons randomly
 		void RandomInputButton();
 
 	private:
 
-		// 创建二次密码表单
+		// create secondary password form
 		CForm*      frmDoublePwdCreate;
 		CEdit*		edtDoublePwdCreate;
 		CEdit*      edtDoublePwdCreateRetry;
 
-		// 修改二次密码表单
+		// modify secondary password form
 		CForm*      frmDoublePwdAlter;
 		CEdit*		edtDoublePwdAlterOld;
 		CEdit*		edtDoublePwdAlterNew;
 		CEdit*		edtDoublePwdAlterNewRetry;
 
-		// 输入二次密码表单
+		// input secondary password form
 		CForm*      frmDoublePwd;
 		CEdit*      edtDoublePwd;
 
-		// 二次密码输入软键盘表单
+		// secondary password input soft keyboard form
 		CForm*      frmDoublePwdInput;
 
-		// 创建二次密码时的提示
+		// the prompt shown when creating a secondary password
 		CForm*		frmDoublePwdInfo;
 
-		// 焦点密码编辑框
+		// focused password edit box
 		CEdit*		edtFocusEditBox;
 
-		// 类型
+		// type
 		int         m_nType;
 
 		int lockGridID; //TODO: No default value
 
 	private:
 
-		// 创建二次密码表单按钮事件
+		// creation secondary password form button event
 		static void _evtCreateFromMouseEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey);
 
-		// 修改二次密码表单按钮事件
+		// modification secondary password form button event
 		static void _evtAlterFromMouseEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey);
 
-		// 输入二次密码表单按钮事件
+		// input secondary password form button event
 		static void _evtDoublePwdFromMouseEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey);
 
-		// 二次密码输入软键盘表单按钮事件
+		// secondary password input soft keyboard form button event
 		static void _evtInputFromMouseEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey);
 
-		// 编辑框激活事件（保存下激活的编辑框）
+		// edit box activation event (saves the activated edit box)
 		static void _evtEditFocus(CGuiData* pSender);
 
-		// 关闭窗体事件
+		// close window event
 		static void _evtFormClose(CForm* pForm, bool& IsClose );
 
-		// 二次密码是否合法
+		// whether the secondary password is valid
 		static bool IsPwdValid(const char* szStr);
 
 	}; // end of class CDoublePwdMgr

@@ -37,10 +37,10 @@ namespace GUI
 		void		SetType(int type) { m_iType = type; }
 		int			GetType() const { return m_iType; }
 
-		static const int MAKE_EQUIP_TYPE = 2;	//合成类型（协议中用）
-		static const int EQUIP_FUSION_TYPE = 4;	//装备熔合
-		static const int EQUIP_UPGRADE_TYPE = 5;//装备升级
-		static const int ELF_SHIFT_TYPE     = 6;//精灵二转
+		static const int MAKE_EQUIP_TYPE = 2;	//synthesis type (used in the protocol)
+		static const int EQUIP_FUSION_TYPE = 4;	//equipment fusing
+		static const int EQUIP_UPGRADE_TYPE = 5;//equipment upgrading
+		static const int ELF_SHIFT_TYPE     = 6;// elf second rebirth
 
 		
 		void		PushEquipUpgradeItem(int iIndex, CItemCommand& rItem);
@@ -149,19 +149,19 @@ namespace GUI
 		bool		IsEquipUpgradeSpar(CItemCommand& rItem);
 		bool		IsFusionEquip(CItemCommand& rItem);
 
-		bool        IsElfShiftStone(CItemCommand& rItem);	// 是否是精灵二转所需的恶魔果实
-		bool        IsElfShiftItem(CItemCommand& rItem);	// 是否是精灵
+		bool        IsElfShiftStone(CItemCommand& rItem);	// whether it is the demon fruit needed for the elf second rebirth
+		bool        IsElfShiftItem(CItemCommand& rItem);	// whether it is an elf
 
 
 	private:
-		static const int STONE_ITEM_NUM = 2;	//宝石合成数量
-		static const int ITEM_NUM = 4;			//其他合成数量
-		static const int FUSION_NUM = 3;		//熔合Item数量
-		static const int UPGRADE_NUM = 2;		//升级Item数量
-		static const int SHIFT_NUM   = 2;       //精灵二转Item数量
+		static const int STONE_ITEM_NUM = 2;	//gem synthesis count
+		static const int ITEM_NUM = 4;			//other synthesis count
+		static const int FUSION_NUM = 3;		//fusing Item count
+		static const int UPGRADE_NUM = 2;		//upgrading Item count
+		static const int SHIFT_NUM   = 2;       //elf second rebirth Item count
 
-		static const int GEM_ROULEAU_TYPE = 47;	//宝石卷轴道具类型号
-		static const int EQUIP_ROULEAU_TYPE = 48;//道具合成卷轴D号
+		static const int GEM_ROULEAU_TYPE = 47;	//gem scroll item type number
+		static const int EQUIP_ROULEAU_TYPE = 48;//item synthesis scroll D number
 		static const int GEN_STONE_TYPE = 49;
 		static const int FORGE_STONE_TYPE = 50;
 		static const int EQUIP_FUSION_ROULEAU_TYPE = 60;
@@ -174,7 +174,7 @@ namespace GUI
 
 
 		static const long MAKE_EQUIP_MONEY = 50000;
-		static const long EQUIP_FUSION_MONEY = 1000;	// 熔合乘以的钱数
+		static const long EQUIP_FUSION_MONEY = 1000;	// the money multiplied by for fusing
 		static const long EQUIP_UPGRADE_MONEY = 10000;
 
 		CForm*			frmMakeEquip;
@@ -187,8 +187,8 @@ namespace GUI
 		CTextButton	*	btnYes;
 
 		struct EquipInfo {
-			int iPos;		// 物品栏位的位置索引
-			int iNum;		// 物品的数量
+			int iPos;		// the position index in the item slot
+			int iNum;		// the number of items
 		};
 		typedef std::vector<EquipInfo*> EquipList;
 		typedef EquipList::iterator EquipListIter;

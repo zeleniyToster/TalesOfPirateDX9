@@ -9,7 +9,7 @@
 #include "UIBoatForm.h"
 #include "UIGlobalVar.h"
 #include "Character.h"
-#include <jobtype.h>	// common 库
+#include <jobtype.h>	// common library
 extern const char* g_szJobName[MAX_JOB_TYPE];
 
 using namespace std;
@@ -30,7 +30,7 @@ namespace GUI
 	bool CFindTeamMgr::Init()
 	{
 		//
-		// 寻找组队
+		// team finding
 		//
 		frmFindTeam = CFormMgr::s_Mgr.Find("frmFindTeam");
 		if(! frmFindTeam)
@@ -209,7 +209,7 @@ namespace GUI
 	}
 
 
-	// 寻找组队界面按钮消息处理
+	// button message handling of the team finding screen
 	void CFindTeamMgr::_evtFindTeamMouseButton(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey)
 	{
 		string strName = pSender->GetName();
@@ -230,12 +230,12 @@ namespace GUI
 		}
 		else if(strName == "btnAddme")
 		{
-			// 添加到寻求组队列表中
+			// adds to the team seeking list
 			CS_VolunteerAdd();
 		}
 		else if(strName == "btnDelme")
 		{
-			// 从寻求组队列表中消除
+			// removes from the team seeking list
 			CS_VolunteerDel();
 		}
 		else if(strName.substr(0, 10) == "btnSubmit_")
@@ -257,7 +257,7 @@ namespace GUI
 			int nSeq = strName[strName.size() - 1] - '0';
 			if(0 <= nSeq && nSeq < FINDTEAM_PAGE_SIZE)
 			{
-				// 发出组队请求
+				// sends the party request
 				if(g_stUIFindTeam.labName[nSeq]->GetIsShow())
 				{
 					CS_VolunteerSel(g_stUIFindTeam.labName[nSeq]->GetCaption());
@@ -267,7 +267,7 @@ namespace GUI
 	}
 
 
-	// 组队申请回调
+	// party application callback
 	void CFindTeamMgr::_evtFindTeamCheckEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey)
 	{
 		CS_VolunteerAsr(nMsgType == CForm::mrYes, g_stUIFindTeam.m_strTeamLeader.c_str());

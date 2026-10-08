@@ -14,7 +14,7 @@ namespace client_udp
 	}
 }
 
-// 另外一种实现方法，不用从binary_function派生
+// another implementation, not deriving from binary_function
 //template <class T>
 //class NameIsEqual
 //{

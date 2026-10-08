@@ -1,7 +1,7 @@
 ﻿
 //---------------------------
 //
-//  音频资源管理
+//  audio resource management
 //  by Jampe
 //  2007/03/28
 //
@@ -45,7 +45,7 @@ public:
     void close(ulong id);
     void release();
 
-    void checkResValid(ulong timeout = 300);     //  清楚超时资源(秒),默认5分钟
+    void checkResValid(ulong timeout = 300);     //  clears timed out resources (seconds); 5 minutes by default
 
 protected:
     AudioInfo* _addRes(const char* resource, int type);

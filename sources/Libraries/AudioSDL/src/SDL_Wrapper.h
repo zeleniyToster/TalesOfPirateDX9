@@ -1,7 +1,7 @@
 ﻿
 //---------------------------
 //
-//  SDL音频库封装
+//  SDL audio library wrapper
 //  by Jampe
 //  2007/03/28
 //

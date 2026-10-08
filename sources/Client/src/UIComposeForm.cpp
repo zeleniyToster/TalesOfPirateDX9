@@ -286,7 +286,7 @@ namespace GUI
 
     void CComposeMgr::PopItem(int iIndex, bool bRetry/* = false*/)
     {
-        //  是否锁定
+        //  whether it is locked
         if(bLock)
         {
             return;
@@ -296,16 +296,16 @@ namespace GUI
 		if (! pItemCommand)
             return;
 
-		cmdCompose[iIndex]->DelCommand();	// 该函数将删除delete Item
+		cmdCompose[iIndex]->DelCommand();	// this function deletes the Item
 
-		// 将Item相应的物品栏恢复成可用
+		// puts the item slot of the Item back to usable
 		CCommandObj* pItem = g_stUIEquip.GetGoodsGrid()->GetItem(iComposePos[iIndex]);
 		if (pItem && (6 != iIndex))
 		{
 			pItem->SetIsValid(true);
 		}
 
-		// 记录Item在物品栏中的位置
+		// records the position of the Item in the item slot
         if(!bRetry)
         {
 		    iComposePos[iIndex] = NO_USE;
@@ -315,32 +315,32 @@ namespace GUI
 
     void CComposeMgr::PushItem(int iIndex, CItemCommand& rItem, bool bRetry/* = false*/)
     {
-        //  是否锁定
+        //  whether it is locked
         if(bLock)
         {
             return;
         }
-        // 判断道具是否可以拖
+        // decides whether the item can be dragged
 		if(! rItem.GetIsValid())
 		{
 			return;
 		}
 
-		// 查看原来的Cmd中是否已经有Item了，如果有则移出
+		// checks whether the original Cmd already has an Item and removes it if so
 		CItemCommand* pItemCommand =  dynamic_cast<CItemCommand*>(cmdCompose[iIndex]->GetCommand());
 		if (pItemCommand)
 		{
 			PopItem(iIndex);
 		}
 
-		// 记录Item在物品栏中的位置
+		// records the position of the Item in the item slot
         if(!bRetry)
         {
             iComposePos[iIndex] = g_stUIEquip.GetGoodsGrid()->GetDragIndex();
         }
         if(6 != iIndex)
         {
-		    // 将Item相应的物品栏灰调
+		    // greys out the item slot of the Item
 		    rItem.SetIsValid(false);
         }
 
@@ -531,7 +531,7 @@ namespace GUI
 
     void CComposeMgr::_evtDragItemBase4(CGuiData *pSender,CCommandObj* pItem,bool& isAccept)
     {
-        //  材料1
+        //  material 1
         if(!g_stUICompose.cmdCompose[1]->GetCommand())
         {
             g_pGameApp->MsgBox(g_oLangRec.GetString(896));
@@ -555,7 +555,7 @@ namespace GUI
 
     void CComposeMgr::_evtDragItemBase5(CGuiData *pSender,CCommandObj* pItem,bool& isAccept)
     {
-        //  材料2
+        //  material 2
         if(!g_stUICompose.cmdCompose[1]->GetCommand())
         {
             g_pGameApp->MsgBox(g_oLangRec.GetString(896));
@@ -579,7 +579,7 @@ namespace GUI
 
     void CComposeMgr::_evtDragItemBase6(CGuiData *pSender,CCommandObj* pItem,bool& isAccept)
     {
-        //  材料3
+        //  material 3
         if(!g_stUICompose.cmdCompose[1]->GetCommand())
         {
             g_pGameApp->MsgBox(g_oLangRec.GetString(896));

@@ -8,7 +8,7 @@ namespace GUI
 	class CMemoEx;
 	class CTextButton;
 
-	// 任务
+	// mission
 	class CMissionMgr : public CUIInterface
 	{
 	public:
@@ -23,7 +23,7 @@ namespace GUI
 		void CloseForm();
 
 	private:
-		// 窗口处理消息函数
+		// window message handler
 		static void _MouseEvent( CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey );
 		static void _ItemClickEvent( std::string strItem );
 

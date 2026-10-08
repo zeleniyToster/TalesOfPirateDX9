@@ -19,53 +19,53 @@
 namespace GUI
 {
 
-	// 单个商品里单个道具信息
+	// information about a single item inside a single good
 	struct stItemInfo
 	{
-		short       itemID;         //	道具编号
-		int         itemNum;        //	道具个数
-		int         itemFlute;      //	凹槽数
-		short       itemAttrID[5];  //	五个属性编号
-		short       itemAttrVal[5]; //	五个属性值
+		short       itemID;         //	item number
+		int         itemNum;        //	item count
+		int         itemFlute;      //	slot count
+		short       itemAttrID[5];  //	five attribute numbers
+		short       itemAttrVal[5]; //	five attribute values
 
 		void Clear() { memset(this, 0, sizeof(stItemInfo)); }
 	};
 
-	// 单个商品信息
+	// information about a single good
 	struct stStoreInfo
 	{
-		long        comID;          //	商品编号
-		char        comName[21];    //	商品名称
-		long        comClass;       //	商品分类
-		long        comTime;        //	商品上架时间
-		long        comPrice;       //	价格
-		char        comRemark[129]; //	商品备注
-		int         comNumber;      //  商品剩余个数。-1不限制，0下架
-		time_t      comExpire;      //  商品到期时间。
-		int         itemNum;        //  道具个数
-		int         isHot;          //  是否热卖
-		stItemInfo  comItemInfo[6]; //  最多六个道具
+		long        comID;          //	goods number
+		char        comName[21];    //	goods name
+		long        comClass;       //	goods category
+		long        comTime;        //	goods listing time
+		long        comPrice;       //	price
+		char        comRemark[129]; //	goods remark
+		int         comNumber;      //  remaining number of the goods. -1 unlimited, 0 delisted
+		time_t      comExpire;      //  goods expiry time.
+		int         itemNum;        //  item count
+		int         isHot;          //  whether it is on hot sale
+		stItemInfo  comItemInfo[6]; //  at most six items
 
 		stStoreInfo() { memset(this, 0, sizeof(stStoreInfo)); }
 		void Clear()  { memset(this, 0, sizeof(stStoreInfo)); }
 	};
 
-	//  单个商品GUI
+	//  the GUI for a single good
 	struct stStoreGui
 	{
-		CLabelEx*		labName;			// 商品名
-		CLabelEx*		labPrice;			// 商品价格
-		CLabelEx*		labLeftTime;		// 商品剩余时间
-		CLabelEx*		labLeftNum;			// 商品剩余个数
-		CLabelEx*		labRemark;			// 商品描述
-		CLabelEx*		labRightClickView;	// 右键查看祥细
-		CImage*			imgCutLine;			// 分割线
-		CImage*			imgHot;				// 热卖图
-		CImage*			imgNew;				// 新品图
-		CImage*			imgBlue;			// 选中商品高亮
-		CImage*			imgSquare;			// 道具格子
-		COneCommand*	cmdStore;			// 商品表格
-		CTextButton*	btnBlue;			// 高亮按钮
+		CLabelEx*		labName;			// goods name
+		CLabelEx*		labPrice;			// goods price
+		CLabelEx*		labLeftTime;		// goods remaining time
+		CLabelEx*		labLeftNum;			// goods remaining count
+		CLabelEx*		labRemark;			// goods description
+		CLabelEx*		labRightClickView;	// right click to view the details
+		CImage*			imgCutLine;			// divider line
+		CImage*			imgHot;				// hot sale icon
+		CImage*			imgNew;				// new arrival icon
+		CImage*			imgBlue;			// highlight of the selected good
+		CImage*			imgSquare;			// item cell
+		COneCommand*	cmdStore;			// goods grid
+		CTextButton*	btnBlue;			// highlight button
 		
 		CImage*			imgWhite;
 
@@ -107,58 +107,58 @@ namespace GUI
 		CForm*		GetStoreForm()			{  return frmStore;		}
 		static int	GetPageSize()			{  return STORE_PAGE_SIZE;  }
 
-		// 场景变黑
+		// the scene turns black
 		void DarkScene(bool bDark);
 
-		// 从临时背包取出
+		// takes it out of the temporary bag
 		bool PopFromTempKitbag(CGoodsGrid& rkDrag, CGoodsGrid& rkSelf, int nGridID, CCommandObj& rkItem);
 		
-		// 打开商城询问
+		// the query for opening the shop
 		void OpenStoreAsk();
 
-		// 添加商城树结点（父结点为零表示根结点）
+		// adds a shop tree node (a parent node of zero means the root node)
 		void AddStoreTreeNode(long nParentID, long nID, const char* szCaption);
 
-		// 添加商城商品信息
+		// adds shop goods information
 		void AddStoreItemInfo(long nSeq, long nID, const char* szName, long nPrice, const char* szRemark, bool isHot, long nTime, long nRemainNum, long nRemainTime);
 
-		// 添加商城商品细节信息
+		// adds shop goods detail information
 		void AddStoreItemDetail(long nSeq, long nSubSeq, short sItemID, short sItemNum, short sFlute, short pItemAttrID[], short pItemAttrVal[]);
 
-		// 添加用户设置结点
+		// adds a user settings node
 		void AddStoreUserTreeNode(void);
 
-		// 设置商城列表页
+		// sets the page of the shop list
 		void SetStoreItemPage(long nCurPage, long nMaxPage);
 
-		// 设置魔豆数量
+		// sets the MoDou count
 		void SetStoreMoney(long nMoBean, long nRplMoney);
 
-		// 设置VIP值
+		// sets the VIP value
 		void SetStoreVip(long nVip);
 
-		// 添加商城公告
+		// adds a shop announcement
 		//void AddStoreCommunique(long nID, const char* szTitle, 
 
-		// 刷新商城树
+		// refreshes the shop tree
 		void StoreTreeRefresh();
 
-		// 清除全部的商城树结点
+		// clears every shop tree node
 		void ClearStoreTreeNode();
 
-		// 清除全部商城物品列表
+		// clears every shop item list
 		void ClearStoreItemList();
 
-		// 设置商城按钮是否可用
+		// sets whether the shop buttons are usable
 		void SetStoreBuyButtonEnable(bool b);
 
-		// 获得当前选中ID
+		// gets the currently selected ID
 		int GetCurSelItemID();
 
-		// 重置最后操作时间，10 秒间隔处理
+		// resets the time of the last operation; handled at 10 second intervals
 		bool ResetLastOperate(bool bSilent = false);
 
-		// 用户信息结点
+		// user information node
 		static const long USER_NODEID = 0x7FFFFFFE;
 		static const long HELP_NODEID = 0x7FFFFFFF;
 
@@ -170,58 +170,58 @@ namespace GUI
 
 	private:
 
-		// 临时背包
-		CForm*			frmTempBag;			// 临时背包界面
-		CGoodsGrid*		grdTempBag;			// 临时背包表格
+		// temporary bag
+		CForm*			frmTempBag;			// temporary bag screen
+		CGoodsGrid*		grdTempBag;			// temporary bag grid
 		
 		
-		stNumBox*		m_pkNumberBox;		// 询问个数
-		stNetTempKitbag m_NetTempKitbag;	// 临时背包网络协议数据
+		stNumBox*		m_pkNumberBox;		// asks for a count
+		stNetTempKitbag m_NetTempKitbag;	// temporary bag network protocol data
 
 		static void _evtDragItemsEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey);
 		static void _MoveItemsEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey);
 
 	private:
-		// 商城
-		CForm*			frmStore;			// 商城界面
-		CTreeView*		trvStore;			// 树列表
-		CLabelEx*		labMoneyLeft;		// 金钱剩余
-		CLabelEx*		labBeanLeft;		// 代币剩余
-		CLabelEx*		labMemberStyle;		// 会员类型
+		// shop
+		CForm*			frmStore;			// shop screen
+		CTreeView*		trvStore;			// tree list
+		CLabelEx*		labMoneyLeft;		// money remaining
+		CLabelEx*		labBeanLeft;		// tokens remaining
+		CLabelEx*		labMemberStyle;		// membership type
 
 		CLabelEx*		labNameTitle;
 		CLabelEx*		labPriceTitle;
 		CLabelEx*		labLeftTimeTitle;
 		CLabelEx*		labLeftNumTitle;
 
-		CLabelEx*		labListPage;		// 页标签
-		CTextButton*	btnLeftPage;		// 左按钮
-		CTextButton*	btnRightPage;		// 右按钮
-		CTextButton*	btnTrade;			// 交易按钮
-		CTextButton*	btnTryon;			// 试穿按钮
-		CTextButton*	btnViewAll;			// 查看全部商品按钮
-		CLabelEx*		labTrade;			// 交易按钮字
-		CLabelEx*		labTryon;			// 试穿按钮字
-		CLabelEx*		labViewAll;			// 查看全部商品按钮字
-		CMemo*			memStoreHelp;		// 个人信息帮助
-		CImage*			imgBackGround10;	// 白色挡板（商品购买时显示，自定义信息时不显示）
-		stNumBox*		m_pkExchangeNum;	// 兑换代币数输入框
+		CLabelEx*		labListPage;		// page tab
+		CTextButton*	btnLeftPage;		// left button
+		CTextButton*	btnRightPage;		// right button
+		CTextButton*	btnTrade;			// trade button
+		CTextButton*	btnTryon;			// try on button
+		CTextButton*	btnViewAll;			// view all goods button
+		CLabelEx*		labTrade;			// trade button text
+		CLabelEx*		labTryon;			// try on button text
+		CLabelEx*		labViewAll;			// view all goods button text
+		CMemo*			memStoreHelp;		// personal information help
+		CImage*			imgBackGround10;	// white panel (shown while buying goods, hidden when custom information is shown)
+		stNumBox*		m_pkExchangeNum;	// token exchange count input box
 
-		static const int STORE_PAGE_SIZE = 9;		  // 商品列表一页最多 9 条
+		static const int STORE_PAGE_SIZE = 9;		  // a goods list page holds at most 9 entries
 		stStoreGui		m_stStoreGui [STORE_PAGE_SIZE];
 		stStoreInfo		m_stStoreInfo[STORE_PAGE_SIZE];
 
-		long			m_nCurClass;		// 当前类型
-		long			m_nCurSel;			// 当前选择
-		long			m_nCurPage;			// 当前页
-		long			m_nMaxPage;			// 最大页
-		long			m_nExchangeNum;		// 兑换数
-		long			m_nVip;				// 是否是VIP
+		long			m_nCurClass;		// current type
+		long			m_nCurSel;			// current selection
+		long			m_nCurPage;			// current page
+		long			m_nMaxPage;			// maximum page
+		long			m_nExchangeNum;		// exchange count
+		long			m_nVip;				// whether it is a VIP
 
 
 		typedef std::map<long, std::string> MapNode;
 		typedef std::map<long, std::string>::iterator MapNodeIter;
-		MapNode			m_mapNode;		// 树结点
+		MapNode			m_mapNode;		// tree node
 
 		void _SetIsShowUserInfo(bool bShow);
 		void _SetIsShowHelpInfo(bool bShow);
@@ -246,19 +246,19 @@ namespace GUI
 
 	private:
 
-		// 商城读取界面
+		// shop reading screen
 		CForm*			frmStoreLoad;
 		CProgressBar*	proStoreLoad;
 		static void _evtStoreLoadFormClose(CForm* pForm, bool& IsClose);
 		static void _evtProTimeArriveEvt(CGuiData *pSender);
 		DWORD			_dwDarkScene;
 
-		static const int STORE_OPEN_TIMEOUT = 15;	// 商城打开超时（单位：秒）
+		static const int STORE_OPEN_TIMEOUT = 15;	// shop open timeout (unit: seconds)
 
 	private:
 
-		// 查看祥细
-		static const int STORE_ITEM_COUNT = 6;	// 商品最多六个道具
+		// view the details
+		static const int STORE_ITEM_COUNT = 6;	// a good holds at most six items
 		CForm*			frmViewAll;
 		CMemo*			memViewAll;
 		CImage*			imgSquareViewAll[STORE_ITEM_COUNT];
@@ -269,11 +269,11 @@ namespace GUI
 
 	private:
 
-		// 试穿(Avata)
-		CForm*			frmTryon;		// 试穿界面
-		C3DCompent*		ui3dplayer;		// 3D试穿
+		// try on (Avata)
+		CForm*			frmTryon;		// try on screen
+		C3DCompent*		ui3dplayer;		// 3D try on
 
-		int				m_nChaRotate;	// 角色旋转
+		int				m_nChaRotate;	// character rotation
 		CCharacter*		m_pCurrMainCha;
 		bool			m_isFight;
 		stNetLookInfo	m_sLookInfo;
@@ -282,7 +282,7 @@ namespace GUI
 		void			ChaEquipClearAll();
 		void			ChaLeftRotate();
 		void			ChaRightRotate();
-		void			RenderChaTryon(int x, int y);	// 绘制 3D 角色
+		void			RenderChaTryon(int x, int y);	// draws the 3D character
 
 		static void	_evtChaTryonRenderEvent(C3DCompent *pSender, int x, int y);
 		static void _evtChaEquipClearAll(CGuiData *sender, int x, int y, DWORD key);

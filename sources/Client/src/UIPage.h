@@ -1,8 +1,8 @@
 ﻿//----------------------------------------------------------------------
-// 名称:换页类
-// 作者:lh 2004-08-02
-// 设计思想:CPageItem是控件容器,CPage是CPageItem容器,并实现切换CPageItem
-// 最后修改日期:2004-10-09
+// Name: paged class
+// Author: lh 2004-08-02
+// Design: CPageItem is a container for controls and CPage is a container for CPageItem, implementing the switching of CPageItem
+// Last modified date: 2004-10-09
 //----------------------------------------------------------------------
 #pragma once
 #include "uicompent.h"
@@ -13,7 +13,7 @@ namespace GUI
 {
 class CPage;
 
-// 换页类CPage的页面类
+// the page class of the paged class CPage
 class CPageItem : public CContainer
 {
 	friend class CPage;
@@ -57,21 +57,21 @@ private:
 	void			_OnTitleDown();
 
 protected:
-	CImage			*_pTitle;		// 操作这一页的标题栏,其位置由CPage决定
-	CImage			*_pImage;		// 页显示背景图片,充满所有区域
-	unsigned int	_nIndex;		// 在Page类里的索引
+	CImage			*_pTitle;		// operates the title bar of this page; its position is decided by CPage
+	CImage			*_pImage;		// the page shows a background image that fills every region
+	unsigned int	_nIndex;		// the index inside the Page class
 
 };
 
-// 换页类
+// the paged class
 class CPage : public CCompent
 {
 public:
-	enum eButtonPos		// 均为依次排列
+	enum eButtonPos		// all arranged in sequence
 	{
-		bpLeftUp=0,		// 左上
-		bpUpFull,		// 充满上部
-        bpCustom,       // 自定义
+		bpLeftUp=0,		// top left
+		bpUpFull,		// fills the top
+        bpCustom,       // custom
 		bpEnd,
 	};
 
@@ -94,38 +94,38 @@ public:
     virtual CCompent*       GetHitCommand( int x, int y );
 
 public:
-	void			SetIndex( unsigned int n );		// 激活某一页
+	void			SetIndex( unsigned int n );		// activates a page
 	int				GetIndex()									{ return _nIndex;				}
 	CPageItem*		GetPage( unsigned int n );
 
-	CPageItem*		NewPage();				// 产生新的一页
+	CPageItem*		NewPage();				// produces a new page
 
 	void			SetButtonSize( int w, int h );
 	void			SetButtonPutStyle( eButtonPos style )		{ _eButtonPos=style;			}
 	void			SetButtonMargin( int n )					{ if(n>0) _nButtonMargin=n;		}
 
 public:
-	GuiEvent		evtSelectPage;			// 选择了新的一页
+	GuiEvent		evtSelectPage;			// a new page was selected
 
 private:
 	void			_RefreshButtonPos();
 
 protected:
-	unsigned int	_nIndex;				// 当前页		
-	unsigned int	_nMaxPage;				// 当前最大页
+	unsigned int	_nIndex;				// current page
+	unsigned int	_nMaxPage;				// current maximum page
 
 	CGuiPic*		_pImage;
 
 	typedef std::vector<CPageItem*>	items;
 	items			_pages;
 
-	eButtonPos		_eButtonPos;		// 页标题按钮排列方式
-	int				_nButtonWidth, _nButtonHeight;		// 页标题按钮宽高
-	int				_nButtonMargin;		// 页标题按钮的边距
+	eButtonPos		_eButtonPos;		// arrangement of the page title buttons
+	int				_nButtonWidth, _nButtonHeight;		// page title button width and height
+	int				_nButtonMargin;		// page title button margin
 
 };
 
-// 内联函数
+// inline function
 inline void CPageItem::_OnTitleDown(CGuiData *pSender, int x, int y, DWORD key)
 {
 	((CPageItem*)(pSender->GetParent()))->_OnTitleDown();

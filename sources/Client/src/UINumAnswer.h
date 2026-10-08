@@ -20,7 +20,7 @@
 
 
 
-// 读取内存BMP图片，暂时只支持黑白图片
+// reads an in-memory BMP image; only black and white images are supported for now
 class CImageBMP
 {
 public:
@@ -72,7 +72,7 @@ namespace GUI
 	private:
 
 		CForm*			frmNumAnswer;
-		CForm*			frmFast;	// 仅作为坐标参照，不作任何处理
+		CForm*			frmFast;	// used only as a coordinate reference, nothing is done with it
 		CEdit*			edtUserInput;
 		CLabelEx*		labTimeLeft;
 		C3DCompent*		ui3dCheckCode;

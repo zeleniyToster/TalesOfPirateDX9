@@ -39,7 +39,7 @@ void CTextParse::Render( string str, int x, int y,  DWORD color, ALLIGN allign, 
 
 	while ( i < length)
 	{
-		if ( str[i]  & 0x80)  //汉字
+		if ( str[i]  & 0x80)  //a Chinese character
 		{
 			strLine += str.substr(i ,2) ;
 			i+=2;		 		
@@ -51,7 +51,7 @@ void CTextParse::Render( string str, int x, int y,  DWORD color, ALLIGN allign, 
 				_strTwoChar =  str.substr(i+1 ,2);
 
 			index  = InitEx( _strTwoChar );
-			//如果索引在0~iPicNum,平且索引所对应的图元存在, 则表示进行图元处理
+			//if the index is in 0~iPicNum and the graphic element for that index exists, it means graphic element processing is performed
 			static CGraph* pGraph = NULL;
 			pGraph = GetFace(index);
 			if (pGraph) //(index >=0 && index < iPicNum && _files[index].pGraph ) 
@@ -60,8 +60,8 @@ void CTextParse::Render( string str, int x, int y,  DWORD color, ALLIGN allign, 
 				int nX =  CGuiFont::s_Font.GetWidth( str.substr(0, i).c_str() );
 				int nX2 =(int) GetRender().DrawConvertX2((float) nX );
 		
-				strLine += "   "; //到底是1个空格，2个空格，3个空格？？？//added by billy			
-				pGraph->Next() ;  // 满足表情的动画效果 :04-11-19
+				strLine += "   "; //is it 1 space, 2 spaces or 3 spaces???//added by billy			
+				pGraph->Next() ;  // the animation effect of the emote match :04-11-19
 				pGraph->Render( iPosX + nX2, iPosY );
 				i+=3;
 			}
@@ -98,7 +98,7 @@ void CTextParse::RenderEx( string str, int x, int y, DWORD color, float scale )
 	int 	i=0;
 	while ( i < length)
 	{
-		if ( str[i]  & 0x80)  //汉字
+		if ( str[i]  & 0x80)  //a Chinese character
 		{
 			strLine += str.substr(i ,2) ;
 			i+=2;		 		
@@ -110,7 +110,7 @@ void CTextParse::RenderEx( string str, int x, int y, DWORD color, float scale )
 				_strTwoChar =  str.substr(i+1 ,2);
 
 			index  = InitEx( _strTwoChar ) ;
-			//如果索引在0~iPicNum,平且索引所对应的图元存在, 则表示进行图元处理 		
+			//if the index is in 0~iPicNum and the graphic element for that index exists, it means graphic element processing is performed
 			static CGraph* pGraph = NULL;
 			pGraph = GetFace(index);
 			if (pGraph) //index >=0 && index <= iPicNum && _files[index].pGraph ) 
@@ -119,9 +119,9 @@ void CTextParse::RenderEx( string str, int x, int y, DWORD color, float scale )
 				int nX =  CGuiFont::s_Font.GetWidth(str.substr(0, i).c_str() );
 				int nX2 =(int) GetRender().DrawConvertX2((float) nX );
 		
-				strLine += "   "; //到底是1个空格，2个空格，3个空格？？？//added by billy
+				strLine += "   "; //is it 1 space, 2 spaces or 3 spaces???//added by billy
 				
-				pGraph->Next();  // 满足表情的动画效果 :04-11-19
+				pGraph->Next();  // the animation effect of the emote match :04-11-19
 				pGraph->Render( iPosX + nX2 , iPosY  );
 				i+=3;
 			}
@@ -195,6 +195,6 @@ CGraph* CTextParse::GetFace( DWORD nIndex )
 
 int  CTextParse::InitLink()
 {
-	//_str进行处理,建立链表
+	//_str is processed and a linked list is built
 	return 1;
 }

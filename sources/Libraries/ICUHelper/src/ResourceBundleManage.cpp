@@ -73,7 +73,7 @@ CResourceBundleManage::CResourceBundleManage(const char* configFileName)
     {
         throw "GetModuleFileName failed \n"; 
     }
-	// 取得入口程序的路径
+	// gets the path of the entry program
 	const char* ret = strrchr(szPath, '\\');
 	long dirLength = (long)(ret - szPath);
 
@@ -148,13 +148,13 @@ CResourceBundleManage::~CResourceBundleManage(void)
 	Release();
 }
 
-// 取得资源个数
+// gets the number of resources
 int CResourceBundleManage::GetSize(void)
 {
 	return (int)mapRes.size();
 }
 
-// 把Unicode字符串转换为多字节本机编码
+// converts a Unicode string to multibyte native encoding
 UErrorCode CResourceBundleManage::ToCodePageString(UConverter *conv, UChar* source, char* target, int destCapacity, int& len)
 {
   UErrorCode status = U_ZERO_ERROR;
@@ -167,7 +167,7 @@ UErrorCode CResourceBundleManage::ToCodePageString(UConverter *conv, UChar* sour
   return status;
 }
 
-// 初始化资源管理器
+// initialises the resource manager
 bool CResourceBundleManage::Init()
 {
 	int len = 0;
@@ -212,7 +212,7 @@ bool CResourceBundleManage::Init()
 	return false;
 }
 
-// 释放资源
+// releases the resources
 void CResourceBundleManage::Release(void)
 {
 	m_ResDir.reset(nullptr);
@@ -234,7 +234,7 @@ void CResourceBundleManage::Release(void)
 	}
 }
 
-// 根据ID取得字符串
+// gets the string by ID
 const char* CResourceBundleManage::LoadResString(const char* key)
 {
 	const char* ret ="";
@@ -268,7 +268,7 @@ UnicodeString CResourceBundleManage::LoadUResString(const char* key)
 	return m_pResourceBundle->getStringEx(key, status);
 }
 
-// 格式根据参数化一个字符串
+// formats a string according to the parameters
 int CResourceBundleManage::Format(const char* key, CFormatParameter& parameter, char buffer[])
 {
     UErrorCode status = U_ZERO_ERROR;

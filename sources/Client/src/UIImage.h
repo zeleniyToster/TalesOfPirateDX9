@@ -1,7 +1,7 @@
 ﻿//----------------------------------------------------------------------
-// 名称:静态图片
-// 作者:lh 2004-07-21
-// 最后修改日期:2004-10-09
+// Name: static image
+// Author: lh 2004-07-21
+// Last modified date: 2004-10-09
 //----------------------------------------------------------------------
 #pragma once
 #include "uicompent.h"
@@ -9,7 +9,7 @@
 namespace GUI
 {
 
-// 一张简单静态图片
+// a simple static image
 class CImage : public CCompent
 {
 public:
@@ -27,14 +27,14 @@ public:
 	CGuiPic*		GetImage() { return _pImage; }
 
 public:
-	GuiMouseEvent	evtMouseDown;		// 鼠标按下事件
+	GuiMouseEvent	evtMouseDown;		// mouse button pressed event
 
 public:
 	CGuiPic* _pImage;
 
 };
 
-// 带边框的图片控件
+// image control with a border
 class CFrameImage : public CCompent
 {
 public:
@@ -52,23 +52,23 @@ public:
 	CFramePic*		GetFrameImage() { return _pImage; }
 
 public:
-	GuiMouseEvent	evtMouseDown;		// 鼠标按下事件
+	GuiMouseEvent	evtMouseDown;		// mouse button pressed event
 
 protected:
 	CFramePic*		_pImage;
 
 };
 
-//带效果的图片
+//image with an effect
 class CFlashImage: public CCompent
 {
 public:
 	enum eStyle
 	{
-		enumNone,		// 静止图片
-		enumFlash,		// 闪烁
-		enumCartoon,	// 动画
-		enumRightMove,	// 从左至右移动
+		enumNone,		// still image
+		enumFlash,		// blinking
+		enumCartoon,	// animation
+		enumRightMove,	// moves from left to right
 	};
 
 	CFlashImage(CForm& frmOwn, unsigned int max=1 );

@@ -10,10 +10,10 @@ class CGraph;
 class CTextParse
 {
 public :
-	struct node //节点
+	struct node //node
 	{
-	    std::string    str; //节点数据
-	    node    * next; //指向下一个节点的指针
+	    std::string    str; //node data
+	    node    * next; //pointer to the next node
 	};
 
 public:
@@ -39,7 +39,7 @@ public:
 	void			SetCaption( const char * str ) {  _str = str;};
 	const char *	GetCaption()		{              return _str.c_str();		}
 
-	// 设置表情对应的索引号
+	// sets the index corresponding to an emote
 	void AddFace( int nIndex, CGraph* pGraph );
 	CGraph* GetFace( DWORD nIndex );
 	int GetFaceCount()	{ return (int)_files.size();}
@@ -65,9 +65,9 @@ extern CTextParse	g_TextParse;
 
 
 
-//算法 
-//获取一个字符串的前面n个字符或者后面的n个字符
-//flag ==true ,则表示获取前面的字符 
+//algorithm
+//gets the first n or the last n characters of a string
+//flag ==true means the leading characters are taken
 inline std::string  GetSelfString(std::string str , int n , bool flag )
 {	
 	std::string strReturn;

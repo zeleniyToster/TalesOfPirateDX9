@@ -91,7 +91,7 @@ void CGrid::_Clear()
 	for( memory::iterator it = _memory.begin(); it!=_memory.end(); it++ )
 	{
 		//delete *it;
-		SAFE_DELETE(*it); // UI当机处理
+		SAFE_DELETE(*it); // UI freeze handling
 	}
 
 	_memory.clear();
@@ -101,7 +101,7 @@ CGrid::~CGrid(void)
 {
 	_Clear();
 	//delete _pImage;
-	SAFE_DELETE(_pImage); // UI当机处理
+	SAFE_DELETE(_pImage); // UI freeze handling
 }
 
 void CGrid::_SetSelf()
@@ -166,11 +166,11 @@ void CGrid::Refresh()
 
 	_pImage->Refresh();
 
-	// _pSizeImg在右下角
+	// _pSizeImg is at the bottom right
 	_pSizeImg->SetPos( GetWidth()-_pSizeImg->GetWidth(), GetHeight()-_pSizeImg->GetHeight() );
 	_pSizeImg->Refresh();
 
-	// 向前按钮，文字，向后前按钮依次在左下角
+	// the forward button, the text and the backward button are in turn at the bottom left
 	_pPriorPage->SetPos( _nMargin, GetHeight()-_pPriorPage->GetHeight()-_nMargin );
 	_pPriorPage->Refresh();
 
@@ -218,7 +218,7 @@ bool CGrid::MouseRun( int x, int y, DWORD key )
 
 		if( _pSizeImg->MouseRun(x,y,key) ) return true;
 
-		// 计算鼠标点击得到的选择
+		// computes the selection from the mouse click
 		int col = ( x - _nStartX ) / _nTotalW;
 		int row = ( y - _nStartY ) / _nTotalH;
 		if( col < _nColNum )

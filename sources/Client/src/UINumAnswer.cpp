@@ -25,7 +25,7 @@ bool CImageBMP::Load(BYTE* pData, int nSize)
 
 	_nDataSize = nSize;
 
-	// 数据开始位置，高度，宽度
+	// data start position, height, width
 	memcpy(&_nBmpData, _pData + 10, sizeof(int));
 	memcpy(&_nWidth,   _pData + 18, sizeof(int));
 	memcpy(&_nHeight,  _pData + 22, sizeof(int));
@@ -79,7 +79,7 @@ DWORD CImageBMP::GetColor(int x, int y)
 
 	if(_pData)
 	{
-		//  位置 = 数据起始  + ( 转换对应BMP的行  *    每一行的占用的字节数   ) + 列偏移字节
+		//  position = data start  + ( row of the matching BMP  *    bytes occupied per row   ) + column offset in bytes
 		int nPos = _nBmpData + (_nHeight - y - 1) * (((_nWidth >> 5) + 1) << 2) + (x >> 3);
 
 		return (!(_pData[nPos] & BitMask[x & 7]));
@@ -205,7 +205,7 @@ namespace GUI
 	}
 
 
-	// 将数据刷新至纹理
+	// refreshes the data into the texture
 	void CNumAnswerMgr::Refresh()
 	{
 		if(_pNumTexture)

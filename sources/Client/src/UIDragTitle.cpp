@@ -36,7 +36,7 @@ void CDragTitle::_SetSelf( const CDragTitle& rhs )
 CDragTitle::~CDragTitle(void)
 {
     //delete _pImage;
-	SAFE_DELETE(_pImage); // UI当机处理
+	SAFE_DELETE(_pImage); // UI freeze handling
 }
 
 void CDragTitle::DragRender()
@@ -46,7 +46,7 @@ void CDragTitle::DragRender()
 
     if( CDrag::IsDraging(this) )
     {
-    	// 显示拖动状态 
+    	// shows the dragging state
 		_pImage->Render( GetX() + CDrag::GetDrag()->GetDragX(), GetY() + CDrag::GetDrag()->GetDragY(), DROP_ALPHA );
     }
     else

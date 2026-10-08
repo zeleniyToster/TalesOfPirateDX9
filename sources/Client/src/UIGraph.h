@@ -1,7 +1,7 @@
 ﻿//----------------------------------------------------------------------
-// 名称:静态文字
-// 作者:lh 2004-07-19
-// 最后修改日期:2004-10-09
+// Name: static text
+// Author: lh 2004-07-19
+// Last modified date: 2004-10-09
 //----------------------------------------------------------------------
 #pragma once
 #include "uiguidata.h"
@@ -9,7 +9,7 @@
 namespace GUI
 {
 
-// 图元
+// graphic element
 class CGraph : public CItemObj
 {
 public:
@@ -28,7 +28,7 @@ public:
 
 	CGraph(unsigned int frame) : nTag(0)	{_pImage = new CGuiPic(NULL, frame);	}
 
-	// Grid接口
+	// Grid interface
 	virtual void	Render( int x, int y )	{ _pImage->Render(x, y);	    }
 
     virtual int     GetWidth()				{ return _pImage->GetWidth();	}
@@ -37,7 +37,7 @@ public:
 	void		Next()					{ _pImage->Next();			}
 	void		Reset()					{ _pImage->SetFrame(0);		}
 
-	// 外部接口
+	// external interface
 	CGuiPic*	GetImage()				{ return _pImage;			}
 
 	int			nTag;
@@ -47,7 +47,7 @@ protected:
 
 };
 
-// 带hint的图元,用于编辑器树中节点
+// graphic element with a hint, used for nodes in the editor tree
 class CHintGraph : public CGraph
 {
 public:
@@ -65,7 +65,7 @@ protected:
 
 };
 
-// 用于聊天的头像
+// the portrait used for chat
 class CTextGraph : public CHintGraph
 {
 public:
@@ -90,7 +90,7 @@ protected:
 
 };
 
-// 用于树型控件的表格节点
+// grid node used by tree controls
 class CNoteGraph : public CHintGraph
 {
 public:
@@ -109,7 +109,7 @@ public:
 protected:
     std::string			_strName;
 	DWORD			_color;
-	int				_nTextX, _nTextY;	// 文字的X,Y偏移
+	int				_nTextX, _nTextY;	// X,Y offset of the text
 
 };
 

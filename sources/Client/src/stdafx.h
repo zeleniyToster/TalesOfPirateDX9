@@ -27,7 +27,7 @@
 #include <bitset>
 #include <tuple>
 
-namespace GUI  //定义名字空间
+namespace GUI  //defines the namespace
 {
 };
 
@@ -41,7 +41,7 @@ using namespace GUI;
 
 #include "LanguageRecord.h"
 
-extern CLanguageRecord g_oLangRec;	// 多语言声明
+extern CLanguageRecord g_oLangRec;	// multilingual declaration
 
 inline VOID D3DUtil_InitMaterialI( D3DMATERIALX& mtrl, FLOAT r, FLOAT g, FLOAT b,
                            FLOAT a )
@@ -57,7 +57,7 @@ inline VOID D3DUtil_InitMaterialI( D3DMATERIALX& mtrl, FLOAT r, FLOAT g, FLOAT b
 
 //#define APP_DEBUG
 
-#define _LOG_NAME_		// 用于输出角色名字,快捷键
+#define _LOG_NAME_		// used to output character names and shortcuts
 
 // #define FLOAT_INVALID   // 定义这个宏后，将检测浮点异常,已知caLua中有浮点异常
 

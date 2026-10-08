@@ -68,7 +68,7 @@ int SetEncKey(const __byte* key)
 /* -------------------加密--------------------- */
 int Encrypt(__byte* buf, int len, const __byte* pwd, int plen)
 {
-    int size = plen + 4;    //  将会生成4个噪音字节
+    int size = plen + 4;    //  generates 4 noise bytes
     int apd = size % 8;
     if(apd)
     {
@@ -82,7 +82,7 @@ int Encrypt(__byte* buf, int len, const __byte* pwd, int plen)
     memcpy((tmp + 4), pwd, plen);
 
     __byte* ptr = tmp;
-    //  生成4个噪音字节
+    //  generates 4 noise bytes
     tmp[0] = (__byte)rand() & 0xFF;
     tmp[1] = (__byte)rand() & 0xFF;
     tmp[2] = (__byte)rand() & 0xFF;

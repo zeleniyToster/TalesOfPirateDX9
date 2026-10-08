@@ -20,8 +20,8 @@ class	CGateInfo
 {
 public:
 	CGateInfo( CGroupInfo* pGroup, const char* name );
-	void			Start();			// 初始化Socket,获取数据
-	void			Exit();				// 关闭Socket
+	void			Start();			// initialises the socket and fetches the data
+	void			Exit();				// closes the socket
 	CGroupInfo*		GetOwner()	{ return pOwner;			}
 	bool			Read();
 	bool			Send();
@@ -44,7 +44,7 @@ public:
 	CGateInfo*		Find( const char* Name );
 	CRegionInfo*	GetOwner()	{ return pOwner;		}
 	int				GetNum();
-	CGateInfo*		GetMinGate();		// 获得负载最小的Gate
+	CGateInfo*		GetMinGate();		// gets the Gate with the smallest load
 
 	void			Start();
 	void			Exit();
@@ -83,18 +83,18 @@ private:
 
 typedef void (*GateChangeEvent) ( CGateInfo* pGate );
 
-// 客户端发送用
+// used for sending on the client
 class CRegionMgr
 {
 public:
 	CRegionMgr();
 	void	Init( HWND hWnd, UINT uRegeditNetMes );
 
-	bool	Add( const char* szRegion, const char* szGroup, const char* szGate );	// 增加基础数据
+	bool	Add( const char* szRegion, const char* szGroup, const char* szGate );	// adds the base data
 
-	bool	EnterRegion( const char* szRegion );	// 进入了区，准备获取数据
-	int		GetGroupNum( const char* szGroup );		// 得到当前区中某个Group人数,返回-1为失败
-	bool	ExitRegion();							// 从当前Group中退出
+	bool	EnterRegion( const char* szRegion );	// has entered a zone and is ready to fetch the data
+	int		GetGroupNum( const char* szGroup );		// gets the number of people in a Group of the current zone; -1 on failure
+	bool	ExitRegion();							// leaves the current Group
 	CRegionInfo*	GetActiovRegion()	{ return _pRegion;		}
 
 	void	Exit();
@@ -103,7 +103,7 @@ public:
 
 	void	FrameMove( DWORD dwTime );
 
-public:		// 列表的操作
+public:		// list operations
 	CRegionInfo*	Find( const char* Name );
 	void			Add( CRegionInfo* pRegion )		{ if( pRegion ) _Regions.push_back( pRegion );	}
 
@@ -115,14 +115,14 @@ public:
 
 private:
 	typedef std::vector<CRegionInfo*> regions;
-	regions			_Regions;			// 所有区
+	regions			_Regions;			// every zone
 
-	CRegionInfo*	_pRegion;			// 当前激活的区，可能为空
+	CRegionInfo*	_pRegion;			// the currently active zone; may be empty
 	HWND			_hWnd;
 	UINT			_uNetMessage;
 
 	typedef std::map<SOCKET, CGateInfo*> gates;
-	gates			_gates;				// 用于根据socket快速查找CGateInfo
+	gates			_gates;				// used to look up CGateInfo quickly by socket
 
 	DWORD			_dwLastSendTime;
 

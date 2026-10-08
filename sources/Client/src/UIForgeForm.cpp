@@ -37,7 +37,7 @@ static int         g_nForgeIndex  =-1;
 bool CForgeMgr::Init()
 {
 	CFormMgr &mgr = CFormMgr::s_Mgr;
-	//初始化npc对话表单
+	//initialises the NPC dialog form
 	frmNPCforge  = mgr.Find("frmNPCforge" );
 	if ( !frmNPCforge )
 	{	
@@ -53,7 +53,7 @@ bool CForgeMgr::Init()
 		return Error(g_oLangRec.GetString(561), frmNPCforge->GetName(), "labForgeGold");	
 	labForgeGold->SetCaption("");
 
-	// 装备栏
+	// equipment slot
 	char szBuf[32];
 	for (int i(0); i<ITEM_NUM; i++)
 	{
@@ -132,7 +132,7 @@ void CForgeMgr::ShowForge(bool bShow, bool isMilling)
 		frmNPCforge->Refresh();
 		frmNPCforge->Show();
 
-		//同时打开玩家的装备栏
+		//opens the player's equipment slot as well
 		int x = frmNPCforge->GetX() + frmNPCforge->GetWidth();
 		int y = frmNPCforge->GetY();
 		g_stUIEquip.GetItemForm()->SetPos(x, y);
@@ -143,7 +143,7 @@ void CForgeMgr::ShowForge(bool bShow, bool isMilling)
 			g_stUIEquip.GetItemForm()->Show();
 		}
 
-		//更新界面（打磨或精炼）
+		//updates the screen (polishing or refining)
 		btnMillingYes->SetIsShow(m_isMilling);
 		btnForgeYes->SetIsShow(!m_isMilling);
 		btnYes = m_isMilling ? btnMillingYes : btnForgeYes;
@@ -227,11 +227,11 @@ bool CForgeMgr::SendForgeProtocol()
 {
 	stNetItemForgeAsk kNetItemForgeAsk;
 	
-	kNetItemForgeAsk.chType = m_isMilling? MILLING_TYPE : FORGE_TYPE;	// 打磨或精炼
+	kNetItemForgeAsk.chType = m_isMilling? MILLING_TYPE : FORGE_TYPE;	// polishing or refining
 
 	for (int i(0); i<ITEM_NUM; ++i)
 	{
-		kNetItemForgeAsk.SGroup[i].sCellNum = 1;		// 始终是1
+		kNetItemForgeAsk.SGroup[i].sCellNum = 1;		// always 1
 		kNetItemForgeAsk.SGroup[i].pCell = new SForgeCell::SCell[1];
 		kNetItemForgeAsk.SGroup[i].pCell[0].sNum = 1;
 		kNetItemForgeAsk.SGroup[i].pCell[0].sPosID = m_iForgeItemPos[i];
@@ -290,9 +290,9 @@ void CForgeMgr::_MainMouseEvent(CCompent *pSender, int nMsgType, int x, int y, D
 {
 	string name = pSender->GetName();
 	if( name=="btnClose"  || name == "btnForgeNo" )  
-	{ ///关闭表单
-		// 如果滚动条正在滚动按取消键则，发送取消协议给服务器
-		//全部移到OnClose事件中
+	{ ////closes the form
+		// if the scroll bar is scrolling and cancel is pressed, send the cancel protocol to the server
+		//moves it all into the OnClose event
 		//if (g_stUIForge.proNPCforge->IsRuning())
 		//{
 		//	g_stUIForge.proNPCforge->Start(0);
@@ -354,7 +354,7 @@ void CForgeMgr::_DragEvtGenStone(CGuiData *pSender,CCommandObj* pItem,bool& isAc
 	if( !(pItemCommand->GetIsValid())) return;
 
 	if (g_stUIForge.m_isMilling)
-	{ //这里是打磨
+	{ //this is polishing
 		if (g_stUIForge.IsMillingReinforce(*pItemCommand))
 		{
 			g_stUIForge.PushItem(GEN_STONE, *pItemCommand);
@@ -366,7 +366,7 @@ void CForgeMgr::_DragEvtGenStone(CGuiData *pSender,CCommandObj* pItem,bool& isAc
 		}
 	}
 	else
-	{ //这里是精炼
+	{ //this is refining
 		if (g_stUIForge.IsGenStone(*pItemCommand))
 		{
 			g_stUIForge.PushItem(GEN_STONE, *pItemCommand);
@@ -394,7 +394,7 @@ void CForgeMgr::_DragEvtForgStone(CGuiData *pSender,CCommandObj* pItem,bool& isA
 	if (!(pItemCommand->GetIsValid())) return;
 
 	if (g_stUIForge.m_isMilling)
-	{ //这里是打磨
+	{ //this is polishing
 		if (g_stUIForge.IsMillingKatalyst(*pItemCommand))
 		{
 			g_stUIForge.PushItem(FORGE_STONE, *pItemCommand);
@@ -406,7 +406,7 @@ void CForgeMgr::_DragEvtForgStone(CGuiData *pSender,CCommandObj* pItem,bool& isA
 		}
 	}
 	else
-	{ //这里是精炼
+	{ //this is refining
 		if (g_stUIForge.IsForgStone(*pItemCommand))
 		{
 			g_stUIForge.PushItem(FORGE_STONE, *pItemCommand);
@@ -467,7 +467,7 @@ bool CForgeMgr::IsEquip(CItemCommand& rItem)
 	if (pItemRecord) 
 	{
 		short sType = pItemRecord->sType;
-		//	Close by alfred.shi 20080912 帽子也可以打磨
+		//	Close by alfred.shi 20080912  hats can be polished too
 		if (sType < EQUIP_TYPE && sType != 12 && sType != 13 && sType != 17 && sType != 18 && sType != 19 /*&& sType != 20*/ && sType != 21 || sType == 88)
 			return true;
 	}
@@ -533,7 +533,7 @@ bool CForgeMgr::IsValidDragSource()
 //---------------------------------------------------------------------------
 void CForgeMgr::PushItem(int iIndex, CItemCommand& rItem)
 {
-	// 查看原来的Cmd中是否已经有Item了，如果有则移出
+	// checks whether the original Cmd already has an Item and removes it if so
 	CItemCommand* pItemCommand =  
 		dynamic_cast<CItemCommand*>(cmdForgeItem[iIndex]->GetCommand());
 	if (pItemCommand)
@@ -541,9 +541,9 @@ void CForgeMgr::PushItem(int iIndex, CItemCommand& rItem)
 		PopItem(iIndex);
 	}
 
-	// 记录Item在物品栏中的位置
+	// records the position of the Item in the item slot
 	m_iForgeItemPos[iIndex] = g_stUIEquip.GetGoodsGrid()->GetDragIndex();
-	// 将Item相应的物品栏灰调
+	// greys out the item slot of the Item
 	rItem.SetIsValid(false);
 
 	// 将创建的Item放入Cmd中，这里用new将会在PopItem()中删除
@@ -561,9 +561,9 @@ void CForgeMgr::PopItem(int iIndex)
 	CItemCommand* pItemCommand =  
 		dynamic_cast<CItemCommand*>(cmdForgeItem[iIndex]->GetCommand());
 	if (pItemCommand)
-		cmdForgeItem[iIndex]->DelCommand();	// 该函数将删除delete Item
+		cmdForgeItem[iIndex]->DelCommand();	// this function deletes the Item
 
-	// 将Item相应的物品栏灰调
+	// greys out the item slot of the Item
 	CCommandObj* pItem = 
 				g_stUIEquip.GetGoodsGrid()->GetItem(m_iForgeItemPos[iIndex]);
 	if (pItem)
@@ -571,7 +571,7 @@ void CForgeMgr::PopItem(int iIndex)
 		pItem->SetIsValid(true);
 	}
 
-	// 记录Item在物品栏中的位置
+	// records the position of the Item in the item slot
 	m_iForgeItemPos[iIndex] = NO_USE;
 
 	this->SetForgeUI();
@@ -598,7 +598,7 @@ void CForgeMgr::SetForgeUI()
 	char szBuf[64];
 	if (cmdForgeItem[EQUIP]->GetCommand())
 	{
-		// 武器的描述
+		// the weapon description
 		CItemCommand* pItemCommand =  
 			dynamic_cast<CItemCommand*>(cmdForgeItem[EQUIP]->GetCommand());
 		if (!pItemCommand)
@@ -610,7 +610,7 @@ void CForgeMgr::SetForgeUI()
 		SItemForge rItemForgeInfo = pItemCommand->GetForgeInfo();
 
 		string sEquipState("");
-		// 武器名
+		// the weapon name
 		CItemRow* pItem = lstForgeItemState->GetItems()->GetItem(0);
 		if (pItem)
 		{
@@ -620,7 +620,7 @@ void CForgeMgr::SetForgeUI()
 			pItem->GetBegin()->SetString(sEquipState.c_str());
 		}
 
-		// 武器插槽一
+		// weapon slot one
 		pItem = lstForgeItemState->GetItems()->GetItem(1);
 		if (pItem)
 		{
@@ -644,7 +644,7 @@ void CForgeMgr::SetForgeUI()
 			pItem->GetBegin()->SetString(sEquipState.c_str());
 		}
 
-		// 武器插槽二
+		// weapon slot two
 		pItem = lstForgeItemState->GetItems()->GetItem(2);
 		if (pItem)
 		{
@@ -668,7 +668,7 @@ void CForgeMgr::SetForgeUI()
 			pItem->GetBegin()->SetString(sEquipState.c_str());
 		}
 
-		// 武器插槽三
+		// weapon slot three
 		pItem = lstForgeItemState->GetItems()->GetItem(3);
 		if (pItem)
 		{
@@ -692,7 +692,7 @@ void CForgeMgr::SetForgeUI()
 			pItem->GetBegin()->SetString(sEquipState.c_str());
 		}
 
-		// 武器精炼加成
+		// weapon refining bonus
 		pItem = lstForgeItemState->GetItems()->GetItem(4);
 		if (pItem)
 		{
@@ -709,7 +709,7 @@ void CForgeMgr::SetForgeUI()
 		}
 
 
-		// 武器精炼加成
+		// weapon refining bonus
 		pItem = lstForgeItemState->GetItems()->GetItem(5);
 		if (pItem)
 		{
@@ -730,7 +730,7 @@ void CForgeMgr::SetForgeUI()
 
 	}
 
-	//		宝石效果     攻击+2      专注+1 
+	//		gem effect     attack+2      focus+1
 	if (!m_isMilling)
 	{
 		if (cmdForgeItem[GEN_STONE]->GetCommand())
@@ -761,7 +761,7 @@ void CForgeMgr::SetForgeUI()
 
 
 	}
-		// 其他UI设置
+		// other UI settings
 
 	if (cmdForgeItem[EQUIP]->GetCommand() 
 		&& cmdForgeItem[GEN_STONE]->GetCommand() 

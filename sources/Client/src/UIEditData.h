@@ -1,7 +1,7 @@
 ﻿//----------------------------------------------------------------------
-// 描述:Edit的数据结构
-// 作者:lh 2004-07-12
-// 最后修改日期:
+// Description: the data structure of Edit
+// Author: lh 2004-07-12
+// Last modified date:
 //----------------------------------------------------------------------
 #pragma once
 
@@ -12,7 +12,7 @@ class CEditParse;
 class CEditStrategy;
 class CRichEdit;
 
-// 最小单元
+// minimum unit
 class CEditObj
 {
 public:
@@ -25,7 +25,7 @@ public:
 	virtual const char* GetCaption()			{ return "";		}
 	virtual DWORD		GetWordCount()			{ return 0;			}
 
-	// 子对象的操作
+	// operations on child objects
 	virtual void	PushUnit( CEditObj* pObj )	{}
 	virtual void	ClearChilds()				{}
 	virtual	bool	IsEmpty()					{ return true;		}
@@ -34,7 +34,7 @@ public:
 
 };
 
-// 文字类从祖先
+// the text class derives from its ancestor
 class CEditTextObj : public CEditObj
 {
 public:
@@ -51,17 +51,17 @@ public:
 	void		SetColor( DWORD dwColor )		{ _dwColor=dwColor;			}
 	DWORD		GetColor()						{ return _dwColor;			}
 
-	// 用于判断是否可以合并文字
+	// used to decide whether text can be merged
 	bool		IsSameType( CEditTextObj* pObj ){ return pObj->GetColor()==GetColor() && pObj->GetFont()==GetFont();	}
 
 private:
-	DWORD			_dwFont;			// 所用的字体
-	DWORD			_dwColor;			// 颜色
+	DWORD			_dwFont;			// the font in use
+	DWORD			_dwColor;			// colour
 
 };
 
 
-// 单个字符,包括汉字
+// a single character, including a Chinese character
 class CEditChar : public CEditTextObj
 {
 public:
@@ -75,7 +75,7 @@ public:
 
 	int				GetWidth()					{ return _nWidth;					}
 
-	// 用于显示被选择时
+	// used for display when selected
 	void			InvertRedner( int x, int y );
 
 protected:
@@ -84,7 +84,7 @@ protected:
 
 };
 
-// 控制符
+// control character
 class CEditControl : public CEditObj
 {
 public:
@@ -100,7 +100,7 @@ private:
 
 };
 
-// 句子，同类字符的集合，用于快速显示
+// a sentence, a set of characters of the same kind, used for fast display
 class CEditSentence : public CEditTextObj
 {
 public:
@@ -120,12 +120,12 @@ private:
 	typedef std::vector<CEditChar*> chars;
 	chars			_chars;
 
-	std::string			_szString;			// 合并后的字串
+	std::string			_szString;			// the merged string
 	int				_nX,	_nY;
 
 };
 
-// 文章，包含了所有内容以及一个用换行的算法
+// the article, holding all the content plus the algorithm for line breaks
 class CEditArticle : public CEditObj
 {
 public:
@@ -148,7 +148,7 @@ public:
 	void	SetColor( DWORD dwColor )		{ _dwFontColor=dwColor;		}
 	DWORD	GetColor()						{ return _dwFontColor;		}
 
-public:		// 键盘事件
+public:		// keyboard event
 	void	OnKeyDown( int key, bool IsShiftPress );
 	void	DelSelect();
 
@@ -162,27 +162,27 @@ private:
 private:
 	enum eRunType
 	{
-		enumNormal,							// 正常模式
-		enumSelect,							// 用户正在选择，此时不显示光标
+		enumNormal,							// normal mode
+		enumSelect,							// the user is selecting, so the cursor is not shown
 	};
 
 	CRichEdit*		_pEdit;
 	CEditStrategy*	_pStrategy;
 
 	typedef std::vector<CEditObj*> memorys;
-	memorys			_memorys;				// 原始内存，用于管理内存,也用于计算光标
+	memorys			_memorys;				// the original memory, used to manage memory and to compute the cursor
 
 	eRunType		_eRunType;
 
-	unsigned int	_nCursor;				// 光标所在位置
-	unsigned int	_nSelStart;				// 用户选择的区域
+	unsigned int	_nCursor;				// the position of the cursor
+	unsigned int	_nSelStart;				// the region the user has selected
 	unsigned int	_nSelEnd;
 
-	unsigned int	_dwWordMax;				// 可输入字数的最大值,为0不限制
-	unsigned int	_dwWordNum;				// 目前文字个数
+	unsigned int	_dwWordMax;				// maximum number of characters that may be entered; 0 means no limit
+	unsigned int	_dwWordNum;				// current number of characters
 
-	DWORD			_dwFontColor;			// 当前字体颜色
-	int				_dwFontIndex;			// 当前字体
+	DWORD			_dwFontColor;			// current font colour
+	int				_dwFontIndex;			// current font
 
 };
 
@@ -201,7 +201,7 @@ inline bool CEditArticle::AddControl( char c )
 	if( !_AddObj( pChar ) )
 	{
 		//delete pChar;
-		SAFE_DELETE(pChar); // UI当机处理
+		SAFE_DELETE(pChar); // UI freeze handling
 		return false;
 	}
 	return true;
@@ -215,7 +215,7 @@ inline bool CEditArticle::AddChar( char c1, char c2 )
 	if( !_AddObj( pChar ) )
 	{
 		//delete pChar;
-		SAFE_DELETE(pChar); // UI当机处理
+		SAFE_DELETE(pChar); // UI freeze handling
 		return true;
 	}
 	return false;

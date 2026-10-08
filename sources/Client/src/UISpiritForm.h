@@ -22,27 +22,27 @@ namespace GUI
 		~CSpiritMgr(void);
 
 		static const int NO_USE = -1;
-		static const int SPIRIT_MARRY_TYPE = 6;			// 精灵融合类型（与服务器交互用）
+		static const int SPIRIT_MARRY_TYPE = 6;			// elf fusion type (used to talk to the server)
 
-		static const int SPIRIT_MARRY_CELL_COUNT = 3;	// 格子个数
-		static const int SPIRIT_MARRY_ITEM = 0;			// 恶魔果实
-		static const int SPIRIT_MARRY_ONE  = 1;			// 精灵1
-		static const int SPIRIT_MARRY_TWO  = 2;			// 精灵2
+		static const int SPIRIT_MARRY_CELL_COUNT = 3;	// number of cells
+		static const int SPIRIT_MARRY_ITEM = 0;			// demon fruit
+		static const int SPIRIT_MARRY_ONE  = 1;			// elf 1
+		static const int SPIRIT_MARRY_TWO  = 2;			// elf 2
 
-		static const int ERNIE_IMAGE_COUNT = 5;			// 老虎机图片数
-		static const int ERNIE_SPEED       = 50;		// 翻转速度（毫秒）
-		static const int ERNIE_COIN_COUNT  = 5;			// 5 个精灵硬币
-		static const int ERNIE_EMPTY_COUNT = 5;			// 5 个背包空格
+		static const int ERNIE_IMAGE_COUNT = 5;			// number of slot machine images
+		static const int ERNIE_SPEED       = 50;		// flip speed (milliseconds)
+		static const int ERNIE_COIN_COUNT  = 5;			// 5 elf coins
+		static const int ERNIE_EMPTY_COUNT = 5;			// 5 free bag slots
 
 		void ClearAllCommand();
 		void ShowMarryForm(bool bShow = true);
 		void ShowErnieForm(bool bShow = true);
 
-		void UpdateErnieNumber(short nNum, short nID1, short nID2, short nID3);	// 更新老虎机
-		void UpdateErnieString(const char* szText);		// 更新显示内容
+		void UpdateErnieNumber(short nNum, short nID1, short nID2, short nID3);	// updates the slot machine
+		void UpdateErnieString(const char* szText);		// updates the displayed content
 		void ShowErnieHighLight();
 
-		int GetType() {  return SPIRIT_MARRY_TYPE;	}	// 类型
+		int GetType() {  return SPIRIT_MARRY_TYPE;	}	// type
 
 	protected:
 		virtual bool Init();
@@ -53,7 +53,7 @@ namespace GUI
 	private:
 
 		//
-		//  精灵融合
+		//  elf fusion
 		//
 		CForm*		    frmSpiritMarry;
 		CLabel*			labMoneyShow;
@@ -66,22 +66,22 @@ namespace GUI
 		void		PopItem(int iIndex);
 		void		SetSpiritUI();
 
-		bool		IsValidSpiritItem(CItemCommand& rItem);	// 是否是合法的恶魔果实
-		bool		IsValidSpirit(CItemCommand& rItem);		// 是否是合法的精灵（LV > 20）
+		bool		IsValidSpiritItem(CItemCommand& rItem);	// whether it is a valid demon fruit
+		bool		IsValidSpirit(CItemCommand& rItem);		// whether it is a valid elf (LV > 20)
 
 		void		SendSpiritMarryProtocol();
 
-		static void _evtDragMarryItem(CGuiData *pSender,CCommandObj* pItem,bool& isAccept);	// 拖入恶魔果实
-		static void _evtDragMarryOne(CGuiData *pSender,CCommandObj* pItem,bool& isAccept);	// 拖入精灵1
-		static void _evtDragMarryTwo(CGuiData *pSender,CCommandObj* pItem,bool& isAccept);	// 拖入精灵2
+		static void _evtDragMarryItem(CGuiData *pSender,CCommandObj* pItem,bool& isAccept);	// the demon fruit is dragged in
+		static void _evtDragMarryOne(CGuiData *pSender,CCommandObj* pItem,bool& isAccept);	// elf 1 is dragged in
+		static void _evtDragMarryTwo(CGuiData *pSender,CCommandObj* pItem,bool& isAccept);	// elf 2 is dragged in
 
-		static void _evtMainMouseButton(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey);// 鼠标点击按钮事件
-		static void _evtCloseMarryForm(CForm* pForm, bool& IsClose);	// 关闭窗体事件
+		static void _evtMainMouseButton(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey);// mouse button click event
+		static void _evtCloseMarryForm(CForm* pForm, bool& IsClose);	// close window event
 
 	private:
 
 		//
-		//  精灵老虎机
+		//  elf slot machine
 		//
 		CForm*			frmSpiritErnie;
 		CImage*			imgLine[9][ERNIE_IMAGE_COUNT];
@@ -103,8 +103,8 @@ namespace GUI
 		void			ClearTigerItem(void);
 		void			ErnieHightLight(int nNum, bool b = true);
 
-		static void _evtErnieMouseButton(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey);// 鼠标点击按钮事件
-		static void _evtCloseErnieForm(CForm* pForm, bool& IsClose);	// 关闭窗体事件
+		static void _evtErnieMouseButton(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey);// mouse button click event
+		static void _evtCloseErnieForm(CForm* pForm, bool& IsClose);	// close window event
 
 	};
 

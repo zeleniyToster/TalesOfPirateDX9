@@ -1,9 +1,9 @@
 ﻿//--------------------------------------------------------------
-// 名称:表单类
-// 作者:lh 2004-07-08
-// 设计思想:控件容器
-// 用途:热键显示隐藏,拖动
-// 最后修改日期:2004-10-09
+// Name: form class
+// Author: lh 2004-07-08
+// Design: a container for controls
+// Purpose: hot key show and hide, dragging
+// Last modified date: 2004-10-09
 //--------------------------------------------------------------
 #pragma once
 #include "uiguidata.h"
@@ -15,8 +15,8 @@ typedef void (*GuiFormCloseEvent)( CForm* pForm, bool& IsClose );
 typedef void (*GuiFormBeforeShowEvent)( CForm* pForm, bool& IsShow );
 typedef void (*GuiFormEscCloseEvent)( CForm* pForm );
 
-// 用于在表单中的按钮控件事件回调,
-// pSender为按钮,nMsgType为eModalResult
+// callback for button control events inside the form;
+// pSender is the button, nMsgType is eModalResult
 typedef void (*FormMouseEvent) (CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey);
 
 
@@ -39,7 +39,7 @@ public:
 		mrCancel,
         mrEnd,
 	};
-	enum eFormStyle  //表单的风格: 普通,全居中,左右居中,上下居中,居左, 居右,居上,居下
+	enum eFormStyle  //form style: ordinary, fully centred, centred left and right, centred top and bottom, left, right, top, bottom
 	{
 		fsNone,
 		fsAllCenter,
@@ -74,7 +74,7 @@ public:
 	bool				MenuMouseRun( int x, int y, DWORD key );
 
 public:
-	void				ForEach( CompentFun pFun );		// Form中所有Compent都执行一次pFun函数
+	void				ForEach( CompentFun pFun );		// every Compent in the Form runs pFun once
     void                FrameMove(int nCount);
 
 public:
@@ -105,11 +105,11 @@ public:
 	char				GetHotKey()			{ return _cHotKey;		}
 	void				SetHotKeyHandler(GuiHotKeyEvent handler)	{ evtHotkeyHandler=handler; }
 
-    bool                SetNextActiveCompent( bool isNext=true );       // 激活表单里下一个控件,isNext=false为上一个控件
+    bool                SetNextActiveCompent( bool isNext=true );       // activates the next control in the form; isNext=false gives the previous control
 
 	void				SetActiveCompent( CCompent* pActive );
 
-	// 得到当前菜单
+	// gets the current menu
 	void				PopMenu( CMenu* pMenu, int x=0, int y=0 );
 	
     void                SetPointer( void* v )   { _pPointer = v;    }
@@ -124,25 +124,25 @@ public:
 
     CCompent*           FindActiveCompent();
 
-	int					ClearChild();	// 解除所有与子窗口的关系,返回解除个数
+	int					ClearChild();	// breaks all relations with child windows; returns the number broken
 
-public:		// 事件
-	GuiEvent			evtShow;		// 显示时
-	GuiEvent			evtHide;		// 隐藏时
-	GuiEvent			evtActive;		// 得到焦点时
-	GuiEvent			evtLost;		// 失去焦点时
-	GuiMouseEvent		evtMouseDown;	// 鼠标有键在窗口上按下时
+public:		// events
+	GuiEvent			evtShow;		// on show
+	GuiEvent			evtHide;		// on hide
+	GuiEvent			evtActive;		// on gaining focus
+	GuiEvent			evtLost;		// on losing focus
+	GuiMouseEvent		evtMouseDown;	// when a mouse button is pressed over the window
 	GuiKeyDownEvent		evtKeyDown;
 	GuiKeyCharEvent		evtKeyChar;
     GuiEvent            evtOnSetScreen;
-	GuiMouseEvent		evtMouseDragEnd;			// 拖动结束
-	GuiHotKeyEvent		evtHotkeyHandler;	//热键处理 返回true表示已经处理，false表示未处理
+	GuiMouseEvent		evtMouseDragEnd;			// dragging ends
+	GuiHotKeyEvent		evtHotkeyHandler;	//hot key handling; returning true means it was handled, false means it was not
 
 	GuiFormEscCloseEvent	evtEscClose;
 	GuiFormBeforeShowEvent	evtBeforeShow;
-	GuiFormCloseEvent		evtClose;		// 关闭时调用
+	GuiFormCloseEvent		evtClose;		// called when closing
 
-public:		// 用于控件的回调事件
+public:		// used for control callback events
 	FormMouseEvent			evtEntrustMouseEvent;
 
 protected:
@@ -150,39 +150,39 @@ protected:
 	bool				_AddCompent(CCompent* c, bool isCheck);
 	bool				_AddFrameMove(CCompent* c, bool isCheck);
 
-	void				_TempleteInit();	// 进入模板前的初始化
-	void				_TempleteClear();	// 模板退出后的清除
+	void				_TempleteInit();	// initialisation before entering the template
+	void				_TempleteClear();	// cleanup after leaving the template
 
 protected:
     void*               _pPointer;
 
 	typedef std::vector<CCompent*> vcs;	
-	vcs					_compents;			// 表单内部的控件,也是显示控件时的顺序
-	vcs					_mouse;				// 处理控件的鼠标
-	vcs					_actives;			// 可激活的列表
-	vcs					_allCompents;		// 所有控件
+	vcs					_compents;			// the controls inside the form, also the order they are displayed in
+	vcs					_mouse;				// handles the control's mouse
+	vcs					_actives;			// the activatable list
+	vcs					_allCompents;		// every control
 	vcs					_frames;
 
 	typedef std::list<CForm*> vfrm;
-	vfrm				_childs;			// 子窗体
+	vfrm				_childs;			// child forms
 
-	int					_nActiveCompentID;	// 当前激活的Compent索引
+	int					_nActiveCompentID;	// index of the currently active Compent
 
-	bool			    _isModal;			// 显示时是否按模态显示
+	bool			    _isModal;			// whether it is shown modally
 	
 	static	CForm*		_pActive;
 
-    eModalResult		_modalResult;		// 窗口模态
+    eModalResult		_modalResult;		// window modal
 	eFormStyle          _formStyle;
 
-	bool				_IsEscClose;		// 为true,则按esc时关闭表单
+	bool				_IsEscClose;		// if true, pressing esc closes the form
 
-	CFramePic*			_pImage;			// 背景图,共二帧，一帧为普通状态，一帧为激活状态
+	CFramePic*			_pImage;			// background image, two frames, one normal and one active
 	CTextButton*		_pEnterButton;
 
 protected:
-	char				_cHotKey;			// 激活的热键
-	CMenu*				_pPopMenu;			// 弹出菜单
+	char				_cHotKey;			// the active hot key
+	CMenu*				_pPopMenu;			// pops up the menu
 
 private:
 	void				_Copy( const CForm* rhs );

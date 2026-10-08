@@ -26,8 +26,8 @@ using namespace std;
 bool CTradeMgr::Init()
 {
 	m_bTradeType = 0;
-	m_dwAcceptID = 0;         // 交易接受方
-	m_dwRequestID = 0;        // 交易申请方
+	m_dwAcceptID = 0;         // the accepting side of the trade
+	m_dwRequestID = 0;        // the requesting side of the trade
 	m_dwMainID = 0;
 
 	frmRequest = NULL;				
@@ -35,7 +35,7 @@ bool CTradeMgr::Init()
 
 	CFormMgr &mgr = CFormMgr::s_Mgr;
 
-    //角色交易界面和控件
+    //the character trade screen and controls
 	frmPlayertrade =  mgr.Find("frmPlayertrade");
 	if ( !frmPlayertrade)
 	{
@@ -44,7 +44,7 @@ bool CTradeMgr::Init()
 	}
 	frmPlayertrade->evtEntrustMouseEvent = _MainMousePlayerTradeEvent ;
 
-	// 道具以及装备栏
+	// the item and equipment slots
 	grdSale = dynamic_cast<CGoodsGrid*>(frmPlayertrade->Find("grdSale"));
 	if( !grdSale )		return Error( g_oLangRec.GetString(45), frmPlayertrade->GetName(), "grdSale" );
 	GetPlayertradeSaleGrid()->evtBeforeAccept = _evtDragToGoodsEvent;
@@ -55,7 +55,7 @@ bool CTradeMgr::Init()
     GetPlayertradeBuyGrid()->evtBeforeAccept = _evtDragToGoodsEvent;
 	GetPlayertradeBuyGrid()->evtRMouseEvent = _evtOtherRMouseGridEvent;
 
-	//角色交易的金额
+	//the amount involved in the character trade
 	labOtherGold =  dynamic_cast<CLabelEx*>(frmPlayertrade->Find("labOtherGold") ); 
 	if ( !labOtherGold)		return Error( g_oLangRec.GetString(45), frmPlayertrade->GetName(), "labOtherGold" );
 	
@@ -113,7 +113,7 @@ void CTradeMgr::ShowCharTradeRequest( BYTE byType, DWORD dwRequestID )
 	CGameScene *pScene = CGameApp::GetCurScene();
 	if(!pScene) return;
 
-	CCharacter * pCha = pScene->SearchByID( dwRequestID );  //申请方
+	CCharacter * pCha = pScene->SearchByID( dwRequestID );  //the requesting side
 	if( !pCha)	
 	{
 		if( !pCha ) return;
@@ -126,8 +126,8 @@ void CTradeMgr::ShowCharTradeRequest( BYTE byType, DWORD dwRequestID )
 		sprintf( szBuf, g_oLangRec.GetString(780), pCha->getHumanName() );
 
 
-	// add by Philip.Wu  2006-06-11  防止因弹出过多的选择框导致当机
-	//                               修改为一旦有交易邀请，就关闭之前的确定框
+	// add by Philip.Wu  2006-06-11  prevents the freeze caused by too many selection boxes popping up
+	//                               changed so that as soon as a trade invitation arrives the previous confirm box is closed
 	g_stUIBox.CloseAllBox();
 
 	stSelectBox* pBox = g_stUIBox.ShowSelectBox( _evtSelectYesNoEvent, szBuf );
@@ -153,7 +153,7 @@ void CTradeMgr::_evtSelectYesNoEvent(CCompent *pSender, int nMsgType, int x, int
 void CTradeMgr::_MainMousePlayerTradeEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey)
 {
 	string name = pSender->GetName();
-	if( name=="btnNo"  || name == "btnClose" )  //如果是退出按钮,则关闭该表单
+	if( name=="btnNo"  || name == "btnClose" )  // if it is the exit button, this form is closed
 	{	
 		if ( g_stUITrade.m_dwMainID==g_stUITrade.m_dwAcceptID )
 			::CS_CancelTrade( g_stUITrade.m_bTradeType, g_stUITrade.m_dwRequestID );
@@ -232,7 +232,7 @@ void CTradeMgr::_evtGoldFormEvent(CCompent *pSender, int nMsgType, int x, int y,
 
 void CTradeMgr::ShowCharTrade( BYTE byType, DWORD dwAcceptID, DWORD dwRequestID )
 {
-	if( !frmPlayertrade ) return;			//交易界面
+	if( !frmPlayertrade ) return;			//the trade screen
 
 	CGameScene *pScene = g_pGameApp->GetCurScene();
 	if(!pScene) return;
@@ -243,15 +243,15 @@ void CTradeMgr::ShowCharTrade( BYTE byType, DWORD dwAcceptID, DWORD dwRequestID 
 	CCharacter* pRequestCha(NULL);
 	CCharacter* pAcceptCha(NULL);
 
-	if (mission::TRADE_CHAR == byType)		//玩家人物之间的交易
+	if (mission::TRADE_CHAR == byType)		//a trade between two players
 	{
 		frmRequest = g_stUIEquip.GetItemForm();
-		grdRequest = g_stUIEquip.GetGoodsGrid();  //道具栏的Grid控件
+		grdRequest = g_stUIEquip.GetGoodsGrid();  //the Grid control of the item slot
 
 		pRequestCha = pScene->SearchByHumanID( dwRequestID );
 		pAcceptCha =  pScene->SearchByHumanID( dwAcceptID );
 	} 
-	else if (mission::TRADE_BOAT == byType)	//玩家船只之间的交易,这时两人都是船,所有用ID搜索
+	else if (mission::TRADE_BOAT == byType)	//a trade between two player boats; here both are boats, so everything is looked up by ID
 	{		
 		CCharacter* pMain = CGameScene::GetMainCha();
 		if( !pMain ) return;
@@ -274,7 +274,7 @@ void CTradeMgr::ShowCharTrade( BYTE byType, DWORD dwAcceptID, DWORD dwRequestID 
 		{
 			return;			
 		}
-		// 判断船只属性页面是否打开,如果打开,关闭它
+		// checks whether the boat attribute page is open and closes it if so
 		CForm* pBoatRoom = pBoat->GetForm();
 		if (!pBoatRoom) return;
 		CForm* pForm = dynamic_cast<CForm*>(pBoatRoom->GetParent());
@@ -303,7 +303,7 @@ void CTradeMgr::ShowCharTrade( BYTE byType, DWORD dwAcceptID, DWORD dwRequestID 
 	else
 		m_dwMainID = dwAcceptID;
 
-	//设置表单的位置并显示,以及交易表单控件初始化
+	//sets the position of the form, shows it and initialises the controls of the trade form
 	frmRequest->SetParent( NULL );
 	frmRequest->SetPos( 0, 100 );
 	frmRequest->Refresh();	
@@ -328,12 +328,12 @@ void CTradeMgr::ShowCharTrade( BYTE byType, DWORD dwAcceptID, DWORD dwRequestID 
 	btnIMP->SetIsEnabled( m_bTradeType==mission::TRADE_CHAR );
 	btnTrade->SetIsEnabled( false );	
 
-	string strPlayTradeLabName("");			//labPlayertradeName控件Caption
+	string strPlayTradeLabName("");			//the Caption of the labPlayertradeName control
 	strPlayTradeLabName = pRequestCha->getHumanName();
 	strPlayTradeLabName +=  "/";
 	strPlayTradeLabName += pAcceptCha->getHumanName();
 
-	// 刚开始看见对方输入的金额以物品，只有对方确定以后才能看见
+	// at first the amount typed by the other side is seen as items; it is only visible after they confirm
 	labOtherGold->SetIsShow( false );
 	GetPlayertradeBuyGrid()->SetIsShow( false );
 
@@ -372,7 +372,7 @@ void  CTradeMgr::DragItemToTrade(DWORD dwCharID,USHORT sItemID,BYTE byIndex,BYTE
 	{
 		tradeGrd = g_stUITrade.GetPlayertradeSaleGrid();
 
-		//道具栏中该道具变灰
+		//the item in the item slot is greyed out
 		CCommandObj* pSelf = grdRequest->GetItem( byItemIndex );
 		if (pSelf)
 		{
@@ -573,13 +573,13 @@ void CTradeMgr::Clear()
 		}
 	}
 
-	//关闭左边表单
+	//closes the left form
 	if ( frmRequest ) frmRequest->Close();
 
-	//关闭右边表单
+	//closes the right form
 	if ( frmPlayertrade) frmPlayertrade->Close();
 
-	//其他
+	//the other side
 	frmRequest = NULL;
 	grdRequest = NULL;
 
@@ -592,7 +592,7 @@ void CTradeMgr::Clear()
 		CDrag::GetDrag()->Reset();
 	}
 
-    // 交易后关闭出海
+    // closes the sea voyage after the trade
 	CWorldScene* pWorldScene = dynamic_cast<CWorldScene*>(g_pGameApp->GetCurScene());
 	if(pWorldScene && pWorldScene->GetShipMgr())
 	{
@@ -645,16 +645,16 @@ void CTradeMgr::_evtOtherRMouseGridEvent(CGuiData *pSender,CCommandObj* pItem,in
 }
 
 
-// add by Philip.Wu  2006-07-04  停止交易并关闭交易框
+// add by Philip.Wu  2006-07-04  stops the trade and closes the trade box
 void CTradeMgr::CloseAllForm()
 {
-	// 先停止交易
+	// stops the trade first
 	if(IsTrading())
 	{
 		::CS_CancelTrade( g_stUITrade.m_bTradeType, g_stUITrade.m_dwRequestID );
 	}
 
-	// 关闭窗体
+	// closes the window
 	if(frmPlayertrade && frmPlayertrade->GetIsShow())
 	{
 		frmPlayertrade->SetIsShow(false);

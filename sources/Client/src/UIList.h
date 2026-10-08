@@ -1,8 +1,8 @@
 ﻿//----------------------------------------------------------------------
-// 名称:列表
-// 作者:lh 2004-07-21
-// 思想:列表中集合CListItems,CListItems中集合CItemRow
-// 最后修改日期:2004-10-09
+// Name: list
+// Author: lh 2004-07-21
+// Idea: the list holds CListItems, and CListItems holds CItemRow
+// Last modified date: 2004-10-09
 //----------------------------------------------------------------------
 #pragma once
 #include "uicompent.h"
@@ -15,7 +15,7 @@ namespace GUI
 
 class CList;
 
-// 选择条
+// selection bar
 class CSelectItem
 {
 public:
@@ -45,10 +45,10 @@ private:
 	void		_Copy( const CSelectItem& rhs );
 
 private:	
-	CItemRow*	_pItem;				// 选择的Item
-	bool		_isEnabled;			// 是否使用
+	CItemRow*	_pItem;				// the selected Item
+	bool		_isEnabled;			// whether it is used
 	bool		_isSelect;
-	int			_nIndex;			// 选择的索引，没有选择为-1
+	int			_nIndex;			// the selected index; -1 when nothing is selected
 	CGuiPic*	_pImage;
 
 private:
@@ -76,7 +76,7 @@ public:
 	virtual unsigned int GetColumn() { return 1; }
 	virtual CItemRow*	Add( const char* str, DWORD c );
 
-	virtual void		SetRect( int x1, int y1, int x2, int y2, int rowheight ); // 设置可以点击的范围
+	virtual void		SetRect( int x1, int y1, int x2, int y2, int rowheight ); // sets the clickable range
 	
 	int					GetColumnWidth( unsigned int nCol=0 )	{ return _GetColumnWidth(nCol); }
 	void				SetParent( CList* pList );
@@ -102,16 +102,16 @@ public:
 	void				SetItemMargin( int left, int top );
 	void				SetImageMargin( int left, int top );
 
-public:		// 键盘处理	
-	void				SelectPrior();			// 选择上一个	
-	void				SelectNext();			// 选择下一个
-	void				SelectFirst();			// 选择第一个
-	void				SelectLast();			// 选择最后一个
-	void				SelectAdd( int page );	// 当前选择移动几格
-	void				Select( int n );		// 选择第几个
+public:		// keyboard handling
+	void				SelectPrior();			// selects the previous
+	void				SelectNext();			// selects the next
+	void				SelectFirst();			// selects the first
+	void				SelectLast();			// selects the last
+	void				SelectAdd( int page );	// how many rows the current selection moves
+	void				Select( int n );		// selects the nth
 
 protected:
-	void				_CheckMaxRow();			// 检查是否达到最大行数,否则,删除最早的一行
+	void				_CheckMaxRow();			// checks whether the maximum row count is reached; if not, the oldest row is deleted
 	void				_AddRow( CItemRow* p );
 
 private:
@@ -121,27 +121,27 @@ private:
 protected:
 	typedef		std::deque<CItemRow*>	vitems;
 	vitems				_items;
-	CSelectItem*		_pSelect;			// 选择的Item
+	CSelectItem*		_pSelect;			// the selected Item
 
-	CGuiPic*			_pItemPic;			// 指向父类的图片，用于显示在项目条背景中
+	CGuiPic*			_pItemPic;			// the image pointing at the parent class, used to draw the item row background
 	CList*				_pList;
 
 	int					_nX1, _nX2, _nY1, _nY2;
 	int					_nHeight;
 	int					_nShowCount;
 
-	DWORD				_dwFirstShowRow;	// 第一行可以显示的行数
-	DWORD				_dwLastShowRow;		// 最后一行的显示
-	DWORD				_dwCount;			// 总共的行数
-	int					_nMaxRow;			// 允许的最大行数
+	DWORD				_dwFirstShowRow;	// number of rows the first row can display
+	DWORD				_dwLastShowRow;		// display of the last row
+	DWORD				_dwCount;			// total number of rows
+	int					_nMaxRow;			// maximum number of rows allowed
 
-	// 项目条距离边框的距离
+	// distance of the item row from the border
 	int					_nItemLeft, _nItemTop;
 	int					_nItemX;
 
 	int					_nPicLeft,  _nPicTop;
 	int					_nPicX;
-	bool				_IsMouseFollow;		// 鼠标是否自动跟随
+	bool				_IsMouseFollow;		// whether the mouse follows automatically
 
 protected:
 	static int			_nTmpY;
@@ -173,9 +173,9 @@ private:
 	void				_RefreshColX();
 
 protected:
-	unsigned int		_nCol;			// 列数
-	unsigned int*		_nColWidth;		// 每一列的宽度
-	int*				_nColX;			// 每一列的位置
+	unsigned int		_nCol;			// number of columns
+	unsigned int*		_nColWidth;		// width of each column
+	int*				_nColX;			// position of each column
 
 }; 
 
@@ -198,12 +198,12 @@ public:
 	virtual bool		IsHandleMouse()				{ return true;	}
 	virtual void		SetAlpha( BYTE alpha );
 
-public:		// 键盘处理
+public:		// keyboard handling
 	virtual void		OnActive();
 	virtual void		OnLost();
 	virtual bool		OnKeyDown( int key );
 
-	virtual bool		SetShowRow( int n );			// 设置显示时的行高,会改变List总高度
+	virtual bool		SetShowRow( int n );			// sets the row height while displaying, which changes the total height of the List
 
 public:
 	CItemRow*			GetSelectItem()						{ return  _pItems->GetSelect()->GetItem();	}
@@ -239,8 +239,8 @@ public:
 	bool				GetIsChangeColor()			{ return _IsChangeColor;	}
 	
 public:
-	GuiEvent			evtSelectChange;			// 选择发生了变化
-	GuiMouseEvent		evtListMouseDown;			// 鼠标在列表的文字区按下
+	GuiEvent			evtSelectChange;			// the selection changed
+	GuiMouseEvent		evtListMouseDown;			// the mouse is pressed in the text area of the list
 	GuiMouseEvent		evtListMouseDB;
 
 protected:
@@ -258,25 +258,25 @@ protected:
 protected:
 	CScroll*			_pScroll;	
 	CListItems*			_pItems;
-	CGuiPic*			_pImage;		// 背景图
+	CGuiPic*			_pImage;		// background image
 	CGuiPic*			_pItemImage;	
 
-	int					_nLeftMargin;	// 与周围边框的距离
-	int					_nTopMargin;	// 与周围边框的距离
-	int					_nRightMargin;	// 与周围边框的距离
-	int					_nBottomMargin;	// 与周围边框的距离
+	int					_nLeftMargin;	// distance to the surrounding border
+	int					_nTopMargin;	// distance to the surrounding border
+	int					_nRightMargin;	// distance to the surrounding border
+	int					_nBottomMargin;	// distance to the surrounding border
 
-	int					_nRowHeight;	// 行高
-	int					_nSpaceBottom;	// 距底部空闲行数
+	int					_nRowHeight;	// row height
+	int					_nSpaceBottom;	// idle rows from the bottom
 
 	DWORD				_dwFontColor;
 	DWORD				_dwSelectColor;
-	bool				_IsChangeColor;	// 不改变颜色
+	bool				_IsChangeColor;	// does not change colour
 
 
 };
 
-// 内联函数
+// inline function
 inline 	void CSelectItem::SetSelect( CItemRow* pItem, DWORD dwIndex ) 
 {
 	if( _pList->GetIsChangeColor() )

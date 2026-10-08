@@ -1,9 +1,9 @@
 ﻿//--------------------------------------------------------------
-// 名称:表单管理类
-// 作者:lh 2004-07-08
-// 设计思想:管理所有表单
-// 用途:显示,隐藏,查找表单,切换表单模板,提供全局钩子回调接口
-// 最后修改日期:2004-10-09
+// Name: form management class
+// Author: lh 2004-07-08
+// Design: manages every form
+// Purpose: show, hide, find forms, switch the form template, provide a global hook callback interface
+// Last modified date: 2004-10-09
 //--------------------------------------------------------------
 #pragma once
 #include "uicompent.h"
@@ -18,7 +18,7 @@ typedef bool (*KeyDownEvent) (int& key);
 typedef bool (*KeyCharEvent) (char& key);
 typedef bool (*MouseEvent) (int& x, int& y, DWORD& mouse);
 typedef bool (*MouseScrollEvent) (int& nScroll);
-typedef bool (*HotKeyEvent) ( char& key, int& control );	// 返回true中断
+typedef bool (*HotKeyEvent) ( char& key, int& control );	// returning true interrupts
 
 
 class CFormMgr
@@ -28,10 +28,10 @@ public:
 	CFormMgr();
 	~CFormMgr();
 
-	static void		SetDebugMode(bool v) { _IsDebugMode=v;}		//设置是否启动调试模式（由控制台命令调用）-added by Arcol
-	void			ShowDebugInfo();							//显示调试信息 -added by Arcol
-	static void		SetDrawFrameInDebugMode(bool v)	{_IsDrawFrameInDebugMode=v;}	//设置在调试模式下是否显示窗口边框 -added by Arcol
-	static void		SetDrawBackGroundInDebugMode(bool v) {_IsDrawBackgroundInDebugMode=v;}	//置在调试模式下是否显示底色 -added by Arcol
+	static void		SetDebugMode(bool v) { _IsDebugMode=v;}		//sets whether to start debug mode (called by a console command) -added by Arcol
+	void			ShowDebugInfo();							//shows debug information -added by Arcol
+	static void		SetDrawFrameInDebugMode(bool v)	{_IsDrawFrameInDebugMode=v;}	//sets whether window borders are shown in debug mode -added by Arcol
+	static void		SetDrawBackGroundInDebugMode(bool v) {_IsDrawBackgroundInDebugMode=v;}	//sets whether the background colour is shown in debug mode -added by Arcol
 
 	bool			AddForm( CForm* form, int templete=0 );
 
@@ -39,7 +39,7 @@ public:
 	unsigned int	GetFormTempleteMax()			{ return (unsigned int)_showforms.size();	}
 	int				GetFormTempletetNum()			{ return _nTempleteNo;						}
 
-	bool			SwitchTemplete( int n );		// 切换当前模板,如果为-1,则切换到默认模板
+	bool			SwitchTemplete( int n );		// switches the current template; if it is -1, switch to the default template
 
 public:
 	bool			Init(HWND hWnd);
@@ -61,15 +61,15 @@ public:
 
 	CForm*			GetHitForm( int x, int y );
 
-	CForm*			Find( const char * );			// 在当前模板中，查找Form
-	CForm*			Find( const char *str, int no );// 在no模板中，查找Form
-	CForm*			FindAll( const char* );			// 在所有表单中，查找Form
+	CForm*			Find( const char * );			// looks up a Form in the current template
+	CForm*			Find( const char *str, int no );// looks up a Form in the 'no' template
+	CForm*			FindAll( const char* );			// looks up a Form among every form
 
-	CForm*			FindESCForm();					// 查找可用ESC关闭的Form
+	CForm*			FindESCForm();					// looks up a Form that can be closed with ESC
 	int				ModalFormNum()					{ return (int)_modal.size();		}
 
 	typedef void (*FormFun)(CForm* pSender);
-	void			ForEach( FormFun pFun );		// 所有Form都执行一次pFun函数
+	void			ForEach( FormFun pFun );		// every Form runs pFun once
 
 public:
 	void			SetEnabled( bool v )			{ _bEnabled = v;	}
@@ -77,14 +77,14 @@ public:
     void            ResetAllForm();
     void            SetScreen();
 
-	void			SetEnableHotKey(int flag, bool v);		// 西门文档修改
-	bool			GetEnableHotKey()				{ return _nEnableHotKey == 0xFFFFFFFF; }// 西门文档修改
+	void			SetEnableHotKey(int flag, bool v);		// revised per the Ximen document
+	bool			GetEnableHotKey()				{ return _nEnableHotKey == 0xFFFFFFFF; }// revised per the Ximen document
 
 	static bool		IsMouseInGui()					{ return _eMouseAction==enumMA_Gui;	}
 	static eMouseAction	GetMouseAction()			{ return _eMouseAction;	}
 
-public:	// 全局钩子
-	bool			AddFormInit( FormMgrEvent pInitFun );	// 读入脚本后,初始化时事件
+public:	// global hook
+	bool			AddFormInit( FormMgrEvent pInitFun );	// the event run during initialisation after the script is read
 
 	bool			AddKeyDownEvent( KeyDownEvent event );
 	bool			DelKeyDownEvent( KeyDownEvent event );
@@ -113,7 +113,7 @@ private:
 	void			_ShowModal( CForm* form );
     void            _ModalClose( CForm* form );
 
-	void			_SetNewActiveForm();		// 当前激活form丢失后，要寻找一个新的form激活
+	void			_SetNewActiveForm();		// when the currently active form is lost, a new form has to be found and activated
 
 	void			_InitFormID();
 
@@ -126,9 +126,9 @@ private:
 private:
 	typedef std::list<CForm*> vfrm;
 	vfrm			_allForms;
-	vfrm*			_forms;						// 非模态显示表单资源,第一个为当前激活的的表单
-	vfrm			_modal;						// 正在显示的模态框
-    vfrm            _show;                      // 正在显示的非模态框
+	vfrm*			_forms;						// the resources for the modeless form display, the first being the currently active form
+	vfrm			_modal;						// the modal box being displayed
+    vfrm            _show;                      // the modeless box being displayed
 
 	typedef std::vector<vfrm*> frmtemplete;
 	frmtemplete		_showforms;
@@ -136,7 +136,7 @@ private:
 
 	bool			_bEnabled;		
 	bool			_bInit;
-	int				_nEnableHotKey;		// 西门文档修改
+	int				_nEnableHotKey;		// revised per the Ximen document
 
 	typedef std::vector<KeyDownEvent>	vkeydowns;
 	vkeydowns		_OnKeyDown;
@@ -156,16 +156,16 @@ private:
 	typedef std::vector<HotKeyEvent>		vhotkey;
 	vhotkey			_vhotkey;
 
-	int				_nTempleteNo;				// 当前的模板号
+	int				_nTempleteNo;				// the current template number
 
-    int             _nMouseHover;               // 鼠标在不做任何操作已经多少时间
+    int             _nMouseHover;               // how long the mouse has been idle
     
     CGuiData*       _pHintGui;
 
 	static eMouseAction		_eMouseAction;
-	static bool		_IsDebugMode;				// 是否在调试模式 -added by Arcol
-	static bool		_IsDrawFrameInDebugMode;	// 仅用于调试模式 -added by Arcol
-	static bool		_IsDrawBackgroundInDebugMode;	// 仅用于调试模式 -added by Arcol
+	static bool		_IsDebugMode;				// whether it is in debug mode -added by Arcol
+	static bool		_IsDrawFrameInDebugMode;	// debug mode only -added by Arcol
+	static bool		_IsDrawBackgroundInDebugMode;	// debug mode only -added by Arcol
 
 private:
 	void			_DelForm( vfrm& list, CForm* frm );

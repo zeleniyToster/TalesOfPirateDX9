@@ -29,7 +29,7 @@ using namespace GUI;
 
 static BYTE		_byIndex = - 1; 
 static BYTE		_byPage = - 1;       
-static DWORD	_npcID = -1;       //npc的id 号
+static DWORD	_npcID = -1;       //the id of the npc
 static BYTE		_byCmd = 0;
 
 BYTE CNpcTalkMgr::_byTalkStyle = 0;
@@ -42,8 +42,8 @@ bool CNpcTalkMgr::Init()
 	m_bIsNpcTalk = false;
 	CFormMgr &mgr = CFormMgr::s_Mgr;
 
-	//初始化npc对话表单
-	frmNPCchat = _FindForm("frmNPCchat");   // 道具表单
+	//initialises the NPC dialog form
+	frmNPCchat = _FindForm("frmNPCchat");   // item form
 	if ( !frmNPCchat ) return false;
 	frmNPCchat->evtEntrustMouseEvent = _MainMouseNPCEvent;
 
@@ -66,7 +66,7 @@ void CNpcTalkMgr::ShowFuncPage( BYTE byFuncPage , BYTE byCount,BYTE byMisNum, co
 {
 	m_bIsNpcTalk = true;
 
-	//删除Lst控件原来的Item
+	//deletes the Items the Lst control had
 	if( !memCtrl ) return;
 
     memCtrl->Init();
@@ -74,7 +74,7 @@ void CNpcTalkMgr::ShowFuncPage( BYTE byFuncPage , BYTE byCount,BYTE byMisNum, co
 
 	memCtrl->SetCaption( FuncArray.szTalk );
 
-	if ( byCount >0 )   //读取选项数据
+	if ( byCount >0 )   //reads the option data
 	{
 		memCtrl->SetIsHaveItem(true);			
 		memCtrl->SetItemRowNum( byCount);
@@ -140,7 +140,7 @@ void CNpcTalkMgr::_MainMouseNPCEvent(CCompent *pSender, int nMsgType, int x, int
 {
 	string name = pSender->GetName();
 
-	if( name=="btnNo"  || name == "btnClose" )  //如果是退出按钮,则关闭该表单
+	if( name=="btnNo"  || name == "btnClose" )  // if it is the exit button, this form is closed
 	{		
 		pSender->GetForm()->Close();
 		pSender->GetForm()->Find("memCtrl")->SetCaption("");			
@@ -234,7 +234,7 @@ void CNpcTalkMgr::SwitchMap()
 {
 	if( !(dynamic_cast<CWorldScene*>( CGameApp::GetCurScene() )) ) return;
 
-	// 帮助
+	// help
 	static bool IsFirstWorldScene = true;
 	if( IsFirstWorldScene )
 	{

@@ -115,7 +115,7 @@ CPage& CPage::operator=(const CPage& rhs)
 CPage::~CPage(void)
 {
 	//delete _pImage;
-	SAFE_DELETE(_pImage); // UI当机处理
+	SAFE_DELETE(_pImage); // UI freeze handling
 }
 
 void CPage::Init()

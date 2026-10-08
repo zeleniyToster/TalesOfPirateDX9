@@ -287,7 +287,7 @@ int CDrag::BeginMouseRun( CGuiData* gui, bool InRect, int x, int y, DWORD key )
                 _nDragX = x - _nStartX;
                 _nDragY = y - _nStartY;
 
-                // 开始拖动
+                // dragging starts
                 if( (abs(_nStartX - x)>=(int)_nYareLen || abs(_nStartY - y)>=(int)_nYareLen) )
                 {
                     _eState = stDrag;
@@ -317,7 +317,7 @@ void CDrag::Reset()
 
 bool CDrag::MouseRun( int x, int y, DWORD key )
 {
-    // 拖动完毕
+    // dragging finishes
     if( key & Mouse_LUp )
     {
         if( _IsUseGrid )
@@ -640,7 +640,7 @@ void UIRender::SetScreen( int w, int h, bool isFull )
 {
 	_IsFullScreen = isFull;
 
-    int sw, sh;     // 实际显示区域
+    int sw, sh;     // the actual display area
     RECT rc;
     ::GetClientRect( g_pGameApp->GetHWND(), &rc );
     sw = rc.right  - rc.left;	
@@ -748,7 +748,7 @@ bool CGuiPic::LoadImage( int frame, int nTextureID, int tx, int ty, int tw, int 
 	pTex->nTexSY	= ty;
 	pTex->nTexW	= tw;
 	pTex->nTexH	= th;
-	if( scale_x<=0.000001f ) // 贴图拉升到窗口尺寸
+	if( scale_x<=0.000001f ) // scales the texture to the window size
 	{
 		if( _pParent )
 		{
@@ -1011,7 +1011,7 @@ bool CGuiFont::Clear()
 	{
 		(*it)->ReleaseFont();
 		//delete (*it);
-		SAFE_DELETE(*it); // UI当机处理
+		SAFE_DELETE(*it); // UI freeze handling
 	}
 
 	_fonts.clear();
@@ -1161,10 +1161,10 @@ void CEdit::ShowFocus()
 {
 	if( !IsNormal() ) return;
 
-	RefreshText();   // 刷新文字显示
-	RefreshCursor(); // 刷新光标显示
+	RefreshText();   // refreshes the text display
+	RefreshCursor(); // refreshes the cursor display
 
-	// 显示闪烁光标
+	// shows the blinking cursor
 	++_nCursorFlashCount;
 	if( _nCursorFlashCount>=10 )
 	{
@@ -1173,7 +1173,7 @@ void CEdit::ShowFocus()
 	}
 	if( _bCursorIsShow )
 	{
-		//采用绝对坐标确定光标的位置
+		//uses absolute coordinates to determine the cursor position
 		//GetRender().RenderTextureAbsRect( _nCursorX, _nCursorY, &_CursorImage );
 		GetRender().FillFrame( _nCursorX, _nCursorY, _nCursorX+2, _nCursorY+_nCursorHeight, _nCursorColor );
 	}

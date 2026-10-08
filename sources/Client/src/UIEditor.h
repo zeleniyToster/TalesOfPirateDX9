@@ -1,7 +1,7 @@
 ﻿//----------------------------------------------------------------------
-// 名称:编辑器界面
-// 作者:lh 2004-08-21
-// 最后修改日期:2004-10-09
+// Name: editor screen
+// Author: lh 2004-08-21
+// Last modified date: 2004-10-09
 //----------------------------------------------------------------------
 
 #pragma once
@@ -20,7 +20,7 @@ class CEditor : public CUIInterface
 {
 public:
     CEditor();
-    bool Init();			// 用于初始内部指针
+    bool Init();			// used to initialise internal pointers
 
     bool Error(const char* strInfo, const char* strFormName, const char* strCompentName) {
         LG("error", strInfo, strFormName, strCompentName );

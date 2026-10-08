@@ -1,8 +1,8 @@
 ﻿//----------------------------------------------------------------------
-// 名称:翻页表格
-// 作者:lh 2004-07-29
-// 用途:内部显示图元为CGraph,按翻页数字可翻页,可改变表格大小
-// 最后修改日期:2004-10-09
+// Name: paged grid
+// Author: lh 2004-07-29
+// Purpose: the internal display element is CGraph, it can turn pages with the page number and its size can be changed
+// Last modified date: 2004-10-09
 //----------------------------------------------------------------------
 #pragma once
 #include "uicompent.h"
@@ -59,7 +59,7 @@ public:
     int             GetSelectIndex(){ return _nSelectIndex; }
 
 public:
-	GuiEvent		evtSelectChange;				// 选择发生了变化
+	GuiEvent		evtSelectChange;				// the selection changed
 
 protected:
 	void			_SetSelf();
@@ -93,30 +93,30 @@ protected:
 
 protected:
 	CGuiPic*		_pImage;
-	CImage*			_pSelectImage;		// 用于画选择框
+	CImage*			_pSelectImage;		// used to draw the selection box
 
 	CDragTitle*		_pSizeImg;
 
-	CTextButton*	_pNextPage;			// 翻到下一页
-	CTextButton*	_pPriorPage;		// 翻到上一页	
+	CTextButton*	_pNextPage;			// turns to the next page
+	CTextButton*	_pPriorPage;		// turns to the previous page
 
-	char			_strPage[10];		// 用于显示当前多少页，总共多少页
+	char			_strPage[10];		// used to show the current page and the total number of pages
 	int				_nStrX, _nStrY;
 	int				_nStrWidth;
 
-	int				_nUnitHeight, _nUnitWidth;  // 单元宽高
-    int             _nSpaceX, _nSpaceY; // 行间距
+	int				_nUnitHeight, _nUnitWidth;  // cell width and height
+    int             _nSpaceX, _nSpaceY; // row spacing
 
 	typedef std::vector<CGraph*>		memory;
 	memory		_memory;
 	int			_nSize;			
-	int			_nFirst, _nLast;		// 在显示区的第一个ID和最后一个ID
-	int			_nPage, _nMaxPage;		// 当前页数，最大页数
-	int			_nColNum;				// 一行可以显示多少列
-	int			_nRowNum;				// 一页可以显示多少行
-	int			_nPageNum;				// 一页可以显示多少个
+	int			_nFirst, _nLast;		// the first and last ID in the display area
+	int			_nPage, _nMaxPage;		// the current page and the maximum page
+	int			_nColNum;				// how many columns fit in a row
+	int			_nRowNum;				// how many rows fit on a page
+	int			_nPageNum;				// how many fit on a page
 
-	int			_nMargin;				// 与周围边框的距离
+	int			_nMargin;				// distance to the surrounding border
 	int			_nStartX, _nStartY;
 
 private:
@@ -130,7 +130,7 @@ private:
 	
 };
 
-// 内联函数
+// inline function
 inline void CGrid::SetUnitSize(int w, int h) 
 { 
 	if( w>0 ) _nUnitWidth=w; 

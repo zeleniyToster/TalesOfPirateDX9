@@ -91,7 +91,7 @@ void CColorItem::ParseScript( const char szScript[], USHORT sStartCom, DWORD dwD
 		{
 			if( strDesp.size() > 0 )
 			{
-				// 添加文字显示数据到列表中
+				// adds the text display data to the list
 				ITEM_TEXT_DATA Data;
 				Data.dwColor = dwColor;
 				Data.sxPos = sxPos;
@@ -104,7 +104,7 @@ void CColorItem::ParseScript( const char szScript[], USHORT sStartCom, DWORD dwD
 			pszTemp++;
 			if( pszTemp[0] == 'p' )
 			{
-				dwColor = 0xFFFF00FF; // 紫色
+				dwColor = 0xFFFF00FF; // purple
 				if( pszTemp[1] == '>' )
 				{
 					pszTemp++;
@@ -158,16 +158,16 @@ void CColorItem::ParseScript( const char szScript[], USHORT sStartCom, DWORD dwD
 			}
 			else
 			{
-				// 未知类型报错！
+				// unknown type error!
 				continue;
 			}
 
-			// 使用新的字符记录
+			// uses the new character record
 			pszTemp++;
 		}
 		else if( pszTemp[0] == '>' )
 		{
-			// 添加文字显示数据到列表中
+			// adds the text display data to the list
 			ITEM_TEXT_DATA Data;
 			Data.dwColor = dwColor;
 			Data.sxPos = sxPos;
@@ -181,7 +181,7 @@ void CColorItem::ParseScript( const char szScript[], USHORT sStartCom, DWORD dwD
 			continue;
 		}
 
-		// 判断是否一个GBK
+		// decides whether it is a GBK character
 		BOOL bFlag1 = 0x81 <= (BYTE)pszTemp[0] && (BYTE)pszTemp[0] <= 0xFE;
 		BOOL bFlag2 = (0x40 <= (BYTE)pszTemp[1] && (BYTE)pszTemp[1] <= 0x7E) || (0x7E <= (BYTE)pszTemp[1] && (BYTE)pszTemp[1] <= 0xFE);
 		if( bFlag1 && bFlag2 )
@@ -190,7 +190,7 @@ void CColorItem::ParseScript( const char szScript[], USHORT sStartCom, DWORD dwD
 			szData[1] = pszTemp[1];
 			strDesp += szData;
 			
-			// 移动列和指向下一个字符
+			// advances the column and points at the next character
 			sCom += 2;
 			pszTemp += 2;
 		}
@@ -199,7 +199,7 @@ void CColorItem::ParseScript( const char szScript[], USHORT sStartCom, DWORD dwD
 			szData[0] = pszTemp[0];
 			strDesp += szData;
 			
-			// 移动列和指向下一个字符
+			// advances the column and points at the next character
 			sCom++;
 			pszTemp++;
 		}
@@ -256,12 +256,12 @@ void CItemRow::_Clear()
 		if( _items[i] != _GetNullItem() )
 		{
 			//delete _items[i];
-			SAFE_DELETE(_items[i]); // UI当机处理
+			SAFE_DELETE(_items[i]); // UI freeze handling
 		}
 	}
 
 	//delete [] _items;
-	SAFE_DELETE_ARRAY(_items); // UI当机处理
+	SAFE_DELETE_ARRAY(_items); // UI freeze handling
 	_pTag = NULL;
 }
 
@@ -285,27 +285,27 @@ void CItemRow::SetColor( DWORD c )
 //---------------------------------------------------------------------------
 // class CItemEx
 //---------------------------------------------------------------------------
-void CItemEx::ProcessString( int length ) // 参数：角色名称的长度
+void CItemEx::ProcessString( int length ) // argument: the length of the character name
 {
-	_strLine[0] = _str.substr( 0 , length ); //第一行显示角色的名称
+	_strLine[0] = _str.substr( 0 , length ); //the first line shows the character name
 
-	if ( _str.size() - length <= 32)  //实际文字不足32个字符,则2行显示
+	if ( _str.size() - length <= 32)  //if the text is shorter than 32 characters it is shown on 2 lines
 	{
 		_strLine[1] = _str.substr (length , _str.size() - length ) ;
 		_nLineNum = 2;
 	}
-	else       //实际文字长于32个字符,则3行显示,最多3行
+	else       //if the text is longer than 32 characters it is shown on 3 lines, at most 3 lines
 	{
 		int i ;
 		i = length ;					
-		while((int) _strLine[1].size() < 32 )   //第2行
+		while((int) _strLine[1].size() < 32 )   //the second line
 		{
-			if ( _str[i] & 0x80 ) //汉字
+			if ( _str[i] & 0x80 ) //a Chinese character
 			{
 				_strLine[1] +=  _str.substr (i , 2  );
 				i += 2 ;
 			}						
-			else //其他字符
+			else //other characters
 			{
 				//Modify by sunny.sun20080901
 				//begin
@@ -344,7 +344,7 @@ void CItemEx::ProcessString( int length ) // 参数：角色名称的长度
 			}
 		}
 
-		while ( (int)_strLine[1].size() >= 32 && (int)_strLine[2].size() < 32 && i < (int)_str.size()) //第3行
+		while ( (int)_strLine[1].size() >= 32 && (int)_strLine[2].size() < 32 && i < (int)_str.size()) //the third line
 		{
 			if ( _str[i] & 0x80 )
 			{

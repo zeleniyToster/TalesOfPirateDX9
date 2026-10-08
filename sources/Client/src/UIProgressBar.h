@@ -1,9 +1,9 @@
 ﻿//----------------------------------------------------------------------
-// 名称:进度条
-// 作者:lh 2004-07-19
-// 用途:横竖两种进度条
-//	 注:不支持多线程
-// 最后修改日期:2004-10-09
+// Name: progress bar
+// Author: lh 2004-07-19
+// Purpose: horizontal and vertical progress bars
+//	 note: multithreading is not supported
+// Last modified date: 2004-10-09
 //----------------------------------------------------------------------
 #pragma once
 #include "uicompent.h"
@@ -17,17 +17,17 @@ class CProgressBar : public CCompent
 public:
 	enum eStyle
 	{
-		btHorizontal=0, // 水平的,从左自右的
-		btVertical,     // 垂直的，从下直上的
+		btHorizontal=0, // horizontal, left to right
+		btVertical,     // vertical, straight up
 		btEnd,
 	};
-	enum ePic           // 两张背景图
+	enum ePic           // two background images
 	{
 		pcBackground=0,
 		pcProgressbar,
 		pcEnd,
 	};
-    enum eHintStyle     // hint显示方式:显示数字比,显示百分比
+    enum eHintStyle     // hint display mode: show a number, or show a percentage
     {
         hsHintNum,
         hsHintPercent,
@@ -49,7 +49,7 @@ public:
 
 	void				Start( DWORD time );
 
-	// 存储格式：背景，进度条
+	// storage format: background, progress bar
 	bool				LoadImage( const char* file, int w=32, int h=32, bool isHorizontal=true );
 	virtual void		SetAlpha( BYTE alpha )		{ _pImage->SetAlpha(alpha);		}
 
@@ -60,7 +60,7 @@ public:
 	void                SetFlashNum(int v)          {  _nFlash = v ;                }   
 	void                SetActiveMouse(bool v)      { _bActiveMouse = v ;   }       
 	 
-public:	// 事件
+public:	// events
 	GuiMouseEvent		evtMouseDown;
 	GuiEvent			evtTimeArrive;
 
@@ -85,9 +85,9 @@ private:
 
 	eStyle				_style;
 
-	CGuiPic*			_pImage;					// 背景图+进度条
-	int                 _nFlash;                    //序列桢的个数
-	bool                _bActiveMouse;                 //是否响应鼠标(针对音频调节方面) 
+	CGuiPic*			_pImage;					// background image plus progress bar
+	int                 _nFlash;                    // number of frames in the sequence
+	bool                _bActiveMouse;                 //whether it responds to the mouse (regarding audio adjustment)
     eHintStyle          _eHintStyle;
 
 	int					_nStart;

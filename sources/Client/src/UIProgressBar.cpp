@@ -50,7 +50,7 @@ void CProgressBar::_Copy(const CProgressBar& rhs)
 CProgressBar::~CProgressBar()
 {
 	//delete _pImage;
-	SAFE_DELETE(_pImage); // UI当机处理
+	SAFE_DELETE(_pImage); // UI freeze handling
 }
 
 void CProgressBar::Refresh()

@@ -2,7 +2,7 @@
 
 inline int GetAngleDistance(int nAngle1, int nAngle2)
 {
-	if(nAngle1 >= 0 && nAngle1 < 90) // nAngle1 在第一象限
+	if(nAngle1 >= 0 && nAngle1 < 90) // nAngle1 is in the first quadrant
 	{
 		if(nAngle2 >= 0 && nAngle2 < 90)
 		{
@@ -25,7 +25,7 @@ inline int GetAngleDistance(int nAngle1, int nAngle2)
 			return -1 * (360 - nAngle2 + nAngle1);
 		}
 	}
-	else if(nAngle1 >= 90 && nAngle1 < 180) // nAngle1 在第二象限
+	else if(nAngle1 >= 90 && nAngle1 < 180) // nAngle1 is in the second quadrant
 	{
 		if(nAngle2 >= 0 && nAngle2 < 90)
 		{
@@ -104,7 +104,7 @@ inline int FixAngle(int nAngle)
 	return nAngle;
 }
 
-// 得到从x1到x2的角度
+// gets the angle from x1 to x2
 inline int GetLineAngle(int x1, int y1, int x2, int y2)
 {
 	D3DXVECTOR2 dPosition = D3DXVECTOR2((float)x2, (float)y2) - D3DXVECTOR2((float)x1, (float)y1);
@@ -134,16 +134,16 @@ inline BOOL IsValidHeight(DWORD dwCharType, float fHeight)
 
 	switch (dwCharType)
 	{
-		//水面(船只)
+		//water (boats)
 	case	201:
 	case	202:
 		if (fHeight > SEA_LEVEL)
 			ret = FALSE;
 		break;
-		//水陆两栖(螃蟹)
+		//amphibious (crabs)
 	case	31:
 		break;
-		//陆地
+		//land
 	default:
 		if (fHeight < (SEA_LEVEL - 0.2f))
 			ret = FALSE;
@@ -153,7 +153,7 @@ inline BOOL IsValidHeight(DWORD dwCharType, float fHeight)
 	return ret;
 }
 
-// 从x1, y1沿x2, y2方向移动dis后的坐标
+// the coordinates after moving dis from x1, y1 along the x2, y2 direction
 inline void GetDistancePos( int x1, int y1, int x2, int y2, int dis, int& x, int& y )
 {
 	D3DXVECTOR2 v1( (float)x1, (float)y1 );
@@ -165,7 +165,7 @@ inline void GetDistancePos( int x1, int y1, int x2, int y2, int dis, int& x, int
 	y = (int)v2.y;
 }
 
-// 从x1, y1沿x2, y2反方向移动dis后的坐标
+// the coordinates after moving dis from x1, y1 along the opposite of the x2, y2 direction
 inline void GetInDistancePos( int x1, int y1, int x2, int y2, int dis, int& x, int& y )
 {
 	D3DXVECTOR2 v1( (float)x1, (float)y1 );
@@ -177,7 +177,7 @@ inline void GetInDistancePos( int x1, int y1, int x2, int y2, int dis, int& x, i
 	y = (int)v2.y;
 }
 
-// 从x1, y1沿angle方向移动dis后的坐标
+// the coordinates after moving dis from x1, y1 along the angle direction
 inline void GetAnglePos(int x1,int y1, int Dist, int angle, int& x, int& y)
 {
 	D3DXVECTOR2 v1( (float)x1, (float)y1 );
@@ -198,13 +198,13 @@ inline void GetAnglePos(int x1,int y1, int Dist, int angle, int& x, int& y)
 
 inline int GetItemForgeLv( int chForgeLv )
 {
-    if( chForgeLv<4 ) return -1;        // 0~3没有图片,卸载流光
-    else if( chForgeLv<8 ) return 0;    // 以下装载流光时时,因为数组原因,依次减一
+    if( chForgeLv<4 ) return -1;        // 0~3 means there is no image, unload the light effect
+    else if( chForgeLv<8 ) return 0;    // when loading light effects below, the values are decremented by one in turn because of the array
     else if( chForgeLv<12 ) return 1;
     else return 2;
 }
 
-// nInLen是有效点个数，nOutLen是输出缓冲的大小，返回输出的有效点个数
+// nInLen is the number of valid points, nOutLen is the size of the output buffer; returns the number of valid points output
 inline int GetMovePoint( POINT* pInPoint, int nInLen, int nDis, POINT* pOutPoint, int nOutLen )
 {
 	if(!pInPoint || !pOutPoint || nInLen <= 1 || nOutLen <= 1)

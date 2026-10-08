@@ -1,8 +1,8 @@
 ﻿//----------------------------------------------------------------------
-// 名称:滚动条
-// 作者:lh 2004-07-20
-// 用途:用于配合树状控件,列表栏等的滚动
-// 最后修改日期:2004-10-09
+// Name: scroll bar
+// Author: lh 2004-07-20
+// Purpose: used together with tree controls, list bars and the like to scroll
+// Last modified date: 2004-10-09
 //----------------------------------------------------------------------
 #pragma once
 #include "uicompent.h"
@@ -19,8 +19,8 @@ class CScroll : public CCompent
 public:
 	enum eStyle
 	{
-		btHorizontal=0, // 水平的,从左自右的
-		btVertical,     // 垂直的，从下直上的      
+		btHorizontal=0, // horizontal, left to right
+		btVertical,     // vertical, straight up
 	};
 
 public:
@@ -40,7 +40,7 @@ public:
 	virtual bool	IsFrameMove()		{ return true;		}
 	virtual void	SetAlpha( BYTE alpha );
     virtual void    RenderHint( int x, int y );	
-    virtual CCompent* GetHintCompent( int x, int y );                       // 返回有提示的控件
+    virtual CCompent* GetHintCompent( int x, int y );                       // returns the control that has a tooltip
 
 	virtual bool    IsHandleMouse()		{ return true;		}
 
@@ -68,7 +68,7 @@ public:
 	// End
 
 public:
-	GuiEvent		evtChange;		// 发生了滚动
+	GuiEvent		evtChange;		// scrolling happened
 
 protected:
 	void			_RefreshMidst();
@@ -99,7 +99,7 @@ protected:
 	void			_UpdataStep( int v );
 
 protected:
-	CGuiPic*		_pImage;		// 背景图
+	CGuiPic*		_pImage;		// background image
 
 	CTextButton*	_up;
 	CTextButton*	_down;
@@ -110,8 +110,8 @@ protected:
 	CStep			_step;
 	int				_nStart;
 
-	float			_fPageNum;		// 翻页时的间距
-	bool			_IsAutoHide;	// 如果没有翻页是否自动隐藏
+	float			_fPageNum;		// spacing when paging
+	bool			_IsAutoHide;	// whether it hides automatically when there is nothing to page
 
 private:
 	int				_nMinDrag, _nMaxDrag;

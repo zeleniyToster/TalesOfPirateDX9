@@ -32,7 +32,7 @@ namespace GUI
 	CHaircutMgr::~CHaircutMgr()
 	{
 		//delete m_pHairTools;
-		SAFE_DELETE(m_pHairTools); // UI当机处理
+		SAFE_DELETE(m_pHairTools); // UI freeze handling
 	}
 
 	//~ ==================================================================
@@ -74,7 +74,7 @@ namespace GUI
 			return Error(g_oLangRec.GetString(616),
 						 frmHaircut->GetName(), "labHairMoney");
 
-		// 左右选择按钮
+		// left and right selection buttons
 		CTextButton* btnLeftColor = (CTextButton*)frmHaircut->Find("btnLeftColor");
 		if( !btnLeftColor ) 
 		{
@@ -164,7 +164,7 @@ namespace GUI
 		if (!pMainCha){ LG( "haircut", g_oLangRec.GetString(617) ); return; }
 
 		m_pHairTools->RefreshCha( pMainCha->GetDefaultChaInfo()->lID );
-		//设置界面数据
+		//sets the screen data
 		
 		if( (m_dwHairTypeMaxNum = m_pHairTools->GetHairMax()) <= 0 ) 
 		{
@@ -172,10 +172,10 @@ namespace GUI
 			return;
 		}
 
-		//每次打开时设置人物正面
+		//sets the character to face front each time it is opened
 		m_nChaRotate = 0;
 
-		//显示界面
+		//shows the screen
 		frmHaircut->Show();
 
 		CCharacter* pCha = CGameApp::GetCurScene()->AddCharacter( pMainCha->getTypeID() );
@@ -236,7 +236,7 @@ namespace GUI
 			}
 		}
 
-		// 搜索道具
+		// searches for the item
 		CItemCommand* propItem = NULL;
 		for (int i(0); i<defHAIR_MAX_ITEM; i++)
 		{
@@ -264,21 +264,21 @@ namespace GUI
 			}
 			
 			if (j < pGrid->GetMaxNum())
-			{	//找到
+			{	// found
 				m_iGoodsIndex[i] = j;
 				pItem->SetIsValid( false );
 			}
 			else
-			{	// 没有找到
+			{	// not found
 				m_iGoodsIndex[i] = -1;
 				propItem->SetIsValid( false );
 			}
 		}
 	
-		// 改变头发
+		// changes the hair
 		if (m_pCurrMainCha)
 		{
-			// 设置单线程加载资源,防止闪烁
+			// sets single threaded resource loading to prevent flickering
 			lwIByteSet* res_bs = g_Render.GetInterfaceMgr()->res_mgr->GetByteSet();
 			BYTE loadtex_flag = res_bs->GetValue(OPT_RESMGR_LOADTEXTURE_MT);
 			BYTE loadmesh_flag = res_bs->GetValue(OPT_RESMGR_LOADMESH_MT);
@@ -326,7 +326,7 @@ namespace GUI
 	{
 		m_dwHairColorIndex += ((int)(enumDirect));
 
-		// 循环移动
+		// cycles round
 		m_dwHairColorIndex = (m_dwHairColorIndex + m_dwHairColorMaxNum) % m_dwHairColorMaxNum;
 
 		Refresh(m_dwHairTypeIndex, m_dwHairColorIndex);
@@ -337,7 +337,7 @@ namespace GUI
 	{
 		m_dwHairTypeIndex += ((int)(enumDirect));
 
-		// 循环移动
+		// cycles round
 		m_dwHairTypeIndex = (m_dwHairTypeIndex + m_dwHairTypeMaxNum) % m_dwHairTypeMaxNum;
 
 		Refresh(m_dwHairTypeIndex, 0);

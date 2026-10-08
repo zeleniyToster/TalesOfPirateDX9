@@ -1,7 +1,7 @@
 ﻿//----------------------------------------------------------------------
-// 名称:静态文字
-// 作者:lh 2004-07-19
-// 最后修改日期:2004-10-09
+// Name: static text
+// Author: lh 2004-07-19
+// Last modified date: 2004-10-09
 //----------------------------------------------------------------------
 #pragma once
 #include "uiguidata.h"
@@ -16,7 +16,7 @@
 	
 namespace GUI
 {
-// 固定列数的ItemObj
+// ItemObj with a fixed number of columns
 class CItemRow
 {
 public:
@@ -53,7 +53,7 @@ private:
 
 };
 
-// 文字
+// text
 class CItem : public CItemObj
 {
 public:
@@ -107,14 +107,14 @@ private:
 		std::string strData;
 	};
 
-	// 分段显示不通颜色的文字信息
+	// displays text information in segments of different colours
 	typedef std::vector<ITEM_TEXT_DATA> ITEM_TEXT_ARRAY;
 		ITEM_TEXT_ARRAY m_TextArray;
 
 	void ParseScript( const char szScript[], USHORT sStartCom, DWORD dwDefColor );
 };
 
-// 带进度条的文字
+// text with a progress bar
 class CItemBar : public CItem
 {
 public:
@@ -131,7 +131,7 @@ protected:
 
 };
 
-// 可换行文字
+// text that can wrap
 class CItemEx : public CItemObj
 {
 public:
@@ -173,7 +173,7 @@ public:
 	void		SetItemName(const char* name)	{ _strItemName=name;		}
 	const char*	GetItemName()					{ return _strItemName.c_str();		}
 
-	void		ProcessString( int length );	// 参数：角色名称的长度
+	void		ProcessString( int length );	// argument: the length of the character name
 
 	
 
@@ -192,28 +192,28 @@ public:
 protected:
 	std::string		_str;
 	std::string		_strItemName;
-	bool		_bParseText;					// 是否需要解析图元
-	bool        _bMultiLine;                    //是否多行显示
-	std::string      _strLine[3];					//最多3行 
+	bool		_bParseText;					// whether graphic elements need to be parsed
+	bool        _bMultiLine;                    //whether it is shown on multiple lines
+	std::string      _strLine[3];					//at most 3 lines
 	DWORD		_HeadLen;
 	DWORD		_HeadColor;
 
 	DWORD		_dwColor;
 	int			_nWidth;
 	int			_nHeight;
-	int         _nLineNum;						//显示在头像上的行数
-	int         _nMaxWidth;                     //多行中最大的宽度
+	int         _nLineNum;						// number of lines shown on the portrait
+	int         _nMaxWidth;                     // the greatest width among the lines
 	ALLIGN		m_Allign;
 
 };
 
-// 内联函数
+// inline function
 inline void CItemRow::SetIndex( unsigned int v, CItemObj* p )		
 { 
 	if( _items[v]!=_GetNullItem() && _items[v]!=p ) 
 	{
 		//delete _items[v]; 
-		SAFE_DELETE(_items[v]); // UI当机处理
+		SAFE_DELETE(_items[v]); // UI freeze handling
 	}
 	_items[v]=p; 
 }

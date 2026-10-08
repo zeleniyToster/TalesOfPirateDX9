@@ -1,8 +1,8 @@
 ﻿//----------------------------------------------------------------------
-// 名称:步增
-// 作者:lh 2004-07-19
-// 用途:用于滚动条或进度条
-// 最后修改日期:2004-10-26
+// Name: step increment
+// Author: lh 2004-07-19
+// Purpose: used for scroll bars or progress bars
+// Last modified date: 2004-10-26
 //----------------------------------------------------------------------
 #pragma once
 
@@ -31,8 +31,8 @@ public:
 	int			GetShowPosition()		{ return (int)(_fPosition / (_fMax-_fMin) * fLen); }
 	bool		SetShowPosition( float fPos );
 
-	float		fStep;			// 递增步长
-	float		fLen;			// 总滚动长度
+	float		fStep;			// increment step
+	float		fLen;			// total scroll length
 
 private:
 	float		_fMax;
@@ -41,7 +41,7 @@ private:
 
 };
 
-// 内联函数
+// inline function
 inline bool CStep::Add()
 { 
 	if( _fPosition < _fMax ) 

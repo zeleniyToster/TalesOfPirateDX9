@@ -1,14 +1,14 @@
 ﻿//----------------------------------------------------------------------
-// 名称:静态文字
-// 作者:lh 2004-07-19
-// 最后修改日期:2004-10-09
+// Name: static text
+// Author: lh 2004-07-19
+// Last modified date: 2004-10-09
 //----------------------------------------------------------------------
 #pragma once
 #include "uicompent.h"
 
 namespace GUI
 {
-// 拖动控件条,用于支持外部拖动控件
+// drag control bar, used to support dragging a control from outside
 class CDragTitle : public CCompent
 {
 public:

@@ -68,7 +68,7 @@ CSkillCommand& CSkillCommand::operator=( const CSkillCommand& rhs )
 CSkillCommand::~CSkillCommand()
 {
     //delete _pImage;
-	SAFE_DELETE(_pImage); // UI当机处理
+	SAFE_DELETE(_pImage); // UI freeze handling
 }
 
 void CSkillCommand::Render( int x, int y )
@@ -105,7 +105,7 @@ bool CSkillCommand::UseCommand(bool value)
 	CCharacter* pCha = CGameScene::GetMainCha();
 	if( !pCha ) return false;
 
-	// 被动技能，不执行
+	// a passive skill, not executed
 	if( !_pSkill->GetIsUse() )
 		return false;
 
@@ -163,7 +163,7 @@ bool CSkillCommand::IsAllowUse()
 	CCharacter* pCha = g_stUIBoat.GetHuman();
 	if( !pCha ) return false;
 
-	if(g_stUIBank.GetBankGoodsGrid()->GetForm()->GetIsShow())	// 西门文档修改，打开银行时不允许放技能
+	if(g_stUIBank.GetBankGoodsGrid()->GetForm()->GetIsShow())	// revised per the Ximen document; skills may not be placed while the bank is open
 	{
 		g_pGameApp->SysInfo( g_oLangRec.GetString(748) );
 		return false;
@@ -181,7 +181,7 @@ bool CSkillCommand::IsAllowUse()
 		return false;
 	}
 
-    // 允许使用的两种情况:1.没有再施放时间,2.已到达再施放时间
+    // the two permitted cases: 1. there is no reuse time yet, 2. the reuse time has been reached
     if( _GetSkillTime()<=0 ) 
 	{
 		return true;
@@ -343,14 +343,14 @@ bool CSkillCommand::GetIsSpecial(eSpecialType SpecialType)
 	{
 	case enumHighLight:
 		{
-			if(338 <= nID && nID <= 341) return true;	// 生活技能特殊处理
-			if(459 == nID) return true;					// 转生技能
+			if(338 <= nID && nID <= 341) return true;	// special handling for life skills
+			if(459 == nID) return true;					// rebirth skill
 		}
 		break;
 
 	case enumNotUpgrade:
 		{
-			if(453 <= nID && nID <= 459) return true;	// 转生技能
+			if(453 <= nID && nID <= 459) return true;	// rebirth skill
 		}
 		break;
 

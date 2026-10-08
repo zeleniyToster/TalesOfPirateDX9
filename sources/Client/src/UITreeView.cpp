@@ -74,7 +74,7 @@ bool CTreeNodeObj::ClearAllChild()
 	for( TreeNodes::iterator it=_ndChilds.begin(); it!=_ndChilds.end(); ++it )
 	{
 		//delete *it;
-		SAFE_DELETE(*it); // UI当机处理
+		SAFE_DELETE(*it); // UI freeze handling
 	}
 
 	_ndChilds.clear();
@@ -96,7 +96,7 @@ bool CTreeNodeObj::DelNode( CTreeNodeObj* pNode )
 				_pOwn->GetSelect()->CancelSelect();
 			}
 			//delete *it;
-			SAFE_DELETE(*it); // UI当机处理
+			SAFE_DELETE(*it); // UI freeze handling
 			
 			_ndChilds.erase( it );
 			return true;
@@ -180,7 +180,7 @@ bool CTreeNodeObj::MouseRun( int x, int y, DWORD key )
 		CWaitCursor lock;
 		_pOwn->Refresh();
 
-		// 点击树结点的 +/- 时也会触发鼠标点击事件，+32 是为了使点击能落在结点上而不是 +/- 上
+		// clicking the +/- of a tree node also triggers the mouse click event; +32 makes the click land on the node rather than on the +/-
 		if(_pOwn->evtMouseDown) _pOwn->evtMouseDown(_pOwn, x + 32, y, key);
 
 		return false;
@@ -397,7 +397,7 @@ CTreeGridNode::~CTreeGridNode()
     for( vitems::iterator it=_items.begin(); it!=_items.end(); ++it )
 	{
         //delete *it;
-		SAFE_DELETE(*it); // UI当机处理
+		SAFE_DELETE(*it); // UI freeze handling
 	}
 
     _items.clear();
@@ -518,7 +518,7 @@ void CTreeGridNode::Clear()
     for( vitems::iterator it=_items.begin(); it!=_items.end(); ++it )
 	{
         //delete *it;
-		SAFE_DELETE(*it); // UI当机处理
+		SAFE_DELETE(*it); // UI freeze handling
 	}
 
     _items.clear();
@@ -536,7 +536,7 @@ bool CTreeGridNode::DelItem( CItemObj* item )
 			_pOwn->GetSelect()->CancelSelect();
 		}
 		//delete *it;
-		SAFE_DELETE(*it); // UI当机处理
+		SAFE_DELETE(*it); // UI freeze handling
 
 		_pOwn->DelItemCall( *it );
 		_items.erase(it);
@@ -585,7 +585,7 @@ bool CTreeGridNode::DelItem( const char* str )
 				_pOwn->GetSelect()->CancelSelect();
 			}
 			//delete *it;
-			SAFE_DELETE(*it); // UI当机处理
+			SAFE_DELETE(*it); // UI freeze handling
 
 			_pOwn->DelItemCall( *it );
 		    _items.erase(it);
@@ -658,7 +658,7 @@ void CTreeView::Render()
 	{
 		_pImage->Render( GetX(), GetY() );
 
-		// 由于树在选中时的选中图象可以在前可以在后,所以在SelectItem中再决定画的顺序
+		// since the selected image of a node when it is selected can be before or after it, the drawing order is decided in SelectItem
 		_pSelectItem->Render();
 
 		if( _pScroll->GetIsShow() ) _pScroll->Render();

@@ -1,9 +1,9 @@
 ﻿//-----------------
-// 判断物体是否有效
+// decides whether the object is valid
 //-----------------
 inline int lua_objIsValid(lua_State *L)
 {
-    // 参数合法性判别
+    // argument validity check
     BOOL bValid = (lua_gettop (L)==1 && lua_islightuserdata(L, 1));
     if(!bValid) 
     {
@@ -19,11 +19,11 @@ inline int lua_objIsValid(lua_State *L)
 }
 
 //-----------
-// 取得物体ID
+// gets the object ID
 //-----------
 inline int lua_objGetID(lua_State *L)
 {
-    // 参数合法性判别
+    // argument validity check
     BOOL bValid = (lua_gettop (L)==1 && lua_islightuserdata(L, 1)); 
     if(!bValid) 
     {
@@ -39,11 +39,11 @@ inline int lua_objGetID(lua_State *L)
 
 
 //--------------------
-// 设置物体坐标(厘米)
+// sets the object coordinates (cm)
 //--------------------
 inline int lua_objSetPos (lua_State * L)
 {
-    // 参数合法性判别
+    // argument validity check
     BOOL bValid = (lua_gettop (L)==3 && lua_islightuserdata(L, 1) && lua_isnumber (L, 2) &&  lua_isnumber (L, 3));
     if(!bValid) 
     {
@@ -58,11 +58,11 @@ inline int lua_objSetPos (lua_State * L)
 }
 
 //-------------
-// 获取角色坐标
+// gets the character coordinates
 //-------------
 inline int lua_objGetPos(lua_State *L)
 {
-   // 参数合法性判别
+   // argument validity check
     BOOL bValid = (lua_gettop (L)==1); 
     if(!bValid) 
     {
@@ -77,11 +77,11 @@ inline int lua_objGetPos(lua_State *L)
 }
 
 //-------------
-// 获取角色面向
+// gets the direction the character faces
 //-------------
 inline int lua_objGetFaceAngle(lua_State *L)
 {
-   // 参数合法性判别
+   // argument validity check
     BOOL bValid = (lua_gettop (L)==1 && lua_islightuserdata(L, 1)); 
     if(!bValid) 
     {
@@ -95,11 +95,11 @@ inline int lua_objGetFaceAngle(lua_State *L)
 }
 
 //-------------
-// 设置角色面向
+// sets the direction the character faces
 //-------------
 inline int lua_objSetFaceAngle(lua_State *L)
 {
-   // 参数合法性判别
+   // argument validity check
     BOOL bValid = (lua_gettop (L)==2 && lua_islightuserdata(L, 1) && lua_isnumber(L, 2)); 
     if(!bValid) 
     {
@@ -113,11 +113,11 @@ inline int lua_objSetFaceAngle(lua_State *L)
 }
 
 //---------
-// 属性取值
+// gets an attribute
 //---------
 inline int lua_objGetAttr(lua_State* L)
 {
-    // 参数合法性判别
+    // argument validity check
     BOOL bValid = (lua_gettop (L)==2 && lua_islightuserdata(L, 1) && lua_isnumber(L, 2));
     if(!bValid) 
     {
@@ -134,11 +134,11 @@ inline int lua_objGetAttr(lua_State* L)
 }
 
 //---------
-// 属性赋值
+// sets an attribute
 //---------
 inline int lua_objSetAttr(lua_State* L)
 {
-    // 参数合法性判别
+    // argument validity check
     BOOL bValid = (lua_gettop (L)==3 && lua_islightuserdata(L, 1) && lua_isnumber(L, 2) && lua_isnumber(L, 3));
     if(!bValid) 
     {
@@ -157,11 +157,11 @@ inline int lua_objSetAttr(lua_State* L)
 }
 
 //--------------------
-// 角色说话,头顶出文字
+// the character speaks, with text over its head
 //--------------------
 inline int lua_chaSay(lua_State *L)
 {
-    // 参数合法性判别
+    // argument validity check
     BOOL bValid = (lua_gettop (L)==2 && lua_islightuserdata(L, 1) && lua_isstring(L, 2));
     if(!bValid) 
     {
@@ -174,7 +174,7 @@ inline int lua_chaSay(lua_State *L)
         SCENE_NULL_ERROR
         return 0;
     }
-    // 头顶显示文字
+    // shows text over the head
     CCharacter *pCha = (CCharacter*)lua_touserdata(L, 1);
     const char *pszText = lua_tostring(L, 2);
 	if( pCha )
@@ -187,11 +187,11 @@ inline int lua_chaSay(lua_State *L)
 }
 
 //-------------------------
-// 角色跑步到指定坐标(厘米)
+// the character runs to the given coordinates (cm)
 //-------------------------
 inline int lua_chaMoveTo(lua_State *L)
 {
-    // 参数合法性判别
+    // argument validity check
     BOOL bValid = (lua_gettop (L)==3 && lua_islightuserdata(L, 1) && lua_isnumber (L, 2) &&  lua_isnumber (L, 3));
     if(!bValid) 
     {
@@ -214,11 +214,11 @@ inline int lua_chaMoveTo(lua_State *L)
 }
 
 //-------------
-// 角色状态停止
+// the character state stops
 //-------------
 inline int lua_chaStop(lua_State *L)
 {
-    // 参数合法性判别
+    // argument validity check
     BOOL bValid = (lua_gettop (L)==1 && lua_islightuserdata(L, 1));
     if(!bValid) 
     {
@@ -235,11 +235,11 @@ inline int lua_chaStop(lua_State *L)
 
 
 //-----------------
-// 角色更换身体部位
+// the character changes a body part
 //-----------------
 inline int lua_chaChangePart(lua_State *L)
 {
-    // 参数合法性判别
+    // argument validity check
     BOOL bValid = (lua_gettop (L)==2 && lua_islightuserdata(L, 1) && lua_isnumber (L, 2));
     if(!bValid) 
     {
@@ -257,11 +257,11 @@ inline int lua_chaChangePart(lua_State *L)
 }
 
 //-------------
-// 播放角色动画
+// plays a character animation
 //-------------
 inline int lua_chaPlayPose(lua_State *L)
 {
-    // 参数合法性判别
+    // argument validity check
     BOOL bValid = (lua_gettop (L)==3 && lua_islightuserdata(L, 1) && lua_isnumber (L, 2) && lua_isnumber(L,3));
     if(!bValid) 
     {

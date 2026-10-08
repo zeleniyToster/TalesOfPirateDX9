@@ -5,11 +5,11 @@
 namespace GUI
 {
 
-// 与NPC交谈
+// talking to an NPC
 class CNpcTalkMgr : public CUIInterface
 {
 public:
-	void			ShowFuncPage( BYTE byFuncPage , BYTE byCount,BYTE byMisNum ,const NET_FUNCPAGE& FuncArray, DWORD dwNpcID ) ;      //显示 NPC功能页
+	void			ShowFuncPage( BYTE byFuncPage , BYTE byCount,BYTE byMisNum ,const NET_FUNCPAGE& FuncArray, DWORD dwNpcID ) ;      //shows the NPC function page
 
 	void			AddHelpInfo( const NET_HELPINFO &Info );
 	void			ShowTalkPage( const char *content, BYTE command, DWORD npcID );
@@ -37,7 +37,7 @@ private:
 	CMemo*		memCtrl;
 	
 private:
-	static BYTE		_byTalkStyle;		// 交易的类型
+	static BYTE		_byTalkStyle;		// the type of trade
 
 	bool		m_bIsNpcTalk;
 

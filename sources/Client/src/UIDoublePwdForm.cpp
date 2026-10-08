@@ -18,12 +18,12 @@ namespace GUI
 	}
 
 
-	// 初始化二次密码所有的界面
+	// initialises every screen of the secondary password
 	bool CDoublePwdMgr::Init()
 	{
 		CFormMgr& mgr = CFormMgr::s_Mgr;
 
-		// 二次密码创建表单
+		// secondary password creation form
 		frmDoublePwdCreate = mgr.Find("frmDoublePwdCreate");
 		if(! frmDoublePwdCreate) return false;
 
@@ -42,7 +42,7 @@ namespace GUI
 		edtDoublePwdCreateRetry->SetIsPassWord(true);
 
 
-		// 二次密码修改表单
+		// secondary password modification form
 		frmDoublePwdAlter = mgr.Find("frmDoublePwdAlter");
 		if(! frmDoublePwdAlter) return false;
 
@@ -66,7 +66,7 @@ namespace GUI
 		edtDoublePwdAlterNewRetry->SetIsPassWord(true);
 
 
-		// 二次密码输入表单
+		// secondary password input form
 		frmDoublePwd = mgr.Find("frmDoublePwd");
 		if(! frmDoublePwd) return false;
 
@@ -79,7 +79,7 @@ namespace GUI
 		edtDoublePwd->SetIsPassWord(true);
 
 
-		// 二次密码输入软键盘
+		// secondary password input soft keyboard
 		frmDoublePwdInput = mgr.Find("frmDoublePwdInput");
 		if(! frmDoublePwdInput) return false;
 
@@ -87,7 +87,7 @@ namespace GUI
 		frmDoublePwdInput->evtClose             = _evtFormClose;
 
 
-		// 创建二次密码的提示
+		// the prompt shown when creating a secondary password
 		frmDoublePwdInfo = mgr.Find("frmDoublePwdInfo");
 		if(! frmDoublePwdInfo) return false;
 
@@ -95,14 +95,14 @@ namespace GUI
 	}
 
 
-	// 关闭二次密码
+	// closes the secondary password
 	void CDoublePwdMgr::CloseForm()
 	{
 		CloseAllForm();
 	}
 
 
-	// 二次密码是否合法
+	// whether the secondary password is valid
 	bool CDoublePwdMgr::IsPwdValid(const char* szStr)
 	{
 		if(! szStr)
@@ -118,7 +118,7 @@ namespace GUI
 	}
 
 
-	// 显示创建表单
+	// shows the creation form
 	void CDoublePwdMgr::ShowCreateForm()
 	{
 		CloseAllForm();
@@ -145,7 +145,7 @@ namespace GUI
 	}
 
 
-	// 显示修改表单
+	// shows the modification form
 	void CDoublePwdMgr::ShowAlterForm()
 	{
 		CloseAllForm();
@@ -165,7 +165,7 @@ namespace GUI
 	}
 
 
-	// 显示输入表单
+	// shows the input form
 	void CDoublePwdMgr::ShowDoublePwdForm()
 	{
 		CloseAllForm();
@@ -184,34 +184,34 @@ namespace GUI
 	}
 
 
-	// 关闭全部表单
+	// closes every form
 	void CDoublePwdMgr::CloseAllForm()
 	{
-		// 关闭创建表单
+		// closes the creation form
 		if(frmDoublePwdCreate && frmDoublePwdCreate->GetIsShow())
 		{
 			frmDoublePwdCreate->Close();
 		}
 
-		// 关闭修改表单
+		// closes the modification form
 		if(frmDoublePwdAlter && frmDoublePwdAlter->GetIsShow())
 		{
 			frmDoublePwdAlter->Close();
 		}
 
-		// 关闭二次密码输入表单
+		// closes the secondary password input form
 		if(frmDoublePwd && frmDoublePwd->GetIsShow())
 		{
 			frmDoublePwd->Close();
 		}
 
-		// 关闭二次密码软键盘表单
+		// closes the secondary password soft keyboard form
 		if(frmDoublePwdInput && frmDoublePwdInput->GetIsShow())
 		{
 			frmDoublePwdInput->Close();
 		}
 
-		// 关闭创建二次密码提示
+		// closes the create secondary password prompt
 		if(frmDoublePwdInfo && frmDoublePwdInfo->GetIsShow())
 		{
 			frmDoublePwdInfo->Close();
@@ -219,7 +219,7 @@ namespace GUI
 	}
 
 
-	// 显示二次密码软键盘
+	// shows the secondary password soft keyboard
 	void CDoublePwdMgr::ShowDoublePwdKeyboardForm()
 	{
 		if(! frmDoublePwdInput)
@@ -231,7 +231,7 @@ namespace GUI
 	}
 
 
-	// 发送删除角色消息
+	// sends the delete character message
 	void CDoublePwdMgr::SendDeleteCharactor()
 	{
 		CSelectChaScene* pScene = dynamic_cast<CSelectChaScene*>(g_pGameApp->GetCurScene());
@@ -240,14 +240,14 @@ namespace GUI
 	}
 
 
-	// 发送背包解锁消息
+	// sends the bag unlock message
 	void CDoublePwdMgr::SendPackageUnlock()
 	{
 		CS_UnlockKitbag(g_stUIDoublePwd.edtDoublePwd->GetCaption());
 	}
 
-	 // 发送道具解锁消息 add by ning.yan 2008-11-11 begin
-	void CDoublePwdMgr::SendItemUnlock()// 被锁道具的位置和id
+	 // sends the item unlock message add by ning.yan 2008-11-11 begin
+	void CDoublePwdMgr::SendItemUnlock()// the position and ID of the locked item
 	{
 		CS_UnlockItem(g_stUIDoublePwd.edtDoublePwd->GetCaption(), lockGridID);
 		g_stUIDoublePwd.CloseAllForm();
@@ -286,7 +286,7 @@ namespace GUI
 	}
 	// end
 
-	// 发送商城打开消息
+	// sends the shop open message
 	void CDoublePwdMgr::SendPackageStoreOpen()
 	{
 		if(! g_stUIStore.ResetLastOperate())
@@ -300,7 +300,7 @@ namespace GUI
 		CloseAllForm();
 	}
 
-	void CDoublePwdMgr::SendGameRequest()// 被锁道具的位置和id
+	void CDoublePwdMgr::SendGameRequest()// the position and ID of the locked item
 	{
 		CS_SendGameRequest(g_stUIDoublePwd.edtDoublePwd->GetCaption());
 		
@@ -308,7 +308,7 @@ namespace GUI
 	} 
 
 
-	// 对软键盘按钮进行随机排列
+	// shuffles the soft keyboard buttons randomly
 	void CDoublePwdMgr::RandomInputButton()
 	{
 		CTextButton* btnNum[10] = {0};
@@ -350,7 +350,7 @@ namespace GUI
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-	// 创建二次密码表单按钮事件
+	// creation secondary password form button event
 	void CDoublePwdMgr::_evtCreateFromMouseEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey)
 	{
 		string strName = pSender->GetName();
@@ -361,7 +361,7 @@ namespace GUI
 
 			if(! IsPwdValid(g_stUIDoublePwd.edtDoublePwdCreate->GetCaption()))
 			{
-				// 密码只能是数字
+				// the password may only contain digits
 				g_pGameApp->MsgBox(g_oLangRec.GetString(797));//"二次密码只能有 0 ~ 9 数字组成，请重新输入"
 
 				g_stUIDoublePwd.edtDoublePwdCreate->SetCaption("");
@@ -371,7 +371,7 @@ namespace GUI
 
 			if(6 > nPwdLen || 12 < nPwdLen)
 			{
-				// 密码长度不在 6 ~ 12 之间
+				// the password length is not between 6 and 12
 				g_pGameApp->MsgBox(g_oLangRec.GetString(798));//"二次密码长度不在 6 ~ 12，请重新输入"
 
 				g_stUIDoublePwd.edtDoublePwdCreate->SetCaption("");
@@ -382,7 +382,7 @@ namespace GUI
 			if(0 != strcmp(g_stUIDoublePwd.edtDoublePwdCreate->GetCaption(), 
 						   g_stUIDoublePwd.edtDoublePwdCreateRetry->GetCaption()))
 			{
-				// 两次密码不同
+				// the two passwords differ
 				g_pGameApp->MsgBox(g_oLangRec.GetString(799));//"两次输入的密码不同，请重新输入"
 
 				g_stUIDoublePwd.edtDoublePwdCreate->SetCaption("");
@@ -390,13 +390,13 @@ namespace GUI
 				return;
 			}
 
-			// 两次密码相同，向服务器发送创建二次密码消息
+			// the two passwords match; sends the create secondary password message to the server
 			CS_CreatePassword2(g_stUIDoublePwd.edtDoublePwdCreate->GetCaption());
 			CCursor::I()->SetCursor(CCursor::stWait);
 		}
 		else
 		{
-			// 用户取消
+			// the user cancelled
 			extern TOM_SERVER g_TomServer;
 			if( g_TomServer.bEnable )
 			{
@@ -404,7 +404,7 @@ namespace GUI
 				return;
 			}
 
-			// 退出选人场景
+			// leaves the character selection scene
 			CS_Logout();
 			CS_Disconnect(DS_DISCONN);
 			g_pGameApp->LoadScriptScene( enumLoginScene );
@@ -412,7 +412,7 @@ namespace GUI
 	}
 
 
-	// 修改二次密码表单按钮事件
+	// modification secondary password form button event
 	void CDoublePwdMgr::_evtAlterFromMouseEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey)
 	{
 		string strName = pSender->GetName();
@@ -422,7 +422,7 @@ namespace GUI
 		{
 			if(! IsPwdValid(g_stUIDoublePwd.edtDoublePwdAlterNew->GetCaption()))
 			{
-				// 密码只能是数字
+				// the password may only contain digits
 				g_pGameApp->MsgBox(g_oLangRec.GetString(797));//"二次密码只能有 0 ~ 9 数字组成，请重新输入"
 
 				g_stUIDoublePwd.edtDoublePwdAlterOld->SetCaption("");
@@ -434,7 +434,7 @@ namespace GUI
 			int nPwdLen = (int) strlen(g_stUIDoublePwd.edtDoublePwdAlterNew->GetCaption());
 			if(6 > nPwdLen || 12 < nPwdLen)
 			{
-				// 密码长度不在 6 ~ 12 之间
+				// the password length is not between 6 and 12
 				g_pGameApp->MsgBox(g_oLangRec.GetString(798));//"二次密码长度不在 6 ~ 12，请重新输入"
 
 				g_stUIDoublePwd.edtDoublePwdAlterOld->SetCaption("");
@@ -446,7 +446,7 @@ namespace GUI
 			if(0 != strcmp(g_stUIDoublePwd.edtDoublePwdAlterNew->GetCaption(), 
 						   g_stUIDoublePwd.edtDoublePwdAlterNewRetry->GetCaption()))
 			{
-				// 两次密码不同
+				// the two passwords differ
 				g_pGameApp->MsgBox(g_oLangRec.GetString(799));//"两次输入的密码不同，请重新输入"
 
 				g_stUIDoublePwd.edtDoublePwdAlterOld->SetCaption("");
@@ -455,7 +455,7 @@ namespace GUI
 				return;
 			}
 
-			// 两次密码相同，向服务器发送修改二次密码消息
+			// the two passwords match; sends the modify secondary password message to the server
 			CS_UpdatePassword2(g_stUIDoublePwd.edtDoublePwdAlterOld->GetCaption(), g_stUIDoublePwd.edtDoublePwdAlterNew->GetCaption());
 		}
 		else
@@ -465,7 +465,7 @@ namespace GUI
 	}
 
 
-	// 输入二次密码表单按钮事件
+	// input secondary password form button event
 	void CDoublePwdMgr::_evtDoublePwdFromMouseEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey)
 	{
 		string strName = pSender->GetName();
@@ -487,7 +487,7 @@ namespace GUI
 				g_stUIDoublePwd.SendPackageStoreOpen();
 				break;
 
-			// add by ning.yan 2008-11-11 道具解锁 begin
+			// add by ning.yan 2008-11-11 item unlock begin
 			case ITEM_UNLOCK:
 				g_stUIDoublePwd.SendItemUnlock();
 				break;// end
@@ -508,7 +508,7 @@ namespace GUI
 	}
 
 
-	// 二次密码输入软键盘表单按钮事件
+	// secondary password input soft keyboard form button event
 	void CDoublePwdMgr::_evtInputFromMouseEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey)
 	{
 		if(! g_stUIDoublePwd.edtFocusEditBox)
@@ -522,19 +522,19 @@ namespace GUI
 
 		if(strName == "btnClear")
 		{
-			// 清空按钮
+			// clear button
 			g_stUIDoublePwd.edtFocusEditBox->SetCaption("");
 		}
 		else if('0' <= cNumber && cNumber <= '9' && strPwd.size() < 12)
 		{ 
-			// 数字键
+			// digit key
 			strPwd += cNumber;
 			g_stUIDoublePwd.edtFocusEditBox->SetCaption(strPwd.c_str());
 		}
 	}
 
 
-	// 编辑框激活事件（保存下激活的编辑框）
+	// edit box activation event (saves the activated edit box)
 	void CDoublePwdMgr::_evtEditFocus(CGuiData* pSender)
 	{
 		CEdit* edtTemp = dynamic_cast<CEdit*>(pSender);
@@ -545,7 +545,7 @@ namespace GUI
 	}
 
 
-	// 关闭窗体事件
+	// close window event
 	void CDoublePwdMgr::_evtFormClose(CForm* pForm, bool& IsClose)
 	{
 		//g_stUIDoublePwd.CloseAllForm();

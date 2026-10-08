@@ -9,7 +9,7 @@ using namespace std;
 
 using namespace GUI;
 //---------------------------------------------------------------------------
-// class CMissionMgr  用户任务管理类
+// class CMissionMgr  user mission management class
 //---------------------------------------------------------------------------
 
 CMissionMgr::CMissionMgr()
@@ -28,9 +28,9 @@ CMissionMgr::~CMissionMgr()
 {
 }
 
-bool CMissionMgr::Init() // 用户任务信息初始化
+bool CMissionMgr::Init() // user mission information initialisation
 {
-	//npc任务
+	//npc mission
 	m_pMisForm = _FindForm("frmNPCMission" ); 
 	if( !m_pMisForm )
 	{	
@@ -86,7 +86,7 @@ void CMissionMgr::_MouseEvent( CCompent *pSender, int nMsgType, int x, int y, DW
 	string strName = pSender->GetName();
 	if( stricmp( "frmNPCMission", pSender->GetForm()->GetName() ) ==  0 )
 	{
-		// 如果是退出按钮,则关闭该表单
+		// if it is the exit button, this form is closed
 		if( strName == "btnNo" || strName == "btnClose" )
 		{
 			pSender->GetForm()->Close();
@@ -120,17 +120,17 @@ void CMissionMgr::ShowMissionPage( DWORD dwNpcID, BYTE byCmd, const NET_MISPAGE&
 	m_pMisBtn1->SetIsShow( false );
 	m_pMisBtn2->SetIsShow( false );
 
-	if (byCmd == ROLE_MIS_BTNACCEPT )  //接受按钮
+	if (byCmd == ROLE_MIS_BTNACCEPT )  //accept button
 	{
 		m_pMisBtn1->SetIsShow( true );		
 	}
-	else if (byCmd == ROLE_MIS_BTNDELIVERY )  //完成按钮
+	else if (byCmd == ROLE_MIS_BTNDELIVERY )  //complete button
 	{		
 		m_pMisBtn2->SetIsShow( true );
 		m_pMisBtn2->SetIsEnabled( true );
 		m_pMisInfo->SetIsSelect( TRUE );
 	}
-	else if ( byCmd == ROLE_MIS_BTNPENDING )//已接受，但未完成
+	else if ( byCmd == ROLE_MIS_BTNPENDING )//accepted but not completed
 	{
 		m_pMisBtn2->SetIsShow( true );
 		m_pMisBtn2->SetIsEnabled( false );

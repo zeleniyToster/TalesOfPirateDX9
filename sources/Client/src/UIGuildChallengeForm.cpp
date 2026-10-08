@@ -37,7 +37,7 @@ namespace GUI
 	bool CGuildChallengeMgr::Init()
 	{
 		CFormMgr &mgr = CFormMgr::s_Mgr;
-		//初始化npc对话表单
+		//initialises the NPC dialog form
 		frmGuildPK  = mgr.Find("frmGuildPK" );
 		if ( !frmGuildPK )
 		{	
@@ -196,7 +196,7 @@ namespace GUI
 	//-------------------------------------------------------------------------
 	void CGuildChallengeMgr::_ChargeEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey)
 	{
-		if( nMsgType!=CForm::mrYes )	// 修正竞拍点取消也收钱的 BUG  add by Philip.Wu  2006-07-25
+		if( nMsgType!=CForm::mrYes )	// fixed a BUG where cancelling the bid still charged the player  add by Philip.Wu  2006-07-25
 		{
 			g_stGuildChallenge.m_iSelIndex = -1;
 			return;

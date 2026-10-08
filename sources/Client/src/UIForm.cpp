@@ -1,8 +1,8 @@
 ﻿//------------------------------------------------------------------------
-//	2005/3/26	Arcol	修正定时器运作时设置定时器引起出错的BUG
-//	2005/3/24	Arcol	加入定时器
-//	2005/4/13	Arcol	修改表单风格,支持屏幕各边的相对位置设置
-//	2005/5/17	Arcol	删除定时器相关代码（定时器已被做成独立控件）
+//	2005/3/26	Arcol	fixed a BUG where setting the timer while the timer was running caused an error
+//	2005/3/24	Arcol	added the timer
+//	2005/4/13	Arcol	changed the form style and added support for positions relative to each screen edge
+//	2005/5/17	Arcol	removed the timer related code (the timer was made a separate control)
 //------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "uiform.h"
@@ -100,7 +100,7 @@ void CForm::_Copy( const CForm* rhs )
 CForm::~CForm()
 {
 	//delete _pImage;
-	SAFE_DELETE(_pImage); // UI当机处理
+	SAFE_DELETE(_pImage); // UI freeze handling
 	_TempleteClear();
 
 	CFormMgr::s_Mgr._DelMemory( this );
@@ -222,7 +222,7 @@ void CForm::Init()
 
 void CForm::OnSetScreen()
 {
-	int sw, sh;     // 实际显示区域
+	int sw, sh;     // the actual display area
 	RECT rc;
 	::GetClientRect( g_pGameApp->GetHWND(), &rc );
 	sw = rc.right  - rc.left;
@@ -240,7 +240,7 @@ void CForm::OnSetScreen()
 		_nOffHeight = 0;
 	}
 
-	//根据不同的表单类型设定其位置
+	//sets the position according to the form type
 	switch( _formStyle)
 	{
 	case fsNone:
@@ -307,7 +307,7 @@ void CForm::OnSetScreen()
 //	sw = rc.right  - rc.left;
 //	sh = rc.bottom - rc.top;
 //
-//	//根据不同的表单类型设定其位置
+//	//sets the position according to the form type
 //	switch( _formStyle)
 //	{
 //	case fsNone:
@@ -499,7 +499,7 @@ bool CForm::SetNextActiveCompent( bool isNext )
     int n = 0;
     int max = (int)_actives.size();
 
-    // 激活下一个控件
+    // activates the next control
     if( isNext )
     {
         do
@@ -669,7 +669,7 @@ void CForm::_OnActive()
 	{
         if( _pActive->evtLost ) _pActive->evtLost( this );
 
-		// 在两个非模态窗口前切换焦点
+		// switches focus between two modeless windows
 		if( !_pActive->GetIsModal() && !GetIsModal() )
 		{
 			CFormMgr::s_Mgr._UpdataShowForm( this );

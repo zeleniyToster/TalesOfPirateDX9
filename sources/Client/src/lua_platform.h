@@ -8,11 +8,11 @@ extern "C"
     #include <lualib.h>
 }
 
-// lua函数返回值定义
-#define LUA_FALSE			0 // 返回错误
-#define LUA_TRUE			1 // 返回正确
+// lua function return value definitions
+#define LUA_FALSE			0 // returns error
+#define LUA_TRUE			1 // returns correct
 
-// 出错调试输出
+// debug output on error
 #define PARAM_ERROR        { LG("lua", g_oLangRec.GetString(183),__FUNCTION__ ); }
 #define SCENE_NULL_ERROR   { LG("lua", g_oLangRec.GetString(184), __FUNCTION__);         }
 

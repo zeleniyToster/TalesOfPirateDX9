@@ -252,13 +252,13 @@ void CEditor::_TreeEvent(CTreeView* tree, bool press )
             if( press )
             {
                 lblSetIslandIndex->SetIsShow(true);
-                edtSetIslandIndex->SetCaption(""); // 清空
-                edtSetIslandIndex->SetIsShow(true); // 显示出来
-				CCompent::SetActive(edtSetIslandIndex); // 默认拥有输入焦点
+                edtSetIslandIndex->SetCaption(""); // clears it
+                edtSetIslandIndex->SetIsShow(true); // shows it
+				CCompent::SetActive(edtSetIslandIndex); // has the input focus by default
             }
             else
             {
-                edtSetIslandIndex->SetIsShow(false); // 隐藏
+                edtSetIslandIndex->SetIsShow(false); // hides it
                 lblSetIslandIndex->SetIsShow(false);
                 g_Editor.cancelIsland();
             }

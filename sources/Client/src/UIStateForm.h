@@ -18,7 +18,7 @@
 
 namespace GUI
 {
-// 玩家属性
+// player attributes
 class CStateMgr : public CUIInterface
 {
 public:
@@ -36,17 +36,17 @@ private:
 	static void MainMouseDown(CGuiData *pSender, int x, int y, DWORD key);
 
 private:
-	//frmState界面的控件
+	//the controls of the frmState screen
 	CForm*			frmState;
-	CLabelEx*		labName;                    //创建角色名称
-	CLabelEx*		labGuildName;               //创建公会名称
-	CLabelEx*		labStateLevel;              //创建等级
-	CLabelEx*		labStatePoint;              //创建属性点数 
-	CLabelEx*  		labSkillPoint;              //创建技能点数
-	CLabelEx*		labJobShow;					//职业
-	CLabelEx *      labFameShow;				//创建名声
+	CLabelEx*		labName;                    //create character name
+	CLabelEx*		labGuildName;               //create guild name
+	CLabelEx*		labStateLevel;              //create level
+	CLabelEx*		labStatePoint;              //create attribute points
+	CLabelEx*  		labSkillPoint;              //create skill points
+	CLabelEx*		labJobShow;					//class
+	CLabelEx *      labFameShow;				//create reputation
 
-	//6个基本属性
+	//6 basic attributes
 	CLabelEx*		labStrshow;
 	CLabelEx*		labDexshow;
 	CLabelEx*		labAgishow;
@@ -56,7 +56,7 @@ private:
 	CLabelEx*		labSailLevel;
 	CLabelEx*		labSailEXP;
 
-	//8个附加属性
+	//8 additional attributes
 	CLabelEx*		labMinAtackShow;
 	CLabelEx*		labMaxAtackShow;
 	CLabelEx*		labFleeShow;
@@ -68,19 +68,19 @@ private:
 	//CLabelEx*		labMfShow;
 	CLabelEx*		labPhysDefineShow;
 
-	//6 个基本属性按钮
-	CTextButton*   btnStr;						//创建力量栏
-	CTextButton*   btnAgi;						//创建敏捷栏
-	CTextButton*   btnCon;						//创建体质栏
-	CTextButton*   btnSta;						//创建精神栏
+	//6 basic attribute buttons
+	CTextButton*   btnStr;						//create strength bar
+	CTextButton*   btnAgi;						//create agility bar
+	CTextButton*   btnCon;						//create constitution bar
+	CTextButton*   btnSta;						//create spirit bar
 	//CTextButton*   btnLuk;						//创建幸运栏
-	CTextButton*   btnDex;						//创建专注栏     
+	CTextButton*   btnDex;						//create focus bar
 
 	CLabelEx*		labStateEXP;
 	CLabelEx*		labStateHP;
 	CLabelEx*		labStateSP;
 
-	CLabelEx*		labFameSho;              //创建名声
+	CLabelEx*		labFameSho;              //create reputation
 	CLabelEx*		labStateName;
 	CLabelEx*		labStateJob;
 

@@ -1,7 +1,7 @@
 ﻿
 //---------------------------
 //
-//  音频播放
+//  audio playback
 //  by Jampe
 //  2007/03/28
 //
@@ -22,52 +22,52 @@ class AudioSDL : public _singleton<AudioSDL>
 public:
     ~AudioSDL();
 
-    //  初始化声音系统
+    //  initialises the sound system
     bool init();
 
-    //  释放声音系统
+    //  releases the sound system
     void release();
 
-    //  声音系统是否有效
+    //  whether the sound system is valid
     bool is_valid();
 
-    //  获取音乐资源索引
+    //  gets the music resource index
     ulong get_resID(const char* resource, int type);
 
-    //  播放
+    //  play
     bool play(ulong id, bool loop = false);
 
-    //  渐入
+    //  fade in
     bool fadeIn(ulong id, int ms, bool loop = false);
 
-    //  渐退
+    //  fade out
     bool fadeOut(ulong id, int ms);
 
-    //  停止播放
+    //  stop playing
     bool stop(ulong id);
 
-    //  暂停
+    //  pause
     bool pause(ulong id);
 
-    //  恢复
+    //  resume
     bool resume(ulong id);
 
-    //  重置(仅音乐有效.如MP3,OGG等)
+    //  reset (valid for music only, such as MP3 or OGG)
     bool rewind(ulong id);
 
-    //  是否正在播放
+    //  whether it is playing
     bool is_playing(ulong id);
 
-    //  是否暂停
+    //  whether it is paused
     bool is_paused(ulong id);
 
-    //  是否停止
+    //  whether it is stopped
     bool is_stopped(ulong id);
 
-    //  调整音量
+    //  adjusts the volume
     bool volume(ulong id, int vol);
 
-    //  检测资源有效性(清楚超时未引用资源)(秒)
+    //  checks whether a resource is valid (clears timed out unreferenced resources) (seconds)
     void checkRes(ulong timeout = 300);
 
 protected:

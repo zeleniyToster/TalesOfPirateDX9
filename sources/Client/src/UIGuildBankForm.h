@@ -1,6 +1,6 @@
 ﻿//--------------------------------------------------------------
-// 名称:用户界面银行管理类
-// 设计思想:管理界面银行
+// Name: user interface bank management class
+// Design: manages the interface bank
 //--------------------------------------------------------------
 
 #ifndef UI_GUILDBANK_FORM_H
@@ -20,22 +20,22 @@ namespace GUI
 	class CGuildBankMgr : public CUIInterface
 	{
 	public:
-		void		ShowBank(); // 显示道具栏物品
-		CGoodsGrid* GetBankGoodsGrid() { return grdBank; } // 获取道具栏格子
+		void		ShowBank(); // shows the item slot items
+		CGoodsGrid* GetBankGoodsGrid() { return grdBank; } // gets an item slot cell
 
-		bool		PushToBank(CGoodsGrid& rkDrag, CGoodsGrid& rkSelf, int nGridID, CCommandObj& rkItem); // 将物品放入银行
-		bool		PopFromBank(CGoodsGrid& rkDrag, CGoodsGrid& rkSelf, int nGridID, CCommandObj& rkItem); //从银行中拖出物品
-		bool		BankToBank(CGoodsGrid& rkDrag, CGoodsGrid& rkSelf, int nGridID, CCommandObj& rkItem);  //将物品从一个银行移到另一个银行
+		bool		PushToBank(CGoodsGrid& rkDrag, CGoodsGrid& rkSelf, int nGridID, CCommandObj& rkItem); // puts an item into the bank
+		bool		PopFromBank(CGoodsGrid& rkDrag, CGoodsGrid& rkSelf, int nGridID, CCommandObj& rkItem); //drags an item out of the bank
+		bool		BankToBank(CGoodsGrid& rkDrag, CGoodsGrid& rkSelf, int nGridID, CCommandObj& rkItem);  //moves an item from one bank to another
 		void		UpdateGuildGold(const char* value);
 	protected:
-		virtual bool Init(); // 用户界面银行信息初始化
-		virtual void CloseForm(); //关闭表单 
+		virtual bool Init(); // user interface bank information initialisation
+		virtual void CloseForm(); //closes the form
 
 	private:
-		static void _MoveItemsEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey);  // 移动多个物品
-		static void _MoveAItemEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey);  //移动单个物品
-		static void _evtBankToBank(CGuiData *pSender,int nFirst, int nSecond, bool& isSwap);  //用于用户银行表单中道具互换
-		static void _evtOnClose( CForm* pForm, bool& IsClose );//关闭银行表单
+		static void _MoveItemsEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey);  // moves several items
+		static void _MoveAItemEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey);  //moves a single item
+		static void _evtBankToBank(CGuiData *pSender,int nFirst, int nSecond, bool& isSwap);  //used to swap items inside the user bank form
+		static void _evtOnClose( CForm* pForm, bool& IsClose );//closes the bank form
 		
 		static void _EnterGoldTake(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey);
 		static void _EnterGoldPut(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey);
@@ -43,12 +43,12 @@ namespace GUI
 		static void _OnClickGoldPut(CGuiData *pSender, int x, int y, DWORD key);
 
 	private:
-		stNumBox*		m_pkNumberBox; // 询问个数
+		stNumBox*		m_pkNumberBox; // asks for a count
 		stNetBank		m_kNetBank;
 
-		// 界面
-		CForm*			frmBank; // 银行表单
-		CGoodsGrid*	grdBank; // 格子表单
+		// interface
+		CForm*			frmBank; // bank form
+		CGoodsGrid*	grdBank; // cell form
 		CLabel*			labGuildMoney;
 		CTextButton*	btnGoldPut;
 		CTextButton*	btnGoldTake;

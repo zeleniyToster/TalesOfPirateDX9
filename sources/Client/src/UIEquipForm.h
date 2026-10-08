@@ -12,7 +12,7 @@ namespace GUI
 {
 class CItemCommand;
 
-// 技能，道具，快捷方式，装备
+// skill, item, shortcut, equipment
 class CEquipMgr : public CUIInterface
 {
 public:
@@ -25,23 +25,23 @@ public:
     void            UpdataEquipSpy( const stNetChangeChaPart& SPart, CCharacter* pCha );
     void            UpdataEquipData( const stNetChangeChaPart& SPart, CCharacter* pCha );
 
-    void            UpdateShortCut( stNetShortCut& stShortCut );		// 更新快捷栏
-	void			DelFastCommand( CCommandObj* pObj );				// 删除当前快捷栏
+    void            UpdateShortCut( stNetShortCut& stShortCut );		// updates the shortcut bar
+	void			DelFastCommand( CCommandObj* pObj );				// deletes the current shortcut bar
     bool            ExecFastKey( int key );
 	void			FastChange(int nIndex, short sGridID, char chType,bool update = false);
 
-	void            CloseAllForm();		// 关闭窗体
+	void            CloseAllForm();		// closes the window
 
-	// 将快捷栏与道具栏比较,与服务器不相同的快捷栏,向服务器发送协议更新快捷栏,返回更新的个数
-	// 用于道具在道具栏交换时
+	// compares the shortcut bar with the item slot and, for shortcuts that differ from the server, sends a protocol to the server to update the shortcut bar; returns the number updated
+	// used when items are swapped inside the item slot
 	int				RefreshServerShortCut();							
 
-	CGoodsGrid* GetGoodsGrid() { return grdItem; }	// 操作道具栏表格
-	CForm* GetItemForm() { return frmInv; }   // 操作道具表单
+	CGoodsGrid* GetGoodsGrid() { return grdItem; }	// operates on the item slot grid
+	CForm* GetItemForm() { return frmInv; }   // operates on the item form
 
 	CForm* stateDrags;
 
-	// 从装备栏卸载道具到道具栏
+	// unloads an item from the equipment slot into the item slot
 	void			UnfixToGrid( CCommandObj* pItem, int nGridID, int nLink );
 
 	CSkillRecord*	FindSkill( int nID );
@@ -55,14 +55,14 @@ public:
 	
 	void 			UpdateIMP(int imp);
 
-	// 获得道具在当前背包中总的个数
+	// gets the total number of an item in the current bag
 	int				GetItemCount(int nID);
 
 	static CGuiPic*		GetChargePic( unsigned int n );
 
 	void ShowSellPrompt();
-    static void		evtThrowItemEvent(CGuiData *pSender,int id,bool& isThrow);					// 从道具栏中扔出道具
-    static void		evtSwapItemEvent(CGuiData *pSender,int nFirst, int nSecond, bool& isSwap); // 道具栏中交换道具
+    static void		evtThrowItemEvent(CGuiData *pSender,int id,bool& isThrow);					// throws an item out of the item slot
+    static void		evtSwapItemEvent(CGuiData *pSender,int nFirst, int nSecond, bool& isSwap); // swaps items inside the item slot
 
 protected:
 	virtual bool Init();
@@ -105,20 +105,20 @@ private:
 	static void		_evtSpyFormShow(CGuiData *pSender);
 
 	static void		_evtSkillUpgrade(CSkillList *pSender, CSkillCommand* pSkill);
-    static void		_evtFastChange(CGuiData *pSender, CCommandObj* pItem, bool& isAccept);		// 快捷栏发生变化
-	static void		_evtEquipEvent(CGuiData *pSender, CCommandObj* pItem, bool& isAccept);		// 从道具栏中装备到装备栏
-	static void		_evtThrowEquipEvent(CGuiData *pSender, CCommandObj* pItem, bool& isThrow);  // 从装备栏扔出装备
+    static void		_evtFastChange(CGuiData *pSender, CCommandObj* pItem, bool& isAccept);		// the shortcut bar changed
+	static void		_evtEquipEvent(CGuiData *pSender, CCommandObj* pItem, bool& isAccept);		// equips from the item slot into the equipment slot
+	static void		_evtThrowEquipEvent(CGuiData *pSender, CCommandObj* pItem, bool& isThrow);  // throws equipment out of the equipment slot
 
 	static void		_evtButtonClickEvent( CGuiData *pSender, int x, int y, DWORD key);
 	static void		_evtRMouseGridEvent(CGuiData *pSender,CCommandObj* pItem,int nGridID);
 
 	bool			_UpdataEquip( SItemGrid& Item, int nLink );
 	bool			_UpdataEquipSpy( SItemGrid& Item, int nLink );
-    void			_ActiveFast( int num );         // 激活第几栏
+    void			_ActiveFast( int num );         // activates which bar
 
 	static void		_evtItemFormMouseEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey);
 
-	// 加锁 MSGBOX 确认
+	// lock added, MSGBOX confirm
 	static void		_CheckLockMouseEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey);
 
 	static void _RotateChaLeft(CGuiData *sender, int x, int y, DWORD key );
@@ -137,31 +137,31 @@ private:
 	static int				lIMP;
 	CForm*			frmSkill;
 
-    CLabel*         labPoint;                   // 剩余技能点数
-    CLabel*         labPointLife;               // 剩余生活技能点数
-    CSkillList*     lstFightSkill;              // 战斗技能栏
-    CSkillList*     lstLifeSkill;               // 生活技能栏
-    CSkillList*     lstSailSkill;               // 航海技能栏
+    CLabel*         labPoint;                   // remaining skill points
+    CLabel*         labPointLife;               // remaining life skill points
+    CSkillList*     lstFightSkill;              // combat skill bar
+    CSkillList*     lstLifeSkill;               // life skill bar
+    CSkillList*     lstSailSkill;               // navigation skill bar
 
 	CTextButton* btnOpenTempBag;
 	
 	
 	CCheckBox* chkLinkEqForm;
 	
-	CForm*			frmItemSpy;					// 道具表单
-	CGoodsGrid*     grdItem;					// 道具栏
-	COneCommand*    cnmEquip[enumEQUIP_NUM];    // 装备栏
-	COneCommand*    cnmEquipSpy[enumEQUIP_NUM];    // 装备栏
+	CForm*			frmItemSpy;					// item form
+	CGoodsGrid*     grdItem;					// item slot
+	COneCommand*    cnmEquip[enumEQUIP_NUM];    // equipment slot
+	COneCommand*    cnmEquipSpy[enumEQUIP_NUM];    // equipment slot
     stNetChangeChaPart    stEquip;
     stNetChangeChaPart    stEquipSpy;
     stNetShortCut         _stShortCut;
 
-    int				_nFastCur;					// 快捷栏目前在第几位
+    int				_nFastCur;					// which slot the shortcut bar is currently on
     CFastCommand**  _pFastCommands;
-	CLabel*			_pActiveFastLabel;			// 用于激活快捷栏的页码
+	CLabel*			_pActiveFastLabel;			// the page number used to activate the shortcut bar
 
-	CLabel*			lblGold;					// 金钱
-	CImage*			imgItem4;					// 道具前4格的图片
+	CLabel*			lblGold;					// money
+	CImage*			imgItem4;					// the pictures for the first 4 item cells
 
 	CImage*			imgLock;
 	CImage*			imgUnLock;
@@ -218,23 +218,23 @@ private:
 	vskill		_skills;
 
 	typedef std::vector<int>	ints;
-	vskill		_cancels;			// 可被击活的技能状态
+	vskill		_cancels;			// skill states that can be reactivated
 
 	typedef std::vector<CSkillStateRecord*>  states;
-	states		_charges;			// 充电的技能状态
+	states		_charges;			// charging skill states
 
 	static CGuiPic	_imgCharges[enumEQUIP_NUM];
 
 	struct SSplitItem
 	{
-		static void		_evtSplitItemEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey);	// 拆分道具回调
+		static void		_evtSplitItemEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey);	// split item callback
 		int			nFirst;
 		int			nSecond;
 		CCharacter*	pSelf;
 	};
 	static SSplitItem	SSplit;
 
-public:	// 修理道具相关
+public:	// item repair related
 	void	ShowRepairMsg( const char* pItemName, long lMoney );
 	void    SetIsShow(bool bShow);
 

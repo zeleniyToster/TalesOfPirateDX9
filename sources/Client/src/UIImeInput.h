@@ -1,7 +1,7 @@
 ﻿//----------------------------------------------------------------------
-// 名称:输入法
-// 作者:lh 2004-07-28
-// 最后修改日期:2004-10-09
+// Name: input method
+// Author: lh 2004-07-28
+// Last modified date: 2004-10-09
 //----------------------------------------------------------------------
 #pragma once
 #include "uiGuidata.h"
@@ -10,14 +10,14 @@ namespace GUI
 {
 class CImeInput
 {
-    static const int InputX = 120;     //  输入框宽
-    static const int InputY = 170;     //  输入框高
+    static const int InputX = 120;     //  input box width
+    static const int InputY = 170;     //  input box height
 	enum
 	{
 		MAX_CHAR = 256,
 	};
 
-private:	// 禁止拷贝,复制,克隆
+private:	// copying, pasting and cloning are forbidden
 	CImeInput& operator=(const CImeInput& rhs);
 	CImeInput(const CImeInput& rhs);
 
@@ -69,15 +69,15 @@ private:
     char        _strSBC[5];
     char        _strInterpunction[7];
 
-	HIMC		_hImc;		// 输入句柄
+	HIMC		_hImc;		// input handle
 	HIMC		_oldImc;
-	LPCANDIDATELIST		_pList;			// 预选字列表
+	LPCANDIDATELIST		_pList;			// candidate character list
 
-	int			_nWidth, _nHeight;		// 宽高
+	int			_nWidth, _nHeight;		// width and height
 
 };
 
-// 内联函数
+// inline function
 inline void	CImeInput::OnCreate( HWND hWnd, HINSTANCE hInst )
 {
 	HIMC hImc = ::ImmCreateContext();

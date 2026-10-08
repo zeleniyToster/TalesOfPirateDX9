@@ -1,12 +1,12 @@
 ﻿//--------------------------------------------------------------
-// 名称:GUI接口
-// 作者:lh 2004-07-15
-// 设计思想:CGuiDat管理内存，提供控件接口
-//		     CForm显示，处理事件，切换控件焦点，装载存储资源文件
-// 注:所有实例只能在在堆中生成，由程序开始时静态分配
-//    退出时释放资源
-// 修改日期:2004-10-26 by lh
-// 修改内容:将CItemObj的脚本功能分离为CUIScript,CItemRow支持多态
+// Name: GUI interface
+// Author: lh 2004-07-15
+// Design: CGuiDat manages memory and provides the control interface
+//		     CForm displays, handles events, switches control focus, and loads and stores resource files
+// note: every instance may only be created on the heap, statically allocated when the program starts
+//    releases the resources on exit
+// Modified: 2004-10-26 by lh
+// Change: the script functionality of CItemObj was split out into CUIScript; CItemRow supports polymorphism
 //--------------------------------------------------------------
 
 #pragma once
@@ -20,7 +20,7 @@
 #include "UIFont.h"
 #include "UIPicture.h"
 
-// 以下宏用于支持Gui克隆
+// the following macros are used to support GUI cloning
 #define GUI_CLONE(TName)	\
 public:							\
 	virtual CGuiData* Clone() { return new (##TName)(*this); }	\
@@ -33,13 +33,13 @@ public:							\
 
 namespace GUI
 {
-// 用于函数MouseRun的参数key中,鼠标行为的集合
+// the set of mouse behaviours, used in the key parameter of the MouseRun function
 enum eMouseState
 {
 	Mouse_LDown		= 0x0001,
 	Mouse_MDown		= 0x0002,
 	Mouse_RDown		= 0x0004,
-	Mouse_Down		= 0x0008,	// 有键按下
+	Mouse_Down		= 0x0008,	// a button is pressed
 	Mouse_LUp		= 0x0010,
 	Mouse_MUp		= 0x0020,
 	Mouse_RUp		= 0x0040,
@@ -47,27 +47,27 @@ enum eMouseState
 	Mouse_LDB		= 0x0100,
 	Mouse_MDB		= 0x0200,
 	Mouse_RDB		= 0x0400,
-	Mouse_LClick	= 0x0800,	// 鼠标左键点击
+	Mouse_LClick	= 0x0800,	// left mouse click
 	Mouse_MClick	= 0x1000,	
 	Mouse_RClick	= 0x2000,	
 };
 
 enum eCompentAlign
 {
-	caNone,				// 不改变位置
-	caLeft,				// 充满左边
-	caLeftUp,			// 放置在最左上角
+	caNone,				// does not change position
+	caLeft,				// fills the left side
+	caLeftUp,			// placed at the top left corner
 	caUp,
 	caRightUp,
 	caRight,
 	caRightBottom,
 	caBottom,
 	caLeftBottom,	
-	caClient,			// 充满全部
-    caCenter,           // 完全居中
-    caWidthCenter,      // 水平居中
-    caHeightCenter,     // 上下居中
-	caEnd,				// 结束符，无意义
+	caClient,			// fills everything
+    caCenter,           // completely centred
+    caWidthCenter,      // horizontally centred
+    caHeightCenter,     // vertically centred
+	caEnd,				// terminator, meaningless
 };
 
 const BYTE DROP_ALPHA = 0xA0;
@@ -85,7 +85,7 @@ typedef void (*CompentFun)(CCompent* pSender, unsigned int index );
 typedef bool (*GuiHotKeyEvent)(CForm *pSender, char key );
 typedef void (*GuiItemClickEvent)(std::string strItem);
 
-// GUI对象拖动
+// GUI object dragging
 class CDrag
 {
 public:
@@ -103,7 +103,7 @@ public:
 	void			SetYare( unsigned int n )	{ if(n<30) _nYareLen = n; }
 
 	bool			MouseRun( int x, int y, DWORD key );
-	int				BeginMouseRun( CGuiData* gui, bool InRect, int x, int y, DWORD key );	// 确定鼠标状态,返回0无动作
+	int				BeginMouseRun( CGuiData* gui, bool InRect, int x, int y, DWORD key );	// decides the mouse state; returns 0 for no action
 
 	static CDrag*		GetDrag()		{ return _pDrag;	}
 	static CGuiData*	GetParent()		{ return _pParent;	}
@@ -139,13 +139,13 @@ public:
 	CCursor::eState	GetDragCursor()							{ return _crDrag;	}
 
 public:
-	GuiMouseEvent	evtMouseDragBegin;			// 开始拖动
-	GuiMouseEvent	evtMouseDragMove;			// 正在拖动事件
-	GuiMouseEvent	evtMouseDragEnd;			// 拖动结束
+	GuiMouseEvent	evtMouseDragBegin;			// dragging starts
+	GuiMouseEvent	evtMouseDragMove;			// dragging event
+	GuiMouseEvent	evtMouseDragEnd;			// dragging ends
 
 private:
-	static CDrag*		_pDrag;					// 正在拖动中的对象
-	static CGuiData*	_pParent;				// 正在拖动中的gui
+	static CDrag*		_pDrag;					// the object currently being dragged
+	static CGuiData*	_pParent;				// the gui currently being dragged
 
 	static int			_nDragX, _nDragY;
 	static int			_nStartX, _nStartY;
@@ -153,19 +153,19 @@ private:
 	int				_nYareLen;
 	eState			_eState;
 
-	bool			_IsMove;					// 当移动结束后,直接将控件移动
-	bool			_IsUseGrid;					// 是否使用对齐表格
+	bool			_IsMove;					// once the movement ends, the control is moved directly
+	bool			_IsUseGrid;					// whether the alignment grid is used
 
-	CCursor::eState	_crDragIn;					// 进入拖动区域内的光标
-	CCursor::eState	_crDrag;					// 拖动时的光标
-    static 	CCursor::eState	_crNormal;			// 正常情况下的光标
+	CCursor::eState	_crDragIn;					// the cursor inside the drag area
+	CCursor::eState	_crDrag;					// the cursor while dragging
+    static 	CCursor::eState	_crNormal;			// the cursor in normal situations
 
-	static DWORD    _dwGridWidth, _dwGridHeight;// 对齐表格的宽高
-	static DWORD	_dwMouseUpTime;				// 用于开始拖动后,已经没有MouseUP消息,但鼠标却已松开达到一定时间后取消拖动
+	static DWORD    _dwGridWidth, _dwGridHeight;// the width and height of the alignment grid
+	static DWORD	_dwMouseUpTime;				// after dragging has started, if there is no more MouseUP message but the mouse has been released for a while, the drag is cancelled
 
 };
 
-// 以下宏用于支持Gui克隆
+// the following macros are used to support GUI cloning
 #define ITEM_CLONE(TName)	\
 public:							\
 	virtual TName* Clone() { return new (##TName)(*this); }	\
@@ -177,7 +177,7 @@ public:							\
 	}
 
 
-// 显示在GUI对象中的小对象
+// a small object displayed inside a GUI object
 class CItemObj		
 {
 public:
@@ -205,7 +205,7 @@ public:
 
 };
 
-// GUI祖先类
+// GUI ancestor class
 class CForm;
 class CGuiData
 {
@@ -217,12 +217,12 @@ public:
 	virtual ~CGuiData();
 	GUI_CLONE(CGuiData)
 
-	virtual void		Init() {}			// 用于外部初始化，如装载图片等
+	virtual void		Init() {}			// used for external initialisation, such as loading images
 
-	virtual void		Render(){}			// 显示
-	virtual void		Refresh();			// 用于刷新显示用的绝对坐标
+	virtual void		Render(){}			// display
+	virtual void		Refresh();			// absolute coordinates used to refresh the display
 
-	// 键盘鼠标处理过程，已处理，返回true
+	// keyboard and mouse handling; returns true when already handled
 	virtual bool		MouseRun( int x, int y, DWORD key );
 	virtual bool		MouseScroll( int nScroll )		{ return _IsMouseIn;}
 
@@ -235,7 +235,7 @@ public:
 	virtual CGuiPic*	GetImage()						{ return NULL;		}
 
 	virtual CForm*		GetForm()						{ return NULL;		}
-	virtual void		SetCaption( const char * str) {}	// 设置显示的文本
+	virtual void		SetCaption( const char * str) {}	// sets the displayed text
 	virtual void		SetTextColor( DWORD color ) {}
 	virtual void		SetIsDrag( bool v );
 
@@ -246,13 +246,13 @@ public:
 
     virtual void        RenderHint( int x, int y );
 
-    virtual bool        IsAllowActive();            // 判断是否可以激活
+    virtual bool        IsAllowActive();            // decides whether it can be activated
 
-	virtual void		Reset()					{};	// 用于外部调用,让滚动条清零等工作
+	virtual void		Reset()					{};	// used by external calls, for things like zeroing the scroll bar
 
 public:
-	static HWND		GetHWND();						// 得到windows handle
-	static CGuiData* GetGui( DWORD dwID ) {			// 根据索引得到控件对象
+	static HWND		GetHWND();						// gets the windows handle
+	static CGuiData* GetGui( DWORD dwID ) {			// gets the control object by index
         if( dwID==0 )
         {
             LG( "gui", "NULL GUI\n" );
@@ -265,8 +265,8 @@ public:
         }
 		return _AllGui[dwID-1]; 
 	}
-	static void		ClearAllGui();					// 清除所有控件
-	static void		InitMemory();					// 在生成所有控件后调用
+	static void		ClearAllGui();					// clears every control
+	static void		InitMemory();					// called after every control has been created
 
     static bool         SetHintItem( CItemObj* pObj );
     static CItemObj*    GetHintItem()                   { return _pHintItem;    }
@@ -309,54 +309,54 @@ public:
 	void		SetPointer( void* v )		{ _pVoid = v;					}
 	void*		GetPointer()				{ return _pVoid;				}
 
-	void		ScriptSetShow( bool v )		{ _bShow = v;					}	// 外部脚本用
+	void		ScriptSetShow( bool v )		{ _bShow = v;					}	// used by external scripts
 
 	int			nTag;
 
 public:
 	
 	bool		InRect(int x, int y)		{ return _IsMouseIn = ( x >= _nX1 && x<= _nX2 && y >=_nY1 && y <=_nY2 );	}
-	bool        IsNoDrag(int x, int y, DWORD key);		// 如果没有开始拖动,并且点在区域内,返回true
+	bool        IsNoDrag(int x, int y, DWORD key);		// if dragging has not started and the click is inside the area, returns true
 
 	static void SetScreen( float dx, float dy, float sx, float sy ) {
 		_fDrawX = dx, _fDrawY = dy,  _fScreenX = sx,  _fScreenY = sy;
 	}
-	void		LineFrame();					// 画一个边框
-	void        SelectChaLineFrame() ;          //画一个死人框
+	void		LineFrame();					// draws a border
+	void        SelectChaLineFrame() ;          //draws a dead frame
 
-	void		LineThinFrame();				// 画一个细框
-	void		FillFrame();					// 填充
+	void		LineThinFrame();				// draws a thin frame
+	void		FillFrame();					// fill
 
 	static void	SetMousePos( int x, int y )	{ _nMouseX=x; _nMouseY=y;		}
 	static int  GetMouseX()					{ return _nMouseX;				}
 	static int  GetMouseY()					{ return _nMouseY;				}
 	
-	static void SetCursor( CCursor::eState v )	{ _eCursor = v;				}		// 仅用于MouseRun中
+	static void SetCursor( CCursor::eState v )	{ _eCursor = v;				}		// used only inside MouseRun
 	static CCursor::eState GetCursor()		{ return _eCursor;				}
 
 protected:
-	virtual void _AddForm() {}			// 将自己加入到所属的Form中
+	virtual void _AddForm() {}			// adds itself to the Form it belongs to
 
 protected:
 	typedef std::vector<CGuiData*> vcs;
-	static vcs	_AllGui;		// 存放所有的控件资源
+	static vcs	_AllGui;		// holds every control resource
 
-	DWORD		_dwID;			// 注册控件的ID-即索引，外部不可改变
+	DWORD		_dwID;			// the registered control ID, that is the index; not to be changed from outside
 
 	CGuiData*	_pParent;
 
-	std::string		_strName;				// 标识
-	int			_nWidth, _nHeight;		// 宽高
-	int			_nLeft, _nTop;			// 相对坐标
+	std::string		_strName;				// identifier
+	int			_nWidth, _nHeight;		// width and height
+	int			_nLeft, _nTop;			// relative coordinates
 
-	int			_nX1,_nX2, _nY1, _nY2;	// 显示用的绝对坐标
+	int			_nX1,_nX2, _nY1, _nY2;	// absolute coordinates used for display
 
-	bool		_bShow;			// 是否显示
-	bool		_bEnabled;		// 是否可用
+	bool		_bShow;			// whether it is shown
+	bool		_bEnabled;		// whether it is available
 	CDrag*		_pDrag;
 
-	bool		_IsMouseIn;		// 鼠标是否在区域内
-    std::string		_strHint;		// 控件提示
+	bool		_IsMouseIn;		// whether the mouse is inside the area
+    std::string		_strHint;		// control tooltip
 
 	void*		_pVoid;
 
@@ -367,11 +367,11 @@ protected:
 
 private:
 	static		float		_fDrawX, _fDrawY,  _fScreenX,  _fScreenY;
-	static		CGuiPic		_imgLevel,	_imgVertical;	// 用于画边框的水平线和垂直线
+	static		CGuiPic		_imgLevel,	_imgVertical;	// the horizontal and vertical lines used to draw the border
     static      CItemObj*   _pHintItem;
 
-	static		int			_nMouseX,	_nMouseY;		// 目前鼠标所在的位置
-	static		CCursor::eState		_eCursor;			// 显示在gui上的光标
+	static		int			_nMouseX,	_nMouseY;		// the current mouse position
+	static		CCursor::eState		_eCursor;			// the cursor shown on the gui
 };
 
 class CGuiTime;
@@ -382,7 +382,7 @@ class CGuiTime
 	friend class CFormMgr;
 public:
 	static  CGuiTime*	Create( DWORD dwInterval=0, GuiTimerEvent evt=NULL );
-	bool	Release();					// 外部删除对象
+	bool	Release();					// external object deletion
 
 	static void			FrameMove(DWORD dwTime);
 	static  CGuiTime*	Find( DWORD id ); 
@@ -398,7 +398,7 @@ public:
 	void	SetUserPoint( PVOID v )	{ _lpData = v;			}
 	PVOID	GetUserPoint()			{ return _lpData;		}
 	
-	bool	IsTime()				{	// 是否到达时间点,不能阻塞
+	bool	IsTime()				{	// whether the time point is reached; must not block
 		if( _IsTime ) {
 			_IsTime = false;
 			return true;
@@ -409,13 +409,13 @@ public: // event
 	GuiTimerEvent	evtTime;
 
 private:
-	DWORD	_dwIndex;			// 唯一ID
+	DWORD	_dwIndex;			// unique ID
 	DWORD 	_dwInterval;		// 等于零,不激活;
 
 	bool	_IsTime;
 	DWORD	_dwLastTime;
 
-	// 用户数据
+	// user data
 	DWORD	_nEventID;
 	PVOID	_lpData;
 
@@ -431,7 +431,7 @@ private:
 
 };
 
-// 内联函数
+// inline function
 inline bool	CGuiData::IsNoDrag(int x, int y, DWORD key)
 { 
 	InRect( x, y );

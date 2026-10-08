@@ -30,16 +30,16 @@ void CUdpSocket::Close()
 
 bool CUdpSocket::RegeditReadEvent( HWND hWnd, DWORD dwMessage )
 {
-	//FD_READ： 网络数据包到达 
-	//FD_WRITE： 发送网络数据 
-	//FD_OOB： OOB数据到达 
-	//FD_ACCEPT： 收到连接请求 
-	//FD_CONNECT： 已建立连接 
-	//FD_CLOSE： 断开连接 
-	//FD_QOS： 服务质量(QoS)发生变化 
-	//FD_GROUP_QOS： 保留事件 
-	//FD_ROUTING_INTERFACE_CHANGE： 指定地址的路由接口发生变化 
-	//FD_ADDRESS_LIST_CHANGE： 本地地址变化 
+	//FD_READ: a network packet arrived
+	//FD_WRITE: sending network data
+	//FD_OOB: OOB data arrived
+	//FD_ACCEPT: a connection request was received
+	//FD_CONNECT: the connection was established
+	//FD_CLOSE: the connection was closed
+	//FD_QOS: the quality of service (QoS) changed
+	//FD_GROUP_QOS: reserved event
+	//FD_ROUTING_INTERFACE_CHANGE: the routing interface for the given address changed
+	//FD_ADDRESS_LIST_CHANGE: the local address list changed
 
 	if (WSAAsyncSelect(m_Socket, hWnd, dwMessage, FD_READ) == SOCKET_ERROR)
 	{
@@ -54,7 +54,7 @@ bool CUdpSocket::OnNetworkEvent( WPARAM wParam, LPARAM lParam )
     switch (WSAGETSELECTEVENT(lParam))
     {
     case FD_READ:
-        // 接收数据
+        // receives data
         break;
     case FD_WRITE:
         break;
@@ -95,11 +95,11 @@ bool CUdpServer::Init( int nPort )
 	}
 
 	SOCKADDR_IN m_saAddr;
-	m_nPort = nPort;							// 端口号
+	m_nPort = nPort;							// port number
 	ZeroMemory(&m_saAddr, sizeof(m_saAddr));
 	m_saAddr.sin_family      = AF_INET;
-	m_saAddr.sin_port        = htons(m_nPort);  // 如果此值为0，系统将随机选择一个未被使用的端口号
-	m_saAddr.sin_addr.s_addr = INADDR_ANY;      // 填入本机IP地址
+	m_saAddr.sin_port        = htons(m_nPort);  // if this value is 0 the system picks an unused port at random
+	m_saAddr.sin_addr.s_addr = INADDR_ANY;      // fills in the local IP address
 	if (bind(m_Socket, (LPSOCKADDR) &m_saAddr, sizeof(m_saAddr)) == SOCKET_ERROR)
 	{
 		return false;
@@ -186,8 +186,8 @@ bool CUdpClient::Init(const char* szIP, unsigned int nPort, int nReadTimeOut)
 	}
 
 	m_ServerAddr.sin_family=AF_INET; 
-	m_ServerAddr.sin_port=htons(nPort);				// server的监听端口 
-	m_ServerAddr.sin_addr.s_addr=inet_addr(szIP);	// server的地址 　　 
+	m_ServerAddr.sin_port=htons(nPort);				// the listening port of the server
+	m_ServerAddr.sin_addr.s_addr=inet_addr(szIP);	// the address of the server
 	m_Socket = socket(AF_INET,SOCK_DGRAM,0); 
 	if( m_Socket == INVALID_SOCKET )
 		return false;

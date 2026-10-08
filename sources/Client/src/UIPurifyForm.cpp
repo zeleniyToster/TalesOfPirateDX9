@@ -48,7 +48,7 @@ namespace GUI
 			return false;
 		}
 
-		// Command下面提示
+		// the hint under the Command
 		char szName[32] = {0};
 		for(int i = 0; i < TYPE_COUNT; ++i)
 		{
@@ -103,7 +103,7 @@ namespace GUI
 
 	void CPurifyMgr::CloseForm()
 	{
-		// 不作任何处理
+		// does nothing
 	}
 
 
@@ -115,7 +115,7 @@ namespace GUI
 
 			if(PURIFY_TYPE <= nType && nType < PURIFY_TYPE + TYPE_COUNT)
 			{
-				m_nType = nType;  // 保存类型
+				m_nType = nType;  // saves the type
 
 				for(int i = 0; i < TYPE_COUNT; ++i)
 				{
@@ -189,7 +189,7 @@ namespace GUI
 	}
 
 
-	// 是否是可以装备的物品
+	// whether it is an item that can be equipped
 	bool CPurifyMgr::IsEquipItem(CItemCommand& rItem)
 	{
 		CItemRecord* pItemRecord = rItem.GetItemInfo();
@@ -199,20 +199,20 @@ namespace GUI
 
 			switch(sType)
 			{
-			case 1:		//剑
-			case 2:		//巨剑
-			case 3:		//弓
-			case 4:		//火枪
-			case 7:		//匕首
-			case 9:		//法杖
-			case 11:	//盾牌
-			case 20:	//帽子
-			case 22:	//衣服
-			case 23:	//手套
-			case 24:	//鞋子
+			case 1:		//sword
+			case 2:		//greatsword
+			case 3:		//bow
+			case 4:		//musket
+			case 7:		//dagger
+			case 9:		//staff
+			case 11:	//shield
+			case 20:	//hat
+			case 22:	//clothing
+			case 23:	//gloves
+			case 24:	//boots
 			case 25:	//rings
 			case 26:	//necks
-			case 27:	//纹身
+			case 27:	//tattoo
 			case 81:	//brac
 			case 82:	//brac
 			case 83:	//brac
@@ -236,10 +236,10 @@ namespace GUI
 
 			switch(nType)
 			{
-			case 1067://	水晶锅	
-			case 1068://	黑洞水晶	
-			case 1069://	反物质水晶	
-			case 1070://	粒子流水晶
+			case 1067://	crystal pot
+			case 1068://	black hole crystal
+			case 1069://	antimatter crystal
+			case 1070://	particle flow crystal
 				return true;
 
 			default:
@@ -260,7 +260,7 @@ namespace GUI
 
 			switch(nType)
 			{
-			case 2236://	修补工具
+			case 2236://	repair tool
 				return true;
 
 			default:
@@ -274,13 +274,13 @@ namespace GUI
 
 	void CPurifyMgr::PushItem(int iIndex, CItemCommand& rItem)
 	{
-		// 判断道具是否可以拖
+		// decides whether the item can be dragged
 		if(! rItem.GetIsValid())
 		{
 			return;
 		}
 
-		// 查看原来的Cmd中是否已经有Item了，如果有则移出
+		// checks whether the original Cmd already has an Item and removes it if so
 		CItemCommand* pItemCommand =  
 			dynamic_cast<CItemCommand*>(cmdEquipPurify[iIndex]->GetCommand());
 		if (pItemCommand)
@@ -288,9 +288,9 @@ namespace GUI
 			PopItem(iIndex);
 		}
 
-		// 记录Item在物品栏中的位置
+		// records the position of the Item in the item slot
 		m_iPurifyItemPos[iIndex] = g_stUIEquip.GetGoodsGrid()->GetDragIndex();
-		// 将Item相应的物品栏灰调
+		// greys out the item slot of the Item
 		rItem.SetIsValid(false);
 
 		// 将创建的Item放入Cmd中，这里用new将会在PopItem()中删除
@@ -309,9 +309,9 @@ namespace GUI
 			dynamic_cast<CItemCommand*>(cmdEquipPurify[iIndex]->GetCommand());
 		if (! pItemCommand) return;
 
-		cmdEquipPurify[iIndex]->DelCommand();	// 该函数将删除delete Item
+		cmdEquipPurify[iIndex]->DelCommand();	// this function deletes the Item
 
-		// 将Item相应的物品栏恢复成可用
+		// puts the item slot of the Item back to usable
 		CCommandObj* pItem = 
 					g_stUIEquip.GetGoodsGrid()->GetItem(m_iPurifyItemPos[iIndex]);
 		if (pItem)
@@ -319,12 +319,12 @@ namespace GUI
 			pItem->SetIsValid(true);
 		}
 
-		// 记录Item在物品栏中的位置
+		// records the position of the Item in the item slot
 		m_iPurifyItemPos[iIndex] = NO_USE;
 	}
 
 
-	// 设置界面，并计算价格
+	// sets up the screen and computes the price
 	void CPurifyMgr::SetPurifyUI()
 	{
 		CItemCommand* pItem1 = dynamic_cast<CItemCommand*>(cmdEquipPurify[PURIFY_ONE]->GetCommand());
@@ -347,12 +347,12 @@ namespace GUI
 			return;
 		}
 
-		// 二个栏位都已经放入，允许点击“确定”按钮
+		// both slots are filled, so the 'confirm' button may be clicked
 		btnForgeYes->SetIsEnabled(true);
 
 		int nMoney = 0;
 
-		// 道具提纯
+		// item purifying
 		if(GetType() == CPurifyMgr::PURIFY_TYPE)
 		{
 			//int nMainLevel = pItem1->GetItemInfo()->sNeedLv;
@@ -360,7 +360,7 @@ namespace GUI
 
 			nMoney = 1000000;
 		}
-		// 贝壳
+		// shell
 		else if(GetType() == CPurifyMgr::ENERGY_TYPE)
 		{
 			int nBatteryID = pItem2->GetItemInfo()->lID;
@@ -373,7 +373,7 @@ namespace GUI
 				nMoney = 1000;
 			}
 		}
-		// 宝石
+		// gem
 		else if(GetType() == CPurifyMgr::GETSTONE_TYPE)
 		{
 			int nStoneLevel = pItem1->GetForgeInfo().nStoneLevel[0] + 
@@ -381,7 +381,7 @@ namespace GUI
 							  pItem1->GetForgeInfo().nStoneLevel[2];
 			nMoney = nStoneLevel * 10000;
 		}
-		// 修理破锅
+		// repairing the broken pot
 		else if(g_stUIPurify.GetType() == CPurifyMgr::REPAIR_OVEN_TYPE)
 		{
 			//int nOvenLevel = 0;
@@ -405,7 +405,7 @@ namespace GUI
 	}
 
 
-	// 发送提纯协议
+	// sends the purify protocol
 	void CPurifyMgr::SendNetProtocol()
 	{
 		CS_ItemForgeAsk(true, GetType(), m_iPurifyItemPos, PURIFY_CELL_COUNT);
@@ -414,10 +414,10 @@ namespace GUI
 
 ///////////////////////////////////////////////////////////////////////////
 //
-//	界面消息处理
+//	screen message handling
 //
 
-	// 拖入主要物品
+	// the main item is dragged in
 	void CPurifyMgr::_evtDragPurifyOne(CGuiData *pSender,CCommandObj* pItem,bool& isAccept)
 	{
 		CItemCommand* pItemCommand =  dynamic_cast<CItemCommand*>(pItem);
@@ -426,7 +426,7 @@ namespace GUI
 		CGoodsGrid* pGood = dynamic_cast<CGoodsGrid*>(CDrag::GetParent());
 		if( pGood != g_stUIEquip.GetGoodsGrid() ) return;
 
-		// 道具提纯
+		// item purifying
 		if(g_stUIPurify.GetType() == CPurifyMgr::PURIFY_TYPE)
 		{
 			//if(! g_stUIPurify.IsEquipItem(*pItemCommand))
@@ -435,34 +435,34 @@ namespace GUI
 			//	return;
 			//}
 		}
-		// 贝壳
+		// shell
 		else if(g_stUIPurify.GetType() == CPurifyMgr::ENERGY_TYPE)
 		{
 			if(pItemCommand->GetItemInfo()->sType != 29)
 			{
-				g_pGameApp->MsgBox(g_oLangRec.GetString(852)); // 您放入的不是贝壳，请重新选择
+				g_pGameApp->MsgBox(g_oLangRec.GetString(852)); // what you put in is not a shell; please choose again
 				return;
 			}
 		}
-		// 宝石
+		// gem
 		else if(g_stUIPurify.GetType() == CPurifyMgr::GETSTONE_TYPE)
 		{
 			if(! g_stUIPurify.IsEquipItem(*pItemCommand))
 			{
-				g_pGameApp->MsgBox(g_oLangRec.GetString(831)); // 主要装备不合法，请重新选择
+				g_pGameApp->MsgBox(g_oLangRec.GetString(831)); // the main equipment is not valid; please choose again
 				return;
 			}
 		}
-		// 修理破锅
+		// repairing the broken pot
 		else if(g_stUIPurify.GetType() == CPurifyMgr::REPAIR_OVEN_TYPE)
 		{
 			if(! g_stUIPurify.IsMainLifeItem(*pItemCommand))
 			{
-				g_pGameApp->MsgBox(g_oLangRec.GetString(891)); // 您放入的不是生活技能工具，请重新选择
+				g_pGameApp->MsgBox(g_oLangRec.GetString(891)); // what you put in is not a life skill tool; please choose again
 				return;
 			}
 		}
-		else	// 类型不合法
+		else	// the type is not valid
 		{
 			return;
 		}
@@ -471,7 +471,7 @@ namespace GUI
 	}
 
 
-	// 拖入提纯物品
+	// the item to purify is dragged in
 	void CPurifyMgr::_evtDragPurifyTwo(CGuiData *pSender,CCommandObj* pItem,bool& isAccept)
 	{
 		CItemCommand* pItemCommand =  dynamic_cast<CItemCommand*>(pItem);
@@ -482,12 +482,12 @@ namespace GUI
 
 		CItemCommand* pMainItem = dynamic_cast<CItemCommand*>(g_stUIPurify.cmdEquipPurify[PURIFY_ONE]->GetCommand());
 
-		// 道具提纯
+		// item purifying
 		if(g_stUIPurify.GetType() == CPurifyMgr::PURIFY_TYPE)
 		{
 			if(NULL == pMainItem)
 			{
-				g_pGameApp->MsgBox(g_oLangRec.GetString(828)); // 请先放入主要装备
+				g_pGameApp->MsgBox(g_oLangRec.GetString(828)); // please put in the main equipment first
 				return;
 			}
 
@@ -503,40 +503,40 @@ namespace GUI
 			//	return;
 			//}
 		}
-		// 贝壳
+		// shell
 		else if(g_stUIPurify.GetType() == CPurifyMgr::ENERGY_TYPE)
 		{
 			if(NULL == pMainItem)
 			{
-				g_pGameApp->MsgBox(g_oLangRec.GetString(853)); // 请先放入贝壳
+				g_pGameApp->MsgBox(g_oLangRec.GetString(853)); // please put in the shell first
 				return;
 			}
 		}
-		// 宝石
+		// gem
 		else if(g_stUIPurify.GetType() == CPurifyMgr::GETSTONE_TYPE)
 		{
 			if(NULL == pMainItem)
 			{
-				g_pGameApp->MsgBox(g_oLangRec.GetString(828)); // 请先放入主要装备
+				g_pGameApp->MsgBox(g_oLangRec.GetString(828)); // please put in the main equipment first
 				return;
 			}
 		}
-		// 修理破锅
+		// repairing the broken pot
 		else if(g_stUIPurify.GetType() == CPurifyMgr::REPAIR_OVEN_TYPE)
 		{
 			if(NULL == pMainItem)
 			{
-				g_pGameApp->MsgBox(g_oLangRec.GetString(892)); // 请先入放入生活技能工具
+				g_pGameApp->MsgBox(g_oLangRec.GetString(892)); // please put in the life skill tool first
 				return;
 			}
 
 			if(! g_stUIPurify.IsRepairLifeItem(*pItemCommand))
 			{
-				g_pGameApp->MsgBox(g_oLangRec.GetString(893)); // 您放入的不是修补工具，请重新选择
+				g_pGameApp->MsgBox(g_oLangRec.GetString(893)); // what you put in is not a repair tool; please choose again
 				return;
 			}
 		}
-		// 类型不合法
+		// the type is not valid
 		else
 		{
 			return;
@@ -546,7 +546,7 @@ namespace GUI
 	}
 
 
-	// 鼠标点击按钮事件
+	// mouse button click event
 	void CPurifyMgr::_evtMainMouseButton(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey)
 	{
 		string strName = pSender->GetName();
@@ -559,7 +559,7 @@ namespace GUI
 	}
 
 
-	// 关闭窗体事件
+	// close window event
 	void CPurifyMgr::_evtClosePurifyForm(CForm* pForm, bool& IsClose)
 	{
 		g_stUIPurify.ClearAllCommand();

@@ -1,7 +1,7 @@
 ﻿//----------------------------------------------------------------------
-// 名称:菜单
-// 作者:lh 2005-03-25
-// 最后修改日期:
+// Name: menu
+// Author: lh 2005-03-25
+// Last modified date:
 //----------------------------------------------------------------------
 #pragma once
 #include "uiguidata.h"
@@ -12,7 +12,7 @@ namespace GUI
 
 class CMenu;
 
-// 菜单条
+// menu bar
 class CMenuItem : public CItemObj
 {
 public:
@@ -54,14 +54,14 @@ protected:
 
 };
 
-// 菜单类
+// menu class
 class CMenu : public CGuiData
 {
 public:
-	enum eShowStyle		// 菜单消失方式
+	enum eShowStyle		// how the menu disappears
 	{
-		enumMouseFollow,	// 离开时消失
-		enumMouseClick,		// 点击时消失
+		enumMouseFollow,	// disappears when the mouse leaves
+		enumMouseClick,		// disappears when it is clicked
 	};
 
 	CMenu( CForm* pForm );
@@ -99,20 +99,20 @@ public:
 	CFramePic*			GetBkgImage()				{ return _pImage;		}
 	CMenuItem*			GetSelectMenu()				{ return _pSelectMenu;	}
 
-public:	// 事件
-	GuiEvent			evtSelectChange;			// 选择发生了变化
-	GuiMouseEvent		evtListMouseDown;			// 鼠标在文字区按下
+public:	// events
+	GuiEvent			evtSelectChange;			// the selection changed
+	GuiMouseEvent		evtListMouseDown;			// the mouse is pressed in the text area of the list
 
 protected:
-	CFramePic*			_pImage;		// 背景
-	CGuiPic*			_pSelect;		// 选择条
+	CFramePic*			_pImage;		// background
+	CGuiPic*			_pSelect;		// selection bar
 
 	typedef std::vector<CMenuItem*>	menus;
-	menus				_menus;			// 所有菜单项
+	menus				_menus;			// every menu item
 
-	int					_nRowSpace;		// 行距
+	int					_nRowSpace;		// row spacing
 
-	int					_nLeftMargin;	// 与周围边框的距离
+	int					_nLeftMargin;	// distance to the surrounding border
 	int					_nTopMargin;
 	int					_nRightMargin;
 	int					_nBottomMargin;
@@ -123,18 +123,18 @@ private:
 	void				_MenusClear();
 
 private:
-	CMenuItem*			_pSelectMenu;	// 当前选择的菜单条
+	CMenuItem*			_pSelectMenu;	// the currently selected menu bar
 
 	int		_nStartX, _nStartX2;
 	int		_nStartY, _nStartY2;
 
-	// 用于内存管理
+	// used for memory management
 	typedef std::vector<CMenu*>	allmenus;
 	static allmenus		_allmenus;
 
 };
 
-// 内联函数
+// inline function
 inline void CMenu::SetMargin( int left, int top, int right, int bottom ) 
 { 
 	_nLeftMargin = left;

@@ -6,7 +6,7 @@
 namespace GUI
 {
 
-	// 道具精炼
+	// item refining
 	class CGuildChallengeMgr : public CUIInterface
 	{
 	public:
@@ -45,11 +45,11 @@ namespace GUI
 		const static int FIRST_CHARGE_MONEY[NUM];
 
 		CForm		*frmGuildPK;
-		CLabel		*labChallenger[NUM];	//挑战者
-		CLabel		*labMoney[NUM];			//竞价
-		CLabel		*labGuildName[NUM];		//擂主工会名
-		CTextButton	*btnCharge[NUM];		//竞价按钮
-		CList		*lstGuildPK;			//其他信息
+		CLabel		*labChallenger[NUM];	// the challenger
+		CLabel		*labMoney[NUM];			// bidding
+		CLabel		*labGuildName[NUM];		// name of the guild holding the title
+		CTextButton	*btnCharge[NUM];		// the bid button
+		CList		*lstGuildPK;			// other information
 
 		int			m_iSelIndex;
 		int			m_iChangeMoney;

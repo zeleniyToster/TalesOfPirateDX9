@@ -114,7 +114,7 @@ namespace GUI
 			frmMakeEquip->Refresh();
 			frmMakeEquip->Show();
 
-			//同时打开玩家的装备栏
+			//opens the player's equipment slot as well
 			int x = frmMakeEquip->GetX() + frmMakeEquip->GetWidth();
 			int y = frmMakeEquip->GetY();
 			g_stUIEquip.GetItemForm()->SetPos(x, y);
@@ -201,7 +201,7 @@ namespace GUI
 			break;
 		case EQUIP_FUSION_TYPE:
 			if (iIndex == 0)
-			{	// 移去外观，同时移去装备
+			{	// removes the appearance and the equipment as well
 				PopItem(iIndex);
 
 				CItemCommand* pEquipItemCommand = 
@@ -212,11 +212,11 @@ namespace GUI
 				}
 			}
 			else if (iIndex == 1)
-			{	// 移去装备
+			{	// removes the equipment
 				PopItem(iIndex);
 			}
 			else if (iIndex == 2)
-			{	// 移去催化剂
+			{	// removes the catalyst
 				PopItem(iIndex);
 			}
 			break;
@@ -272,7 +272,7 @@ namespace GUI
 			return;
 
 		int iNum(0), iPos(-1);
-		// 更新相应的COneCommand的数据
+		// updates the data of the corresponding COneCommand
 		if (pOldItemCommand->GetIsPile())
 		{
 		}
@@ -282,7 +282,7 @@ namespace GUI
 		}
 
 		//int iPos = g_stUIEquip.GetGoodsGrid()->GetDragIndex();
-		//// 更新相应的EquipList
+		////// updates the corresponding EquipList
 		//EquipInfo* pEquipInfo = new EquipInfo();
 		//pEquipInfo->iPos = iPos;
 		//pEquipInfo->iNum = iNum;
@@ -294,9 +294,9 @@ namespace GUI
 	//-----------------------------------------------------------------------------
 	void CMakeEquipMgr::PopEquipItem(int iIndex)
 	{
-		// 清除相应COneCommand的数据
+		// clears the data of the corresponding COneCommand
 
-		// 清除相应的EquipList
+		// clears the corresponding EquipList
 		ClearEquipList(iIndex);
 	}
 	//-----------------------------------------------------------------------------
@@ -325,7 +325,7 @@ namespace GUI
 			}
 
 			// modify by Philip.Wu  2006-06-11
-			// 熔合时，外观装备类型为 27，并且属性装备类型为 22 时，不作匹配判断
+			// while fusing, when the appearance equipment type is 27 and the attribute equipment type is 22, no matching check is performed
 			if ((pItemCommand->GetItemInfo()->sType == 27 && rItem.GetItemInfo()->sType == 22) ||
 				(IsSameAppearEquip(rItem, *pItemCommand)))
 			{
@@ -391,7 +391,7 @@ namespace GUI
 	//-----------------------------------------------------------------------------
 	void CMakeEquipMgr::PushRouleau(CItemCommand& rItem)
 	{
-		// 查看是否已经有卷轴了，如果有则移出该卷轴
+		// checks whether a scroll is already there and removes it if so
 		CItemCommand* pItemCommand =  
 			dynamic_cast<CItemCommand*>(cmdRouleau->GetCommand());
 		if (pItemCommand)
@@ -406,23 +406,23 @@ namespace GUI
 			}
 		}
 
-		// 记录卷轴在物品栏中的位置
+		// records the position of the scroll in the item slot
 		m_iRouleauPos = g_stUIEquip.GetGoodsGrid()->GetDragIndex();
 
-		// 将卷轴相应的物品栏灰调
+		// greys out the item slot of the scroll
 		rItem.SetIsValid(false);
-		// 将创建的Command放入
+		// puts the created Command in
 		CItemCommand* pItemCmd = new CItemCommand(rItem);
 		cmdRouleau->AddCommand(pItemCmd);
 		pItemCmd->SetIsValid(true);
 		
-		// 更新相应配方的COneCommand的数据,这里分成两个流程，道具精炼和宝石合成
+		// updates the data of the corresponding recipe COneCommand; this is split into two flows, item refining and gem synthesis
 		if (rItem.GetItemInfo()->sType == GEM_ROULEAU_TYPE)
-		{	//宝石合成
+		{	//gem synthesis
 			PushNewGems();
 		}
 		else
-		{	//道具精炼
+		{	//item refining
 			PushNewEquips(*(rItem.GetItemInfo()));
 		}
 
@@ -439,7 +439,7 @@ namespace GUI
 	//-----------------------------------------------------------------------------
 	void CMakeEquipMgr::PopRouleau()
 	{
-		// 清除相应COneCommand的数据
+		// clears the data of the corresponding COneCommand
 		if (m_iRouleauPos == -1)
 			return;
 		
@@ -450,11 +450,11 @@ namespace GUI
 		// 删除其中的Command (DelCommand()中调用delete删除)
 		cmdRouleau->DelCommand();
 
-		// 清除三个配方COneCommand相应的数据
+		// clears the corresponding data of the three recipe COneCommands
 		for (int i(0); i<ITEM_NUM; ++i)
 			PopItem(i);
 
-		// 清除最后合成的物品
+		// clears the last synthesised item
 		PopLastEquip();
 
 		this->SetMakeEquipUI();
@@ -486,7 +486,7 @@ namespace GUI
 		for (; iter != end; ++iter)
 		{
 			//delete (*iter);
-			SAFE_DELETE(*iter); // UI当机处理
+			SAFE_DELETE(*iter); // UI freeze handling
 		}
 		equipItems[iIndex].clear();
 
@@ -495,19 +495,19 @@ namespace GUI
 	//-----------------------------------------------------------------------------
 	void CMakeEquipMgr::Clear()
 	{
-		// 清除UI表单数据
+		// clears the UI form data
 		labForgeGold->SetCaption("");
 		btnYes->SetIsEnabled(false);
 
 
-		// 清除卷轴（同时会清除其他Item）
+		// clears the scroll (this also clears the other Items)
 		PopRouleau();
 	}
 
 	//-----------------------------------------------------------------------------
 	void CMakeEquipMgr::ClearEquips()
 	{
-		// 清除精炼对应的装备栏物品
+		// clears the equipment slot item corresponding to the refining
 		EquipListIter iter, end;
 		for (int i(0); i<ITEM_NUM; ++i)
 		{
@@ -529,18 +529,18 @@ namespace GUI
 		if (!pItemRecord)
 			return false;
 
-		//  不是宝石和精炼石直接返回false
+		//  returns false straight away if it is neither a gem nor a refining stone
 		if (pItemRecord->sType != GEN_STONE_TYPE && pItemRecord->sType != FORGE_STONE_TYPE)
 		{
 			g_pGameApp->MsgBox(g_oLangRec.GetString(692));
 			return false;
 		}
 
-		// 检测另一个位置是否有宝石
+		// checks whether the other slot holds a gem
 		int iOtherIndex = iIndex == 0 ? 1 : 0;
 		CItemCommand* pOtherItem = dynamic_cast<CItemCommand* >(cmdItem[iOtherIndex]->GetCommand());
 		if (pOtherItem)
-		{	//另一个位置有宝石，则仅当ID号相同才返回true
+		{	//the other slot has a gem, so it returns true only when the IDs match
 			CItemRecord* pOtherItemRecord = pOtherItem->GetItemInfo();
 			if (pItemRecord->lID == pOtherItemRecord->lID)
 			{
@@ -552,7 +552,7 @@ namespace GUI
 				return false;
 			}
 		}
-		else //另一个位置没有宝石，直接返回true
+		else //the other slot has no gem, so it returns true directly
 		{
 			return true;
 		}
@@ -562,7 +562,7 @@ namespace GUI
 	//-----------------------------------------------------------------------------
 	void CMakeEquipMgr::PushItem(int iIndex, CItemCommand& rItem, int iItemNum)
 	{
-		// 查看原来的Cmd中是否已经有Item了，如果有则移出
+		// checks whether the original Cmd already has an Item and removes it if so
 		CItemCommand* pItemCommand =  
 			dynamic_cast<CItemCommand*>(cmdItem[iIndex]->GetCommand());
 		if (pItemCommand)
@@ -572,14 +572,14 @@ namespace GUI
 
 		if (iItemNum == 1)
 		{
-			// 记录Item在物品栏中的位置
+			// records the position of the Item in the item slot
 			EquipInfo* pEquipInfo = new EquipInfo();
 			pEquipInfo->iPos = g_stUIEquip.GetGoodsGrid()->GetDragIndex();
 			pEquipInfo->iNum = iItemNum;
 			equipItems[iIndex].resize(1);
 			equipItems[iIndex][0] = pEquipInfo;
 
-			// 将Item相应的物品栏灰调
+			// greys out the item slot of the Item
 			rItem.SetIsValid(false);
 
 			// 将创建的Item放入Cmd中，这里用new将会在PopItem()中删除
@@ -602,9 +602,9 @@ namespace GUI
 		CItemCommand* pItemCommand =  
 			dynamic_cast<CItemCommand*>(cmdItem[iIndex]->GetCommand());
 		if (pItemCommand)
-			cmdItem[iIndex]->DelCommand();	// 该函数将删除delete Item
+			cmdItem[iIndex]->DelCommand();	// this function deletes the Item
 
-		// 将Item相应的物品栏灰调
+		// greys out the item slot of the Item
 		CCommandObj* pItem(0);
 		EquipListIter iter = equipItems[iIndex].begin();
 		EquipListIter end  = equipItems[iIndex].end();
@@ -633,7 +633,7 @@ namespace GUI
 		{
 			if (this->CanPushStone(iIndex, rItem))
 			{
-				// 查看原来的Cmd中是否已经有Item了，如果有则移出
+				// checks whether the original Cmd already has an Item and removes it if so
 				CItemCommand* pItemCommand =  
 					dynamic_cast<CItemCommand*>(cmdItem[iIndex]->GetCommand());
 				if (pItemCommand)
@@ -641,13 +641,13 @@ namespace GUI
 					PopItem(iIndex);
 				}
 
-				// 记录Item在物品栏中的位置
+				// records the position of the Item in the item slot
 				EquipInfo* pEquipInfo = new EquipInfo();
 				pEquipInfo->iPos = g_stUIEquip.GetGoodsGrid()->GetDragIndex();
 				pEquipInfo->iNum = 1;
 				equipItems[iIndex].push_back(pEquipInfo);
 
-				// 将Item相应的物品栏灰调
+				// greys out the item slot of the Item
 				rItem.SetIsValid(false);
 
 				// 将创建的Item放入Cmd中，这里用new将会在PopItem()中删除
@@ -725,7 +725,7 @@ namespace GUI
 		CItemRecord* pEquipRecord = rEquipItem.GetItemInfo();
 		CItemRecord* pAppearRecord = rAppearItem.GetItemInfo();
 
-		// comment by Philip.Wu  2006-08-15  允许外观装备也是熔合过的装备
+		// comment by Philip.Wu  2006-08-15  allows appearance equipment to be fused equipment too
 		//if (IsAppearanceEquip(rEquipItem))
 		//{
 		//	return false;
@@ -764,7 +764,7 @@ namespace GUI
 
 		if (pItemRecord) {
 			short sType = pItemRecord->sType;
-			//	Close by alfred.shi 20080912 帽子也可以打磨
+			//	Close by alfred.shi 20080912  hats can be polished too
 			
 			switch(sType){
 				case enumItemTypeSword		:
@@ -793,13 +793,13 @@ namespace GUI
 		return false;
 	}
 	//-----------------------------------------------------------------------------
-	// 回调函数
+	// callback function
 	//-----------------------------------------------------------------------------
 	void CMakeEquipMgr::_MainMouseEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey)
 	{
 		string name = pSender->GetName();
 		if( name=="btnClose"  || name == "btnForgeNo" )  
-		{ ///关闭表单
+		{ ////closes the form
 
 			g_stUIMakeEquip.ShowMakeEquipForm(false);
 			return;
@@ -876,7 +876,7 @@ namespace GUI
 				g_pGameApp->MsgBox(g_oLangRec.GetString(697));
 			}
 			break;
-		case ELF_SHIFT_TYPE:	// 精灵二转
+		case ELF_SHIFT_TYPE:	// elf second rebirth
 			if (g_stUIMakeEquip.IsElfShiftStone(*pItemCommand))
 			{
 				g_stUIMakeEquip.PushRouleau(*pItemCommand);
@@ -950,7 +950,7 @@ namespace GUI
 
 
 	//-----------------------------------------------------------------------------
-	// 私有函数
+	// private function
 	//-----------------------------------------------------------------------------
 	void CMakeEquipMgr::DragEvtEquipItem(int index, CGuiData *pSender, CCommandObj* pItem, bool& isAccept)
 	{
@@ -974,7 +974,7 @@ namespace GUI
 
 		if (!cmdRouleau->GetCommand())
 		{
-			// by Philip.Wu  修改原先判定逻辑，当顶格关键道具示未放入时，下面的道具不允许拖入
+			// by Philip.Wu  changed the original decision logic: when the top cell key item is not placed, the item below may not be dragged in
 			switch(this->m_iType)
 			{
 			case MAKE_EQUIP_TYPE:
@@ -994,7 +994,7 @@ namespace GUI
 
 			return;
 
-			// 以下是原先的处理，暂时保留
+			// the following is the original handling, kept for now
 			//if (IsEquipMakeRouleau(*pItemCommand) || 
 			//	IsEquipFusionRouleau(*pItemCommand) || 
 			//	IsEquipUpgradeRouleau(*pItemCommand))
@@ -1115,22 +1115,22 @@ namespace GUI
 	void CMakeEquipMgr::SendMakeEquipProtocol()
 	{
 		stNetItemForgeAsk kNetItemForgeAsk;
-		kNetItemForgeAsk.chType = char(m_iType);	// 合成
+		kNetItemForgeAsk.chType = char(m_iType);	// synthesis
 
 		if (m_iType == MAKE_EQUIP_TYPE)
 		{
 			if (IsMakeGem())
 			{
-				// 卷轴0
+				// scroll 0
 				kNetItemForgeAsk.SGroup[0].sCellNum = 1;
 				kNetItemForgeAsk.SGroup[0].pCell = new SForgeCell::SCell[1];
 				kNetItemForgeAsk.SGroup[0].pCell[0].sNum = 1;
 				kNetItemForgeAsk.SGroup[0].pCell[0].sPosID = m_iRouleauPos;
 
-				// 宝石1～2
+				// gem 1~2
 				for (int i(1); i<=STONE_ITEM_NUM; ++i)
 				{
-					kNetItemForgeAsk.SGroup[i].sCellNum = 1;		// 合成始终是1
+					kNetItemForgeAsk.SGroup[i].sCellNum = 1;		// synthesis is always 1
 					kNetItemForgeAsk.SGroup[i].pCell = new SForgeCell::SCell[1];
 					kNetItemForgeAsk.SGroup[i].pCell[0].sNum = equipItems[i-1][0]->iNum;
 					kNetItemForgeAsk.SGroup[i].pCell[0].sPosID = equipItems[i-1][0]->iPos;
@@ -1140,7 +1140,7 @@ namespace GUI
 			{
 				for (int i(0); i<ITEM_NUM; ++i)
 				{
-					kNetItemForgeAsk.SGroup[i].sCellNum = 1;		// 合成始终是1
+					kNetItemForgeAsk.SGroup[i].sCellNum = 1;		// synthesis is always 1
 					kNetItemForgeAsk.SGroup[i].pCell = new SForgeCell::SCell[1];
 					kNetItemForgeAsk.SGroup[i].pCell[1].sNum = 1;
 					//kNetItemForgeAsk.SGroup[i].pCell[1].sPosID = m_iForgeItemPos[i];
@@ -1149,8 +1149,8 @@ namespace GUI
 			}
 		}
 		else
-		{	// 溶合和升级
-			// 卷轴0
+		{	// fusing and upgrading
+			// scroll 0
 			kNetItemForgeAsk.SGroup[0].sCellNum = 1;
 			kNetItemForgeAsk.SGroup[0].pCell = new SForgeCell::SCell[1];
 			kNetItemForgeAsk.SGroup[0].pCell[0].sNum = 1;
@@ -1179,7 +1179,7 @@ namespace GUI
 
 			for (int i(1); i<=iNum; ++i)
 			{
-				kNetItemForgeAsk.SGroup[i].sCellNum = 1;		// 合成始终是1
+				kNetItemForgeAsk.SGroup[i].sCellNum = 1;		// synthesis is always 1
 				kNetItemForgeAsk.SGroup[i].pCell = new SForgeCell::SCell[1];
 				kNetItemForgeAsk.SGroup[i].pCell[0].sNum = equipItems[i-1][0]->iNum;
 				kNetItemForgeAsk.SGroup[i].pCell[0].sPosID = equipItems[i-1][0]->iPos;
@@ -1209,13 +1209,13 @@ namespace GUI
 			return EQUIP_FUSION_MONEY * pItemCommand->GetItemInfo()->sNeedLv;
 			break;
 		case EQUIP_UPGRADE_TYPE:
-			// 装备等级+1的平方*1W(策划文档)
+			// (equipment level + 1) squared * 1W (design document)
 			pItemCommand = dynamic_cast<CItemCommand*>(cmdItem[0]->GetCommand());	
 			iLevelPlusOne = pItemCommand->GetData().GetItemLevel() + 1;
 			return EQUIP_UPGRADE_MONEY * iLevelPlusOne * iLevelPlusOne;
 			break;
 		case ELF_SHIFT_TYPE:
-			// 精灵二转（策划文档）
+			// elf second rebirth (design document)
 			pItemCommand = dynamic_cast<CItemCommand*>(cmdItem[0]->GetCommand());
 			nLevel1  = pItemCommand->GetData().GetItemLevel();
 			pItemCommand = dynamic_cast<CItemCommand*>(cmdItem[1]->GetCommand());
@@ -1227,7 +1227,7 @@ namespace GUI
 	}
 
 
-	// 是否是精灵二转所需的恶魔果实
+	// whether it is the demon fruit needed for the elf second rebirth
 	bool CMakeEquipMgr::IsElfShiftStone(CItemCommand& rItem)
 	{
 		CItemRecord* pItem = rItem.GetItemInfo();
@@ -1241,7 +1241,7 @@ namespace GUI
 	}
 
 
-	// 是否是精灵
+	// whether it is an elf
 	bool CMakeEquipMgr::IsElfShiftItem(CItemCommand& rItem)
 	{
 		CItemRecord* pItemRecord = rItem.GetItemInfo();
@@ -1254,7 +1254,7 @@ namespace GUI
 	}
 
 
-	// 放入精灵
+	// puts in an elf
 	void CMakeEquipMgr::PushElfShiftItem(int iIndex, CItemCommand& rItem)
 	{
 		CItemCommand* pItemCommand = NULL;
@@ -1262,7 +1262,7 @@ namespace GUI
 		memset(&sItemHint, 0, sizeof(SItemHint));
 		sItemHint.Convert(rItem.GetData(), rItem.GetItemInfo());
 
-		// 计算精灵等级
+		// computes the elf level
 		int nLevel = sItemHint.sInstAttr[ITEMATTR_VAL_STR] +
 					 sItemHint.sInstAttr[ITEMATTR_VAL_AGI] +
 					 sItemHint.sInstAttr[ITEMATTR_VAL_DEX] +
@@ -1279,7 +1279,7 @@ namespace GUI
 		{
 			pItemCommand = dynamic_cast<CItemCommand*>(cmdItem[1]->GetCommand());
 
-			// 判断是否是精灵，并且不能与第二格的精灵ID相同
+			// decides whether it is an elf and its ID differs from the elf in the second cell
 			if (IsElfShiftItem(rItem) && 
 				(NULL == pItemCommand || (rItem.GetItemInfo()->lID != pItemCommand->GetItemInfo()->lID)))
 			{
@@ -1295,7 +1295,7 @@ namespace GUI
 		{
 			pItemCommand = dynamic_cast<CItemCommand*>(cmdItem[0]->GetCommand());
 
-			// 判断是否是精灵，并且不能与第一格的精灵ID相同
+			// decides whether it is an elf and its ID differs from the elf in the first cell
 			if (IsElfShiftItem(rItem) && 
 				(NULL == pItemCommand || (rItem.GetItemInfo()->lID != pItemCommand->GetItemInfo()->lID)))
 			{

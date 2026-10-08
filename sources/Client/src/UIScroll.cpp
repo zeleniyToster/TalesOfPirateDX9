@@ -81,7 +81,7 @@ CScroll& CScroll::operator=( const CScroll& rhs )
 CScroll::~CScroll(void)
 {
 	//delete _pImage;
-	SAFE_DELETE(_pImage); // UI当机处理
+	SAFE_DELETE(_pImage); // UI freeze handling
 }
 
 void CScroll::Render()
@@ -151,7 +151,7 @@ bool CScroll::MouseRun( int x, int y, DWORD key )
 		if( _down->MouseRun(x,y,key) ) return true;
 		if( _pScroll->MouseRun(x,y,key) ) return true;
 
-		// 处理翻页
+		// handles paging
 		if( key & Mouse_LDown )
 		{
 	        switch( _eStyle )
@@ -210,7 +210,7 @@ void CScroll::FrameMove( DWORD dwTime )
     {
         if( _dwStartTime==0 )
         {
-            _dwStartTime = dwTime + 800;        // 第一次要多等待一段时间
+            _dwStartTime = dwTime + 800;        // the first time has to wait longer
             return;
         }
         if( dwTime - _dwStartTime > 30 )

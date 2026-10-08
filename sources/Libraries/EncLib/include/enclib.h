@@ -1,7 +1,7 @@
 ﻿
 ////////////////////////////////////////
 //
-//      加密/解密
+//      encryption/decryption
 //      by jampe
 //      2006/5/26
 //
@@ -14,26 +14,26 @@
 typedef unsigned char       __byte;
 
 
-//  设置密钥
-//  key为 8位密钥
+//  sets the key
+//  key is the 8 byte key
 extern int SetEncKey(const __byte* key);
 
 
-//  加密
-//  buf 输出缓存
-//  len 输出缓存长度
-//  pwd 待加密密码
-//  plen 密码长度
-//  返回加密后的字符串长度
+//  encrypts
+//  buf output buffer
+//  len output buffer length
+//  pwd the password to encrypt
+//  plen the password length
+//  returns the length of the encrypted string
 extern int Encrypt(__byte* buf, int len, const __byte* pwd, int plen);
 
 
-//  解密
-//  buf 输出缓存
-//  len 输出缓存长度
-//  enc 待解密密钥
-//  elen 密钥长度
-//  返回加密后的字符串长度
+//  decrypts
+//  buf output buffer
+//  len output buffer length
+//  enc the key to decrypt with
+//  elen the key length
+//  returns the length of the encrypted string
 extern int Decrypt(__byte* buf, int len, const __byte* enc, int elen);
 
 

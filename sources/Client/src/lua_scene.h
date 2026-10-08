@@ -2,11 +2,11 @@
 #include "EffectObj.h"
 
 //-----------------------------
-// 为场景添加物体, 参数为表格ID
+// adds an object to the scene; the parameter is a table ID
 //-----------------------------
 inline int lua_sceAddObj(lua_State * L)
 {
-    // 参数合法性判别
+    // argument validity check
     BOOL bValid = (lua_gettop (L)==3 && lua_islightuserdata(L, 1) && lua_isnumber (L, 2) &&  lua_isnumber (L, 3));
     if(!bValid) 
     {
@@ -54,11 +54,11 @@ inline int lua_sceAddObj(lua_State * L)
 }
 
 //-------------------
-// 根据ID取得物体指针
+// gets the object pointer by ID
 //-------------------
 inline int lua_sceGetObj(lua_State *L)
 {
-    // 参数合法性判别
+    // argument validity check
     BOOL bValid = (lua_gettop (L)==3 && lua_islightuserdata(L, 1) && lua_isnumber(L,2) && lua_isnumber(L, 3));
     if(!bValid) 
     {
@@ -87,11 +87,11 @@ inline int lua_sceGetObj(lua_State *L)
 }
 
 //---------
-// 删除物体
+// deletes the object
 //---------
 inline int lua_sceRemoveObj(lua_State *L)
 {
-    // 参数合法性判别
+    // argument validity check
     BOOL bValid = (lua_gettop (L)==1 && lua_islightuserdata(L, 1)); 
     if(!bValid) 
     {
@@ -106,11 +106,11 @@ inline int lua_sceRemoveObj(lua_State *L)
 
 
 //-----------------
-// 设置当前控制角色
+// sets the currently controlled character
 //-----------------
 inline int lua_sceSetMainCha(lua_State *L)
 {
-    // 参数合法性判别
+    // argument validity check
     BOOL bValid = (lua_gettop (L)==2 && lua_islightuserdata(L, 1) && lua_islightuserdata(L, 2)); 
     if(!bValid) 
     {
@@ -134,11 +134,11 @@ inline int lua_sceSetMainCha(lua_State *L)
 }
 
 //-----------------
-// 获取当前控制角色
+// gets the currently controlled character
 //-----------------
 inline int lua_sceGetMainCha(lua_State *L)
 {
-    // 参数合法性判别
+    // argument validity check
     BOOL bValid = (lua_gettop (L)==1 && lua_islightuserdata(L, 1)); 
     if(!bValid) 
     {
@@ -160,7 +160,7 @@ inline int lua_sceGetMainCha(lua_State *L)
 
 inline int lua_sceGetHoverCha(lua_State *L)
 {
-    // 参数合法性判别
+    // argument validity check
     BOOL bValid = (lua_gettop (L)==1 && lua_islightuserdata(L, 1)); 
     if(!bValid) 
     {
@@ -182,7 +182,7 @@ inline int lua_sceGetHoverCha(lua_State *L)
 
 inline int lua_sceEnableDefaultMouse(lua_State *L)
 {
-    // 参数合法性判别
+    // argument validity check
     BOOL bValid = (lua_gettop (L)==2 && lua_islightuserdata(L, 1) && lua_isnumber(L,2)); 
     if(!bValid) 
     {

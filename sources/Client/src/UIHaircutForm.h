@@ -19,8 +19,8 @@ namespace GUI
 		CHaircutMgr();
 		~CHaircutMgr();
 
-		void ShowHaircutForm();			// 服务器要求打开理发界面
-		void Clear();					// 服务器关闭理发界面
+		void ShowHaircutForm();			// the server asks to open the haircut screen
+		void Clear();					// the server closes the haircut screen
 
 		void Refresh(DWORD dwHairType, DWORD dwHairColor);
 		void RenderCha(int x,int y);
@@ -40,7 +40,7 @@ namespace GUI
 		void ChangeHairColor(eDirectType enumDirect = LEFT);
 		void ChangeHairType(eDirectType enumDirect = LEFT);
 
-		//UI的回调函数
+		//UI callback function
 		static void _MainMouseHaircutEvent(CCompent *pSender, int nMsgType, 
 										   int x, int y, DWORD dwKey);
 		static void _MainOnCloseEvent( CForm* pForm, bool& IsClose );
@@ -59,7 +59,7 @@ namespace GUI
 
 
 	private:
-		//理发UI
+		//haircut UI
 		CForm			* frmHaircut;
 		COneCommand		* cmdProp[defHAIR_MAX_ITEM];
 		CLabel			* lblHairColor;

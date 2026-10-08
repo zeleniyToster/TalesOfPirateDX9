@@ -29,13 +29,13 @@ namespace GUI
 
 	private:
 
-		// 问题表单
+		// question form
 		CForm*		frmQuestion;
 		CEdit*		edtQuestionTitle;
 		CMemo*		memCentent;
 		static void _evtQuestionFormEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey);
 
-		// 回答表单
+		// answer form
 		CForm*		frmAnswer;
 		CMemo*		memMiss;
 	};

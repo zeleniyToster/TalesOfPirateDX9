@@ -1,10 +1,10 @@
 ﻿
 //-----------------
-// 设置app当前scene
+// sets the current scene of the app
 //-----------------
 inline int lua_appSetCaption(lua_State * L)
 {
-    // 参数合法性判别
+    // argument validity check
     BOOL bValid = (lua_gettop (L)==1 && lua_isstring(L, 1));
     if(!bValid) 
     {
@@ -16,11 +16,11 @@ inline int lua_appSetCaption(lua_State * L)
 }
 
 //-----------------
-// 取得app当前scene
+// gets the current scene of the app
 //-----------------
 inline int lua_appGetCurScene(lua_State * L)
 {
-    // 参数合法性判别
+    // argument validity check
     BOOL bValid = (lua_gettop (L)==0);
     if(!bValid) 
     {
@@ -32,11 +32,11 @@ inline int lua_appGetCurScene(lua_State * L)
 }
 
 //-----------------
-// 设置app当前scene
+// sets the current scene of the app
 //-----------------
 inline int lua_appSetCurScene(lua_State * L)
 {
-    // 参数合法性判别
+    // argument validity check
     BOOL bValid = (lua_gettop (L)==1 && lua_islightuserdata(L, 1));
     if(!bValid) 
     {
@@ -50,7 +50,7 @@ inline int lua_appSetCurScene(lua_State * L)
 
 inline int lua_appPlaySound(lua_State *L)
 {
-    // 参数合法性判别
+    // argument validity check
     BOOL bValid = (lua_gettop (L)==1 && lua_isnumber(L, 1));
     if(!bValid) 
     {
@@ -64,7 +64,7 @@ inline int lua_appPlaySound(lua_State *L)
 
 inline int lua_appCreateScene(lua_State *L)
 {
-    // 参数合法性判别
+    // argument validity check
     BOOL bValid = (lua_gettop (L)==5 && lua_isstring(L, 1) && 
               lua_isnumber(L,2) && lua_isnumber(L,3) && 
               lua_isnumber(L,4) && lua_isnumber(L,5));
@@ -81,7 +81,7 @@ inline int lua_appCreateScene(lua_State *L)
     int nMaxItem = (int)lua_tonumber(L,4);
     int nMaxEff  = (int)lua_tonumber(L,5);
    
-    // 创建Scene
+    // creates a Scene
     CGameScene *pScene = NULL;
     
     lua_pushlightuserdata(L, pScene);

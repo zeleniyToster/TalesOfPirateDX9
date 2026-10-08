@@ -51,11 +51,11 @@ public:
 
 	void RenderTextureRect(int nX, int nY, MPTexRect *pRect, DWORD dwColor);
 
-	void LineFrame(int left, int top, int right, int bottom, DWORD color=0x90000000 );	// 画一个边框
-	void SelectChaLineFrame(int left, int top, int right, int bottom, DWORD color=0x90000000 );	// 画一个边框
+	void LineFrame(int left, int top, int right, int bottom, DWORD color=0x90000000 );	// draws a border
+	void SelectChaLineFrame(int left, int top, int right, int bottom, DWORD color=0x90000000 );	// draws a border
 	
-	void LineThinFrame(int left, int top, int right, int bottom, DWORD color=0x90000000 );	// 画一个细框
-	void FillFrame(int left, int top, int right, int bottom, DWORD color=0x90000000 );	// 填充边框
+	void LineThinFrame(int left, int top, int right, int bottom, DWORD color=0x90000000 );	// draws a thin frame
+	void FillFrame(int left, int top, int right, int bottom, DWORD color=0x90000000 );	// fills the border
 	void SetIsConvert( bool v );
 	void SetIsChangeResolution(bool v )  {      _bChangeResolution = v ;    }
 	bool GetIsChangeResolution()         {      return _bChangeResolution;  }  
@@ -63,10 +63,10 @@ public:
 	void SetClipRect( int x, int y, int w, int h );
 	void Reset();
 
-public:	// 三层坐标：屏幕坐标，画图坐标，GUI坐标
-	void SetScreen( int w, int h, bool isFull );			// 设置游戏桌面显示的宽高，当初始化或改变屏幕分辨率时调用
+public:	// three layers of coordinates: screen, draw and GUI
+	void SetScreen( int w, int h, bool isFull );			// sets the width and height of the game desktop display; called on initialisation or when the screen resolution changes
 
-	// 将屏幕坐标转换为GUI坐标
+	// converts screen coordinates to GUI coordinates
 	void ScreenConvert( int &x, int &y ) {
 		x = (int)((float)(x) / _fScreenScaleX);
 		y = (int)((float)(y) / _fScreenScaleY);
@@ -78,7 +78,7 @@ public:	// 三层坐标：屏幕坐标，画图坐标，GUI坐标
         return (float)y / _fScreenScaleY; 
     }
 
-	// 将画图坐标转换为GUI坐标
+	// converts draw coordinates to GUI coordinates
 	void DrawConvert( int &x, int &y ) {
 		x = (int)((float)(x) * _fDrawScaleX);
 		y = (int)((float)(y) * _fDrawScaleY);
@@ -123,14 +123,14 @@ private:
 	float			_fOldScreenScaleX, _fOldScreenScaleY;
 	float			_fOldDrawScaleX, _fOldDrawScaleY;
 
-	int				_nGuiWidth, _nGuiHeight;		// GUI系统宽高,即屏幕大小
+	int				_nGuiWidth, _nGuiHeight;		// GUI system width and height, that is the screen size
 	bool			_IsFullScreen;
 
 private:
 	//LPTEXTURE		_pTex;				// 纹理
-    int             _nTex;				// 纹理
-	int             _nOutLine ;         // 私人框
-	RECT			_rtFrame;			// 纹理大小
+    int             _nTex;				// texture
+	int             _nOutLine ;         // private frame
+	RECT			_rtFrame;			// texture size
 	VECTOR2			_vesLevel;
 	VECTOR2			_vesVertical;
 
@@ -145,6 +145,6 @@ private:
 
 inline UIRender& GetRender() { return UIRender::s_Render;   }
 
-extern bool UIGetChooseColor( DWORD &c );					// 颜色对话框,c为默认颜色,同时也作为执行成功时的返回值
-extern char* UIGetOpenFileName( char* strInitDir=NULL );	// 打开文件对话框,成功返回文件名称,否则返回NULL
+extern bool UIGetChooseColor( DWORD &c );					// colour dialog; c is the default colour and also the return value when the operation succeeds
+extern char* UIGetOpenFileName( char* strInitDir=NULL );	// open file dialog; returns the file name on success, otherwise NULL
 

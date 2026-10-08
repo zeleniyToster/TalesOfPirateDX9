@@ -49,10 +49,10 @@ void CLabelEx::_Copy( const CLabelEx& rhs )
 
 void CLabelEx::Render()
 {
-	DWORD dwOldShadow = _clShadow;	// 保存默认阴影颜色
-	DWORD dwOldColor  = _color;		// 保存下默认的颜色
+	DWORD dwOldShadow = _clShadow;	// saves the default shadow colour
+	DWORD dwOldColor  = _color;		// saves the default colour
 
-	if(_IsFlash)	// 文字闪烁
+	if(_IsFlash)	// text blinking
 	{
 		DWORD dwColorID = (GetTickCount() & 1023) >> 8;
 		DWORD dwColor = 0;
@@ -116,6 +116,6 @@ void CLabelEx::Render()
 		}
 	}
 
-	_clShadow = dwOldShadow;	// 还原成原来的阴影颜色
-	_color    = dwOldColor;		//?还原成原来的颜色
+	_clShadow = dwOldShadow;	// restores the original shadow colour
+	_color    = dwOldColor;		//?restores the original colour
 }

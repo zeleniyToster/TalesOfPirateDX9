@@ -49,7 +49,7 @@ CSkillList::~CSkillList(void)
     //delete _pImage;
     //delete _pSelect;
 
-	SAFE_DELETE(_pImage);	// UI当机处理
+	SAFE_DELETE(_pImage);	// UI freeze handling
 	SAFE_DELETE(_pSelect);
 }
 
@@ -76,7 +76,7 @@ void CSkillList::_Copy( const CSkillList& rhs )
 
 void CSkillList::Init()
 {
-    // 初始化控件
+    // initialises the controls
     if( _nRowHeight<=0 ) _nRowHeight=34;
     if( _nUnitHeight<=0 || _nUnitHeight>_nRowHeight ) _nUnitHeight=_nRowHeight;
 
@@ -90,7 +90,7 @@ void CSkillList::Init()
 
     _pSelect->SetScale( GetWidth()-_nLeftMargin-_nRightMargin-_nUnitWidth - _pScroll->GetWidth(), _nUnitHeight );
 
-    // 测试
+    // test
     if( GetCommand(0) ) return;
     
     CSkillRecord *info;
@@ -128,7 +128,7 @@ void CSkillList::Render()
         y += _nRowHeight;
     }
 
-	// 显示升级按钮
+	// shows the level up button
     y = _nSY1 + _nButtonOffY;
     for( int i=_nShowFirst; i<_nShowLast; i++ )
     {
@@ -440,7 +440,7 @@ void CSkillList::Clear()
     for( skills::iterator it=_skills.begin(); it!=_skills.end(); it++ )
     {
         //delete *it;
-		SAFE_DELETE(*it);	// UI当机处理
+		SAFE_DELETE(*it);	// UI freeze handling
     }
     _skills.clear();
 }

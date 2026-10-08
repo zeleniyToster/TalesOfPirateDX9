@@ -100,13 +100,13 @@ bool CRichEdit::OnChar( char c )
 {
 	if( _IsReadyOnly ) return false;
 
-	// 有三种情况：一、英文字符，二、汉字，三、控制字符
+	// there are three cases: one, an English character; two, a Chinese character; three, a control character
 	switch( c )
 	{
-	case '\r':		// 回车
+	case '\r':		// enter
 		_cArticle.AddControl( c );
 		break;
-	case '\b':		// 退格
+	case '\b':		// backspace
 		break;
 	case '\t':
 		break;
@@ -128,7 +128,7 @@ bool CRichEdit::OnChar( char c )
 				if( _ismbslead( (unsigned char*)_szEnter, (unsigned char*)&_szEnter[0] )==0 
 					&& _ismbstrail( (unsigned char*)_szEnter, (unsigned char*)&_szEnter[0] )==0 )
 				{
-					// 为英文或控制字符
+					// it is English or a control character
 					_nEnterPos = 0;
 
 					_cArticle.AddChar( c );
@@ -138,7 +138,7 @@ bool CRichEdit::OnChar( char c )
 			{
 				if( _ismbslead( (unsigned char*)_szEnter, (unsigned char*)&_szEnter[0] )==-1 && _ismbstrail( (unsigned char*)_szEnter, (unsigned char*)&_szEnter[1] )==-1 )
 				{
-					// 汉字
+					// a Chinese character
 					_cArticle.AddChar(_szEnter[0], _szEnter[1] );
 
 					IsError = false;
@@ -149,7 +149,7 @@ bool CRichEdit::OnChar( char c )
 
 			if( IsError )
 			{
-				// 错误
+				// error
 				_nEnterPos = 0;
 				_szEnter[1] = 0;
 			}

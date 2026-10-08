@@ -25,7 +25,7 @@ void CUdpManage::Run()
 {
 	_Socket.Init( _nPort );
 
-	// 设置缓接收冲区大小
+	// sets the receive buffer size
 	int n = 1024;
 	setsockopt( _Socket.GetSocket(), SOL_SOCKET, SO_RCVBUF, (char*)&n, sizeof(n) );
 

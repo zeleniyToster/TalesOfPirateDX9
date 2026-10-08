@@ -42,7 +42,7 @@ void CGuiPic::SetMax( int v )
 
 	_max = v;
 	//delete [] _pImage;
-	SAFE_DELETE_ARRAY(_pImage); // UI当机处理
+	SAFE_DELETE_ARRAY(_pImage); // UI freeze handling
 
 	_pImage = new MPTexRect[v];
 	_frame = 0;

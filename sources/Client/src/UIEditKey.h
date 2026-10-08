@@ -1,7 +1,7 @@
 ﻿//----------------------------------------------------------------------
-// 名称:管理Edit的输入，显示光标，显示选中状态等
-// 作者:lh 2005-05-23
-// 最后修改日期:
+// Name: manages the input to Edit, cursor display, selection display and the like
+// Author: lh 2005-05-23
+// Last modified date:
 //----------------------------------------------------------------------
 #pragma once
 
@@ -20,7 +20,7 @@ public:
 	bool	SetFont( DWORD dwFont );
 	void	SetColor( DWORD dwColor )		{ _dwFontColor=dwColor;		}
 
-public:		// 外部接口
+public:		// external interface
 	bool	OnChar( char c );
 	bool	OnKeyDown( int key );
 
@@ -32,20 +32,20 @@ private:
 private:
 	CEditParse*		_pParse;
 
-	char			_szEnter[16];				// 用于计算输入的buf
+	char			_szEnter[16];				// the buf used to compute the input
 	int				_nEnterPos;
 
-	bool			_IsReadyOnly;				// 是否只读
+	bool			_IsReadyOnly;				// whether it is read only
 
-	DWORD			_dwFontColor;				// 当前字体颜色
-	int				_dwFontIndex;				// 当前字体
+	DWORD			_dwFontColor;				// current font colour
+	int				_dwFontIndex;				// current font
 
 private:
-	DWORD			_dwCurosrIndex;				// 当前光标位置
+	DWORD			_dwCurosrIndex;				// current cursor position
 
-	DWORD			_dwCursorHeight;			// 光标高度
-	DWORD			_dwCursorColor;				// 光标颜色 
-	int				_nCursorX, _nCursorY;		// 光标渲染位置
+	DWORD			_dwCursorHeight;			// cursor height
+	DWORD			_dwCursorColor;				// cursor colour
+	int				_nCursorX, _nCursorY;		// cursor rendering position
 	bool			_IsShowCursor;
 	DWORD			_dwCursorTime;
 	DWORD			_dwCursorSpace;

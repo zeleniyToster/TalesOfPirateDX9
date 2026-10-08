@@ -9,7 +9,7 @@ public:
 	virtual ~CUdpSocket();
 	virtual void Close();
 
-	bool	IsCreate();			// 是否已经创建
+	bool	IsCreate();			// whether it has already been created
 
 	bool	RegeditReadEvent( HWND hWnd, DWORD dwMessage );
 	bool	OnNetworkEvent( WPARAM wParam, LPARAM lParam );

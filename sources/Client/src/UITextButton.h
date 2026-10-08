@@ -1,8 +1,8 @@
 ﻿//----------------------------------------------------------------------
-// 名称:按钮
-// 作者:lh 2004-07-19
-// 用途:可显示文字
-// 最后修改日期:2004-10-09
+// Name: button
+// Author: lh 2004-07-19
+// Purpose: can display text
+// Last modified date: 2004-10-09
 //----------------------------------------------------------------------
 #pragma once
 #include "uicompent.h"
@@ -14,7 +14,7 @@ namespace GUI
 class CTextButton : public CCompent
 {
 public:
-	enum eButtonState	// 按钮状态：正常，鼠标浮动在上面，已经按下，禁用
+	enum eButtonState	// button states: normal, mouse hovering over it, pressed, disabled
 	{
 		csNormal = 0,
 		csHover,
@@ -46,7 +46,7 @@ public:
 
 	virtual	void		SetIsEnabled( bool v );
 
-	// 文件中存储格式：依次按csNormal,csHover,csDown,csDisable排列，w，h为单元宽高
+	// storage format in the file: in the order csNormal, csHover, csDown, csDisable; w,h are the cell width and height
 	bool				LoadImage( const char* file, int w=32, int h=32, int tx=0, int ty=0, bool isHorizontal=true );
 
 	DWORD				GetTextColor()						{ return _textColor;		}
@@ -56,33 +56,33 @@ public:
     void				SetFormModal( CForm::eModalResult v );
 	CForm::eModalResult GetFormModal()						{ return _eFormModal;		}
 
-	void				DoClick(eMouseState state = Mouse_LUp);		// 外部模拟点击事件
+	void				DoClick(eMouseState state = Mouse_LUp);		// external simulated click event
 
-	// 设置闪烁周期（毫秒），设 0 不闪烁
+	// sets the blink period (milliseconds); 0 means no blinking
 	void				SetFlashCycle( DWORD dwCycle = 1000 )	{ _dwFlashCycle = dwCycle;  }
 	DWORD				GetFlashCycle()			{ return _dwFlashCycle;		}
 
-public:	// 事件
-	GuiMouseEvent		evtMouseClick;			// 鼠标左键点击事件
-	GuiMouseEvent		evtMouseRClick;			// 鼠标右键点击事件  add by Philip.Wu 2006/01/23
-	GuiMouseEvent		evtMouseDBClick;		// 鼠标左键双击事件  add by Philip.Wu 2006/01/23
-	GuiEvent			evtMouseDownContinue;	// 鼠标持续按在按钮
+public:	// events
+	GuiMouseEvent		evtMouseClick;			// left mouse click event
+	GuiMouseEvent		evtMouseRClick;			// right mouse click event  add by Philip.Wu 2006/01/23
+	GuiMouseEvent		evtMouseDBClick;		// left mouse double click event  add by Philip.Wu 2006/01/23
+	GuiEvent			evtMouseDownContinue;	// the mouse is held down on the button
 
 protected:
 	void				_SetState( eButtonState v );
 	void				_ClearOldState();
 
 protected:
-	std::string				_strCaption;	// 显示在表面的名称
-	DWORD				_textColor;		// 字体颜色
+	std::string				_strCaption;	// the name shown on the surface
+	DWORD				_textColor;		// font colour
 
-	CGuiPic*			_pImage;		// 背景图,共四帧，分别对应：bsNormal,bsHover,bsDown,bsDisable
-	bool				_isDown;		// 以前已经在按钮上按下，等行松开执行evtMouseClick事件
+	CGuiPic*			_pImage;		// background image, four frames, corresponding to bsNormal, bsHover, bsDown, bsDisable
+	bool				_isDown;		// already pressed on the button before, waits for the release to run the evtMouseClick event
 
-    CForm::eModalResult _eFormModal;    // 对于所属表单为模态显示时，赋于表单的返回值
+    CForm::eModalResult _eFormModal;    // the value returned to the form when its owning form is shown modally
 
-	DWORD				_dwFlashCycle;	// 闪烁周期，=0 不闪烁
-	DWORD				_dwLastClick;	// 上一次点击的时间
+	DWORD				_dwFlashCycle;	// blink period; =0 means no blinking
+	DWORD				_dwLastClick;	// the time of the previous click
 
 	static CTextButton*	m_pCurButton;
 };

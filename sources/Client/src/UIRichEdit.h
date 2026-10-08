@@ -1,6 +1,6 @@
 ﻿//----------------------------------------------------------------------
-// 名称:RichEdit
-// 作者:lh 2005-07-11
+// Name: RichEdit
+// Author: lh 2005-07-11
 //----------------------------------------------------------------------
 #pragma once
 #include "uicompent.h"
@@ -33,11 +33,11 @@ private:
 	void	_Copy( const CRichEdit& rhs );
 	
 private:
-	char		_szEnter[16];	// 用于计算输入的buf
+	char		_szEnter[16];	// the buf used to compute the input
 	int			_nEnterPos;
 
 	CEditArticle	_cArticle;
-	bool			_IsReadyOnly;			// 是否只读
+	bool			_IsReadyOnly;			// whether it is read only
 	CEditKey*		_pEditKey;
 
 };

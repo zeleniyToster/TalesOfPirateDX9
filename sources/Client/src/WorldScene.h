@@ -29,7 +29,7 @@ public:
 	virtual void	SetScreen( int w, int h, bool IsFull );
 	static void		SetAttackChaColor( BYTE r, BYTE g, BYTE b );
 
-    virtual void    LoadingCall();          // 在装载loading后,刷新
+    virtual void    LoadingCall();          // refreshed after loading finishes
 
 public:
 	CWorldScene(stSceneInitParam& param);
@@ -40,7 +40,7 @@ public:
 
     xShipMgr*		GetShipMgr() { return _pShipMgr; }
 
-    CCharacter*     HitSelectCharacter( int nScrX, int nScrY, int nSelect=0 );			// nSelect为选择范围,参看CCharacter.h-eSelectCha
+    CCharacter*     HitSelectCharacter( int nScrX, int nScrY, int nSelect=0 );			// nSelect is the selection range; see CCharacter.h-eSelectCha
 
 	CMouseDown&		GetMouseDown()			{ return _cMouseDown;		}
 

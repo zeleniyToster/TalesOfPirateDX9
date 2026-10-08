@@ -1,7 +1,7 @@
 ﻿//----------------------------------------------------------------------
-// 名称:固定的图象式列表
-// 作者:lh 2004-10-09
-// 最后修改日期:2004-10-09
+// Name: fixed image style list
+// Author: lh 2004-10-09
+// Last modified date: 2004-10-09
 //----------------------------------------------------------------------
 #pragma once
 #include "uicompent.h"
@@ -10,7 +10,7 @@
 namespace GUI
 {
 
-// 固定大小的List,实际上仅是一个背景+选择框,选择时移动选择框上下位置
+// a List of fixed size; in fact it is only a background plus a selection box, and selecting moves the selection box up and down
 class CFixList : public CCompent
 {
 public:
@@ -38,36 +38,36 @@ public:
 	void				SetRowHeight( int v )		{ if( v>0 ) _nRowHeight = v;	}
 	void				SetRowSpace( int v )		{ if( v>=0 ) _nRowSpace = v;	}
 
-public:	// 事件
-	GuiEvent			evtSelectChange;				// 选择发生了变化
-	GuiMouseEvent		evtListMouseDown;			// 鼠标在列表的文字区按下
+public:	// events
+	GuiEvent			evtSelectChange;				// the selection changed
+	GuiMouseEvent		evtListMouseDown;			// the mouse is pressed in the text area of the list
 
 private:
 	void				_SetSelf( const CFixList& rhs );
 	void				_RefreshSelY();
 
 protected:
-	int					_nLeftMargin;	// 与周围边框的距离
+	int					_nLeftMargin;	// distance to the surrounding border
 	int					_nTopMargin;
 	int					_nRightMargin;
 	int					_nBottomMargin;
 
-	int					_nRowHeight;	// 行高
-	int					_nRowSpace;		// 行距
+	int					_nRowHeight;	// row height
+	int					_nRowSpace;		// row spacing
 
 	typedef std::vector<std::string> vstring;
 	vstring				_vstString;
 
-	CGuiPic*			_pImage;		// 背景图
-	CGuiPic*			_pSelect;		// 选择框
+	CGuiPic*			_pImage;		// background image
+	CGuiPic*			_pSelect;		// selection box
 	int					_nSelX, _nSelY;
-	CLimit<int>			_lmtSel;		// 当前选择
+	CLimit<int>			_lmtSel;		// the current selection
 
 	int					_nHitX1, _nHitY1, _nHitX2, _nHitY2;
 
 };
 
-// 用途:在每一栏上可标识是否已经选择
+// Purpose: marks on each column whether it is already selected
 class CCheckFixList : public CFixList
 {
 public:
@@ -98,14 +98,14 @@ protected:
 	typedef std::vector<bool>	vbool;
 	vbool					_checks;
 
-	int						_nCheckLeftMargin, _nCheckTopMargin;	// 显示Check的左边距和距顶部边距
+	int						_nCheckLeftMargin, _nCheckTopMargin;	// left and top margins of the displayed Check
 
-	CGuiPic*				_pImgCheck;			// 选择
-	CGuiPic*				_pImgUnCheck;		// 未选择
+	CGuiPic*				_pImgCheck;			// selected
+	CGuiPic*				_pImgUnCheck;		// not selected
 
 };
 
-// 内联函数
+// inline function
 inline 	void CFixList::SetMargin( int left, int top, int right, int bottom ) 
 { 
 	_nLeftMargin = left;

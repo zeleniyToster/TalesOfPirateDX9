@@ -18,10 +18,10 @@ namespace GUI
 	// 
 	enum MEMO_LINE_TYPE
 	{
-		MEMO_LINE_TITLE,		// 文字标题
-		MEMO_LINE_DESP,			// 文字描述
-		MEMO_LINE_INTERVAL,		// 间隔行
-		MEMO_LINE_ICON,			// 图标	
+		MEMO_LINE_TITLE,		// text title
+		MEMO_LINE_DESP,			// text description
+		MEMO_LINE_INTERVAL,		// spacer row
+		MEMO_LINE_ICON,			// icon
 	};
 
 	class CMemo : public CCompent
@@ -52,7 +52,7 @@ namespace GUI
 		bool	MouseScroll( int nScroll ) ;
 
 	public:
-		GuiEvent	evtSelectChange;				// 选择发生了变化
+		GuiEvent	evtSelectChange;				// the selection changed
 		void	SetMaxNumPerRow(int n) { _nMaxNum = n; }
 		int		GetMaxNumPerRow() {  return _nMaxNum; } 
 		void	SetPageShowNum(int n) {  _nPageShowNum = n; }
@@ -83,14 +83,14 @@ namespace GUI
 		void	_SetScrollRange();
 		void	_Copy( const CMemo& rhs );
 		void	_SetSelf();
-		void	_CheckTextAlign();			// 检查文本排列方式
-		void	_CheckScroll();			// 检查是否显示滚动轴
+		void	_CheckTextAlign();			// checks the text layout mode
+		void	_CheckScroll();			// checks whether the scroll bar is shown
 
 		std::string  _strCaption;
 		std::string  _str[MEMO_MAX_LINE];
 		bool	_IsTextCenter;
 
-		int		_nLeftMargin;	// 与周围边框的距离
+		int		_nLeftMargin;	// distance to the surrounding border
 		int		_nTopMargin;
 		int		_nRightMargin;
 		int		_nBottomMargin;
@@ -105,7 +105,7 @@ namespace GUI
 		int		_nMisRowNum;
 		int		_nMemoNum;
 		std::string	_strItem[MEMO_MAX_ITEM];
-		std::string	_strItemEx[MEMO_MAX_ITEM];		// 额外数据,不显示
+		std::string	_strItemEx[MEMO_MAX_ITEM];		// extra data, not shown
 		std::string	_strMis[MEMO_MAX_ITEM];
 		int		_nSelectItem{ -1 };
 		int		_nSelectMission{ -1 };
@@ -162,8 +162,8 @@ namespace GUI
 		void        Init();
 
 		bool		MouseScroll( int nScroll ) ;
-		GuiEvent	evtSelectChange; // 选择发生了变化
-		GuiItemClickEvent evtClickItem;	// 点击了莫个字符串
+		GuiEvent	evtSelectChange; // the selection changed
+		GuiItemClickEvent evtClickItem;	// a certain string was clicked
 		void		SetMaxNumPerRow(int n) { _nMaxNum  = n; }
 		int			GetMaxNumPerRow() { return _nMaxNum; } 
 		void		SetRowNum(int n) { _nRowNum = n; }
@@ -194,15 +194,15 @@ namespace GUI
 			CGraph* pIcon;
 			USHORT	sData;
 			BYTE	byData;
-			BYTE	byType;		  // 信息类型
-			USHORT	sxPos, syPos; // 行和列
+			BYTE	byType;		  // information type
+			USHORT	sxPos, syPos; // rows and columns
 		};
 
-		// 需要显示的任务数据信息
+		// the mission data information that needs to be shown
 		USHORT		m_sNumInfo;
-		MEMO_INFO	m_MemoInfo[MEMO_MAX_LINE];	// 任务界面显示解析后数据
-		NET_MISPAGE m_PageInfo;					// 任务数据原始信息
-		BOOL		m_bUpdate;					// 任务数据是否已被更新
+		MEMO_INFO	m_MemoInfo[MEMO_MAX_LINE];	// the parsed data shown on the mission screen
+		NET_MISPAGE m_PageInfo;					// the original mission data information
+		BOOL		m_bUpdate;					// whether the mission data has been updated
 
 		// Add by lark.li 20080721 begin
 		int	m_SelMem;
@@ -216,7 +216,7 @@ namespace GUI
 		void	_SetScrollRange();
 		void	_Copy( const CMemoEx& rhs );
 		void	_SetSelf();
-		void	_CheckScroll();			// 检查是否显示滚动轴
+		void	_CheckScroll();			// checks whether the scroll bar is shown
 		void	ParseMisPage();
 		BOOL	ParseScript( char* pszTemp, USHORT& sNumLine, USHORT& sRow, USHORT& sCom, USHORT sStartCom, USHORT sMaxCom, DWORD dwDefColor, MEMO_INFO* pInfo, USHORT sMaxInfo );
 		BOOL	SelPrizeItem( int nxPos, int nyPos, DWORD dwKey );
@@ -225,14 +225,14 @@ namespace GUI
 		int SelMemInfo(int x, int y, DWORD key);
 		// End
 	private:
-		DWORD	_color;				// 字体颜色
+		DWORD	_color;				// font colour
 		CScroll*	_pScroll;
-		int		_nFirst, _nLast;	// 显示的第一行和最后一行
-		int		_nPageShowNum ;		// 一页最多可以显示的行数
-		int		_nLeftMargin;	// 与周围边框的距离
-		int		_nTopMargin;	// 与周围边框的距离
-		int		_nRightMargin;	// 与周围边框的距离
-		int		_nBottomMargin;	// 与周围边框的距离
+		int		_nFirst, _nLast;	// the first row and the last row displayed
+		int		_nPageShowNum ;		// maximum number of rows a page can show
+		int		_nLeftMargin;	// distance to the surrounding border
+		int		_nTopMargin;	// distance to the surrounding border
+		int		_nRightMargin;	// distance to the surrounding border
+		int		_nBottomMargin;	// distance to the surrounding border
 		int		_nRowHeight;
 		int     _nTitleHeight;
 		int     _nIconHeight;
@@ -240,7 +240,7 @@ namespace GUI
 		int     _nRowNum; 
 		int     _nPhraseNum;
 
-		// 记录奖励物品选择项
+		// records the reward item selection
 		BYTE	m_bySelPrize;
 		CGuiPic* m_pPrizePic;
 		CGuiPic* m_pPrizeSelPic;
@@ -259,25 +259,25 @@ namespace GUI
 
 	enum MEMO_COL_TYPE
 	{
-		COL_ICON			= 0, // 图标
-		COL_TEXT			= 1, // 文本
+		COL_ICON			= 0, // icon
+		COL_TEXT			= 1, // text
 	};
 
 	enum MEMO_COLOR_TYPE
 	{
-		TEXT_COLOR_WIGHT	= 0, // 白色
-		TEXT_COLOR_BLACK	= 1, // 黑色
-		TEXT_COLOR_RED		= 2, // 红色
-		TEXT_COLOR_GREEN	= 3, // 绿色
-		TEXT_COLOR_BLUE		= 4, // 蓝色
-		TEXT_COLOR_GRAY		= 5, // 灰色
-		TEXT_COLOR_PURPLE	= 6, // 紫色
+		TEXT_COLOR_WIGHT	= 0, // white
+		TEXT_COLOR_BLACK	= 1, // black
+		TEXT_COLOR_RED		= 2, // red
+		TEXT_COLOR_GREEN	= 3, // green
+		TEXT_COLOR_BLUE		= 4, // blue
+		TEXT_COLOR_GRAY		= 5, // grey
+		TEXT_COLOR_PURPLE	= 6, // purple
 	};
 	
 	enum MEMO_FONT_TYPE
 	{
-		TEXT_FONT_9			= 0, // 9号字
-		TEXT_FONT_10		= 1, // 10号字
+		TEXT_FONT_9			= 0, // size 9 font
+		TEXT_FONT_10		= 1, // size 10 font
 	};
 
 	class CRichMemo : public CCompent
@@ -295,14 +295,14 @@ namespace GUI
 		virtual bool MouseRun( int x, int y, DWORD key );
 		virtual bool IsHandleMouse() { return true; }
 	
-		// 滚动条处理
+		// scroll bar handling
 		CScroll* GetScroll() { return m_pScroll; }
 		bool	MouseScroll( int nScroll );
 
-		// 滚动条滚动事件处理
+		// scroll bar scrolling event handling
 		void	OnScrollChange();
 
-		// 设置控件显示信息接口		
+		// interface for setting the control display information
 		void	Clear();
 		void	AddText( const char szTitle[], const char szText[], BYTE byColType, BYTE byFontType );
 		void	SetClipRect( const RECT& rect ) { m_ShowRect = rect; }
@@ -314,38 +314,38 @@ namespace GUI
 		void	AutoScroll();		
 
 	protected:
-		// 显示列信息结构
+		// column display information structure
 		struct MEMO_COLINFO
 		{
 			std::string  strDesp;
 			CGraph* pIcon;
 			BYTE	byType;
-			DWORD	dwColor;	// 字体颜色
+			DWORD	dwColor;	// font colour
 			USHORT  sxPos;
 		};
 
-		// 每行列信息数组
+		// array of per-row column information
 		typedef std::vector<MEMO_COLINFO> MEMO_COLINFO_ARRAY;
 
-		// 行信息显示结构
+		// row information display structure
 		struct MEMO_LINE_INFO
 		{
 			MEMO_COLINFO_ARRAY ColInfoArray;
-			BYTE	byFontType; // 字体类型
-			USHORT  sFontWidth;	// 显示字体宽高
+			BYTE	byFontType; // font type
+			USHORT  sFontWidth;	// displayed font width and height
 			USHORT	sFontHeight;
-			USHORT  sHeight;	// 显示行高度
+			USHORT  sHeight;	// displayed row height
 		};
 
-		// 所有需要显示的行信息列表
+		// the list of all row information that needs to be shown
 		typedef std::list<MEMO_LINE_INFO*> MEMO_LINEINFO_LIST;
 			MEMO_LINEINFO_LIST	m_LineList;
 
-		// 每个标题段信息结构
+		// each title segment information structure
 		struct MEMO_SECTION_INFO
 		{
-			BYTE	byFontType; // 字体类型
-			USHORT  sFontWidth;	// 显示字体宽高
+			BYTE	byFontType; // font type
+			USHORT  sFontWidth;	// displayed font width and height
 			USHORT	sFontHeight;
 			DWORD	dwColor;
 			std::string  strTitle;
@@ -363,14 +363,14 @@ namespace GUI
 		CGraph* GetImage( const char szImage[] );
 
 	private:
-		CImageList*	m_pImageList;   // 显示图形列表
-		CScroll*	m_pScroll;		// 滚动条控件
-		RECT		m_ShowRect;		// 控件有效显示区域裁剪
-		USHORT		m_sMaxLine;		// 最大可以显示的段信息数量
-		DWORD		m_dwTitleColor;	// 标题字体的颜色
-		BYTE		m_byTitleFont;	// 标题字体的大小
-		BYTE		m_byDist;		// 设置每行显示间隔距离
-		BOOL		m_bAutoScroll;  // 是否自动滚屏
+		CImageList*	m_pImageList;   // the list of graphics to display
+		CScroll*	m_pScroll;		// scroll bar control
+		RECT		m_ShowRect;		// clipping of the control's valid display area
+		USHORT		m_sMaxLine;		// maximum number of segment information items that can be shown
+		DWORD		m_dwTitleColor;	// the title font colour
+		BYTE		m_byTitleFont;	// the title font size
+		BYTE		m_byDist;		// sets the spacing between displayed rows
+		BOOL		m_bAutoScroll;  // whether the screen scrolls automatically
 	};
 
 

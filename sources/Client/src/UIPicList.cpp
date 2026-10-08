@@ -50,8 +50,8 @@ CFixList::~CFixList()
 	//delete _pImage; 
 	//delete _pSelect; 
 
-	SAFE_DELETE(_pImage);  // UI当机处理
-	SAFE_DELETE(_pSelect); // UI当机处理
+	SAFE_DELETE(_pImage);  // UI freeze handling
+	SAFE_DELETE(_pSelect); // UI freeze handling
 }
 
 void CFixList::Render() 
@@ -84,7 +84,7 @@ bool CFixList::MouseRun( int x, int y, DWORD key )
 	{
 		if( (key & Mouse_LDown) && (x>=_nHitX1 && x<=_nHitX2 && y>=_nHitY1 && y<=_nHitY2) )
 		{
-			// 计算点击后的行数
+			// computes the row number after the click
 			int row = ( y - _nHitY1 ) / (_nRowHeight+_nRowSpace);
 			if( (_lmtSel.GetCur()!=row) && ( _lmtSel.SetCur( row ) ) )
 			{
@@ -172,8 +172,8 @@ CCheckFixList::~CCheckFixList()
 	//delete _pImgCheck; 
 	//delete _pImgUnCheck; 
 
-	SAFE_DELETE(_pImgCheck);   // UI当机处理
-	SAFE_DELETE(_pImgUnCheck); // UI当机处理
+	SAFE_DELETE(_pImgCheck);   // UI freeze handling
+	SAFE_DELETE(_pImgUnCheck); // UI freeze handling
 }
 
 bool CCheckFixList::SetMaxNum( int n )

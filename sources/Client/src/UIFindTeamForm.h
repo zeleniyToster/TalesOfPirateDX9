@@ -28,8 +28,8 @@ namespace GUI
 		void SetOwnFindTeamState(bool bState);
 		void FindTeamAsk(const char* szName);
 
-		static const int FINDTEAM_PAGE_SIZE = 10;	// 寻求组队一页显示条数
-		static const int FINDTEAM_INTERVAL  = 60;	// 两次申请间隔时间：60秒
+		static const int FINDTEAM_PAGE_SIZE = 10;	// number of rows a team seeking page shows
+		static const int FINDTEAM_INTERVAL  = 60;	// interval between two applications: 60 seconds
 
 	protected:
 		virtual bool Init();
@@ -38,27 +38,27 @@ namespace GUI
 	private:
 
 		//
-		// 寻找组队
+		// team finding
 		//
 		CForm*		frmFindTeam;
 
-		CLabelEx*		labName[FINDTEAM_PAGE_SIZE];	// 角色姓名
-		CLabelEx*		labLevel[FINDTEAM_PAGE_SIZE];	// 角色等级
-		CLabelEx*		labJob[FINDTEAM_PAGE_SIZE];		// 角色职业
-		CLabelEx*		labPlace[FINDTEAM_PAGE_SIZE];	// 角色所在地
-		CTextButton*	btnSubmit[FINDTEAM_PAGE_SIZE];	// 提交按钮
+		CLabelEx*		labName[FINDTEAM_PAGE_SIZE];	// character name
+		CLabelEx*		labLevel[FINDTEAM_PAGE_SIZE];	// character level
+		CLabelEx*		labJob[FINDTEAM_PAGE_SIZE];		// character class
+		CLabelEx*		labPlace[FINDTEAM_PAGE_SIZE];	// character location
+		CTextButton*	btnSubmit[FINDTEAM_PAGE_SIZE];	// submit button
 
 		CTextButton*	btnAddme;
 		CTextButton*	btnDelme;
-		CLabelEx*		labListPage;		// 显示页数
+		CLabelEx*		labListPage;		// number of displayed pages
 
-		int				m_nCurPage;			// 当前页
-		int				m_nPageNum;			// 总页数
-		DWORD			m_dwLastTick;		// 上一次申请组队的时间
-		std::string		m_strTeamLeader;	// 申请的队长
+		int				m_nCurPage;			// current page
+		int				m_nPageNum;			// total pages
+		DWORD			m_dwLastTick;		// the time of the last party application
+		std::string		m_strTeamLeader;	// the party leader applied to
 
-		static void _evtFindTeamMouseButton(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey);// 鼠标点击按钮事件
-		static void	_evtFindTeamCheckEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey); // 组队申请
+		static void _evtFindTeamMouseButton(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey);// mouse button click event
+		static void	_evtFindTeamCheckEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey); // party application
 
 	};
 

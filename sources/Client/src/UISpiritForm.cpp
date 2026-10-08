@@ -30,7 +30,7 @@ namespace GUI
 	bool CSpiritMgr::Init()
 	{
 		//
-		//  精灵融合界面初始化
+		//  elf fusion screen initialisation
 		//
 		frmSpiritMarry = CFormMgr::s_Mgr.Find("frmSpiritMarry");
 		if(! frmSpiritMarry)
@@ -82,7 +82,7 @@ namespace GUI
 		cmdSpiritMarry[SPIRIT_MARRY_TWO]->evtBeforeAccept  = _evtDragMarryTwo;
 
 		//
-		//  精灵老虎机界面初始化
+		//  elf slot machine screen initialisation
 		//
 		frmSpiritErnie = CFormMgr::s_Mgr.Find("frmSpiritErnie");
 		if(! frmSpiritErnie)
@@ -104,7 +104,7 @@ namespace GUI
 		char szName[32] = {0};
 		for(int i = 0; i < 9; ++i)
 		{
-			// 卷动图片
+			// scrolls the image
 			for(int j = 0; j < ERNIE_IMAGE_COUNT; ++j)
 			{
 				sprintf(szName, "imgLine%d_%d", i + 1, j + 1);
@@ -121,7 +121,7 @@ namespace GUI
 
 		for(int i = 0; i < 3; ++i)
 		{
-			// 显示的格子
+			// the cell that is displayed
 			for(int j = 0; j < 3; ++j)
 			{
 				int nSeq = i * 3 + j;
@@ -136,7 +136,7 @@ namespace GUI
 				cmdItem[nSeq]->SetIsDrag(false);
 			}
 
-			// 下注 Check
+			// bet Check
 			sprintf(szName, "chkSetmoney%d", i + 1);
 			chkSetmoney[i] = dynamic_cast<CCheckBox*>(frmSpiritErnie->Find(szName));
 			if(! chkSetmoney[i])
@@ -145,7 +145,7 @@ namespace GUI
 				return false;
 			}
 
-			// 下注硬币个数显示
+			// display of the number of coins bet
 			sprintf(szName, "labUsemoney%d", i + 1);
 			labUsemoney[i] = dynamic_cast<CLabelEx*>(frmSpiritErnie->Find(szName));
 			if(! labUsemoney[i])
@@ -154,7 +154,7 @@ namespace GUI
 				return false;
 			}
 
-			// 停止转动按钮
+			// the stop spinning button
 			sprintf(szName, "btnStop%d", i + 1);
 			btnStop[i] = dynamic_cast<CTextButton*>(frmSpiritErnie->Find(szName));
 			if(! btnStop[i])
@@ -184,11 +184,11 @@ namespace GUI
 
 	void CSpiritMgr::CloseForm()
 	{
-		// 不作任何处理
+		// does nothing
 	}
 
 
-	// 清除界面上所有的格子
+	// clears every cell on the screen
 	void CSpiritMgr::ClearAllCommand()
 	{
 		PopItem(SPIRIT_MARRY_ITEM);
@@ -197,7 +197,7 @@ namespace GUI
 	}
 
 
-	// 显示精灵融合界面
+	// shows the elf fusion screen
 	void CSpiritMgr::ShowMarryForm(bool bShow)
 	{
 		if(frmSpiritMarry)
@@ -275,7 +275,7 @@ namespace GUI
 	}
 
 
-	// 更新老虎机
+	// updates the slot machine
 	void CSpiritMgr::UpdateErnieNumber(short nNum, short nID1, short nID2, short nID3)
 	{
 		switch(nNum)
@@ -344,7 +344,7 @@ namespace GUI
 
 	void CSpiritMgr::PushItem(int iIndex, CItemCommand& rItem)
 	{
-		// 查看原来的Cmd中是否已经有Item了，如果有则移出
+		// checks whether the original Cmd already has an Item and removes it if so
 		CItemCommand* pItemCommand =  
 			dynamic_cast<CItemCommand*>(cmdSpiritMarry[iIndex]->GetCommand());
 		if (pItemCommand)
@@ -352,9 +352,9 @@ namespace GUI
 			PopItem(iIndex);
 		}
 
-		// 记录Item在物品栏中的位置
+		// records the position of the Item in the item slot
 		m_iSpiritItemPos[iIndex] = g_stUIEquip.GetGoodsGrid()->GetDragIndex();
-		// 将Item相应的物品栏灰调
+		// greys out the item slot of the Item
 		rItem.SetIsValid(false);
 
 		// 将创建的Item放入Cmd中，这里用new将会在PopItem()中删除
@@ -362,7 +362,7 @@ namespace GUI
 		pItemCmd->SetIsValid(true);
 		cmdSpiritMarry[iIndex]->AddCommand(pItemCmd);
 
-		// 属性
+		// attribute
 		SItemGrid& oItemGridSrc  = rItem.GetData();
 		SItemGrid& oItemGridDest = pItemCmd->GetData();
 		for(int i = 0; i < defITEM_INSTANCE_ATTR_NUM; ++i)
@@ -380,9 +380,9 @@ namespace GUI
 			dynamic_cast<CItemCommand*>(cmdSpiritMarry[iIndex]->GetCommand());
 		if (! pItemCommand) return;
 
-		cmdSpiritMarry[iIndex]->DelCommand();	// 该函数将删除delete Item
+		cmdSpiritMarry[iIndex]->DelCommand();	// this function deletes the Item
 
-		// 将Item相应的物品栏恢复成可用
+		// puts the item slot of the Item back to usable
 		CCommandObj* pItem = 
 					g_stUIEquip.GetGoodsGrid()->GetItem(m_iSpiritItemPos[iIndex]);
 		if (pItem)
@@ -390,12 +390,12 @@ namespace GUI
 			pItem->SetIsValid(true);
 		}
 
-		// 记录Item在物品栏中的位置
+		// records the position of the Item in the item slot
 		m_iSpiritItemPos[iIndex] = NO_USE;
 	}
 
 
-	// 是否是合法的恶魔果实
+	// whether it is a valid demon fruit
 	bool CSpiritMgr::IsValidSpiritItem(CItemCommand& rItem)
 	{
 		CItemRecord* pItem = rItem.GetItemInfo();
@@ -409,7 +409,7 @@ namespace GUI
 	}
 
 
-	// 是否是合法的精灵（LV > 20）
+	// whether it is a valid elf (LV > 20)
 	bool CSpiritMgr::IsValidSpirit(CItemCommand& rItem)
 	{
 		static CItemRecord* pInfo = NULL;
@@ -419,7 +419,7 @@ namespace GUI
 		memset( &s_item, 0, sizeof(SItemHint) );
 		s_item.Convert( rItem.GetData(), pInfo );
 
-		// 更新宠物等级,头像
+		// updates the pet level and portrait
 		int nLevel  = s_item.sInstAttr[ITEMATTR_VAL_STR]
 					+ s_item.sInstAttr[ITEMATTR_VAL_AGI] 
 					+ s_item.sInstAttr[ITEMATTR_VAL_DEX] 
@@ -435,7 +435,7 @@ namespace GUI
 	}
 
 
-	// 设置界面
+	// sets up the screen
 	void CSpiritMgr::SetSpiritUI()
 	{
 		CItemCommand* pItemCommand =  
@@ -465,7 +465,7 @@ namespace GUI
 
 		int nMoney = 0;
 
-		// 计算价格（策划文档）
+		// computes the price (design document)
 		if(nLevel1 < 60 && nLevel2 < 60)
 		{
 			nMoney = (60 - nLevel1) * (60 - nLevel2) * 100;
@@ -478,12 +478,12 @@ namespace GUI
 		pItemCommand = dynamic_cast<CItemCommand*>(cmdSpiritMarry[SPIRIT_MARRY_ITEM]->GetCommand());
 		if(! pItemCommand) return;
 
-		// 三个栏位都已经放入，允许点击“确定”按钮
+		// all three slots are filled, so the 'confirm' button may be clicked
 		btnForgeYes->SetIsEnabled(true);
 	}
 
 
-	// 提交信息给服务器
+	// submits the information to the server
 	void CSpiritMgr::SendSpiritMarryProtocol()
 	{
 		CS_ItemForgeAsk(true, GetType(), m_iSpiritItemPos, SPIRIT_MARRY_CELL_COUNT);
@@ -492,10 +492,10 @@ namespace GUI
 
 ///////////////////////////////////////////////////////////////////////////
 //
-//	界面消息处理
+//	screen message handling
 //
 
-	// 拖入恶魔果实
+	// the demon fruit is dragged in
 	void CSpiritMgr::_evtDragMarryItem(CGuiData *pSender,CCommandObj* pItem,bool& isAccept)
 	{
 		CItemCommand* pItemCommand =  dynamic_cast<CItemCommand*>(pItem);
@@ -516,7 +516,7 @@ namespace GUI
 	}
 
 
-	// 拖入精灵1
+	// elf 1 is dragged in
 	void CSpiritMgr::_evtDragMarryOne(CGuiData *pSender,CCommandObj* pItem,bool& isAccept)
 	{
 		CItemCommand* pItemCommand =  dynamic_cast<CItemCommand*>(pItem);
@@ -528,13 +528,13 @@ namespace GUI
 		CItemCommand* pStoneItem = dynamic_cast<CItemCommand*>(g_stUISpirit.cmdSpiritMarry[SPIRIT_MARRY_ITEM]->GetCommand());
 		if(NULL == pStoneItem)
 		{
-			g_pGameApp->MsgBox(g_oLangRec.GetString(826));//请先放入恶魔果实
+			g_pGameApp->MsgBox(g_oLangRec.GetString(826));//please put in the demon fruit first
 			return;
 		}
 
 		if(! pItemCommand->GetIsValid())
 		{
-			g_pGameApp->MsgBox(g_oLangRec.GetString(899));//您放入的精灵不合法，请重新选择精灵
+			g_pGameApp->MsgBox(g_oLangRec.GetString(899));//the elf you put in is not valid; please choose the elf again
 			return;
 		}
 
@@ -545,12 +545,12 @@ namespace GUI
 		}
 		else
 		{
-			g_pGameApp->MsgBox(g_oLangRec.GetString(827));//您放入的不是精灵或者是低于20级的精灵，请重新选择精灵
+			g_pGameApp->MsgBox(g_oLangRec.GetString(827));//what you put in is not an elf, or is an elf below level 20; please choose the elf again
 		}
 	}
 
 
-	// 拖入精灵2
+	// elf 2 is dragged in
 	void CSpiritMgr::_evtDragMarryTwo(CGuiData *pSender,CCommandObj* pItem,bool& isAccept)
 	{
 		CItemCommand* pItemCommand =  dynamic_cast<CItemCommand*>(pItem);
@@ -568,7 +568,7 @@ namespace GUI
 
 		if(! pItemCommand->GetIsValid())
 		{
-			g_pGameApp->MsgBox(g_oLangRec.GetString(899));//您放入的精灵不合法，请重新选择精灵
+			g_pGameApp->MsgBox(g_oLangRec.GetString(899));//the elf you put in is not valid; please choose the elf again
 			return;
 		}
 
@@ -579,12 +579,12 @@ namespace GUI
 		}
 		else
 		{
-			g_pGameApp->MsgBox(g_oLangRec.GetString(827));//您放入的不是精灵或者是低于20级的精灵，请重新选择精灵
+			g_pGameApp->MsgBox(g_oLangRec.GetString(827));//what you put in is not an elf, or is an elf below level 20; please choose the elf again
 		}
 	}
 
 
-	// 鼠标点击按钮事件
+	// mouse button click event
 	void CSpiritMgr::_evtMainMouseButton(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey)
 	{
 		string strName = pSender->GetName();
@@ -597,7 +597,7 @@ namespace GUI
 	}
 
 
-	// 关闭窗体事件
+	// close window event
 	void CSpiritMgr::_evtCloseMarryForm(CForm* pForm, bool& IsClose)
 	{
 		g_stUISpirit.ClearAllCommand();
@@ -614,7 +614,7 @@ namespace GUI
 			if(dwCurrTickCount - m_dwLastTickCount > ERNIE_SPEED)
 			{
 				//
-				// 老虎机翻转
+				// slot machine flip
 				//
 				m_dwLastTickCount = dwCurrTickCount;
 
@@ -650,7 +650,7 @@ namespace GUI
 				}
 
 				//
-				// 显示文字闪
+				// shows the text flash
 				//
 				DWORD dwColorID = (g_pGameApp->GetCurTick() & 1023) >> 8;
 				DWORD dwColor = 0;
@@ -675,7 +675,7 @@ namespace GUI
 			}
 
 			//
-			// 下注显示
+			// bet display
 			//
 			char szBuffer[32] = {0};
 			sprintf(szBuffer, "%d", ERNIE_COIN_COUNT);
@@ -696,7 +696,7 @@ namespace GUI
 	}
 
 
-	// 精灵老虎机，鼠标点击事件
+	// elf slot machine, mouse click event
 	void CSpiritMgr::_evtErnieMouseButton(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey)
 	{
 		string strName = pSender->GetName();
@@ -718,7 +718,7 @@ namespace GUI
 					nCoinCount += ERNIE_COIN_COUNT;
 			}
 
-			if(nCoinCount > g_stUIEquip.GetItemCount(855))	// 是否有足够的精灵硬币
+			if(nCoinCount > g_stUIEquip.GetItemCount(855))	// whether there are enough elf coins
 			{
 				g_stUISpirit.chkSetmoney[0]->SetIsChecked(false);
 				g_stUISpirit.chkSetmoney[1]->SetIsChecked(false);
@@ -729,13 +729,13 @@ namespace GUI
 			}
 
 			int nEmptyCount = g_stUIEquip.GetGoodsGrid()->GetEmptyGridCount();
-			if(ERNIE_EMPTY_COUNT > nEmptyCount)	// 背包需要 5 个空格
+			if(ERNIE_EMPTY_COUNT > nEmptyCount)	// the bag needs 5 free slots
 			{
 				g_pGameApp->MsgBox(g_oLangRec.GetString(890), ERNIE_EMPTY_COUNT);
 				return;
 			}
 
-			if(g_stUIEquip.GetIsLock())	// 背包是否锁定
+			if(g_stUIEquip.GetIsLock())	// whether the bag is locked
 			{
 				g_pGameApp->MsgBox(g_oLangRec.GetString(894), ERNIE_EMPTY_COUNT);
 				return;
@@ -760,7 +760,7 @@ namespace GUI
 
 			g_stUISpirit.ClearTigerItem();
 
-			// 通知服务器开始
+			// notifies the server to start
 			CS_TigerStart(  g_stUINpcTalk.GetNpcId(),
 							g_stUISpirit.chkSetmoney[0]->GetIsChecked(),
 							g_stUISpirit.chkSetmoney[1]->GetIsChecked(),
@@ -800,7 +800,7 @@ namespace GUI
 	}
 
 
-	// 更新显示内容
+	// updates the displayed content
 	void CSpiritMgr::UpdateErnieString(const char* szText)
 	{
 		if(0 == strlen(labLastshow1->GetCaption()))
@@ -829,7 +829,7 @@ namespace GUI
 			{
 				nID[i] = pItem->GetItemInfo()->lID;
 
-				if(nID[i] != 194)	// 单个金钱也有效
+				if(nID[i] != 194)	// a single coin is valid too
 				{
 					ErnieHightLight(i, false);
 				}

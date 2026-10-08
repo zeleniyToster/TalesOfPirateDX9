@@ -1,7 +1,7 @@
 ﻿//----------------------------------------------------------------------
-// 名称:游戏标题
-// 作者:lh 2005-05-23
-// 最后修改日期:
+// Name: game title
+// Author: lh 2005-05-23
+// Last modified date:
 //----------------------------------------------------------------------
 #pragma once
 #include "uicompent.h"
@@ -43,15 +43,15 @@ protected:
 	CGuiPic*		_pImage;
 
 	unsigned int	_nFontIndex;
-	std::string			_strCaption;		// 显示在表面的名称
-	DWORD			_dwColor;			// 字体颜色
+	std::string			_strCaption;		// the name shown on the surface
+	DWORD			_dwColor;			// font colour
 	DWORD			_dwShowTime;
 	int				_nFontH;
 
 private:
 	BYTE			_alpha;
 	DWORD			_endtime;
-	int				_posx[enumMax];		// 坐标
+	int				_posx[enumMax];		// coordinates
 	int				_posy;
 	int				_posfonty;
 

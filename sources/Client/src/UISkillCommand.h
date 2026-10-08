@@ -1,7 +1,7 @@
 ﻿//----------------------------------------------------------------------
-// 名称:技能
-// 作者:lh 2004-11-07
-// 最后修改日期:
+// Name: skill
+// Author: lh 2004-11-07
+// Last modified date:
 //----------------------------------------------------------------------
 #pragma once
 #include "UICommand.h"
@@ -37,8 +37,8 @@ public:
 
 	enum eSpecialType
 	{
-		enumHighLight  = 1,	// 一直显示高亮
-		enumNotUpgrade = 2	// 不允许手动升级
+		enumHighLight  = 1,	// always shown highlighted
+		enumNotUpgrade = 2	// manual levelling up is not allowed
 	};
 
 	bool			GetIsSpecial(eSpecialType SpecialType);
@@ -61,11 +61,11 @@ protected:
 	DWORD			_dwPlayTime;
     DWORD           _dwRecordTime;
 
-    static CGuiPic  _imgActive;		// 显示激活的边框
+    static CGuiPic  _imgActive;		// shows the active border
 
 };
 
-// 内联函数
+// inline function
 inline int CSkillCommand::_GetSkillTime()  
 { 
     return _pSkill->GetFireSpeed();

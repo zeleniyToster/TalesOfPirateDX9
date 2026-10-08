@@ -1,15 +1,15 @@
 ﻿//----------------------------------------------------------------------
-// 名称:技能框
-// 作者:lh 2004-12-13
-// 用途:双击可以使用技能,升级时显示一个升级按钮,有当前级别,魔法值
-//      可拖动到快捷栏,可双击执行,因些有Command系列
-//      有动态可显示按钮用于升级,因此要响应鼠标
-//      有静态文字,表示技能名称
-//      有动态文字,表示当前级别,消耗魔法值
-//      有上下换行,换页,到头尾等,要响应键盘
-//   注:本来这个类可以直接使用CList,只要派生CListItems即可,但考虑到功能较CList更多更复杂,
-//      后期可能有改动,所以新开一个类,避免CList系列可能太过复杂
-// 最后修改日期:
+// Name: skill box
+// Author: lh 2004-12-13
+// Purpose: a double click uses the skill; when levelling up a level up button is shown, with the current level and the mana cost
+//      it can be dragged onto the shortcut bar and executed with a double click, so there is a Command family
+//      it has a dynamic button for levelling up, so it has to respond to the mouse
+//      it has static text showing the skill name
+//      it has dynamic text showing the current level and the mana cost
+//      it has up and down line changes, paging and jumping to the ends, so it has to respond to the keyboard
+//   note: this class could use CList directly, deriving CListItems would be enough, but it has more and more complex functionality,
+//      and may change later, so a new class is opened to keep the CList family from becoming too complicated
+// Last modified date:
 //----------------------------------------------------------------------
 #pragma once
 #include <vector>
@@ -90,42 +90,42 @@ private:
     void			_DragEnd( int x, int y, DWORD key );
 
 protected:
-    CGuiPic*		_pImage;		// 背景图
-    CGuiPic*		_pSelect;	    // 选择条
-    CGuiPic*        _pButton;       // 升级按钮
+    CGuiPic*		_pImage;		// background image
+    CGuiPic*		_pSelect;	    // selection bar
+    CGuiPic*        _pButton;       // level up button
     CScroll*		_pScroll;	    
 
     typedef std::vector<CSkillCommand*> skills;
     skills          _skills;
 
-    // 与周围边框的距离
+    // distance to the surrounding border
     int				_nLeftMargin;	
     int				_nTopMargin;	
     int				_nRightMargin;	
     int				_nBottomMargin;	
 
-    int				_nRowHeight;    // 行高
-    int             _nFontStart;    // 字体开始位置
+    int				_nRowHeight;    // row height
+    int             _nFontStart;    // where the text starts
     DWORD           _dwFontColor;
 
-    int             _nUnitHeight, _nUnitWidth;   // 单元图片宽高
+    int             _nUnitHeight, _nUnitWidth;   // cell image width and height
 
-    int             _nSelectIndex;  // 选择的行数
+    int             _nSelectIndex;  // the selected row number
     bool            _IsShowUpgrade;
 
 private:
-    int             _nShowFirst;    // 显示的第一行
-    int             _nShowLast;     // 显示的最后一行
-    int				_nShowCount;    // 总共可以显示多少行    
+    int             _nShowFirst;    // the first row displayed
+    int             _nShowLast;     // the last row displayed
+    int				_nShowCount;    // how many rows can be displayed in total
 
-    // 用于显示技能的范围
+    // the range used to display skills
     int             _nSX1, _nSY1, _nSX2, _nSY2;   
 
-    int             _nButtonX1;     // 按钮显示的X位置
-    int             _nButtonOffY;   // 按钮显示的Y轴偏移
+    int             _nButtonX1;     // X position where the button is displayed
+    int             _nButtonOffY;   // Y offset where the button is displayed
 
-    int             _nRowSpace;     // 行距
-    int             _nFontYOff;     // 字显示在一行的中部高度
+    int             _nRowSpace;     // row spacing
+    int             _nFontYOff;     // the height of the text in the middle of a row
 
 private:
     int             _nDragIndex;
@@ -135,7 +135,7 @@ private:
 };
 
 
-// 内联函数 
+// inline function
 inline 	void CSkillList::_ResetPageNum() 
 { 
     _pScroll->SetPageNum( ( GetHeight() - _nTopMargin - _nBottomMargin ) / _nRowHeight - 1 );
@@ -154,7 +154,7 @@ inline int CSkillList::_GetHitSkill( int x, int y )
         int h = ( _nShowCount * _nRowHeight + _nSY1 );
         if( y >= h ) return false;
 
-        // 得到行数
+        // gets the number of rows
         int row = ( y - _nSY1 ) / _nRowHeight + _nShowFirst;
         if( row>=0 && row<(int)_skills.size() ) 
 			return row;

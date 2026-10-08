@@ -19,7 +19,7 @@ bool CPkDialog::Init()
 {
 	CFormMgr &mgr = CFormMgr::s_Mgr;
 
-	{	// pk 开始前的对话框
+	{	// dialog before the pk starts
 		frmTeamPkStart = mgr.Find("frmTeamPK");
 		if ( !frmTeamPkStart)
 		{
@@ -56,7 +56,7 @@ bool CPkDialog::Init()
 	}
 
 	{
-		 // pk 结束后的对话框
+		 // dialog after the pk ends
 		//frmTeamPkEnd = mgr.Find("frmfrmTeamPkStart");
 		//if ( !frmTeamPkEnd)
 		//{

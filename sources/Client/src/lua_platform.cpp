@@ -38,7 +38,7 @@ void InitLuaPlatform()
 
     lua_register(L, "sysAddHelpString", lua_sysAddHelpString);
     
-    // util对象操作函数
+    // util object operation functions
     g_luaFNList.push_back("[util]");
     REGFN(MsgBox);
     REGFN(GetTickCount);
@@ -47,7 +47,7 @@ void InitLuaPlatform()
     REGFN(SysInfo);
     g_luaFNList.push_back("\r");
 
-    // app对象操作函数
+    // app object operation functions
     g_luaFNList.push_back("[app]");
     REGFN(appGetCurScene);
     REGFN(appSetCaption);
@@ -56,7 +56,7 @@ void InitLuaPlatform()
     //lua_dofile(L, "scripts/gamesdk/app.lua");
     g_luaFNList.push_back("\r");
     
-    // scene对象操作函数
+    // scene object operation functions
     g_luaFNList.push_back("[scene]");
     REGFN(sceAddObj);
     REGFN(sceRemoveObj);
@@ -68,7 +68,7 @@ void InitLuaPlatform()
     //lua_dofile(L, "scripts/gamesdk/scene.lua");
     g_luaFNList.push_back("\r");
     
-    // object对象操作函数
+    // object object operation functions
     g_luaFNList.push_back("[object]");
     REGFN(objSetPos);
     REGFN(objGetPos);
@@ -86,7 +86,7 @@ void InitLuaPlatform()
     //lua_dofile(L, "scripts/gamesdk/object.lua");
     g_luaFNList.push_back("\r");
 
-    // 镜头对象操作函数
+    // camera object operation functions
     g_luaFNList.push_back("[camera]");
     REGFN(camGetCenter);
     REGFN(camSetCenter);
@@ -97,13 +97,13 @@ void InitLuaPlatform()
     REGFN(camSetAngle);
     g_luaFNList.push_back("\r");
 
-    // Input对象操作函数
+    // Input object operation functions
     g_luaFNList.push_back("[input]");
     REGFN(IsKeyDown);
     //lua_dofile(L, "scripts/gamesdk/input.lua");
     g_luaFNList.push_back("\r");
 
-    // UI对象操作函数
+    // UI object operation functions
     g_luaFNList.push_back("[UI]");
     REGFN(uiHideAll);
     // lua_dofile(L, "scripts/gamesdk/input.lua");
