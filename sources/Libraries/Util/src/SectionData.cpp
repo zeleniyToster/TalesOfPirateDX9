@@ -50,7 +50,7 @@ BOOL CSectionDataMgr::Create(int nSectionCntX, int nSectionCntY, const char *psz
 
     int nTotal = GetSectionCnt();
     
-    // 索引区全部填写为0
+    // zero out the whole index area
     _SectionArray = new SDataSection*[nTotal];
 	
     memset(_SectionArray, 0, nTotal * sizeof(SDataSection*));
@@ -68,7 +68,7 @@ BOOL CSectionDataMgr::Create(int nSectionCntX, int nSectionCntY, const char *psz
     return TRUE;
 }
 
-// 从文件读入, 并决定是否需要编辑操作
+// read from the file, and decide whether editing is allowed
 BOOL CSectionDataMgr::CreateFromFile(const char *pszMapName, BOOL bEdit)
 {
     strcpy(_szFileName, pszMapName);
@@ -120,7 +120,7 @@ BOOL CSectionDataMgr::CreateFromFile(const char *pszMapName, BOOL bEdit)
 
 SDataSection *CSectionDataMgr::LoadSectionData(int nSectionX, int nSectionY)
 {
-    // 读取Section数据的文件偏移位置
+    // read the file offset of the section data
     DWORD dwLoc = (nSectionY * _nSectionCntX + nSectionX);
     
     SDataSection *pSection = new SDataSection;
@@ -133,7 +133,7 @@ SDataSection *CSectionDataMgr::LoadSectionData(int nSectionX, int nSectionY)
     {
         pSection->pData = new BYTE[_GetSectionDataSize()];
 		
-        // 读取实际的Section数据
+        // read the actual section data
         fseek(_fp, pSection->dwDataOffset, SEEK_SET);
         if(_bDebug)
         {
@@ -171,12 +171,12 @@ void CSectionDataMgr::SaveSectionData(int nSectionX, int nSectionY)
             //LG(GetDataName(), "[%d %d]到文件末尾分配新的区块数据空间\n", nSectionX, nSectionY);
 			LG(GetDataName(), "[%d %d] alloc new area at file tail \n", nSectionX, nSectionY);
         }
-        // 首先应该寻找废弃的Data数据段
-        // 但缺乏废弃区域索引, 所以只能到文件末尾去添加
-        // 这样会在粘贴数据的过程中产生空间的浪费
-        // 需要在发布时把数据Trim一次, 此过程有点像文件磁盘碎片
+        // first look for a spare Data section
+        // but there is no index of the spare regions, so new data can only be appended at the end of the file
+        // which wastes space as data is pasted in
+        // the data needs to be trimmed once before shipping; the process is a bit like disk defragmentation
 	
-        // 到文件末尾添加新的数据块
+        // append a new data block at the end of the file
 	    fseek(_fp, 0, SEEK_END);
 	    pSection->dwDataOffset = ftell(_fp);
     }
@@ -187,13 +187,13 @@ void CSectionDataMgr::SaveSectionData(int nSectionX, int nSectionY)
 
 void CSectionDataMgr::ClearSectionData(int nSectionX, int nSectionY)
 {
-    // 清除文件里的记录
+    // clear the records in the file
     DWORD dwLoc = (nSectionY * _nSectionCntX + nSectionX);
     _WriteSectionIdx(dwLoc, 0);
 	
-    // 清除内存里的记录
+    // clear the records in memory
     SDataSection *pSection = GetSectionData(nSectionX, nSectionY);
-	if(pSection) // 此Section已经读入内存
+	if(pSection) // this section is already resident in memory
     {
         // _SectionList.remove(pSection);
          *(_SectionArray + dwLoc) = NULL;
@@ -206,7 +206,7 @@ void CSectionDataMgr::CopySectionData(SDataSection *pDest, SDataSection *pSrc)
     DWORD dwLastOffset = pDest->dwDataOffset;
     memcpy(pDest, pSrc, sizeof(SDataSection));
     
-    pDest->dwDataOffset = dwLastOffset; // 数据偏移位置保持不变
+    pDest->dwDataOffset = dwLastOffset; // the data offset stays the same
     
     if(pSrc->pData==NULL)
     {
@@ -227,7 +227,7 @@ void CSectionDataMgr::Load(BOOL bFull, DWORD dwTimeParam)
     if(bFull)
     {
         int nTotal = _nSectionCntX * _nSectionCntY;
-        // 读取全部Section数据
+        // read all section data
         for(int i = 0; i < nTotal; i++)
         {
             int nSectionX = i % _nSectionCntX;

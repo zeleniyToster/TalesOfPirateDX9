@@ -6,7 +6,7 @@
 
 using namespace std;
 
-// 地图文件文件头定义
+// map file header layout
 struct MPMapFileHeader
 	{
 	int nMapFlag;
@@ -15,18 +15,18 @@ struct MPMapFileHeader
 	int nSectionWidth;
 	int nSectionHeight;};
 
-//// 设置对齐方式为1字节，因为要写入文件中
+//  force 1-byte alignment, because this is written out to a file
 //#pragma pack(push)
 //#pragma pack(1)
 //
-//// 区域属性文件文件头定义
+//  region attribute file header layout
 //struct SAttribFileHeader
 //	{
 //	unsigned int width;
 //	unsigned int height;
 //	};
 //
-//// 区域属性文件单位数据定义
+//  region attribute file per-tile record
 //typedef struct _Tile_Attrib
 //	{
 //	unsigned short attrib; // tile属性
@@ -59,7 +59,7 @@ public:
 	unsigned char getTileIsland(int nX, int nY);
 	void setTileIsland(int nX, int nY, unsigned char btIsland);
 
-	// 初始化标志
+	// initialised flag
 	bool m_bInitFlag;
 
 protected:
@@ -139,7 +139,7 @@ bool CTerrainAttrib::_getMapInfo(char const* filename, int& width, int& height)
 	char mapfilename[128];
 	MPMapFileHeader header;
 
-	// 打开同名地图文件，取得宽度和高度
+	// open the map file of the same name and take its width and height
 	sprintf(mapfilename, "map/%s.map", filename);
 	FILE* fp = fopen(mapfilename, "rb");
 	if (fp == NULL)
@@ -157,10 +157,10 @@ bool CTerrainAttrib::_getMapInfo(char const* filename, int& width, int& height)
 	}
 
 //
-// 外部接口
+// external interface
 //
 
-// 创建一个新的区域属性文件或覆盖原有文件 (*.atr)
+// create a new region attribute file, or overwrite the existing one (*.atr)
 bool CTerrainAttrib::createFile(char const* filename, int width, int height,
 								int option)
 	{
@@ -170,7 +170,7 @@ bool CTerrainAttrib::createFile(char const* filename, int width, int height,
 		_fp = NULL;
 		}
 
-	// 得到宽度_width和高度_height
+	// obtain the width _width and height _height
 	if (width <= 0 && height <= 0)
 		{
 		if (!_getMapInfo(filename, _width, _height))
@@ -182,21 +182,21 @@ bool CTerrainAttrib::createFile(char const* filename, int width, int height,
 		_height = height;
 		}
 
-	// 检查参数标志及文件是否存在!
+	// check the flags and whether the file exists!
 	char attribfilename[128];
 	sprintf(attribfilename, "map/%s.atr", filename);
 
 	if ((option == 0) && (_access(attribfilename, 0) == 0))
 		{
-		// 文件已存在，并且调用者并不强制创建
+		// the file exists and the caller did not force creation
 		return true;
 		}
 
-	// 创建
+	// creating
 	_fp = fopen(attribfilename, "wb");
 	if (_fp == NULL) return false;
 
-	// 组织数据
+	// gathering the data
 	_header.width = _width;
 	_header.height = _height;
 
@@ -204,12 +204,12 @@ bool CTerrainAttrib::createFile(char const* filename, int width, int height,
 	_tile_attrib.attrib = TILE_ATTRIB_DEFAULT_VALUE;
 	_tile_attrib.island = TILE_ISLAND_DEFAULT_VALUE;
 
-	// 写入文件头和tile属性数据
+	// write the file header and the tile attribute data
 	fwrite(&_header, sizeof _header, 1, _fp);
 	for (int i = 0; i < cnt; ++ i)
 		fwrite(&_tile_attrib, sizeof _tile_attrib, 1, _fp);
 
-	// fwrite不能一次写超过4K的字节
+	// fwrite cannot write more than 4K at a time
 	//fwrite(&_tile_attrib, sizeof _tile_attrib, cnt, _fp);
 
 	fclose(_fp);
@@ -224,7 +224,7 @@ bool CTerrainAttrib::openFile(char const* fname)
 
 	if (_fp != NULL) {fclose(_fp); _fp = NULL;}
 
-    // 去掉只读属性
+    // clear the read-only attribute
     DWORD file_atr = ::GetFileAttributes(atr_fname);
     if (file_atr & FILE_ATTRIBUTE_READONLY)
         SetFileAttributes(atr_fname,
@@ -237,7 +237,7 @@ bool CTerrainAttrib::openFile(char const* fname)
 		return false;
 		}
 
-	// 读取文件头
+	// read the file header
 	fread(&_header, sizeof _header, 1, _fp);
 	_width = _header.width;
 	_height = _header.height;
@@ -252,7 +252,7 @@ void CTerrainAttrib::Init(char const* pszTerrainName)
 		_fp = NULL;
 		}
 
-	// 打开同名地图文件，取得宽度和高度
+	// open the map file of the same name and take its width and height
 	char szMapFileName[128];
 	sprintf(szMapFileName, "map/%s.map", pszTerrainName);
 
@@ -270,10 +270,10 @@ void CTerrainAttrib::Init(char const* pszTerrainName)
 	_height = header.nWidth;
 	_width  = header.nHeight;
 
-	// 检查区域属性文件是否存在，不存在则创建
+	// check whether the region attribute file exists, creating it if not
 	char szAttrFileName[128];
 	sprintf(szAttrFileName, "map/%s.atr", pszTerrainName);
-	if (_access(szAttrFileName, 0) == -1) // 文件不存在, 创建新文件
+	if (_access(szAttrFileName, 0) == -1) // the file does not exist, create a new one
 		{
 		_header.width = _width;
 		_header.height = _height;
@@ -289,16 +289,16 @@ void CTerrainAttrib::Init(char const* pszTerrainName)
 			fwrite(&_tile_attrib, sizeof _tile_attrib, 1, _fp);
 			}
 #endif
-		// 写入文件头
+		// write the file header
 		fwrite(&_header, sizeof _header, 1, _fp);
 
-		// 写入数据
+		// write the data
 		fwrite(&_tile_attrib, sizeof _tile_attrib, nTileCnt, _fp);
 
 		fclose(_fp);
 		}
 
-	// 打开区域属性文件
+	// open the region attribute file
 	_fp = fopen(szAttrFileName, "r+b");
 	m_bInitFlag = true;
 	}
@@ -335,12 +335,12 @@ void CTerrainAttrib::setTileAttrib(int nX, int nY, unsigned char btAttrib, bool 
 
 		if (bAdd)
 			{
-			// 增加tile属性
+			// add a tile attribute
 			sAttrib |= i << (btAttrib - 1);
 			}
 		else
 			{
-			// 赋予tile属性
+			// assign a tile attribute
 			sAttrib = i << (btAttrib - 1);
 			}
 
@@ -401,10 +401,10 @@ void CTerrainAttrib::setTileIsland(int nX, int nY, unsigned char btIsland)
 
 	if (_validateFilePointer() && _validateTile(nX, nY))
 		{
-		// 定位到attrib
+		// seek to attrib
 		_seekTile(nX, nY);
 
-		// 定位到island
+		// seek to island
 		_tile_attrib.island = btIsland;
 		fseek(_fp, sizeof _tile_attrib.attrib, SEEK_CUR);
 		fwrite(&_tile_attrib.island, sizeof _tile_attrib.island, 1, _fp);
@@ -417,10 +417,10 @@ unsigned char CTerrainAttrib::getTileIsland(int nX, int nY)
 
 	if (_validateFilePointer() && _validateTile(nX, nY))
 		{
-		// 定位到attrib
+		// seek to attrib
 		_seekTile(nX, nY);
 
-		// 定位到island
+		// seek to island
 		fseek(_fp, sizeof _tile_attrib.attrib, SEEK_CUR);
 		fread(&_tile_attrib.island, sizeof _tile_attrib.island, 1, _fp);
 		btIsland = _tile_attrib.island;
@@ -429,7 +429,7 @@ unsigned char CTerrainAttrib::getTileIsland(int nX, int nY)
 	return btIsland;
 	}
 
-// 单件CTAMgr
+// single CTAMgr
 #include <iostream>
 #include <memory>
 class CTAMgr
@@ -444,7 +444,7 @@ public:
 	static CTAMgr* Instance();
 
 public:
-	// 核心对象
+	// core object
 	std::unique_ptr<CTerrainAttrib> ta = std::make_unique <CTerrainAttrib>();
 
 protected:
@@ -463,7 +463,7 @@ CTAMgr* CTAMgr::Instance()
 	}
 
 //
-// 简单接口
+// simple interface
 //
 bool createAttribFile(char const* filename, int width, int height, int option)
 	{
@@ -642,7 +642,7 @@ inline bool mem_stuff::chfile(char const* fname, char const* mode /* = "rb" */)
 
     return true;}
 
-// 区域属性基本接口定义
+// region attribute base interface
 class terrain_attr
     {
 protected:
@@ -659,7 +659,7 @@ protected:
     terrain_attr_hdr* _hdr;
     };
 
-// 区域属性全部装入内存，直接从内存中读取
+// load all region attributes into memory and read straight from it
 class terrain_attr_mem : public terrain_attr, public mem_stuff
     {
 public:
@@ -715,7 +715,7 @@ inline bool terrain_attr_mem::get_info(unsigned int& width, unsigned int& height
     height = _hdr->height;
     return true;}
 
-// 处理terrain_attr_mem的单件
+// handles a single terrain_attr_mem
 class tamem_mgr
     {
     friend class cfl_singleton_ap<tamem_mgr>;
@@ -741,15 +741,15 @@ public:
             return false;}
         }
 
-    // 装载区域属性文件进内存
+    // load the region attribute file into memory
     int load_map(char const* fname);
 
-    // 得到区域属性文件信息
+    // obtain the region attribute file information
     bool get_info(int id, unsigned int& width, unsigned int& height)
         {
         return (validate(id)) ? _ta[id]->get_info(width, height) : false;}
 
-    // 区域属性
+    // region attributes
     bool get_trrnattr(int id, unsigned int x, unsigned int y, unsigned short& attr)
         {
         return (validate(id)) ? _ta[id]->get_attr(x, y, attr) : false;}
@@ -761,7 +761,7 @@ public:
         {
         return (validate(id)) ? _ta[id]->has_attr(x, y, mask) : false;}
 
-    // 海岛编号
+    // island id
     bool get_isldidx(int id, unsigned int x, unsigned int y, unsigned char& isldidx)
         {
         return (validate(id)) ? _ta[id]->get_island(x, y, isldidx) : false;}
@@ -787,7 +787,7 @@ int tamem_mgr::load_map(char const* fname)
 
     int id = _find(fname);
     if (id != INVALID_INDEX) return id;
-    else { // 新装入内存
+    else { // newly loaded into memory
         terrain_attr_mem* tmp;
         try {tmp = new terrain_attr_mem(fname);}
         catch (...)

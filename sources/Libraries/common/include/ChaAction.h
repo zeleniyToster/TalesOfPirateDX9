@@ -8,19 +8,19 @@
 #ifndef CHAACTION_H
 #define CHAACTION_H
 
-const long	ACTCONTROL_MOVE         = 0; // 移动位
-const long	ACTCONTROL_USE_GSKILL   = 1; // 使用普通技能位
-const long	ACTCONTROL_USE_MSKILL   = 2; // 使用魔法技能位
-const long	ACTCONTROL_BEUSE_SKILL  = 3; // 被使用技能位
-const long	ACTCONTROL_TRADE        = 4; // 交易位
-const long	ACTCONTROL_USE_ITEM     = 5; // 使用物品位
-const long	ACTCONTROL_BEUSE_ITEM   = 6; // 被使用物品位
-const long	ACTCONTROL_INVINCIBLE   = 7; // 无敌位
-const long	ACTCONTROL_EYESHOT      = 8; // 视野位（可以看到视野内可见的实体）
-const long	ACTCONTROL_NOHIDE       = 9; // 不隐形（可以被看见）
-const long	ACTCONTROL_NOSHOW       = 10; // 不被强制现形（如果有强制现形，则隐形被屏蔽）
-const long	ACTCONTROL_ITEM_OPT     = 11; // 道具操作位
-const long	ACTCONTROL_TALKTO_NPC   = 12; // 和NPC对话位
+const long	ACTCONTROL_MOVE         = 0; // movement bit
+const long	ACTCONTROL_USE_GSKILL   = 1; // normal skill use bit
+const long	ACTCONTROL_USE_MSKILL   = 2; // magic skill use bit
+const long	ACTCONTROL_BEUSE_SKILL  = 3; // being targeted by a skill bit
+const long	ACTCONTROL_TRADE        = 4; // trade bit
+const long	ACTCONTROL_USE_ITEM     = 5; // item use bit
+const long	ACTCONTROL_BEUSE_ITEM   = 6; // being targeted by an item bit
+const long	ACTCONTROL_INVINCIBLE   = 7; // invulnerable bit
+const long	ACTCONTROL_EYESHOT      = 8; // vision bit (sees whatever is visible in range)
+const long	ACTCONTROL_NOHIDE       = 9; // not invisible, i.e. can be seen
+const long	ACTCONTROL_NOSHOW       = 10; // not force-revealed (force reveal suppresses invisibility)
+const long	ACTCONTROL_ITEM_OPT     = 11; // item interaction bit
+const long	ACTCONTROL_TALKTO_NPC   = 12; // talk to NPC bit
 
 const long	ACTCONTROL_MAX          = 13;
 

@@ -36,7 +36,7 @@ string StringLimit(const string& str,size_t len)
 }
 
 //------------------------------------------------------------------------
-//	从字符串中取人物名字，人名最大长度为16个字符
+//  extract the character name from a string; the name is at most 16 characters
 //------------------------------------------------------------------------
 bool GetNameFormString(const string &str,string &name)
 {
@@ -57,7 +57,7 @@ bool GetNameFormString(const string &str,string &name)
 }
 
 //------------------------------------------------------------------------
-//	分割含有表情标记的中文文字，分割后可用于分行显示
+//  split Chinese text containing emoticon markers so it can be wrapped across lines
 //------------------------------------------------------------------------
 string CutFaceText(string &text,size_t cutLimitlen)
 {
@@ -70,7 +70,7 @@ string CutFaceText(string &text,size_t cutLimitlen)
 
 	if(0 == stricmp(g_oLangRec.GetString(0), "English"))
 	{
-		// 支持英文单词截断
+		// supports truncating an English word
 		string temp = text.substr(0,cutLimitlen);
 		size_t nPos = temp.find_last_of(" ");
 		if(nPos != string::npos && nPos > 8)
@@ -85,7 +85,7 @@ string CutFaceText(string &text,size_t cutLimitlen)
 	}
 	else
 	{
-		// 中文截断
+		// Chinese truncation
 		retStr=text.substr(0,cutLimitlen);
 	}
 
@@ -106,7 +106,7 @@ string CutFaceText(string &text,size_t cutLimitlen)
 }
 
 ////------------------------------------------------------------------------
-////	字符串查找，并使用*号替换字符串
+///	find within a string and replace the match with asterisks
 ////------------------------------------------------------------------------
 //void ReplaceText(string &text,const string strRpl)
 //{
@@ -119,7 +119,7 @@ string CutFaceText(string &text,size_t cutLimitlen)
 //}
 //
 ////------------------------------------------------------------------------
-////	根据字符串表过滤字符串
+///	filter a string using a string table
 ////------------------------------------------------------------------------
 //void FilterText(string &text,vector<char*> *p_strFilterTxt)
 //{
@@ -131,11 +131,11 @@ string CutFaceText(string &text,size_t cutLimitlen)
 //}
 
 //------------------------------------------------------------------------
-//	解析符转换,从0起,例:
+//  expand a format specifier, counting from 0, e.g.:
 //	#00 -> </00>
 //	#01 -> </01>
 //	#02 -> </02>
-//	...到nMaxCount-1
+//  ... up to nMaxCount-1
 //------------------------------------------------------------------------
 void ChangeParseSymbol(string &text,int nMaxCount)
 {
@@ -155,17 +155,17 @@ void ChangeParseSymbol(string &text,int nMaxCount)
 }
 
 
-// 将InBuf中的字符串按nWidth插放回车放在OutBuf中
+// wrap the lines of InBuf at nWidth into OutBuf
 int StringNewLine( char* pOutBuf, unsigned int nWidth, const char* pInBuf, unsigned int nInLen )
 {
 	if(0 == _stricmp(g_oLangRec.GetString(0), "english"))
 	{
-		// 英文
+		// English
 		return StringNewLineEng(pOutBuf, nWidth, pInBuf, nInLen);
 	}
 	else
 	{
-		// 中文
+		// Chinese
 		return StringNewLineChs(pOutBuf, nWidth, pInBuf, nInLen);
 	}
 }

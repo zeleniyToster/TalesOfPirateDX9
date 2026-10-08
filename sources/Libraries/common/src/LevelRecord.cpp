@@ -20,11 +20,11 @@ BOOL CLevelRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string
     string strList[80];
 	string strLine;
 
-	// 编号
+	// id
 	pInfo->lID = pInfo->nID;
-	// 等级
+	// level
 	pInfo->sLevel = Str2Int(pInfo->szDataName);
-	// 经验值
+	// experience
 	pInfo->ulExp = _atoi64(ParamList[m++].c_str()); //Str2Int(ParamList[m++]);
 
 	return TRUE;

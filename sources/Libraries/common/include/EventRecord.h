@@ -13,16 +13,16 @@
 #include "TableData.h"
 #include "point.h"
 
-// 事件触发类型
+// event trigger type
 enum EEventTouchType
 {
-	enumEVENTT_RANGE	= 1,		// 按半径触发
+	enumEVENTT_RANGE	= 1,		// triggered by radius
 };
 
 enum EEventExecType
 {
-	enumEVENTE_SMAP_ENTRY	= 1,	// 地图静态切换点
-	enumEVENTE_DMAP_ENTRY	= 2,	// 地图动态切换点
+	enumEVENTE_SMAP_ENTRY	= 1,	// static map switch point
+	enumEVENTE_DMAP_ENTRY	= 2,	// dynamic map switch point
 };
 
 enum EEventType
@@ -31,11 +31,11 @@ enum EEventType
 	enumEVENT_TYPE_ENTITY,
 };
 
-// 触发类型,决定客户端怎样触发
+// trigger type; decides how the client fires it
 enum EEventArouseType
 {
-	enumEVENT_AROUSE_DISTANCE,		// 按半径触发
-	enumEVENT_AROUSE_CLICK,			// 点击触发
+	enumEVENT_AROUSE_DISTANCE,		// triggered by radius
+	enumEVENT_AROUSE_CLICK,			// triggered by click
 };
 
 const char cchEventRecordKeyValue = (char)0xff;
@@ -47,16 +47,16 @@ class CEventRecord : public CRawDataInfo
 public:
 	//CEventRecord();
 
-	long	lID;						// 编号
-	char	szName[defEVENT_NAME_LEN];	// 名称
-    short   sEventType;                 // 事件类型,用于区分发送协议方式,参看EEventType
-	short	sArouseType;				// 触发类型
-	short	sArouseRadius;				// 触发半径
-	short	sEffect;					// 触发特效
-	short	sMusic;						// 触发音效
-	short   sBornEffect;				// 出生时的特效
-	short	sCursor;					// 事件显示的光标
-	char	chMainChaType;				// 事件点击时什么情况有效(0-都有效,1-人，2-船)
+	long	lID;						// id
+	char	szName[defEVENT_NAME_LEN];	// name
+    short   sEventType;                 // event type; selects how the protocol message is sent, see EEventType
+	short	sArouseType;				// trigger type
+	short	sArouseRadius;				// trigger radius
+	short	sEffect;					// effect played on trigger
+	short	sMusic;						// sound played on trigger
+	short   sBornEffect;				// effect played on spawn
+	short	sCursor;					// cursor shown for the event
+	char	chMainChaType;				// what the event click applies to (0 = both, 1 = character, 2 = ship)
 
 	bool	IsValid( int MainChaType )	{ return chMainChaType==0 || MainChaType==chMainChaType;	}
 };
@@ -76,7 +76,7 @@ public:
 
 protected:
 
-	static CEventRecordSet* _Instance; // 相当于单键, 把自己记住
+	static CEventRecordSet* _Instance; // acts like a singleton: keeps a reference to itself
 
 	virtual CRawDataInfo* _CreateRawDataArray(int nCnt)
 	{

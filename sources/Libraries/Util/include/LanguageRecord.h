@@ -1,6 +1,6 @@
 ﻿
 //
-//	多语言字符串记录类
+// multi-language string record class
 //
 //	add by Philip.Wu  2006-07-18
 //
@@ -22,33 +22,33 @@ public:
 
 	~CLanguageRecord(void);
 
-	// 获得字符串
+	// fetch a string
 	const char* GetString(int nID);
 
-	// 从文件中读取
+	// read from a file
 	bool LoadFromBinFile(const char* szBinFile);
 
-	// 从文件中读取
+	// read from a file
 	bool LoadFromTxtFile(const char* szTxtFile);
 
-	// 获得字符串个数
+	// number of strings held
 	int GetRecordCount(void);
 
-	// 加密并生成二进制
+	// encrypt and emit the binary form
 	bool MadeBinFile(const char* szBinFile, const char* szTxtFile);
 
 private:
 
-	// 字符串 map
+	// string map
 	std::map<int, std::string> m_mapString;
 
-	// 添加一行
+	// append a line
 	void Add(char* szLine);
 
-	// 替换
+	// replace
 	int ReplaceString(char* _str, const char* _old, const char* _new);
 
-	// 查找
+	// look up
 	int Find(const char* _str, const char* _find);
 };
 

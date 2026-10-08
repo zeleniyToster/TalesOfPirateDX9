@@ -41,56 +41,56 @@ BOOL CSkillStateRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<s
     string strList[80];
 	string strLine;
 
-	// 编号
+	// id
 	pInfo->chID = (char)pInfo->nID;
-	// 名称
+	// name
 	strncpy(pInfo->szName, pInfo->szDataName, defSKILLSTATE_NAME_LEN);
 	pInfo->szName[defSKILLSTATE_NAME_LEN - 1] = '\0';
-	// 触发的时间间隔（单位：秒）
+	// interval between ticks, in seconds
 	pInfo->sFrequency = Str2Int(ParamList[m++]);
-	// 状态到传递目标上的作用时间脚本
+	// script applying the state to the target
 	strncpy(pInfo->szOnTransfer, ParamList[m++].c_str(), defSKILLSTATE_SCRIPT_NAME);
 	pInfo->szOnTransfer[defSKILLSTATE_SCRIPT_NAME - 1] = '\0';
-	// 使用效果脚本
+	// script for the use effect
 	strncpy(pInfo->szAddState, ParamList[m++].c_str(), defSKILLSTATE_SCRIPT_NAME);
 	pInfo->szAddState[defSKILLSTATE_SCRIPT_NAME - 1] = '\0';
-	// 移除效果脚本
+	// script for the removal effect
 	strncpy(pInfo->szSubState, ParamList[m++].c_str(), defSKILLSTATE_SCRIPT_NAME);
 	pInfo->szSubState[defSKILLSTATE_SCRIPT_NAME - 1] = '\0';
-	// 替换策略
+	// replacement policy
 	pInfo->chAddType = Str2Int(ParamList[m++]);
-	// 是否可由终端取消
+	// whether the client may cancel it
 	pInfo->bCanCancel = Str2Int(ParamList[m++]) != 0 ? true : false;
-	// 是否能够移动
+	// whether the character can move
 	pInfo->bCanMove = Str2Int(ParamList[m++]) ? true : false;
-	// 是否能够使用魔法技能
+	// whether magic skills can be used
 	pInfo->bCanMSkill = Str2Int(ParamList[m++]) ? true : false;
-	// 是否能够使用普通技能
+	// whether normal skills can be used
 	pInfo->bCanGSkill = Str2Int(ParamList[m++]) ? true : false;
-	// 是否能够交易
+	// whether trading is allowed
 	pInfo->bCanTrade = Str2Int(ParamList[m++]) ? true : false;
-	// 是否能够使用物品
+	// whether items can be used
 	pInfo->bCanItem = Str2Int(ParamList[m++]) ? true : false;
-	// 是否无敌
+	// whether the character is invulnerable
 	pInfo->bCanUnbeatable = Str2Int(ParamList[m++]) ? true : false;
-	// 是否能够被使用物品
+	// whether items can be used on the character
 	pInfo->bCanItemmed = Str2Int(ParamList[m++]) ? true : false;
-	// 是否能够被使用技能
+	// whether skills can be used on the character
 	pInfo->bCanSkilled = Str2Int(ParamList[m++]) ? true : false;
-	// 是否隐身
+	// whether the character is invisible
 	pInfo->bNoHide = Str2Int(ParamList[m++]) ? true : false;
-	// 是否被强制显形
+	// whether the character is force-revealed
 	pInfo->bNoShow = Str2Int(ParamList[m++]) ? true : false;
-	// 是否可操作道具
+	// whether items can be manipulated
 	pInfo->bOptItem = Str2Int(ParamList[m++]) ? true : false;
-	// 是否可操作道具
+	// whether items can be manipulated
 	pInfo->bTalkToNPC = Str2Int(ParamList[m++]) ? true : false;
-	// 解除的效果编号
+	// id of the effect that is removed
 	pInfo->bFreeStateID = Str2Int(ParamList[m++]);
 
-	// 屏幕效果
+	// screen effect
 	pInfo->chScreen = Str2Int(ParamList[m++]);
-	// 出生表现
+	// spawn presentation
 	memset( pInfo->nActBehave, 0, sizeof(pInfo->nActBehave) );
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
@@ -100,24 +100,24 @@ BOOL CSkillStateRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<s
 		pInfo->nActBehave[i] = Str2Int(strList[i]);
 	}
 
-	//客户端表现标识
+	// client presentation flag
     pInfo->sChargeLink = Str2Int(ParamList[m++]);
 
-    // 地面持续特效
+    // lasting ground effect
     pInfo->sAreaEffect = Str2Int(ParamList[m++]);
-	// 地面状态特效,是否仅显示中心点
+	// ground state effect; whether only the centre point is drawn
     pInfo->IsShowCenter = Str2Int(ParamList[m++]) ? true : false;
-	// 挂效果方POSE
+	// pose of the entity the effect is applied to
 	pInfo->IsDizzy = Str2Int(ParamList[m++]) ? true : false;
-	// 挂效果方特效表现
+	// effect presentation for the entity the effect is applied to
 	pInfo->sEffect = Str2Int(ParamList[m++]);
-	// 挂特效玩家的播放dummy点
+	// dummy point used to play the effect on the affected player
 	pInfo->sDummy1 = Str2Int(ParamList[m++]);
-	// 该状态下受击特效表现
+	// hit effect shown while in this state
 	pInfo->sBitEffect = Str2Int(ParamList[m++]);
-	// 特效播放dummy点
+	// dummy point used to play the effect
 	pInfo->sDummy2 = Str2Int(ParamList[m++]);
-	// 中该效果挂在身上的ICON表现
+	// icon shown for the effect while it is attached to the character
 	pInfo->sIcon = Str2Int(ParamList[m++]);
 
 	memset(pInfo->szIcon, 0, sizeof(pInfo->szIcon));
@@ -142,6 +142,6 @@ void CSkillStateRecordSet::_ProcessRawDataInfo(CRawDataInfo *pInfo)
 {
 	CSkillStateRecord *pState = (CSkillStateRecord*)pInfo;
 
-    // 更新动态属性
+    // refresh the dynamic attributes
 	pState->RefreshPrivateData();	
 }

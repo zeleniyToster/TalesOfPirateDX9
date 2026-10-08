@@ -16,10 +16,10 @@
 class CNpcRecord : public CRawDataInfo
 {
 public:
-	char szNpc[NPC_MAX_NAMESIZE];		// npc文件名
-	char szName[NPC_MAX_NAMESIZE];		// 地图中显示npc名称
-	USHORT ulCharID;	// 角色列表编号索引
-	USHORT x, y;		// npc位置信息
+	char szNpc[NPC_MAX_NAMESIZE];		// npc file name
+	char szName[NPC_MAX_NAMESIZE];		// npc name shown on the map
+	USHORT ulCharID;	// index into the character list
+	USHORT x, y;		// npc position
 	USHORT w, h;
 	USHORT usParam1, usParam2;
 };

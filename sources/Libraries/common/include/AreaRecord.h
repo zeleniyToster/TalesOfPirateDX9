@@ -3,7 +3,7 @@
 #include "TableData.h"
 
 
-// 数据项 ID 地名 标识颜色 
+// data item: id, place name, marker colour
 class CAreaInfo : public CRawDataInfo
 {
 public:
@@ -18,7 +18,7 @@ public:
     DWORD dwEnvColor;
     DWORD dwLightColor;
     float fLightDir[3];
-	char  chType;			// 0-野外,1-城内,用于更换显示文字的背景
+	char  chType;			// 0 = wilderness, 1 = inside a town; selects the background behind the label
 };
 
 
@@ -36,7 +36,7 @@ public:
 
 protected:
 
-	static CAreaSet* _Instance; // 相当于单键, 把自己记住
+	static CAreaSet* _Instance; // acts like a singleton: keeps a reference to itself
    
 	virtual CRawDataInfo* _CreateRawDataArray(int nCnt)
 	{

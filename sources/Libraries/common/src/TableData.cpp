@@ -72,7 +72,7 @@ BOOL CRawDataSet::_LoadRawDataInfo_Bin(const char* pszFileName)
 		if (IsValidID(i) == FALSE) continue;
 
 		CRawDataInfo* pCurInfo = _GetRawDataInfo(pInfo->nID);
-		memcpy(pCurInfo, pInfo, nInfoSize); // 替代原有的信息
+		memcpy(pCurInfo, pInfo, nInfoSize); // replaces the previous information
 		_IDIdx[pCurInfo->szDataName] = pCurInfo;
 		//vector<string> ParamList; _ReadRawDataInfo(pCurInfo, ParamList);
 		_ProcessRawDataInfo(pCurInfo);

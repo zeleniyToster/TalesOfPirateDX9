@@ -16,18 +16,18 @@ BOOL CForgeRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string
 	int m = 0;
 	string strList[8];
 
-	// 精练等级
+	// refine level
 	pInfo->byLevel = pInfo->nID;
 	
-	// 失败后物品退回等级
+	// level the item falls back to on failure
 	pInfo->byFailure = Str2Int(pInfo->szDataName);
 	
-	// 精练成功几率
+	// chance of a successful refine
 	pInfo->byRate = Str2Int(ParamList[m++]);
 	if( pInfo->byRate > 100 )
 		pInfo->byRate = 100;
 
-	// 精练需求物品数据信息
+	// refine material requirements
 	for( int i = 0; i < FORGE_MAXNUM_ITEM; i++ )
 	{
 		Util_ResolveTextLine( ParamList[m++].c_str(), strList, 8, ',' ); 
@@ -35,7 +35,7 @@ BOOL CForgeRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string
 		pInfo->ForgeItem[i].byNum = Str2Int(strList[1]);
 	}
 
-	// 精练需求金钱
+	// money a refine costs
 	pInfo->dwMoney = Str2Int(ParamList[m++]);
 
 	return TRUE;

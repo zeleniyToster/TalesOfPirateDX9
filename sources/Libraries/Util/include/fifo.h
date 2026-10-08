@@ -18,43 +18,43 @@ public:
     ~fifo() {_head = _tail = NULL;}
 
     void push(T* t)
-        { // 往尾部压入一个元素
+        { // push one element at the tail
         if (t == NULL) return;
         if (_head == NULL)
-            { // fifo为空
+            { // the fifo is empty
             _head = t;
             _head->prev = NULL;
             _head->next = NULL;
             _tail = _head;}
-        else{ // fifo非空
+        else{ // the fifo is not empty
             _tail->next = t;
             t->prev = _tail;
             t->next = NULL;
             _tail = t;}}
 
     T* pop()
-        { // 从头部取出一个元素
+        { // pop one element off the head
         T* tmp;
         if (_head == _tail)
             {
-            if (_head == NULL) return NULL; // fifo为空
-            else{ // fifo剩余一个元素
+            if (_head == NULL) return NULL; // the fifo is empty
+            else{ // exactly one element left in the fifo
                 tmp = _head;
                 _head = _tail = NULL;
                 return tmp;}}
-        else{ // fifo中剩余多于一个元素，取出一个
+        else{ // more than one element left in the fifo; pop one
             tmp = _head;
             _head = (T *)_head->next;
             _head->prev = NULL;
             return tmp;}}
 
     int size() const
-        { // 取得fifo的长度
+        { // length of the fifo
         int sz = 0;
         T* curr = _head;
-        if (curr == NULL) return sz; // fifo为空
+        if (curr == NULL) return sz; // the fifo is empty
         while (curr != _tail)
-            { // fifo非空
+            { // the fifo is not empty
             ++ sz; curr = (T *)curr->next;}
         return (sz + 1);}
 

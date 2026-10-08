@@ -21,11 +21,11 @@ public:
 	CHairRecord();
 	char	szColor[10];
 
-	DWORD	dwNeedItem[defHAIR_MAX_ITEM][2];		// 需要的道具ID,以及所需要的数量
-	DWORD	dwMoney;								// 需要的金钱
-	DWORD	dwItemID;								// 对应的(发型部位)道具ID
-	DWORD	dwFailItemID[defHAIR_MAX_FAIL_ITEM];	// 失败时的发型
-	bool	IsChaUse[4];							// 4个主角是否可用
+	DWORD	dwNeedItem[defHAIR_MAX_ITEM][2];		// required item id and count
+	DWORD	dwMoney;								// money required
+	DWORD	dwItemID;								// matching (hair slot) item id
+	DWORD	dwFailItemID[defHAIR_MAX_FAIL_ITEM];	// hairstyle on failure
+	bool	IsChaUse[4];							// usable by which of the 4 protagonists
 	
 	int		GetFailItemNum()		{ return _nFailNum;		}
 	void	RefreshPrivateData();
@@ -48,7 +48,7 @@ public:
 	}
 
 protected:
-	static CHairRecordSet* _Instance; // 相当于单键, 把自己记住
+	static CHairRecordSet* _Instance; // acts like a singleton: keeps a reference to itself
 
 	virtual CRawDataInfo* _CreateRawDataArray(int nCnt)
 	{

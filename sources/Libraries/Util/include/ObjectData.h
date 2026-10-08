@@ -6,12 +6,12 @@
 
 struct SSceneObjInfo
 {
-    short	sTypeID;	// 高2位是type(0: 场景物件, 1: 特效物件), 其余是ID
+    short	sTypeID;	// the top 2 bits are the type (0: scene object, 1: effect object), the rest is the id
 	unsigned long nX;
 	unsigned long nY;
 	short	sHeightOff;
 	short	sYawAngle;
-    short	sScale;		// 保留未使用
+    short	sScale;		// reserved, unused
 
 	short GetType()
 	{
@@ -37,11 +37,11 @@ class CSceneObjData : public CSectionDataMgr
 		int		lVersion;
 		long	lFileSize;
 
-		int		iSectionCntX;	// 地图的横向区域数
-		int		iSectionCntY;	// 地图的纵向区域数
-		int		iSectionWidth;	// 区域的宽度（单位：Tile）
-		int		iSectionHeight; // 区域的高度（单位：Tile）
-		int		iSectionObjNum;	// 区域允许的最大物件数
+		int		iSectionCntX;	// number of regions across the map
+		int		iSectionCntY;	// number of regions down the map
+		int		iSectionWidth;	// region width, in tiles
+		int		iSectionHeight; // region height, in tiles
+		int		iSectionObjNum;	// maximum number of objects a region may hold
 
         SFileHead()
         {
@@ -89,8 +89,8 @@ protected:
 };
 
 //-------------------------
-// 文件头的读取
-// 子类可以做一些合法性判断
+// read the file header
+// derived classes can do their own validation here
 //-------------------------
 inline BOOL CSceneObjData::_ReadFileHeader()
 {
@@ -109,7 +109,7 @@ inline BOOL CSceneObjData::_ReadFileHeader()
 }
 
 //-----------------------------------
-// 文件头的写入, 用于新创建文件等场合
+// write the file header, used when creating a file
 //-----------------------------------
 inline void CSceneObjData::_WriteFileHeader()
 {
@@ -164,7 +164,7 @@ inline void CSceneObjData::_WriteSectionIdx(DWORD dwSectionNo, DWORD dwOffset)
 		idx.iObjNum = pSection->dwParam;
 		if(idx.iObjNum > MAX_SECTION_OBJ) idx.iObjNum = MAX_SECTION_OBJ;
 	}
-	if(dwOffset==0) idx.iObjNum = 0; // 被清除记录
+	if(dwOffset==0) idx.iObjNum = 0; // records that were cleared
     fseek(_fp, sizeof(SFileHead) + sizeof(idx) * dwSectionNo, SEEK_SET);
     fwrite(&idx, sizeof(idx), 1, _fp);
     if(_bDebug)
@@ -200,7 +200,7 @@ inline void CSceneObjData::TrimFile(const char *pszTarget)
 	
 	fwrite(&_header, sizeof(_header), 1, fp);
 	
-	// 写入内容
+	// write out the content
 	SSectionIndex *pIdx = new SSectionIndex[_nSectionCntX * _nSectionCntY];
 	memset(pIdx, 0, sizeof(SSectionIndex) * _nSectionCntX * _nSectionCntY);
 	SSectionIndex *pCurIdx = pIdx;
@@ -238,7 +238,7 @@ inline void CSceneObjData::TrimFile(const char *pszTarget)
 	fwrite(&_header, sizeof(_header), 1, fp);
 	_header.lFileSize = nLastSize;
 	
-	// 写入索引区
+	// write the index area
 	fseek(fp, sizeof(_header), SEEK_SET);
 	fwrite(pIdx, sizeof(SSectionIndex), _nSectionCntX * _nSectionCntY, fp);
 

@@ -88,7 +88,7 @@ void CHairRecordSet::_ProcessRawDataInfo(CRawDataInfo *pInfo)
 {
 	CHairRecord *pHair = (CHairRecord*)pInfo;
 
-    // 更新动态属性
+    // refresh the dynamic attributes
 	pHair->RefreshPrivateData();	
 }
 

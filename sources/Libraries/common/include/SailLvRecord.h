@@ -19,9 +19,9 @@ class CSailLvRecord : public CRawDataInfo
 public:
 	//CSailLvRecord();
 
-	long	lID;			// 编号
-	short	sLevel;			// 等级
-	unsigned long	ulExp;	// 经验值
+	long	lID;			// id
+	short	sLevel;			// level
+	unsigned long	ulExp;	// experience
 };
 
 class CSailLvRecordSet : public CRawDataSet
@@ -39,7 +39,7 @@ public:
 
 protected:
 
-	static CSailLvRecordSet* _Instance; // 相当于单键, 把自己记住
+	static CSailLvRecordSet* _Instance; // acts like a singleton: keeps a reference to itself
 
 	virtual CRawDataInfo* _CreateRawDataArray(int nCnt)
 	{

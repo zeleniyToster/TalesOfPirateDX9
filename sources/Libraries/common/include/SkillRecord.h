@@ -13,7 +13,7 @@
 #include "TableData.h"
 #include "SkillBag.h"
 
-const char cchSkillRecordKeyValue = (char)0xfe;				// 为-1时是都可以拿,为0时是空手,所以改为-2
+const char cchSkillRecordKeyValue = (char)0xfe;				// -1 means "either hand" and 0 means "bare handed", so it was changed to -2
 
 #define	defSKILL_NAME_LEN	17
 #define defSKILL_JOB_SELECT_NUM	9
@@ -39,90 +39,90 @@ enum ESkillItemNeed
 
 enum ESkillObjType
 {
-	// 该技能的施放目标选择1、自己；2、队友；3、场景；4、敌人；5、全体
+	// target selection for this skill: 1 self, 2 party members, 3 scene, 4 enemies, 5 everyone
 
-	enumSKILL_TYPE_SELF		= 1,	// 自身
-	enumSKILL_TYPE_TEAM		= 2,	// 队友
-	enumSKILL_TYPE_SCENE	= 3,	// 场景特效
-	enumSKILL_TYPE_ENEMY	= 4,	// 敌人
-	enumSKILL_TYPE_ALL		= 5,	// 全体
-	enumSKILL_TYPE_PLAYER_DIE	= 6,	// 玩家尸体
-	enumSKILL_TYPE_EXCEPT_SELF  = 7,    // 除了自己以外的所有角色和怪物
+	enumSKILL_TYPE_SELF		= 1,	// self
+	enumSKILL_TYPE_TEAM		= 2,	// party members
+	enumSKILL_TYPE_SCENE	= 3,	// scene effect
+	enumSKILL_TYPE_ENEMY	= 4,	// enemies
+	enumSKILL_TYPE_ALL		= 5,	// everyone
+	enumSKILL_TYPE_PLAYER_DIE	= 6,	// player corpse
+	enumSKILL_TYPE_EXCEPT_SELF  = 7,    // every character and monster except self
 
-	// 特殊技能类型
-	enumSKILL_TYPE_REPAIR	= 17,	// 修补
-	enumSKILL_TYPE_TREE		= 18,	// 砍树
-	enumSKILL_TYPE_MINE		= 19,	// 开矿
-	enumSKILL_TYPE_TRADE	= 22,	// 摆摊
-	enumSKILL_TYPE_FISH		= 28,	// 捕鱼
-	enumSKILL_TYPE_SALVAGE	= 29,	// 打捞沉船
+	// special skill type
+	enumSKILL_TYPE_REPAIR	= 17,	// repair
+	enumSKILL_TYPE_TREE		= 18,	// chop trees
+	enumSKILL_TYPE_MINE		= 19,	// mine ore
+	enumSKILL_TYPE_TRADE	= 22,	// run a stall
+	enumSKILL_TYPE_FISH		= 28,	// fish
+	enumSKILL_TYPE_SALVAGE	= 29,	// salvage wrecks
 
 };
 
-enum eSelectCha		// 仅客户端用
+enum eSelectCha		// client side only
 {
-	enumSC_NONE = 0,		// 不能对所有人使用
-	enumSC_ALL,				// 对所有人使用
-	enumSC_PLAYER,			// 其它玩家,不包括自己,用于菜单
+	enumSC_NONE = 0,		// cannot be used on everyone
+	enumSC_ALL,				// usable on everyone
+	enumSC_PLAYER,			// other players, excluding self; used for menus
 
-	enumSC_ENEMY,			// 敌人:可PK则怪物+非同队玩家,否则仅为怪物
-	enumSC_PLAYER_ASHES,	// 玩家尸体(已死亡的)
+	enumSC_ENEMY,			// enemies: monsters plus players not on the same party when PK is allowed, otherwise only monsters
+	enumSC_PLAYER_ASHES,	// player corpse (already dead)
 
-	enumSC_MONS,			// 普通怪物
-	enumSC_MONS_REPAIRABLE, // 可修补怪物
-	enumSC_MONS_TREE,       // 树怪物
-	enumSC_MONS_MINE,		// 矿石怪物
-	enumSC_MONS_FISH,		// 鱼怪物
-	enumSC_MONS_DBOAT,		// 沉船怪物
+	enumSC_MONS,			// ordinary monster
+	enumSC_MONS_REPAIRABLE, // repairable monster
+	enumSC_MONS_TREE,       // tree monster
+	enumSC_MONS_MINE,		// ore monster
+	enumSC_MONS_FISH,		// fish monster
+	enumSC_MONS_DBOAT,		// wreck monster
 
-	enumSC_SELF,			// 玩家自己
-	enumSC_TEAM,			// 队员
+	enumSC_SELF,			// the player itself
+	enumSC_TEAM,			// party member
 };
 
 enum ESkillEffType
 {
-	enumSKILL_EFF_BANEFUL	= 0,	// 有害的
-	enumSKILL_EFF_HELPFUL	= 1,	// 有益的
+	enumSKILL_EFF_BANEFUL	= 0,	// harmful
+	enumSKILL_EFF_HELPFUL	= 1,	// beneficial
 };
 
 enum ESkillUpgrade
 {
-	enumSKILL_UPGRADE_NONE,			// 不能升级
-	enumSKILL_UPGRADE_CAN,			// 可升级
-	enumSKILL_UPGRADE_MAX,			// 已经升到最大值
+	enumSKILL_UPGRADE_NONE,			// cannot be upgraded
+	enumSKILL_UPGRADE_CAN,			// can be upgraded
+	enumSKILL_UPGRADE_MAX,			// already at maximum level
 };
 
 enum ESkillFightType
 {
-	enumSKILL_LAND_LIVE		= 0, // 陆地生活技能
-	enumSKILL_FIGHT			= 1, // 战斗技能
-	enumSKILL_SAIL			= 2, // 航海技能
-	enumSKILL_SEE_LIVE		= 3, // 海上生活技能
+	enumSKILL_LAND_LIVE		= 0, // land life skill
+	enumSKILL_FIGHT			= 1, // combat skill
+	enumSKILL_SAIL			= 2, // sailing skill
+	enumSKILL_SEE_LIVE		= 3, // sea life skill
 };
 
 enum ESkillSrcType
 {
-	enumSKILL_SRC_HUMAN	= 1,	// 人
-	enumSKILL_SRC_BOAT	= 2,	// 船
+	enumSKILL_SRC_HUMAN	= 1,	// character
+	enumSKILL_SRC_BOAT	= 2,	// ship
 };
 
 enum ESkillTarHabitatType
 {
-	enumSKILL_TAR_LAND	= 1,	// 陆地
-	enumSKILL_TAR_SEA	= 2,	// 海洋
-	enumSKILL_TAR_LORS	= 3,	// 两栖
+	enumSKILL_TAR_LAND	= 1,	// land
+	enumSKILL_TAR_SEA	= 2,	// sea
+	enumSKILL_TAR_LORS	= 3,	// amphibious
 };
 
 enum ESkillType
 {
-	enumSKILL_INBORN	= 0,	// 天生的技能
-	enumSKILL_ACTIVE	= 1,	// 主动的技能
-	enumSKILL_PASSIVE	= 2,	// 被动的技能
+	enumSKILL_INBORN	= 0,	// innate skill
+	enumSKILL_ACTIVE	= 1,	// active skill
+	enumSKILL_PASSIVE	= 2,	// passive skill
 };
 
 enum ESkillPhaseType
 {
-	enumSKILL_NOT_MANUAL_ADD   = 6,	// 玩家不允许手动升级
+	enumSKILL_NOT_MANUAL_ADD   = 6,	// players may not upgrade this manually
 };
 
 
@@ -131,89 +131,89 @@ class CSkillRecord : public CRawDataInfo
 public:
 	CSkillRecord();
 
-	short	sID;												// 编号
-	_TCHAR	szName[defSKILL_NAME_LEN];							// 名称
-	char    chFightType;										// 技能类型，生活技能，战斗技能
-	char	chJobSelect[defSKILL_JOB_SELECT_NUM][2];			// 可以学习该技能的职业，及对应该职业可以学到的最高等级。
-																// 0、怪物 1、剑士 2、狙击手 3、海客 4、航海士 5、商人 6、医生 7、技师 8、所有
-	short	sItemNeed[3][defSKILL_ITEM_NEED_NUM][2];			// 左(0)右(1)手，身体(2)必须装备相应的道具才可使用技能。
-	short	sConchNeed[defSKILL_ITEM_NEED_NUM][3];				// 贝壳需求（装备部位，类型，编号；装备部位，类型，编号；。。。）
-	char	chPhase;											// 技能阶段：1。固有技能，2。基础技能，3。进阶技能，4。终极技能，5。海卵技能，6。技能等级能否手动添加
-	char	chType;												// 技能类型：1。主动技能（手动释放），2。被动技能（自动释放）
-	short	sLevelDemand;										// 学习该技能需要的等级
-	short	sPremissSkill[defSKILL_PRE_SKILL_NUM][2];			// 需要的3个前提技能（技能编号，等级）
-	char	chPointExpend;										// 消耗的技能点
-	char	chSrcType;											// 施放者形态（人，船）
-	char	chTarType;											// 目标类型（陆地生物，海上生物）
-	short	sApplyDistance;										// 使用距离。单位：米
-	char	chApplyTarget;										// 使用的目标。
-	char	chApplyType;										// 作用类型：1。单体，2。范围，3。溅射
-	char	chHelpful;											// 技能有益,还是有害
-	short	sAngle;												// 角度（0-360），用于“范围“攻击类型。
-	short	sRadii;												// 半径，用于“范围“攻击类型。
-	char	chRange;											// 技能区域形状编号
-	char	szPrepare[defSKILL_RANGE_SET_SCRIPT];				// 准备技能
-	char	szUseSP[defSKILL_EFFECT_SCRIPT_LEN];				// 消耗SP公式
-	char	szUseEndure[defSKILL_EFFECT_SCRIPT_LEN];			// 消耗“耐久度“公式
-	char	szUseEnergy[defSKILL_EFFECT_SCRIPT_LEN];			// 消耗“能量“公式
-	char	szSetRange[defSKILL_EFFECT_SCRIPT_LEN];				// 技能区域设定
-	char	szRangeState[defSKILL_EFFECT_SCRIPT_LEN];			// 地表状态设定
-	char	szUse[defSKILL_EFFECT_SCRIPT_LEN];					// 施放阶段公式
-	char	szEffect[defSKILL_EFFECT_SCRIPT_LEN];				// 效果阶段公式
-	char	szActive[defSKILL_EFFECT_SCRIPT_LEN];				// 正效果公式
-	char	szInactive[defSKILL_EFFECT_SCRIPT_LEN];				// 反效果公式
-	int		nStateID;											// 绑定的可手动移除状态编号
-	short	sSelfAttr[defEFFECT_SELF_ATTR_NUM];					// 自身属性数值的变化，公式编号。
-	short	sSelfEffect[defSELF_EFFECT_NUM];					// 自身效果
-	short	sItemExpend[defEXPEND_ITEM_NUM][2];					// 消耗的物品（ID，数量）
-	short	sBeingTime;											// 持续时间
-	short	sTargetAttr[defEFFECT_TAR_ATTR_NUM];				// 目标属性数值的变化，公式编号。
-	short	sSplashPara;										// 溅射参数
-	short	sTargetEffect;										// 目标持续效果
-	short	sSplashEffect;										// 溅射持续效果
-	short	sVariation;											// 变身编号
-	short	sSummon;											// 召唤编号
-	short	sPreTime;											// 释放时间
-	char	szFireSpeed[defSKILL_EFFECT_SCRIPT_LEN];			// 再施放速度公式
-	char	chOperate[defSKILL_OPERATE_NUM];					// 特殊操作：0，无。1，上船。2，下船
+	short	sID;												// id
+	_TCHAR	szName[defSKILL_NAME_LEN];							// name
+	char    chFightType;										// skill type: life skill, combat skill
+	char	chJobSelect[defSKILL_JOB_SELECT_NUM][2];			// jobs that may learn this skill, and the highest level each can reach
+																// 0 monster, 1 swordsman, 2 sniper, 3 sailor, 4 navigator, 5 merchant, 6 doctor, 7 technician, 8 all
+	short	sItemNeed[3][defSKILL_ITEM_NEED_NUM][2];			// left (0) / right (1) hand, body (2); the matching item must be equipped before the skill can be used
+	short	sConchNeed[defSKILL_ITEM_NEED_NUM][3];				// shell requirements (slot, type, id; slot, type, id; ...)
+	char	chPhase;											// skill stage: 1 innate, 2 basic, 3 advanced, 4 ultimate, 5 sea egg; 6 whether skill levels may be added manually
+	char	chType;												// skill type: 1 active (cast manually), 2 passive (fires automatically)
+	short	sLevelDemand;										// level required to learn this skill
+	short	sPremissSkill[defSKILL_PRE_SKILL_NUM][2];			// the three prerequisite skills (skill id, level)
+	char	chPointExpend;										// skill points consumed
+	char	chSrcType;											// caster form (character, ship)
+	char	chTarType;											// target type (land creature, sea creature)
+	short	sApplyDistance;										// use distance, in metres
+	char	chApplyTarget;										// the target used
+	char	chApplyType;										// effect type: 1 single target, 2 area, 3 splash
+	char	chHelpful;											// whether the skill is beneficial or harmful
+	short	sAngle;												// angle (0-360), used by the "area" attack type
+	short	sRadii;												// radius, used by the "area" attack type
+	char	chRange;											// skill area shape id
+	char	szPrepare[defSKILL_RANGE_SET_SCRIPT];				// prepare the skill
+	char	szUseSP[defSKILL_EFFECT_SCRIPT_LEN];				// SP cost formula
+	char	szUseEndure[defSKILL_EFFECT_SCRIPT_LEN];			// durability cost formula
+	char	szUseEnergy[defSKILL_EFFECT_SCRIPT_LEN];			// energy cost formula
+	char	szSetRange[defSKILL_EFFECT_SCRIPT_LEN];				// skill area settings
+	char	szRangeState[defSKILL_EFFECT_SCRIPT_LEN];			// terrain state settings
+	char	szUse[defSKILL_EFFECT_SCRIPT_LEN];					// cast stage formula
+	char	szEffect[defSKILL_EFFECT_SCRIPT_LEN];				// effect stage formula
+	char	szActive[defSKILL_EFFECT_SCRIPT_LEN];				// positive effect formula
+	char	szInactive[defSKILL_EFFECT_SCRIPT_LEN];				// negative effect formula
+	int		nStateID;											// ids of the bound states that can be removed manually
+	short	sSelfAttr[defEFFECT_SELF_ATTR_NUM];					// change to the caster's own attribute values; formula id
+	short	sSelfEffect[defSELF_EFFECT_NUM];					// effect on self
+	short	sItemExpend[defEXPEND_ITEM_NUM][2];					// items consumed (id, count)
+	short	sBeingTime;											// duration
+	short	sTargetAttr[defEFFECT_TAR_ATTR_NUM];				// change to the target's attribute values; formula id
+	short	sSplashPara;										// splash parameters
+	short	sTargetEffect;										// lasting effect on the target
+	short	sSplashEffect;										// lasting effect from the splash
+	short	sVariation;											// transformation id
+	short	sSummon;											// summon id
+	short	sPreTime;											// cast time
+	char	szFireSpeed[defSKILL_EFFECT_SCRIPT_LEN];			// recast speed formula
+	char	chOperate[defSKILL_OPERATE_NUM];					// special action: 0 none, 1 board ship, 2 disembark
 
-public:		// 客户端表现用
-	short	sActionHarm;										// 动作特效播放伤害表现方式
-	char	chActionPlayType;									// 动作播放方式:0-顺序播放,1-随机播放
-	short	sActionPose[defSKILL_POSE_NUM];						// 释放该技能主角的动作
-	short	sActionKeyFrme;										// 人释放技能动作关键桢
-	short	sWhop;												// 攻击音效
-	short	sActionDummyLink[defSKILL_ACTION_EFFECT];			// 释放者人物link点
-	short	sActionEffect[defSKILL_ACTION_EFFECT];				// 释放该技能主角的特效
-	short	sActionEffectType[defSKILL_ACTION_EFFECT];			// 释放该技能的方式:0-无变化,1-能自动缩放
-	short	sItemDummyLink;										// 释放者道具link点
-	short	sItemEffect1[defSKILL_ITEM_EFFECT];					// 释放者道具特效,0位-道具特效,1位-执行时间点
+public:		// for client side presentation
+	short	sActionHarm;										// how damage is presented when the action effect plays
+	char	chActionPlayType;									// action playback: 0 sequential, 1 random
+	short	sActionPose[defSKILL_POSE_NUM];						// the caster's action for this skill
+	short	sActionKeyFrme;										// key frame of the character casting animation
+	short	sWhop;												// attack sound
+	short	sActionDummyLink[defSKILL_ACTION_EFFECT];			// link point on the caster character
+	short	sActionEffect[defSKILL_ACTION_EFFECT];				// the caster's effect for this skill
+	short	sActionEffectType[defSKILL_ACTION_EFFECT];			// how the skill is released: 0 no scaling, 1 scales automatically
+	short	sItemDummyLink;										// link point on the caster's item
+	short	sItemEffect1[defSKILL_ITEM_EFFECT];					// caster item effect; bit 0 = item effect, bit 1 = execution timing
 	short	sItemEffect2[defSKILL_ITEM_EFFECT];					// 
-	short	sSkyEffectActionKeyFrame;							// 飞出特效动作关键桢
-	short   sSkyEffectActionDummyLink;							// 飞行出发点人物dummy
+	short	sSkyEffectActionKeyFrame;							// key frame of the outgoing effect animation
+	short   sSkyEffectActionDummyLink;							// dummy at the flight origin on the character
 	short   sSkyEffectItemDummyLink;							// 飞行出发点道具dummy;
-	short   sSkyEffect;											// 释放该技能飞行的特效
-	short	sSkySpd;											// 飞行速度
-	short	sWhoped;											// 受击音效
-	short   sTargetDummyLink;									// 受击者link点
-	short	sTargetEffectID;									// 受击特效
-	char	chTargetEffectTime;									// 受击特效时间点 ,0-动作开始，1－关键帧，2－动作结束(飞行特效伤害无效)
-    short   sAgroundEffectID;                                   // 对于范围攻击,地上的出现的特效（包括水）
-	short	sWaterEffectID;										// 对于范围攻击,水面上的出现的特效 
-	char	szICON[defSKILL_ICON_NAME_LEN];						// 该技能在游戏界面表现的图标
-	char	chPlayTime;											// 技能播放次数
-	char	szDescribeHint[128];								// 描述,用于hint
-	char	szEffectHint[128];									// 效果,用于hint
-	char	szExpendHint[128];									// 消耗,用于hint
+	short   sSkyEffect;											// the flight effect for this skill
+	short	sSkySpd;											// flight speed
+	short	sWhoped;											// hit sound
+	short   sTargetDummyLink;									// link point on the target being hit
+	short	sTargetEffectID;									// hit effect
+	char	chTargetEffectTime;									// hit effect timing: 0 action start, 1 key frame, 2 action end (no effect for flying damage)
+    short   sAgroundEffectID;                                   // for area attacks, the effect that appears on the ground (including water)
+	short	sWaterEffectID;										// for area attacks, the effect that appears on the water surface
+	char	szICON[defSKILL_ICON_NAME_LEN];						// the icon this skill shows in the game UI
+	char	chPlayTime;											// number of times the animation plays
+	char	szDescribeHint[128];								// description, shown in the tooltip
+	char	szEffectHint[128];									// effect, shown in the tooltip
+	char	szExpendHint[128];									// cost, shown in the tooltip
 
 public:
-    bool    IsPlayCyc()         { return chPlayTime==1;     }   // 是否循环播放
-    bool    IsAttackArea()		{ return chApplyType==2;    }   // 是否攻击地面
-	bool	IsHarmRange()		{ return chApplyType!=1;	}	// 是否范围伤害
-    bool    IsActKeyHarm()      { return sActionHarm==1;    }   // 是否动作关键帧伤害
-    bool    IsEffectHarm()      { return sActionHarm==2;    }   // 是否特效伤害
-    bool    IsNoHarm()          { return sActionHarm==0;    }   // 无伤害技能
-	bool	IsShow()			{ return szICON[1]!='\0';	}	// 是否显示出来
+    bool    IsPlayCyc()         { return chPlayTime==1;     }   // whether playback loops
+    bool    IsAttackArea()		{ return chApplyType==2;    }   // whether it attacks the ground
+	bool	IsHarmRange()		{ return chApplyType!=1;	}	// whether it deals area damage
+    bool    IsActKeyHarm()      { return sActionHarm==1;    }   // whether damage lands on the action key frame
+    bool    IsEffectHarm()      { return sActionHarm==2;    }   // whether damage comes from the effect
+    bool    IsNoHarm()          { return sActionHarm==0;    }   // skill deals no damage
+	bool	IsShow()			{ return szICON[1]!='\0';	}	// whether it is displayed
 	bool	IsPlayRand()		{ return chActionPlayType==1;	}
 	int		GetPoseNum()		{ return _nPoseNum;			}
 
@@ -221,20 +221,20 @@ public:
     void    SetSkillGrid( SSkillGridEx& v )   { _Skill = v;   }
     SSkillGridEx&     GetSkillGrid()  { return _Skill;        }
 
-	int     GetSPExpend()       { return _Skill.sUseSP;     }   // SP消耗
-    short   GetRange()          { return _Skill.sRange[1];  }   // 攻击范围
+	int     GetSPExpend()       { return _Skill.sUseSP;     }   // SP cost
+    short   GetRange()          { return _Skill.sRange[1];  }   // attack range
     short*  GetParam()          { return &_Skill.sRange[1]; }
-    int     GetShape()          { return _Skill.sRange[0];  }   // 技能形状
-    int     GetDistance()       { return sApplyDistance;    }   // 使用距离
+    int     GetShape()          { return _Skill.sRange[0];  }   // skill shape
+    int     GetDistance()       { return sApplyDistance;    }   // use distance
     int     GetLevel()          { return _Skill.chLv;       }
-    int     GetFireSpeed()      { return _Skill.lResumeTime;}   // 攻击速度
-    bool    GetIsValid()        { return _Skill.chState!=0; }   // 是否可用
+    int     GetFireSpeed()      { return _Skill.lResumeTime;}   // attack speed
+    bool    GetIsValid()        { return _Skill.chState!=0; }   // whether it is usable
 
 	int     GetUpgrade()		{ return _nUpgrade;			}
 	bool    GetIsUpgrade()		{ return _nUpgrade==enumSKILL_UPGRADE_CAN;	}
 
 	bool	GetIsUse()			{ return chType!=2;			}
-	bool	GetIsHelpful()		{ return chHelpful==1;		}	// 技能是有益的，可用于安全区
+	bool	GetIsHelpful()		{ return chHelpful==1;		}	// the skill is beneficial, so it may be used in a safe zone
 
 	void	Refresh( int nJob );
 
@@ -248,21 +248,21 @@ public:
 
 	bool	IsAutoAttack()		{ return !IsPlayCyc() && GetDistance()>0;	}
 
-	void	RefreshPrivateData();				// 刷新内部数据
+	void	RefreshPrivateData();				// refresh the internal data
 	
 	bool	IsJobAllow( int nJob );
 	int		GetJobMax( int nJob );
 
 private:
     SSkillGridEx		_Skill;
-	int					_nUpgrade;				// 0-不能升级,1-可升级,2-已经升级到最大值
+	int					_nUpgrade;				// 0 cannot be upgraded, 1 can be upgraded, 2 already at maximum level
 
-	bool				_IsActive;				// 用于动画表现,正在激活的画一个动态边框
-	DWORD				_dwAttackTime;			// 下次可攻击的时间
+	bool				_IsActive;				// for the animation: draw an animated border around the active skill
+	DWORD				_dwAttackTime;			// time of the next possible attack
 
-	eSelectCha			_eSelectCha;			// 用于场景判断可以选择那些玩家攻击
+	eSelectCha			_eSelectCha;			// used by scene logic to decide which players may be attacked
 
-	int					_nPoseNum;				// 总共的pose个数
+	int					_nPoseNum;				// total number of poses
 
 	// added by clp
 public:
@@ -287,7 +287,7 @@ public:
 
 protected:
 
-	static CSkillRecordSet* _Instance; // 相当于单键, 把自己记住
+	static CSkillRecordSet* _Instance; // acts like a singleton: keeps a reference to itself
 
 	virtual CRawDataInfo* _CreateRawDataArray(int nCnt)
 	{

@@ -45,7 +45,7 @@ void CChaAttr::Init(long lID, bool bFromFile)
 		m_lAttribute[i] = 0;
 
 	// Add by lark.li 20080723 begin
-	// 不能初始化，这些属性需要保存到数据库里
+	// cannot be initialised; these attributes are persisted in the database
 	//for (i = ATTR_EXTEND0; i <= ATTR_EXTEND9; i++)
 	//	m_lAttribute[i] = 0;
 	// End

@@ -149,8 +149,8 @@ protected:
 	inline static std::unique_ptr<T> _instance = nullptr;
     };
 
-// 这个版本的singleton实现很快会被丢弃，因为它不能很容易地被扩充为多线程安全的
-// 所以不推荐使用这个singleton template
+// this singleton implementation will be dropped soon, because it cannot easily be made thread safe
+// so this singleton template is not recommended
 #if 1
 template <class T>
 class CSingleton

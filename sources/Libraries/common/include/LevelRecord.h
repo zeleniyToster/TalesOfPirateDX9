@@ -19,9 +19,9 @@ class CLevelRecord : public CRawDataInfo
 public:
 	//CLevelRecord();
 
-	long	lID;			// 编号
-	short	sLevel;			// 等级
-	unsigned int	ulExp;	// 经验值
+	long	lID;			// id
+	short	sLevel;			// level
+	unsigned int	ulExp;	// experience
 };
 
 class CLevelRecordSet : public CRawDataSet
@@ -39,7 +39,7 @@ public:
 
 protected:
 
-	static CLevelRecordSet* _Instance; // 相当于单键, 把自己记住
+	static CLevelRecordSet* _Instance; // acts like a singleton: keeps a reference to itself
 
 	virtual CRawDataInfo* _CreateRawDataArray(int nCnt)
 	{

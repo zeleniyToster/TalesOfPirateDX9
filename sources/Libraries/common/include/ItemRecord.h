@@ -14,7 +14,7 @@
 #include "CompCommand.h"
 #include "JobType.h"
 
-const char cchItemRecordKeyValue = (char)0xfe;	// 道具对职业的需求中占用了-1
+const char cchItemRecordKeyValue = (char)0xfe;	// -1 is taken by "no job requirement" in the job requirement field
 
 #define defITEM_NAME_LEN	80
 #define defITEM_MODULE_NUM	5
@@ -31,54 +31,54 @@ const char cchItemRecordKeyValue = (char)0xfe;	// 道具对职业的需求中占
 
 enum EItemType
 {
-	enumItemTypeSword		= 1,	// 剑
-	enumItemTypeGlave		= 2,	// 巨剑
-	enumItemTypeBow			= 3,	// 弓
-	enumItemTypeHarquebus	= 4,	// 火绳枪
-	enumItemTypeFalchion	= 5,	// 刀
-	enumItemTypeMitten		= 6,	// 拳套
-	enumItemTypeStylet		= 7,	// 匕首
-	enumItemTypeMoneybag	= 8,	// 钱袋
-	enumItemTypeCosh		= 9,	// 短棒
-	enumItemTypeSinker		= 10,	// 锤子
-	enumItemTypeShield		= 11,	// 盾
-	enumItemTypeArrow		= 12,	// 箭
-	enumItemTypeAmmo		= 13,	// 弹药
-	enumItemTypeHeadpiece	= 19,	// 头盔
-	enumItemTypeHair		= 20,	// 头发
-	enumItemTypeFace		= 21,	// 脸型
-	enumItemTypeClothing	= 22,	// 衣服
-	enumItemTypeGlove		= 23,	// 手套
-	enumItemTypeBoot		= 24,	// 靴子
+	enumItemTypeSword		= 1,	// sword
+	enumItemTypeGlave		= 2,	// greatsword
+	enumItemTypeBow			= 3,	// bow
+	enumItemTypeHarquebus	= 4,	// flintlock
+	enumItemTypeFalchion	= 5,	// knife
+	enumItemTypeMitten		= 6,	// knuckle
+	enumItemTypeStylet		= 7,	// dagger
+	enumItemTypeMoneybag	= 8,	// money bag
+	enumItemTypeCosh		= 9,	// baton
+	enumItemTypeSinker		= 10,	// hammer
+	enumItemTypeShield		= 11,	// shield
+	enumItemTypeArrow		= 12,	// arrow
+	enumItemTypeAmmo		= 13,	// ammunition
+	enumItemTypeHeadpiece	= 19,	// helmet
+	enumItemTypeHair		= 20,	// hair
+	enumItemTypeFace		= 21,	// face
+	enumItemTypeClothing	= 22,	// clothes
+	enumItemTypeGlove		= 23,	// gloves
+	enumItemTypeBoot		= 24,	// boots
 	enumItemTypeNecklace	= 25,
 	enumItemTypeRing		= 26,
 	enumItemTypeTattoo		= 27,
-	enumItemTypeConch		= 29,	// 贝壳
-	enumItemTypeMedicine	= 31,	// 药品
-	enumItemTypeOvum		= 32,	// 海卵
+	enumItemTypeConch		= 29,	// shell
+	enumItemTypeMedicine	= 31,	// medicine
+	enumItemTypeOvum		= 32,	// sea egg
 	enumItemTypeUnknownConsumable = 33, // TODO: Proper naming
-	enumItemTypeScroll		= 36,	// 回城卷轴
-	enumItemTypeGeneral		= 41,	// 一般物品
-    enumItemTypeMission     = 42,   // 任务道具
-	enumItemTypeBoat		= 43,	// 船长证明
-	enumItemTypeWing		= 44,	// 翅膀，客户端用于显示特效用
-	enumItemTypeTrade		= 45,	// 贸易证明
-	enumItemTypeBravery		= 46,	// 勇者之证
-	enumItemTypeHull		= 51,	// 船身
-	enumItemTypeEmbolon		= 52,	// 撞角
-	enumItemTypeEngine		= 53,	// 发动机
-	enumItemTypeArtillery	= 54,	// 火炮
-	enumItemTypeAirscrew	= 55,	// 螺旋浆
-	enumItemTypeBoatSign	= 56,	// 船标志
-	enumItemTypePetFodder	= 57,	// 宠物饲料
-	enumItemTypePetSock		= 58,	// 能量零食
-	enumItemTypePet			= 59,	// 守护精灵
+	enumItemTypeScroll		= 36,	// return scroll
+	enumItemTypeGeneral		= 41,	// ordinary item
+    enumItemTypeMission     = 42,   // quest item
+	enumItemTypeBoat		= 43,	// captain's certificate
+	enumItemTypeWing		= 44,	// wings; the client uses them to show an effect
+	enumItemTypeTrade		= 45,	// trade certificate
+	enumItemTypeBravery		= 46,	// hero's certificate
+	enumItemTypeHull		= 51,	// hull
+	enumItemTypeEmbolon		= 52,	// ram
+	enumItemTypeEngine		= 53,	// engine
+	enumItemTypeArtillery	= 54,	// cannon
+	enumItemTypeAirscrew	= 55,	// propeller
+	enumItemTypeBoatSign	= 56,	// ship flag
+	enumItemTypePetFodder	= 57,	// pet food
+	enumItemTypePetSock		= 58,	// energy snack
+	enumItemTypePet			= 59,	// guardian spirit
 
 	enumItemCloak			= 88,
 	enumItemMount			= 90,
 
 	// Add by lark.li 20080514 begin
-	enumItemTypeNo			= 99,	// 彩票小球
+	enumItemTypeNo			= 99,	// lottery ball
 	// End
 };
 
@@ -93,116 +93,116 @@ class CItemRecord : public CRawDataInfo
 public:
 	enum EItemExtendInfo
 	{
-		enumItemNormalStart		= 0,		// 普通道具
+		enumItemNormalStart		= 0,		// ordinary item
 		enumItemNormalEnd		= 4999,
-		enumItemFusionEndure   = 23000,      // 融合道具所要求的最大耐久度//Modify by ning.yan 20080821 （大澎要求融合道具的条件由道具起始、结束栏改为最大耐久度）
-		enumItemFusionStart		= 5000,		// 熔合道具起始栏位
-		enumItemFusionEnd		= 9800,		// 熔合道具结束栏位
+		enumItemFusionEndure   = 23000,      // maximum durability a fusion item may require; modified by ning.yan 20080821 (Da Peng asked for the fusion requirement to change from the source/target slot to a maximum durability)
+		enumItemFusionStart		= 5000,		// source slot of the fusion
+		enumItemFusionEnd		= 9800,		// target slot of the fusion
 		// Modify by lark.li 20080703
-		enumItemMax				= 32768,		// 道具表最大记录数量
+		enumItemMax				= 32768,		// maximum number of records in the item table
 		// End
 
 	};
 
 	CItemRecord();
 
-	long	lID;							// 编号
-	_TCHAR	szName[defITEM_NAME_LEN];		// 名称
+	long	lID;							// id
+	_TCHAR	szName[defITEM_NAME_LEN];		// name
 	char    szICON[defITEM_ICON_NAME_LEN];	// ICON
-	_TCHAR	chModule[defITEM_MODULE_NUM][defITEM_MODULE_LEN];	// 模型
-	short	sShipFlag;						// 船标志
-	short	sShipType;						// 船体型号
-	short	sType;							// 类型
+	_TCHAR	chModule[defITEM_MODULE_NUM][defITEM_MODULE_LEN];	// model
+	short	sShipFlag;						// ship flag
+	short	sShipType;						// hull model
+	short	sType;							// type
 
-	char	chForgeLv;						// 精炼等级
-	char	chForgeSteady;					// 安定值（精炼物品的稳定值，超过这个值，每精炼一次就递减一定成功率）
-	char	chExclusiveID;					// 是否拥有唯一ID
-    char    chIsTrade;                      // 可交易
-    char    chIsPick;                       // 可拾取
-    char    chIsThrow;                      // 可丢弃
-	char	chIsDel;						// 可销毁
-    long    lPrice;                         // 交易价格
-	char	chBody[defITEM_BODY];			// 体形限制
-	short	sNeedLv;						// 要求的等级
-    char    szWork[MAX_JOB_TYPE];           // 职业
+	char	chForgeLv;						// refine level
+	char	chForgeSteady;					// stability value (the stability of a refineable item; past this value every refine lowers the success chance by a fixed amount)
+	char	chExclusiveID;					// whether it has a unique id
+    char    chIsTrade;                      // tradable
+    char    chIsPick;                       // can be picked up
+    char    chIsThrow;                      // can be dropped
+	char	chIsDel;						// can be destroyed
+    long    lPrice;                         // trade price
+	char	chBody[defITEM_BODY];			// body size restriction
+	short	sNeedLv;						// required level
+    char    szWork[MAX_JOB_TYPE];           // job
 
-	int		nPileMax;						// 在道具栏一格中可以放置的最多个数
-	char	chInstance;						// 是否实例化
-	char	szAbleLink[enumEQUIP_NUM];		// 可装备的位置
-	char	szNeedLink[enumEQUIP_NUM];		// 需要的位置
-	char	chPickTo;						// 0 拾取时进入背包，1 进入船舱
+	int		nPileMax;						// largest number that fit in one inventory slot
+	char	chInstance;						// whether it is instantiated
+	char	szAbleLink[enumEQUIP_NUM];		// slot it can be equipped in
+	char	szNeedLink[enumEQUIP_NUM];		// slot it requires
+	char	chPickTo;						// 0 goes into the backpack when picked up, 1 goes into the cargo hold
 
-	short	sStrCoef;						// 力量系数加成
-	short	sAgiCoef;						// 敏捷系数加成
-	short	sDexCoef;						// 专注系数加成
-	short	sConCoef;						// 体质系数加成
-	short	sStaCoef;						// 精力系数加成
-	short	sLukCoef;						// 幸运系数加成	
-	short	sASpdCoef;						// 攻击频率系数加成
-	short	sADisCoef;						// 攻击距离系数加成
-	short	sMnAtkCoef;						// 最小攻击力系数加成
-	short	sMxAtkCoef;						// 最大攻击力系数加成
-	short	sDefCoef;						// 防御系数加成
-	short	sMxHpCoef;						// 最大Hp系数加成
-	short	sMxSpCoef;						// 最大Sp系数加成
-	short	sFleeCoef;						// 闪避率系数加成
-	short	sHitCoef;						// 命中率系数加成
-	short	sCrtCoef;						// 爆击率系数加成
-	short	sMfCoef;						// 寻宝率系数加成
-	short	sHRecCoef;						// hp恢复速度系数加成
-	short	sSRecCoef;						// sp恢复速度系数加成
-	short	sMSpdCoef;						// 移动速度系数加成
-	short	sColCoef;						// 资源采集速度系数加成
+	short	sStrCoef;						// strength coefficient bonus
+	short	sAgiCoef;						// agility coefficient bonus
+	short	sDexCoef;						// focus coefficient bonus
+	short	sConCoef;						// constitution coefficient bonus
+	short	sStaCoef;						// vitality coefficient bonus
+	short	sLukCoef;						// luck coefficient bonus
+	short	sASpdCoef;						// attack interval coefficient bonus
+	short	sADisCoef;						// attack range coefficient bonus
+	short	sMnAtkCoef;						// minimum attack coefficient bonus
+	short	sMxAtkCoef;						// maximum attack coefficient bonus
+	short	sDefCoef;						// defence coefficient bonus
+	short	sMxHpCoef;						// maximum HP coefficient bonus
+	short	sMxSpCoef;						// maximum SP coefficient bonus
+	short	sFleeCoef;						// evasion rate coefficient bonus
+	short	sHitCoef;						// hit rate coefficient bonus
+	short	sCrtCoef;						// critical rate coefficient bonus
+	short	sMfCoef;						// treasure find rate coefficient bonus
+	short	sHRecCoef;						// HP regeneration rate coefficient bonus
+	short	sSRecCoef;						// SP regeneration rate coefficient bonus
+	short	sMSpdCoef;						// movement speed coefficient bonus
+	short	sColCoef;						// resource gathering speed coefficient bonus
 
-	short	sStrValu[2];					// 力量常数加成（最小值，最大值）
-	short	sAgiValu[2];					// 敏捷常数加成
-	short	sDexValu[2];					// 专注常数加成
-	short	sConValu[2];					// 体质常数加成
-	short	sStaValu[2];					// 精力常数加成
-	short	sLukValu[2];					// 幸运常数加成
-	short	sASpdValu[2];					// 攻击频率常数加成
-	short	sADisValu[2];					// 攻击距离常数加成
-	short	sMnAtkValu[2];					// 最小攻击力常数加成
-	short	sMxAtkValu[2];					// 最大攻击力常数加成
-	short	sDefValu[2];					// 防御常数加成
-	short	sMxHpValu[2];					// 最大Hp常数加成
-	short	sMxSpValu[2];					// 最大Sp常数加成
-	short	sFleeValu[2];					// 闪避率常数加成
-	short	sHitValu[2];					// 命中率常数加成
-	short	sCrtValu[2];					// 爆击率常数加成
-	short	sMfValu[2];						// 寻宝率常数加成
-	short	sHRecValu[2];					// hp恢复速度常数加成
-	short	sSRecValu[2];					// sp恢复速度常数加成
-	short	sMSpdValu[2];					// 移动速度常数加成
-	short	sColValu[2];					// 资源采集速度常数加成
+	short	sStrValu[2];					// strength constant bonus (minimum, maximum)
+	short	sAgiValu[2];					// agility constant bonus
+	short	sDexValu[2];					// focus constant bonus
+	short	sConValu[2];					// constitution constant bonus
+	short	sStaValu[2];					// vitality constant bonus
+	short	sLukValu[2];					// luck constant bonus
+	short	sASpdValu[2];					// attack interval constant bonus
+	short	sADisValu[2];					// attack range constant bonus
+	short	sMnAtkValu[2];					// minimum attack constant bonus
+	short	sMxAtkValu[2];					// maximum attack constant bonus
+	short	sDefValu[2];					// defence constant bonus
+	short	sMxHpValu[2];					// maximum HP constant bonus
+	short	sMxSpValu[2];					// maximum SP constant bonus
+	short	sFleeValu[2];					// evasion rate constant bonus
+	short	sHitValu[2];					// hit rate constant bonus
+	short	sCrtValu[2];					// critical rate constant bonus
+	short	sMfValu[2];						// treasure find rate constant bonus
+	short	sHRecValu[2];					// HP regeneration rate constant bonus
+	short	sSRecValu[2];					// SP regeneration rate constant bonus
+	short	sMSpdValu[2];					// movement speed constant bonus
+	short	sColValu[2];					// resource gathering speed constant bonus
 
-	short	sPDef[2];						// 物理抵抗
-	short	sLHandValu;						// 道具左手发挥
-	short	sEndure[2];						// 耐久度
-	short	sEnergy[2];						// 能量
-	short	sHole;							// 洞数
-	char	szAttrEffect[defITEM_ATTREFFECT_NAME_LEN];	// 使用效果
+	short	sPDef[2];						// physical resistance
+	short	sLHandValu;						// the item works in the left hand
+	short	sEndure[2];						// durability
+	short	sEnergy[2];						// energy
+	short	sHole;							// number of holes
+	char	szAttrEffect[defITEM_ATTREFFECT_NAME_LEN];	// use effect
 	short	sDrap;							// drap
-	short	sEffect[defITEM_BIND_EFFECT_NUM][2];		// 武器捆绑特效以及对应dummy
-	short	sItemEffect[2];					// 道具外观特效
-	short	sAreaEffect[2];					// 放在地上时的特效
-	short	sUseItemEffect[2];				// 使用时的特效
-    _TCHAR  szDescriptor[defITEM_DESCRIPTOR_NAME_LEN];   // 描述
+	short	sEffect[defITEM_BIND_EFFECT_NUM][2];		// weapon attach effect and the matching dummy
+	short	sItemEffect[2];					// item appearance effect
+	short	sAreaEffect[2];					// effect shown while it lies on the ground
+	short	sUseItemEffect[2];				// effect shown while it is used
+    _TCHAR  szDescriptor[defITEM_DESCRIPTOR_NAME_LEN];   // description
 
 	float		nCooldown;
 	//short	sSeteffect[enumEQUIP_NUM][2];
 	//_TCHAR  szDescriptor[5][defITEM_DESCRIPTOR_SET_LEN];
 
 public:
-    const char* GetIconFile();              // 得到完整的icon文件名称
+    const char* GetIconFile();              // obtain the full icon file name
 	static bool	IsVaildFusionID(CItemRecord* pItem); // add by ning.yan  2008-08-21
 	
 	bool		GetIsPile()							{ return nPileMax>1;	}
 
-	// 检查角色体型是否可以装备
+	// check whether the character's body size allows equipping it
 	bool		IsAllowEquip( unsigned int nChaID );
 
-	// 检查是否没有体型限制
+	// check whether there is no body size restriction
 	bool		IsAllEquip()						{ return chBody[0]==-1;	}
 
 	void		RefreshData();
@@ -225,7 +225,7 @@ public:
 	bool IsLockable() const;
 
 public:
-	short		sEffNum;					// 武器捆绑特效数量
+	short		sEffNum;					// number of weapon attach effects
 
 private:
 	bool		_IsBody[5];
@@ -247,7 +247,7 @@ public:
 
 protected:
 
-	static CItemRecordSet* _Instance; // 相当于单键, 把自己记住
+	static CItemRecordSet* _Instance; // acts like a singleton: keeps a reference to itself
 
 	virtual CRawDataInfo* _CreateRawDataArray(int nCnt)
 	{

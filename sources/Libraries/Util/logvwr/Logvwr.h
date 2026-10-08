@@ -1,4 +1,4 @@
-﻿// Logvwr.h : PROJECT_NAME 应用程序的主头文件
+﻿// Logvwr.h : main header file for the PROJECT_NAME application
 //
 
 #pragma once
@@ -7,11 +7,11 @@
 #error 在包含用于 PCH 的此文件之前包含“stdafx.h”
 #endif
 
-#include "resource.h"       // 主符号
+#include "resource.h"       // primary symbols
 
 
 // CLogvwrApp:
-// 有关此类的实现，请参阅 Logvwr.cpp
+// see Logvwr.cpp for the implementation of this class
 //
 
 class CLogvwrApp : public CWinApp
@@ -19,11 +19,11 @@ class CLogvwrApp : public CWinApp
 public:
     CLogvwrApp();
 
-    // 重写
+    // overrides
 public:
     virtual BOOL InitInstance();
 
-    // 实现
+    // implementation
 
     DECLARE_MESSAGE_MAP()
     };

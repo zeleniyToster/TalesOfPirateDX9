@@ -24,40 +24,40 @@ class CSkillStateRecord : public CRawDataInfo
 public:
 	// CSkillStateRecord();
 
-	char	chID;									// 编号
-	char	szName[defSKILLSTATE_NAME_LEN];			// 名称
-	short	sFrequency;								// 触发的时间间隔（单位：秒）
-	char	szOnTransfer[defSKILLSTATE_SCRIPT_NAME];// 状态到传递目标上的作用时间脚本
-	char	szAddState[defSKILLSTATE_SCRIPT_NAME];	// 使用效果脚本
-	char	szSubState[defSKILLSTATE_SCRIPT_NAME];	// 移除效果脚本
-	char	chAddType;								// 替换策略
-	bool	bCanCancel;								// 是否可由终端取消
-	bool	bCanMove;								// 是否能够移动
-	bool	bCanMSkill;								// 是否能够使用魔法技能
-	bool	bCanGSkill;								// 是否能够使用普通技能
-	bool	bCanTrade;								// 是否能够交易
-	bool	bCanItem;								// 是否能够使用物品
-	bool	bCanUnbeatable;							// 是否无敌
-	bool	bCanItemmed;							// 是否能够被使用物品
-	bool	bCanSkilled;							// 是否能够被使用技能
-	bool	bNoHide;								// 是否不隐身
-	bool	bNoShow;								// 是否不显形
-	bool	bOptItem;								// 是否可操作道具
-	bool	bTalkToNPC;								// 是否可和NPC对话
-	char	bFreeStateID;							// 解除的效果编号
+	char	chID;									// id
+	char	szName[defSKILLSTATE_NAME_LEN];			// name
+	short	sFrequency;								// interval between ticks, in seconds
+	char	szOnTransfer[defSKILLSTATE_SCRIPT_NAME];// script applying the state to the target
+	char	szAddState[defSKILLSTATE_SCRIPT_NAME];	// script for the use effect
+	char	szSubState[defSKILLSTATE_SCRIPT_NAME];	// script for the removal effect
+	char	chAddType;								// replacement policy
+	bool	bCanCancel;								// whether the client may cancel it
+	bool	bCanMove;								// whether the character can move
+	bool	bCanMSkill;								// whether magic skills can be used
+	bool	bCanGSkill;								// whether normal skills can be used
+	bool	bCanTrade;								// whether trading is allowed
+	bool	bCanItem;								// whether items can be used
+	bool	bCanUnbeatable;							// whether the character is invulnerable
+	bool	bCanItemmed;							// whether items can be used on the character
+	bool	bCanSkilled;							// whether skills can be used on the character
+	bool	bNoHide;								// whether the character is not invisible
+	bool	bNoShow;								// whether the character is not force-revealed
+	bool	bOptItem;								// whether items can be manipulated
+	bool	bTalkToNPC;								// whether the character can talk to NPCs
+	char	bFreeStateID;							// id of the effect that is removed
 
-	// 客户端表现
-	char	chScreen;								// 屏幕效果
-	char    nActBehave[defSKILLSTATE_ACT_NUM];		// 动作表现
-	short	sChargeLink;							// 客户端表现标识,用于表现充电贝壳
-    short   sAreaEffect;                            // 地面持续特效
-	bool	IsShowCenter;							// 地面状态特效,是否仅显示中心点
-	bool	IsDizzy;								// 是否显示眩晕效果
-	short	sEffect;								// 挂效果方特效表现
-	short	sDummy1;								// 挂特效玩家的播放dummy点
-	short	sBitEffect;								// 该状态下受击特效表现
-	short	sDummy2;								// 特效播放dummy点
-	short	sIcon;									// 中该效果挂在身上的ICON表现
+	// client side presentation
+	char	chScreen;								// screen effect
+	char    nActBehave[defSKILLSTATE_ACT_NUM];		// action presentation
+	short	sChargeLink;							// client presentation flag, used to show the shell charging effect
+    short   sAreaEffect;                            // lasting ground effect
+	bool	IsShowCenter;							// ground state effect; whether only the centre point is drawn
+	bool	IsDizzy;								// whether the stun effect is shown
+	short	sEffect;								// effect presentation for the entity the effect is applied to
+	short	sDummy1;								// dummy point used to play the effect on the affected player
+	short	sBitEffect;								// hit effect shown while in this state
+	short	sDummy2;								// dummy point used to play the effect
+	short	sIcon;									// icon shown for the effect while it is attached to the character
 	char	szIcon[defSKILLSTATE_NAME_LEN][10];		// icons for pots per level 
 	char	szDesc[defSKILLSTATE_DESC_NAME_LEN];
 	int		lColour;
@@ -67,7 +67,7 @@ public:
 	int		GetActNum()			{ return _nActNum;		}
 
 public:
-	int		_nActNum;								// 动作表现个数
+	int		_nActNum;								// number of action presentations
 
 };
 
@@ -86,7 +86,7 @@ public:
 
 protected:
 
-	static CSkillStateRecordSet* _Instance; // 相当于单键, 把自己记住
+	static CSkillStateRecordSet* _Instance; // acts like a singleton: keeps a reference to itself
 
 	virtual CRawDataInfo* _CreateRawDataArray(int nCnt)
 	{

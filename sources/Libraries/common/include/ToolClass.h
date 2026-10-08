@@ -146,7 +146,7 @@ T* CListArray<T>::Add(T* pCObj)
 	long	lPosID = pCObj->GetPosID();
 	if (lPosID < 0 || lPosID >= m_lCapacity)
 		lPosID = m_ppArray[m_lUsed]->lPosID;
-	if (m_pArray[lPosID].lPosReverse < m_lUsed) // 该位置已经有内容
+	if (m_pArray[lPosID].lPosReverse < m_lUsed) // this slot already holds something
 		return NULL;
 
 	pCObj->SetPosID(lPosID);
@@ -182,7 +182,7 @@ bool CListArray<T>::Del(long lPosID)
 		return false;
 	if (lPosID < 0 || lPosID >= m_lCapacity)
 		return false;
-	if (m_pArray[lPosID].lPosReverse >= m_lUsed) // 该位置已经为空
+	if (m_pArray[lPosID].lPosReverse >= m_lUsed) // this slot is already empty
 		return true;
 
 	m_lUsed--;
@@ -201,7 +201,7 @@ T* CListArray<T>::Get(long lPosID)
 {
 	if (lPosID < 0 || lPosID >= m_lCapacity)
 		return NULL;
-	if (m_pArray[lPosID].lPosReverse >= m_lUsed) // 该位置已经为空
+	if (m_pArray[lPosID].lPosReverse >= m_lUsed) // this slot is already empty
 		return NULL;
 	return &m_pArray[lPosID].CContent;
 }
@@ -316,14 +316,14 @@ T* CResidentList<T>::Add(T* pCObj)
 		return NULL;
 
 	SUnit	*pSCarrier;
-	if (m_pSFreeQueue) // 有空闲的载体
+	if (m_pSFreeQueue) // a free carrier exists
 	{
 		pSCarrier = m_pSFreeQueue;
 		m_pSFreeQueue = pSCarrier->pSNext;
 		if (m_pSFreeQueue)
 			m_pSFreeQueue->pSLast = 0;
 	}
-	else // 分配新的载体
+	else // allocate a new carrier
 	{
 		pSCarrier = new SUnit;
 		if (!pSCarrier)

@@ -21,24 +21,24 @@ BOOL CSwitchMapRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<st
     string strList[80];
 	string strLine;
 
-	// 编号
+	// id
 	pInfo->lID = pInfo->nID;
-	// 被绑定的实体ID
+	// id of the bound entity
 	pInfo->lEntityID = Str2Int(pInfo->szDataName);
-	// 事件编号
+	// event id
 	pInfo->lEventID = Str2Int(ParamList[m++]);
-	// 实体的位置
+	// entity position
 	memset(&pInfo->SEntityPos, 0, sizeof(Point));
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
 	pInfo->SEntityPos.x = Str2Int(strList[0]);
 	pInfo->SEntityPos.y = Str2Int(strList[1]);
-	// 实体的方向
+	// entity direction
 	pInfo->sAngle = Str2Int(ParamList[m++]);
-	// 目标地图名
+	// target map name
 	_tcsncpy(pInfo->szTarMapName, ParamList[m++].c_str(), defMAP_NAME_LEN);
 	pInfo->szTarMapName[defMAP_NAME_LEN - 1] = _TEXT('\0');
-	// 目标地图的位置
+	// position on the target map
 	memset(&pInfo->STarPos, 0, sizeof(Point));
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');

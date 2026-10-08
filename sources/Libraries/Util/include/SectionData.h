@@ -2,21 +2,21 @@
 
 #include "Util.h"
 
-// MapData 数据管理类
+// MapData storage management class
 
-// 支持数据动态读入, 不限制数据类型
+// supports loading data on demand, with no restriction on the data type
 
-// 比如地表, 物件存盘文件都可以使用此类
+// e.g. both terrain and object save files can use this class
 
-// 支持数据块之间的复制, 可以方便地图切割, 组合
+// supports copying between data blocks, which makes cutting and stitching maps easy
 
 
 struct SDataSection
 {
-    void*		pData;				// 指向实际的数据
-    DWORD		dwDataOffset;		// 文件数据指针位置 = 0, 表示没有数据
-	DWORD		dwActiveTime;		// 最后一次使用的时间
-    DWORD       dwParam;            // 参数
+    void*		pData;				// points at the real data
+    DWORD		dwDataOffset;		// a file data pointer position of 0 means there is no data
+	DWORD		dwActiveTime;		// time of last use
+    DWORD       dwParam;            // parameters
 	
 	SDataSection()
     :pData(NULL),dwActiveTime(0),dwDataOffset(0),dwParam(0)
@@ -35,35 +35,35 @@ public:
 
     ~CSectionDataMgr();
     
-    // 从文件读入, 并决定是否需要编辑操作
+    // read from the file, and decide whether editing is allowed
     BOOL    CreateFromFile(const char *pszMapName, BOOL bEdit = FALSE);
     
-    // 创建, 会生成文件
+    // create; this generates the file
     BOOL    Create(int nSectionCntX, int nSectionCntY, const char *pszMapName);
 	
-    // 读盘, 可以一次性读入, 也可以动态读入
+    // read from disk, either all at once or on demand
     void	Load(BOOL bFull, DWORD dwTimeParam = 0);
     
-    // 读取Section数据的回调函数
+    // callback invoked when section data is read
     void	SetLoadSectionCallback(MAP_LOADING_PROC pfn)	{	_pfnProc = pfn;				        }
     
-    // 复制Section数据
+    // copy the section data
     void    CopySectionData(SDataSection* pDest, SDataSection *pSrc);
     
-    // 保存Section数据到文件
+    // write the section data to the file
     void    SaveSectionData(int nSectionX, int nSectionY);
 
-    // 清除指定Section的数据, 内部会清除文件索引
+    // drop the data of the given section; this also clears the file index
     void    ClearSectionData(int nSectionX, int nSectionY);
 
-    // 获取Section数据, 如果不在内存里则返回空
+    // fetch the section data; returns empty when it is not resident
     SDataSection* GetSectionData(int nSectionX, int nSectionY);
     
-    // 读取指定Section的数据
+    // read the data of the given section
     SDataSection* LoadSectionData(int nSectionX, int nSectionY);
 
 	
-	// 获取map相关描述信息
+	// fetch the map descriptor
 	int		GetSectionCntX()						        { return _nSectionCntX;			        }
 	int		GetSectionCntY()						        { return _nSectionCntY;			        }
     int     GetSectionCnt()                                 { return _nSectionCntX * _nSectionCntY; }
@@ -71,10 +71,10 @@ public:
     char*   GetDataName()                                   { return _szDataName;                    }
     void    SetDataName(const char *pszName)                { strcpy(_szDataName, pszName);          }   
 
-    // 计算有效数据
+    // work out the valid data
     // int     CalValidSectionCnt();
     
-    // 设置动态读入的中心位置和范围
+    // set the centre and radius used for on-demand loading
     void	SetLoadSize(int nWidth, int nHeight)	{ _nLoadWidth  = nWidth;_nLoadHeight = nHeight; }
 	int		GetLoadWidth()							{ return _nLoadWidth;					        }
 	int		GetLoadHeight()							{ return _nLoadHeight;					        }
@@ -102,22 +102,22 @@ protected:
         return *(_SectionArray + dwSectionNo);
     }
 
-	char                _szFileName[255];   // 包含完整路径的名称
-    char                _szDataName[32];     // 地图名称
-	int					_nSectionCntX;		// 地图水平方向上Section的块数
-	int					_nSectionCntY;		// 地图垂直方向上Section的块数
-	int					_nLoadCenterX;		// 动态读入的中心位置
+	char                _szFileName[255];   // name including the full path
+    char                _szDataName[32];     // map name
+	int					_nSectionCntX;		// number of section blocks horizontally
+	int					_nSectionCntY;		// number of section blocks vertically
+	int					_nLoadCenterX;		// centre of on-demand loading
 	int 				_nLoadCenterY;
-	int					_nLoadWidth;		// 可视范围
+	int					_nLoadWidth;		// visible range
 	int					_nLoadHeight;
 	
     int					_nSectionStartX;
 	int					_nSectionStartY;
     
-	MAP_LOADING_PROC	_pfnProc;			// 地图动态读入回调通知函数
+	MAP_LOADING_PROC	_pfnProc;			// notification callback for on-demand map loading
 	
-	FILE*				_fp;				// 地图文件句柄
-	BOOL				_bEdit;				// 是否可编辑
+	FILE*				_fp;				// map file handle
+	BOOL				_bEdit;				// whether editing is allowed
     BOOL                _bDebug;
 	
     std::list<SDataSection*>	_SectionList;

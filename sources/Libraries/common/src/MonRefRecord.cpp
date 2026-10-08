@@ -16,14 +16,14 @@ BOOL CMonRefRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<strin
 
 	CMonRefRecord *pInfo = (CMonRefRecord*)pRawDataInfo;
 
-	// 区域编号
+	// region id
 	pInfo->lID = pInfo->nID;
 
 	int m = 0, n = 0;
     string strList[80];
 	string strLine;
 
-	// 区域的左上角，右下角
+	// top-left and bottom-right corner of the region
 	memset(pInfo->SRegion, cchMonRefRecordKeyValue, sizeof(pInfo->SRegion));
 	strLine = pInfo->szDataName;
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
@@ -35,10 +35,10 @@ BOOL CMonRefRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<strin
 	pInfo->SRegion[1].x = Str2Int(strList[0]);
 	pInfo->SRegion[1].y = Str2Int(strList[1]);
 
-	// 出生方向
+	// spawn direction
 	pInfo->sAngle = Str2Int(ParamList[m++]);
 
-	// ID，数量，刷新概率，刷新间隔
+	// id, count, spawn chance, respawn interval
 	memset(pInfo->lMonster, cchMonRefRecordKeyValue, sizeof(pInfo->lMonster));
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');

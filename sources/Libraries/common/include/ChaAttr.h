@@ -25,13 +25,13 @@ public:
 	LONG32	GetAttr(long lNo);
 	long	SetAttr(long lNo, LONG32 lVal);
 	LONG32	GetAttrMaxVal(long lNo);
-	long	DirectSetAttr(long lNo, LONG32 lVal); // 直接设置最大值，只用于客户端（因为客户端的数据来源于服务端，是合法数据）
+	long	DirectSetAttr(long lNo, LONG32 lVal); // sets the maximum directly; client side only, because the client receives its values from the server and they are valid by construction
 	long	AddAttr(long lNo, LONG32 lVal);
 	long	ReEvaluation(long lNo);
 
 	void	SetChangeFlag();
 	void	ResetChangeFlag();
-	void	SetChangeFlag(const char *cszChangeFlag, unsigned short usLen = ATTR_SIGN_BYTE_NUM); // 此接口不设置m_sChangeNumClient
+	void	SetChangeFlag(const char *cszChangeFlag, unsigned short usLen = ATTR_SIGN_BYTE_NUM); // this interface does not touch m_sChangeNumClient
 	char*	GetChangeFlag(unsigned short& usLen);
 	void	SetChangeBitFlag(long lBit);
 	bool	GetChangeBitFlag(long lBit);
@@ -44,8 +44,8 @@ private:
 
 	LONG32	m_lAttribute[ATTR_MAX_NUM];
 
-	char	m_szChangeFlag[ATTR_SIGN_BYTE_NUM]; // 标识改变的属性
-	short	m_sChangeNumClient; // 改变的终端属性个数
+	char	m_szChangeFlag[ATTR_SIGN_BYTE_NUM]; // marks which attribute changed
+	short	m_sChangeNumClient; // number of leaf attributes that changed
 
 };
 
@@ -65,7 +65,7 @@ inline LONG32 CChaAttr::GetAttrMaxVal(long lNo)
 	return g_lMaxChaAttr[lNo];
 T_E}
 
-// 返回值：0，失败。1，成功设置，但请求的值超过最大值。2，成功设置。
+// return value: 0 = failed; 1 = set, but the requested value exceeded the maximum; 2 = set
 inline long CChaAttr::SetAttr(long lNo, LONG32 lVal)
 {T_B
 	if (lNo >= ATTR_MAX_NUM) return 0;
@@ -91,7 +91,7 @@ inline long CChaAttr::SetAttr(long lNo, LONG32 lVal)
 	return lRet;
 T_E}
 
-// 直接设置最大值，只用于客户端（因为客户端的数据来源于服务端，是合法数据）
+// sets the maximum directly; client side only, because the client receives its values from the server and they are valid by construction
 inline long CChaAttr::DirectSetAttr(long lNo, LONG32 lVal)
 {T_B
 	if (lNo >= ATTR_MAX_NUM) return 0;
@@ -136,7 +136,7 @@ inline void CChaAttr::ResetChangeFlag()
 	m_sChangeNumClient = 0;
 T_E}
 
-// 此接口不设置m_sChangeNumClient
+// this interface does not touch m_sChangeNumClient
 inline void CChaAttr::SetChangeFlag(const char *cszChangeFlag, unsigned short usLen)
 {T_B
 	if (!cszChangeFlag)

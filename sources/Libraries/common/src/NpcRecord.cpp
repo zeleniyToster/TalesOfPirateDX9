@@ -16,20 +16,20 @@ BOOL CNpcRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string> 
 	string strList[8];
 	string strLine;
 
-	// npc显示名称
+	// npc display name
 	_tcsncpy(pInfo->szName, pInfo->szDataName, NPC_MAXSIZE_NAME);
 	pInfo->szName[NPC_MAXSIZE_NAME - 1] = _TEXT('\0');
 
-	// npc类型信息
+	// npc type information
 	pInfo->sNpcType = Str2Int(ParamList[m++]);
 	
-	// npc角色信息
+	// npc character information
 	pInfo->sCharID = Str2Int(ParamList[m++]);
 
-	// 客户端显示颜色类型
+	// colour type shown by the client
 	pInfo->byShowType = (BYTE)Str2Int(ParamList[m++]);
 
-	// npc位置信息
+	// npc position
 	Util_ResolveTextLine( ParamList[m++].c_str(), strList, 8, ',' ); 
 	pInfo->dwxPos0 = Str2Int(strList[0]);
 	pInfo->dwyPos0 = Str2Int(strList[1]);
@@ -42,15 +42,15 @@ BOOL CNpcRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string> 
 	pInfo->sParam1 = Str2Int(ParamList[m++]);
 	pInfo->sParam2 = Str2Int(ParamList[m++]);
 
-	// npc文件名称
+	// npc file name
 	_tcsncpy(pInfo->szNpc, ParamList[m++].c_str(), NPC_MAXSIZE_NAME);
 	pInfo->szNpc[NPC_MAXSIZE_NAME - 1] = _TEXT('\0');
 
-	// npc对话处理
+	// npc dialogue handler
 	_tcsncpy(pInfo->szMsgProc, ParamList[m++].c_str(), NPC_MAXSIZE_MSGPROC);
 	pInfo->szMsgProc[NPC_MAXSIZE_MSGPROC - 1] = _TEXT('\0');
 	
-	// npc对话处理
+	// npc dialogue handler
 	_tcsncpy(pInfo->szMisProc, ParamList[m++].c_str(), NPC_MAXSIZE_MSGPROC);
 	pInfo->szMisProc[NPC_MAXSIZE_MSGPROC - 1] = _TEXT('\0');
 

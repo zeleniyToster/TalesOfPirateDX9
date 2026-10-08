@@ -20,7 +20,7 @@ using namespace std;
 #define LW_RGBDWORDTO555(color) (WORD)( ((color&0xf8)<<7) | ((color & 0xf800)>>6) | ((color & 0xf80000)>>19) )
 #define LW_RGBDWORDTO565(color) (WORD)( ((color&0xf8)<<8) | ((color & 0xfC00)>>5) | ((color & 0xf80000)>>19) )
 
-// 地图文件版本转换    
+// map file version conversion
 void CheckMapFileVersion(const char *pszMapName)
 {
     FILE *fp = fopen(pszMapName, "rb");
@@ -85,7 +85,7 @@ void CheckMapFileVersion(const char *pszMapName)
                     
 					TileInfo_8To5(pOld->t, tile.dwTileInfo, tile.btTileInfo);
 					
-					tile.cHeight  = (char)(pOld->sHeight / 10); // 10cm为一级
+					tile.cHeight  = (char)(pOld->sHeight / 10); // one step is 10 cm
                     tile.sColor   = LW_RGBDWORDTO565(pOld->dwColor);
                     tile.sRegion  = pOld->sRegion;
                     tile.btIsland = pOld->btIsland;

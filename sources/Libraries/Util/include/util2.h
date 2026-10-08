@@ -162,7 +162,7 @@ inline void Util_ClearStrEndline(std::string &str)
     {
         p = str.find('\n');
     }
-    if(p!=std::string::npos) // 结束字符串
+    if(p!=std::string::npos) // end of string
     {
        str[p] = '\0';
     }
@@ -267,7 +267,7 @@ protected:
 
 
 
-class CBlockData // 把按位保存的数据变为字节, 提高存取速度
+class CBlockData // turn bit-packed data into bytes, which speeds up access
 {
 public:
 

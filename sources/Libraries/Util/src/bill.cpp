@@ -870,7 +870,7 @@ int PSS_GetCredit(char const* section, char const* name, std::string& strErr)
 	if (gr.connect("61.152.115.184", 8080)) {
         if (gr.request(buf)) {
             while (gr.process()) {}
-            rc = atoi(gr.getData().c_str()); // Data 主体就是返回值
+            rc = atoi(gr.getData().c_str()); // the Data body is the return value
         } else {
             rc = 1;
         }

@@ -35,7 +35,7 @@ void CTestLog::OnBnClickedOk()
     {
     // TODO: Add your control notification handler code here
 
-    // 得到LOG的类型，单行
+    // get the LOG type, single line
     static char type[81] = {0};
     int cnt = 0;
     cnt = m_LogType.GetLine(0, type, sizeof type);
@@ -46,12 +46,12 @@ void CTestLog::OnBnClickedOk()
     else
         {
         type[min(cnt, 8)] = 0;
-        } // 最多8个字符
+        } // at most 8 characters
 
-    // 得到LOG的内容（这里特殊化了）
+    // get the LOG content (specialised here)
     static char ctx[81] = "this is log context";
 
-    // 输出调试信息
+    // emit debug information
     LG(type, ctx);
     //GPL(type, 20, 100, ctx);
 

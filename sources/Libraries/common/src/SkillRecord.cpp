@@ -33,7 +33,7 @@ void CSkillRecord::Refresh( int nJob )
 
 	if(chPhase == enumSKILL_NOT_MANUAL_ADD)
 	{
-		// 技能不允许玩家手动升级
+		// players may not upgrade this skill manually
 		return;
 	}
 
@@ -121,10 +121,10 @@ BOOL CSkillRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string
     string strList[80], strSub[10];
 	string strLine;
 
-	// 战斗类型，生活类型
+	// combat type, life type
 	pInfo->chFightType = Str2Int(ParamList[m++]);
 
-	// 可以学习该技能的职业
+	// jobs that may learn this skill
 	memset(pInfo->chJobSelect, cchSkillRecordKeyValue, sizeof(char) * defSKILL_JOB_SELECT_NUM);
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ';');
@@ -136,7 +136,7 @@ BOOL CSkillRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string
 		pInfo->chJobSelect[i][1] = Str2Int(strSub[1]);
 	}
 
-	// 左手上必须装备相应的道具才可使用技能
+	// the matching item must be equipped on the left hand before the skill can be used
 	for( int i=0; i<3; i++ )
 	{
 		for( int j=0; j<defSKILL_ITEM_NEED_NUM; j++ )
@@ -157,7 +157,7 @@ BOOL CSkillRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string
 		pInfo->sItemNeed[0][i][1] = Str2Int(strSub[1]);
 	}
 
-	// 右手上必须装备相应的道具才可使用技能
+	// the matching item must be equipped on the right hand before the skill can be used
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ';');
 	n = n > defSKILL_ITEM_NEED_NUM ? defSKILL_ITEM_NEED_NUM : n;
@@ -168,7 +168,7 @@ BOOL CSkillRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string
 		pInfo->sItemNeed[1][i][1] = Str2Int(strSub[1]);
 	}
 
-	// 身体上必须装备相应的道具才可使用技能
+	// the matching item must be equipped on the body before the skill can be used
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ';');
 	n = n > defSKILL_ITEM_NEED_NUM ? defSKILL_ITEM_NEED_NUM : n;
@@ -179,7 +179,7 @@ BOOL CSkillRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string
 		pInfo->sItemNeed[2][i][1] = Str2Int(strSub[1]);
 	}
 
-	// 贝壳需求（装备部位，类型，编号；装备部位，类型，编号；。。。）
+	// shell requirements (slot, type, id; slot, type, id; ...)
 	pInfo->sConchNeed[0][0] = cchSkillRecordKeyValue;
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ';');
@@ -200,19 +200,19 @@ BOOL CSkillRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string
 		}
 	}
 
-	// 技能阶段
+	// skill stage
 	pInfo->chPhase = Str2Int(ParamList[m++]);
 
-	// 技能类型
+	// skill type
 	pInfo->chType = Str2Int(ParamList[m++]);
 
-	// 有益有害
+	// beneficial or harmful
 	pInfo->chHelpful = Str2Int(ParamList[m++]);
 
-	// 学习该技能需要的等级
+	// level required to learn this skill
 	pInfo->sLevelDemand = Str2Int(ParamList[m++]);
 
-	//需要的前提技能（技能编号，等级）
+	// required prerequisite skills (skill id, level)
 	for (int i = 0; i < defSKILL_PRE_SKILL_NUM; i++)
 	{
 		pInfo->sPremissSkill[i][0] = cchSkillRecordKeyValue;
@@ -229,119 +229,119 @@ BOOL CSkillRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string
 		pInfo->sPremissSkill[i][1] = Str2Int(strSub[1]);
 	}
 
-	// 消耗的技能点
+	// skill points consumed
 	pInfo->chPointExpend = Str2Int(ParamList[m++]);
 
-	// 施放者形态（人，船）
+	// caster form (character, ship)
 	pInfo->chSrcType = Str2Int(ParamList[m++]);
 
-	// 目标类型（陆地生物，海上生物）
+	// target type (land creature, sea creature)
 	pInfo->chTarType = Str2Int(ParamList[m++]);
 
-	// 使用距离
+	// use distance
 	pInfo->sApplyDistance = Str2Int(ParamList[m++]);
 
-	// 使用的目标
+	// the target used
 	pInfo->chApplyTarget = Str2Int(ParamList[m++]);
 
-	// 作用类型
+	// effect type
 	pInfo->chApplyType = Str2Int(ParamList[m++]);
 
-	// 角度
+	// angle
 	pInfo->sAngle = Str2Int(ParamList[m++]);
 
-	// 半径
+	// radius
 	pInfo->sRadii = Str2Int(ParamList[m++]);
 
-	// 技能区域形状编号
+	// skill area shape id
 	pInfo->chRange = Str2Int(ParamList[m++]);
 
-	// 准备技能
+	// prepare the skill
 	strncpy(pInfo->szPrepare, ParamList[m++].c_str(), defSKILL_RANGE_SET_SCRIPT);
 	pInfo->szPrepare[defSKILL_RANGE_SET_SCRIPT - 1] = _TEXT('\0');
 
-	//// 地表状态设定
+	//  terrain state settings
 	strncpy(pInfo->szRangeState, ParamList[m++].c_str(), defSKILL_EFFECT_SCRIPT_LEN);
 	pInfo->szRangeState[defSKILL_EFFECT_SCRIPT_LEN - 1] = _TEXT('\0');
 
-	// 消耗SP公式
+	// SP cost formula
 	strncpy(pInfo->szUseSP, ParamList[m++].c_str(), defSKILL_EFFECT_SCRIPT_LEN);
 	pInfo->szUseSP[defSKILL_EFFECT_SCRIPT_LEN - 1] = _TEXT('\0');
 
-	// 消耗“耐久度“公式
+	// durability cost formula
 	strncpy(pInfo->szUseEndure, ParamList[m++].c_str(), defSKILL_EFFECT_SCRIPT_LEN);
 	pInfo->szUseEndure[defSKILL_EFFECT_SCRIPT_LEN - 1] = _TEXT('\0');
 
-	// 消耗“能量“公式
+	// energy cost formula
 	strncpy(pInfo->szUseEnergy, ParamList[m++].c_str(), defSKILL_EFFECT_SCRIPT_LEN);
 	pInfo->szUseEnergy[defSKILL_EFFECT_SCRIPT_LEN - 1] = _TEXT('\0');
 
-	// 技能区域设定
+	// skill area settings
 	strncpy(pInfo->szSetRange, ParamList[m++].c_str(), defSKILL_EFFECT_SCRIPT_LEN);
 	pInfo->szSetRange[defSKILL_EFFECT_SCRIPT_LEN - 1] = _TEXT('\0');
 
-	// 施放阶段公式
+	// cast stage formula
 	strncpy(pInfo->szUse, ParamList[m++].c_str(), defSKILL_RANGE_SET_SCRIPT);
 	pInfo->szUse[defSKILL_RANGE_SET_SCRIPT - 1] = _TEXT('\0');
 
-	// 效果阶段公式
+	// effect stage formula
 	strncpy(pInfo->szEffect, ParamList[m++].c_str(), defSKILL_RANGE_SET_SCRIPT);
 	pInfo->szEffect[defSKILL_RANGE_SET_SCRIPT - 1] = _TEXT('\0');
 
-	// 正效果公式
+	// positive effect formula
 	strncpy(pInfo->szActive, ParamList[m++].c_str(), defSKILL_RANGE_SET_SCRIPT);
 	pInfo->szActive[defSKILL_RANGE_SET_SCRIPT - 1] = _TEXT('\0');
 
-	// 反效果公式
+	// negative effect formula
 	strncpy(pInfo->szInactive, ParamList[m++].c_str(), defSKILL_RANGE_SET_SCRIPT);
 	pInfo->szInactive[defSKILL_RANGE_SET_SCRIPT - 1] = _TEXT('\0');
 
-	// 绑定的可手动移除状态编号
+	// ids of the bound states that can be removed manually
 	pInfo->nStateID = Str2Int(ParamList[m++]);
 
-	// 自身属性数值的变化
+	// change to the caster's own attribute values
 	strLine = ParamList[m++];
 
-	// 自身效果
+	// effect on self
 	strLine = ParamList[m++];
 
-	// 消耗的物品
+	// items consumed
 	strLine = ParamList[m++];
 
-	// 持续时间
+	// duration
 	strLine = ParamList[m++];
 
-	// 目标属性数值的变化
+	// change to the target's attribute values
 	strLine = ParamList[m++];
 
-	// 溅射参数
+	// splash parameters
 	pInfo->sSplashPara = Str2Int(ParamList[m++]);
 
-	// 目标持续效果
+	// lasting effect on the target
 	pInfo->sTargetEffect = Str2Int(ParamList[m++]);
 
-	// 溅射持续效果
+	// lasting effect from the splash
 	pInfo->sSplashEffect = Str2Int(ParamList[m++]);
 
-	// 变身编号
+	// transformation id
 	pInfo->sVariation = Str2Int(ParamList[m++]);
 
-	// 召唤编号
+	// summon id
 	pInfo->sSummon = Str2Int(ParamList[m++]);
 
-	// 释放时间
+	// cast time
 	strLine = ParamList[m++];
 
-	// 再施放速度公式
+	// recast speed formula
 	strncpy(pInfo->szFireSpeed, ParamList[m++].c_str(), defSKILL_EFFECT_SCRIPT_LEN);
 	pInfo->szFireSpeed[defSKILL_EFFECT_SCRIPT_LEN - 1] = _TEXT('\0');
 
-	// 客户端下使用
+	// used on the client
 	pInfo->sActionHarm = Str2Int(ParamList[m++]);
 
 	pInfo->chActionPlayType = Str2Int(ParamList[m++]);
 
-    // 释放该技能主角的动作
+    // the caster's action for this skill
     strLine = ParamList[m++];
     memset( pInfo->sActionPose, 0, sizeof(pInfo->sActionPose) );
     n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
@@ -353,10 +353,10 @@ BOOL CSkillRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string
 
 	pInfo->sActionKeyFrme = Str2Int(ParamList[m++]);
 
-	// 攻击音效
+	// attack sound
 	pInfo->sWhop = Str2Int(ParamList[m++]);
 
-	// 释放者人物link点
+	// link point on the caster character
 	memset(pInfo->sActionDummyLink, 0, sizeof(pInfo->sActionDummyLink));
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
@@ -366,7 +366,7 @@ BOOL CSkillRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string
 		pInfo->sActionDummyLink[i] = Str2Int(strList[i]);
 	}
 
-	// 释放该技能主角的特效
+	// the caster's effect for this skill
 	memset(pInfo->sActionEffect, 0, sizeof(pInfo->sActionEffect));
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
@@ -376,7 +376,7 @@ BOOL CSkillRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string
 		pInfo->sActionEffect[i] = Str2Int(strList[i]);
 	}
 
-	// 释放该技能的方式:0-无变化,1-能自动缩放
+	// how the skill is released: 0 no scaling, 1 scales automatically
 	memset(pInfo->sActionEffectType, 0, sizeof(pInfo->sActionEffectType));
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
@@ -416,7 +416,7 @@ BOOL CSkillRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string
 
 	pInfo->sSkySpd = Str2Int(ParamList[m++]);
 
-	// 受击音效
+	// hit sound
 	pInfo->sWhoped = Str2Int(ParamList[m++]);
 
 	pInfo->sTargetDummyLink = Str2Int(ParamList[m++]);
@@ -433,10 +433,10 @@ BOOL CSkillRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string
 	_tcsncpy(pInfo->szICON, ParamList[m++].c_str(), defSKILL_ICON_NAME_LEN);
 	pInfo->szICON[defSKILL_ICON_NAME_LEN - 1] = _TEXT('\0');
 
-	// 播放次数
+	// number of times it plays
 	pInfo->chPlayTime = Str2Int(ParamList[m++]);
 
-	// 特殊操作
+	// special action
 	memset(pInfo->chOperate, 0, sizeof(char) * defSKILL_OPERATE_NUM);
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
@@ -446,15 +446,15 @@ BOOL CSkillRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string
 		pInfo->chOperate[i] = Str2Int(strList[i]);
 	}
 
-	// 描述
+	// description
 	_tcsncpy(pInfo->szDescribeHint, ParamList[m++].c_str(), sizeof(pInfo->szDescribeHint) );
 	pInfo->szDescribeHint[sizeof(pInfo->szDescribeHint)-1] = '\0';
 
-	// 效果
+	// effect
 	_tcsncpy(pInfo->szEffectHint, ParamList[m++].c_str(), sizeof(pInfo->szEffectHint) );
 	pInfo->szEffectHint[sizeof(pInfo->szEffectHint)-1] = '\0';
 
-	// 消耗
+	// cost
 	_tcsncpy(pInfo->szExpendHint, ParamList[m++].c_str(), sizeof(pInfo->szExpendHint) );
 	pInfo->szExpendHint[sizeof(pInfo->szExpendHint)-1] = '\0';
 	return TRUE;
@@ -464,6 +464,6 @@ void CSkillRecordSet::_ProcessRawDataInfo(CRawDataInfo *pInfo)
 {
 	CSkillRecord *pSkill = (CSkillRecord*)pInfo;
 
-    // 更新动态属性
+    // refresh the dynamic attributes
 	pSkill->RefreshPrivateData();	
 }

@@ -16,17 +16,17 @@ using	namespace	GAME;
 
 const char cchMonRefRecordKeyValue = (char)0xff;
 
-#define defMAX_REGION_MONSTER_TYPE	15	// 每个区域的最多怪物类型
+#define defMAX_REGION_MONSTER_TYPE	15	// maximum number of monster types per region
 
 class CMonRefRecord : public CRawDataInfo
 {
 public:
 	//CMonRefRecord();
 
-	long	lID;		// 区域编号
-	Point	SRegion[2];	// 区域的左上角和右下角
-	short	sAngle;		// 出生方向
-	long	lMonster[defMAX_REGION_MONSTER_TYPE][4]; // ID，数量，刷新概率，刷新间隔
+	long	lID;		// region id
+	Point	SRegion[2];	// top-left and bottom-right corner of the region
+	short	sAngle;		// spawn direction
+	long	lMonster[defMAX_REGION_MONSTER_TYPE][4]; // id, count, spawn chance, respawn interval
 };
 
 class CMonRefRecordSet : public CRawDataSet
@@ -44,7 +44,7 @@ public:
 
 protected:
 
-	static CMonRefRecordSet* _Instance; // 相当于单键, 把自己记住
+	static CMonRefRecordSet* _Instance; // acts like a singleton: keeps a reference to itself
 
 	virtual CRawDataInfo* _CreateRawDataArray(int nCnt)
 	{

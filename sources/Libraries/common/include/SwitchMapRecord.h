@@ -22,13 +22,13 @@ class CSwitchMapRecord : public CRawDataInfo
 public:
 	//CSwitchMapRecord();
 
-	long	lID;							// 编号
-	long	lEntityID;						// 被绑定的实体ID
-	long	lEventID;						// 事件编号
-	Point	SEntityPos;						// 实体的位置（厘米）
-	short	sAngle;							// 实体的方向
-	_TCHAR	szTarMapName[defMAP_NAME_LEN];	// 目标地图名
-	Point	STarPos;						// 目标地图的位置（厘米）
+	long	lID;							// id
+	long	lEntityID;						// id of the bound entity
+	long	lEventID;						// event id
+	Point	SEntityPos;						// entity position, in centimetres
+	short	sAngle;							// entity direction
+	_TCHAR	szTarMapName[defMAP_NAME_LEN];	// target map name
+	Point	STarPos;						// position on the target map, in centimetres
 };
 
 class CSwitchMapRecordSet : public CRawDataSet
@@ -46,7 +46,7 @@ public:
 
 protected:
 
-	static CSwitchMapRecordSet* _Instance; // 相当于单键, 把自己记住
+	static CSwitchMapRecordSet* _Instance; // acts like a singleton: keeps a reference to itself
 
 	virtual CRawDataInfo* _CreateRawDataArray(int nCnt)
 	{

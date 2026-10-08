@@ -9,7 +9,7 @@ public:
     CPAI();
     ~CPAI() {}
 
-    int Login(char const* name, char const* pwd);       //  修改返回值，10000成功，10001失败，10004连接失败
+    int Login(char const* name, char const* pwd);       // the return value is modified: 10000 success, 10001 failure, 10004 connection failure
     std::string GetPassport();
 
     std::string LastError();    //  add by jampe

@@ -15,18 +15,18 @@
 #define ATTRIB_FILE_DEFAULT_WIDTH 4096
 #define ATTRIB_FILE_DEFAULT_HEIGHT 4096
 
-// 区域属性值域定义
+// region attribute value ranges
 #define TILE_ATTRIB_MIN_BITS 1
 #define TILE_ATTRIB_MAX_BITS 16
 #define TILE_ATTRIB_DEFAULT_VALUE 0
 
-// 海岛值域定义
+// island value ranges
 #define TILE_ISLAND_MIN_VALUE 0
 #define TILE_ISLAND_MAX_VALUE 200
 #define TILE_ISLAND_DEFAULT_VALUE TILE_ISLAND_MIN_VALUE
 
 
-// 开放给客户端使用，其中filename不带扩展名
+// exposed to the client; filename carries no extension
 bool createAttribFile(char const* filename, int width = ATTRIB_FILE_DEFAULT_WIDTH,
 					  int height = ATTRIB_FILE_DEFAULT_HEIGHT,
 					  int option = 0);
@@ -40,18 +40,18 @@ bool delTileAttrib(int x, int y, unsigned char attrib);
 bool getTileIsland(int x, int y, unsigned char& index);
 
 
-// 服务端只使用以下接口，客户端切勿使用！
-int s_openAttribFile(char const* filename); // 返回 -1 则错误
+// the server uses only the interfaces below; clients must not use them!
+int s_openAttribFile(char const* filename); // a return of -1 means error
 bool s_getAttribFileInfo(int id, unsigned int& width, unsigned int& height);
 bool s_getTileAttrib(int id, unsigned int x, unsigned int y, unsigned short& attrib);
 bool s_hasTileAttrib(int id, unsigned int x, unsigned int y, unsigned char attrib_mask);
 bool s_getTileIsland(int id, unsigned int x, unsigned int y, unsigned char& island_index);
 
-// 设置对齐方式为1字节，因为要写入文件中
+// force 1-byte alignment, because this is written out to a file
 #pragma pack(push)
 #pragma pack(1)
 
-// 区域属性文件文件头定义
+// region attribute file header layout
 struct SAttribFileHeader
 	{
 	unsigned int width;
@@ -59,11 +59,11 @@ struct SAttribFileHeader
 	};
 typedef SAttribFileHeader terrain_attr_hdr;
 
-// 区域属性文件单位数据定义
+// region attribute file per-tile record
 typedef struct _Tile_Attrib
 	{
-	unsigned short attrib; // tile属性
-	unsigned char island; // 海岛编号
+	unsigned short attrib; // tile attributes
+	unsigned char island; // island id
 
 	} STILE_ATTRIB;
 typedef _Tile_Attrib terrain_attr_dat;

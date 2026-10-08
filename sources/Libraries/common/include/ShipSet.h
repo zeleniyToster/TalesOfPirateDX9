@@ -5,7 +5,7 @@
 #include "util.h"
 #include "TableData.h"
 
-// 船体更换命令按钮值
+// button value for the hull change command
 enum ID_BTN_BOAT
 {
     ID_BTN_HEADLEFT =      0,
@@ -17,17 +17,17 @@ enum ID_BTN_BOAT
 
     ID_BTN_ITEM_NUM,
 };
-#define BOAT_MAXSIZE_MINNAME	2   // 船只名称最少字符长度
-#define BOAT_MAXSIZE_BOATNAME	17	// 船只的名称最大长度
-#define BOAT_MAXSIZE_NAME		64	// 船只部件名称最大长度
-#define BOAT_MAXSIZE_DESP		128 // 船只部件信息最大描述字节数
-#define BOAT_MAXSIZE_PART		3   // 船只最大部件数量
-#define BOAT_MAXNUM_PARTITEM	16  // 船只每个可换部件最大的选择数量
-#define BOAT_MAXNUM_MOTOR		4	// 每个引擎最大可以有最大马达数量
-#define BOAT_MAXNUM_MODEL		8	// 每个船只最大模型数量
-#define MAX_CHAR_BOAT			3	// 每个角色最大可以拥有的船只数量
+#define BOAT_MAXSIZE_MINNAME	2   // minimum length of a ship name
+#define BOAT_MAXSIZE_BOATNAME	17	// maximum length of a ship name
+#define BOAT_MAXSIZE_NAME		64	// maximum length of a ship part name
+#define BOAT_MAXSIZE_DESP		128 // maximum description size in bytes for a ship part
+#define BOAT_MAXSIZE_PART		3   // maximum number of parts on a ship
+#define BOAT_MAXNUM_PARTITEM	16  // largest number of options per replaceable ship part
+#define BOAT_MAXNUM_MOTOR		4	// largest number of engines per engine type
+#define BOAT_MAXNUM_MODEL		8	// maximum number of models per ship
+#define MAX_CHAR_BOAT			3	// maximum number of ships a character may own
 
-// 船只选择列表数据
+// ship selection list data
 struct BOAT_BERTH_DATA
 {
 	BYTE byID[MAX_CHAR_BOAT];
@@ -37,149 +37,149 @@ struct BOAT_BERTH_DATA
 
 enum BOAT_STATE
 {
-	BS_GOOD		= 0,				// 状态良好
-	BS_NOSP		= 1,				// 需要补充SP
-	BS_NOHP		= 2,				// 需要修理
-	BS_DEAD		= 3,				// 船只沉没
+	BS_GOOD		= 0,				// in good condition
+	BS_NOSP		= 1,				// needs SP replenished
+	BS_NOHP		= 2,				// needs repairs
+	BS_DEAD		= 3,				// ship has sunk
 };
 
-// 角色建造、设置拥有的船只
+// the character builds and configures an owned ship
 struct BOAT_DATA
 {
-	char szName[BOAT_MAXSIZE_BOATNAME];		// 船只名称
-	USHORT sBoat;				// 船只信息ID
-	USHORT sHeader;				// 船头
-	USHORT sBody;				// 船身
-	USHORT sEngine;				// 船只马达
-	USHORT sCannon;				// 船只火炮
-	USHORT sEquipment;			// 船只装备
-	USHORT sBerth;				// 船只停泊港口
-	USHORT sCapacity;			// 货舱容量
-	DWORD  dwOwnerID;			// 船只拥有者ID
+	char szName[BOAT_MAXSIZE_BOATNAME];		// ship name
+	USHORT sBoat;				// ship info id
+	USHORT sHeader;				// bow
+	USHORT sBody;				// hull
+	USHORT sEngine;				// engine
+	USHORT sCannon;				// cannons
+	USHORT sEquipment;			// ship equipment
+	USHORT sBerth;				// port the ship is moored at
+	USHORT sCapacity;			// cargo hold capacity
+	DWORD  dwOwnerID;			// id of the ship's owner
 };
 
-// 角色装载船只属性
+// attributes of the ship as loaded by the character
 struct BOAT_LOAD_INFO
 {
-	DWORD  dwID;				// 船只数据库ID
-	char   szName[BOAT_MAXSIZE_BOATNAME];			// 船只名称
-	USHORT sHeader;				// 船头
-	USHORT sBody;				// 船身
-	USHORT sEngine;				// 船只马达
-	USHORT sCannon;				// 船只火炮
-	USHORT sEquipment;			// 船只装备
-	USHORT sBerth;				// 船只停泊港口
+	DWORD  dwID;				// ship database id
+	char   szName[BOAT_MAXSIZE_BOATNAME];			// ship name
+	USHORT sHeader;				// bow
+	USHORT sBody;				// hull
+	USHORT sEngine;				// engine
+	USHORT sCannon;				// cannons
+	USHORT sEquipment;			// ship equipment
+	USHORT sBerth;				// port the ship is moored at
 };
 
 struct xShipBuildInfo
 {
-	char szName[BOAT_MAXSIZE_NAME];			// 船名
-	char szDesp[BOAT_MAXSIZE_DESP];			// 描述（道具等级）
-	char szBerth[BOAT_MAXSIZE_NAME];		// 船只停泊港口名称
-	char szHeader[BOAT_MAXSIZE_NAME];		// 船头名称
-	char szBody[BOAT_MAXSIZE_NAME];			// 船身名称
-	char szEngine[BOAT_MAXSIZE_NAME];		// 船马达名称
-	char szCannon[BOAT_MAXSIZE_NAME];		// 船装载火炮名称
-	char szEquipment[BOAT_MAXSIZE_NAME];	// 船配件名称
+	char szName[BOAT_MAXSIZE_NAME];			// ship name
+	char szDesp[BOAT_MAXSIZE_DESP];			// description (item level)
+	char szBerth[BOAT_MAXSIZE_NAME];		// name of the port the ship is moored at
+	char szHeader[BOAT_MAXSIZE_NAME];		// bow name
+	char szBody[BOAT_MAXSIZE_NAME];			// hull name
+	char szEngine[BOAT_MAXSIZE_NAME];		// engine name
+	char szCannon[BOAT_MAXSIZE_NAME];		// name of the mounted cannons
+	char szEquipment[BOAT_MAXSIZE_NAME];	// name of the accessory
 
-	// 船只组成模型ID	
-	USHORT sPosID;				// 模型动作信息ID
+	// model id of the ship assembly
+	USHORT sPosID;				// model animation info id
 	union
 	{
 		struct
 		{
-			DWORD dwBody;		// 船身		
-			DWORD dwHeader;		// 船头	
-			DWORD dwEngine;		// 船只动力
-			DWORD dwFlag;		// 船标志
+			DWORD dwBody;		// hull
+			DWORD dwHeader;		// bow
+			DWORD dwEngine;		// ship engine
+			DWORD dwFlag;		// ship flag
 			DWORD dwMotor[BOAT_MAXNUM_MOTOR];
 		};
 
 		DWORD dwBuf[BOAT_MAXNUM_MODEL];
 	};
 
-	BYTE  byHeader;	   // 船头的选择索引记录
-	BYTE  byEngine;	   // 船动力的选择索引记录
-	BYTE  byCannon;	   // 船火炮的选择索引记录
-	BYTE  byEquipment; // 船配件的选择索引记录
-	BYTE  byIsUpdate;  // 是否可以更新船只部件
-	DWORD dwMoney;	   // 价值
-    DWORD dwMinAttack; // 最小攻击
-    DWORD dwMaxAttack; // 最大攻击
-    DWORD dwCurEndure; // 当前耐久
-    DWORD dwMaxEndure; // 最大耐久
-    DWORD dwSpeed;	   // 移动速度
-    DWORD dwDistance;  // 最大攻击距离
-    DWORD dwDefence;   // 防御
-	DWORD dwCurSupply; // 当前补给
-	DWORD dwMaxSupply; // 最大补给
-	DWORD dwConsume;   // 船只补给消耗
-    DWORD dwAttackTime;// 攻击间隔时间
-	USHORT	sCapacity; // 货舱容量
+	BYTE  byHeader;	   // selection index record for the bow
+	BYTE  byEngine;	   // selection index record for the engine
+	BYTE  byCannon;	   // selection index record for the cannons
+	BYTE  byEquipment; // selection index record for the accessory
+	BYTE  byIsUpdate;  // whether ship parts may be replaced
+	DWORD dwMoney;	   // value
+    DWORD dwMinAttack; // minimum attack
+    DWORD dwMaxAttack; // maximum attack
+    DWORD dwCurEndure; // current durability
+    DWORD dwMaxEndure; // maximum durability
+    DWORD dwSpeed;	   // movement speed
+    DWORD dwDistance;  // maximum attack range
+    DWORD dwDefence;   // defence
+	DWORD dwCurSupply; // current supplies
+	DWORD dwMaxSupply; // maximum supplies
+	DWORD dwConsume;   // ship supply consumption
+    DWORD dwAttackTime;// attack interval
+	USHORT	sCapacity; // cargo hold capacity
 };
 
 struct xShipAttrInfo
 {
-	// 船只建造基本属性
-	DWORD dwMoney;	   // 价值
-    DWORD dwMinAttack; // 最小攻击
-    DWORD dwMaxAttack; // 最大攻击
-    DWORD dwCurEndure; // 当前耐久
-    DWORD dwMaxEndure; // 最大耐久
-    DWORD dwSpeed;	   // 移动速度
-    DWORD dwDistance;  // 最大攻击距离
-    DWORD dwDefence;   // 防御
-	DWORD dwCurSupply; // 当前补给
-	DWORD dwMaxSupply; // 最大补给
-    DWORD dwAttackTime;// 攻击间隔时间
-	USHORT	sCapacity; // 货舱容量
+	// base attributes of a ship as built
+	DWORD dwMoney;	   // value
+    DWORD dwMinAttack; // minimum attack
+    DWORD dwMaxAttack; // maximum attack
+    DWORD dwCurEndure; // current durability
+    DWORD dwMaxEndure; // maximum durability
+    DWORD dwSpeed;	   // movement speed
+    DWORD dwDistance;  // maximum attack range
+    DWORD dwDefence;   // defence
+	DWORD dwCurSupply; // current supplies
+	DWORD dwMaxSupply; // maximum supplies
+    DWORD dwAttackTime;// attack interval
+	USHORT	sCapacity; // cargo hold capacity
 
-	// 其他属性	
-	DWORD dwResume;			// 船耐久恢复
-	DWORD dwResist;	        // 船只抗力
-	DWORD dwScope;			// 爆炸范围
-	DWORD dwConsume;		// 船只补给消耗
-	DWORD dwCannonSpeed;	// 炮弹飞行速度
+	// other attributes
+	DWORD dwResume;			// ship durability regeneration
+	DWORD dwResist;	        // ship resistance
+	DWORD dwScope;			// blast radius
+	DWORD dwConsume;		// ship supply consumption
+	DWORD dwCannonSpeed;	// shell speed
 
-	// 船只属性系数
+	// ship attribute coefficients
 };
 
 struct xShipInfo: public CRawDataInfo
 {
-	char szName[BOAT_MAXSIZE_NAME];	// 船只名称
-	char szDesp[BOAT_MAXSIZE_DESP];	// 描述（道具等级）
-	USHORT sItemID;					// 船长证明道具ID
-	USHORT sCharID;					// 船只角色属性ID
-	USHORT sPosID;					// 模型动作信息ID
-	BYTE byIsUpdate;				// 是否可以更换船各部件	
+	char szName[BOAT_MAXSIZE_NAME];	// ship name
+	char szDesp[BOAT_MAXSIZE_DESP];	// description (item level)
+	USHORT sItemID;					// captain's certificate item id
+	USHORT sCharID;					// ship character attribute id
+	USHORT sPosID;					// model animation info id
+	BYTE byIsUpdate;				// whether the ship's parts may be swapped
 	USHORT sNumHeader;
 	USHORT sNumEngine;
 	USHORT sNumCannon;
 	USHORT sNumEquipment;
-	USHORT sHeader[BOAT_MAXNUM_PARTITEM];		// 船头	
-	USHORT sEngine[BOAT_MAXNUM_PARTITEM];		// 动力
-	USHORT sCannon[BOAT_MAXNUM_PARTITEM];		// 火炮
-	USHORT sEquipment[BOAT_MAXNUM_PARTITEM];	// 配件
-	USHORT sBody;			// 船身	
-	USHORT sLvLimit;		// 等级限制
+	USHORT sHeader[BOAT_MAXNUM_PARTITEM];		// bow
+	USHORT sEngine[BOAT_MAXNUM_PARTITEM];		// engine
+	USHORT sCannon[BOAT_MAXNUM_PARTITEM];		// cannons
+	USHORT sEquipment[BOAT_MAXNUM_PARTITEM];	// accessory
+	USHORT sBody;			// hull
+	USHORT sLvLimit;		// level limit
 	USHORT sNumPfLimit;
-	USHORT sPfLimit[BOAT_MAXNUM_PARTITEM];		// 职业限制
+	USHORT sPfLimit[BOAT_MAXNUM_PARTITEM];		// job limit
 
-	USHORT sEndure;			// 船只耐久
-	USHORT sResume;			// 船耐久恢复
-	USHORT sDefence;		// 船只防御力
-	USHORT sResist;			// 船只抗力
-    USHORT sMinAttack;		// 最小攻击
-    USHORT sMaxAttack;		// 最大攻击
-	USHORT sDistance;		// 攻击距离
-	USHORT sTime;			// 添弹时间
-	USHORT sScope;			// 爆炸范围
-	USHORT sCapacity;		// 货舱容量
-	USHORT sSupply;			// 船只补给
-	USHORT sConsume;		// 船只补给消耗
-	USHORT sCannonSpeed;	// 炮弹飞行速度
-	USHORT sSpeed;			// 船移动速度
-	USHORT sParam;			// 备注
+	USHORT sEndure;			// ship durability
+	USHORT sResume;			// ship durability regeneration
+	USHORT sDefence;		// ship defence
+	USHORT sResist;			// ship resistance
+    USHORT sMinAttack;		// minimum attack
+    USHORT sMaxAttack;		// maximum attack
+	USHORT sDistance;		// attack range
+	USHORT sTime;			// reload time
+	USHORT sScope;			// blast radius
+	USHORT sCapacity;		// cargo hold capacity
+	USHORT sSupply;			// ship supplies
+	USHORT sConsume;		// ship supply consumption
+	USHORT sCannonSpeed;	// shell speed
+	USHORT sSpeed;			// ship movement speed
+	USHORT sParam;			// remarks
 
 	xShipInfo()
 	{
@@ -198,7 +198,7 @@ struct xShipInfo: public CRawDataInfo
 		memset( sCannon, 0, sizeof(USHORT)*BOAT_MAXNUM_PARTITEM );
 		memset( sEquipment, 0, sizeof(USHORT)*BOAT_MAXNUM_PARTITEM );
 		sBody = 0;
-		sLvLimit = 0;		// 等级限制
+		sLvLimit = 0;		// level limit
 		sNumPfLimit = 0;
 		memset( sPfLimit, 0, sizeof(USHORT)*BOAT_MAXNUM_PARTITEM );	
 
@@ -223,27 +223,27 @@ struct xShipInfo: public CRawDataInfo
 
 struct xShipPartInfo: public CRawDataInfo
 {
-	char szName[BOAT_MAXSIZE_NAME];	// 船只部件名称
-	char szDesp[BOAT_MAXSIZE_DESP];	// 描述（道具等级）
-    DWORD dwModel;			// 部件模型ID
-	USHORT sMotor[BOAT_MAXNUM_MOTOR];	// 船只引擎马达
-	DWORD  dwPrice;			// 价格
+	char szName[BOAT_MAXSIZE_NAME];	// ship part name
+	char szDesp[BOAT_MAXSIZE_DESP];	// description (item level)
+    DWORD dwModel;			// part model id
+	USHORT sMotor[BOAT_MAXNUM_MOTOR];	// ship engine
+	DWORD  dwPrice;			// price
 
-	USHORT sEndure;			// 船只耐久
-	USHORT sResume;			// 船耐久恢复
-	USHORT sDefence;		// 船只防御力
-	USHORT sResist;			// 船只抗力
-    USHORT sMinAttack;		// 最小攻击
-    USHORT sMaxAttack;		// 最大攻击
-	USHORT sDistance;		// 攻击距离
-	USHORT sTime;			// 添弹时间
-	USHORT sScope;			// 爆炸范围
-	USHORT sCapacity;		// 货舱容量
-	USHORT sSupply;			// 船只补给
-	USHORT sConsume;		// 船只补给消耗
-	USHORT sCannonSpeed;	// 炮弹飞行速度
-	USHORT sSpeed;			// 船移动速度
-	USHORT sParam;			// 备注
+	USHORT sEndure;			// ship durability
+	USHORT sResume;			// ship durability regeneration
+	USHORT sDefence;		// ship defence
+	USHORT sResist;			// ship resistance
+    USHORT sMinAttack;		// minimum attack
+    USHORT sMaxAttack;		// maximum attack
+	USHORT sDistance;		// attack range
+	USHORT sTime;			// reload time
+	USHORT sScope;			// blast radius
+	USHORT sCapacity;		// cargo hold capacity
+	USHORT sSupply;			// ship supplies
+	USHORT sConsume;		// ship supply consumption
+	USHORT sCannonSpeed;	// shell speed
+	USHORT sSpeed;			// ship movement speed
+	USHORT sParam;			// remarks
 	
 	xShipPartInfo()
 	{
@@ -270,7 +270,7 @@ struct xShipPartInfo: public CRawDataInfo
 	}
 };
 
-// 船只建造属性表
+// ship construction attribute table
 class xShipSet : public CRawDataSet
 {
 public:
@@ -290,7 +290,7 @@ protected:
 		return (CRawDataInfo*)new xShipInfo[nCnt];
 	}
 	
-	static xShipSet* _Instance; // 相当于单键, 把自己记住
+	static xShipSet* _Instance; // acts like a singleton: keeps a reference to itself
 
 	virtual void _DeleteRawDataArray()
 	{
@@ -315,7 +315,7 @@ protected:
 	virtual BOOL _ReadRawDataInfo(CRawDataInfo *pRawDataInfo, std::vector<std::string> &ParamList);
 };
 
-// 船只部件基本属性表
+// ship part base attribute table
 class xShipPartSet : public CRawDataSet
 {
 public:

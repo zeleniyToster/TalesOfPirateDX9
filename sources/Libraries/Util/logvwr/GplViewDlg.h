@@ -38,13 +38,13 @@ public:
 	afx_msg BOOL OnCommand(WPARAM wParam, LPARAM lParam);
 	afx_msg void OnRButtonDown(UINT nFlags, CPoint point);
 private:
-	// 主菜单
+	// main menu
 	CLogvwrDlg* m_pParent;
 
 	CRect m_RC;
 	CBrush m_Brush;
 	
-	// 数据源
+	// data source
 	PGPLDATALIST m_pGPLData;
 	PLGDATALIST m_pLGData;
 

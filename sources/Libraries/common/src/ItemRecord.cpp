@@ -223,52 +223,52 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
     string strList[80];
 	string strLine;
 
-	// 编号
+	// id
 	pInfo->lID = pInfo->nID;
-	// 名称
+	// name
 	_tcsncpy(pInfo->szName, pInfo->szDataName, defITEM_NAME_LEN);
 	pInfo->szName[defITEM_NAME_LEN - 1] = _TEXT('\0');
 	// ICON
 	_tcsncpy(pInfo->szICON, ParamList[m++].c_str(), defITEM_ICON_NAME_LEN);
 	pInfo->szICON[defITEM_ICON_NAME_LEN - 1] = _TEXT('\0');
-	// 模型
+	// model
 	for (int i = 0; i < defITEM_MODULE_NUM; i++)
 	{
 		_tcsncpy(pInfo->chModule[i], ParamList[m++].c_str(), defITEM_MODULE_LEN);
 		pInfo->chModule[i][defITEM_MODULE_LEN - 1] = _TEXT(0);
 	}
-	// 船标志
+	// ship flag
 	pInfo->sShipFlag = Str2Int(ParamList[m++]);
-	// 船体型号
+	// hull model
 	pInfo->sShipType = Str2Int(ParamList[m++]);
-	// 类型
+	// type
 	pInfo->sType = Str2Int(ParamList[m++]);
 
-	// 获得前缀几率
+	// chance of a prefix when acquired
 	strLine = Str2Int(ParamList[m++]);
-	// 套装编号
+	// set id
 	strLine = Str2Int(ParamList[m++]);
-	// 精炼等级
+	// refine level
 	pInfo->chForgeLv = Str2Int(ParamList[m++]);
-	// 安定值
+	// stability value
 	pInfo->chForgeSteady = Str2Int(ParamList[m++]);
-	// 唯一ID
+	// unique id
 	pInfo->chExclusiveID = Str2Int(ParamList[m++]);
-	// 交易
+	// trade
 	pInfo->chIsTrade = Str2Int(ParamList[m++]);
-	// 拾取
+	// pick up
 	pInfo->chIsPick = Str2Int(ParamList[m++]);
-	// 丢弃
+	// drop
 	pInfo->chIsThrow = Str2Int(ParamList[m++]);
-	// 销毁
+	// destroy
 	pInfo->chIsDel = Str2Int(ParamList[m++]);
-	// 在道具栏一格中可以放置的最多个数
+	// largest number that fit in one inventory slot
 	pInfo->nPileMax = Str2Int(ParamList[m++]);
-	// 是否实例化
+	// whether it is instantiated
 	pInfo->chInstance = Str2Int(ParamList[m++]);
-	// 价格
+	// price
 	pInfo->lPrice = Str2Int(ParamList[m++]);
-	// 体形
+	// body size
 	memset(pInfo->chBody, cchItemRecordKeyValue, sizeof(pInfo->chBody));
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
@@ -277,9 +277,9 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
 	{
 		pInfo->chBody[i] = Str2Int(strList[i]);
 	}
-	// 角色等级
+	// character level
 	pInfo->sNeedLv = Str2Int(ParamList[m++]);    
-	// 职业
+	// job
 	memset(pInfo->szWork, cchItemRecordKeyValue, sizeof(char) * MAX_JOB_TYPE);
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
@@ -288,11 +288,11 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
 	{
 		pInfo->szWork[i] = Str2Int(strList[i]);
 	}
-	// 角色称号
+	// character title
 	strLine = Str2Int(ParamList[m++]);
-	// 角色名声
+	// character reputation
 	strLine = Str2Int(ParamList[m++]);
-	// 道具可装备位置
+	// slot the item can be equipped in
 	memset(pInfo->szAbleLink, cchItemRecordKeyValue, sizeof(char) * enumEQUIP_NUM);
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
@@ -301,7 +301,7 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
 	{
 		pInfo->szAbleLink[i] = Str2Int(strList[i]);
 	}
-	// 道具装备所必需的所有位置
+	// every slot the item needs in order to be equipped
 	memset(pInfo->szNeedLink, cchItemRecordKeyValue, sizeof(char) * enumEQUIP_NUM);
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
@@ -311,53 +311,53 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
 		pInfo->szNeedLink[i] = Str2Int(strList[i]);
 	}
 
-	// 拾取进入位置
+	// where it goes when picked up
 	pInfo->chPickTo = Str2Int(ParamList[m++]);
 
-	// 力量系数加成
+	// strength coefficient bonus
 	pInfo->sStrCoef = Str2Int(ParamList[m++]);
-	// 敏捷系数加成
+	// agility coefficient bonus
 	pInfo->sAgiCoef = Str2Int(ParamList[m++]);
-	// 专注系数加成
+	// focus coefficient bonus
 	pInfo->sDexCoef = Str2Int(ParamList[m++]);
-	// 体质系数加成
+	// constitution coefficient bonus
 	pInfo->sConCoef = Str2Int(ParamList[m++]);
-	// 精力系数加成
+	// vitality coefficient bonus
 	pInfo->sStaCoef = Str2Int(ParamList[m++]);
-	// 幸运系数加成
+	// luck coefficient bonus
 	pInfo->sLukCoef = Str2Int(ParamList[m++]);
-	// 攻击频率系数加成
+	// attack interval coefficient bonus
 	pInfo->sASpdCoef = Str2Int(ParamList[m++]);
-	// 攻击距离系数加成
+	// attack range coefficient bonus
 	pInfo->sADisCoef = Str2Int(ParamList[m++]);
-	// 最小攻击力系数加成
+	// minimum attack coefficient bonus
 	pInfo->sMnAtkCoef = Str2Int(ParamList[m++]);
-	// 最大攻击力系数加成
+	// maximum attack coefficient bonus
 	pInfo->sMxAtkCoef = Str2Int(ParamList[m++]);
-	// 防御系数加成
+	// defence coefficient bonus
 	pInfo->sDefCoef = Str2Int(ParamList[m++]);
-	// 最大Hp系数加成
+	// maximum HP coefficient bonus
 	pInfo->sMxHpCoef = Str2Int(ParamList[m++]);
-	// 最大Sp系数加成
+	// maximum SP coefficient bonus
 	pInfo->sMxSpCoef = Str2Int(ParamList[m++]);
-	// 闪避率系数加成
+	// evasion rate coefficient bonus
 	pInfo->sFleeCoef = Str2Int(ParamList[m++]);
-	// 命中率系数加成
+	// hit rate coefficient bonus
 	pInfo->sHitCoef = Str2Int(ParamList[m++]);
-	// 爆击率系数加成
+	// critical rate coefficient bonus
 	pInfo->sCrtCoef = Str2Int(ParamList[m++]);
-	// 寻宝率系数加成
+	// treasure find rate coefficient bonus
 	pInfo->sMfCoef = Str2Int(ParamList[m++]);
-	// hp恢复速度系数加成
+	// HP regeneration rate coefficient bonus
 	pInfo->sHRecCoef = Str2Int(ParamList[m++]);
-	// sp恢复速度系数加成
+	// SP regeneration rate coefficient bonus
 	pInfo->sSRecCoef = Str2Int(ParamList[m++]);
-	// 移动速度系数加成
+	// movement speed coefficient bonus
 	pInfo->sMSpdCoef = Str2Int(ParamList[m++]);
-	// 资源采集速度系数加成
+	// resource gathering speed coefficient bonus
 	pInfo->sColCoef = Str2Int(ParamList[m++]);
 
-	// 力量常数加成
+	// strength constant bonus
 	memset(pInfo->sStrValu, 0, sizeof(pInfo->sStrValu));
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
@@ -366,7 +366,7 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
 	{
 		pInfo->sStrValu[i] = Str2Int(strList[i]);
 	}
-	// 敏捷常数加成
+	// agility constant bonus
 	memset(pInfo->sAgiValu, 0, sizeof(pInfo->sAgiValu));
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
@@ -375,7 +375,7 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
 	{
 		pInfo->sAgiValu[i] = Str2Int(strList[i]);
 	}
-	// 专注常数加成
+	// focus constant bonus
 	memset(pInfo->sDexValu, 0, sizeof(pInfo->sDexValu));
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
@@ -384,7 +384,7 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
 	{
 		pInfo->sDexValu[i] = Str2Int(strList[i]);
 	}
-	// 体质常数加成
+	// constitution constant bonus
 	memset(pInfo->sConValu, 0, sizeof(pInfo->sConValu));
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
@@ -393,7 +393,7 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
 	{
 		pInfo->sConValu[i] = Str2Int(strList[i]);
 	}
-	// 精力常数加成
+	// vitality constant bonus
 	memset(pInfo->sStaValu, 0, sizeof(pInfo->sStaValu));
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
@@ -402,7 +402,7 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
 	{
 		pInfo->sStaValu[i] = Str2Int(strList[i]);
 	}
-	// 幸运常数加成
+	// luck constant bonus
 	memset(pInfo->sLukValu, 0, sizeof(pInfo->sLukValu));
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
@@ -411,7 +411,7 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
 	{
 		pInfo->sLukValu[i] = Str2Int(strList[i]);
 	}
-	// 攻击频率常数加成
+	// attack interval constant bonus
 	memset(pInfo->sASpdValu, 0, sizeof(pInfo->sASpdValu));
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
@@ -420,7 +420,7 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
 	{
 		pInfo->sASpdValu[i] = Str2Int(strList[i]);
 	}
-	// 攻击距离常数加成
+	// attack range constant bonus
 	memset(pInfo->sADisValu, 0, sizeof(pInfo->sADisValu));
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
@@ -429,7 +429,7 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
 	{
 		pInfo->sADisValu[i] = Str2Int(strList[i]);
 	}
-	// 最小攻击力常数加成
+	// minimum attack constant bonus
 	memset(pInfo->sMnAtkValu, 0, sizeof(pInfo->sMnAtkValu));
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
@@ -438,7 +438,7 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
 	{
 		pInfo->sMnAtkValu[i] = Str2Int(strList[i]);
 	}
-	// 最大攻击力常数加成
+	// maximum attack constant bonus
 	memset(pInfo->sMxAtkValu, 0, sizeof(pInfo->sMxAtkValu));
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
@@ -447,7 +447,7 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
 	{
 		pInfo->sMxAtkValu[i] = Str2Int(strList[i]);
 	}
-	// 防御常数加成
+	// defence constant bonus
 	memset(pInfo->sDefValu, 0, sizeof(pInfo->sDefValu));
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
@@ -456,7 +456,7 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
 	{
 		pInfo->sDefValu[i] = Str2Int(strList[i]);
 	}
-	// 最大Hp常数加成
+	// maximum HP constant bonus
 	memset(pInfo->sMxHpValu, 0, sizeof(pInfo->sMxHpValu));
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
@@ -465,7 +465,7 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
 	{
 		pInfo->sMxHpValu[i] = Str2Int(strList[i]);
 	}
-	// 最大Sp常数加成
+	// maximum SP constant bonus
 	memset(pInfo->sMxSpValu, 0, sizeof(pInfo->sMxSpValu));
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
@@ -474,7 +474,7 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
 	{
 		pInfo->sMxSpValu[i] = Str2Int(strList[i]);
 	}
-	// 闪避率常数加成
+	// evasion rate constant bonus
 	memset(pInfo->sFleeValu, 0, sizeof(pInfo->sFleeValu));
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
@@ -483,7 +483,7 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
 	{
 		pInfo->sFleeValu[i] = Str2Int(strList[i]);
 	}
-	// 命中率常数加成
+	// hit rate constant bonus
 	memset(pInfo->sHitValu, 0, sizeof(pInfo->sHitValu));
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
@@ -492,7 +492,7 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
 	{
 		pInfo->sHitValu[i] = Str2Int(strList[i]);
 	}
-	// 爆击率常数加成
+	// critical rate constant bonus
 	memset(pInfo->sCrtValu, 0, sizeof(pInfo->sCrtValu));
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
@@ -501,7 +501,7 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
 	{
 		pInfo->sCrtValu[i] = Str2Int(strList[i]);
 	}
-	// 寻宝率常数加成
+	// treasure find rate constant bonus
 	memset(pInfo->sMfValu, 0, sizeof(pInfo->sMfValu));
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
@@ -510,7 +510,7 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
 	{
 		pInfo->sMfValu[i] = Str2Int(strList[i]);
 	}
-	// hp恢复速度常数加成
+	// HP regeneration rate constant bonus
 	memset(pInfo->sHRecValu, 0, sizeof(pInfo->sHRecValu));
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
@@ -519,7 +519,7 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
 	{
 		pInfo->sHRecValu[i] = Str2Int(strList[i]);
 	}
-	// sp恢复速度常数加成
+	// SP regeneration rate constant bonus
 	memset(pInfo->sSRecValu, 0, sizeof(pInfo->sSRecValu));
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
@@ -528,7 +528,7 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
 	{
 		pInfo->sSRecValu[i] = Str2Int(strList[i]);
 	}
-	// 移动速度常数加成
+	// movement speed constant bonus
 	memset(pInfo->sMSpdValu, 0, sizeof(pInfo->sMSpdValu));
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
@@ -537,7 +537,7 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
 	{
 		pInfo->sMSpdValu[i] = Str2Int(strList[i]);
 	}
-	// 资源采集速度常数加成
+	// resource gathering speed constant bonus
 	memset(pInfo->sColValu, 0, sizeof(pInfo->sColValu));
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
@@ -547,7 +547,7 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
 		pInfo->sColValu[i] = Str2Int(strList[i]);
 	}
 
-	// 物理抵抗
+	// physical resistance
 	memset(pInfo->sPDef, 0, sizeof(pInfo->sPDef));
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
@@ -556,9 +556,9 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
 	{
 		pInfo->sPDef[i] = Str2Int(strList[i]);
 	}
-	// 道具左手发挥
+	// the item works in the left hand
 	pInfo->sLHandValu = Str2Int(ParamList[m++]);
-	// 能量
+	// energy
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
 	for (int i = 0; i < 2; i++)
@@ -568,7 +568,7 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
 		else
 			pInfo->sEnergy[i] = 0;
 	}
-	// 耐久度
+	// durability
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
 	for (int i = 0; i < 2; i++)
@@ -578,31 +578,31 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
 		else
 			pInfo->sEndure[i] = 0;
 	}
-	// 洞数
+	// number of holes
 	pInfo->sHole = Str2Int(ParamList[m++]);
-	// 船耐久恢复
+	// ship durability regeneration
 	strLine = Str2Int(ParamList[m++]);
-	// 可装炮数量
+	// number of cannons that fit
 	strLine = Str2Int(ParamList[m++]);
-	// 船员人数
+	// number of crew
 	strLine = Str2Int(ParamList[m++]);
-	// 人员标配
+	// standard crew
 	strLine = Str2Int(ParamList[m++]);
-	// 货舱容量
+	// cargo hold capacity
 	strLine = Str2Int(ParamList[m++]);
-	// 补给消耗
+	// supply consumption
 	strLine = Str2Int(ParamList[m++]);
-	// 炮弹飞行速度
+	// shell speed
 	strLine = Str2Int(ParamList[m++]);
-	// 船移动速度
+	// ship movement speed
 	strLine = Str2Int(ParamList[m++]);
-	// 使用效果
+	// use effect
 	strncpy(pInfo->szAttrEffect, ParamList[m++].c_str(), defITEM_ATTREFFECT_NAME_LEN);
 	pInfo->szAttrEffect[defITEM_ATTREFFECT_NAME_LEN - 1] = _TEXT('\0');
 
 	//drap
 	pInfo->sDrap = Str2Int(ParamList[m++]);
-	// 武器捆绑特效
+	// weapon attach effect
 	memset(pInfo->sEffect,0 ,sizeof(pInfo->sEffect));
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
@@ -620,7 +620,7 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
         pInfo->sEffNum = n;
     }
 
-	// 捆绑定特效的dummy
+	// dummy used by the attached effect
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
 	if( n>defITEM_BIND_EFFECT_NUM ) n=defITEM_BIND_EFFECT_NUM;
@@ -629,7 +629,7 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
 		pInfo->sEffect[e][1] = Str2Int(strList[e]);
 	}
 
-	// 道具外观特效
+	// item appearance effect
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
 	int ItemNum = sizeof(pInfo->sItemEffect) / sizeof( pInfo->sItemEffect[0] );
@@ -640,7 +640,7 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
 		pInfo->sItemEffect[e] = Str2Int(strList[e]);
 	}
 
-	// 放在地上时的特效
+	// effect shown while it lies on the ground
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
 	int AreaNum = sizeof(pInfo->sAreaEffect) / sizeof( pInfo->sAreaEffect[0] );
@@ -651,7 +651,7 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
 		pInfo->sAreaEffect[e] = Str2Int(strList[e]);
 	}
 
-	// 使用时的特效
+	// effect shown while it is used
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
 	int nNum = sizeof(pInfo->sUseItemEffect) / sizeof( pInfo->sUseItemEffect[0] );
@@ -662,7 +662,7 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
 		pInfo->sUseItemEffect[e] = Str2Int(strList[e]);
 	}
 
-	//描述
+	// description
     strLine = ParamList[m++];
 
     if( strLine=="0" )

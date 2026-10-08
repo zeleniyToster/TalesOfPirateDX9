@@ -28,7 +28,7 @@ const long	JOB_TYPE_HANGHAISHI		= 16;	// "航海士"
 const long	JOB_TYPE_BAOFAHU		= 17;	// "暴发户"
 const long	JOB_TYPE_GONGCHENGSHI	= 18;	// "工程师"
 
-const long	MAX_JOB_TYPE			= 19;	// 最大职业类型
+const long	MAX_JOB_TYPE			= 19;	// maximum number of job types
 
 extern const char	*g_szJobName[MAX_JOB_TYPE];
 

@@ -10,23 +10,23 @@
 #include "TableData.h"
 
 //---------------------------------------------------------
-#define FORGE_MAXNUM_ITEM				6 // 精练需求最大物品数
+#define FORGE_MAXNUM_ITEM				6 // maximum number of materials a refine may require
 
 class CForgeRecord : public CRawDataInfo
 {
 public:
-	BYTE byLevel;	// 精练等级
-	BYTE byFailure; // 失败后物品退回等级
-	BYTE byRate;	// 精练武器的成功率	
-	BYTE byParam;	// 保留参数
-	DWORD dwMoney;  // 精练需求金钱
+	BYTE byLevel;	// refine level
+	BYTE byFailure; // level the item falls back to on failure
+	BYTE byRate;	// success chance when refining a weapon
+	BYTE byParam;	// reserved parameter
+	DWORD dwMoney;  // money a refine costs
 
-	// 精练物品需求数据
+	// refine material requirements
 	struct FORGE_ITEM
 	{
-		USHORT sItem;	// 需求物品ID
-		BYTE   byNum;	// 需求物品的数量
-		BYTE   byParam; // 保留参数
+		USHORT sItem;	// required item id
+		BYTE   byNum;	// required item count
+		BYTE   byParam; // reserved parameter
 	};	
 	FORGE_ITEM ForgeItem[FORGE_MAXNUM_ITEM];
 };
@@ -45,7 +45,7 @@ public:
 	}
 
 protected:
-	static CForgeRecordSet* _Instance; // 相当于单键, 把自己记住
+	static CForgeRecordSet* _Instance; // acts like a singleton: keeps a reference to itself
 
 	virtual CRawDataInfo* _CreateRawDataArray(int nCnt)
 	{

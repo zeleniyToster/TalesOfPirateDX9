@@ -23,18 +23,18 @@ CLanguageRecord::~CLanguageRecord(void)
 }
 
 
-// 获得字符串
+// fetch a string
 const char* CLanguageRecord::GetString(int nID)
 {
 	std::map<int, std::string>::iterator it = m_mapString.find(nID);
 
 	if(it != m_mapString.end())
 	{
-		// 找到对应字符串
+		// found the matching string
 		return it->second.c_str();
 	}
 
-	// 未找到对应字符串
+	// no matching string found
 	return "";
 }
 
@@ -57,7 +57,7 @@ bool CLanguageRecord::LoadFromBinFile(const char* szBinFile)
 
 	while(fs.getline(szBuffer, sizeof(szBuffer) / sizeof(szBuffer[0])))
 	{
-		// 先解密
+		// decrypt first
 		Decrypt((__byte*)szNewBuf, 1024, (__byte*)szBuffer, strlen(szBuffer));
 
 		Add(szNewBuf);
@@ -67,7 +67,7 @@ bool CLanguageRecord::LoadFromBinFile(const char* szBinFile)
 }
 
 
-// 从 TXT 文件中读取
+// read from the TXT file
 //
 //	[0] <TAB> "字符串"
 //
@@ -94,7 +94,7 @@ bool CLanguageRecord::LoadFromTxtFile(const char* szTxtFile)
 // 加密并生成二进制（TXT -> BIN）
 bool CLanguageRecord::MadeBinFile(const char* szBinFile, const char* szTxtFile)
 {
-	if(-1 != access(szBinFile, 0))	// BIN 文件已存在
+	if(-1 != access(szBinFile, 0))	// the BIN file already exists
 		return false;
 
 	std::ifstream ifs;
@@ -122,17 +122,17 @@ bool CLanguageRecord::MadeBinFile(const char* szBinFile, const char* szTxtFile)
 }
 
 
-// 获得字符串个数
+// number of strings held
 int CLanguageRecord::GetRecordCount(void)
 {
 	return (int)(m_mapString.size());
 }
 
 
-// 添加一行
+// append a line
 void CLanguageRecord::Add(char* szLine)
 {
-	// 替换资源文件里的转义符
+	// substitute the escape sequences in the resource file
 	ReplaceString(szLine, "\\n", "\n");
 	ReplaceString(szLine, "\\t", "\t");
 
@@ -159,7 +159,7 @@ void CLanguageRecord::Add(char* szLine)
 }
 
 
-// 替换
+// replace
 int CLanguageRecord::ReplaceString(char* _str, const char* _old, const char* _new)
 {
     int __pos = 0;
@@ -192,7 +192,7 @@ int CLanguageRecord::ReplaceString(char* _str, const char* _old, const char* _ne
 }
 
 
-// 替换
+// replace
 int CLanguageRecord::Find(const char* _str, const char* _find)
 {
     char* __ptr = 0;

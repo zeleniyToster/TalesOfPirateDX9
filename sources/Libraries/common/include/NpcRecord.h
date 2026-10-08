@@ -11,23 +11,23 @@
 
 //---------------------------------------------------------
 
-#define NPC_MAXSIZE_NAME			128 // npc名称长度
-#define NPC_MAXSIZE_MSGPROC			16	// npc消息处理函数名称长度
+#define NPC_MAXSIZE_NAME			128 // length of the npc name
+#define NPC_MAXSIZE_MSGPROC			16	// length of the npc message handler name
 
 class CNpcRecord : public CRawDataInfo
 {
 public:	
-	char szName[NPC_MAXSIZE_NAME];		// 地图中显示npc名称
-	USHORT sNpcType;					// npc类型
-	USHORT sCharID;						// 角色列表编号索引
-	BYTE byShowType;					// 客户端显示颜色类型
-	DWORD dwxPos0, dwyPos0;				// npc位置信息
+	char szName[NPC_MAXSIZE_NAME];		// npc name shown on the map
+	USHORT sNpcType;					// npc type
+	USHORT sCharID;						// index into the character list
+	BYTE byShowType;					// colour type shown by the client
+	DWORD dwxPos0, dwyPos0;				// npc position
 	DWORD dwxPos1, dwyPos1;
 	USHORT sDir;
 	USHORT sParam1, sParam2;
-	char szNpc[NPC_MAXSIZE_NAME];		// npc文件名
-	char szMsgProc[NPC_MAXSIZE_MSGPROC];// npc消息处理函数
-	char szMisProc[NPC_MAXSIZE_MSGPROC];// npc任务状态处理函数
+	char szNpc[NPC_MAXSIZE_NAME];		// npc file name
+	char szMsgProc[NPC_MAXSIZE_MSGPROC];// npc message handler
+	char szMisProc[NPC_MAXSIZE_MSGPROC];// npc quest state handler
 };
 
 class CNpcRecordSet : public CRawDataSet

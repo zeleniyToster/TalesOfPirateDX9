@@ -189,7 +189,7 @@ void Util_TrimString(std::string &str)
 }
 
 
-// 修正英文 MAKEBIN 空格丢失问题  modify by Philip.Wu  2006-07-31
+// fixed lost spaces in the English MAKEBIN - modified by Philip.Wu, 2006-07-31
 void Util_TrimTabString(std::string &str)
 {
 	char *psz = (char*)(str.c_str());
@@ -341,7 +341,7 @@ int  Util_ResolveTextLine(const char *pszText , std::string strList[] ,
 	{
 	if (pszText == NULL || strlen(pszText) == 0) return 0;
 
-	// 如果没用分割符，或源串只有1个字符
+	// no separator used, or the source string holds a single character
 	if ((nSep == 0 && nSep2 == 0) || (strlen(pszText) == 1))
 		{
 		strList[0] = pszText;
@@ -351,12 +351,12 @@ int  Util_ResolveTextLine(const char *pszText , std::string strList[] ,
 	int nResult = 0;
 	if ((nSep != 0) && (nSep2 != 0) && (nSep != nSep2))
 		{
-		// 同时支持两个，空格和制表符
+		// both are supported: space and tab
 		std::string lstrList[1024];
 		int n1 = 0;
 		int n2 = 0;
 
-		// 看字符串中是否有两种间隔符
+		// check whether the string contains both kinds of separator
 		char* pszFound1 = NULL;
 		char* pszFound2 = NULL;
         pszFound1 =(char*) strchr(pszText, nSep);
@@ -364,33 +364,33 @@ int  Util_ResolveTextLine(const char *pszText , std::string strList[] ,
 
 		if ((pszFound1 == NULL) || (pszFound2 == NULL))
 			{
-			// 只有一种分隔符或都没有
+			// only one kind of separator, or none at all
 			if (pszFound1 != NULL)
 				nResult = Util_ResolveTextLine1(pszText, strList, nMax, nSep);
 			else if (pszFound2 != NULL)
 				nResult = Util_ResolveTextLine1(pszText, strList, nMax, nSep2);
 			else
 				{
-				// 两种分隔符都没有
+				// neither separator is present
 				strList[0] = pszText;
 				return 1;
 				}
 			}
 		else
 			{
-			// 两种分隔符都有
+			// both separators are present
 			std::string newString;
 
-			// 先去掉第一个
+			// drop the first one
 			n1 = Util_ResolveTextLine1(pszText, lstrList, nMax, nSep);
 
-			// 将剩余的重新连接起来
+			// join the remainder back together
 			for (int i = 0; i < n1; ++ i)
 				{
 				newString += lstrList[i] + char(nSep2);
 				}
 
-			// 再去除第二个
+			// then drop the second one
 			char const* p = newString.c_str();
 			n2 = Util_ResolveTextLine1(newString.c_str(), strList, nMax, nSep2);
 			nResult = n2;
@@ -398,7 +398,7 @@ int  Util_ResolveTextLine(const char *pszText , std::string strList[] ,
 		}
 	else
 		{
-		// 只有一个，nSep和nSep2可能相同
+		// only one; nSep and nSep2 may be identical
 		int sep = 0;
 		if (nSep != 0) sep = nSep;
 		else sep = nSep2;

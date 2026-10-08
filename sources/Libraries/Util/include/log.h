@@ -10,25 +10,25 @@ void   fLG(const char *pszName, const char *pszFormat, ...);
 
 #define GPL_CONSTANT 2000
 
-// 设置LG输出目录
+// set the LG output directory
 extern "C" void SetLGDir(char const* dir);
 
-// 得到LG输出目录
+// fetch the LG output directory
 void GetLGDir(std::string& dir);
 
-// 使能LG中弹出MessageBox
+// let LG pop up a MessageBox
 extern "C" void EnableMsgBox(bool enable = true);
 
-// 使能所有的LG输出
+// enable all LG output
 extern "C" void EnableAllLG(bool enable = true);
 
-// 使能特定的LG输出
+// enable a specific LG output
 extern "C" void EnableLG(char const* type, bool enable = true);
 
-// 特点：要记录下每一个时间点上的LOG
+// characteristic: keeps a LOG entry for every point in time
 //void LG(char const* type, char const* format, ...);
 
-// 特点：只记录下当前时间点上的LOG（更新）
+// characteristic: keeps only the LOG for the current point in time (overwritten)
 extern "C" void GPL(char const* type, int x, int y, char const* format, ...);
 
 extern "C" int myprintf(char const* fmt, ...);

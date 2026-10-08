@@ -44,26 +44,26 @@ public:
 		long lpos;
 		long llen;
 	};
-	//一次把所有地图大小分配好。
+	// size every map up front
 	void	AddMap(const char* pszName, int w,int h);
 
-	//从数据库读取的mask数据
+	// mask data read from the database
 	bool	InitMaskData(char* pszMapName, const char* szBase64Data, long llen = 0);
 
-	//得到某个地图的mask数据
+	// get the mask data of a given map
 	BYTE*	GetMapMask(const char* pszMapName, long& size);
 
-	// 得到某一地图的探索度(百分比)
+	// get the explored percentage of a given map
 	float	GetMapMaskOpenScale(const char* pszMapName);
 
-	//更新某地图的mask, x,y以为为单位。w,h为地图宽高，以为为单位
+	// update a map's mask; x and y are tile coordinates, w and h the map size in tiles
 	bool	UpdateMapMask(char* pszMapName, int x, int y, int cha_range = SHOWRANGE);
 
 	//
 	//void	SetChaRange(int cha_range){ iChaRange = cha_range;}
 	//int 	GetChaRange(int cha_range){ iChaRange = cha_range;}
 
-	//得到结果数据
+	// get the resulting data
 	//long	GetResultLength(){ return lResultSize;}
 	//const char*	GetResultMask(const char* pszMapName)
 	//{ 
@@ -83,7 +83,7 @@ public:
 		return (const char *)szBase64;
 	}
 protected:
-	//保存时先要计算整个字节数
+	// the total byte count has to be worked out before saving
 	//void	ColResultMask();
 
 	//bool	GetMask(int x, int y)

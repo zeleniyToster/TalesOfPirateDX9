@@ -10,7 +10,7 @@
 
 
 #if 0
-// 重定向printf
+// redirect printf
 int myprintf(char const* fmt, ...)
     {
     char buf[8192];
@@ -23,7 +23,7 @@ int myprintf(char const* fmt, ...)
     LG2("printf", buf);
     return 1;}
 
-// 重定向fprintf
+// redirect fprintf
 int myfprintf(FILE* fp, char const* fmt, ...)
     {
     char buf[8192];
@@ -38,11 +38,11 @@ int myfprintf(FILE* fp, char const* fmt, ...)
     else LG2("other", buf);
     return 1;}
 
-// 特点：要记录下每一个时间点上的LOG
+// characteristic: keeps a LOG entry for every point in time
 static HWND LG_hwnd = NULL;
 void LG(char const* type, char const* format, ...)
     {
-	// 检查是否使能LOG
+	// check whether logging is enabled
 	CLogMgr* logMgr = CLogMgr::Instance();
 	if (logMgr == NULL || !logMgr->IsEnable()) return;
 	CLog* log = logMgr->Add(type);
@@ -57,7 +57,7 @@ void LG(char const* type, char const* format, ...)
 	if (len >= sizeof buf)
         throw std::logic_error("buf overflow, length > 8K\n");
 
-    // 得到当前日期
+    // get the current date
     SYSTEMTIME st; char tim[100];
     ::GetLocalTime(&st);
     sprintf(tim, "%02d-%02d %02d:%02d:%02d", st.wMonth, st.wDay, st.wHour,
@@ -71,7 +71,7 @@ void LG(char const* type, char const* format, ...)
 
     //////////////////////////////////////////////////////////////////////////
 	//
-	// 写入磁盘文件的LOG
+	// LOG entry written to the file on disk
 #if 0
     string ctx;
     if (strncmp(buf, "msg", 3) != 0)
@@ -93,7 +93,7 @@ void LG(char const* type, char const* format, ...)
 
     //////////////////////////////////////////////////////////////////////////
     //
-    // 发送到Logviewer的LOG
+    // LOG entry sent to the log viewer
     if (LG_hwnd == NULL)
         {LG_hwnd = FindWindow(NULL, "kIng Of pIrAtEs lOgvIEwEr");}
 
@@ -125,7 +125,7 @@ void LG(char const* type, char const* format, ...)
 #endif
 
 #if 1
-// 特点：只记录下当前时间点上的LOG（更新）
+// characteristic: keeps only the LOG for the current point in time (overwritten)
 static HWND GPL_hwnd = NULL;
 void GPL(char const* type, int x, int y, char const* format, ...)
     {
@@ -133,13 +133,13 @@ void GPL(char const* type, int x, int y, char const* format, ...)
 #if 0
     //////////////////////////////////////////////////////////////////////////
     //
-    // 发送到Logviewer的GPL
+    // GPL entry sent to the log viewer
     if (GPL_hwnd == NULL)
         {GPL_hwnd = FindWindow(NULL, "kIng Of pIrAtEs lOgvIEwEr");}
 
     if (GPL_hwnd == NULL) return;
 
-    // 得到LOG内容
+    // get the LOG content
     char buf[1024] = {0};
     va_list args;
     va_start(args, format);
@@ -169,13 +169,13 @@ void GPL(char const* type, int x, int y, char const* format, ...)
 
 #if 0
 
-// 使能所有的LG输出
+// enable all LG output
 void EnableAllLG(bool enable /* = true */)
 {
     CLogMgr::Instance()->Enable(enable);
 }
 
-// 使能特定的LG输出
+// enable a specific LG output
 void EnableLG(char const* type, bool enable /* = true */)
 {
     CLog* pLog = NULL;
@@ -222,7 +222,7 @@ void LG_SetEraseMode(bool bEraseMode /* = true */)
 }
 void LG2(char const* type, char const* format, ...)
 {
-    // 检查是否使能LOG
+    // check whether logging is enabled
     CLog2Mgr* pLogMgr = CLog2Mgr::Inst();
     if (pLogMgr == NULL || !pLogMgr->IsEnable()) return;
 
@@ -246,7 +246,7 @@ void LG2(char const* type, char const* format, ...)
 
 void LG3(char const* type, char const* format, ...)
 {
-	// 检查是否使能LOG
+	// check whether logging is enabled
 	CLog2Mgr* pLogMgr = CLog2Mgr::Inst();
 	if (pLogMgr == NULL || !pLogMgr->IsEnable()) return;
 

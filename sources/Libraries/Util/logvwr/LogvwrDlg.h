@@ -1,4 +1,4 @@
-﻿// LogvwrDlg.h : 头文件
+﻿// LogvwrDlg.h : header file
 //
 
 #pragma once
@@ -6,39 +6,39 @@
 #include "afxcmn.h"
 
 
-// CLogvwrDlg 对话框
+// the CLogvwrDlg dialog
 class CLogPacket;
 class CLogTypeData;
 class CGplTypeData;
 class CGplViewDlg;
 class CLogvwrDlg : public CDialog
     {
-    // 构造
+    // construction
 public:
-    CLogvwrDlg(CWnd* pParent = NULL);   // 标准构造函数
+    CLogvwrDlg(CWnd* pParent = NULL);   // standard constructor
 	~CLogvwrDlg();
 
-    // 对话框数据
+    // dialog data
     enum {IDD = IDD_LOGVWR_DIALOG};
 
-	// 主菜单对象指针
+	// pointer to the main menu object
 	CMenu* m_pMainMenu;
 
 protected:
-    virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
+    virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 
 
-    // 实现
+    // implementation
 protected:
     HICON m_hIcon;
 
-    // 生成的消息映射函数
+    // generated message map functions
     virtual BOOL OnInitDialog();
     afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
     afx_msg void OnPaint();
     afx_msg HCURSOR OnQueryDragIcon();
 
-    // 自添加消息映射函数
+    // hand added message map functions
     afx_msg void OnSize(UINT nType, int cx, int cy);
     afx_msg BOOL OnCopyData(CWnd* pWnd, COPYDATASTRUCT* pCopyDataStruct);
 	afx_msg BOOL OnCommand(WPARAM wParam, LPARAM lParam);
@@ -46,38 +46,38 @@ protected:
     DECLARE_MESSAGE_MAP()
 
 private:
-	// 右键弹出菜单对象
+	// context menu object
 	CMenu m_PopMenu;
 
-    // 放置所有显示元素的容器
+    // container for all display elements
     CStatic m_Container;
 
-	// 当前激活的窗口
+	// currently active window
 	CWnd* m_pActiveWnd;
 
-    // 显示所有LOG的列表
+    // list showing all LOG entries
     CListCtrl m_LogList;
 
-	// 存放各种类别LOG的ListCtrl对象及类别标识串
+	// ListCtrl objects per log category, plus the category identifier strings
 	std::vector<CLogTypeData*> m_LGData;
 
-	// 显示所有GPL的对话框
+	// dialog showing all GPL entries
 	CGplViewDlg* m_pGplDlg;
 
-	// 存放各种类别GPL的类别对象
+	// per category objects for the GPL entries
 	std::vector<CGplTypeData*> m_GPLData;
 
-	// 测试、清除按钮
+	// test and clear buttons
     CButton m_btnTestLog;
     CButton m_btnClearLog;
 
-    // 显示与清除及防止重入的同步对象
+    // synchronisation object guarding display, clearing and re-entrancy
     CCriticalSection m_CS;
 
-    // LOG包对象
+    // LOG packet object
     CLogPacket* m_pLogPacket;
 
-    // 接收所有包计数
+    // count of all packets received
     DWORD m_dwPacketCnt;
 
 public:

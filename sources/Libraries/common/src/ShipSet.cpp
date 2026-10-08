@@ -22,7 +22,7 @@ BOOL xShipSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string> &Para
 	pInfo->byIsUpdate = 1;//(BYTE)Str2Int(ParamList[m++]);
 	pInfo->sBody = (USHORT)Str2Int(ParamList[m++]);
 
-	// 船只部件列表
+	// ship part list
 	int nNum = Util_ResolveTextLine( ParamList[m++].c_str(), strList, BOAT_MAXNUM_PARTITEM, ',' );
 	pInfo->sNumEngine = ( nNum > 0 ) ? nNum : 0;
 	memset( pInfo->sEngine, 0, sizeof(USHORT)*BOAT_MAXNUM_PARTITEM );
@@ -64,7 +64,7 @@ BOOL xShipSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string> &Para
 		pInfo->sPfLimit[i] = (USHORT)Str2Int(strList[i]);
 	}
 
-	// 船只部件基本属性
+	// ship part base attributes
 	pInfo->sEndure = (USHORT)Str2Int(ParamList[m++]);
 	pInfo->sResume = (USHORT)Str2Int(ParamList[m++]);
 	pInfo->sDefence = (USHORT)Str2Int(ParamList[m++]);
@@ -105,7 +105,7 @@ BOOL xShipPartSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string> &
 
 	pInfo->dwPrice = (DWORD)Str2Int(ParamList[m++]);
 
-	// 船只部件基本属性
+	// ship part base attributes
 	pInfo->sEndure = (USHORT)Str2Int(ParamList[m++]);
 	pInfo->sResume = (USHORT)Str2Int(ParamList[m++]);
 	pInfo->sDefence = (USHORT)Str2Int(ParamList[m++]);

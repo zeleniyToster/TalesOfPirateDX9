@@ -21,9 +21,9 @@ class CJobEquipRecord : public CRawDataInfo
 public:
 	//CJobEquipRecord();
 
-	char	chID;			// 编号
-	char	chJob;			// 职业
-	short	sItemID[defJOB_INIT_EQUIP_MAX];		// 装备编号
+	char	chID;			// id
+	char	chJob;			// job
+	short	sItemID[defJOB_INIT_EQUIP_MAX];		// equipment id
 };
 
 class CJobEquipRecordSet : public CRawDataSet
@@ -41,7 +41,7 @@ public:
 
 protected:
 
-	static CJobEquipRecordSet* _Instance; // 相当于单键, 把自己记住
+	static CJobEquipRecordSet* _Instance; // acts like a singleton: keeps a reference to itself
 
 	virtual CRawDataInfo* _CreateRawDataArray(int nCnt)
 	{
