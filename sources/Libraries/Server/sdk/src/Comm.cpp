@@ -195,6 +195,7 @@ WPacket TcpCommApp::GetWPacket()const
 {
 	WPacket l_ret =this;
 	l_ret =__bufheap.Get(1024);
+	l_ret.WritePktLen();  // Автоматически записываем длину пакета
 	return l_ret;
 }
 void TcpCommApp::BeginWork(uLong keepalive_seconds,uLong delay)

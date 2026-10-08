@@ -24,6 +24,7 @@ _DBC_USING
 void  CS_GM1Say(const char *pszContent)
 {
 	WPacket pk	=g_NetIF->GetWPacket();
+	pk.WritePktLen();
 	pk.WriteCmd(CMD_CP_GM1SAY);	//����
 	pk.WriteString(pszContent);
 
@@ -34,6 +35,7 @@ void  CS_GM1Say(const char *pszContent)
 void  CS_GM1Say1(const char *pszContent, DWORD color)
 {
 	WPacket pk	=g_NetIF->GetWPacket();
+	pk.WritePktLen();
 	pk.WriteCmd(CMD_CP_GM1SAY1);	//����
 	pk.WriteString(pszContent);
 	pk.WriteLong(color);
@@ -43,6 +45,7 @@ void  CS_GM1Say1(const char *pszContent, DWORD color)
 void  CS_Say2Trade(const char *pszContent)
 {
 	WPacket pk	=g_NetIF->GetWPacket();
+	pk.WritePktLen();
 	pk.WriteCmd(CMD_CP_SAY2TRADE);	//����
 	pk.WriteString(pszContent);
 
@@ -51,6 +54,7 @@ void  CS_Say2Trade(const char *pszContent)
 void CS_Say2All(const char *pszContent)
 {
 	WPacket pk	=g_NetIF->GetWPacket();
+	pk.WritePktLen();
 	pk.WriteCmd(CMD_CP_SAY2ALL);	//����
 	pk.WriteString(pszContent);
 
@@ -67,6 +71,7 @@ void  CP_RefuseToMe(bool refusetome)	//���þܾ�˽�ı�־
 void  CS_Say2You(const char *you,const char *pszContent)
 {
 	WPacket pk	=g_NetIF->GetWPacket();
+	pk.WritePktLen();
 	pk.WriteCmd(CMD_CP_SAY2YOU);	//����
 	pk.WriteString(you);
 	pk.WriteString(pszContent);
@@ -76,6 +81,7 @@ void  CS_Say2You(const char *you,const char *pszContent)
 void  CS_Say2Team(const char *pszContent)
 {
 	WPacket l_wpk	=g_NetIF->GetWPacket();
+	l_wpk.WritePktLen();
 	l_wpk.WriteCmd(CMD_CP_SAY2TEM);
 	l_wpk.WriteString(pszContent);
 	g_NetIF->SendPacketMessage(l_wpk);
@@ -84,6 +90,7 @@ void  CS_Say2Team(const char *pszContent)
 void  CS_Say2Guild( const char* pszContent)
 {
 	WPacket l_wpk	=g_NetIF->GetWPacket();
+	l_wpk.WritePktLen();
 	l_wpk.WriteCmd(CMD_CP_SAY2GUD);
 	l_wpk.WriteString(pszContent);
 	g_NetIF->SendPacketMessage(l_wpk);
@@ -94,6 +101,7 @@ void  CS_Team_Invite(const char *chaname)
 	if( !g_stUIStart.IsCanTeamAndInfo() ) return;
 
 	WPacket l_wpk	=g_NetIF->GetWPacket();
+	l_wpk.WritePktLen();
 	l_wpk.WriteCmd(CMD_CP_TEAM_INVITE);
 	l_wpk.WriteString(chaname);
 	g_NetIF->SendPacketMessage(l_wpk);
@@ -102,6 +110,7 @@ void  CS_Team_Invite(const char *chaname)
 void  CS_Team_Refuse(unsigned long chaid)
 {
 	WPacket l_wpk	=g_NetIF->GetWPacket();
+	l_wpk.WritePktLen();
 	l_wpk.WriteCmd(CMD_CP_TEAM_REFUSE);
 	l_wpk.WriteLong(chaid);
 	g_NetIF->SendPacketMessage(l_wpk);
@@ -112,6 +121,7 @@ void  CS_Team_Confirm(unsigned long chaid)
 	if( !g_stUIStart.IsCanTeamAndInfo() ) return;
 
 	WPacket l_wpk	=g_NetIF->GetWPacket();
+	l_wpk.WritePktLen();
 	l_wpk.WriteCmd(CMD_CP_TEAM_ACCEPT);
 	l_wpk.WriteLong(chaid);
 	g_NetIF->SendPacketMessage(l_wpk);
@@ -122,6 +132,7 @@ void  CS_Team_Kick( DWORD dwKickedID )
 	if( !g_stUIStart.IsCanTeamAndInfo() ) return;
 
 	WPacket l_wpk	=g_NetIF->GetWPacket();
+	l_wpk.WritePktLen();
 	l_wpk.WriteCmd(CMD_CP_TEAM_KICK);
 	l_wpk.WriteLong( dwKickedID );
 	g_NetIF->SendPacketMessage(l_wpk);
@@ -132,6 +143,7 @@ void  CS_Team_Leave()
 	if( !g_stUIStart.IsCanTeamAndInfo() ) return;
 
 	WPacket l_wpk	=g_NetIF->GetWPacket();
+	l_wpk.WritePktLen();
 	l_wpk.WriteCmd(CMD_CP_TEAM_LEAVE);
 	g_NetIF->SendPacketMessage(l_wpk);
 }
@@ -139,6 +151,7 @@ void  CS_Team_Leave()
 void  CS_Frnd_Invite(const char *chaname)
 {
 	WPacket l_wpk	=g_NetIF->GetWPacket();
+	l_wpk.WritePktLen();
 	l_wpk.WriteCmd(CMD_CP_FRND_INVITE);
 	l_wpk.WriteString(chaname);
 	g_NetIF->SendPacketMessage(l_wpk);
@@ -146,6 +159,7 @@ void  CS_Frnd_Invite(const char *chaname)
 void  CS_Frnd_Refuse(unsigned long chaid)
 {
 	WPacket l_wpk	=g_NetIF->GetWPacket();
+	l_wpk.WritePktLen();
 	l_wpk.WriteCmd(CMD_CP_FRND_REFUSE);
 	l_wpk.WriteLong(chaid);
 	g_NetIF->SendPacketMessage(l_wpk);
@@ -153,6 +167,7 @@ void  CS_Frnd_Refuse(unsigned long chaid)
 void  CS_Frnd_Confirm(unsigned long chaid)
 {
 	WPacket l_wpk	=g_NetIF->GetWPacket();
+	l_wpk.WritePktLen();
 	l_wpk.WriteCmd(CMD_CP_FRND_ACCEPT);
 	l_wpk.WriteLong(chaid);
 	g_NetIF->SendPacketMessage(l_wpk);
@@ -160,6 +175,7 @@ void  CS_Frnd_Confirm(unsigned long chaid)
 void  CS_Frnd_Delete(unsigned long chaid)
 {
 	WPacket l_wpk	=g_NetIF->GetWPacket();
+	l_wpk.WritePktLen();
 	l_wpk.WriteCmd(CMD_CP_FRND_DELETE);
 	l_wpk.WriteLong(chaid);
 	g_NetIF->SendPacketMessage(l_wpk);
@@ -168,6 +184,7 @@ void  CS_Frnd_Delete(unsigned long chaid)
 void  CP_Frnd_Refresh_Info(unsigned long chaid)
 {
 	WPacket l_wpk	=g_NetIF->GetWPacket();
+	l_wpk.WritePktLen();
 	l_wpk.WriteCmd(CMD_CP_FRND_REFRESH_INFO);
 	l_wpk.WriteLong(chaid);
 	g_NetIF->SendPacketMessage(l_wpk);
@@ -198,6 +215,7 @@ void  CS_Sess_Create(const char *chaname[],unsigned char chanum)
 void  CS_Sess_Add(unsigned long sessid,const char *chaname)
 {
 	WPacket l_wpk	=g_NetIF->GetWPacket();
+	l_wpk.WritePktLen();
 	l_wpk.WriteCmd(CMD_CP_SESS_ADD);
 	l_wpk.WriteLong(sessid);
 	l_wpk.WriteString(chaname);
@@ -207,6 +225,7 @@ void  CS_Sess_Add(unsigned long sessid,const char *chaname)
 void  CS_Sess_Leave(unsigned long sessid)
 {
 	WPacket l_wpk	=g_NetIF->GetWPacket();
+	l_wpk.WritePktLen();
 	l_wpk.WriteCmd(CMD_CP_SESS_LEAVE);
 	l_wpk.WriteLong(sessid);
 
@@ -215,6 +234,7 @@ void  CS_Sess_Leave(unsigned long sessid)
 void  CS_Sess_Say(unsigned long sessid,const char *word)
 {
 	WPacket l_wpk	=g_NetIF->GetWPacket();
+	l_wpk.WritePktLen();
 	l_wpk.WriteCmd(CMD_CP_SESS_SAY);
 	l_wpk.WriteLong(sessid);
 	l_wpk.WriteString(word);
