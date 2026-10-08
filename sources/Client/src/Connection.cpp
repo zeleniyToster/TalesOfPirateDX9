@@ -144,12 +144,12 @@ int  Connection::GetConnStat()
 	}
 	//end
 
-	WPacket pk	=g_NetIF->GetWPacket();;
-	pk.WriteCmd(CMD_CM_SELROLE);			//����
-	pk.WriteLong(m_cat);
-	pk.WriteSequence(m_name, uShort(strlen(m_name) + 1));
-	if (cbNameAppendInfo)
-		pk.WriteSequence(chAppendName, uShort(strlen(chAppendName) + 1));
-	m_nt->SendData(m_datasock,pk);
+		WPacket pk	=g_NetIF->GetWPacket();;
+		pk.WriteCmd(CMD_CM_SELROLE);			//����
+		pk.WriteLong(m_cat);
+		pk.WriteSequence(m_name, uShort(strlen(m_name) + 1));
+		if (cbNameAppendInfo)
+			pk.WriteSequence(chAppendName, uShort(strlen(chAppendName) + 1));
+		m_nt->SendData(m_datasock,pk);
 	return true;
 */
