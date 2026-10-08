@@ -92,8 +92,9 @@ long Receiver::Process()
 
 		// l_reallen is the n bytes received, and the data is written to the buffer in m_rpk
 		#if DEBUG_RECEIVER
-		DEBUG_LOG << "[RECEIVER RECV] BEFORE recv() -> m_rpk valid: " << (bool)m_rpk << ", GetPktAddr: " << m_rpk.GetPktAddr() << ", m_p: " << m_p << ", HasSpace: " << HasSpace() << std::endl;
+		DEBUG_LOG << "[RECEIVER RECV] BEFORE recv() -> m_rpk valid: " << (bool)m_rpk << ", GetPktAddr: " << static_cast<void*>(m_rpk.GetPktAddr()) << ", m_p: " << m_p << std::endl;
 		DEBUG_LOG << "[RECEIVER RECV] __bufheap.unit: " << __bufheap.GetUnitSize() << ", __bufheap.used: " << __bufheap.GetUsedNum() << std::endl;
+		DEBUG_LOG << "[RECEIVER RECV] HasSpace: " << HasSpace() << std::endl;
 		#endif
 
 		l_reallen	=recv(m_datasock->m_socket,const_cast<char*>(m_rpk.GetPktAddr()) + m_p,int(HasSpace()),0);

@@ -334,7 +334,11 @@ RPacket::RPacket(const WPacket &wpk)
 RPacket::RPacket(const TcpCommApp *tca)
 :__tca(tca),m_offset(0),m_rpos(0),m_revrpos(0),m_len(0),m_tickcount(GetTickCount())
 ,m_head(tca?tca->GetPktHead():0)
-{}
+{
+	if (__tca) {
+		*this = __bufheap.Get(__tca->__pkt_maxlen);
+	}
+}
 //--------------------------------------------------------------------
 RPacket &RPacket::operator=(rbuf *bptr)
 {
