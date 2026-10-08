@@ -2,7 +2,7 @@
 #define MPEffPrerequisites_H
 
 //=============================================================================
-// 头文件
+// header files
 //=============================================================================
 #include <cassert>
 #include <cstdio>
@@ -12,7 +12,7 @@
 #include <cstdarg>
 #include <cmath>
 
-// STL 容器
+// STL containers
 #include <vector>
 #include <map>
 #include <string>
@@ -35,7 +35,7 @@
 #include "MindPowerAPI.h"
 
 //=============================================================================
-// 类型定义
+// type definitions
 //=============================================================================
 typedef unsigned char uchar;
 typedef unsigned short ushort;
@@ -45,7 +45,7 @@ typedef std::string String;
 
 
 //=============================================================================
-// 多线程
+// threading
 //=============================================================================
 #define MP_AUTO_MUTEX_NAME mpMutex
 #if MP_THREAD_SUPPORT
@@ -53,7 +53,7 @@ typedef std::string String;
 #define MP_LOCK_AUTO_MUTEX boost::recursive_mutex::scoped_lock mpAutoMutexLock(MP_AUTO_MUTEX_NAME);
 #define MP_MUTEX(name) mutable boost::recursive_mutex name;
 #define MP_LOCK_MUTEX(name) boost::recursive_mutex::scoped_lock mpNameLock(name);
-// 和MP_AUTO_MUTEX类似，但mpMutex被指针持有
+// like MP_AUTO_MUTEX, but the mutex is held by pointer
 #define MP_AUTO_SHARED_MUTEX mutable boost::recursive_mutex *MP_AUTO_MUTEX_NAME;
 #define MP_LOCK_AUTO_SHARED_MUTEX boost::recursive_mutex::scoped_lock mpAutoMutexLock(*OGRE_AUTO_MUTEX_NAME);
 #define MP_NEW_AUTO_SHARED_MUTEX MP_AUTO_MUTEX_NAME = new boost::recursive_mutex();
@@ -72,7 +72,7 @@ typedef std::string String;
 #endif
 
 //=============================================================================
-// 前置声明
+// forward declarations
 //=============================================================================
 class MPColorValue;
 class MPEffectMath;

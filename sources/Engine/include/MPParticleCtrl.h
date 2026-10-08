@@ -518,9 +518,9 @@ public:
 	//CMPShadeCtrl*				GetShade(int iIdx);
 	//int							GetShadeNum(){return m_iShadeNum;}
 
-	//!保存粒子到文件	
+	//! save the particles to a file
 	bool		 SaveToFile(char* pszName);
-	//!装入粒子从文件
+	//! load the particles from a file
 	bool		 LoadFromFile(char* pszName);
 
 	bool		 LoadFromMemory(CMemoryBuf*	pbuf);
@@ -534,15 +534,15 @@ public:
 	float						m_fLength;
 	float						m_fCurTime;
 
-	//武器拖拉出来的条带
+	// the trail dragged by a weapon
 	int							m_iStripNum;
 	CMPStrip*					m_pcStrip;
 
-	//骨骼动画
+	// skeletal animation
 	int							m_iModelNum;
 	std::vector<CChaModel*>		m_vecModel;
 
-	////骨骼动画
+	//// skeletal animation
 	//int							m_iShadeNum;
 	//std::vector<CMPShadeCtrl>	m_vecShade;
 };

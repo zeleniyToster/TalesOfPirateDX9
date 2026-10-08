@@ -35,10 +35,10 @@ struct MPLineVertex
 	DWORD		dwColor;
 };
 
-struct MPTileTex  // 单一贴图层  
+struct MPTileTex  // a single texture layer
 {
-	BYTE	btTexNo;	 // 贴图编号
-	BYTE	btAlphaNo;	 // Alpha图编号
+	BYTE	btTexNo;	 // texture number
+	BYTE	btAlphaNo;	 // alpha map number
 	MPTileTex()
 		:btTexNo(0), btAlphaNo(0)	{}
 	
@@ -60,8 +60,8 @@ inline float _getObjHeight(BYTE btValue, int no)
 {
     BYTE btLevel = btValue & 63;
     float f = (float)btLevel;
-    f*=5.0f; // 每个级别代表5厘米
-    if(btValue & 64) // 负数
+    f*=5.0f; // each step represents 5 cm
+    if(btValue & 64) // negative
     {
         return f / 100.0f * -1.0f;
     }
@@ -83,7 +83,7 @@ inline BYTE _setObjHeight(BYTE btOldValue, float fHeight, int no)
          btOldValue&=191;
      }
      BYTE btLevel = (BYTE)(fHeight / 0.05f);
-     btOldValue&=192; // 清除6位高度
+     btOldValue&=192; // clear the 6-bit height
      btOldValue|=btLevel;
      return btOldValue;
 }
@@ -93,17 +93,17 @@ struct MINDPOWER_API MPTile
 {
 	static	int		Offset[4][2];
 
-    MPTileTex		TexLayer[4]; // 最多4层重叠
-	DWORD			dwColor;	 // 左上角第一个顶点的颜色
-    short           sRegion;     // 区域属性
-    BYTE            btIsland;    // 岛屿属性
-    BYTE            btBlock[4];  // 4个分格的障碍记录
+    MPTileTex		TexLayer[4]; // at most 4 overlapping layers
+	DWORD			dwColor;	 // colour of the first vertex at the top left
+    short           sRegion;     // region attribute
+    BYTE            btIsland;    // island attribute
+    BYTE            btBlock[4];  // obstacle record for the 4 cells
     
-	float			fHeight;     // 左上角第一个顶点的高度
+	float			fHeight;     // height of the first vertex at the top left
 	
     //lemon add@2004.10.18
-	DWORD			dwTColor;	 // 临时顶点的颜色
-    DWORD           dwXColor;    // 混合后的颜色
+	DWORD			dwTColor;	 // temporary vertex colour
+    DWORD           dwXColor;    // blended colour
 
 public:
     
@@ -118,7 +118,7 @@ public:
 			TexLayer[i].btTexNo = TexLayer[i].btAlphaNo = 0;
 		    btBlock[i] = 0;
         }
-		sRegion  = 0; // 默认为海水, 区域属性 = 0
+		sRegion  = 0; // defaults to sea water, region attribute = 0
         btIsland = 0;
     }
 

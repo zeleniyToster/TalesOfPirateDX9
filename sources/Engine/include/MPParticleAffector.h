@@ -68,7 +68,7 @@ protected:
 	void addBaseParameters(void) { /* 实际上没有做任何事 - 将来可能会做一些事 */ }
 
 protected:
-	/// 粒子影响因子的类型, 必须由子类初始化
+	/// the particle affector type; must be initialised by the subclass
 	string m_Type;
 
 	MPParticleSystem* m_ParticleSystem;

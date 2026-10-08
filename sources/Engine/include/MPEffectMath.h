@@ -6,7 +6,7 @@
 #include <string>
 #include <math.h>
 
-/// 前置声明
+/// forward declarations
 class MPDegree;
 
 /** 给出的角度以弧度为单位的包装类.
@@ -93,7 +93,7 @@ public:
 	bool operator >  ( const MPDegree& d ) const { return m_fDeg >  d.m_fDeg; }
 };
 
-// 这些函数不能在MPRadian类内定义，因为这些函数需要MPDegree类的定义
+// these cannot be defined inside the MPRadian class, because they need MPDegree to be defined first
 inline MPRadian::MPRadian(const MPDegree& d) : m_fRad(d.valueRadians()) {
 }
 inline const MPRadian& MPRadian::operator =(const MPDegree& d) { 
@@ -134,10 +134,10 @@ public:
 	};
 
 protected:
-	// API内部使用的角度单位
+	// angle unit used internally by the API
 	static AngleUnit m_sAngleUnit;
 
-	/// 三角函数表由构造函数决定.
+	/// the size of the trigonometry table is chosen by the constructor
 	static int m_TrigTableSize;
 
 	/// 弧度值 -> 三角函数表中最小表示弧度 ( m_TrigTableSize / 2 * PI )
@@ -172,7 +172,7 @@ public:
 
 	static const std::string BLANK;
 
-/// 角度弧度相关
+/// degree / radian related
 	static inline float DegreesToRadians(float degrees) { return degrees * fDeg2Rad; }
 	static inline float RadiansToDegrees(float radians) { return radians * fRad2Deg; }
 	/** 这个函数用于设置整个API使用的角度单位（弧度或角度）	*/
@@ -189,11 +189,11 @@ public:
 	/** 将角度转换成当前的角度单位. */
 	static float DegreesToAngleUnits(float degrees);
 
-/// 随机数相关
+/// random number related
 	static float UnitRandom ();  // [0,1]
 	static float RangeRandom (float fLow, float fHigh);  // in [fLow,fHigh]
 
-/// 三角函数相关
+/// trigonometry related
 	/** Sine 函数.
 	@param
 		fValue 角的弧度值

@@ -52,9 +52,9 @@ private:
     lwAnimDataBone _data;
     lwMatrix44* _bone_rtmat_seq;
     lwMatrix44* _bone_rtmat_blend_seq;
-    //这里用lwIndexMatrix44而不是lwMatrix44是从接口角度考虑
+    // lwIndexMatrix44 is used here rather than lwMatrix44 for interface reasons
     //外部需要SetDummyRTM()来得到运行时刻的dummy信息，这个信息
-    //需要包含dummy的index
+    // it has to carry the dummy indices
     lwIndexMatrix44* _dummy_rtmat_seq;
     lwRTBD* _rtbuf_seq;
     lwMatrix44* _rtmat_ptr;

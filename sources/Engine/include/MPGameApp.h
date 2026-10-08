@@ -29,7 +29,7 @@ class MPConsole;
 #define M_LDown		0x0001
 #define M_MDown		0x0002
 #define M_RDown		0x0004
-#define M_Down		0x0008	// 有键按下
+#define M_Down		0x0008	// a key is down
 #define M_LUp		0x0010
 #define M_MUp		0x0020
 #define M_RUp		0x0040
@@ -37,7 +37,7 @@ class MPConsole;
 #define M_LDB		0x0100
 #define M_MDB		0x0200
 #define M_RDB		0x0400
-#define M_LClick	0x0800 // 鼠标左键点击
+#define M_LClick	0x0800 // left mouse button click
 #define M_MClick	0x1000
 #define M_RClick	0x2000
 
@@ -58,7 +58,7 @@ public:
 	~MPGameApp();
     virtual void _PreMouseRun( DWORD dwMouseKey) {}
 
-	// camMove 标识是否进入Vim 3D Vision的渲染循环
+	// camMove marks whether we are inside the Vim 3D Vision render loop
     virtual void _FrameMove(DWORD dwTimeParam, bool camMove=false)	{            }
     virtual void _Render()                     {            }
     virtual BOOL _Init()                       {return TRUE;}       
@@ -83,9 +83,9 @@ public:
 	DWORD			GetMouseKey(){ return _dwMouseKey;}
 
 	// input interface
-	BOOL IsKeyContinue(BYTE btDIKey);		// 检查按键是否连续按下
+	BOOL IsKeyContinue(BYTE btDIKey);		// check whether a key is being held down
 	BOOL IsKeyDown(BYTE btDIKey);
-	BOOL IsMouseButtonPress(int nButtonNo);  // 检查某个鼠标按钮是否按下
+	BOOL IsMouseButtonPress(int nButtonNo);  // check whether a mouse button is down
 	BOOL IsCtrlPress()
 	{
 		return (GetKeyState(VK_CONTROL) & 0xff00);
@@ -145,7 +145,7 @@ protected:
 	BOOL		_InitInput();
 	void		_RenderAxis();
 	void		_ReadKeyboardInput();
-	void		_SetupView(MPCameraNOLEECH *pCamera);	// 通过镜头的信息设置D3D ViewMatrix
+	void		_SetupView(MPCameraNOLEECH *pCamera);	// set the D3D view matrix from the camera information
 
 	// UI
 	void		_RenderUI();
@@ -230,7 +230,7 @@ protected:
 	// ----- Added by CLP ----- //
 };
 
-// 检查某个按键是否被连续按下
+// check whether a key is being held down continuously
 inline BOOL MPGameApp::IsKeyContinue(BYTE dikey)
 {
 	return isKeyHold ( dikey );

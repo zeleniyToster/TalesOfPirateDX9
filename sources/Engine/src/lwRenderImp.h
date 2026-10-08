@@ -12,12 +12,12 @@
 LW_BEGIN
 
 // remarks
-// 1。静态shader定义和声明
-//    物件初始化的时候对decl和shader赋值，中间不作光照，动画的切换
-// 2。动态shader定义和声明
-//    物件初始化的时候对decl赋值，渲染时候根据动画类型，光照类型在
-//    lwShaderDeclMgr中做动态匹配查找（查找算法对效率有要求）
-// 3。自定义Shader定义和声明（user-defined shader）
+// 1. static shader declaration and definition
+//    decl and shader are assigned when the object is initialised; no lighting or animation switch happens in between
+// 2. dynamic shader declaration and definition
+//    decl is assigned when the object is initialised; at render time the match is looked up dynamically
+//    in lwShaderDeclMgr based on the animation and lighting types (the lookup algorithm has efficiency requirements)
+// 3. user-defined shader declaration and definition
 
 
 class lwRenderCtrlAgent : public lwIRenderCtrlAgent

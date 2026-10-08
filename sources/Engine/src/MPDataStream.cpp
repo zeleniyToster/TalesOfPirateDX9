@@ -16,7 +16,7 @@ String MPDataStream::getLine(bool trimAfter)
 {
 	MPStringUtil::StrStreamType str;
 	size_t c = MP_STREAM_TEMP_SIZE-1;
-	// 一直循环直到遇到分隔符
+	// keep going until the delimiter is found
 	while (c == MP_STREAM_TEMP_SIZE-1)
 	{
 		c = readLine(m_TmpArea, MP_STREAM_TEMP_SIZE-1);
@@ -34,7 +34,7 @@ String MPDataStream::getLine(bool trimAfter)
 //-----------------------------------------------------------------------------
 String MPDataStream::getAsString(void)
 {
-	// 读取整个缓冲
+	// read the whole buffer
 	char* pBuf = new char[m_Size+1];
 	read(pBuf, m_Size);
 	pBuf[m_Size] = '\0';
@@ -68,7 +68,7 @@ MPMemoryDataStream::MPMemoryDataStream(const String& name, void* pMem, size_t si
 MPMemoryDataStream::MPMemoryDataStream(MPDataStream& sourceStream, bool freeOnClose)
 	: MPDataStream()
 {
-	// 从另一个流拷贝数据
+	// copy the data from another stream
 	m_Size = sourceStream.size();
 	m_Data = new uchar[m_Size];
 	sourceStream.read(m_Data, m_Size);
@@ -80,7 +80,7 @@ MPMemoryDataStream::MPMemoryDataStream(MPDataStream& sourceStream, bool freeOnCl
 MPMemoryDataStream::MPMemoryDataStream(MPDataStreamPtr& sourceStream, bool freeOnClose)
 	: MPDataStream()
 {
-	// 从另一个流拷贝数据
+	// copy the data from another stream
 	m_Size = sourceStream->size();
 	m_Data = new uchar[m_Size];
 	sourceStream->read(m_Data, m_Size);
@@ -92,7 +92,7 @@ MPMemoryDataStream::MPMemoryDataStream(MPDataStreamPtr& sourceStream, bool freeO
 MPMemoryDataStream::MPMemoryDataStream(const String& name, MPDataStream& sourceStream, bool freeOnClose)
 	: MPDataStream(name)
 {
-	// 从另一个流拷贝数据
+	// copy the data from another stream
 	m_Size = sourceStream.size();
 	m_Data = new uchar[m_Size];
 	sourceStream.read(m_Data, m_Size);
@@ -104,7 +104,7 @@ MPMemoryDataStream::MPMemoryDataStream(const String& name, MPDataStream& sourceS
 MPMemoryDataStream::MPMemoryDataStream(const String& name, const MPDataStreamPtr& sourceStream, bool freeOnClose)
 	: MPDataStream(name)
 {
-	// 从另一个流拷贝数据
+	// copy the data from another stream
 	m_Size = sourceStream->size();
 	m_Data = new uchar[m_Size];
 	sourceStream->read(m_Data, m_Size);
@@ -154,8 +154,8 @@ size_t MPMemoryDataStream::read(void* buf, size_t count)
 //-----------------------------------------------------------------------------
 size_t MPMemoryDataStream::readLine(char* buf, size_t maxCount, const String& delim)
 {
-	// 这里处理Unix和Windows的文件（基于 DOS/Windows 的文本文件在每一行末
-	// 尾有一个 CR（回车）和 LF（换行），而 UNIX 文本只有一个换行）
+	// this handles both Unix and Windows files (DOS/Windows text files end every
+	// line with a CR (carriage return) and an LF (line feed), while a Unix text file has only the line feed)
 	bool trimCR = false;
 	if (delim.find_first_of('\n') != String::npos)
 	{
@@ -167,7 +167,7 @@ size_t MPMemoryDataStream::readLine(char* buf, size_t maxCount, const String& de
 	if (pos > maxCount)
 		pos = maxCount;
 
-	// 确保pos不会超出eof
+	// make sure pos does not run past eof
 	if(m_Pos + pos > m_End) pos = m_End - m_Pos; 
 
 	if (pos > 0)
@@ -175,16 +175,16 @@ size_t MPMemoryDataStream::readLine(char* buf, size_t maxCount, const String& de
 		memcpy(buf, (const void*)m_Pos, pos);
 	}
 
-	// 重新设置目前的指针位置
+	// reposition the current pointer
 	m_Pos += pos + 1;
 
-	// 剔除CR（回车）和 LF（换行）
+	// strip the CR (carriage return) and the LF (line feed)
 	if (trimCR && buf[pos-1] == '\r')
 	{
 		// 删除'\r'
 		--pos;
 	}
-	// 中止符
+	// terminator
 	buf[pos] = '\0';
 
 	return pos;
@@ -195,7 +195,7 @@ size_t MPMemoryDataStream::skipLine(const String& delim)
 	// 查找下一个分隔符("\n")的位置
 	size_t pos = strcspn( (const char*)m_Pos, delim.c_str() );
 
-	// 确保pos不会超出eof
+	// make sure pos does not run past eof
 	if(m_Pos + pos > m_End) pos = m_End - m_Pos; 
 
 	m_Pos += pos + 1;
@@ -241,7 +241,7 @@ void MPMemoryDataStream::close(void)
 MPFileStreamDataStream::MPFileStreamDataStream(std::ifstream* s, bool freeOnClose)
 	: MPDataStream()
 {
-	// 计算大小
+	// compute the size
 	m_pStream->seekg(0, std::ios_base::end);
 	m_Size = m_pStream->tellg();
 	m_pStream->seekg(0, std::ios_base::beg);
@@ -250,7 +250,7 @@ MPFileStreamDataStream::MPFileStreamDataStream(std::ifstream* s, bool freeOnClos
 MPFileStreamDataStream::MPFileStreamDataStream(const String& name, std::ifstream* s, bool freeOnClose)
 	: MPDataStream(name)
 {
-	// 计算大小
+	// compute the size
 	m_pStream->seekg(0, std::ios_base::end);
 	m_Size = m_pStream->tellg();
 	m_pStream->seekg(0, std::ios_base::beg);
@@ -284,25 +284,25 @@ size_t MPFileStreamDataStream::readLine(char* buf, size_t maxCount, const String
 	{
 		LG("WARNING: FileStreamDataStream::readLine","using only first delimeter");
 	}
-	// 这里处理Unix和Windows的文件
+	// this handles both Unix and Windows files
 	bool trimCR = false;
 	if (delim.at(0) == '\n') 
 	{
 		trimCR = true;
 	}
-	// 因为不包括中止符，所有要maxCount + 1
+	// the terminator is not counted, hence maxCount + 1
 	m_pStream->getline(buf, maxCount+1, delim.at(0));
 	size_t ret = m_pStream->gcount();
-	// 3种情况
-	// 1) 遇到了eof
-	// 2) 超过缓存的空间
-	// 3) 读取了一整行 - 这种情况下分隔符在流中，但并不写入到缓存，所以
-	//    读取数据的长度为ret-1,结尾在ret-2处
-	// 所有情况缓存都以null结尾
+	// three cases
+	// 1) eof was reached
+	// 2) the buffer space was exceeded
+	// 3) a whole line was read - in this case the delimiter is in the stream but is not written to the buffer, so
+	//    the data length is ret-1 and the line ends at ret-2
+	// in every case the buffer is null terminated
 
 	if (m_pStream->eof()) 
 	{
-		// 没问题
+		// no problem
 	}
 	else if (m_pStream->fail())
 	{
@@ -324,7 +324,7 @@ size_t MPFileStreamDataStream::readLine(char* buf, size_t maxCount, const String
 		--ret;
 	}
 
-	// 剔除CR（回车）和 LF（换行）
+	// strip the CR (carriage return) and the LF (line feed)
 	if (trimCR && buf[ret-1] == '\r')
 	{
 		--ret;
@@ -347,19 +347,19 @@ size_t MPFileStreamDataStream::skipLine(const String& delim)
 //-----------------------------------------------------------------------------
 void MPFileStreamDataStream::skip(long count)
 {
-	m_pStream->clear(); //万一eof已经设置，则清除
+	m_pStream->clear(); // clear it in case eof was already set
 	m_pStream->seekg(static_cast<std::ifstream::pos_type>(count), std::ios::cur);
 }
 //-----------------------------------------------------------------------------
 void MPFileStreamDataStream::seek( size_t pos )
 {
-	m_pStream->clear(); //万一eof已经设置，则清除
+	m_pStream->clear(); // clear it in case eof was already set
 	m_pStream->seekg(static_cast<std::ifstream::pos_type>(pos), std::ios::beg);
 }
 //-----------------------------------------------------------------------------
 size_t MPFileStreamDataStream::tell(void) const
 {
-	m_pStream->clear(); //万一eof已经设置，则清除
+	m_pStream->clear(); // clear it in case eof was already set
 	return m_pStream->tellg();
 }
 //-----------------------------------------------------------------------------
@@ -386,7 +386,7 @@ void MPFileStreamDataStream::close(void)
 MPFileHandleDataStream::MPFileHandleDataStream(FILE* handle)
 	: MPDataStream(), m_FileHandle(handle)
 {
-	// 计算大小
+	// compute the size
 	fseek(m_FileHandle, 0, SEEK_END);
 	m_Size = ftell(m_FileHandle);
 	fseek(m_FileHandle, 0, SEEK_SET);
@@ -395,7 +395,7 @@ MPFileHandleDataStream::MPFileHandleDataStream(FILE* handle)
 MPFileHandleDataStream::MPFileHandleDataStream(const String& name, FILE* handle)
 	: MPDataStream(name), m_FileHandle(handle)
 {
-	// 计算大小
+	// compute the size
 	fseek(m_FileHandle, 0, SEEK_END);
 	m_Size = ftell(m_FileHandle);
 	fseek(m_FileHandle, 0, SEEK_SET);
@@ -413,7 +413,7 @@ size_t MPFileHandleDataStream::read(void* buf, size_t count)
 //-----------------------------------------------------------------------------
 size_t MPFileHandleDataStream::readLine(char* buf, size_t maxCount, const String& delim)
 {
-	// 这里处理Unix和Windows的文件
+	// this handles both Unix and Windows files
 	bool trimCR = false;
 	if (delim.find_first_of('\n') != String::npos)
 	{
@@ -425,20 +425,20 @@ size_t MPFileHandleDataStream::readLine(char* buf, size_t maxCount, const String
 	size_t readCount; 
 	while (chunkSize && (readCount = fread(m_TmpArea, chunkSize, 1, m_FileHandle)))
 	{
-		// 中止符
+		// terminator
 		m_TmpArea[readCount] = '\0';
-		// 查找第一个分隔符的位置
+		// find the position of the first delimiter
 		size_t pos = strcspn(m_TmpArea, delim.c_str());
 
 		if (pos < readCount)
 		{
-			// 找到分隔符，向后重新定位位置
+			// delimiter found, reposition after it
 			fseek(m_FileHandle, pos - readCount + 1, SEEK_CUR);
 		}
 
 		if (pos > 0)
 		{
-			// 如果找到CR，提前中止
+			// stop early if a CR was found
 			if (trimCR && m_TmpArea[pos-1] == '\r')
 			{
 				--pos;
@@ -456,7 +456,7 @@ size_t MPFileHandleDataStream::readLine(char* buf, size_t maxCount, const String
 		{
 			break;
 		}
-		// 为下次查找重新调整块大小
+		// resize the block for the next lookup
 		chunkSize = min(maxCount-totalCount, (size_t)MP_STREAM_TEMP_SIZE-1);
 
 	}

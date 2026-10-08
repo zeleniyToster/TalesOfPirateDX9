@@ -304,11 +304,11 @@ LW_RESULT lwNodePrimitive::Load(lwIGeomObjInfo* geom_info, const char* tex_path,
     LoadRenderCtrl(&info->rcci);
 
     // base info
-    // warning:注意，这里的_type用来表示MODELNODE_的类型
-    // 不能用导出的信息type来覆盖！！！
+    // warning: _type here denotes the MODELNODE_ type
+    // it must not be overwritten with the exported type!!!
     //_type = info->type;
 
-    // 基本信息_id, _link_id, _link_parent_id等已经在lwLoadModelInfo中设置
+    // the basic fields _id, _link_id, _link_parent_id etc. are already set in lwLoadModelInfo
     //_id = info->id;
     _mat_local = info->mat_local;
     //_state_ctrl = info->state_ctrl;
@@ -1008,13 +1008,13 @@ void lwNodePrimitive::SetOpacity(float opacity)
     //_state_ctrl.SetState(STATE_TRANSPARENT, opacity == 1.0f ? 0 : 1);
 }
 
-// SetParent对于parent是VertexBlendCtrl时的问题
-// 1.调整lwAnimCtrlAgent中ANIM_CTRL_TYPE_BONE的对象
-// 2.重设_ref_ctrl_obj_bone
-// 3.重设lwRenderCtrlAgent中vs_type和vs_ctrl，因为vs_type具有自定义性质
-//   所以无法通过fvf或者其他方式进行内部匹配，这里建议vs_type和vs_ctrl
-//   做外部显示重设
-//   可以不需要重设vs_type（重设效率略高）,需要重设vs_ctrl
+// problems with SetParent when parent is a VertexBlendCtrl
+// 1. adjust the ANIM_CTRL_TYPE_BONE objects in lwAnimCtrlAgent
+// 2. reset _ref_ctrl_obj_bone
+// 3. reset vs_type and vs_ctrl in lwRenderCtrlAgent; vs_type is custom,
+//    so it cannot be matched internally by fvf or any other means. Resetting them externally is
+//    recommended. vs_type need not be reset (resetting it is slightly more efficient), but vs_ctrl does
+//    need to be reset
 LW_RESULT lwNodePrimitive::SetParent(lwINode* parent)
 {
     LW_RESULT ret = LW_RET_FAILED;
@@ -2272,7 +2272,7 @@ LW_RESULT lwNodePrimitive_PlayPoseAll(lwINodePrimitive* obj, const lwPlayPoseInf
         {
             ctrl_obj = anim_agent->GetAnimCtrlObj(i);
 
-            // lwAnimCtrlObjBone在lwPrimitive中最为容器而非动画控制器
+            // in an lwPrimitive, lwAnimCtrlObjBone acts as a container rather than as an animation controller
             ctrl_obj->GetTypeInfo(&type_info);
             if (type_info.type == ANIM_CTRL_TYPE_BONE)
                 continue;

@@ -960,7 +960,7 @@ LW_RESULT lwDeviceObject::SetStreamSource(UINT stream_num, IDirect3DVertexBuffer
     if(stream_num >= LW_MAX_STREAM_NUM)
         goto __ret;
 
-    //这里不能只判断stream_data，还需要判断offset_byte,stride
+    // stream_data alone is not enough here, offset_byte and stride must be checked too
     //if(_vb_value[stream_num] == stream_data)
     //    goto __addr_ok;
     
@@ -979,7 +979,7 @@ LW_RESULT lwDeviceObject::SetIndices(IDirect3DIndexBufferX* index_data, UINT bas
 {
     LW_RESULT ret = LW_RET_FAILED;
 
-    //这里不能只判断index_data，还需要判断base_vert_index
+    // index_data alone is not enough here, base_vert_index must be checked too
     //if(_ib_value == index_data)
     //    goto __addr_ok;
     

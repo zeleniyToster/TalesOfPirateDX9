@@ -14,7 +14,7 @@ int MPTile::Offset[4][2] =
 
 
 //--------------------------- 
-// 增加贴图层(经典啊, 够简洁)
+// add a texture layer (classic, and simple enough)
 //---------------------------
 void MPTile::AddTexLayer(BYTE btTexNo, BYTE btAlphaNo)
 {
@@ -86,7 +86,7 @@ void MPTile::AddTexLayer(BYTE btTexNo, BYTE btAlphaNo)
 	TexLayer[0].btAlphaNo = 15;
 	if(btValid < 4)
 	{
-		TexLayer[btValid].btTexNo = 0; // 此层开始无效
+		TexLayer[btValid].btTexNo = 0; // this layer starts out invalid
 	}
 }
 
@@ -95,7 +95,7 @@ MPTileVertex		MPTile::_TVertex[4];
 MPSeaTileVertex		MPTile::_SVertex[4];
 
 //-----------------------------
-// 调试渲染, 非VertexBuffer方式
+// debug rendering, not via the vertex buffer
 //-----------------------------
 
 
@@ -103,8 +103,8 @@ MPSeaTileVertex		MPTile::_SVertex[4];
 void MPTile::RenderTerrain(int nX, int nY, MPTile *TileList[4])
 {
     // begin by lsh
-    // 这里有关得到render state ambient 的颜色应该使用统一的缓存
-    // 不是每次render都通过device来动态得到
+    // the render state ambient colour obtained here should use a shared cache
+    // rather than asking the device for it on every render
     lwColorValue4b amb, vert_amb, c, t, x;
     g_Render.GetDevice()->GetRenderState(D3DRS_AMBIENT, &amb.color);
     // end by lsh

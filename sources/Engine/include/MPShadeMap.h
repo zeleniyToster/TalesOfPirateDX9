@@ -9,8 +9,8 @@ class   CMPResManger;
 #define		SHADE_SINGLE		1
 #define		SHADE_ANI			2
 
-#define  MAXRADIUS	9.0f;//!影子最大的半径,在7之内可以用vs,7以上只能用soft
-#define	 MAXTILE	5 //!影子最大所能占用的格子的数量
+#define  MAXRADIUS	9.0f;//! maximum shadow radius: up to 7 can be done in the vertex shader, above 7 only with soft shadows
+#define	 MAXTILE	5 //! maximum number of cells a shadow may cover
 
 class MINDPOWER_API  CMPShadeMap// : public CEffectBase
 {
@@ -22,7 +22,7 @@ public:
 	void				setTextureName(s_string& strName);
 	s_string			getTextureName(){return _strTexName;}
 	void				BoundingRes(CMPResManger	*m_CResMagr);
-	//!创建的影子半径大小如果大于4则不能创建。
+	//! a shadow cannot be created when its radius is greater than 4.
 	bool				CreateShadeMap(float fRadius = 0.8f);
 
 	bool				SetGridNum(int iNum);
@@ -31,7 +31,7 @@ public:
 	virtual void		Render();
 
 	virtual void		RenderVS();
-	//!如果硬件不支持VS则使用
+	//! used when the hardware does not support the vertex shader
 	void				RenderSoft();
 	virtual void		MoveTo(D3DXVECTOR3 SVerPos, MPMap* pMap, float	fAngle = 0);
 

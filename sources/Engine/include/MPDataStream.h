@@ -23,13 +23,13 @@ Archive数据流的MPDataStream的派生类，除非默认提供的可以满足�
 class MINDPOWER_API MPDataStream
 {
 public:
-	/// 构造函数用来创建匿名的流
+	/// constructor that creates an unnamed stream
 	MPDataStream() : m_Size(0) {}
-	/// 构造函数用来创建命名的流
+	/// constructor that creates a named stream
 	MPDataStream(const String& name) : m_Name(name), m_Size(0) {}
 	virtual ~MPDataStream() {}
 
-	// 流操作
+	// stream operations
 	template<typename T> MPDataStream& operator>>(T& val);
 	/** 从流中读取所需字节的数据, 当遇到eof则停止.
 	@param buf 缓存的指针
@@ -88,16 +88,16 @@ public:
 
 	/** 返回流的数据的大小，如果不确定可能为0. */
 	size_t size(void) const { return m_Size; }
-	/// 返回流的名字，如果有的话.
+	/// returns the name of the stream, if it has one
 	const String& getName(void) const { return m_Name; }
 
 protected:
-	/// 用于标识资源的名字（比如资源名）(可选)
+	/// name used to identify the resource (e.g. the resource name) (optional)
 	String m_Name;		
-	/// 流中数据的大小(如果不能决定数据的大小可以为0)
+	/// size of the data in the stream (0 when the size cannot be determined)
 	size_t m_Size;
 #define MP_STREAM_TEMP_SIZE 128
-	/// 格式读取的临时缓冲区
+	/// scratch buffer used by the format readers
 	char m_TmpArea[MP_STREAM_TEMP_SIZE];
 };
 
@@ -189,13 +189,13 @@ public:
 	void close(void);
 
 protected:
-	/// 指向数据域开头的指针
+	/// pointer to the start of the data region
 	uchar* m_Data;
-	/// 指向目前所在位置的指针
+	/// pointer to the current position
 	uchar* m_Pos;
-	/// 指向数据域结尾的指针
+	/// pointer to the end of the data region
 	uchar* m_End;
-	/// 当关闭时是否删词数据
+	/// whether the data is deleted on close
 	bool m_FreeOnClose;			
 };
 
@@ -257,9 +257,9 @@ protected:
 class MINDPOWER_API MPFileHandleDataStream : public MPDataStream
 {
 public:
-	/// 从c风格文件方式构建流
+	/// build a stream from a C style file
 	MPFileHandleDataStream(FILE* handle);
-	/// 从c风格文件方式构建命名流
+	/// build a named stream from a C style file
 	MPFileHandleDataStream(const String& name, FILE* handle);
 	~MPFileHandleDataStream();
 

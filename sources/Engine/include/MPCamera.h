@@ -22,7 +22,7 @@ class MINDPOWER_API MPCameraNOLEECH
 { 
 public:
 	
-	// 视角
+	// viewing angle
 	D3DXVECTOR3	m_EyePos;
 	D3DXVECTOR3	m_RefPos;
 	

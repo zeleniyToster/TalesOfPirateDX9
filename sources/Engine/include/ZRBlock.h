@@ -15,8 +15,8 @@
 class ZRBlockData
 {
 public:
-	short           sRegion{};     // 区域属性
-	BYTE btBlock[4] = {}; // 4个分格的障碍记录
+	short           sRegion{};     // region attribute
+	BYTE btBlock[4] = {}; // obstacle record for the 4 cells
 public:
 	ZRBlockData() {}
 	~ZRBlockData(){}
@@ -54,9 +54,9 @@ class ZRBlockSection
 {
 public:
 	std::unique_ptr<ZRBlockData[]> blockData{};
-	int			 nX{};									// MapSection所在的位置
+	int			 nX{};									// position of the map section
 	int			 nY{};
-	DWORD		 dwDataOffset{};						// 文件数据指针位置 = 0, 表示没有数据
+	DWORD		 dwDataOffset{};						// a file data pointer position of 0 means there is no data
 public:
 	ZRBlockSection() = default;
 	~ZRBlockSection() = default;
@@ -68,18 +68,18 @@ public:
 	ZRBlock() = default;
 	~ZRBlock() = default;
 	BOOL                Load(const char *pszMapName, BOOL bEdit);
-	void				GetBlockByRange(int CenterX, int CenterY, int range); //动态读入一定范围的Block信息
-	ZRBlockData*		GetBlock(int nX, int nY); //获取Block数据
-    BYTE				IsGridBlock(int x, int y) const;      // x,y为小格子坐标
-	short				GetTileRegionAttr(int x, int y) const;// x,y为大格子米坐标
+	void				GetBlockByRange(int CenterX, int CenterY, int range); // load a given range of block information on demand
+	ZRBlockData*		GetBlock(int nX, int nY); // obtain the block data
+    BYTE				IsGridBlock(int x, int y) const;      // x, y are tile coordinates
+	short				GetTileRegionAttr(int x, int y) const;// x, y are block coordinates in metres
 	void                SetGrid(int GridX, int GridY);
 private:
-	std::unique_ptr<ZRBlockSection>& GetBlockSection(int nSectionX, int nSectionY); //货物存放block的动态数组
-	std::unique_ptr<ZRBlockSection>& LoadBlockData(int nSectionX, int nSectionY); //读取block数据
+	std::unique_ptr<ZRBlockSection>& GetBlockSection(int nSectionX, int nSectionY); // dynamic array holding the cargo blocks
+	std::unique_ptr<ZRBlockSection>& LoadBlockData(int nSectionX, int nSectionY); // read the block data
 	void				ClearSectionArray();
 
-	void				_LoadBlockData(ZRBlockSection& pSection); //从文件中读block数据
-	DWORD				_ReadSectionDataOffset(int nSectionX, int nSectionY); //读数据
+	void				_LoadBlockData(ZRBlockSection& pSection); // read block data from a file
+	DWORD				_ReadSectionDataOffset(int nSectionX, int nSectionY); // read the data
 
 public:
 	BYTE                m_btBlockBuffer[MAX_BLOCK_RANGE][MAX_BLOCK_RANGE] = {};
@@ -87,14 +87,14 @@ public:
 private:
 	std::array<std::array<std::unique_ptr<ZRBlockSection>, MAX_BLOCK_SECTION>, MAX_BLOCK_SECTION> m_BlockSectionArray{};
 
-	std::unique_ptr<ZRBlockData>        m_pDefaultBlock = std::make_unique<ZRBlockData>();     //默认的block数据
+	std::unique_ptr<ZRBlockData>        m_pDefaultBlock = std::make_unique<ZRBlockData>();     // default block data
 	std::fstream fs;
 
-	int					m_fShowCenterX{}; // 动态读入的中心位置
+	int					m_fShowCenterX{}; // centre of on-demand loading
 	int					m_fShowCenterY{};
-	int					m_nSectionWidth{};// 每一块Section的宽度和高度
+	int					m_nSectionWidth{};// width and height of one section block
 	int					m_nSectionHeight{};
-	int					m_nSectionCntX{};// 地图水平方向上Section的块数
+	int					m_nSectionCntX{};// number of section blocks horizontally
 	int					m_nSectionCntY{};
 	int                 m_nSectionCnt{};
 	int                 m_nLastGridStartX{};
@@ -110,7 +110,7 @@ private:
 	std::unique_ptr<DWORD[]> m_pOffsetIdx{};
 };
 
-inline BYTE ZRBlock::IsGridBlock(int x, int y) const // 小格子坐标
+inline BYTE ZRBlock::IsGridBlock(int x, int y) const // tile coordinates
 {
     int offx = x - m_nLastGridStartX;
     int offy = y - m_nLastGridStartY;
@@ -121,7 +121,7 @@ inline BYTE ZRBlock::IsGridBlock(int x, int y) const // 小格子坐标
     return m_btBlockBuffer[offy][offx];
 }
 
-inline short ZRBlock::GetTileRegionAttr(int x, int y) const // 大格子坐标
+inline short ZRBlock::GetTileRegionAttr(int x, int y) const // block coordinates
 {
     int offx = x - m_nLastGridStartX/2;
     int offy = y - m_nLastGridStartY/2;

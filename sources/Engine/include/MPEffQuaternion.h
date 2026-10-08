@@ -20,7 +20,7 @@ public:
 
 	D3DXQUATERNION& GetDXValue() { return m_qSelf; }
 
-	// 根据这个四元数旋转这个向量
+	// rotate this vector by this quaternion
 	MPEffVector3 operator* (const MPEffVector3& rkVector) const;
 
 

@@ -19,7 +19,7 @@ public:
 
 	D3DXVECTOR3& GetDXValue()	{ return m_vSelf; }
 
-	// 数学操作
+	// math operations
 	inline MPEffVector3 operator + ( const MPEffVector3& rkVector ) const
 	{
 		MPEffVector3 kSum;
@@ -69,7 +69,7 @@ public:
 	{
 		float fLength = D3DXVec3Length(&m_vSelf);
 
-		// 对于零向量也可以使用，不过并不改变任何值
+		// safe for a zero vector, although it leaves the values unchanged
 		if ( fLength > 1e-06f )
 		{
 			D3DXVec3Normalize(&m_vSelf, &m_vSelf);
@@ -92,7 +92,7 @@ public:
 
 		MPEffVector3 perp = this->crossProduct( MPEffVector3::UNIT_X );
 
-		// 检查长度 length
+		// checks that the length equals length
 		if( perp.squaredLength() < fSquareZero )
 		{
 			/* 这个轴是Y轴，所以要换一个轴.
@@ -128,7 +128,7 @@ public:
 
 		if (up == MPEffVector3::ZERO)
 		{
-			// 创建一个向上的向量
+			// create a vector pointing up
 			newUp = this->perpendicular();
 		}
 		else
@@ -136,7 +136,7 @@ public:
 			newUp = up;
 		}
 
-		// 将up向量绕着方向向量旋转随机角度
+		// rotate the up vector around the direction vector by a random angle
 		MPEffQuaternion q;
 		q.FromAngleAxis( MPRadian(MPEffectMath::UnitRandom() * MPEffectMath::TWO_PI), *this );
 		newUp = q * newUp;
@@ -146,7 +146,7 @@ public:
 		return q * (*this);
 	}
 
-	// 特殊的值
+	// special values
 	static const MPEffVector3 ZERO;
 	static const MPEffVector3 UNIT_X;
 	static const MPEffVector3 UNIT_Y;

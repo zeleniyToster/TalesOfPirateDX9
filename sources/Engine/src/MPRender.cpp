@@ -776,7 +776,7 @@ void MPRender::EndRender(const bool present) // vim
 			_bCaptureScreen = FALSE;
 		}
 
-		if (_bEnableCaptureAVI) // 连续截屏
+		if (_bEnableCaptureAVI) // take screenshots in a row
 		{
 			static int g_nAviCnt = 0;
 			char szFileName[64];

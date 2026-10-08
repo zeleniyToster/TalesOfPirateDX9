@@ -54,10 +54,10 @@ LW_BEGIN
 
 #define LW_RENDER_CTRL_PROC_NUM         512
 
-// 每个Primitive最多可以有LW_MAX_OBJ_DUMMY_NUM个Dummy，其中用于得到逆矩阵的Dummy个数为
-// LW_MAX_OBJ_DUMMY_INV_NUM个，所以这里规定在max中制作dummy的时候dummy的id具有范围限制
-// 具体数值如下：dummy_0 - dummy_3用来作为LW_MAX_OBJ_DUMMY_INV_NUM
-//               dummy_4 - dummy_7用来作为特效或者其他不需要Inverse Matrix的链接id
+// each Primitive may have at most LW_MAX_OBJ_DUMMY_NUM dummies, of which the number used to obtain inverse matrices is
+// LW_MAX_OBJ_DUMMY_INV_NUM, so dummy ids are range limited when authoring in max
+// the ranges are: dummy_0 - dummy_3 serve as the LW_MAX_OBJ_DUMMY_INV_NUM
+//               dummy_4 - dummy_7 are for effects and other link ids that need no inverse matrix
 #define LW_MAX_OBJ_DUMMY_NUM            16
 #define LW_MAX_OBJ_DUMMY_INV_NUM        4
 
@@ -77,8 +77,8 @@ enum
 enum
 {
     GEOMOBJ_TYPE_GENERIC =              0,
-    GEOMOBJ_TYPE_CHECK_BB =             1, //无方向判断
-    GEOMOBJ_TYPE_CHECK_BB2 =            2, //有方向判断，这里定义有效方向为( 0, 1, 0 )
+    GEOMOBJ_TYPE_CHECK_BB =             1, // no direction test
+    GEOMOBJ_TYPE_CHECK_BB2 =            2, // with a direction test; the effective direction is defined as (0, 1, 0)
 };
 
 enum

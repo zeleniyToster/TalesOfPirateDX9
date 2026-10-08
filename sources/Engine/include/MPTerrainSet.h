@@ -76,7 +76,7 @@ public:
 
 protected:
 
-	static MPTerrainSet* _Instance; // 相当于单键, 把自己记住
+	static MPTerrainSet* _Instance; // acts like a singleton: keeps a reference to itself
     
     virtual CRawDataInfo* _CreateRawDataArray(int nIDCnt)
 	{
@@ -134,9 +134,9 @@ protected:
 };
 
 //--------------
-// 快捷全局函数:
+// convenience global functions:
 //--------------
-inline MPTerrainInfo* GetTerrainInfo(int nID) // 通过ID取得TerrainInfo表面
+inline MPTerrainInfo* GetTerrainInfo(int nID) // obtain the TerrainInfo surface by id
 {
     return (MPTerrainInfo*)MPTerrainSet::I()->GetRawDataInfo(nID);
 }

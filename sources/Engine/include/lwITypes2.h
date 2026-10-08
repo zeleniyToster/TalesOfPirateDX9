@@ -169,7 +169,7 @@ struct lwTexInfo
     DWORD byte_alignment_flag;
     DWORD type; // file texture or user-defined texture
     // user-defined texture
-    DWORD width; // 当使用TEX_TYPE_DATA的时候，width表示data size
+    DWORD width; // when TEX_TYPE_DATA is used, width holds the data size
     DWORD height;
     // file texture
     DWORD colorkey_type;

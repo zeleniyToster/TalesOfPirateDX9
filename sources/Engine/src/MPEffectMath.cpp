@@ -73,7 +73,7 @@ MPEffectMath::~MPEffectMath()
 //-----------------------------------------------------------------------------
 void MPEffectMath::buildTrigTables(void)
 {
-	// 构建查找表
+	// build the lookup table
 	float angle;
 	for (int i = 0; i < m_TrigTableSize; ++i)
 	{

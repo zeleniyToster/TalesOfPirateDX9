@@ -59,7 +59,7 @@ public:
 	*/
 	void setAsABGR(const ABGR val);
 
-	// 一元数学操作
+	// unary math operations
 	inline MPColorValue& operator += ( const MPColorValue& rkVector )
 	{
 		r += rkVector.r;
@@ -115,7 +115,7 @@ public:
 };
 
 //=============================================================================
-// 二元数学操作
+// binary math operations
 //=============================================================================
 inline const MPColorValue operator +(const MPColorValue& lhs, const MPColorValue& rhs)
 {

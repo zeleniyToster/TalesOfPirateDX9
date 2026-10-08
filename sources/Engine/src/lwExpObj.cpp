@@ -195,7 +195,7 @@ LW_RESULT lwMtlTexInfo_Load(lwMtlTexInfo* info, FILE* fp, DWORD version)
                 t->tss_set[j].value1 = rsv->value;
             }
         }
-        //兼容旧版本的文件导出
+        // compatible with the file export of older versions
         if(info->tex_seq[0].format == D3DFMT_A4R4G4B4)
         {
             info->tex_seq[0].format = D3DFMT_A1R5G5B5;
@@ -207,14 +207,14 @@ LW_RESULT lwMtlTexInfo_Load(lwMtlTexInfo* info, FILE* fp, DWORD version)
         return LW_RET_FAILED;
     }
 
-    // 这里指定mipmap level = 3
+    // mipmap level = 3 is specified here
     //if(info->tex_seq[0].colorkey_type == COLORKEY_TYPE_NONE)
     {
         info->tex_seq[0].pool = D3DPOOL_MANAGED;
         info->tex_seq[0].level = D3DX_DEFAULT;
     }
 
-    // 兼容版本设置
+    // compatibility version setting
     BOOL transp_flag = 0;
     lwRenderStateAtom* rsa;
     DWORD i = 0;
@@ -412,8 +412,8 @@ LW_RESULT lwAnimDataTexUV::GetValue(lwMatrix44* mat, float frame)
 
     //if(_data_seq[frame].w_angle != 0.0f) {
 
-    //    // DirectX对于UV矩阵的的计算需要UV取负值才能得到需要的效果
-    //    // 可能是某个开关没有设置正确
+    //    // DirectX needs the UV negated for the UV matrix to produce the wanted result
+    //    // possibly some switch was not set correctly
     //    lwMatrix44 tmp;
     //    lwMatrix44Identity(&tmp);
 
@@ -924,7 +924,7 @@ LW_RESULT lwAnimDataBone::GetValue(lwMatrix44* mat, DWORD bone_id, float frame, 
 
     // by lsh
     // 这里frame > _frame_num 没有用">="是因为我们在考虑PLAY_LOOP的情况时
-    // 需要插值第0帧和第_data._frame_num - 1帧的数据
+    // the data of frame 0 and frame _data._frame_num - 1 has to be interpolated
     if(frame < 0 || frame > _frame_num)
         goto __ret;
 
@@ -973,7 +973,7 @@ LW_RESULT lwAnimDataBone::GetValue(lwMatrix44* mat, DWORD bone_id, float frame, 
 
             if (max_f == _frame_num)
             {
-                // 这里我们插值第0帧和第_data._frame_num - 1帧的数据
+                // here we interpolate the data of frame 0 and frame _data._frame_num - 1
                 max_f = 0;
                 //max_f = _frame_num - 1; 不作边界截断
             }

@@ -7,9 +7,9 @@
 //-----------------------------------------------------------------------------
 void MPEffQuaternion::FromAngleAxis(const MPRadian& rfAngle, const MPEffVector3& rkAxis)
 {
-	// 假设:  旋转轴是单位向量
+	// assumption: the rotation axis is a unit vector
 	//
-	// 这个旋转的四元数是
+	// the quaternion of this rotation is
 	//   q = cos(A/2)+sin(A/2)*(x*i+y*j+z*k)
 
 	MPRadian fHalfAngle(rfAngle * 0.5);
@@ -22,7 +22,7 @@ void MPEffQuaternion::FromAngleAxis(const MPRadian& rfAngle, const MPEffVector3&
 //-----------------------------------------------------------------------------
 MPEffVector3 MPEffQuaternion::operator*(const MPEffVector3& v) const
 {
-	// 根据nVidia SDK 实现
+	// implemented after the nVidia SDK
 	MPEffVector3 uv, uuv; 
 	MPEffVector3 qvec(m_qSelf.x, m_qSelf.y, m_qSelf.z);
 	uv = qvec.crossProduct(v); 

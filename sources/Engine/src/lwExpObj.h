@@ -28,11 +28,11 @@ const DWORD EXP_OBJ_VERSION_1_0_0_0 = 0x1000;
 const DWORD EXP_OBJ_VERSION_1_0_0_1 = 0x1001;
 const DWORD EXP_OBJ_VERSION_1_0_0_2 = 0x1002;
 
-// 调整导出bone使用quaternion方式保存信息时，保存每一帧的pos信息而不是第一帧
+// when exporting bones with quaternions, the pos information is saved for every frame instead of only the first
 const DWORD EXP_OBJ_VERSION_1_0_0_3 = 0x1003;
-// 调整lwMeshInfo结构，增加bone_infl_factor和vertex_decl_seq变量
+// lwMeshInfo was extended with the bone_infl_factor and vertex_decl_seq members
 const DWORD EXP_OBJ_VERSION_1_0_0_4 = 0x1004;
-// 增加新的动画类型lwAnimDataMtlOpacty
+// added the new animation type lwAnimDataMtlOpacty
 const DWORD EXP_OBJ_VERSION_1_0_0_5 = 0x1005;
 
 const DWORD EXP_OBJ_VERSION = EXP_OBJ_VERSION_1_0_0_5;
@@ -528,9 +528,9 @@ public:
 
     DWORD GetDataSize() const;
 
-    // start_frame,end_frame 用来标明frame取插值计算时候的边界
-    // 如果start_frame == LW_INVALID_INDEX和end_frame == LW_INVALID_INDEX
-    // 则不作帧边界裁减
+    // start_frame and end_frame mark the bounds used when interpolating frames
+    // if start_frame == LW_INVALID_INDEX and end_frame == LW_INVALID_INDEX
+    // no frame bound clipping is applied
     LW_RESULT GetValue(lwMatrix44* mat, DWORD bone_id, float frame, DWORD start_frame, DWORD end_frame);
 
     inline void SetBoneNum(DWORD num) { _bone_num = num; }

@@ -3,9 +3,9 @@
 #include "MindPowerAPI.h"
 #include "TableData.h"
 
-//如果定义了该宏资源文件将按照脚本文件加载
+// with this macro defined, resource files are loaded through the script file
 //#define USE_RESOURCE_SCRIPT
-#define RESOURCE_SCRIPT 0		// 0-不使用资源脚本，1-资源脚本定义，2-资源脚本使用测试时， 3-正式使用资源脚本文件
+#define RESOURCE_SCRIPT 0		// 0 no resource script, 1 resource script defined, 2 resource script while testing, 3 use the resource script file for real
 
 #pragma warning(disable: 4275)
 
@@ -46,7 +46,7 @@ public:
 		return m_pInstance; 
 	}
 
-	static MPResourceSet* m_pInstance; // 相当于单键, 把自己记住
+	static MPResourceSet* m_pInstance; // acts like a singleton: keeps a reference to itself
 
 public:
 	MPResourceSet(int nIDStart, int nIDCnt) : CRawDataSet(nIDStart, nIDCnt)

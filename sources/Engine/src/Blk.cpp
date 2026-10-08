@@ -451,7 +451,7 @@ BOOL CBlk::Compress_BLK(const char* filename, DWORD* pARGB, int width, int heigh
 
 BOOL CBlk::CompressPal(const DWORD* pARGB, int width, int height, _RGB* pPal, int & nCount)
 {
-	//立颜色索引表
+	// build the colour index table
 
 	_RGB* pPalTmp=new _RGB[width * height];
 	int	* pColorCount= new int [width * height];
@@ -474,7 +474,7 @@ BOOL CBlk::CompressPal(const DWORD* pARGB, int width, int height, _RGB* pPal, in
 			int index;
 			if((index = SearchPal(pPalTmp,nPalTmpCount,crTmp)) == -1)
 			{
-				//如果找不到
+				// if it is not found
 				pPalTmp[nPalTmpCount]=crTmp;
 				pColorCount[nPalTmpCount]=1;
 				nPalTmpCount++;
@@ -489,7 +489,7 @@ BOOL CBlk::CompressPal(const DWORD* pARGB, int width, int height, _RGB* pPal, in
 
 	if(nPalTmpCount > 256)
 	{
-		//如果颜色数大于 256 ,则取使用最多的 256 种
+		// if there are more than 256 colours, keep the 256 most used ones
 		for(i=1; i<nPalTmpCount; i++)
 		{
 			crTmp=pPalTmp[i];
@@ -544,7 +544,7 @@ int CBlk::SearchPal(_RGB* pPal, int nCount,_RGB color)
 
 int CBlk::GetColorIndex(_RGB* pPal, int nCount, _RGB color)
 {
-	//在颜色索引表中定位指定颜色的索引
+	// locate the index of the given colour in the colour index table
 	unsigned int min_diff=100000;
 	int min_index=-1;
 	unsigned int diff;

@@ -87,7 +87,7 @@ inline void	 GetDirRotation(D3DXVECTOR2* pOut, D3DXVECTOR3* pDir)
 		const auto v = D3DXVECTOR3(0.0f, 0.0f, 1.0f);
 		pOut->x = asinf(D3DXVec3Dot(pDir, &v) / fDist);
 	}
-	//求在X轴方向旋转的角度
+	// compute the angle rotated about the X axis
 	if(pDir->x == 0 && pDir->y == 0)
 	{
 		pOut->y = 0;
@@ -216,11 +216,11 @@ struct SkillCtrl
 		fRange[0] = fRange[0] = fRange[0] = -1;
 		fSize = -1;	
 	}
-	float		fDelayTime;//延迟播放的时间
-	float		fPlayTime;	//播放时间长度
-	int			iParNum;	//数量 
-	float		fRange[3];	//!在这个范围之内产生
-	float		fSize;		//粒子大小
+	float		fDelayTime;// delay before playback starts
+	float		fPlayTime;	// playback duration
+	int			iParNum;	// count
+	float		fRange[3];	//! generated within this range
+	float		fSize;		// particle size
 };
 
 
@@ -259,7 +259,7 @@ void			_FrameMoveWind(CMPPartSys* pPart,DWORD	dwDailTime);
 bool			_CreateFire(CMPPartSys* pPart,CMPParticle* pCtrl);
 void			_FrameMoveFire(CMPPartSys* pPart,DWORD	dwDailTime);
 
-//创建一个带方向的特效，这只是显示一个原地不动的物件，控制方向和运行应该由客户端来做
+// create a directional effect; this only shows a stationary object, the client is responsible for steering and animating it
 bool			_CreateArraw(CMPPartSys* pPart,CMPParticle* pCtrl);
 void			_FrameMoveArraw(CMPPartSys* pPart,DWORD	dwDailTime);
 
@@ -333,7 +333,7 @@ public:
 	int					GetSysNum(){return _iParNum;}
 	void				SetSysNum(int  iParNum)
 	{
-		// 粒子数限定在[1, 100]
+		// the particle count is clamped to [1, 100]
 		if(iParNum> 100)
 			_iParNum = 100;
 		else if(_iParNum <= 0)
@@ -540,9 +540,9 @@ public:
 	void	SetMediayEff(bool bMediay);
 	bool	IsMediay()	{ return _bMediay; }
 public:
-	//!保存粒子到文件	
+	//! save the particles to a file
 	bool		 SaveToFile(FILE* t_pFile);
-	//!装入粒子从文件
+	//! load the particles from a file
 	bool		 LoadFromFile(FILE* t_pFile, DWORD dwVersion);
 
 	bool		 LoadFromMemory(CMemoryBuf*	pbuf, DWORD dwVersion);
@@ -575,7 +575,7 @@ protected:
 	friend bool			_CreateFire(CMPPartSys* pPart,CMPParticle* pCtrl);
 	friend void			_FrameMoveFire(CMPPartSys* pPart,DWORD	dwDailTime);
 
-	//创建一个带方向的特效，
+	// create a directional effect;
 	friend bool			_CreateArraw(CMPPartSys* pPart,CMPParticle* pCtrl);
 	friend void			_FrameMoveArraw(CMPPartSys* pPart,DWORD	dwDailTime);
 
@@ -623,11 +623,11 @@ protected:
 	D3DXVECTOR3							_vAccel;
 	//float								_fInfXY;//在XY轴方向受到的影响
 
-	float								_fStep;//每隔多少时间创建一个粒子
+	float								_fStep;// interval between creating particles
 	float								_fCurTime;
 
-	float								_fDelayTime;//延迟播放的时间
-	float								_fPlayTime;//播放时间长度
+	float								_fDelayTime;// delay before playback starts
+	float								_fPlayTime;// playback duration
 	float								_fCurPlayTime;
 
 	D3DXVECTOR3							_vScale;
@@ -660,7 +660,7 @@ protected:
 
 	s_string								_strModelName;
 	CEffectModel*							_pCModel;
-	CMPModelEff*							_CPPart;//以CMPModelEff做为粒子
+	CMPModelEff*							_CPPart;// use CMPModelEff as the particle
 
 	bool									_bMediay;
 
@@ -674,19 +674,19 @@ protected:
 	D3DXVECTOR3								_vOffset;
 
 
-	bool									_bModelRange;//使用模型范围来产生粒子
-	s_string								_strVirualModel;//用来查找的虚拟模型的名称
-	std::vector<D3DXVECTOR3>				_vecPointRange;//用来产生粒子的点
-	WORD									_wVecNum;//顶点数量
+	bool									_bModelRange;// use the model bounds to generate particles
+	s_string								_strVirualModel;// name of the dummy model used for the lookup
+	std::vector<D3DXVECTOR3>				_vecPointRange;// the point particles are emitted from
+	WORD									_wVecNum;// vertex count
 
-	float									_fRange[3];	//!粒子在这个范围之内产生
+	float									_fRange[3];	//! particles are generated within this range
 
 	WORD									_wFrameCount;
 	S_BVECTOR<float>						_vecFrameSize;
 	S_BVECTOR<D3DXVECTOR3>					_vecFrameAngle;
 	S_BVECTOR<D3DXCOLOR>					_vecFrameColor;
 
-	S_BVECTOR<D3DXVECTOR3>					_vecBone;//创建的骨骼节点，粒子在这个节点上排序
+	S_BVECTOR<D3DXVECTOR3>					_vecBone;// the skeletal node that was created; particles are sorted on it
 
 	DWORD*									_pdwVShader;
 	float*									_pfDailTime;
@@ -704,7 +704,7 @@ protected:
 	D3DTEXTUREFILTERTYPE					_eMinFilter;
 	D3DTEXTUREFILTERTYPE					_eMagFilter;
 
-	//运动路径
+	// motion path
 	CEffPath*								_pcPath;
 	D3DXVECTOR3								_vSavePos;
 
@@ -755,7 +755,7 @@ inline void		RotatingXZ(D3DXMATRIX* pmat,float fAngleX, float fAngleZ)
 //public:
 //	bool				Create(int iType, s_string	strPartName,int iNumPart,s_string strModelName,
 //									D3DXVECTOR2 vRange, WORD wFrameCount, CMPResManger	*pCResMagr);
-//	//在没有从文件中读取时用这个函数初始化变量
+//	// use this function to initialise the variables when they were not loaded from a file
 //	void				InitParam(D3DXVECTOR3 vDir,D3DXVECTOR3	vVecl,
 //									D3DXVECTOR3 vAccel, int iLife, int iInfXY  =0);
 //
@@ -791,7 +791,7 @@ inline void		RotatingXZ(D3DXMATRIX* pmat,float fAngleX, float fAngleZ)
 //	void				setFrameSizeSmall(float	fsize);
 //
 //public:
-//	//指向算法的函数指针
+//	// function pointer to the algorithm
 //	void				(*FrameUpdate)(CMPMagrPart* pPart,DWORD	dwDailTime);
 //
 //
@@ -847,7 +847,7 @@ inline void		RotatingXZ(D3DXMATRIX* pmat,float fAngleX, float fAngleZ)
 //	float								_fDirXZ[2];//在XZ方向上的角度
 //};
 //
-//////////////////////控制粒子的算法列表
+////////////////////// list of algorithms that drive the particles
 //bool	_CreateRain(CMPMagrPart* pPart,CMPParticle* pCtrl);
 //void	_FrameMoveRain(CMPMagrPart* pPart,DWORD	dwDailTime);
 //

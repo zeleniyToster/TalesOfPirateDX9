@@ -15,11 +15,11 @@
 
 struct MPActiveMapSection
 {
-	MPTile*		pTileData;							// 指向实际的Tile数据
-	int			nX;									// MapSection所在的位置
+	MPTile*		pTileData;							// points at the real tile data
+	int			nX;									// position of the map section
 	int			nY;
-	DWORD		dwActiveTime;						// 最后一次使用的时间
-	DWORD		dwDataOffset;						// 文件数据指针位置 = 0, 表示没有数据
+	DWORD		dwActiveTime;						// time of last use
+	DWORD		dwDataOffset;						// a file data pointer position of 0 means there is no data
 	
 	void	Init()
 	{
@@ -127,20 +127,20 @@ public:
     void        SetSeaDefaultColor(DWORD dwColor)       { _dwSeaDefaultColor = dwColor;           }
     void        UpdateRender(BOOL bReset = FALSE)       
     { 
-        if(bReset) _nUpdateRender = 2; // 需要重新生成Group (比如读盘, 视野变化)
-        else       _nUpdateRender = 1; // 只需要重新产生VB(比如编辑器, 灯光颜色更新)
+        if(bReset) _nUpdateRender = 2; // the group has to be rebuilt (disk load, view change)
+        else       _nUpdateRender = 1; // only the vertex buffers have to be rebuilt (editor, light colour update)
     }
 
-    float       GetGridHeight(int x, int y);    // x,y为小格子坐标
-    BYTE        IsGridBlock(int x, int y);      // x,y为小格子坐标
-	float		GetTileHeight(int x, int y);    // x,y为大格子米坐标
-	short       GetTileRegionAttr(int x, int y);// x,y为大格子米坐标
+    float       GetGridHeight(int x, int y);    // x, y are tile coordinates
+    BYTE        IsGridBlock(int x, int y);      // x, y are tile coordinates
+	float		GetTileHeight(int x, int y);    // x, y are block coordinates in metres
+	short       GetTileRegionAttr(int x, int y);// x, y are block coordinates in metres
 
 public:
 
     DWORD       m_dwTerrainRenderTime;
     DWORD       m_dwSeaRenderTime;
-    DWORD       m_dwLoadingTime[3]; // 最近3次不为0的读盘时间
+    DWORD       m_dwLoadingTime[3]; // the last 3 non-zero disk load times
     DWORD       m_dwMaxLoadingTime;
     DWORD       m_dwActiveSectionCnt;
     DWORD       m_dwBatchTime;
@@ -197,16 +197,16 @@ protected:
 	
     int _nWidth{ 0 };
 	int _nHeight{ 0 };
-	int _nSectionWidth{ 0 }; // 每一块Section的宽度和高度
+	int _nSectionWidth{ 0 }; // width and height of one section block
 	int _nSectionHeight{ 0 };
-	int _nSectionCntX{ 0 }; // 地图水平方向上Section的块数
-	int _nSectionCntY{ 0 }; // 地图垂直方向上Section的块数
-	int _nSectionCnt{ 0 }; // 地图上Section的总块数
+	int _nSectionCntX{ 0 }; // number of section blocks horizontally
+	int _nSectionCntY{ 0 }; // number of section blocks vertically
+	int _nSectionCnt{ 0 }; // total number of section blocks on the map
 
-	float _fShowCenterX{ 0 }; // 动态读入的中心位置
+	float _fShowCenterX{ 0 }; // centre of on-demand loading
 	float _fShowCenterY{ 0 };
 
-	int _nShowWidth{ 0 }; // 可视范围
+	int _nShowWidth{ 0 }; // visible range
 	int _nShowHeight{ 0 };
 
 
@@ -321,7 +321,7 @@ inline void CopyMapSection(MPActiveMapSection *pSource, MPActiveMapSection *pDes
    memcpy(pDest->pTileData, pSource->pTileData, sizeof(MPTile) * 64);
 }
 
-inline float MPMap::GetTileHeight(int x, int y) // 大格子坐标
+inline float MPMap::GetTileHeight(int x, int y) // block coordinates
 {
     int offx = x - _nLastTileStartX;
     int offy = y - _nLastTileStartY;
@@ -332,7 +332,7 @@ inline float MPMap::GetTileHeight(int x, int y) // 大格子坐标
     return _fTileHeightBuffer[offy][offx];
 }
 
-inline short MPMap::GetTileRegionAttr(int x, int y) // 大格子坐标
+inline short MPMap::GetTileRegionAttr(int x, int y) // block coordinates
 {
     int offx = x - _nLastTileStartX;
     int offy = y - _nLastTileStartY;
@@ -361,7 +361,7 @@ inline float MPMap::GetGridHeight(int x, int y) // Small grid coordinates
 	}
 }
 
-inline BYTE MPMap::IsGridBlock(int x, int y) // 小格子坐标
+inline BYTE MPMap::IsGridBlock(int x, int y) // tile coordinates
 {
     int offx = x - _nLastGridStartX;
     int offy = y - _nLastGridStartY;

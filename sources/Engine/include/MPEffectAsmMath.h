@@ -7,7 +7,7 @@
 #define RAND_MAX 0x7fff
 
 
-// 返回一个随机数
+// returns a random number
 __forceinline float asm_rand()
 {
 #if 0
@@ -30,13 +30,13 @@ __forceinline float asm_rand()
 	return float( q );
 	#endif
 #else
-	// VC6 不支持 pshufw
+	// VC6 has no pshufw
 	return float( rand() );
 #endif
 
 }
 
-// 返回最大的随机数
+// returns the largest random number
 __forceinline float asm_rand_max()
 {
 #if 0
@@ -46,7 +46,7 @@ __forceinline float asm_rand_max()
 	return 9223372036854775807.0f;
 	#endif
 #else
-	// VC6 不支持 unsigned __int64
+	// VC6 has no unsigned __int64
 	return float( RAND_MAX );
 #endif
 

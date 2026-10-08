@@ -461,7 +461,7 @@ LW_RESULT lwPhysique::LoadPrimitive(DWORD part_id, lwIGeomObjInfo* geom_info)
     anim_agent->AddAnimCtrlObj(ctrl_obj);
     
 
-    // 设置父子关系
+    // set up the parent/child relationship
     imp->SetID(info->id);
     imp->SetParentID( info->parent_id );
 
@@ -479,7 +479,7 @@ LW_RESULT lwPhysique::LoadPrimitive(DWORD part_id, lwIGeomObjInfo* geom_info)
         imp->SetHelperObject(h);
     }
 
-    // 这里把ObjImp的动画数据载入也放在LoadMesh中执行
+    // the animation data of ObjImp is loaded here as part of LoadMesh
     if( info->anim_size > 0 )
     {
         imp->LoadAnimData( &info->anim_data, tex_path, 0 );
@@ -648,7 +648,7 @@ LW_RESULT lwPhysique::LoadPrimitive( DWORD part_id, const char* file )
     anim_agent->AddAnimCtrlObj(ctrl_obj);
     
 
-    // 设置父子关系
+    // set up the parent/child relationship
     imp->SetID(pInfo->id);
     imp->SetParentID( pInfo->parent_id );
 
@@ -666,7 +666,7 @@ LW_RESULT lwPhysique::LoadPrimitive( DWORD part_id, const char* file )
         imp->SetHelperObject(h);
     }
 
-    // 这里把ObjImp的动画数据载入也放在LoadMesh中执行
+    // the animation data of ObjImp is loaded here as part of LoadMesh
     if( pInfo->anim_size > 0 )
     {
         imp->LoadAnimData( &pInfo->anim_data, tex_path, &res );
@@ -736,7 +736,7 @@ LW_RESULT lwPhysique::Update()
             continue;
 
 
-        // 有父子层次结构的矩阵连乘，以后可以改进
+        // chained multiplication for a hierarchy; could be improved later
         lwMatrix44 mat( _mat_base );
         pp = imp;
         while( pp->GetParentID() != LW_INVALID_INDEX )

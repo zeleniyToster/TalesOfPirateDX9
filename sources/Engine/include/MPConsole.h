@@ -1,5 +1,5 @@
-﻿// MP Console 一个仿Quake的控制台类
-// 作为引擎提供的内部调试指令输入和信息反馈使用
+﻿// MP Console: a Quake-like console class
+// used by the engine for internal debug command input and feedback
 
 // Created By Ryan Wang
 

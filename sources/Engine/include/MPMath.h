@@ -1,6 +1,6 @@
 ﻿//#########################
 // Mind Power Math Routines
-// 历史悠久的数据函数库
+// a long standing math function library
 // Created By Ryan Wang
 //#########################
 
@@ -25,7 +25,7 @@ inline float GetM2D(float *pfVector)
 }
 
 
-//算法：共线的三点的关系， p1, p2 ,p 是否在p1,p2之间还是在p1,p2在外。: added by billy
+// algorithm: relation between three collinear points p1, p2, p - whether p lies between p1 and p2 or outside them. added by billy
 inline bool IsPoint3Intersect(D3DXVECTOR3 *p, D3DXVECTOR3* p1, D3DXVECTOR3  *p2  )
 {
 
@@ -34,12 +34,12 @@ inline bool IsPoint3Intersect(D3DXVECTOR3 *p, D3DXVECTOR3* p1, D3DXVECTOR3  *p2 
 	return false ;
 }
 
-//算法：边与面的相交情况  .: added by billy 
+// algorithm: intersection of an edge with a face. added by billy
 inline  BOOL EdgeIntersectsFace( D3DXVECTOR3* pEdges, D3DXVECTOR3* pFacePoints, 
                          D3DXPLANE* pPlane )
 {
    
-	//如果线段2点在面的一边，则不会相交
+	// if both points of the segment lie on the same side of the plane, there is no intersection
     FLOAT fDist1;
     FLOAT fDist2;
     fDist1 = pPlane->a * pEdges[0].x + pPlane->b * pEdges[0].y +
@@ -52,7 +52,7 @@ inline  BOOL EdgeIntersectsFace( D3DXVECTOR3* pEdges, D3DXVECTOR3* pFacePoints,
         return FALSE;
     }
 
-	//求交点
+	// compute the intersection point
     D3DXVECTOR3 ptIntersection;
     if( NULL == D3DXPlaneIntersectLine( &ptIntersection, pPlane, &pEdges[0], &pEdges[1] ) )
         return FALSE;

@@ -95,7 +95,7 @@ LW_RESULT lwPrimitiveObj_PlayPoseAll(lwIPrimitiveObj* obj, const lwPlayPoseInfo*
     {
         ctrl_obj = anim_agent->GetAnimCtrlObj(i);
 
-        // lwAnimCtrlObjBone在lwPrimitive中最为容器而非动画控制器
+        // in an lwPrimitive, lwAnimCtrlObjBone acts as a container rather than as an animation controller
         if(ctrl_obj->GetType() == ANIM_CTRL_TYPE_BONE)
             continue;
 
@@ -370,8 +370,8 @@ LW_RESULT lwPrimitiveObj::Load(lwIGeomObjInfo* geom_info, const char* tex_path, 
     LoadRenderCtrl(&info->rcci);
 
     // base info
-    // warning:注意，这里的_type用来表示MODELNODE_的类型
-    // 不能用导出的信息type来覆盖！！！
+    // warning: _type here denotes the MODELNODE_ type
+    // it must not be overwritten with the exported type!!!
     //_type = info->type;
 
     _id = info->id;
@@ -1002,13 +1002,13 @@ void lwPrimitiveObj::SetOpacity(float opacity)
     _state_ctrl.SetState(STATE_TRANSPARENT, opacity == 1.0f ? 0 : 1);
 }
 
-// SetParent对于parent是VertexBlendCtrl时的问题
-// 1.调整lwAnimCtrlAgent中ANIM_CTRL_TYPE_BONE的对象
-// 2.重设_ref_ctrl_obj_bone
-// 3.重设lwRenderCtrlAgent中vs_type和vs_ctrl，因为vs_type具有自定义性质
-//   所以无法通过fvf或者其他方式进行内部匹配，这里建议vs_type和vs_ctrl
-//   做外部显示重设
-//   可以不需要重设vs_type（重设效率略高）,需要重设vs_ctrl
+// problems with SetParent when parent is a VertexBlendCtrl
+// 1. adjust the ANIM_CTRL_TYPE_BONE objects in lwAnimCtrlAgent
+// 2. reset _ref_ctrl_obj_bone
+// 3. reset vs_type and vs_ctrl in lwRenderCtrlAgent; vs_type is custom,
+//    so it cannot be matched internally by fvf or any other means. Resetting them externally is
+//    recommended. vs_type need not be reset (resetting it is slightly more efficient), but vs_ctrl does
+//    need to be reset
 LW_RESULT lwPrimitiveObj::SetParent(lwIModelNode* parent)
 {
     LW_RESULT ret = LW_RET_FAILED;

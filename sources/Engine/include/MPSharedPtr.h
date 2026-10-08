@@ -10,7 +10,7 @@ protected:
 	unsigned int* m_pUseCount;
 
 public:
-	MP_AUTO_SHARED_MUTEX; // 公有访问权限允许外部锁定
+	MP_AUTO_SHARED_MUTEX; // the public access allows locking from outside
 
 	/** 默认构造函数，并没有初始化SharedPtr
 	@remarks
@@ -25,7 +25,7 @@ public:
 
 	MPSharedPtr(const MPSharedPtr& r) 
 	{
-		// 锁定并拷贝其他mutex的指针
+		// lock and copy the pointer of another mutex
 		MP_LOCK_MUTEX(*(r.MP_AUTO_MUTEX_NAME));
 		MP_COPY_AUTO_SHARED_MUTEX(r.MP_AUTO_MUTEX_NAME);
 
@@ -43,7 +43,7 @@ public:
 			return *this;
 		release();
 
-		// 锁定并拷贝其他mutex的指针
+		// lock and copy the pointer of another mutex
 		MP_LOCK_MUTEX(*(r.MP_AUTO_MUTEX_NAME));
 		MP_COPY_AUTO_SHARED_MUTEX(r.MP_AUTO_MUTEX_NAME);
 
@@ -88,7 +88,7 @@ public:
 	inline void setNull(void) { 
 		if (m_pRep)
 		{
-			// 在内部析构，这里不锁定（双判断）
+			// destructed internally; no locking here (double checked)
 			release();
 			m_pRep = 0;
 			m_pUseCount = 0;
@@ -102,7 +102,7 @@ protected:
 	{
 		bool destroyThis = false;
 		{
-			// 仅在有限的范围内锁定自己的mutex(在析构之前必须解锁)
+			// locks its own mutex for a limited scope (must be unlocked before destruction)
 			MP_LOCK_AUTO_SHARED_MUTEX;
 
 			if (m_pUseCount)
@@ -112,7 +112,7 @@ protected:
 					destroyThis = true;
 				}
 			}
-			// 到这里自动解锁（查看boost帮助）
+			// automatically unlocked here (see the boost documentation)
 		}
 		if (destroyThis)
 			destroy();
@@ -120,7 +120,7 @@ protected:
 
 	virtual void destroy(void)
 	{
-		// 如果你在这遇到崩溃，你肯定在结束程序之前没有释放指针
+		// if you crash here, you certainly failed to release the pointers before exiting
 		// 在结束程序之前使用setNull(),或确保你的指针在程序结束前超出它的范围（自动析构）
 		delete m_pRep;
 		delete m_pUseCount;

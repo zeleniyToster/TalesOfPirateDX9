@@ -84,7 +84,7 @@ int CGuiMgr::HandleMsg(unsigned long dwMsgType, DWORD dwParam1, DWORD dwParam2)
         {
 			int nMouseX = dwParam1;
 			int nMouseY = dwParam2;
-			if(_bEditor && _pFocusObj) // && 左键按下
+			if(_bEditor && _pFocusObj) // && left button down
             {
 				_pFocusObj->SetPos(_pFocusObj->GetX() + nMouseX - _nLastMouseX, _pFocusObj->GetY() + nMouseY - _nLastMouseY);
             }
@@ -357,7 +357,7 @@ BOOL CGuiMgr::LoadFromResource(const char *pszFile)
 
 void CGuiMgr::SendMessage(int nMsgType, int nGuiObjID, DWORD dwParam1, DWORD dwParam2)
 {
-	// 内部行为处理
+	// internal behaviour handling
 	if(nMsgType==MSG_GUI_BUTTON_CHECK && dwParam1==1) 
 	{
 		CGuiButton *pButton = (CGuiButton*)GetGuiObj(nGuiObjID);
@@ -476,7 +476,7 @@ void CGuiObj::Show(BOOL bShow)
 }
 
 //--------------
-//  设置遮挡层次
+//  set the occlusion levels
 //--------------
 void CGuiObj::SetLayer(int nLayer)
 {

@@ -124,7 +124,7 @@ __ret:
 
 LW_RESULT lwAnimCtrlBone::_UpdateFrameDataBone(lwMatrix44** o_mat_ptr, lwMatrix44* mat_buf, float frame, DWORD start_frame, DWORD end_frame, BOOL loop_flag)
 {
-    // 这个版本已经使用线性插值来计算帧数据
+    // this version already computes the frame data with linear interpolation
     LW_RESULT ret = LW_RET_FAILED;
 
     DWORD i;
@@ -139,7 +139,7 @@ LW_RESULT lwAnimCtrlBone::_UpdateFrameDataBone(lwMatrix44** o_mat_ptr, lwMatrix4
 
     // by lsh
     // 这里frame > _data._frame_num 没有用">="是因为我们在考虑PLAY_LOOP的情况时
-    // 需要插值第0帧和第_data._frame_num - 1帧的数据
+    // the data of frame 0 and frame _data._frame_num - 1 has to be interpolated
     if(frame < 0.0f || frame > _data._frame_num)
     {
         ret = ERR_INVALID_PARAM;
@@ -333,12 +333,12 @@ lwMatrix44* lwAnimCtrlBone::GetDummyRTM(DWORD id)
 
 LW_RESULT lwAnimCtrlBone::SetFrame(float frame, DWORD start_frame, DWORD end_frame)
 {
-    // 这个版本已经使用线性插值来计算帧数据
+    // this version already computes the frame data with linear interpolation
     LW_RESULT ret = LW_RET_FAILED;
 
     // by lsh
     // 这里frame > _data._frame_num 没有用">="是因为我们在考虑PLAY_LOOP的情况时
-    // 需要插值第0帧和第_data._frame_num - 1帧的数据
+    // the data of frame 0 and frame _data._frame_num - 1 has to be interpolated
     if(frame < 0.0f || frame > _data._frame_num)
     {
         ret = ERR_INVALID_PARAM;
@@ -424,7 +424,7 @@ __rt_get_value:
         if(LW_FAILED(_BuildRunTimeBoneMatrix(_bone_rtmat_seq, frame, start_frame, end_frame)))
             goto __ret;
 
-#else  // 一下代码已经使用_BuildRunTimeBoneMatrix替代
+#else  // the code below already uses _BuildRunTimeBoneMatrix instead
         DWORD i;
         lwMatrix44* mat_run;
         DWORD parent_id;

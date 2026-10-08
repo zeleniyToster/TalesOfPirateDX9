@@ -117,7 +117,7 @@ public:
 
 protected:
 
-	static MPTexSet* _Instance; // 相当于单键, 把自己记住
+	static MPTexSet* _Instance; // acts like a singleton: keeps a reference to itself
     
     virtual CRawDataInfo* _CreateRawDataArray(int nIDCnt)
 	{
@@ -160,7 +160,7 @@ protected:
 
 	virtual BOOL _IsFull()
 	{
-		// 如果显存占用超过8M,则开始进行界面贴图和地表贴图的动态释放
+		// once video memory usage exceeds 8M, start releasing UI and terrain textures on demand
 		DWORD dwMem = g_Render.GetRegisteredDevMemSize();
 		if(rand()%100 < 2)
 		{
@@ -225,7 +225,7 @@ protected:
 
 
 
-			// 针对dds文件格式不需要设置，只判断tga格式
+			// not needed for the dds format; only tga is examined
 			/*
 			BYTE* pbtBuf = LoadRawFileData(pTexInfo);
 			if(pbtBuf)
@@ -483,7 +483,7 @@ protected:
 };
 
 //--------------
-// 快捷全局函数:
+// convenience global functions:
 //--------------
 
 inline lwITex* GetTexByID(int nID, BOOL bRequest = FALSE)
@@ -492,7 +492,7 @@ inline lwITex* GetTexByID(int nID, BOOL bRequest = FALSE)
     return tex;
 }
 
-inline IDirect3DTextureX* GetTextureByID(int nID, BOOL bRequest = FALSE) // 通过ID取得Texture表面
+inline IDirect3DTextureX* GetTextureByID(int nID, BOOL bRequest = FALSE) // obtain the texture surface by id
 {
 #ifdef USE_MANAGED_TEXTURE
     lwITex* tex = (lwITex*)MPTexSet::I()->GetRawData(nID, bRequest);
@@ -519,7 +519,7 @@ inline SIZE GetTextureSizeByID(int nID)
     return sz;
 }
 
-inline int GetTextureID(const char *pszDataName)  // 通过名字取得Texture ID, 如果是动态ID方式又没有查找到ID, 就会自动分配一个, 返回-1表示失败
+inline int GetTextureID(const char *pszDataName)  // obtain a texture id by name; with the dynamic id scheme an unmatched name gets one allocated automatically, -1 on failure
 {
     if(MPTexSet::I()!=NULL)
 	{
@@ -529,7 +529,7 @@ inline int GetTextureID(const char *pszDataName)  // 通过名字取得Texture I
 	return 0;
 }
 
-inline MPTexInfo* GetTextureInfo(int nID) // 通过ID取得Texture描述信息
+inline MPTexInfo* GetTextureInfo(int nID) // obtain the texture descriptor by id
 {
 	if(MPTexSet::I()!=NULL)
 	{
@@ -547,7 +547,7 @@ inline BOOL IsAlphaTexture(int nID)
 
 inline BOOL IsTextureExist(const char *pszDataName)
 {
-    if(MPTexSet::I()->IsEnablePack()==FALSE) // 非打包方式下
+    if(MPTexSet::I()->IsEnablePack()==FALSE) // in the unpacked case
     {
         if(Util_IsFileExist((char*)pszDataName))
         {

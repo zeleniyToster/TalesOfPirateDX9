@@ -3,7 +3,7 @@
 
 #include "MPEffPrerequisites.h"
 
-/// 可用的参数列表
+/// list of the available parameters
 enum MPParameterType
 {
 	PT_BOOL,
@@ -22,7 +22,7 @@ enum MPParameterType
 	PT_COLOURVALUE
 };
 
-/// 参数定义,用于支持MPParameterInteface的反射机制
+/// parameter definition, used by the reflection mechanism of MPParameterInterface
 class MINDPOWER_API MPParameterDef
 {
 public:
@@ -49,10 +49,10 @@ class MINDPOWER_API MPParamDictionary
 {
 	friend class MPParameterInterface;
 protected:
-	/// 参数定义
+	/// parameter definition
 	MPParameterList m_ParamDefs;
 
-	/// 用于get/set的参数对象
+	/// parameter object used for get/set
 	ParamCommandMap m_ParamCommands;
 
 	/** 返回有名参数的参数对象. */
@@ -151,12 +151,12 @@ public:
 
 	virtual String getParameter(const String& name) const
 	{
-		// 得到字典
+		// obtain the dictionary
 		const MPParamDictionary* dict = getParamDictionary();
 
 		if (dict)
 		{
-			// 查找参数对象
+			// look up a parameter object
 			const MPParamCommand* cmd = dict->getParamCommand(name);
 
 			if (cmd)
@@ -165,18 +165,18 @@ public:
 			}
 		}
 
-		// 失败
+		// failure
 		return "";
 	}
 
 	virtual void copyParametersTo(MPParameterInterface* dest) const
 	{
-		// 得到字典
+		// obtain the dictionary
 		const MPParamDictionary* dict = getParamDictionary();
 
 		if (dict)
 		{
-			// 遍历自己的参数
+			// iterate over our own parameters
 			ParameterList::const_iterator i;
 
 			for (i = dict->mParamDefs.begin(); 
@@ -215,9 +215,9 @@ protected:
 
 protected:
 
-	/// 参数字典
+	/// parameter dictionary
 	static MPParamDictionaryMap m_sDictionary;
-	/// 用于查找的类名 (必须由子类初始化)
+	/// class name used for the lookup (must be initialised by the subclass)
 	String m_ParamDictName;
 
 };

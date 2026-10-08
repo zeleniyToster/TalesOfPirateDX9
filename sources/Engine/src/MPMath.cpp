@@ -222,7 +222,7 @@ int GetSamplePointList(float fStartX, float fStartY, float fEndX, float fEndY, f
 
     D3DXVECTOR3 vM = D3DXVECTOR3(0.0f, 0.0f, 1.0f);
 	D3DXVECTOR3 vShift;
-	D3DXVec3Cross(&vShift, &vecDir, &vM); // 取得水平方向的向量
+	D3DXVec3Cross(&vShift, &vecDir, &vM); // obtain a vector in the horizontal direction
 	D3DXVec3Normalize(&vShift, &vShift);
 			
     float fDis = DistanceFrom(vecStart, vecEnd);

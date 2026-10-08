@@ -1,6 +1,6 @@
-﻿// D3D Render 封装D3D的相关操作
-// 几个主要功能为 :  View Type管理
-//                   WorldViewRegion管理
+﻿// D3D Render: wraps the relevant D3D operations
+// the main responsibilities are: view type management
+//                    world view region management
 // 					 BeginRender, EndRender()
 //                   Ray Tracing
 //                   Draw Basic Geometry 
@@ -30,12 +30,12 @@
 
 enum INFO_TYPE
 {
-// 输入信息类型定义
-	 INFO_DEBUG  = 0,  // 调试专用
-	 INFO_PERF      ,  // 显示Performance专用
-	 INFO_CMD       ,  // 显示Console文字专用
-	 INFO_FPS       ,  // FPS专用
-	 INFO_GAME         // 游戏专用
+// input message type definitions
+	 INFO_DEBUG  = 0,  // debugging only
+	 INFO_PERF      ,  // performance display only
+	 INFO_CMD       ,  // console text display only
+	 INFO_FPS       ,  // FPS only
+	 INFO_GAME         // in-game only
 };
 
 
@@ -48,8 +48,8 @@ struct MPLine
 
 struct MPCullInfo              
 {
-    D3DXVECTOR3 vecFrustum[8];    // 平截头的8个顶点
-    D3DXPLANE planeFrustum[6];    // 平截头的6个面
+    D3DXVECTOR3 vecFrustum[8];    // the 8 vertices of a frustum
+    D3DXPLANE planeFrustum[6];    // the 6 faces of a frustum
 };  //added by billy 
 
 //class  CMPFont;
@@ -227,10 +227,10 @@ public:
     
     enum VIEW_TYPE
 	{
-		VIEW_SCREEN = 0, // 以整个屏幕做为View
-		VIEW_WORLD     , // 以WorldView的区域作为View
-		VIEW_UI ,         // 界面通常需要的平面渲染View
-        VIEW_3DUI ,      // 3D界面
+		VIEW_SCREEN = 0, // the whole screen as the view
+		VIEW_WORLD     , // the world view region as the view
+		VIEW_UI ,         // the flat orthographic view the UI normally needs
+        VIEW_3DUI ,      // 3D user interface
 	};
 
 	void	AddLine(const VECTOR3& v1, const VECTOR3& v2, DWORD dwColor = 0xFFFFFFFF);
@@ -271,30 +271,30 @@ protected:
 	//@}
 	IDirect3DDeviceX*		_pD3DDevice;
     D3DVIEWPORTX            _view;
-    int                     _nScrWidth;         // 屏幕宽度
-    int                     _nScrHeight;        // 屏幕高度
+    int                     _nScrWidth;         // screen width
+    int                     _nScrHeight;        // screen height
     int                     _nColorBit;
     BOOL                    _bFullScreen;
     D3DXMATRIXA16		    _matProjWorld;
-	D3DXMATRIXA16			_matViewWorld;		// 当前世界View	Matrix
-	D3DXMATRIXA16			_matUIView;			// 当前界面用View Matrix
-	D3DXMATRIXA16			_matUIProj;			// 当前界面用Proj Matrix
-	D3DXMATRIXA16			_matViewProj;		// = Proj * View, 为了提高GetRay的速度而临时存放		
+	D3DXMATRIXA16			_matViewWorld;		// current world view matrix
+	D3DXMATRIXA16			_matUIView;			// view matrix used by the UI
+	D3DXMATRIXA16			_matUIProj;			// projection matrix used by the UI
+	D3DXMATRIXA16			_matViewProj;		// = Proj * View, cached to speed up GetRay
     D3DXMATRIXA16           _mat3DUIView;
     D3DXMATRIXA16           _mat3DUIProj;
 	
-	int                     _nWorldViewStartX;  // 屏幕上显示游戏世界的起点位置
+	int                     _nWorldViewStartX;  // origin of the game world as drawn on screen
     int                     _nWorldViewStartY;  
-    int                     _nWorldViewWidth;   // 屏幕上显示游戏世界的尺寸
+    int                     _nWorldViewWidth;   // size of the game world as drawn on screen
     int                     _nWorldViewHeight;
-    DWORD                   _dwBackgroundColor; // 屏幕背景清除颜色
+    DWORD                   _dwBackgroundColor; // screen background clear colour
     DWORD                   _dwClearFlag;
     BOOL                    _bClearTarget;
     BOOL                    _bClearStencil;
     BOOL                    _bClearZBuffer;
 	float                   _fWorldViewFOV;
 	 float					_fAspect;
-	int						_nCurViewType;      // 避免SetCurrentView中重复设置
+	int						_nCurViewType;      // avoids redundant work in SetCurrentView
 	float					_fNearClip;
 	float					_fFarClip;
 	

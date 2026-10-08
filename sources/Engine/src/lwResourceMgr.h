@@ -360,11 +360,11 @@ public:
 };
 
 // remarks by lsh
-// 有关lwMesh和lwMeshInfo之间的关系
-// 1。lwMeshInfo作为纯粹的C类型结构体，再关联一组construct和destruct等的辅助函数。
-//    lwMesh聚合该结构体
-// 2。lwMeshInfo是一个class，同时拥有lwIMeshInfo的接口方式
-//    lwMesh继承（或引用接口指针）该类，在效率上不能接受
+// the relationship between lwMesh and lwMeshInfo
+// 1. lwMeshInfo is a plain C structure plus a set of construct and destruct style helpers
+//    lwMesh aggregates that structure
+// 2. lwMeshInfo is also a class with the lwIMeshInfo interface
+//    lwMesh inheriting from (or referring to) it is not acceptable for efficiency
 // 
 class lwMesh : public lwIMesh
 {
@@ -715,8 +715,8 @@ public:
     LW_RESULT GetTex( lwITex** ret_obj, DWORD id );
     LW_RESULT GetAnimCtrl( lwIAnimCtrl** ret_obj, DWORD id );
 
-    // 直接注册，不通过文件方式查找，在这种情况下一旦内存数据被删除，显存数据将创建失败
-    // 适用于一些帮助性的物体，如BoundingBox等
+    // registered directly instead of being looked up through a file; in this case, once the memory data is released, creating the video memory data will fail
+    // suitable for helper objects such as the bounding box
     LW_RESULT RegisterMesh( lwIMesh* obj );
     LW_RESULT RegisterTex( lwITex* obj );
     LW_RESULT RegisterAnimCtrl( lwIAnimCtrl* obj );
@@ -738,7 +738,7 @@ public:
 
     LW_RESULT QueryMesh( DWORD* ret_id, const lwResFileMesh* rfm );
     LW_RESULT QueryTex( DWORD* ret_id, const char* file_name );
-    // 目前只有RegisterAnimData时候使用RES_FILE_TYPE_GENERIC或RES_FILE_TYPE_GEOMETRY文件类型的资源才有效
+    // currently only valid for resources registered by RegisterAnimData with the RES_FILE_TYPE_GENERIC or RES_FILE_TYPE_GEOMETRY file type
     LW_RESULT QueryAnimCtrl( DWORD* ret_id, const lwResFileAnimData* info );
 
     LW_VOID ReleaseObject();

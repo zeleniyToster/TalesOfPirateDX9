@@ -5,33 +5,33 @@
 struct IMG_HEADER 
 {
 	DWORD	m_dwMarks;		// 标志位 'RYO'
-	WORD	m_LibType;		// 被打包的图像类型
-	WORD	m_wPackedDirectory;	// 图像包中被打包的目录数,　最大允许数量 65535
+	WORD	m_LibType;		// type of the packed image
+	WORD	m_wPackedDirectory;	// number of directories packed into the image pack, at most 65535
 
-	WORD	m_wGridX;		// 该图包内所有图像的的重心位置
-	WORD	m_wGridY;		// 该图包内所有图像的的重心位置
-	WORD	m_wVer;			//	版本号
+	WORD	m_wGridX;		// centre of gravity of all the images in this pack
+	WORD	m_wGridY;		// centre of gravity of all the images in this pack
+	WORD	m_wVer;			//	version number
 
-	BYTE	m_bAlphaInfo;	//	Alpha 信息
-	BYTE	m_bShadowInfo;	//	Shadow 信息
+	BYTE	m_bAlphaInfo;	//	Alpha information
+	BYTE	m_bShadowInfo;	//	Shadow information
 };
 
 // ----------------------- IMG_BLOCK ------------------------------------//
-struct IMG_BLOCK					//	图像块信息
+struct IMG_BLOCK					//	image block information
 {	
-	BYTE	m_byPixelDepth;			// 像素位深
-	BYTE	m_byUseRle;				// 是否使用RLE
-	BYTE	m_byUseAlpha;			// 是否有Alpha通道
+	BYTE	m_byPixelDepth;			// pixel bit depth
+	BYTE	m_byUseRle;				// whether RLE is used
+	BYTE	m_byUseAlpha;			// whether there is an alpha channel
 	BYTE	m_byNone1;
 
-	WORD	m_wPalCount;			// 块中使用到的色盘数量基数
-	WORD	m_wWidth;				// 图像宽度
-	WORD	m_wHeight;				// 图像高度
+	WORD	m_wPalCount;			// base count of the palette entries used by the block
+	WORD	m_wWidth;				// image width
+	WORD	m_wHeight;				// image height
 
-	WORD	m_wTotalWidthBlock;		// 宽的数据块数量
-	WORD	m_wTotalHeightBlock;	// 高的数据块数量	
-	WORD	m_wTailBlockWidth;		// 末尾的块宽
-	WORD	m_wTailBlockHeight;		// 末尾的块高
+	WORD	m_wTotalWidthBlock;		// number of wide blocks
+	WORD	m_wTotalHeightBlock;	// number of tall blocks
+	WORD	m_wTailBlockWidth;		// width of the trailing blocks
+	WORD	m_wTailBlockHeight;		// height of the trailing blocks
 	BYTE	m_byNone2;
 	BYTE	m_byNone3;
 
@@ -50,7 +50,7 @@ struct _RGB
 	bool operator == (_RGB& v) {return ( (0x00ffffff & this->operator DWORD() ) == (0x00ffffff & v.operator DWORD() ) );}
 	_RGB& operator = (DWORD dwRGB){ (*this) = (*(_RGB*)&dwRGB); return *this;}
 
-	//返回两颜色的差值
+	// returns the difference between two colours
 	unsigned int Difference(_RGB& v){ 
 		int dr,dg,db;
 		dr=(int)r-(int)v.r;

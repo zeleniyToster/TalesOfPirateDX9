@@ -896,7 +896,7 @@ int lwCheckVectorInTriangle2D2(int* flag,const lwVector2* vp,const lwVector2* v1
 	lwVec2Sub(&vec_3,v3,vp);
 
 	if( *vp == *v1 ) {		
-		*flag = 0; // 点重合
+		*flag = 0; // the points coincide
 		return 3;
 	}
 	else if( *vp == *v2 ) {
@@ -916,7 +916,7 @@ int lwCheckVectorInTriangle2D2(int* flag,const lwVector2* vp,const lwVector2* v1
 	if( lwFloatZero(vz1,esp) )  {
 		if( lwVec2Dot( &vec_1, &vec_2 ) > 0 )
 			return 0;
-		*flag = 0; // 边重合
+		*flag = 0; // the edges coincide
 		return 2;
 	}
 	else if( lwFloatZero(vz2,esp) ) {
@@ -933,7 +933,7 @@ int lwCheckVectorInTriangle2D2(int* flag,const lwVector2* vp,const lwVector2* v1
 	}
 
 	if( (vz1<0.0f && vz2<0.0f && vz3<0.0f) || (vz1>0.0f && vz2>0.0f && vz3>0.0f) ) {		 
-        return 1;// 里面
+        return 1;// inside
 	}
     else
         return 0;
@@ -1409,8 +1409,8 @@ int lwIntersectBoxBoxAABB( const lwBox* b1, const lwBox* b2 )
 }
 int lwIntersectBoxBoxOBB( const lwBox* b1, const lwBox* b2, const lwMatrix44* mat )
 {
-    //方法一 先分别做3个面的投影判断，最后做内法线判断
-    //方法二 得到中心点连线向量，判断该向量和box的half_size的关系
+    // method 1: project onto each of the three faces first, then test the interior normal
+    // method 2: take the vector from the centre point and compare it against the box half_size
     //lwVector3 b_cen( b.GetCenter() );
     //lwVec3Mat44Mul( &b_cen, mat );
     //lwVector3 vec_cen;
@@ -1425,7 +1425,7 @@ int lwIntersectBoxBoxOBB( const lwBox* b1, const lwBox* b2, const lwMatrix44* ma
     //    float r1 = ea[i];
     //    float r2 = b.GetCenter()
     //}
-    ////方法三 将b中的八个点乘以mat矩阵，然后判断这八个点是否在box中
+    ////method 3: multiply the eight points of b by the matrix, then test whether all eight lie inside the box
     //lwMatrix44 mat_inv;
     //lwMatrix44Inverse( &mat_inv, mat );
 
@@ -1753,7 +1753,7 @@ int lwGetVecNormalAxisMapping(int* i1,int* i2,const lwVector3* vec)
 	int ret;
     lwVector3 vn( fabsf(vec->x),fabsf(vec->y),fabsf(vec->z) );
 
-	// 如果法向量三维坐标的某个分量的绝对值最大，我们就可以选择与该坐标轴垂直的平面作为投影平面
+	// if one component of the normal dominates in absolute value, the plane perpendicular to that axis can be used as the projection plane
     if( vn.x > vn.y ) {
       if( vn.x > vn.z ) { 
 		  t1 = 1; 
@@ -1793,7 +1793,7 @@ int lwCheckVectorInTriangle3D( const lwVector3* v, const lwVector3* v0, const lw
 
 	lwGetVecNormalAxisMapping( &i1, &i2, n );
 
-	// begin 以下代码一知半解,不明白的是a,b代表的意义	
+	// begin the code below is only half understood; what a and b stand for is unclear
 #if 1
     lwVector3 p( (*v)[i1] - (*v0)[i1],
                 (*v1)[i1] - (*v0)[i1],
@@ -1820,7 +1820,7 @@ int lwCheckVectorInTriangle3D( const lwVector3* v, const lwVector3* v0, const lw
     return (a>=0 && (a+b)<=1);
 	// end
 #else
-	// begin 第二种方法
+	// begin the second method
 	lwVector2 vh( (*v)[i1], (*v)[i2] );
 	lwVector2 v1( (*v0)[i1], (*v0)[i2] );
 	lwVector2 v2( (*v1)[i1], (*v1)[i2] );
@@ -1854,7 +1854,7 @@ int lwCheckVectorInTriangle3D2( int* flag, const lwVector3* v, const lwVector3* 
 	lwVector2 va( (*v0)[i1], (*v0)[i2] );
 	lwVector2 vb( (*v1)[i1], (*v1)[i2] );
 	lwVector2 vc( (*v2)[i1], (*v2)[i2] );
-	// 这儿我希望返回值中包含该点的位置信息,所以用lwCheckVectorInTriangle2D2
+	// here I want the return value to carry the position of the point, so lwCheckVectorInTriangle2D2 is used
 	return lwCheckVectorInTriangle2D2( flag, &vh, &va, &vb, &vc );
 }
 
@@ -2043,7 +2043,7 @@ float lwGetDirTurnAngle( const lwVector2* src_dir, const lwVector2* dst_dir )
 {   
     // check dir
     float dotv = lwVec2Dot( src_dir, dst_dir );
-    // float计算存在细微误差出现1.0000113类似情况，而在acosf(1.0000113)计算得到非法的值
+    // float arithmetic has small errors that can produce values like 1.0000113, and acosf(1.0000113) then yields an illegal value
     if( dotv > 1.0f )
         dotv = 1.0f;
     float acsv = acosf( dotv );

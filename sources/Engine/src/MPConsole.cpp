@@ -151,7 +151,7 @@ void MPConsole::Show(BOOL bShow)
     _bVisible = bShow; 
 }
 
-void MPConsole::FrameMove() // 光标闪动
+void MPConsole::FrameMove() // cursor blink
 {
     DWORD dwTick = GetTickCount();
     if(_dwCursorTick==0) _dwCursorTick = dwTick;

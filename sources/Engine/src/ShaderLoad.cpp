@@ -311,7 +311,7 @@ LW_RESULT LoadShader1(lwISysGraphics* sys_graphics)
 
 #if (defined LW_USE_DX9)
 
-    // 有关dx9部分没有更新
+    // the dx9 side has not been updated
     //const char* shader_file[] = 
     //{
     //    "skinmesh9_1.vsh",

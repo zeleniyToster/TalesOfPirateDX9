@@ -7,7 +7,7 @@ class MPMapIterator
 private:
 	typename T::iterator mCurrent;
 	typename T::iterator mEnd;
-	/// 私有构造函数，因为仅必须提供参数
+	/// private constructor, since only arguments may be supplied
 	MapIterator() {};
 public:
 	typedef typename T::mapped_type MappedType;

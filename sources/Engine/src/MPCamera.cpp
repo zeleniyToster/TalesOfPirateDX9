@@ -101,7 +101,7 @@ VOID MPCameraNOLEECH::Move(DWORD dwMoveType)
 				m_RefPos.x , m_RefPos.y , m_RefPos.z); 
 }
 
-// 前后移动镜头, Hang表示是否悬浮移动
+// move the camera forward and back; Hang means it flies rather than walks
 void MPCameraNOLEECH::MoveForward(float fStep, BOOL bHang)
 {
 	D3DXVECTOR3 Move(0 , 0 , 0);
@@ -120,7 +120,7 @@ void MPCameraNOLEECH::MoveForward(float fStep, BOOL bHang)
 	m_EyePos+=Move;
 }
 
-// 左右移动镜头, Hang表示是否悬浮移动
+// move the camera left and right; Hang means it flies rather than walks
 void MPCameraNOLEECH::MoveRight(float fStep, BOOL bHang)
 {
 	D3DXVECTOR3 Move(0 , 0 , 0);
@@ -261,7 +261,7 @@ void		MPCameraNOLEECH::FrameMove(DWORD	dwTailTime)
 //
 //
 //
-////左右旋转
+////rotate left and right
 //void MPCamera::RotationCameraLR(float Angle)
 //{
 //	//m_fRotaVel = 0.000001f;
@@ -295,7 +295,7 @@ void		MPCameraNOLEECH::FrameMove(DWORD	dwTailTime)
 //
 //	//vDistFrom = tv - m_RefPos;
 //}
-////上下旋转
+////rotate up and down
 //void MPCamera::RotationCameraUD(float Angle)
 //{
 //	//m_cameractrl.ScrollUD(Angle);

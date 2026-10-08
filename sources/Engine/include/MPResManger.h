@@ -238,7 +238,7 @@ public:
 
 	void					SendResMessage(const s_string& strPartName, D3DXVECTOR3 vPos, MPMap* pMap);
 public:
-	//!3D设备
+	//! 3D device
 #ifdef		USE_RENDER
 	MPRender*					m_pDev;
 #else
@@ -258,7 +258,7 @@ public:
 	lwISystem*					m_pSys;
     lwISysGraphics*             m_pSysGraphics;
 protected:
-	//!装入一个组合效果
+	//! load a composite effect
 	bool					LoadEffectFromFile(int idx, char* pszFileName);
 
 	void					LoadTotalRes();
@@ -309,7 +309,7 @@ protected:
 	IDirect3DVertexShaderX*					_dwFontVS;
 
 	IDirect3DVertexShaderX*					_dwMinimapVS;
-	bool									_bMagr;//是否使用统一管理
+	bool									_bMagr;// whether unified management is used
 
 	CMPEffectFile						_CEffectFile;
 	//VEC_int								_vecEffTech;

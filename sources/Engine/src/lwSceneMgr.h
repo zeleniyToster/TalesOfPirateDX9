@@ -10,7 +10,7 @@
 LW_BEGIN
 
 // remarks: by lsh
-// 1。具有透明属性的物件只有在显式调用加入scene manger后才做排序
+// 1. objects with transparency are sorted only after they have been explicitly added to the scene manager
 struct lwSortPriProcInfo
 {
     lwTranspPrimitiveProc proc;

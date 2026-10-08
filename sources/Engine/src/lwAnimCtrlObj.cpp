@@ -34,7 +34,7 @@ LW_RESULT lwAnimCtrlObjMat::Clone(lwIAnimCtrlObjMat** ret_obj)
         goto __ret;
 
     o->AttachAnimCtrl(_anim_ctrl);
-    // 这里以后需要使用lwAnimCtrl_Ref来获得引用计数
+    // lwAnimCtrl_Ref will be used here later to obtain the reference count
     if(_anim_ctrl->GetRegisterID() != LW_INVALID_INDEX)
     {
         _res_mgr->AddRefAnimCtrl(_anim_ctrl, 1);
@@ -184,7 +184,7 @@ LW_RESULT lwAnimCtrlObjBone::Clone(lwIAnimCtrlObjBone** ret_obj)
         goto __ret;
 
     o->AttachAnimCtrl(_anim_ctrl);
-    // 这里以后需要使用lwAnimCtrl_Ref来获得引用计数
+    // lwAnimCtrl_Ref will be used here later to obtain the reference count
     if(_anim_ctrl->GetRegisterID() != LW_INVALID_INDEX)
     {
         _res_mgr->AddRefAnimCtrl(_anim_ctrl, 1);
@@ -328,7 +328,7 @@ LW_RESULT lwAnimCtrlObjBone::UpdateHelperObject(lwIHelperObject* helper_obj)
     LW_RESULT ret = LW_RET_FAILED;
 
     // 这里不用IsPlaying()来作为判断条件，因为当lwAnimCtrlObjBone为
-    // 容器时，其并不做Playing，但是需要更新HelperObject
+    // as a container it does not play, but the HelperObject still has to be updated
     //if(!IsPlaying() || helper_obj == 0)
     if(_dummy_rtm_num == 0 || helper_obj == 0)
         goto __addr_ret_ok;
@@ -422,7 +422,7 @@ LW_RESULT lwAnimCtrlObjTexUV::Clone(lwIAnimCtrlObjTexUV** ret_obj)
         goto __ret;
 
     o->AttachAnimCtrl(_anim_ctrl);
-    // 这里以后需要使用lwAnimCtrl_Ref来获得引用计数
+    // lwAnimCtrl_Ref will be used here later to obtain the reference count
     if(_anim_ctrl->GetRegisterID() != LW_INVALID_INDEX)
     {
         _res_mgr->AddRefAnimCtrl(_anim_ctrl, 1);
@@ -563,7 +563,7 @@ LW_RESULT lwAnimCtrlObjTexImg::Clone(lwIAnimCtrlObjTexImg** ret_obj)
         goto __ret;
 
     o->AttachAnimCtrl(_anim_ctrl);
-    // 这里以后需要使用lwAnimCtrl_Ref来获得引用计数
+    // lwAnimCtrl_Ref will be used here later to obtain the reference count
     if(_anim_ctrl->GetRegisterID() != LW_INVALID_INDEX)
     {
         _res_mgr->AddRefAnimCtrl(_anim_ctrl, 1);
@@ -704,7 +704,7 @@ LW_RESULT lwAnimCtrlObjMtlOpacity::Clone(lwIAnimCtrlObjMtlOpacity** ret_obj)
         goto __ret;
 
     o->AttachAnimCtrl(_anim_ctrl);
-    // 这里以后需要使用lwAnimCtrl_Ref来获得引用计数
+    // lwAnimCtrl_Ref will be used here later to obtain the reference count
     if(_anim_ctrl->GetRegisterID() != LW_INVALID_INDEX)
     {
         _res_mgr->AddRefAnimCtrl(_anim_ctrl, 1);
