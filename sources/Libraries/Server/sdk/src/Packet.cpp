@@ -120,7 +120,7 @@ void WPacket::WritePktLen()
 	uShort		l_lens;
 	uChar		l_lenc;
 	if(!bool(*this))	return;
-	if(GetPktLen() <(__tca->__len_offset +__tca->__len_size))	return;
+	if(GetPktLen() <=(__tca->__len_offset +__tca->__len_size))	return;
 	switch(__tca->__len_size)
 	{
 	case sizeof(uShort):
