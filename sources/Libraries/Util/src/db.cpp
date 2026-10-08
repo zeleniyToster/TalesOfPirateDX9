@@ -406,7 +406,7 @@ RECONNECT:
 			break;
 		}
 
-		sqlret = SQLSetStmtOption(hstmt, SQL_QUERY_TIMEOUT, timeout);
+		sqlret = SQLSetStmtAttr(hstmt, SQL_ATTR_QUERY_TIMEOUT, (SQLPOINTER)(SQLULEN)timeout, 0);
 		if (DBFAIL(sqlret))		
 		{
 			handle_err(_hdbc, SQL_HANDLE_DBC, sqlret);
@@ -643,7 +643,7 @@ RECONNECT:
             } catch (...) {if (g_cchLogUtilDb == 1) LG2("util_db", "exception raised from _get_row alloc\n"); break;}
 
             try {
-            sqlret = SQLSetStmtOption(hstmt, SQL_QUERY_TIMEOUT, 50);
+            sqlret = SQLSetStmtAttr(hstmt, SQL_ATTR_QUERY_TIMEOUT, (SQLPOINTER)(SQLULEN)50, 0);
             if (DBFAIL(sqlret))
             {
                 handle_err(_hdbc, SQL_HANDLE_DBC, sqlret);
@@ -798,7 +798,7 @@ RECONNECT:
             } catch (...) {if (g_cchLogUtilDb == 1) LG2("util_db", "exception raised from _get_row alloc\n"); break;}
 
             try {
-            sqlret = SQLSetStmtOption(hstmt, SQL_QUERY_TIMEOUT, 50);
+            sqlret = SQLSetStmtAttr(hstmt, SQL_ATTR_QUERY_TIMEOUT, (SQLPOINTER)(SQLULEN)50, 0);
             if (DBFAIL(sqlret))
             {
                 handle_err(_hdbc, SQL_HANDLE_DBC, sqlret);
@@ -957,7 +957,7 @@ RECONNECT:
         } catch (...) {if (g_cchLogUtilDb == 1) LG2("util_db", "exception raised from _get_row3 alloc\n"); break;}
 
         try {
-            sqlret = SQLSetStmtOption(hstmt, SQL_QUERY_TIMEOUT, 50);
+            sqlret = SQLSetStmtAttr(hstmt, SQL_ATTR_QUERY_TIMEOUT, (SQLPOINTER)(SQLULEN)50, 0);
             if (DBFAIL(sqlret))
             {
                 handle_err(_hdbc, SQL_HANDLE_DBC, sqlret);
@@ -1123,7 +1123,7 @@ RECONNECT:
         } catch (...) {if (g_cchLogUtilDb == 1) LG2("util_db", "exception raised from _get_row3 alloc\n"); break;}
 
         try {
-            sqlret = SQLSetStmtOption(hstmt, SQL_QUERY_TIMEOUT, 50);
+            sqlret = SQLSetStmtAttr(hstmt, SQL_ATTR_QUERY_TIMEOUT, (SQLPOINTER)(SQLULEN)50, 0);
             if (DBFAIL(sqlret))
             {
                 handle_err(_hdbc, SQL_HANDLE_DBC, sqlret);
@@ -1240,16 +1240,23 @@ RECONNECT:
     SQLHSTMT hstmt = SQL_NULL_HSTMT;
 	//LG2("util_db", "SQL Statement Length: %d\n", strlen(sql));
 
+    printf("[ODBC DEBUG] cfl_rs::exec_sql_direct, SQL='%s', _hdbc=%p\n", sql, (void*)_hdbc);
+    fflush(stdout);
+
 	do
 	{
         sqlret = SQLAllocHandle(SQL_HANDLE_STMT, _hdbc, &hstmt);
+        printf("[ODBC DEBUG] SQLAllocHandle ret=%d, hstmt=%p\n", (int)sqlret, (void*)hstmt);
+        fflush(stdout);
         if (DBFAIL(sqlret))
         {
             handle_err(_hdbc, SQL_HANDLE_DBC, sqlret);
             break;
         }
 
-		sqlret = SQLSetStmtOption(hstmt, SQL_QUERY_TIMEOUT, timeout);
+		sqlret = SQLSetStmtAttr(hstmt, SQL_ATTR_QUERY_TIMEOUT, (SQLPOINTER)(SQLULEN)timeout, 0);
+        printf("[ODBC DEBUG] SQLSetStmtAttr(SQL_ATTR_QUERY_TIMEOUT,%d) ret=%d\n", timeout, (int)sqlret);
+        fflush(stdout);
 		if (DBFAIL(sqlret))
 		{
 			handle_err(_hdbc, SQL_HANDLE_DBC, sqlret);
@@ -1257,6 +1264,8 @@ RECONNECT:
 		}
 
         sqlret = exec_direct_w(hstmt, sql);
+        printf("[ODBC DEBUG] exec_direct_w returned ret=%d\n", (int)sqlret);
+        fflush(stdout);
 		switch (sqlret)
 		{
 		case SQL_SUCCESS_WITH_INFO:
@@ -1306,7 +1315,7 @@ RECONNECT:
             break;
         }
 
-        sqlret = SQLSetStmtOption(hstmt, SQL_QUERY_TIMEOUT, timeout);
+        sqlret = SQLSetStmtAttr(hstmt, SQL_ATTR_QUERY_TIMEOUT, (SQLPOINTER)(SQLULEN)timeout, 0);
         if (DBFAIL(sqlret))
         {
             handle_err(_hdbc, SQL_HANDLE_DBC, sqlret);
@@ -1386,7 +1395,7 @@ RECONNECT:
             break;
         }
 
-        sqlret = SQLSetStmtOption(hstmt, SQL_QUERY_TIMEOUT, timeout);
+        sqlret = SQLSetStmtAttr(hstmt, SQL_ATTR_QUERY_TIMEOUT, (SQLPOINTER)(SQLULEN)timeout, 0);
         if (DBFAIL(sqlret))
         {
             handle_err(_hdbc, SQL_HANDLE_DBC, sqlret);
@@ -1471,7 +1480,7 @@ bool cfl_rs::getalldata(const char* sql, vector< vector< string > >& data, unsig
                 break;
             }
 
-            sqlret = SQLSetStmtOption(hstmt, SQL_QUERY_TIMEOUT, timeout);
+            sqlret = SQLSetStmtAttr(hstmt, SQL_ATTR_QUERY_TIMEOUT, (SQLPOINTER)(SQLULEN)timeout, 0);
             if ((sqlret != SQL_SUCCESS) && (sqlret != SQL_SUCCESS_WITH_INFO))
             {
                 handle_err(_hdbc, SQL_HANDLE_DBC, sqlret);
@@ -1562,7 +1571,7 @@ bool cfl_rs::get_page_data(char* tablename, char* param, int pagesize, int pagei
                 break;
             }
 
-            sqlret = SQLSetStmtOption(hstmt, SQL_QUERY_TIMEOUT, timeout);
+            sqlret = SQLSetStmtAttr(hstmt, SQL_ATTR_QUERY_TIMEOUT, (SQLPOINTER)(SQLULEN)timeout, 0);
             if ((sqlret != SQL_SUCCESS) && (sqlret != SQL_SUCCESS_WITH_INFO))
             {
                 handle_err(_hdbc, SQL_HANDLE_DBC, sqlret);
@@ -1694,7 +1703,7 @@ RECONNECT:
         } catch (...) {if (g_cchLogUtilDb == 1) LG2("util_db", "exception raised from get() alloc\n"); break;}
 
         try {
-            sqlret = SQLSetStmtOption(hstmt, SQL_QUERY_TIMEOUT, 50);
+            sqlret = SQLSetStmtAttr(hstmt, SQL_ATTR_QUERY_TIMEOUT, (SQLPOINTER)(SQLULEN)50, 0);
             if (DBFAIL(sqlret))
             {
                 handle_err(_hdbc, SQL_HANDLE_DBC, sqlret);
@@ -1788,7 +1797,7 @@ RECONNECT:
 
     do
     {
-        sqlret = SQLSetStmtOption(_hstmt, SQL_QUERY_TIMEOUT, timeout);
+        sqlret = SQLSetStmtAttr(_hstmt, SQL_ATTR_QUERY_TIMEOUT, (SQLPOINTER)(SQLULEN)timeout, 0);
         if (DBFAIL(sqlret))
         {
             handle_err(_hdbc, SQL_HANDLE_DBC, sqlret);
@@ -1904,7 +1913,7 @@ bool friend_tbl::get_friend_dat(friend_dat* farray, int& array_num, unsigned int
                 break;
             }
 
-            sqlret = SQLSetStmtOption(hstmt, SQL_QUERY_TIMEOUT, 50);
+            sqlret = SQLSetStmtAttr(hstmt, SQL_ATTR_QUERY_TIMEOUT, (SQLPOINTER)(SQLULEN)50, 0);
             if ((sqlret != SQL_SUCCESS) && (sqlret != SQL_SUCCESS_WITH_INFO))
             {
                 handle_err(_hdbc, SQL_HANDLE_DBC, sqlret);
@@ -2067,7 +2076,7 @@ bool friend_tbl::get_gm_dat(friend_dat* farray, int& array_num, bool* drop)
                 break;
             }
 
-            sqlret = SQLSetStmtOption(hstmt, SQL_QUERY_TIMEOUT, 50);
+            sqlret = SQLSetStmtAttr(hstmt, SQL_ATTR_QUERY_TIMEOUT, (SQLPOINTER)(SQLULEN)50, 0);
             if ((sqlret != SQL_SUCCESS) && (sqlret != SQL_SUCCESS_WITH_INFO))
             {
                 handle_err(_hdbc, SQL_HANDLE_DBC, sqlret);
