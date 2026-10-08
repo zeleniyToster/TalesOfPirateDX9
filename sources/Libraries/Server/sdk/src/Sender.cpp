@@ -5,6 +5,15 @@
 #include "Comm.h"
 #include "LogStream.h"
 #include <fstream>
+
+#define DEBUG_SENDER 1
+#if DEBUG_SENDER
+static std::ofstream sender_debug_log("sender_debug.log", std::ios::app);
+#define SENDER_LOG sender_debug_log
+#else
+#define SENDER_LOG if (false) std::cerr
+#endif
+
 _DBC_USING
 
 extern PreAllocHeap<rbuf>	__bufheap;
@@ -327,7 +336,9 @@ long Sender::Process()
 
 			// (1) send returns actual number of sent bytes - could be less than requested in len parameter.
 			// (2) m_p combined with m_send->GetBufAddr() points to the beginning of the data to-be sent.
+			SENDER_LOG << "[SENDER] BEFORE send() -> m_send: " << static_cast<const void*>(m_send) << ", m_p: " << m_p << ", m_send->m_cpos: " << (m_send ? m_send->m_cpos : 0) << ", socket: " << m_datasock->m_socket << std::endl;
 			l_sendlen = send(m_datasock->m_socket, m_send->GetBufAddr() + m_p, m_send->m_cpos - m_p, 0);
+			SENDER_LOG << "[SENDER] AFTER send() -> l_sendlen: " << l_sendlen << ", WSAGetLastError: " << WSAGetLastError() << std::endl;
 			if (l_sendlen >= 0)
 			{
 				// Great, we sent atleast one byte.
