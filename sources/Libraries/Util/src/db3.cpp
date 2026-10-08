@@ -1307,7 +1307,7 @@ bool CSQLDatabase::ExecuteSQL( const char* a_szStmt )
     if ( !( _rc == SQL_SUCCESS || _rc == SQL_SUCCESS_WITH_INFO ) )
         ThrowError( SQL_HANDLE_DBC );
 
-	_rc = SQLSetStmtOption(_hstmt, SQL_QUERY_TIMEOUT, 30);
+	_rc = SQLSetStmtAttr(_hstmt, SQL_ATTR_QUERY_TIMEOUT, (SQLPOINTER)(SQLULEN)30, 0);
 
     // returns: SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_NEED_DATA, 
     // SQL_STILL_EXECUTING, SQL_ERROR, SQL_NO_DATA, or SQL_INVALID_HANDLE   
@@ -1810,7 +1810,7 @@ bool CSQLRecordset::SQLExecDirect()
     if ( ! SQLAllocStmt() )
         return false;
 
-	_rc = SQLSetStmtOption(_hstmt, SQL_QUERY_TIMEOUT, 30);
+	_rc = SQLSetStmtAttr(_hstmt, SQL_ATTR_QUERY_TIMEOUT, (SQLPOINTER)(SQLULEN)30, 0);
 
     _rc = exec_direct_w_db3(_hstmt, _stmt.c_str());
     if ( _rc != SQL_SUCCESS && _rc != SQL_SUCCESS_WITH_INFO )
