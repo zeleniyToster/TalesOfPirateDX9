@@ -24,7 +24,7 @@
 // Unicode ODBC wrapper for Wine compatibility (MS ODBC Driver 17 exports only W functions)
 static inline SQLRETURN exec_direct_w(SQLHSTMT hstmt, const char* sql) {
 	SQLWCHAR wsql[SQL_MAXLEN];
-	MultiByteToWideChar(CP_UTF8, 0, sql, -1, (LPWSTR)wsql, sizeof(wsql) / sizeof(SQLWCHAR));
+	MultiByteToWideChar(CP_ACP, 0, sql, -1, (LPWSTR)wsql, sizeof(wsql) / sizeof(SQLWCHAR));
 	return SQLExecDirectW(hstmt, wsql, SQL_NTS);
 }
 

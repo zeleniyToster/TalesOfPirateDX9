@@ -64,10 +64,17 @@ bool cfl_db::handle_err(SQLHANDLE h, SQLSMALLINT t,
     SQLWCHAR wstate[SQL_SQLSTATE_SIZE + 1] = { 0 };
     SQLWCHAR wmsg[SQL_MAX_MESSAGE_LENGTH + 1] = { 0 };
     sqlret = SQLGetDiagRecW(t, h, 1, wstate, &error, wmsg, SQL_MAX_MESSAGE_LENGTH, &msg_len);
-    // Convert back to ANSI for logging
-    WideCharToMultiByte(CP_UTF8, 0, (LPCWSTR)wstate, -1, (char*)state, SQL_SQLSTATE_SIZE + 1, NULL, NULL);
-    WideCharToMultiByte(CP_UTF8, 0, (LPCWSTR)wmsg, -1, (char*)msg, SQL_MAX_MESSAGE_LENGTH + 1, NULL, NULL);
+    // Convert back to ANSI for logging (CP_ACP matches console in Wine/Windows)
+    WideCharToMultiByte(CP_ACP, 0, (LPCWSTR)wstate, -1, (char*)state, SQL_SQLSTATE_SIZE + 1, NULL, NULL);
+    WideCharToMultiByte(CP_ACP, 0, (LPCWSTR)wmsg, -1, (char*)msg, SQL_MAX_MESSAGE_LENGTH + 1, NULL, NULL);
     if (sqlret == SQL_ERROR || sqlret == SQL_INVALID_HANDLE) return false;
+
+    // FORCE ODBC error output to console for Wine debugging
+    printf("[ODBC ERROR] State:%s, Native:%ld, Msg:%s\n", state, (long)error, msg);
+    if (sql != NULL) {
+        printf("[ODBC ERROR] SQL was: %s\n", sql);
+    }
+    fflush(stdout);
 
 	if (_dump_errinfo)
 	{
@@ -209,7 +216,7 @@ bool cfl_db::_connect(string& errinfo)
         SQLWCHAR wconn_str[1024];
         SQLWCHAR woutbuf[2048];
         SQLSMALLINT woutlen = 0;
-        int wlen = MultiByteToWideChar(CP_UTF8, 0, _connstr.c_str(), -1, (LPWSTR)wconn_str, sizeof(wconn_str) / sizeof(SQLWCHAR));
+        int wlen = MultiByteToWideChar(CP_ACP, 0, _connstr.c_str(), -1, (LPWSTR)wconn_str, sizeof(wconn_str) / sizeof(SQLWCHAR));
         if (wlen == 0) {
             errinfo = "Failed to convert connection string to UTF-16\n";
             SQLFreeHandle(SQL_HANDLE_DBC, _hdbc);
@@ -319,9 +326,9 @@ bool cfl_db::connect(const char* source, const char* userid, const char* passwd,
 
         // Unicode ODBC for Wine compatibility
         SQLWCHAR wsource[256], wuserid[256], wpasswd[256];
-        MultiByteToWideChar(CP_UTF8, 0, source, -1, (LPWSTR)wsource, 256);
-        MultiByteToWideChar(CP_UTF8, 0, userid, -1, (LPWSTR)wuserid, 256);
-        MultiByteToWideChar(CP_UTF8, 0, passwd, -1, (LPWSTR)wpasswd, 256);
+        MultiByteToWideChar(CP_ACP, 0, source, -1, (LPWSTR)wsource, 256);
+        MultiByteToWideChar(CP_ACP, 0, userid, -1, (LPWSTR)wuserid, 256);
+        MultiByteToWideChar(CP_ACP, 0, passwd, -1, (LPWSTR)wpasswd, 256);
         sqlret = SQLConnectW(_hdbc, wsource, SQL_NTS, wuserid, SQL_NTS, wpasswd, SQL_NTS);
         if (DBFAIL(sqlret))
         {
