@@ -342,8 +342,8 @@ RPacket::RPacket(const TcpCommApp *tca)
 //--------------------------------------------------------------------
 RPacket &RPacket::operator=(rbuf *bptr)
 {
-	if(__tca){
-		rptr<rbuf>::operator =(bptr);
+	rptr<rbuf>::operator =(bptr);
+	if (__tca) {
 		m_offset	=0;
 		m_rpos		=0;
 		m_len		=0;
