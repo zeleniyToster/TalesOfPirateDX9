@@ -12,7 +12,7 @@ using namespace std;
 // Unicode ODBC wrapper for Wine compatibility (MS ODBC Driver 17 exports only W functions)
 static SQLRETURN exec_direct_w_db3(SQLHSTMT hstmt, const char* sql) {
     SQLWCHAR wsql[8192];
-    MultiByteToWideChar(CP_UTF8, 0, sql, -1, (LPWSTR)wsql, sizeof(wsql) / sizeof(SQLWCHAR));
+    MultiByteToWideChar(CP_ACP, 0, sql, -1, (LPWSTR)wsql, sizeof(wsql) / sizeof(SQLWCHAR));
     return SQLExecDirectW(hstmt, wsql, SQL_NTS);
 }
 
@@ -1255,9 +1255,9 @@ bool CSQLDatabase::SQLConnect( const char * a_szDSN,
 
     // Unicode ODBC for Wine compatibility
     SQLWCHAR wdsn[256], wuser[256], wpwd[256];
-    MultiByteToWideChar(CP_UTF8, 0, a_szDSN, -1, (LPWSTR)wdsn, 256);
-    MultiByteToWideChar(CP_UTF8, 0, a_szUserName, -1, (LPWSTR)wuser, 256);
-    MultiByteToWideChar(CP_UTF8, 0, a_szPassword, -1, (LPWSTR)wpwd, 256);
+    MultiByteToWideChar(CP_ACP, 0, a_szDSN, -1, (LPWSTR)wdsn, 256);
+    MultiByteToWideChar(CP_ACP, 0, a_szUserName, -1, (LPWSTR)wuser, 256);
+    MultiByteToWideChar(CP_ACP, 0, a_szPassword, -1, (LPWSTR)wpwd, 256);
     _rc = ::SQLConnectW(_hdbc, wdsn, SQL_NTS, wuser, SQL_NTS, wpwd, SQL_NTS);
     _isOpen = ( _rc == SQL_SUCCESS || _rc == SQL_SUCCESS_WITH_INFO );
     return _isOpen;
@@ -1293,7 +1293,7 @@ bool CSQLDatabase::SQLConnect(char const* conn_instr)
     // Unicode ODBC for Wine compatibility
     SQLWCHAR wconn_in[1024], wconn_out[2048];
     SQLSMALLINT wout_len = 0;
-    MultiByteToWideChar(CP_UTF8, 0, conn_instr, -1, (LPWSTR)wconn_in, sizeof(wconn_in) / sizeof(SQLWCHAR));
+    MultiByteToWideChar(CP_ACP, 0, conn_instr, -1, (LPWSTR)wconn_in, sizeof(wconn_in) / sizeof(SQLWCHAR));
     _rc = ::SQLDriverConnectW(_hdbc, NULL, wconn_in, SQL_NTS,
         wconn_out, sizeof(wconn_out) / sizeof(SQLWCHAR), &wout_len, SQL_DRIVER_NOPROMPT);
     
