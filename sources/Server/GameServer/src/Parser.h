@@ -54,7 +54,7 @@ private:
 		return true;
 	}
 
-	lua_State	*m_pSLua; // lua脚本解释器
+	lua_State	*m_pSLua; // lua script interpreter
 
 	int			m_nDoStringRet[DOSTRING_RETURN_NUM];
 	char		m_szDoStringRet[DOSTRING_RETURN_NUM][DOSTRING_RETURN_STRING_LEN];

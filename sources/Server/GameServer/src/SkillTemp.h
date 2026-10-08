@@ -10,9 +10,9 @@
 
 #include "PreAlloc.h"
 
-#define defSKILL_RANGE_BASEP_NUM	3	// 区域基本参数个数（范围中心坐标，方向）
-#define defSKILL_RANGE_EXTEP_NUM	4	// 区域扩展参数个数（范围类型，类型参数）
-#define defSKILL_STATE_PARAM_NUM	3	// 区域状态参数个数（编号，等级，持续时间）
+#define defSKILL_RANGE_BASEP_NUM	3	// number of base area parameters (range centre coordinates, direction)
+#define defSKILL_RANGE_EXTEP_NUM	4	// number of area extension parameters (range type, type parameters)
+#define defSKILL_STATE_PARAM_NUM	3	// number of area state parameters (number, level, duration)
 
 class CSkillTempData : public dbc::PreAllocStru
 {
@@ -23,13 +23,13 @@ public:
 		sStateParam[0] = SSTATE_NONE;
 	}
 
-	short	sUseEndure{};	// 对“耐久度“的消耗
-	short	sUseEnergy{};	// 对“能量“的消耗
-	short	sUseSP{};		// 对“SP“的消耗
+	short	sUseEndure{};	// cost of 'durability'
+	short	sUseEnergy{};	// cost of 'energy'
+	short	sUseSP{};		// cost of 'SP'
 
-	long	lResumeTime{};// 再释放需要的时间（毫秒）
-	short	sRange[defSKILL_RANGE_EXTEP_NUM];	// 区域描述（类型+参数）
-	short	sStateParam[defSKILL_STATE_PARAM_NUM];	// 状态编号，等级，持续时间
+	long	lResumeTime{};// time before it can be used again (milliseconds)
+	short	sRange[defSKILL_RANGE_EXTEP_NUM];	// area description (type + parameters)
+	short	sStateParam[defSKILL_STATE_PARAM_NUM];	// state number, level, duration
 
 protected:
 

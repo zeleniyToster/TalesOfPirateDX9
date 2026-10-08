@@ -1,10 +1,10 @@
-﻿// 天气本质上是指系统产生的地面状态, 比如风,  雷,  雾
-// 处于该地面状态下的客户端表现为播放范围特效
+﻿// weather is essentially the ground state the system produces, such as wind, thunder or fog
+// on a client under that ground state it plays a range effect
 
 
-// 目前天气系统有2个作用
-// 一. 为航海士的贝壳充值
-// 二. 影响玩家的移动速度, 生命值等, 丰富游戏表现
+// the weather system currently has two purposes
+// one, recharging the navigator's shell
+// two, affecting player movement speed, life and the like, to enrich how the game looks
 
 #pragma once
 
@@ -14,22 +14,22 @@ class CWeather
 {
 public:
 
-	CWeather(BYTE btType) // 构造时必须传入天气类型
+	CWeather(BYTE btType) // the weather type must be passed in when constructing
 	:_dwLastLocationTick(0), _dwFrequence(2)
 	{
 		_btType = btType;
-		_dwStateLastTime = 20; // 默认为20秒
+		_dwStateLastTime = 20; // 20 seconds by default
 	}
 	
-	void	SetRange(int sx, int sy, int w, int h);	// 指定一个大的坐标范围
-	void	RandLocation(SubMap *pMap);				// 在指定的范围内, 随机选择地点出现
-	void	SetFrequence(DWORD dwFre);				// 设定出现频率, 单位是秒
-	void	SetStateLastTime(DWORD dwTime);			// 设置状态持续时间, 单位是秒
+	void	SetRange(int sx, int sy, int w, int h);	// specifies a large coordinate range
+	void	RandLocation(SubMap *pMap);				// picks a random location within the given range to appear
+	void	SetFrequence(DWORD dwFre);				// sets the appearance frequency, in seconds
+	void	SetStateLastTime(DWORD dwTime);			// sets the state duration, in seconds
 
 protected:
 
-	BYTE	_btType;  // 天气类型 0风  1雷  2雾
-	int		_sx;	  // 记录坐标范围
+	BYTE	_btType;  // weather type: 0 wind, 1 thunder, 2 fog
+	int		_sx;	  // records the coordinate range
 	int		_sy;
 	int		_w;
 	int		_h;
@@ -57,7 +57,7 @@ inline void CWeather::SetStateLastTime(DWORD dwTime)
 }
 
 
-// 天气管理类, 可以添加, 删除, 遍历所有天气，需为每个地图对象实例化一个
+// weather management class; it can add, remove and iterate over every weather, and one instance is needed per map object
 class CWeatherMgr 
 {
 public:
@@ -65,7 +65,7 @@ public:
 	~CWeatherMgr();
 	void	AddWeatherRange(CWeather *pWeather);
 	void	RemoveWeather(CWeather *pWeather);
-	void	Run(SubMap *pMap);	// 被定时器调用, 内部会调用每一个Weather的RandLocation
+	void	Run(SubMap *pMap);	// called by the timer; internally it calls RandLocation on each Weather
 	void	ClearAll();
 
 protected:

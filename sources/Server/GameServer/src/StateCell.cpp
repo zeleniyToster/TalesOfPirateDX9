@@ -20,7 +20,7 @@ CChaListNode* CStateCell::AddCharacter(CCharacter *pCCha, bool bIn)
 			m_pCChaIn->m_pCLast = pNode;
 		m_pCChaIn = pNode;
 
-		pNode->m_pCEntStateNode = pCCha->EnterStateCell(this, pNode, true); // 实体记录所在的管理单元
+		pNode->m_pCEntStateNode = pCCha->EnterStateCell(this, pNode, true); // the management cell the entity is recorded in
 	}
 	else
 	{
@@ -29,11 +29,11 @@ CChaListNode* CStateCell::AddCharacter(CCharacter *pCCha, bool bIn)
 			m_pCChaCross->m_pCLast = pNode;
 		m_pCChaCross = pNode;
 
-		pNode->m_pCEntStateNode = pCCha->EnterStateCell(this, pNode); // 实体记录所在的管理单元
+		pNode->m_pCEntStateNode = pCCha->EnterStateCell(this, pNode); // the management cell the entity is recorded in
 	}
 	m_lChaNum++;
 
-	// 向角色增加状态
+	// adds the state to the character
 	if (m_CSkillState.GetStateNum() > 0)
 	{
 		pCCha->m_CChaAttr.ResetChangeFlag();
@@ -68,9 +68,9 @@ void CStateCell::DelCharacter(CChaListNode *pCEntNode)
 	pCEntNode->m_pCLast = 0;
 	pCEntNode->m_pCNext = 0;
 	m_lChaNum--;
-	pCEntNode->m_pCCha->OutMgrUnit(pCEntNode->m_pCEntStateNode); // 实体记录所在的管理单元
+	pCEntNode->m_pCCha->OutMgrUnit(pCEntNode->m_pCEntStateNode); // the management cell the entity is recorded in
 
-	// 向角色增加状态
+	// adds the state to the character
 	CCharacter		*pCCha = pCEntNode->m_pCCha;
 	if (m_CSkillState.GetStateNum() > 0)
 	{
@@ -97,14 +97,14 @@ void CStateCell::SetCharacterIn(CChaListNode *pCEntNode, bool bIn)
 	//{
 	//	if (pCEntNode->m_chEntiType == def_MGRUNIT_ENTITY_TYPE_CHACROSS)
 	//	{
-	//		// 删除
+	//		// delete
 	//		if (pCEntNode->m_pCLast)
 	//			pCEntNode->m_pCLast->m_pCNext = pCEntNode->m_pCNext;
 	//		if (pCEntNode->m_pCNext)
 	//			pCEntNode->m_pCNext->m_pCLast = pCEntNode->m_pCLast;
 	//		if (m_pCChaCross == pCEntNode)
 	//			m_pCChaCross = pCEntNode->m_pCNext;
-	//		// 增加
+	//		// add
 	//		if (pCEntNode->m_pCNext = m_pCChaIn)
 	//			m_pCChaIn->m_pCLast = pCEntNode;
 	//		m_pCChaIn = pCEntNode;
@@ -113,21 +113,21 @@ void CStateCell::SetCharacterIn(CChaListNode *pCEntNode, bool bIn)
 	//	}
 	//	else if (pCEntNode->m_chEntiType == def_MGRUNIT_ENTITY_TYPE_ITEMCROSS)
 	//	{
-	//		// 删除
+	//		// delete
 	//		if (pCEntNode->m_pCLast)
 	//			pCEntNode->m_pCLast->m_pCNext = pCEntNode->m_pCNext;
 	//		if (pCEntNode->m_pCNext)
 	//			pCEntNode->m_pCNext->m_pCLast = pCEntNode->m_pCLast;
 	//		if (m_pCItemCross == pCEntNode)
 	//			m_pCItemCross = pCEntNode->m_pCNext;
-	//		// 增加
+	//		// add
 	//		if (pCEntNode->m_pCNext = m_pCItemIn)
 	//			m_pCItemIn->m_pCLast = pCEntNode;
 	//		m_pCItemIn = pCEntNode;
 
 	//		pCEntNode->m_chEntiType = def_MGRUNIT_ENTITY_TYPE_ITEMIN;
 	//	}
-	//	else // 不可能的清况
+	//	else // impossible case
 	//	{}
 	//	pCEntNode->m_pCEntity->SetCenterMgrNode(pCEntNode->m_pCEntStateNode);
 	//}
@@ -135,14 +135,14 @@ void CStateCell::SetCharacterIn(CChaListNode *pCEntNode, bool bIn)
 	//{
 	//	if (pCEntNode->m_chEntiType == def_MGRUNIT_ENTITY_TYPE_CHAIN)
 	//	{
-	//		// 删除
+	//		// delete
 	//		if (pCEntNode->m_pCLast)
 	//			pCEntNode->m_pCLast->m_pCNext = pCEntNode->m_pCNext;
 	//		if (pCEntNode->m_pCNext)
 	//			pCEntNode->m_pCNext->m_pCLast = pCEntNode->m_pCLast;
 	//		if (m_pCChaIn == pCEntNode)
 	//			m_pCChaIn = pCEntNode->m_pCNext;
-	//		// 增加
+	//		// add
 	//		if (pCEntNode->m_pCNext = m_pCChaCross)
 	//			m_pCChaCross->m_pCLast = pCEntNode;
 	//		m_pCChaCross = pCEntNode;
@@ -151,21 +151,21 @@ void CStateCell::SetCharacterIn(CChaListNode *pCEntNode, bool bIn)
 	//	}
 	//	else if (pCEntNode->m_chEntiType == def_MGRUNIT_ENTITY_TYPE_ITEMIN)
 	//	{
-	//		// 删除
+	//		// delete
 	//		if (pCEntNode->m_pCLast)
 	//			pCEntNode->m_pCLast->m_pCNext = pCEntNode->m_pCNext;
 	//		if (pCEntNode->m_pCNext)
 	//			pCEntNode->m_pCNext->m_pCLast = pCEntNode->m_pCLast;
 	//		if (m_pCItemIn == pCEntNode)
 	//			m_pCItemIn = pCEntNode->m_pCNext;
-	//		// 增加
+	//		// add
 	//		if (pCEntNode->m_pCNext = m_pCItemCross)
 	//			m_pCItemCross->m_pCLast = pCEntNode;
 	//		m_pCItemCross = pCEntNode;
 
 	//		pCEntNode->m_chEntiType = def_MGRUNIT_ENTITY_TYPE_ITEMCROSS;
 	//	}
-	//	else // 不可能的清况
+	//	else // impossible case
 	//	{}
 	//}
 }
@@ -173,11 +173,11 @@ void CStateCell::SetCharacterIn(CChaListNode *pCEntNode, bool bIn)
 bool CStateCell::AddState(unsigned char uchFightID, unsigned long ulSrcWorldID, long lSrcHandle, char chObjType, char chObjHabitat, char chEffType,
 						unsigned char uchStateID, unsigned char uchStateLv, unsigned long ulStartTick, long lOnTick, char chType, char chWithCenter)
 {T_B
-	// 向地表增加状态
+	// adds the state to the terrain
 	if (!m_CSkillState.Add(uchFightID, ulSrcWorldID, lSrcHandle, chObjType, chObjHabitat, chEffType, uchStateID, uchStateLv, ulStartTick, lOnTick, chType, chWithCenter))
 		return false;
 
-	// 向角色增加状态
+	// adds the state to the character
 	unsigned char	uchStateNo = m_CSkillState.GetReverseID(uchStateID);
 	CChaListNode	*pNode;
 	pNode = m_pCChaIn;
@@ -279,7 +279,7 @@ bool CStateCell::AddStateToCharacter(SSkillStateUnit	*pSStateUnit, CCharacter *p
 	return false;
 T_E}
 
-// 状态周期控制
+// state cycle control
 void CStateCell::StateRun(unsigned long ulCurTick, SubMap *pCMap)
 {T_B
 	unsigned char	uchStateNum = m_CSkillState.GetStateNum();
@@ -291,7 +291,7 @@ void CStateCell::StateRun(unsigned long ulCurTick, SubMap *pCMap)
 	{
 		if (pSStateUnit->lOnTick > 0)
 		{
-			if (ulCurTick - pSStateUnit->ulStartTick >= (unsigned long)pSStateUnit->lOnTick * 1000) // 状态计时完成
+			if (ulCurTick - pSStateUnit->ulStartTick >= (unsigned long)pSStateUnit->lOnTick * 1000) // state timer expired
 			{
 				lOnTime = g_pGameApp->GetSStateTraOnTime(pSStateUnit->GetStateID(), pSStateUnit->GetStateLv());
 				pNode = m_pCChaIn;
@@ -311,7 +311,7 @@ void CStateCell::StateRun(unsigned long ulCurTick, SubMap *pCMap)
 			}
 			else
 			{
-				// 向角色增加状态
+				// adds the state to the character
 				CChaListNode	*pNode;
 				pNode = m_pCChaIn;
 				while (pNode)
@@ -359,7 +359,7 @@ void CStateCell::StateBeginSeen(Entity *pCEnt)
 
 	if (!pCCha)
 		return;
-	if(!pCCha->IsPlayerFocusCha()) // 该角色不是玩家当前的控制焦点
+	if(!pCCha->IsPlayerFocusCha()) // this character is not the player's current control focus
 		return;
 
 	WPACKET pk	=GETWPACKET();
@@ -368,7 +368,7 @@ void CStateCell::StateBeginSeen(Entity *pCEnt)
 	WRITE_SHORT(pk, m_sPosY);
 	m_CSkillState.WriteState(pk);
 
-	pCCha->ReflectINFof(pCCha, pk);//通告
+	pCCha->ReflectINFof(pCCha, pk);// notify
 T_E}
 
 void CStateCell::StateEndSeen(Entity *pCEnt)
@@ -377,7 +377,7 @@ void CStateCell::StateEndSeen(Entity *pCEnt)
 
 	if (!pCCha)
 		return;
-	if(!pCCha->IsPlayerFocusCha()) // 该角色不是玩家当前的控制焦点
+	if(!pCCha->IsPlayerFocusCha()) // this character is not the player's current control focus
 		return;
 
 	if (m_CSkillState.GetStateNum() <= 0)
@@ -388,5 +388,5 @@ void CStateCell::StateEndSeen(Entity *pCEnt)
 	WRITE_SHORT(pk, m_sPosX);
 	WRITE_SHORT(pk, m_sPosY);
 
-	pCCha->ReflectINFof(pCCha, pk);//通告
+	pCCha->ReflectINFof(pCCha, pk);// notify
 T_E}

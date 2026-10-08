@@ -118,7 +118,7 @@ public:
 	dbc::Short		GetEyeshotHeight(void) {return GetEyeshotWidth();}
 	bool			IsInEyeshot(Entity *pCTarEnti);
 
-	// 实体切换地图单元网格事件处理函数
+	// entity cell-change map switch event handler
 	virtual	void	GotoMapUnit() {};
 
 	virtual CFightAble *IsFightAble(){return 0;}
@@ -142,8 +142,8 @@ public:
 protected:
 	Entity();
 
-	virtual	void	WritePK(WPACKET& wpk);			//写入玩家本身及其所有附加结构(如召唤兽等)的所有数据
-	virtual	void	ReadPK(RPACKET& rpk);			//重构玩家本身及其所有附加结构(如召唤兽等)
+	virtual	void	WritePK(WPACKET& wpk);			// writes the player itself and all attached structures (summons and the like)
+	virtual	void	ReadPK(RPACKET& rpk);			// rebuilds the player itself and all attached structures (summons and the like)
 
 	virtual void ReflectINFof(Entity *srcent, WPACKET chginf){}
 
@@ -152,8 +152,8 @@ private:
 	virtual const Square & GetLapChkShape(){return m_shape;}
 	virtual void OnBeginSee(Entity *){}
 	virtual void OnEndSee(Entity *){}
-	virtual void OnBeginSeen(CCharacter *pCCha) =0;		//ToDo:传输自己完整信息以反映到客户端
-	virtual void OnEndSeen(CCharacter *pCCha) =0;			//ToDo:从客户端删除自己
+	virtual void OnBeginSeen(CCharacter *pCCha) =0;		//ToDo: transfer the full information about self to reflect it to the client
+	virtual void OnEndSeen(CCharacter *pCCha) =0;			//ToDo: remove self from the client
 	virtual void AreaChange(void){}
 
 	bool	EdgeOverlap(long& xdist,long& ydist);
@@ -161,7 +161,7 @@ private:
 public:
 	bool		m_bValid;
 
-	struct // 对应实体数组的索引（由CEntityAlloc类来配置）
+	struct // index into the entity array (configured by the CEntityAlloc class)
 	{
 		dbc::Long	m_lHandle;
 		dbc::Long	m_lHoldID;
@@ -171,13 +171,13 @@ public:
 	
 	Point		m_lastpos;
 	Square		m_shape;
-	Circle		m_STerritory; // 领地
+	Circle		m_STerritory; // territory
 	short		m_sAngle;
 	/**
 	 * @label 当前所在的地图 
 	 * @labelDirection forward*/
 	SubMap		*m_submap;
-	CStateCellNode	*m_pCStateCellHead, *m_pCStateCellTail;	// 记录所在的管理单元，首节点是中心点所在的管理单元
+	CStateCellNode	*m_pCStateCellHead, *m_pCStateCellTail;	// records the management cell it belongs to; the first node is the management cell containing the centre point
 	struct
 	{
 		Entity	*m_pCEyeshotCellNext;
@@ -192,12 +192,12 @@ public:
 
 	struct SExistCtrl
 	{
-		dbc::Short	sState;			// 存在状态，参见CompCommand.h 中的EExistState类型
-		dbc::Short	sStopState;		// 动作停止后的状态（EExistState 的enumEXISTS_WAITING或enumEXISTS_SLEEPING）
+		dbc::Short	sState;			// existence state, see the EExistState type in CompCommand.h
+		dbc::Short	sStopState;		// state after the action stops (enumEXISTS_WAITING or enumEXISTS_SLEEPING of EExistState)
 
-		// 用于死亡和复活
-		dbc::Long	lWitherTime;	// 消亡需要的时间（毫秒）
-		dbc::Long	lResumeTime;	// 重生需要的时间（毫秒）
+		// used for death and revival
+		dbc::Long	lWitherTime;	// time until it disappears (milliseconds)
+		dbc::Long	lResumeTime;	// time until it respawns (milliseconds)
 		dbc::uLong	ulTick;
 		//
 	};
@@ -206,8 +206,8 @@ public:
 	SExistCtrl		m_SExistCtrl;
 	bool			m_bActiveEyeshot;
 
-	dbc::uShort		m_usAreaAttr[2];	// 实体所在地表的区域属性，0表示之前的区域属性，1表示现在的，参见CompCommand.h的EAreaMask
-	dbc::uChar		m_ucIslandID[2];	// 实体所在地表的岛屿信息，0表示之前的岛屿信息，1表示现在的
+	dbc::uShort		m_usAreaAttr[2];	// area attribute of the entity's map, 0 for the previous attribute and 1 for the current one, see EAreaMask in CompCommand.h
+	dbc::uChar		m_ucIslandID[2];	// island information of the entity's map, 0 for the previous island and 1 for the current one
 
 };
 

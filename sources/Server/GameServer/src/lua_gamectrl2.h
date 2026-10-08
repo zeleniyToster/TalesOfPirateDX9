@@ -1,10 +1,10 @@
 ﻿#include "lua_gamectrl.h"
 
 
-// 获得角色的组队成员总数, 如果返回0表示未组队
+// gets the total number of party members of the character; 0 means no party
 inline int lua_IsChaInTeam(lua_State *L)
 {
-	// 参数合法性判别
+	// argument validity check
     BOOL bValid = (lua_gettop (L)==1 && lua_islightuserdata(L, 1));
 	if(!bValid) 
     {
@@ -26,10 +26,10 @@ inline int lua_IsChaInTeam(lua_State *L)
 	return 1;
 }
 
-// 获得角色的组队成员总数, 如果返回0表示未组队
+// gets the total number of party members of the character; 0 means no party
 inline int lua_GetTeamCha(lua_State *L)
 {
-	// 参数合法性判别
+	// argument validity check
 	BOOL bValid = (lua_gettop (L)==2 && lua_islightuserdata(L, 1) && lua_isnumber(L,2));
 	if(!bValid) 
     {
@@ -59,7 +59,7 @@ inline int lua_GetTeamCha(lua_State *L)
 		return 0;
 	}
 	
-	if(pMember->GetCtrlCha()->IsLiveing()==false) // 如果已经死亡, 返回nil
+	if(pMember->GetCtrlCha()->IsLiveing()==false) // returns nil if already dead
 	{
 		return 0;
 	}
@@ -69,10 +69,10 @@ inline int lua_GetTeamCha(lua_State *L)
 	return 1;
 }
 
-// 取得角色脚下的区域属性编号
+// gets the area attribute number under the character's feet
 inline int lua_IsChaInRegion(lua_State *L)
 {T_B
-	// 参数合法性判别
+	// argument validity check
     BOOL bValid = (lua_gettop (L)==2 && lua_islightuserdata(L, 1) && lua_isnumber(L, 2));
 	if(!bValid) 
     {
@@ -96,10 +96,10 @@ inline int lua_IsChaInRegion(lua_State *L)
 T_E}
 
 
-// 取得角色的类型名称
+// gets the type name of the character
 inline int lua_GetChaDefaultName(lua_State *L)
 {T_B
-	// 参数合法性判别
+	// argument validity check
     BOOL bValid = (lua_gettop (L)==1 && lua_islightuserdata(L, 1));
 	if(!bValid) 
     {
@@ -118,22 +118,22 @@ T_E}
 
 extern int lua_GetChaAttr(lua_State *pLS);
 extern int lua_SetChaAttr(lua_State *pLS);
-// 取得角色的指定属性
+// gets the given attribute of the character
 inline int lua_GetChaAttrI(lua_State *L)
 {T_B
 	return lua_GetChaAttr(L);
 T_E}
 
-// 设置角色的指定属性
+// sets the given attribute of the character
 inline int lua_SetChaAttrI(lua_State *L)
 {T_B
 	return lua_SetChaAttr(L);
 T_E}
 
-// 取得角色的指定属性
+// gets the given attribute of the character
 inline int lua_IsPlayer(lua_State *L)
 {T_B
-	// 参数合法性判别
+	// argument validity check
     BOOL bValid = (lua_gettop (L)==1 && lua_islightuserdata(L, 1));
 	if(!bValid) 
     {
@@ -153,11 +153,11 @@ inline int lua_IsPlayer(lua_State *L)
 	return 1;
 T_E}
 
-// 设置角色数值属性的最大值, 在游戏启动时应该全部设置完毕
+// sets the maximum of a numeric attribute of the character; all of them should be set at game start
 inline int lua_SetChaAttrMax(lua_State *L)
 {T_B
 
-	// 参数合法性判别
+	// argument validity check
     BOOL bValid = (lua_gettop(L)==2 && lua_isnumber(L, 1) && lua_isnumber(L, 2));
 	if(!bValid) 
     {
@@ -176,10 +176,10 @@ inline int lua_SetChaAttrMax(lua_State *L)
 	return 0;
 T_E}
 
-// 为当前地图添加天气区域, 地图初始化时会被调用, 游戏中也可以调用
+// adds a weather area to the current map; it is called on map initialisation and can also be called during the game
 inline int lua_AddWeatherRegion(lua_State *L)
 {
-	// 参数合法性判别
+	// argument validity check
     BOOL bValid = (lua_gettop(L)==7 && lua_isnumber(L, 1) && lua_isnumber(L, 2) && lua_isnumber(L, 3) 
 		                            && lua_isnumber(L, 4) && lua_isnumber(L, 5) && lua_isnumber(L, 6)
 									&& lua_isnumber(L, 7));
@@ -216,7 +216,7 @@ inline int lua_AddWeatherRegion(lua_State *L)
 }
 
 
-// 清除当前地图上的所有天气区域
+// clears every weather area on the current map
 inline int lua_ClearMapWeather(lua_State *L)
 {
 	if(!g_pScriptMap) return 0;
@@ -227,10 +227,10 @@ inline int lua_ClearMapWeather(lua_State *L)
 	return 0;
 }
 
-// 设置船只的熟练度记时
+// sets the boat proficiency timer
 inline int lua_SetBoatCtrlTick(lua_State *L)
 {
-	// 参数合法性判别
+	// argument validity check
     BOOL bValid = (lua_gettop (L)==2 && lua_islightuserdata(L, 1) && lua_isnumber(L, 2));
 	if(!bValid) 
     {
@@ -246,10 +246,10 @@ inline int lua_SetBoatCtrlTick(lua_State *L)
 	return 0;
 }
 
-// 取出船只的熟练度记时
+// gets the boat proficiency timer
 inline int lua_GetBoatCtrlTick(lua_State *L)
 {
-	// 参数合法性判别
+	// argument validity check
     BOOL bValid = (lua_gettop (L)==1 && lua_islightuserdata(L, 1));
 	if(!bValid) 
     {
@@ -269,12 +269,12 @@ inline int lua_GetBoatCtrlTick(lua_State *L)
 	return 1;
 }
 
-// 召唤某类角色, 例如 水雷  宠物
-// 参数 : 召唤者, 召唤类型(1 水雷  2宠物), 角色表编号
-// 返回 召唤出来的角色指针
+// summons a certain kind of character, such as a sea mine or a pet
+// arguments: summoner, summon type (1 sea mine, 2 pet), character table number
+// returns the pointer to the summoned character
 inline int lua_SummonCha(lua_State *L)
 {
-	// 参数合法性判别
+	// argument validity check
     BOOL bValid = (lua_gettop (L)==3 && lua_islightuserdata(L, 1) && lua_isnumber(L, 2) && lua_isnumber(L, 3));
 	if(!bValid) 
     {
@@ -291,7 +291,7 @@ inline int lua_SummonCha(lua_State *L)
 	int nChaType = enumCHACTRL_NONE;
 	CCharacter *pCha = NULL;
 	
-	if(sType==1)		// 放置水雷
+	if(sType==1)		// places a sea mine
 	{
 		pCha = pHost->GetSubMap()->ChaSpawn(sChaInfoID, enumCHACTRL_PLAYER_PET, rand()%360, &Pos);
 		if (pCha)
@@ -301,7 +301,7 @@ inline int lua_SummonCha(lua_State *L)
 			pCha->m_AIType = 0;
 		}
 	}
-	else if(sType==2)		// 放置宠物
+	else if(sType==2)		// places a pet
 	{
 		Pos.move(rand() % 360, 3 * 100);
 		pCha = pHost->GetSubMap()->ChaSpawn(sChaInfoID, enumCHACTRL_PLAYER_PET, rand()%360, &Pos);
@@ -324,12 +324,12 @@ inline int lua_SummonCha(lua_State *L)
 	return 1;
 }
 
-// 删除角色
-// 参数 : 角色对象
-// 返回 无
+// deletes a character
+// arguments: character object
+// returns: none
 inline int lua_DelCha(lua_State *L)
 {
-	// 参数合法性判别
+	// argument validity check
     BOOL bValid = (lua_gettop (L)==1 && lua_islightuserdata(L, 1));
 	if(!bValid) 
     {
@@ -340,7 +340,7 @@ inline int lua_DelCha(lua_State *L)
 	CCharacter *pCTarCha = (CCharacter*)lua_touserdata(L, 1);
 	if (!pCTarCha)
 		return 0;
-	if (pCTarCha->IsPlayerCtrlCha()) // 玩家当前控制角色不能删除
+	if (pCTarCha->IsPlayerCtrlCha()) // the player's currently controlled character cannot be deleted
 		return 0;
 	pCTarCha->Free();
 

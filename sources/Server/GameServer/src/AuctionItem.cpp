@@ -80,7 +80,7 @@ BOOL CAuctionItem::BidUp(CCharacter *pCha, uInt price)
 		//LG("Auction", "角色 %s 投标 %ld 成功!\n", GetCurChaName().c_str(),GetCurPrice());
 		LG("Auction", "character %s bid %ld success!\n", GetCurChaName().c_str(),GetCurPrice());
 
-	//返还金钱
+	// give the money back
 	BOOL bOnline = false;
 	if(!game_db.IsChaOnline(dwPreChaID, bOnline))
 	{

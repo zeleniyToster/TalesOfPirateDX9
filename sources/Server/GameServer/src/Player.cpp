@@ -34,7 +34,7 @@ m_sGarnerWiner(0)
 	//m_CMapMask.AddMap("lonetower", defMAP_LONETOWER_WIDTH, defMAP_LONETOWER_HEIGHT);
 	m_lLightSize = g_lDeftMMaskLight;
 
-	//初始化摩豆和代币数量
+	//initialises the MoDou and token counts
 	m_lMoBean = 0;
 	m_lRplMoney = 0;
 	m_lVipID = 0;
@@ -118,7 +118,7 @@ void CPlayer::Finally()
 	m_pCtrlCha = 0;
 	m_pMainCha = NULL;
 
-	// 建造中的船只
+	// boat under construction
 	if( m_pMakingBoat )
 	{
 		m_pMakingBoat->Free();
@@ -371,8 +371,8 @@ void CPlayer::GetBerth( USHORT& sBerthID, USHORT& sxPos, USHORT& syPos, USHORT& 
 	sDir = m_sDir;
 }
 
-// 组队有关操作参数
-// 添加单个队友
+// party related operation parameters
+// adds a single teammate
 void CPlayer::AddTeamMember(uplayer *pUPlayer)
 {T_B
 	//LG("team", "为[%s]添加队友: [dbid = %d] [gate_addr=%d]\n", GetCtrlCha()->GetLogName(), pUPlayer->m_dwDBChaId, pUPlayer->m_ulGateAddr);
@@ -386,7 +386,7 @@ void CPlayer::AddTeamMember(uplayer *pUPlayer)
 	//LG("team", "添加成功 共有队友数量 %d\n", _nTeamMemberCnt);
 T_E}
 
-// 清除所有队友记录
+// clears all teammate records
 void CPlayer::ClearTeamMember()
 {T_B
     _dwTeamLeaderID = 0;
@@ -404,7 +404,7 @@ void CPlayer::UpdateTeam()
 {
 }
 
-// 协议 : 将Player做为组队成员的信息发送给队友的客户端
+// protocol: sends this Player as a party member to the teammates' clients
 void CPlayer::NoticeTeamMemberData()
 {T_B
 	int	nTMemberCnt = GetTeamMemberCnt();
@@ -418,14 +418,14 @@ void CPlayer::NoticeTeamMemberData()
 
     WPACKET	wpk = GETWPACKET();
 	WRITE_CMD(wpk, CMD_MC_TEAM);
-	WRITE_LONG(wpk, pMainCha->GetID()); // 发送给客户端自己的角色唯一ID作为标识
+	WRITE_LONG(wpk, pMainCha->GetID()); // sends the client's own unique character ID to the client as an identifier
 	WRITE_LONG(wpk, (long)pCha->getAttr(ATTR_HP));
 	WRITE_LONG(wpk, (long)pCha->getAttr(ATTR_MXHP));
 	WRITE_LONG(wpk, (long)pCha->getAttr(ATTR_SP));
 	WRITE_LONG(wpk, (long)pCha->getAttr(ATTR_MXSP));
 	
-	WRITE_LONG(wpk, pMainCha->getAttr(ATTR_LV)); // 写入人的级别信息	
-	pMainCha->WriteLookData(wpk, LOOK_TEAM);	 // 写入人的外观信息, 最终应该处理为显示船的外观和级别
+	WRITE_LONG(wpk, pMainCha->getAttr(ATTR_LV)); // writes the person's level information
+	pMainCha->WriteLookData(wpk, LOOK_TEAM);	 // writes the person's appearance information; in the end this should be handled as the boat's appearance and level
 
 	SENDTOCLIENT2(wpk, nTMemberCnt, _Team);
 T_E}
@@ -450,7 +450,7 @@ void CPlayer::NoticeTeamLeaderID(void)
 	pCha->m_CLog.Log("in phase teamID:header  %d,oneself %d.", getTeamLeaderID(), pCha->GetID());
 }
 
-// 获得玩家同队的成员角色
+// obtains the characters in the player's party
 CCharacter* CPlayer::GetTeamMemberCha(int nNo)
 {
 	CPlayer *pOther = g_pGameApp->GetPlayerByDBID(_Team[nNo].m_dwDBChaId);
@@ -512,7 +512,7 @@ void CPlayer::ClearChallengeObj(bool bAll)
 	SetChallengeType(enumFIGHT_NONE);
 }
 
-// chPosType 1，装备栏.2，道具栏
+// chPosType 1, equipment slot. 2, item slot
 bool CPlayer::SetRepairPosInfo(dbc::Char chPosType, dbc::Char chPosID)
 {
 	m_chRepairPosType = chPosType;
@@ -854,7 +854,7 @@ bool CPlayer::SynBank(char chBankNO, char chType)
 	}
 
 	WPACKET WtPk = GETWPACKET();
-	WRITE_CMD(WtPk, CMD_MC_NOTIACTION);	// 通告行动
+	WRITE_CMD(WtPk, CMD_MC_NOTIACTION);	// notify action
 	WRITE_LONG(WtPk, m_pCtrlCha->GetID());
 	WRITE_LONG(WtPk, m_pCtrlCha->m_ulPacketID);
 	WRITE_CHAR(WtPk, enumACTION_BANK);
@@ -899,7 +899,7 @@ bool CPlayer::BankCanOpen(CCharacter *pCNpc)
 		pCCtrlCha->SystemNotice(RES_STRING(GM_PLAYER_CPP_00009));
 		return false;
 	}
-	// 距离判断，在Npc交互时已经有了检测
+	// distance check, already performed during the NPC interaction
 	if (!pCCtrlCha->IsRangePoint(pCNpc->GetPos(), defBANK_DISTANCE))
 	{
 		//pCCtrlCha->SystemNotice("距离太远");
@@ -1129,7 +1129,7 @@ bool CPlayer::Strin2BankDBIDData(std::string &strData)
 
 void CPlayer::CheckChaItemFinalData()
 {
-	// 外观
+	// appearance
 	cChar	*szScript = "check_item_final_data";
 	CCharacter	*pCMainCha = GetMainCha();
 		if (pCMainCha->HasLook())
@@ -1144,7 +1144,7 @@ void CPlayer::CheckChaItemFinalData()
 		}
 	}
 
-	// 背包
+	// bag
 	SItemGrid	*pGridCont;
 	Short	sUseNum = pCMainCha->m_CKitbag.GetUseGridNum();
 	for (int i = 0; i < sUseNum; i++)
@@ -1156,7 +1156,7 @@ void CPlayer::CheckChaItemFinalData()
 		g_CParser.DoString(szScript, enumSCRIPT_RETURN_NONE, 0, enumSCRIPT_PARAM_LIGHTUSERDATA, 1, pGridCont, DOSTRING_PARAM_END);
 	}
 
-	// 银行
+	// bank
 	for (int j = 0; j < MAX_BANK_NUM; j++)
 	{
 		sUseNum = m_CBank[j].GetUseGridNum();
@@ -1170,7 +1170,7 @@ void CPlayer::CheckChaItemFinalData()
 		}
 	}
 
-	// 船舱
+	// cargo hold
 	//for (int i = 0; i < m_byNumBoat; i++)
 	//{
 	//	if (m_Boat[i])

@@ -13,7 +13,7 @@ public:
 	MyStackWalker(DWORD dwProcessId, HANDLE hProcess) : StackWalker(dwProcessId, hProcess) {}
 	virtual void OnOutput(LPCSTR szText) 
 	{
-		//	计算文件名字。
+		//	Builds the file name.
 		char sName[24];
 
 		sprintf( sName, "c:\\exception%d.txt", GetCurrentThreadId() );

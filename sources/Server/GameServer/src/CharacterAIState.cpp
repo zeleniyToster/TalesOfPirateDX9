@@ -7,19 +7,19 @@
 #include "HarmRec.h"
 
 //--------------------------------------------------------
-//                       AI状态控制
+//                       AI state control
 //--------------------------------------------------------
 
 
 //-----------
-// AI总控函数
+// overall AI control function
 //-----------
 BOOL  g_bEnableAI  = TRUE;
 
 void CCharacter::OnAI(DWORD dwCurTime)
 {T_B
 	
-	m_pHate->UpdateHarmRec(this); // 怪物和玩家都要计算伤害累计
+	m_pHate->UpdateHarmRec(this); // both monsters and players accumulate damage
 
 	if (IsPlayerCha() && getAttr(ATTR_CHATYPE) != enumCHACTRL_PLAYER_PET)	return;
 
@@ -48,7 +48,7 @@ void CCharacter::OnAI(DWORD dwCurTime)
 		m_AITarget = 0;
 	}
 
-	if (!IsLiveing())         return; // 对象不存在
+	if (!IsLiveing())         return; // the object does not exist
 
 
 	if (IsNpc())

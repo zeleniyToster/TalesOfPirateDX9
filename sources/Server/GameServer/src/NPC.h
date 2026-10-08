@@ -16,9 +16,9 @@ namespace mission
 {
 	using namespace dbc;
 
-	#define EN_OK						 0		// 正确
-	#define EN_FAILER					-1		// 错误
-	#define INVALID_SCRIPT_NPCHANDLE	USHORT(-1)		// 无效的NPC脚本ID
+	#define EN_OK						 0		// correct
+	#define EN_FAILER					-1		// error
+	#define INVALID_SCRIPT_NPCHANDLE	USHORT(-1)		// invalid NPC script ID
 
 	//	
 	class CNpc : public CCharacter
@@ -29,38 +29,38 @@ namespace mission
 		CNpc();
 		virtual ~CNpc();
 
-		// 类的类型信息
+		// class type information
 		virtual CNpc* IsNpc() { return this; }
 		virtual void SetType() { m_byType = NPC; }
 		BYTE GetType() { return m_byType; }
 		BYTE GetShowType() { return m_byShowType; }
 		
-		// 装载npc配置信息
+		// loads the NPC configuration information
 		virtual BOOL Load( const CNpcRecord& recNpc, const CChaRecord& recChar );
 
-		// 网络消息处理函数
+		// network message handler
 		virtual HRESULT MsgProc( CCharacter& character, RPACKET& packet );
 
-		// 任务状态处理函数
+		// mission state handler
 		virtual BOOL MissionProc( CCharacter& character, BYTE& byState );
 
-		// 判定npc的地图属性
+		// determines the map attribute of the NPC
 		virtual BOOL IsMapNpc( const char szMap[], USHORT sID );
 
-		// 添加触发器信息
+		// adds trigger information
 		virtual BOOL AddNpcTrigger( WORD wID, mission::TRIGGER_EVENT e, WORD wParam1, WORD wParam2, WORD wParam3, WORD wParam4 );
 
-		// 触发器事件处理
+		// trigger event handling
 		virtual BOOL EventProc( TRIGGER_EVENT e, WPARAM wParam, LPARAM lParam );
 
-		//设置npc脚本对话和交易信息资源ID
+		//sets the resource IDs for the NPC script dialog and trade information
 		virtual void	SetScriptID( USHORT sID ) { m_sScriptID = sID; }
 		virtual USHORT	GetScriptID() { return m_sScriptID; }
 		virtual void	SetNpcHasMission( BOOL bHasMission ) { m_bHasMission = bHasMission; }
 		virtual BOOL	GetNpcHasMission() { return m_bHasMission; }
 		virtual const char* GetInitFunc() { return m_szMsgProc; }
 
-		// NPC被召唤
+		// the NPC has been summoned
 		virtual void	Summoned( USHORT sTime ) {};
 		
 		const char* GetNpcName() { return m_szName; }
@@ -69,22 +69,22 @@ namespace mission
 		//
 		virtual void Clear();
 
-		// npc类型信息
+		// NPC type information
 		BYTE	m_byType;
 
-		// npc客户端显示不同类型
+		// different types shown on the client
 		BYTE	m_byShowType;
 
-		// npc配置表编号
+		// NPC configuration table number
 		USHORT	m_sNpcID;
 
-		// npc信息结构
+		// NPC information structure
 		char	m_szMsgProc[ROLE_MAXSIZE_MSGPROC];
 
-		// npc脚本信息ID
+		// NPC script information ID
 		USHORT	m_sScriptID;
 
-		// npc是否携带任务信息
+		// whether the NPC carries mission information
 		BOOL	m_bHasMission;
 
 		char m_szName[128];
@@ -97,13 +97,13 @@ namespace mission
 		CTalkNpc();
 		virtual ~CTalkNpc();
 
-		// 类的类型信息
+		// class type information
 		virtual void SetType() { m_byType = TALK; }
 
-		// 装载npc配置信息
+		// loads the NPC configuration information
 		virtual BOOL Load( const CNpcRecord& recNpc, const CChaRecord& recChar );
 		
-		// 装载脚本信息
+		// loads the script information
 		virtual BOOL InitScript( const char szFunc[], const char szName[] );
 
 		//
@@ -112,38 +112,38 @@ namespace mission
 		//
 		virtual BOOL MissionProc( CCharacter& character, BYTE& byState );
 
-		// 判定npc的地图属性
+		// determines the map attribute of the NPC
 		virtual BOOL IsMapNpc( const char szMap[], USHORT sID );
 
-		// 添加触发器信息
+		// adds trigger information
 		virtual BOOL AddNpcTrigger( WORD wID, mission::TRIGGER_EVENT e, WORD wParam1, WORD wParam2, WORD wParam3, WORD wParam4 );
 
-		// 触发器事件处理
+		// trigger event handling
 		virtual BOOL EventProc( TRIGGER_EVENT e, WPARAM wParam, LPARAM lParam );
 
-		// NPC被召唤
+		// the NPC has been summoned
 		virtual void Summoned( USHORT sTime );
 
 	protected:
-		// 装载npc脚本初始化npc信息
+		// loads the NPC script and initialises the NPC information
 		virtual BOOL Load( const char szNpcScript[] );
 		
 		// 
 		virtual void Clear();
 
-		// 清除触发器信息
+		// clears the trigger information
 		void	ClearTrigger( WORD wIndex );
 
-		// 任务事件处理函数
+		// mission event handler
 		void	TimeOut( USHORT sTime );
 
-		// npc携带的触发器信息
+		// trigger information carried by the NPC
 		BYTE				m_byNumTrigger;
 		NPC_TRIGGER_DATA	m_Trigger[ROLE_MAXNUM_NPCTRIGGER];
 
-		// 当看到有携带某个任务的角色时出现
-		USHORT m_sTime;		// 剩余显示时间
-		BOOL   m_bSummoned; // 是否是召唤的NPC
+		// appears when a character carrying that mission is seen
+		USHORT m_sTime;		// remaining display time
+		BOOL   m_bSummoned; // whether this is a summoned NPC
 	};
 	
 	class CTradeNpc : public CTalkNpc
@@ -155,7 +155,7 @@ namespace mission
 
 		virtual void SetType() { m_byType = TRADE; }
 
-		// 交易函数接口
+		// trade function interface
 		virtual BOOL Sale( CCharacter& character, RPACKET& packet );
 		virtual BOOL Buy( CCharacter& character, RPACKET& packet );
 
@@ -181,7 +181,7 @@ namespace mission
 			DWORD  dwOwnerID;
 		};
 
-		// 物品装备信息
+		// item equipment information
 		AGENCY_ITEM	m_sItemList[ROLE_MAXNUM_CAPACITY];
 		USHORT		m_sNumItem;
 	};
@@ -195,12 +195,12 @@ namespace mission
 		virtual void SetType() { m_byType = ROLE; }
 		
 	private:
-		// 任务信息
+		// mission information
 		USHORT	m_sRoleList[ROLE_MAXNUM_CAPACITY];
 		USHORT	m_sNumRole;
 	};
 
-	extern CTalkNpc* g_TalkNpc;	// 初始化npc脚本时候设置全局npc类指针
+	extern CTalkNpc* g_TalkNpc;	// set the global NPC class pointer while initialising the NPC script
 }
 
 //---------------------------------------------------------

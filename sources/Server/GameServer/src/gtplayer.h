@@ -31,11 +31,11 @@ struct uplayer
         return *this;
     }
 
-    DWORD m_dwDBChaId; // 唯一ID
+    DWORD m_dwDBChaId; // unique ID
 
-    // 确定这个Player
+    // identifies this Player
     GateServer* pGate;
-    unsigned long m_ulGateAddr; // 在 GateServer 进程中的虚拟地址
+    unsigned long m_ulGateAddr; // virtual address in the GateServer process
 };
 
 struct GatePlayer
@@ -66,7 +66,7 @@ private:
 
     uplayer ply;
 
-    GatePlayer* m_tmplist; // 特定发包接口之用，名称以后可能会调整
+    GatePlayer* m_tmplist; // for the dedicated packet sending interface; the name may change later
 };
 
 

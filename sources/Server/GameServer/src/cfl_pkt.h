@@ -17,20 +17,20 @@ protected:
 
 public:
 
-    // 必须要实现的接口
+    // interface that must be implemented
 
-    static short hdr_sz() {return T::hdr_sz();} // 包头的尺寸
-    static short pkt_len(void* dat) {return T::pkt_len(dat);} // 包的总长度
-    static short pkt_maxlen() {return T::pkt_maxlen();} // 合法包的最大长度
+    static short hdr_sz() {return T::hdr_sz();} // header size of the packet
+    static short pkt_len(void* dat) {return T::pkt_len(dat);} // total length of the packet
+    static short pkt_maxlen() {return T::pkt_maxlen();} // maximum length of a valid packet
 
-    void* pkt_buf() {return _pkt.pkt_buf();} // 包首地址
-    short pkt_len() {return _pkt.pkt_len();} // 包总长度
+    void* pkt_buf() {return _pkt.pkt_buf();} // packet head address
+    short pkt_len() {return _pkt.pkt_len();} // total length of the packet
 
     void clone_from(cfl_pktc<T>* pkt) {_pkt.clone(pkt->_pkt);} // deep-copy
 
 public:
 
-    // 读写接口
+    // read and write interface
 
     void WriteCmd(unsigned short command) {_pkt.wcmd(command);}
     void WriteChar(char const c) {_pkt.wc(c);}
@@ -62,8 +62,8 @@ protected:
     void on_get() {_pkt.reset();}
     void on_ret() {_pkt.reset();}
 
-    void pkt_enc() {}; // 包加密
-    void pkt_dec() {}; // 包解密
+    void pkt_enc() {}; // packet encryption
+    void pkt_dec() {}; // packet decryption
 
     // the core packet
     T _pkt;};
@@ -81,21 +81,21 @@ struct cfl_pkt
         int ssid;};
 
 
-    // 包结构 begin
+    // packet structure begin
     HDR hdr;
     unsigned short cmd;
     char buf[MYPKT_DATMAXLEN];
     unsigned short offset;
     unsigned short offset_r;
-    // 包结构 end
+    // packet structure end
 
 
 
-    // 成员函数
+    // member functions
     cfl_pkt() {reset();}
     void reset();
 
-    // 辅助函数
+    // helper functions
     static short hdr_sz();
     static short pkt_len(void* dat);
     static short pkt_maxlen();
@@ -104,16 +104,16 @@ struct cfl_pkt
     bool has_data(short len) const;
     void clone(cfl_pkt const& pkt);
 
-    // 改变包长度
+    // changes the packet length
     short get_len() const;
     void set_len(short len);
     void add_len(short len);
 
-    // 得到缓冲区和长度
+    // gets the buffer and the length
     void* pkt_buf() const {return (void *)&hdr;}
     short pkt_len() const {return get_len();}
 
-    // 写
+    // write
     void wcmd(unsigned short);
     void wc(char c);
     void ws(short s);
@@ -123,7 +123,7 @@ struct cfl_pkt
     void wb(char const* p, short len);
     void wstr(char const* str);
 
-    // 读
+    // read
     unsigned short rcmd() const;
     char rc();
     short rs();

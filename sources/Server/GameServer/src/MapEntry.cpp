@@ -13,7 +13,7 @@ using namespace std;
 
 CDynMapEntry	g_CDMapEntry;
 
-char	g_szTFightMapName[MAX_MAPNAME_LENGTH] = "";	// 队伍挑战地图名
+char	g_szTFightMapName[MAX_MAPNAME_LENGTH] = "";	// party challenge map name
 
 //=============================================================================
 void CMapEntryCopyCell::WriteParamPacket(WPACKET &pk)

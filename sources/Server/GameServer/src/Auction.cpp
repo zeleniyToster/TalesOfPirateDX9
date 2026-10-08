@@ -99,7 +99,7 @@ BOOL CAuctionSystem::EndAuction(short sItemID)
 							WRITE_CMD(WtPk, CMD_MM_AUCTION);
 							WRITE_LONG(WtPk, pChaOut->GetID());
 							WRITE_LONG(WtPk, pAucItem->GetCurChaID());
-							pChaOut->ReflectINFof(pChaOut, WtPk);//通告
+							pChaOut->ReflectINFof(pChaOut, WtPk);// notify
 
 							bFound = true;
 							break;

@@ -14,12 +14,12 @@
 namespace mission
 {
 
-	// 任务功能项命令结构
+	// mission function item command structure
 	typedef struct _ROLE_ITEM_COMMAND
 	{
-		USHORT usCmd;								// 功能项目命令
-		char   szDesc[ROLE_MAXNUM_FUNCITEMSIZE];	// 描述信息	
-		BYTE   byParam;								// 参数信息
+		USHORT usCmd;								// function item command
+		char   szDesc[ROLE_MAXNUM_FUNCITEMSIZE];	// description information
+		BYTE   byParam;								// parameter information
 		WORD   wParam;
 		DWORD  dwParam;
 
@@ -35,24 +35,24 @@ namespace mission
 
 	} ROLE_ITEM_COMMAND, *PROLE_ITEM_COMMAND;
 
-	// 显示任务对话描述信息
+	// shows the mission dialog description information
 	typedef struct _ROLE_DESCRIPTION
 	{
-		BYTE byCmd;							// 描述对话栏按钮命令ID
-		char szDesc[ROLE_MAXNUM_DESPSIZE];	// 描述信息
+		BYTE byCmd;							// dialog button command ID for the description
+		char szDesc[ROLE_MAXNUM_DESPSIZE];	// description information
 
 	} ROLE_DESCRIPTION, *PROLE_DESCRIPTION;
 
-	//　显示任务功能描述信息
+	//　shows the mission function description information
 	typedef struct _ROLE_FUNCTION
 	{		
-		BYTE byCount;		// 功能项计数
-		ROLE_ITEM_COMMAND FuncItem[ROLE_MAXNUM_FUNCITEM]; // 对应的功能项目
+		BYTE byCount;		// function item count
+		ROLE_ITEM_COMMAND FuncItem[ROLE_MAXNUM_FUNCITEM]; // the corresponding function item
 
 	} ROLE_FUNCTION, *PROLE_FUNCTION;
 
-	// npc信息存储结构
-	// 历史任务单个标记结构
+	// NPC information storage structure
+	// structure for a single history mission tag
 	typedef struct _ROLE_FLAGINFO
 	{
 		WORD  wRoleID;
@@ -91,7 +91,7 @@ namespace mission
 			return szFlag[dwIndex] & szTag;
 		}
 
-		// 设置或者清除设定标记
+		// sets or clears the given tag
 		BOOL SetFlag( WORD wFlag, BOOL bValid )
 		{
 			if( wFlag >= ROLE_MAXNUM_FLAGSIZE<<3 ) return FALSE;
@@ -147,7 +147,7 @@ namespace mission
 			return szFlag[dwIndex] & szTag;
 		}
 
-		// 设置或者清除设定标记
+		// sets or clears the given tag
 		void SetFlag( DWORD dwFlag, BOOL bValid )
 		{
 			DWORD dwIndex = dwFlag>>3; // dwFlag/ROLE_MAXNUM_INDEXSIZE;
@@ -165,17 +165,17 @@ namespace mission
 			DWORD dwTag = dwFlag&1;
 			if( dwTag == 0 )
 			{
-				// 高四位
+				// high four bits
 				szParam[dwIndex] &= 0xF;
 			}
 			else
 			{
-				// 低四位
+				// low four bits
 				szParam[dwIndex] &= 0xF0;
 			}
 		}
 
-		// 设置标记相应参数信息
+		// parameter information for setting the tag
 		BOOL SetParam( DWORD dwFlag, BYTE byParam )
 		{
 			if( byParam >= ROLE_MAXVALUE_PARAM )
@@ -185,13 +185,13 @@ namespace mission
 			DWORD dwTag = dwFlag&1;
 			if( dwTag == 0 )
 			{
-				// 高四位
+				// high four bits
 				szParam[dwIndex] &= 0xF;
 				szParam[dwIndex] |= byParam<<4;
 			}
 			else
 			{
-				// 低四位
+				// low four bits
 				szParam[dwIndex] &= 0xF0;
 				szParam[dwIndex] |= byParam;
 			}
@@ -204,12 +204,12 @@ namespace mission
 			DWORD dwTag = dwFlag&1;
 			if( dwTag == 0 )
 			{
-				// 高四位
+				// high four bits
 				return (szParam[dwIndex]&0xF0)>>4;
 			}
 			else
 			{
-				// 低四位
+				// low four bits
 				return szParam[dwIndex]&0xF;
 			}
 
@@ -218,7 +218,7 @@ namespace mission
 		
 	} ROLE_EXFLAGINFO, *PROLE_EXFLAGINFO;
 
-	// 所有角色最大可执行历史任务标记结构
+	// structure holding the history mission tags executable by all characters
 	typedef struct _ROLE_RECORDINFO
 	{
 		char  szID[ROLE_MAXNUM_RECORDSIZE];
@@ -253,7 +253,7 @@ namespace mission
 			return szID[dwIndex] & szTag;
 		T_E}
 
-		// 设置或者清除设定标记
+		// sets or clears the given tag
 		BOOL SetID( DWORD dwID, BOOL bValid )
 		{T_B
 			if( dwID >= ROLE_MAXNUM_RECORDSIZE<<3 ) return FALSE;
@@ -274,84 +274,84 @@ namespace mission
 	} ROLE_RECORDINFO, *PROLE_RECORDINFO;
 
 
-	// 触发器信息记录
+	// trigger information record
 	typedef struct _TRIGGER_DATA
 	{
-		WORD wTriggerID;	// 触发器ID
-		WORD wMissionID;	// 任务ID(任务取消时需要检测，清除相应任务的触发器)
-		BYTE byType;		// 事件类型
-		WORD wParam1;		// 触发器参数3
-		WORD wParam2;		// 触发器参数4,动作计数
-		WORD wParam3;		// (如果是随机任务，则用作开始记录标签的起始位置，传递到触发器脚本中使用)
+		WORD wTriggerID;	// trigger ID
+		WORD wMissionID;	// mission ID (checked when a mission is cancelled, to clear that mission's triggers)
+		BYTE byType;		// event type
+		WORD wParam1;		// trigger parameter 3
+		WORD wParam2;		// trigger parameter 4, action count
+		WORD wParam3;		// (for a random mission this is the start position recorded in the tag, passed on to the trigger script)
 		WORD wParam4;		// 
 		WORD wParam5;
 		WORD wParam6;
 
-		BYTE byIsDel : 1;	// 标志触发器是否应该删除
+		BYTE byIsDel : 1;	// flags whether the trigger should be deleted
 		BYTE byParam : 7;
 
 	} TRIGGER_DATA, *PTRIGGER_DATA;
 
 	enum { TRIGGER_VALID, TRIGGER_DELED };
 
-	// 触发器信息记录
+	// trigger information record
 	typedef struct _NPC_TRIGGER_DATA
 	{
-		WORD wTID;			// 触发器ID
+		WORD wTID;			// trigger ID
 		WORD wParam;
-		BYTE byType;		// 事件类型
-		WORD wParam1;		// 触发器参数
+		BYTE byType;		// event type
+		WORD wParam1;		// trigger parameter
 		WORD wParam2;
 		WORD wParam3;
 		WORD wParam4;
 
 	} NPC_TRIGGER_DATA, *PNPC_TRIGGER_DATA;
 
-	// 随机任务数据信息
+	// random mission data information
 	typedef struct _MISSION_DATA
 	{
-		WORD	wParam1;				// 随机任务的执行内容信息参数
+		WORD	wParam1;				// parameters of the random mission execution content information
 		WORD	wParam2;
 		WORD	wParam3;
 		WORD	wParam4;
 		WORD	wParam5;
 		WORD	wParam6;
 
-		void*	pData;					// 运行时临时数据
+		void*	pData;					// runtime temporary data
 	} MISSION_DATA, *PMISSION_DATA;
 
 	typedef struct _MISSION_INFO
 	{
-		WORD	wRoleID;				// 任务ID
-		BYTE	byState : 3;			// 任务进行状态
-		BYTE	byMisType : 5;			// 任务类形
-		BYTE	byType;					// 随机任务信息类型
-		BYTE	byLevel;				// 等级信息
-		BYTE	byNumData;				// 执行内容计数
-		DWORD	dwExp;					// 执行该任务可得的经验
-		DWORD	dwMoney;				// 执行该任务的金钱奖励
-		WORD	wItem;					// 随机任务的高级物品奖励（值为0表示无，数量都为1）
-		WORD	wParam1;				// 参数
+		WORD	wRoleID;				// mission ID
+		BYTE	byState : 3;			// mission progress state
+		BYTE	byMisType : 5;			// mission class
+		BYTE	byType;					// random mission information type
+		BYTE	byLevel;				// level information
+		BYTE	byNumData;				// execution content count
+		DWORD	dwExp;					// experience obtainable by executing the mission
+		DWORD	dwMoney;				// money reward for executing the mission
+		WORD	wItem;					// advanced item reward of the random mission (a value of 0 means none; the quantity is always 1)
+		WORD	wParam1;				// parameters
 		WORD	wParam2;
-		ROLE_FLAGINFO RoleInfo;			// 标志和任务ID信息
-		MISSION_DATA RandData[ROLE_MAXNUM_RAND_DATA];	// 随机任务数据信息
+		ROLE_FLAGINFO RoleInfo;			// flag and mission ID information
+		MISSION_DATA RandData[ROLE_MAXNUM_RAND_DATA];	// random mission data information
 		
 	} MISSION_INFO, *PMISSION_INFO;
 
-	// 完成随机任务计数结构
+	// structure counting random mission completions
 	typedef struct _RAND_MISSION_COUNT
 	{
-		WORD	wRoleID;				// 任务ID
-		WORD	wCount;					// 任务完成计数
-		WORD	wNum;					// 完成任务的圈数
+		WORD	wRoleID;				// mission ID
+		WORD	wCount;					// mission completion count
+		WORD	wNum;					// number of rounds completed
 
 	} RAND_MISSION_COUNT, *PRAND_MISSION_COUNT;
 
-	// NPC任务信息状态记录
+	// NPC mission state record
 	typedef struct _STATE_DATA
 	{
-		BYTE byID : 5;		// 每个npc自带的任务信息列表的索引
-		BYTE byState : 3;	// 单个任务状态
+		BYTE byID : 5;		// index of the mission information list carried by each NPC
+		BYTE byState : 3;	// single mission state
 	
 	} STATE_DATA, *PSTATE_DATA;
 
@@ -359,8 +359,8 @@ namespace mission
 	{
 		DWORD dwNpcID;
 		BYTE  byNpcState;
-		BYTE  byMisNum;			// 已完成任务计数
-		STATE_DATA StateInfo[ROLE_MAXNUM_MISSIONSTATE];	// 任务数据信息
+		BYTE  byMisNum;			// completed mission count
+		STATE_DATA StateInfo[ROLE_MAXNUM_MISSIONSTATE];	// mission data information
 	
 	} MISSION_STATE, *PMISSION_STATE;
 }

@@ -147,18 +147,18 @@ LG("init", "game map server [%s] startup...\n", g_Config.m_szName);
 
 	g_gmsvr	= new GameServerApp(0, l_comm);
 
-    // 启动 GateServer 连接线程
+    // starts the GateServer connection thread
    // LG("init", "启动Gate服务器连接线程...\n");
 	 LG("init", "startup Gate server connect thread...\n");
     l_comm->AddTask(new ConnectGateServer(g_gmsvr));
 #endif
 
-    //连接并监听InfoServer
+    // connects to and listens on InfoServer
 	//LG("init", "启动信息服务器连接线程...\n");
 	//LG("init", "startup information server connect thread...\n");
     //l_comm->AddTask(new ToInfoServer(g_gmsvr));
 	
-	// 创建游戏线程
+	// creates the game threads
 	//LG("init", "启动游戏线程...\n");
 	LG("init", "startup game thread...\n");
 	DWORD	dwThreadID;

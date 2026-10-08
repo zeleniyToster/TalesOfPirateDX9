@@ -46,7 +46,7 @@ CEyeshotCell::~CEyeshotCell()
 	}
 }
 
-// 实体pCEnt进入视野单元，执行可视化操作
+// entity pCEnt enters the visibility cell, perform the visualisation
 void CEyeshotCell::EnterEyeshot(Entity *pCEnt)
 {T_B
 	for (short i = 0; i < m_sStateCellNum; i++)

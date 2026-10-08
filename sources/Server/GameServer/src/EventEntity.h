@@ -24,18 +24,18 @@ namespace mission
 
 		virtual void Clear();
 
-		// 设置实体模型显示信息
+		// sets the entity model display information
 		virtual BOOL Create( SubMap& Submap, const char szName[], USHORT sID, USHORT sInfoID, DWORD dwxPos, DWORD dwyPos, USHORT sDir );
 
-		// 事件实体消息处理
+		// event entity message handling
 		virtual HRESULT MsgProc( CCharacter& character, dbc::RPacket& packet );
 
-		// 获取实体状态信息
+		// gets the entity state information
 		virtual void GetState( CCharacter& character, BYTE& byState ) { byState = ENTITY_DISABLE; }
 
 	protected:	
-		BYTE	m_byType;	// 实体类型
-		USHORT  m_sInfoID;  // 实体事件客户端表现信息ID
+		BYTE	m_byType;	// entity type
+		USHORT  m_sInfoID;  // entity event client presentation information ID
 	};
 
 	class CResourceEntity : public CEventEntity
@@ -47,19 +47,19 @@ namespace mission
 		virtual void Clear();
 		virtual void SetType() { m_byType = RESOURCE_ENTITY; }
 
-		// 设置资源实体数据信息
+		// sets the resource entity data information
 		BOOL SetData( USHORT sItemID, USHORT sNum, USHORT sTime );
 
-		// 传送实体消息处理
+		// teleport entity message handling
 		virtual HRESULT MsgProc( CCharacter& character, dbc::RPacket& packet );
 
-		// 获取实体状态信息
+		// gets the entity state information
 		virtual void GetState( CCharacter& character, BYTE& byState );
 
 	private:
-		USHORT	m_sID;		// 资源信息ID
-		USHORT	m_sNum;		// 资源数量信息
-		USHORT	m_sTime;	// 资源采集时间
+		USHORT	m_sID;		// resource information ID
+		USHORT	m_sNum;		// resource quantity information
+		USHORT	m_sTime;	// resource gathering time
 	};
 
 	class CTransitEntity : public CEventEntity
@@ -71,17 +71,17 @@ namespace mission
 		virtual void Clear();
 		virtual void SetType() { m_byType = TRANSIT_ENTITY; }
 
-		// 设置传送实体数据信息
+		// sets the teleport entity data information
 		BOOL SetData( const char szMap[], USHORT sxPos, USHORT syPos );
 
-		// 传送实体消息处理
+		// teleport entity message handling
 		virtual HRESULT MsgProc( CCharacter& character, dbc::RPacket& packet );
 
-		// 获取实体状态信息
+		// gets the entity state information
 		virtual void GetState( CCharacter& character, BYTE& byState );
 
 	private:
-		// 被传送到的地图和位置信息
+		// map and position information the character is teleported to
 		char	m_szMapName[MAX_MAPNAME_LENGTH];
 		USHORT  m_sxPos;
 		USHORT  m_syPos;
@@ -96,13 +96,13 @@ namespace mission
 		virtual void Clear();
 		virtual void SetType() { m_byType = BERTH_ENTITY; }
 
-		// 设置停泊船只实体数据信息
+		// sets the docked boat entity data information
 		BOOL SetData( USHORT sBerthID, USHORT sxPos, USHORT syPos, USHORT sDir );
 
-		// 传送实体消息处理
+		// teleport entity message handling
 		virtual HRESULT MsgProc( CCharacter& character, dbc::RPacket& packet );
 
-		// 获取实体状态信息
+		// gets the entity state information
 		virtual void GetState( CCharacter& character, BYTE& byState );
 
 	private:

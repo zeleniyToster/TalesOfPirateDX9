@@ -85,8 +85,8 @@ protected:
 private:
 	CCharacter	*m_pCOwn;
 
-	SAction	*m_pSExecQueue;	// 执行队列
-	SAction	*m_pSFreeQueue;	// 空闲队列
+	SAction	*m_pSExecQueue;	// running queue
+	SAction	*m_pSFreeQueue;	// idle queue
 
 };
 

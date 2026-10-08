@@ -46,10 +46,10 @@ public:
 protected:
 
 private:
-	dbc::Short	m_sUnitCountX;	// 横向障碍块数目
-	dbc::Short	m_sUnitCountY;	// 纵向障碍块数目
-	dbc::Short	m_sUnitWidth;	// 属性块宽（厘米）
-	dbc::Short	m_sUnitHeight;	// 属性块高（厘米）
+	dbc::Short	m_sUnitCountX;	// number of horizontal obstacle blocks
+	dbc::Short	m_sUnitCountY;	// number of vertical obstacle blocks
+	dbc::Short	m_sUnitWidth;	// attribute block width (cm)
+	dbc::Short	m_sUnitHeight;	// attribute block height (cm)
 
 	int			m_nID;
 
@@ -61,56 +61,56 @@ private:
 
 enum EMapEntryStep
 {
-	enumMAPENTRY_CREATE,	// 创建地图入口
-	enumMAPENTRY_DESTROY,	// 销毁入口
-	enumMAPENTRY_SUBPLAYER,	// 释放玩家
-	enumMAPENTRY_SUBCOPY,	// 释放副本
-	enumMAPENTRY_RETURN,	// 操作返回
-	enumMAPENTRY_COPYPARAM,	// 副本参数（如分边信息）
-	enumMAPENTRY_COPYRUN,	// 副本运行
+	enumMAPENTRY_CREATE,	// creates the map entry
+	enumMAPENTRY_DESTROY,	// destroys the entry
+	enumMAPENTRY_SUBPLAYER,	// releases the player
+	enumMAPENTRY_SUBCOPY,	// releases the instance copy
+	enumMAPENTRY_RETURN,	// operation return value
+	enumMAPENTRY_COPYPARAM,	// instance copy parameters (such as the split-side information)
+	enumMAPENTRY_COPYRUN,	// instance copy running
 };
 
 enum EMapEntryOptRet
 {
-	enumMAPENTRYO_CREATE_SUC,		// 创建成功
-	enumMAPENTRYO_DESTROY_SUC,		// 销毁成功
-	enumMAPENTRYO_COPY_CLOSE_SUC,	// 副本关闭成功
+	enumMAPENTRYO_CREATE_SUC,		// created successfully
+	enumMAPENTRYO_DESTROY_SUC,		// destroyed successfully
+	enumMAPENTRYO_COPY_CLOSE_SUC,	// instance copy closed successfully
 };
 
 enum EMapState
 {
-	enumMAP_STATE_OPEN,			// 打开
-	enumMAP_STATE_CLOSE,		// 关闭
-	enumMAP_STATE_ASK_CLOSE,	// 请求关闭
+	enumMAP_STATE_OPEN,			// open
+	enumMAP_STATE_CLOSE,		// closed
+	enumMAP_STATE_ASK_CLOSE,	// close requested
 };
 
 enum EMapEntryState
 {
-	enumMAPENTRY_STATE_ASK_OPEN,	// 请求开启
-	enumMAPENTRY_STATE_OPEN,		// 开启
-	enumMAPENTRY_STATE_CLOSE,		// 关闭（从未开放过）
-	enumMAPENTRY_STATE_ASK_CLOSE,	// 请求关闭
-	enumMAPENTRY_STATE_CLOSE_SUC,	// 关闭（已经开放过）
+	enumMAPENTRY_STATE_ASK_OPEN,	// open requested
+	enumMAPENTRY_STATE_OPEN,		// opening
+	enumMAPENTRY_STATE_CLOSE,		// closed (never opened before)
+	enumMAPENTRY_STATE_ASK_CLOSE,	// close requested
+	enumMAPENTRY_STATE_CLOSE_SUC,	// closed (has been opened before)
 };
 
-enum EMapType // 此值也用于脚本，不能更改
+enum EMapType // this value is also used by the scripts and must not be changed
 {
-	enumMAPTYPE_NORMAL			= 1, // 普通地图
-	enumMAPTYPE_GUILD_FIGHT		= 2, // 公会战地图
-	enumMAPTYPE_TEAM_FIGHT		= 3, // 队伍战地图
+	enumMAPTYPE_NORMAL			= 1, // ordinary map
+	enumMAPTYPE_GUILD_FIGHT		= 2, // guild war map
+	enumMAPTYPE_TEAM_FIGHT		= 3, // party battle map
 };
 
-enum EMapCopyStartType // 此值也用于脚本，不能更改
+enum EMapCopyStartType // this value is also used by the scripts and must not be changed
 {
-	enumMAPCOPY_START_NOW		= 1, // 立即开始
-	enumMAPCOPY_START_PLAYER	= 2, // 有玩家时开始
-	enumMAPCOPY_START_CONDITION	= 3, // 条件开始
+	enumMAPCOPY_START_NOW		= 1, // start immediately
+	enumMAPCOPY_START_PLAYER	= 2, // start when a player is present
+	enumMAPCOPY_START_CONDITION	= 3, // start on condition
 };
 
-enum EMapCopyStartCdtType // 副本开始条件类型
+enum EMapCopyStartCdtType // instance copy start condition type
 {
-	enumMAPCOPY_START_CDT_UNKN,		// 未知的条件
-	enumMAPCOPY_START_CDT_PLYNUM,	// 玩家人数
+	enumMAPCOPY_START_CDT_UNKN,		// unknown condition
+	enumMAPCOPY_START_CDT_PLYNUM,	// number of players
 };
 
 class CMapRes
@@ -152,12 +152,12 @@ public:
 	void		SetCanPK(bool bCan = true) {m_bCanPK = bCan;}
 	bool		CanPK(void) {return m_bCanPK;}
 	void		SetCanTeam(bool bCan = true) {m_bCanTeam = bCan;}
-	void		SetCanStall(bool bCan = true){m_bCanStall = bCan;}//设置能否摆摊
+	void		SetCanStall(bool bCan = true){m_bCanStall = bCan;}//sets whether a stall may be opened
 	void		SetCanGuild(bool bCan = true) { m_bCanGuild = bCan; }
 	void		SetGuildWar(bool bGuildWar) { m_bGuildWar = bGuildWar; }
 	bool		CanGuildWar() { return m_bGuildWar; }
 	bool		CanTeam(void) {return m_bCanTeam;}
-	bool		CanStall(void) {return m_bCanStall;}//能否摆摊
+	bool		CanStall(void) {return m_bCanStall;}//whether a stall may be opened
 	bool		CanGuild(void) { return m_bCanGuild; }
 	void		SetType(dbc::Char chType = enumMAPTYPE_NORMAL) {m_chType = chType;}
 	dbc::Char	GetType(void) {return m_chType;}
@@ -181,7 +181,7 @@ public:
 
 	mission::CNpc*		FindNpc( const char szName[] );
 
-	// 视野单元
+	// visibility cell
 	struct
 	{
 		dbc::cShort		m_csEyeshotCellWidth;
@@ -189,7 +189,7 @@ public:
 		dbc::Short		m_sEyeshotCellLin;
 		dbc::Short		m_sEyeshotCellCol;
 	};
-	// 状态单元
+	// state cell
 	struct
 	{
 		dbc::cShort		m_csStateCellWidth;
@@ -217,19 +217,19 @@ public:
 	CMapSwitchEntitySpawn	*m_pCMapSwitchEntitySpawn;
 	CNpcSpawn*				m_pNpcSpawn;
 
-	// 入口信息
+	// entry information
 	struct
 	{
 		dbc::Char	m_szEntryMapName[MAX_MAPNAME_LENGTH];
 		Point		m_SEntryPos;
-		dbc::Char	m_chEntryState;		// 入口状态：EMapEntryState
+		dbc::Char	m_chEntryState;		// entry state: EMapEntryState
 
-		time_t		m_tEntryFirstTm;	// 入口第一次执行的时间
-		time_t		m_tEntryTmDis;		// 入口第一次执行后，以后各次执行的时间间隔
-		time_t		m_tEntryOutTmDis;	// 入口每次执行后，到消失的时间间隔
-		time_t		m_tMapClsTmDis;		// 入口每次执行后，到地图关闭的时间间隔
+		time_t		m_tEntryFirstTm;	// time of the first execution of the entry
+		time_t		m_tEntryTmDis;		// interval between subsequent executions after the first one
+		time_t		m_tEntryOutTmDis;	// interval from each execution to the entry disappearing
+		time_t		m_tMapClsTmDis;		// interval from each execution to the map closing
 
-		FILE		*m_pfEntryFile;			// 入口文件
+		FILE		*m_pfEntryFile;			// entry file
 	};
 
 	struct{
@@ -246,17 +246,17 @@ public:
 protected:
 
 private:
-	bool		m_bValid;	// 标示本地图是否有效
-	dbc::Char	m_chState;	// 地图状态：EMapState
+	bool		m_bValid;	// marks whether this map is valid
+	dbc::Char	m_chState;	// map state: EMapState
 
-	BYTE	m_byMapID; // 地图ID
+	BYTE	m_byMapID; // map ID
 
 	struct
 	{
-		bool	m_bCanSavePos;	// 角色在该地图上是否可以保存位置
-		bool	m_bCanPK;		// 角色在该地图上是否可以PK
-		bool	m_bCanTeam;		// 角色在该地图上是否可以操作队伍
-		bool	m_bCanStall;	// 角色在该地图是否可以摆摊
+		bool	m_bCanSavePos;	// whether characters on this map may save their position
+		bool	m_bCanPK;		// whether characters on this map may PK
+		bool	m_bCanTeam;		// whether characters on this map may operate parties
+		bool	m_bCanStall;	// whether characters on this map may open a stall
 		bool	m_bCanGuild;
 	};
 
@@ -270,12 +270,12 @@ private:
 
 	struct
 	{
-		dbc::Char	m_chCopyStartType;		// 副本开始类型 EMapCopyStartType
-		dbc::Char	m_chCopyStartCdtType;	// 副本开始条件类型
-		dbc::Long	m_lCopyStartCdtVal;	// 副本开始条件值
+		dbc::Char	m_chCopyStartType;		// instance copy start type EMapCopyStartType
+		dbc::Char	m_chCopyStartCdtType;	// instance copy start condition type
+		dbc::Long	m_lCopyStartCdtVal;	// instance copy start condition value
 	};
 
-	bool	m_bRepatriateDie;	// 是否要遣返死亡角色
+	bool	m_bRepatriateDie;	// whether dead characters are to be sent back
 
 	dbc::Short	m_sUsedCopySearch;
 
@@ -283,7 +283,7 @@ private:
 
 };
 
-// 地图ID产生器，根据地图名唯一性保证ID唯一,方便地图操作
+// map ID generator; guarantees ID uniqueness from the map name uniqueness, which makes map operations convenient
 class CMapID
 {
 public:

@@ -7,7 +7,7 @@
 
 
 //-------------------------------------
-// 事件 : 角色做表情
+// event: character emotes
 //-------------------------------------
 void CEventHandler::Event_ChaEmotion(CCharacter *pCha, short sEmotionNo)
 {

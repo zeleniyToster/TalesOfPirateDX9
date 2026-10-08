@@ -40,9 +40,9 @@ extern void ReloadEntity( const char szFileName[] );
 #define E_LUACOMPARE	LG( "luamis_error", "lua function[%s]param error is unknown of compara character!\n", __FUNCTION__ ); if( g_pNoticeChar ) g_pNoticeChar->SystemNotice( "lua function[%s]param error is unknow of compara character!", __FUNCTION__ );
 
 
-#define LUA_TRUE		1	// 正确
+#define LUA_TRUE		1	// correct
 #define LUA_FALSE		0	// 
-#define LUA_ERROR		-1	// 错误
+#define LUA_ERROR		-1	// error
 
 #endif // _SCRIPT_H_
 

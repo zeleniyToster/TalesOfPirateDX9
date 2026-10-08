@@ -23,7 +23,7 @@ class CActiveMgrUnitL;
 class Entity;
 class CFightAble;
 
-// 地图外角色队列，当怪物死亡后加入到此列表，重生后离开此列表
+// characters outside the map queue; a monster is added to this list when it dies and removed from it after it respawns
 class	COutMapCha
 {
 public:
@@ -31,9 +31,9 @@ public:
 	{
 		bool	IsValidCha(void) {if (!pCCha) return false; return pCCha->GetID() == ulChaID;}
 
-		dbc::Long	lLeftTick1;	// 剩余时间
-		dbc::Long	lLeftTick2;	// 剩余时间
-		dbc::Char	chAction;	// 定时的行动
+		dbc::Long	lLeftTick1;	// remaining time
+		dbc::Long	lLeftTick2;	// remaining time
+		dbc::Char	chAction;	// timed action
 		CCharacter	*pCCha;
 		dbc::uLong	ulChaID;
 		SSwitchMapInfo	SwitchInfo;
@@ -52,10 +52,10 @@ public:
 	std::deque<std::unique_ptr<SMgrUnit>>  spawnQueue;	// Spawn queue rework - Mdr
 private:
 	unsigned long	m_ulTick;
-	unsigned short	m_usFreq;	// 执行心跳（频率）
+	unsigned short	m_usFreq;	// execution heartbeat (frequency)
 };
 
-// 地图副本类
+// map instance class
 class SubMap
 {
 public:
@@ -67,7 +67,7 @@ public:
 
 	const char*  GetName(void) {return m_pCMapRes->GetName();}
 
-	//pt返回在管理单元中的坐标.
+	//pt returns the coordinates in the management cell.
 	Rect   GetEyeshot(Point &pt)const;
 	Rect   GetEyeshot(short sMgrUnitX, short sMgrUnitY)const;
 	void   GetEyeshotCenter(Point &pt);
@@ -113,19 +113,19 @@ public:
 
 	void NotiStateCellToEyeshot(dbc::Short sCellX, dbc::Short sCellY);
 
-	// 在范围内搜索实体（依赖状态单元进行搜索，即搜索不到道具类）
+	// searches for entities within the range (relies on state cells for the search, so item entities are not found)
 	void		BeginSearchInRange(dbc::Long *plRangeBParam, dbc::Long *plRangeEParam, bool bIncludeHideEnti = false);
 	CCharacter*	GetNextCharacterInRange(void);
 
-	// 向范围增加技能状态
+	// adds a skill state to the range
 	bool		RangeAddState(dbc::uChar uchFightID, dbc::uLong ulSrcWorldID, dbc::Long lSrcHandle,
 				dbc::Char chObjType, dbc::Char chObjHabitat, dbc::Char chEffType, dbc::Short *sStateParam);
 	bool		RangeAddState(Rect *pSRange, dbc::uChar uchFightID, dbc::uLong ulSrcWorldID, dbc::Long lSrcHandle,
 				dbc::Char chObjType, dbc::Char chObjHabitat, dbc::Char chEffType, dbc::Short *sStateParam);
 
-	// 搜寻实体指针
+	// searches for the entity pointer
 	CCharacter*	FindCharacter( dbc::uLong ulID, const Point& point );
-	// 检测位置是否可以通过
+	// checks whether the position can be passed through
 	bool		IsMoveAble(Entity *pCEnt, dbc::Long lPosX, dbc::Long lPosY);
 
 	void		LoadMonsterInfo(void);
@@ -186,7 +186,7 @@ public:
 	void		BeginGetPlyCha(void);
 	CCharacter*	GetNextPlyCha(void);
 	bool		CheckRun(void);
-	void		DealActivePlayer(std::string & function);//2006.10.12wsj处理乱斗白银城的胜者.
+	void		DealActivePlayer(std::string & function);//2006.10.12wsj handles the winner of the melee Silver City.
 	void		DealPlayer(std::string & function);
 	//void		OnPlayerDie(CCharacter	*pCCha)//2006.10.12wsj
 	//{
@@ -239,7 +239,7 @@ public:
 		m_pCEyeshotCell[lCellY][lCellX].m_lActNum--;
 		if (m_pCEyeshotCell[lCellY][lCellX].m_lActNum == 0)
 		{
-			if (CountEyeshotPlyActiveNum(lCellX, lCellY) > 0) // 存在视野激活的玩家角色，这种情况不应该出现
+			if (CountEyeshotPlyActiveNum(lCellX, lCellY) > 0) // there are player characters with active visibility; this should not happen
 			{
 				m_pCEyeshotCell[lCellY][lCellX].m_lActNum++;
 				//LG("视野激活错误", "!!!视野单元[%d,%d]停止激活时，发现其中存在有视野能力的玩家角色\n", lCellX, lCellY);
@@ -312,15 +312,15 @@ public:
 		}
 	}
 
-	CEyeshotCell	**m_pCEyeshotCell; // 视野单元
-	CStateCell		***m_pCStateCell; // 状态单元
-	COutMapCha		m_COutMapCha; // 地图外角色
-	//供随机访问的地图信息数组
-	CActEyeshotCell	m_CEyeshotCellL;	// 激活的视野单元列表
-	CActStateCell	m_CStateCellL;		// 激活的状态单元列表
+	CEyeshotCell	**m_pCEyeshotCell; // visibility cell
+	CStateCell		***m_pCStateCell; // state cell
+	COutMapCha		m_COutMapCha; // characters outside the map
+	//map information array for random access
+	CActEyeshotCell	m_CEyeshotCellL;	// list of active visibility cells
+	CActStateCell	m_CStateCellL;		// list of active state cells
 
-	bool			m_bIsRun;		// 标示本地图是否在运行
-	CWeatherMgr		m_WeatherMgr;	// 天气管理器
+	bool			m_bIsRun;		// marks whether this map is running
+	CWeatherMgr		m_WeatherMgr;	// weather manager
 
 private:
 	CMapRes	*m_pCMapRes;
@@ -337,15 +337,15 @@ private:
 		}
 	}
 
-	// 范围内搜索
+	// searches within the range
 	struct
 	{
-		bool				m_bIncludeHideEnti;							// 是否搜索隐身的实体
-		dbc::Short			m_sRangeMgrUnitNum;							// 范围内管理单元的数目
-		dbc::Long			m_lRangeMgrUnit[defRANGE_MGRUNIU_NUM][2];	// 范围内的管理单元编号列表（x,y）
+		bool				m_bIncludeHideEnti;							// whether to search for invisible entities
+		dbc::Short			m_sRangeMgrUnitNum;							// number of management cells within the range
+		dbc::Long			m_lRangeMgrUnit[defRANGE_MGRUNIU_NUM][2];	// list of management cell numbers within the range (x,y)
 		dbc::Long			m_lRangeCentUnit[2];						// 范围中心单元;
-		dbc::Short			m_sRangeCurMgrUnit;							// 搜索过程中，当前的管理单元
-		CChaListNode*		m_pRangeCurEntiNode;						// 搜索过程中，当前的实体
+		dbc::Short			m_sRangeCurMgrUnit;							// the current management cell during the search
+		CChaListNode*		m_pRangeCurEntiNode;						// the current entity during the search
 		CRangeBase			*m_pCBaseRange;
 
 		CRangeStick		m_CStickRange;

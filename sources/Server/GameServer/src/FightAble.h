@@ -19,25 +19,25 @@
 #include "Timer.h"
 #include "SkillTemp.h"
 
-enum EItemInstance // 此处需要跟脚本统一
+enum EItemInstance // this must stay in sync with the scripts
 {
-	enumITEM_INST_BUY	= 0,		// 商店买卖
-	enumITEM_INST_MONS	= 1,		// 怪物掉落
-	enumITEM_INST_COMP	= 2,		// 合成
-	enumITEM_INST_TASK	= 3,		// 任务获得
+	enumITEM_INST_BUY	= 0,		// shop trade
+	enumITEM_INST_MONS	= 1,		// monster loot
+	enumITEM_INST_COMP	= 2,		// synthesis
+	enumITEM_INST_TASK	= 3,		// obtained from a mission
 };
 
 enum EFightChaType
 {
-	enumFIGHT_CHA_SRC		= 0,	// 攻击者
-	enumFIGHT_CHA_TAR		= 1,	// 受击者
-	enumFIGHT_CHA_SPLASH	= 2,	// 溅射者
+	enumFIGHT_CHA_SRC		= 0,	// attacker
+	enumFIGHT_CHA_TAR		= 1,	// the one being hit
+	enumFIGHT_CHA_SPLASH	= 2,	// the one splashed
 };
 
 struct SFireUnit
 {
 #ifdef defPROTOCOL_HAVE_PACKETID
-	dbc::uLong	ulPacketID;	// 包的ID
+	dbc::uLong	ulPacketID;	// packet ID
 #endif
 	dbc::uChar	uchFightID;
 
@@ -47,7 +47,7 @@ struct SFireUnit
 	dbc::Long	lTarInfo1;
 	dbc::Long	lTarInfo2;
 
-	dbc::Short		sExecTime;	// 执行次数
+	dbc::Short		sExecTime;	// execution count
 	CSkillRecord	*pCSkillRecord;
 	CSkillTempData	*pCSkillTData;
 };
@@ -57,15 +57,15 @@ struct SFightInit
 	CSkillRecord	*pCSkillRecord;
 	SSkillGrid		*pSSkillGrid;
 	CSkillTempData	*pCSkillTData;
-	// lInfo1,lInfo2 若目标是实体,则分别是WorldID,Handle 否则分别是坐标的x,y
+	// lInfo1,lInfo2 are WorldID and Handle respectively if the target is an entity, otherwise they are the x and y of the coordinates
 	struct
 	{
-		dbc::Char		chTarType;	// 0，无目标。1，目标是实体。2，目标是坐标
+		dbc::Char		chTarType;	// 0, no target. 1, the target is an entity. 2, the target is coordinates
 		dbc::Long		lTarInfo1;
 		dbc::Long		lTarInfo2;
 	};
 
-	dbc::Short		sStopState;		// 技能停止后的状态（enumEXISTS_WAITING, enumEXISTS_SLEEPING）
+	dbc::Short		sStopState;		// state after the skill stops (enumEXISTS_WAITING, enumEXISTS_SLEEPING)
 };
 
 /*
@@ -87,10 +87,10 @@ public:
 		dbc::Short	sState;
 		Request	sRequestState;
 
-		bool		bCrt;			// 爆击
+		bool		bCrt;			// critical hit
 		bool		bMiss;			// Miss
 
-		long		lERangeBParam[defSKILL_RANGE_BASEP_NUM];	// 区域基本参数（中心坐标，方向）
+		long		lERangeBParam[defSKILL_RANGE_BASEP_NUM];	// base area parameters (centre coordinates, direction)
 	};
 
 	dbc::Short	GetFightState(void) {return m_SFightProc.sState;}
@@ -115,7 +115,7 @@ public:
 	void	SynSkillStateToEyeshot(void);
 	void	SynSkillStateToUnit(CFightAble *pCObj);
 	void	SynLookEnergy(void);
-	// 数据报组织
+	// packet organisation
 	void	WriteSkillState(WPACKET &pk);
 	void	WriteAttr(WPACKET &pk, dbc::Short sSynType);
 	void	WriteMonsAttr(WPACKET &pk, dbc::Short sSynType);
@@ -139,13 +139,13 @@ public:
 	void	CountSailLevel(void);
 	void	CountLifeLevel(void);
 
-	// 任务事件处理接口
+	// mission event handling interface
 	virtual void AfterObjDie(CCharacter *pCAtk, CCharacter *pCDead) {}
 	virtual void OnLevelUp( USHORT sLevel ) {};
 	virtual void OnSailLvUp( USHORT sLevel ) {};
 	virtual void OnLifeLvUp( USHORT sLevel ) {};
 
-	// 采集资源，暴物品	
+	// gather a resource, drop an item
 	void	SpawnResource( CCharacter *pCAtk, dbc::Long lSkillLv );
 	void	ItemCount(CCharacter *pAtk);
 	void	ItemInstance(dbc::Char chType, SItemGrid *pGridContent, BOOL isTradable = 1, LONG expiration = 0);
@@ -179,14 +179,14 @@ public:
 	void			SetDie(CCharacter *pCSkillSrcCha);
 	virtual void	Die(){};
 
-	CCharacter* SkillPopBoat(dbc::Long lPosX, dbc::Long lPosY, dbc::Short sDir = -1);	// 放船
-	bool SkillPopBoat(CCharacter *pCBoat, dbc::Long lPosX, dbc::Long lPosY, dbc::Short sDir = -1);	// 放船
-	bool SkillInBoat(CCharacter* pCBoat);	// 上船
-	bool SkillOutBoat(dbc::Long lPosX, dbc::Long lPosY, dbc::Short sDir = -1);	// 下船
-	bool SkillPushBoat(CCharacter* pCBoat, bool bFree = true);	// 收船
+	CCharacter* SkillPopBoat(dbc::Long lPosX, dbc::Long lPosY, dbc::Short sDir = -1);	// launch a boat
+	bool SkillPopBoat(CCharacter *pCBoat, dbc::Long lPosX, dbc::Long lPosY, dbc::Short sDir = -1);	// launch a boat
+	bool SkillInBoat(CCharacter* pCBoat);	// board a boat
+	bool SkillOutBoat(dbc::Long lPosX, dbc::Long lPosY, dbc::Short sDir = -1);	// disembark from a boat
+	bool SkillPushBoat(CCharacter* pCBoat, bool bFree = true);	// recall a boat
 
-	dbc::uLong	m_ulPacketID;		// 包的ID
-	dbc::uChar	m_uchFightID;		// 攻击的编号，只是为了客户端匹配的用途
+	dbc::uLong	m_ulPacketID;		// packet ID
+	dbc::uChar	m_uchFightID;		// the attack number, used only so the client can match it up
 
 	SFightInit	m_SFightInit;
 	SFightProc	m_SFightProc;
@@ -206,8 +206,8 @@ protected:
 	void	Finally();
 
 	CFightAble	*	IsFightAble(){return this;}
-	void	WritePK(WPACKET& wpk);			//写入玩家本身及其所有附加结构(如召唤兽等)的所有数据
-	void	ReadPK(RPACKET& rpk);			//重构玩家本身及其所有附加结构(如召唤兽等)
+	void	WritePK(WPACKET& wpk);			// writes the player itself and all attached structures (summons and the like)
+	void	ReadPK(RPACKET& rpk);			// rebuilds the player itself and all attached structures (summons and the like)
 
 	bool	GetFightTargetShape(Square *pSTarShape);
 
@@ -227,14 +227,14 @@ private:
 	virtual void BreakAction(RPACKET pk = NULL) {};
 	virtual void EndAction(RPACKET pk = NULL) {}
 
-	bool SkillGeneral(dbc::Long lDistance, dbc::Short sExecTime = 1); // 普通技能
+	bool SkillGeneral(dbc::Long lDistance, dbc::Short sExecTime = 1); // ordinary skill
 
-	dbc::uShort	m_usTickInterval;	// 战斗执行的心跳（频率），单位（毫秒）
-	dbc::uLong	m_ulLastTick;		// 单位（毫秒）
+	dbc::uShort	m_usTickInterval;	// combat execution heartbeat (frequency), in milliseconds
+	dbc::uLong	m_ulLastTick;		// in milliseconds
 	bool		m_bOnFight;
 
-	bool		m_bLookAttrChange;	// 外观属性改变
-	CFightAble*	m_pCItemHostObj;	// 掉料的属主
+	bool		m_bLookAttrChange;	// appearance attribute changed
+	CFightAble*	m_pCItemHostObj;	// owner of the dropped loot
 
 };
 
@@ -244,10 +244,10 @@ public:
 	struct SMgrUnit
 	{
 		SFireUnit	SFireSrc;
-		dbc::uLong	ulLeftTick;	// 剩余时间
+		dbc::uLong	ulLeftTick;	// remaining time
 		SubMap		*pCMap;
-		Point		STargetPos;	// 目标位置
-		long		lERangeBParam[defSKILL_RANGE_BASEP_NUM];	// 区域基本参数（中心坐标，方向）
+		Point		STargetPos;	// target position
+		long		lERangeBParam[defSKILL_RANGE_BASEP_NUM];	// base area parameters (centre coordinates, direction)
 		SMgrUnit	*pSNext;
 	};
 
@@ -260,10 +260,10 @@ public:
 
 private:
 	unsigned long	m_ulTick;
-	unsigned short	m_usFreq;	// 执行心跳（频率）
+	unsigned short	m_usFreq;	// execution heartbeat (frequency)
 
-	SMgrUnit	*m_pSExecQueue;	// 执行队列
-	SMgrUnit	*m_pSFreeQueue;	// 空闲队列
+	SMgrUnit	*m_pSExecQueue;	// running queue
+	SMgrUnit	*m_pSFreeQueue;	// idle queue
 
 };
 

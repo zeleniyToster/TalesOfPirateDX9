@@ -7,10 +7,10 @@
 
 enum ESaveType
 {
-	enumSAVE_TYPE_OFFLINE,	// 下线
-	enumSAVE_TYPE_SWITCH,	// 地图切换
-	enumSAVE_TYPE_TIMER,	// 定时保存
-	enumSAVE_TYPE_TRADE,	// 交易
+	enumSAVE_TYPE_OFFLINE,	// going offline
+	enumSAVE_TYPE_SWITCH,	// map switch
+	enumSAVE_TYPE_TIMER,	// periodic save
+	enumSAVE_TYPE_TRADE,	// trade
 };
 
 class CPlayer;
@@ -26,18 +26,18 @@ public:
 
 	bool ShowExpRank(CCharacter* pCha, int count);
 	bool Init(void);
-    bool ReadAllData(CPlayer *pPlayer, DWORD atorID);	// 角色进入游戏读盘
-    bool SaveAllData(CPlayer *pPlayer, char chSaveType);// 角色存盘
-	bool SavePos(CPlayer *pPlayer);						// 保存角色位置
+    bool ReadAllData(CPlayer *pPlayer, DWORD atorID);	// reads the character data on entering the game
+    bool SaveAllData(CPlayer *pPlayer, char chSaveType);// saves the character
+	bool SavePos(CPlayer *pPlayer);						// saves the character position
 	bool SaveMoney(CPlayer *pPlayer);
 	bool SaveKBagDBID(CPlayer *pPlayer);
-    bool SaveKBagTmpDBID(CPlayer *pPlayer);             // 保存临时背包ID
-    bool SaveKBState(CPlayer *pPlayer);                 // 保存密码锁定状态
+    bool SaveKBagTmpDBID(CPlayer *pPlayer);             // saves the temporary bag ID
+    bool SaveKBState(CPlayer *pPlayer);                 // saves the password lock state
 	bool SaveMMaskDBID(CPlayer *pPlayer);
 	bool SaveBankDBID(CPlayer *pPlayer);
-	bool SaveTableVer(DWORD atorID);					// 保存表的版本
-	BOOL SaveMissionData(CPlayer *pPlayer, DWORD atorID); // 角色任务信息存盘
-    BOOL VerifyName(const char *pszName);               // 角色名是否存在
+	bool SaveTableVer(DWORD atorID);					// saves the table version
+	BOOL SaveMissionData(CPlayer *pPlayer, DWORD atorID); // saves the character mission information
+    BOOL VerifyName(const char *pszName);               // whether the character name exists
 	std::string GetName(int cha_id);
 
 	BOOL AddCreditByDBID(DWORD atorID, long lCredit);
@@ -70,24 +70,24 @@ public:
 	bool IsMasterRelation(int masterID, int prenticeID);
 };
 
-// 此值和数据库对应，不可改动
+// this value corresponds to the database and must not be changed
 enum ResDBTypeID
 {
-	enumRESDB_TYPE_LOOK,	// 外观
-	enumRESDB_TYPE_KITBAG,	// 道具栏
-	enumRESDB_TYPE_BANK,	// 银行
-	enumRESDB_TYPE_KITBAGTMP, //临时背包
+	enumRESDB_TYPE_LOOK,	// appearance
+	enumRESDB_TYPE_KITBAG,	// item slot
+	enumRESDB_TYPE_BANK,	// bank
+	enumRESDB_TYPE_KITBAGTMP, //temporary bag
 };
 
 // Add by lark.li 20080521 begin
 enum IssueState
 {
-	enumCURRENT = 0,	// 当前期
-	enumPASTDUE = 1,	// 过期
-	enumDISUSE = 2,		// 废弃
+	enumCURRENT = 0,	// current season
+	enumPASTDUE = 1,	// expired
+	enumDISUSE = 2,		// discarded
 };
 
-// 彩票设定
+// lottery settings
 class CTableLotterySetting : public cfl_rs
 {
 public:
@@ -105,7 +105,7 @@ public:
 	bool GetWinItemNo(int issue, std::string& itemno);
 };
 
-// 彩票保存
+// lottery save
 class CTableTicket : public cfl_rs
 {
 public:
@@ -123,7 +123,7 @@ private:
 	bool AddTicket(int atorID, int issue, char itemno1, char itemno2, char itemno3, char itemno4, char itemno5, char itemno6, int real = 1);
 };
 
-// 中奖号码保存
+// winning number save
 class CTableWinTicket : public cfl_rs
 {
 public:
@@ -151,16 +151,16 @@ struct AmphitheaterTeam
 {
 	enum AmphitheaterSateTeam
 	{
-		enumNotUse = 0,				//没注册
-		enumUse = 1,				// 正常
-		enumPromotion = 2,			// 晋级
-		enumRelive = 3,				// 复活
-		enumOut = 4,				// 淘汰
+		enumNotUse = 0,				// not registered
+		enumUse = 1,				// normal
+		enumPromotion = 2,			// promoted
+		enumRelive = 3,				// revived
+		enumOut = 4,				// eliminated
 	};
 };
 
-// 竞技场设定信息保存
-// 保存 当前是第几赛季 第几轮次 等信息
+// arena settings information save
+// saves which season and which round it currently is, and the like
 class CTableAmphitheaterSetting : public cfl_rs
 {
 public:
@@ -177,7 +177,7 @@ public:
 	bool UpdateRound(int season, int round);
 };
 
-// 竞技场参赛队伍信息保存
+// arena participating team information save
 class CTableAmphitheaterTeam : public cfl_rs
 {
 public:
@@ -278,7 +278,7 @@ public:
 protected:
 
 	BOOL			_ExecSQL(const char *pszSQL);
-	std::list<std::string>	_SaveMapMaskList;  // 保存大地图的队列
+	std::list<std::string>	_SaveMapMaskList;  // queue for saving the big map
 };
 
 void inline CTableMapMask::AddSaveQuest(const char *pszSQL)
@@ -321,8 +321,8 @@ public:
 	BOOL SaveBoatDelTag( DWORD dwBoatID, BYTE byIsDeleted = 0 );	
 
     bool SaveAllData(CPlayer *pPlayer, char chSaveType);
-	bool ReadCabin(CCharacter& Boat);	// 读取船舱
-	bool SaveCabin(CCharacter& Boat, char chSaveType);	// 保存船舱
+	bool ReadCabin(CCharacter& Boat);	// reads the cargo hold
+	bool SaveCabin(CCharacter& Boat, char chSaveType);	// saves the cargo hold
 	bool SaveAllCabin(CPlayer *pPlayer, char chSaveType);
 };
 
@@ -374,7 +374,7 @@ public:
 	bool Motto(CCharacter* pCha,cChar *motto);
 	bool GetGuildName(long lGuildID, std::string& strGuildName);
 
-	// 公会挑战
+	// guild challenge
 	bool Challenge( CCharacter* pCha, BYTE byLevel, DWORD dwMoney );
 	bool Leizhu( CCharacter* pCha, BYTE byLevel, DWORD dwMoney );
 	void ListChallenge( CCharacter* pCha );
@@ -387,7 +387,7 @@ public:
 	bool HasGuildLevel( CCharacter* pChar, BYTE byLevel );
 };
 
-// Log专用表
+// table dedicated to the log
 class CTableLog : public cfl_rs
 {
 public:
@@ -451,7 +451,7 @@ public:
 	bool	SavePlayerKitbag(CPlayer *pPlayer, char chSaveType = enumSAVE_TYPE_TRADE)
 	{
 		return false;
-		// 因为此操作可能包含数据库回滚操作，所以期间不能throw异常
+		// because this operation may involve a database rollback, no exception may be thrown while it runs
 		try
 		{
 			if (!_tab_res->SaveKitbagData(pPlayer->GetMainCha()))
@@ -470,7 +470,7 @@ public:
 	}
 	bool	SaveChaAssets(CCharacter *pCCha)
 	{
-		// 因为此操作可能包含数据库回滚操作，所以期间不能throw异常
+		// because this operation may involve a database rollback, no exception may be thrown while it runs
 		try
 		{
 			//LG("enter_map", "开始保存角色资产.\n");
@@ -624,7 +624,7 @@ public:
 		return ret;
 	}
 
-	// 师徒关系判断
+	// master and apprentice relationship check
 	bool IsMasterRelation(int masterID, int prenticeID)
 	{
 		bool ret = false;
@@ -641,7 +641,7 @@ public:
 		return ret;
 	}
 
-	// 取得当前赛季 和 轮次s
+	// gets the current season and round
 	bool GetAmphitheaterSeasonAndRound(int& season, int& round)
 	{
 		try
@@ -654,7 +654,7 @@ public:
 		}
 	}
 
-	// 追加赛季
+	// appends a season
 	bool AddAmphitheaterSeason(int season)
 	{
 		try
@@ -667,7 +667,7 @@ public:
 		}
 	}
 
-	// 更新赛季状态
+	// updates the season state
 	bool DisuseAmphitheaterSeason(int season, int state,const char* winner)
 	{
 		try
@@ -680,7 +680,7 @@ public:
 		}
 	}
 
-	// 更新轮次 
+	// updates the round
 	bool UpdateAmphitheaterRound(int season, int round)
 	{
 		try
@@ -693,7 +693,7 @@ public:
 		}
 	}
 
-	// 获取队伍个数
+	// gets the number of teams
 	bool GetAmphitheaterTeamCount(int& count)
 	{
 		try
@@ -706,7 +706,7 @@ public:
 		}
 	}
 
-	// 获取队伍ID
+	// gets a team ID
 	bool GetAmphitheaterNoUseTeamID(int &teamID)
 	{
 		try
@@ -719,7 +719,7 @@ public:
 		}
 	}
 
-	// 注册
+	// register
 	bool AmphitheaterTeamSignUP(int &teamID, int captain, int member1, int member2)
 	{
 		try
@@ -732,7 +732,7 @@ public:
 		}
 	}
 
-	// 注销
+	// deregister
 	bool AmphitheaterTeamCancel(int teamID)
 	{
 		try
@@ -745,7 +745,7 @@ public:
 		}
 	}
 	//Add by sunny.sun20080714
-	//查询该角色ID是否已经注册
+	//queries whether that character ID is already registered
 	bool IsAmphitheaterLogin(int pActorID)
 	{
 		try
@@ -758,7 +758,7 @@ public:
 		}
 	
 	}
-	//判断是否地图队伍已满
+	//checks whether the map team is already full
 	bool IsMapFull(int MapID,int &PActorIDNum)
 	{
 		try 
@@ -770,7 +770,7 @@ public:
 			return false;
 		}
 	}
-		//更新地图队伍mapflag
+		//updates the map team mapflag
 	bool UpdateMapNum(int Teamid,int Mapid,int MapFlag)
 	{
 		try
@@ -1077,12 +1077,12 @@ public:
 		return _tab_cha->SetChaAddr(atorID, addr);
 	}
 
-	BOOL	SaveMissionData( CPlayer *pPlayer, DWORD atorID ) // 角色任务信息存盘
+	BOOL	SaveMissionData( CPlayer *pPlayer, DWORD atorID ) // saves the character mission information
 	{T_B
 		return _tab_cha->SaveMissionData( pPlayer, atorID );
 	T_E}
 
-	// 船只存储
+	// boat storage
 	BOOL Create( DWORD& dwBoatID, const BOAT_DATA& Data )
 	{T_B
 		return _tab_boat->Create( dwBoatID, Data );
@@ -1255,7 +1255,7 @@ public:
 		return _tab_gld->HasGuildLevel( pChar, byLevel );
 	}
 
-	// 执行sql语句到gamelog表
+	// runs the SQL statement against the gamelog table
 	void ExecLogSQL(const char *pszSQL)
 	{
 		SQLRETURN l_sqlret  =  _tab_log->exec_sql_direct(pszSQL);
@@ -1266,7 +1266,7 @@ public:
 		}
 	}
 	
-	// 可以Log 5个字符串字段, 最后一个长度为8000字符以内
+	// can log 5 string fields, the last one up to 8000 characters
 	//void Log(const char *type, const char *c1, const char *c2, const char *c3, const char *c4, const char *p, BOOL bAddToList = TRUE);
 	//void Log1(int nType, const char *cha1, const char *cha2, const char *pszContent);
 	//void Log2(int nType, CCharacter *pCha1, CCharacter *pCha2, const char *pszContent);
@@ -1312,12 +1312,12 @@ protected:
 	CTableResource*	_tab_res;
 	
 	// Add by lark.li 20080521 begin
-	// 彩票
+	// lottery
 	CTableLotterySetting*	_tab_setting;
 	CTableTicket*			_tab_ticket;
 	CTableWinTicket*			_tab_winticket;
 
-	// 竞技场
+	// arena
 	CTableAmphitheaterSetting*	_tab_amp_setting;
 	CTableAmphitheaterTeam*	_tab_amp_team;
 	// End

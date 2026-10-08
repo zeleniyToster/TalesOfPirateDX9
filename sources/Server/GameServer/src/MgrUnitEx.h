@@ -31,7 +31,7 @@ public:
 
 	char			m_chEntiType;
 	Entity			*m_pCEntity;
-	CMgrNode		*m_pCEntMgrNode; // （对应该管理单元）实体单元管理链的指针
+	CMgrNode		*m_pCEntMgrNode; // pointer to the entity cell management chain of this management cell
 
 	CEntityListNode	*m_pCNext;
 	CEntityListNode	*m_pCLast;
@@ -93,21 +93,21 @@ public:
 
 	void				StateRun(unsigned long ulCurTick, SubMap *pCMap);
 
-	short			m_sPosX;		// 位置
-	short			m_sPosY;		// 位置
-	short			m_sAreaAttr;	// 区域属性
-	char			m_chIslandID;	// 岛屿编号
-	long			m_lActiveNum;	// 激活计数
-	long			m_lEntityNum;	// 实体总数
+	short			m_sPosX;		// position
+	short			m_sPosY;		// position
+	short			m_sAreaAttr;	// area attribute
+	char			m_chIslandID;	// island number
+	long			m_lActiveNum;	// activation count
+	long			m_lEntityNum;	// total number of entities
 
-	CEntityListNode	*m_pCChaIn;		// 记录中心点在范围内的角色
-	CEntityListNode	*m_pCChaCross;	// 记录中心点不在范围内，但与范围相交的角色
-	CEntityListNode	*m_pCItemIn;		// 记录中心点在范围内的物品
-	CEntityListNode	*m_pCItemCross;	// 记录中心点不在范围内，但与范围相交的物品
+	CEntityListNode	*m_pCChaIn;		// records characters whose centre point is inside the range
+	CEntityListNode	*m_pCChaCross;	// records characters whose centre point is outside the range but which intersect it
+	CEntityListNode	*m_pCItemIn;		// records items whose centre point is inside the range
+	CEntityListNode	*m_pCItemCross;	// records items whose centre point is outside the range but which intersect it
 
-	CSkillState		m_CSkillState;	// 地表的技能状态
+	CSkillState		m_CSkillState;	// skill states on the terrain
 
-	CMgrUnit		*m_pCNext;		// 指向“激活的管理单元链表“的指针
+	CMgrUnit		*m_pCNext;		// pointer to the 'chain of active management cells'
 	CMgrUnit		*m_pCLast;
 
 protected:
@@ -306,7 +306,7 @@ inline void CMgrUnit::StateBeginSeen(Entity *pCEnt)
 
 	if (!pCCha)
 		return;
-	if(!pCCha->IsPlayerFocusCha()) // 该角色不是玩家当前的控制焦点
+	if(!pCCha->IsPlayerFocusCha()) // this character is not the player's current control focus
 		return;
 
 	WPACKET pk	=GETWPACKET();
@@ -315,7 +315,7 @@ inline void CMgrUnit::StateBeginSeen(Entity *pCEnt)
 	WRITE_SHORT(pk, m_sPosY);
 	m_CSkillState.WriteState(pk);
 
-	pCCha->ReflectINFof(pCCha, pk);//通告
+	pCCha->ReflectINFof(pCCha, pk);// notify
 }
 
 inline void CMgrUnit::StateEndSeen(Entity *pCEnt)
@@ -324,7 +324,7 @@ inline void CMgrUnit::StateEndSeen(Entity *pCEnt)
 
 	if (!pCCha)
 		return;
-	if(!pCCha->IsPlayerFocusCha()) // 该角色不是玩家当前的控制焦点
+	if(!pCCha->IsPlayerFocusCha()) // this character is not the player's current control focus
 		return;
 
 	if (m_CSkillState.m_chStateNum <= 0)
@@ -335,7 +335,7 @@ inline void CMgrUnit::StateEndSeen(Entity *pCEnt)
 	WRITE_SHORT(pk, m_sPosX);
 	WRITE_SHORT(pk, m_sPosY);
 
-	pCCha->ReflectINFof(pCCha, pk);//通告
+	pCCha->ReflectINFof(pCCha, pk);// notify
 }
 
 inline void CMgrUnit::Initially()
@@ -356,7 +356,7 @@ inline void CMgrUnit::Finally()
 {
 }
 
-class CActiveMgrUnitL // 激活的管理单元链表
+class CActiveMgrUnitL // chain of active management cells
 {
 public:
 	CActiveMgrUnitL()

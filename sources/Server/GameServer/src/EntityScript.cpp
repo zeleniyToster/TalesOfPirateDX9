@@ -78,12 +78,12 @@ int lua_SetEntityData( lua_State* L )
 	mission::CEventEntity* pEntity = (mission::CEventEntity*)lua_touserdata( L, 1 );
 	switch( pEntity->GetType() )
 	{
-	case BASE_ENTITY:			// 基本实体
+	case BASE_ENTITY:			// basic entity
 		{
 		}
 		break;
 
-	case RESOURCE_ENTITY:		// 资源实体
+	case RESOURCE_ENTITY:		// resource entity
 		{
 			bValid = lua_gettop( L ) >= 4;
 			if( !bValid )
@@ -98,12 +98,12 @@ int lua_SetEntityData( lua_State* L )
 		}
 		break;
 
-	case TRANSIT_ENTITY:		// 传送实体
+	case TRANSIT_ENTITY:		// teleport entity
 		{
 		}
 		break;
 
-	case BERTH_ENTITY:			// 停泊实体
+	case BERTH_ENTITY:			// docking entity
 		{
 			BOOL bValid = lua_gettop( L ) >= 5;
 			if( !bValid )

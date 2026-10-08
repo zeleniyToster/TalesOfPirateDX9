@@ -6,10 +6,10 @@
 #include "SubMap.h"
 
 //----------------------------------------------
-//       所有Character自身的定时循环处理
+//       per-tick loop handling for every Character
 //----------------------------------------------
 
-// 总循环入口
+// main loop entry point
 void CCharacter::Run(DWORD dwCurTime)
 {
 	T_B
@@ -30,10 +30,10 @@ void CCharacter::Run(DWORD dwCurTime)
 
 	m_dwCellRunTime[chCount++] = t.End();
 
-	// 怪物(包含宠物等)生命时间检查
+	// lifetime check for monsters (including pets and the like)
 	if (!IsPlayerCha() && !IsNpc())
 	{
-		if (CheckLifeTime()) // 时间到
+		if (CheckLifeTime()) // time is up
 		{
 			if (m_HostCha && m_HostCha->IsPlayerCha())
 			{
@@ -41,9 +41,9 @@ void CCharacter::Run(DWORD dwCurTime)
 				if (nPetNum > 0)
 					m_HostCha->GetPlyMainCha()->SetPetNum(nPetNum - 1);
 			}
-			// 调用一个脚本作为事件通知 
+			// calls a script as an event notification
 			g_CParser.DoString("event_cha_lifetime", enumSCRIPT_RETURN_NONE, 0, enumSCRIPT_PARAM_LIGHTUSERDATA, 1, this, DOSTRING_PARAM_END);
-			Free(); // 释放, 视野通知
+			Free(); // free, visibility notification
 			// char szLua[255];
 			// sprintf(szLua, "CreateCha(133, %d, %d, 145, 50)", this->GetPos().x, this->GetPos().y);
 			// lua_dostring(g_pLuaState, szLua);
@@ -51,14 +51,14 @@ void CCharacter::Run(DWORD dwCurTime)
 		}
 	}
 
-	//防外挂暂时不上
+	// disabled for now, anti-cheat
 	/*if(IsPlayerCha() && !IsGMCha2() && ((!(GetAreaAttr() & enumAREA_TYPE_NOT_FIGHT)) || IsBoat()) && !GetPlyCtrlCha()->GetSubMap()->GetMapRes()->CanPK())
 	{
 		GetPlyMainCha()->CheatRun(dwCurTime);
 	}*/
 
 	//add by jilinlee 2007/4/20
-	//是否在读书状态
+	// whether the character is reading
 	if (IsReadBook())
 	{
 		if (bIsLiveing)
@@ -77,14 +77,14 @@ void CCharacter::Run(DWORD dwCurTime)
 			//	dwReadBookTime = 600*1000;   //取不到的话，默认为十分钟。
 			if (dwCurTime - m_SReadBook.dwLastReadCallTick >= dwReadBookTime)
 			{
-				//调用脚本函数
+				// calls a script function
 				char chSkillLv = 0;
 				static short sSkillID = 0;
 				if (sSkillID == 0 && g_CParser.DoString("ReadBookSkillId", enumSCRIPT_RETURN_NUMBER, 1, DOSTRING_PARAM_END))
 				{
 					sSkillID = g_CParser.GetReturnNumber(0);
 				}
-				SSkillGrid* pSkill = this->m_CSkillBag.GetSkillContByID(sSkillID); //读书技能的技能ID
+				SSkillGrid* pSkill = this->m_CSkillBag.GetSkillContByID(sSkillID); // skill ID of the reading skill
 				if (pSkill)
 				{
 					chSkillLv = pSkill->chLv;
@@ -130,7 +130,7 @@ void CCharacter::Run(DWORD dwCurTime)
 		GetPlayer()->Run(dwCurTime);
 	m_dwCellRunTime[chCount++] = t.End();
 
-	// 定时器检查
+	// timer check
 	t.Begin();
 	if (m_timerAI.IsOK(dwCurTime))         OnAI(dwCurTime);
 	m_dwCellRunTime[chCount++] = t.End();
@@ -189,7 +189,7 @@ void CCharacter::RunEnd(DWORD dwCurTime)
 	T_B
 		if (m_byExit == CHAEXIT_BEGIN && m_timerExit.IsOK(dwCurTime))
 		{
-			// 正式退出
+			// proper exit
 			Exit();
 		}
 	T_E
@@ -234,7 +234,7 @@ void CCharacter::CancelExit()
 void CCharacter::Exit()
 {
 	T_B
-		// 正式退出
+		// proper exit
 		//LG( "延时退出", "Exit: Name = %s, exitcode = %d\n", this->GetName(), m_byExit );
 		LG("time too long exit", "Exit: Name = %s, exitcode = %d\n", this->GetName(), m_byExit);
 	WPACKET	l_wpk = GETWPACKET();
@@ -247,7 +247,7 @@ void CCharacter::Exit()
 	T_E
 }
 
-// 定时检查地域变化
+// timed check of area changes
 void CCharacter::OnAreaCheck(DWORD dwCurTime)
 {
 }
@@ -292,7 +292,7 @@ void CCharacter::OnTeamNotice(DWORD dwCurTime)
 	T_E
 }
 
-// 脚本定时器，用于HP回复，宠物消耗等
+// script timer, used for HP regeneration, pet consumption and the like
 void CCharacter::OnScriptTimer(DWORD dwExecTime, bool bNotice)
 {
 	T_B
@@ -305,7 +305,7 @@ void CCharacter::OnScriptTimer(DWORD dwExecTime, bool bNotice)
 		m_CKitbag.SetChangeFlag(false);
 	g_CParser.DoString("cha_timer", enumSCRIPT_RETURN_NONE, 0, enumSCRIPT_PARAM_LIGHTUSERDATA, 1, this, enumSCRIPT_PARAM_NUMBER, 2, defCHA_SCRIPT_TIMER / 1000, dwExecTime, DOSTRING_PARAM_END);
 
-	// 船在海上时会消耗生命
+	// a boat at sea consumes life
 	if (lOldHP > 0 && getAttr(ATTR_HP) <= 0)
 	{
 		if (IsBoat() && IsPlayerCha())

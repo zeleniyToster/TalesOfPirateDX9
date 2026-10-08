@@ -1,14 +1,14 @@
 ﻿#include "stdafx.h"
 #define MAX_BIRTHPOINT 12
 
-struct SBirthPoint // 单个出生点
+struct SBirthPoint // a single spawn point
 {
-	char szMapName[16];  // 地图名
-	int  x;				 // 地图坐标
+	char szMapName[16];  // map name
+	int  x;				 // map coordinates
 	int  y;
 };
 
-struct SBirthplace // 出生地, 包含多个出生点
+struct SBirthplace // birthplace, holding several spawn points
 {
 	SBirthPoint PointList[MAX_BIRTHPOINT];
 	int nCount;
@@ -17,7 +17,7 @@ struct SBirthplace // 出生地, 包含多个出生点
 	
 	void	Add(const char *pszMapName, int x, int y)
 	{
-		if(nCount>=MAX_BIRTHPOINT) return; // 有最大出生点限制
+		if(nCount>=MAX_BIRTHPOINT) return; // limited number of spawn points
 		
 		strcpy(PointList[nCount].szMapName, pszMapName);
 		PointList[nCount].x = x;
@@ -27,7 +27,7 @@ struct SBirthplace // 出生地, 包含多个出生点
 };
 
 
-class CBirthMgr // 出生地管理
+class CBirthMgr // birthplace management
 {
 public:
 
@@ -41,18 +41,18 @@ protected:
 	std::map<std::string, SBirthplace*>  _LocIdx;
 };
 
-// 添加单个出生点
+// add a single spawn point
 inline void CBirthMgr::AddBirthPoint(const char *pszLocation, const char *pszMapName, int x, int y)
 {
 	SBirthplace *p = NULL;
 	std::map<std::string, SBirthplace*>::iterator it = _LocIdx.find(pszLocation);
-	if(it!=_LocIdx.end()) // 已存在的出生地
+	if(it!=_LocIdx.end()) // the birthplace already exists
 	{
 		p = (*it).second;
 	}
 	else
 	{
-		// 新产生的出生地
+		// the newly created birthplace
 		p = new SBirthplace;
 		_LocIdx[pszLocation] = p;
 	}

@@ -3,10 +3,10 @@
 #include "Submap.h"
 
 
-// 天气预报计时, 记录每一种天气上一次预报的时间
+// weather forecast timer; records the time of the last forecast for each kind of weather
 DWORD g_dwLastWeatherTick[20] = { 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0 };
 
-// 在指定的大范围内, 产生随机坐标的地面状态
+// produces a ground state at random coordinates within the given large range
 void CWeather::RandLocation(SubMap *pMap)
 {
 	DWORD dwCurTick = GetTickCount();
@@ -15,15 +15,15 @@ void CWeather::RandLocation(SubMap *pMap)
 
 	_dwLastLocationTick = dwCurTick;
 	
-	// 在范围内选择一个随机坐标, 产生地面状态
+	// picks a random coordinate within the range and produces a ground state
 		
 	int sx = _sx + rand()%_w;
 	int sy = _sy + rand()%_h;
-	int nw = 1 +  rand()%3; // 每一次产生的地面范围的尺寸, 单位为2米
+	int nw = 1 +  rand()%3; // size of the ground range produced each time, in units of 2 metres
 	int nh = 1 +  rand()%3;
 
 	Rect	SRange = {{sx * 2 * 100, sy * 2 * 100}, {(sx + nw) * 2 * 100, (sy + nh) * 2 * 100}};
-	short	sStateParam[defSKILL_STATE_PARAM_NUM];	// 状态编号，等级，持续时间（毫秒）
+	short	sStateParam[defSKILL_STATE_PARAM_NUM];	// state number, level, duration (milliseconds)
 
     sStateParam[0] = _btType;
     sStateParam[1] = 1;
@@ -34,7 +34,7 @@ void CWeather::RandLocation(SubMap *pMap)
 	CSkillStateRecord *pEff = GetCSkillStateRecordInfo(_btType);
 	if(pEff)
 	{
-		if( (dwCurTick - g_dwLastWeatherTick[_btType]) > 1000 * g_Config.m_lWeather) // 每种天气, 每2分钟一次天气预报
+		if( (dwCurTick - g_dwLastWeatherTick[_btType]) > 1000 * g_Config.m_lWeather) // one weather forecast every 2 minutes, for each kind of weather
 		{
 			g_dwLastWeatherTick[_btType] = dwCurTick; 
 			char szText[128]; 

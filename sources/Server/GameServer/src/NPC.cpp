@@ -98,7 +98,7 @@ namespace mission
 	{T_B
 		if( szFunc[0] == '0' ) return TRUE;
 
-		// 初始化NPC脚本全局变量信息
+		// initialises the NPC script global variable information
 		lua_getglobal( g_pLuaState, "ResetNpcInfo" );
 		if( !lua_isfunction( g_pLuaState, -1 ) )
 		{
@@ -123,7 +123,7 @@ namespace mission
 		}
 		lua_settop(g_pLuaState, 0);
 
-		// 调用NPC初始化全局变量信息入口函数
+		// calls the NPC initialise-global-variables entry function
 		lua_getglobal( g_pLuaState, szFunc );
 		if( !lua_isfunction( g_pLuaState, -1 ) )
 		{
@@ -145,7 +145,7 @@ namespace mission
 		}
 		lua_settop(g_pLuaState, 0);
 
-		// 获取NPC的对话信息和交易信息
+		// gets the NPC dialog and trade information
 		lua_getglobal( g_pLuaState, "GetNpcInfo" );
 		if( !lua_isfunction( g_pLuaState, -1 ) )
 		{
@@ -177,13 +177,13 @@ namespace mission
 	BOOL CTalkNpc::Load( const CNpcRecord& recNpc, const CChaRecord& recChar )
 	{T_B
 		Clear();
-		// 设置npc为未激活状态
+		// sets the NPC to the inactive state
 		SetEyeshotAbility( false );	
 
-		// 初始化npc脚本信息
+		// initialises the NPC script information
 		InitScript( recNpc.szMsgProc, recNpc.szName );
 		
-		// npc配置表编号
+		// NPC configuration table number
 		m_sNpcID = recNpc.nID;
 
 		// 
@@ -222,7 +222,7 @@ namespace mission
 		//if( m_sScriptID == INVALID_SCRIPT_NPCHANDLE )
 		//	return EN_OK;
 		
-		// 判断是否在交易状态
+		// checks whether in the trading state
 		if( character.GetTradeData() )
 		{
 			//character.SystemNotice( "你正在和其他角色交易，不可以和npc对话!" );
@@ -251,7 +251,7 @@ namespace mission
 			return EN_FAILER;
 		}
 
-		// 判断是否在交易状态
+		// checks whether in the trading state
 		if( character.m_CKitbag.IsLock() || !character.GetActControl(enumACTCONTROL_ITEM_OPT) )
 		{
 			//character.SystemNotice( "你的背包已被锁定，不可以和npc对话!" );
@@ -259,14 +259,14 @@ namespace mission
 			return EN_FAILER;
 		}
 
-		// 检测角色是否在npc20米范围内
+		// checks whether the character is within 20 metres of the NPC
 		//if( !IsDist( GetShape().centre.x, GetShape().centre.y, character.GetShape().centre.x, 
 		//	character.GetShape().centre.y, 20 ) )
 		//{
 		//	return EN_FAILER;
 		//}
 
-		// 调用NPC脚本对话处理函数
+		// calls the NPC script dialog handler
 		lua_getglobal( g_pLuaState, "NpcProc" );
 		if( !lua_isfunction( g_pLuaState, -1 ) )
 		{
@@ -405,11 +405,11 @@ namespace mission
 		{
 			if( m_Trigger[i].byType == TE_GAME_TIME )
 			{
-				// 判断是否到达时间间隔触发
+				// checks whether the interval trigger has been reached
 				if( ++m_Trigger[i].wParam4 < m_Trigger[i].wParam2 )
 					continue;
 
-				// lua脚本处理触发器信息
+				// the lua script handles the trigger information
 				lua_getglobal( g_pLuaState, "TriggerProc" );
 				if( !lua_isfunction( g_pLuaState, -1 ) )
 				{
@@ -441,12 +441,12 @@ namespace mission
 				lua_settop(g_pLuaState, 0);
 				if( dwResult == LUA_TRUE )
 				{
-					// 判断清除触发器信息
+					// checks whether to clear the trigger information
 					switch( m_Trigger[i].wParam1 )
 					{
 					case TT_CYCLETIME:
 						{
-							// 清除触发计数
+							// clears the trigger count
 							m_Trigger[i].wParam4 = 0;
 						}
 						break;
@@ -456,7 +456,7 @@ namespace mission
 							{
 								m_Trigger[i].wParam3--;
 								
-								// 清除触发计数
+								// clears the trigger count
 								m_Trigger[i].wParam4 = 0;
 							}
 							else
@@ -466,7 +466,7 @@ namespace mission
 									m_Trigger[i].wTID, m_byNumTrigger, m_Trigger[i].wParam1, m_Trigger[i].wParam1,
 									m_Trigger[i].wParam3, m_Trigger[i].wParam4 );
 #endif
-								// 清除触发器
+								// clears the trigger
 								ClearTrigger( i-- );
 							}
 						}
@@ -496,7 +496,7 @@ namespace mission
 	{T_B
 		m_sTime = sTime;
 		
-		// 判断是否还没有被召唤出来
+		// checks whether it has not been summoned yet
 		if( m_bSummoned == FALSE )
 		{
 			m_bSummoned = TRUE;

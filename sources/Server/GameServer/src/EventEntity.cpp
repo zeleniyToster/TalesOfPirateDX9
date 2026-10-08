@@ -92,9 +92,9 @@ namespace mission
 	void CResourceEntity::Clear()
 	{
 		CEventEntity::Clear();
-		m_sID = 0;		// 资源信息ID
-		m_sNum = 0;		// 资源数量信息
-		m_sTime = 0;	// 资源采集时间
+		m_sID = 0;		// resource information ID
+		m_sNum = 0;		// resource quantity information
+		m_sTime = 0;	// resource gathering time
 	}
 
 	BOOL CResourceEntity::SetData( USHORT sItemID, USHORT sNum, USHORT sTime )
@@ -140,7 +140,7 @@ namespace mission
 				return 0;
 			}
 
-			// 设置资源消失，等待重生
+			// makes the resource disappear and wait for it to respawn
 			this->SetExistState( enumEXISTS_WITHERING );
 			this->Die();
 		}

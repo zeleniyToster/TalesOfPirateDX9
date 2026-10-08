@@ -8,12 +8,12 @@
 class Guild
 {
 public:
-	static BOOL lua_CreateGuild(CCharacter* pCha);	//创建公会,0-海军,1-海盗
-	static BOOL lua_ListAllGuild(CCharacter* pCha);	//开始给客户端传递列表，向客户端发生一个开始列表命令，由NPC对话触发一次
+	static BOOL lua_CreateGuild(CCharacter* pCha);	//creates the guild, 0 navy, 1 pirate
+	static BOOL lua_ListAllGuild(CCharacter* pCha);	//start passing the list to the client; the client is sent a begin-list command, triggered once by the NPC dialog
 
 	static void cmd_CreateGuild(CCharacter* pCha, bool confirm, cChar *guildname, cChar *passwd);
-	static void cmd_ListAllGuild(CCharacter* pCha);	//调用一次返回20行，由客户端命令分次调用，直到返回所有行
-	static void cmd_GuildTryFor(CCharacter* pCha, uLong guildid);	//申请加入公会，由NPC对话触发
+	static void cmd_ListAllGuild(CCharacter* pCha);	//each call returns 20 rows; the client command calls it in batches until all rows are returned
+	static void cmd_GuildTryFor(CCharacter* pCha, uLong guildid);	//applies to join the guild, triggered by the NPC dialog
 	static void cmd_GuildTryForComfirm(CCharacter* pCha, char IsReplace);
 	static void cmd_GuildListTryPlayer(CCharacter* pCha);
 	static void cmd_GuildApprove(CCharacter* pCha,uLong chaid);
@@ -36,7 +36,7 @@ public:
 				return false;
 			}else if(l_ishan)
 			{
-				if(l_name[i-1] ==0xA1 && l_name[i] ==0xA1)	//过滤全角空格
+				if(l_name[i-1] ==0xA1 && l_name[i] ==0xA1)	//filters out full-width spaces
 				{
 					return false;
 				}

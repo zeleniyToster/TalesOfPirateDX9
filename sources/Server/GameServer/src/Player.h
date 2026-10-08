@@ -65,7 +65,7 @@ public:
 
 	bool		IsPlayer(void) {return bIsValid && (GetGate() ? true : false);}
 
-    virtual void OnLogoff() {} // 添加这个player的数据库存盘代码
+    virtual void OnLogoff() {} // adds the database save code for this player
 
 	bool		IsValid(void) {return bIsValid;}
     void        SetActLoginID(DWORD id){m_dwLoginID = id;}
@@ -98,7 +98,7 @@ public:
 	void		SetCanReceiveRequests(bool x) { bReceiveRequests = x; }			//
 	int			GetTeamMemberCnt()			{	return _nTeamMemberCnt;			} 
 	DWORD		GetTeamMemberDBID(int nNo)	{	return _Team[nNo].m_dwDBChaId;  }
-	DWORD		getTeamLeaderID()			{	return _dwTeamLeaderID;			}// 没有队伍的返回0
+	DWORD		getTeamLeaderID()			{	return _dwTeamLeaderID;			}// returns 0 when there is no party
 	CCharacter* GetTeamMemberCha(int nNo); 
 	void		NoticeTeamMemberData();
 	void		NoticeTeamLeaderID(void);
@@ -164,7 +164,7 @@ public:
 	CCharacter* GetMakingBoat() { return m_pMakingBoat; }
 	void		SetMakingBoat( CCharacter* pBoat ) { m_pMakingBoat = pBoat; }
 
-	// 船只建造和改造等函数接口
+	// boat construction and conversion function interfaces
 	BYTE		GetNumBoat() { return m_byNumBoat; }
 	void		GetBerthBoat( USHORT sBerthID, BYTE& byNumBoat, BOAT_BERTH_DATA& Data );
 	void		GetAllBerthBoat( USHORT sBerthID, BYTE& byNumBoat, BOAT_BERTH_DATA& Data );
@@ -186,11 +186,11 @@ public:
 	BOOL		ClearBoat( DWORD dwBoatDBID );
 	void		RefreshBoatAttr(void);
 
-	// 摆摊信息接口
+	// stall information interface
 	mission::CStallData* GetStallData() { return m_pStallData; }
 	void		SetStallData( mission::CStallData* pData ) { m_pStallData = pData; }
 
-	// 大地图
+	// big map
 	//void		SetMapMask(const char *pMask) {m_CMapMask.InitMaskData(pMask);}
 	//const char*	GetMapMask() {return m_CMapMask.GetResultMask();}
 	//BYTE*		GetOneMapMask(const char *szMapName, long &lLen) {return m_CMapMask.GetMapMask(szMapName, lLen);}
@@ -207,7 +207,7 @@ public:
 	void		ResetMapMaskChange(void) {m_chMapMaskChange = 0;}
 	float		GetMapMaskOpenScale(const char *szMapName) {return m_CMapMask.GetMapMaskOpenScale(szMapName);}
 
-	// 银行
+	// bank
 	char		GetCurBankNum(void) {return m_chBankNum;}
 	bool		AddBankDBID(long lDBID) {if (m_chBankNum >= MAX_BANK_NUM) return false; m_lBankDBID[m_chBankNum] = lDBID; m_chBankNum++; return true;}
 	CKitbag*	GetBank(char chBankNO = 0) {if (chBankNO < 0 || chBankNO >= m_chBankNum) return 0; return m_CBank + chBankNO;}
@@ -233,7 +233,7 @@ public:
 	void		CheckChaItemFinalData(void);
 	bool		String2BankData(char chBankNO, std::string &strData);
 
-	//摩豆和代币相关操作
+	//MoDou and token related operations
 	long	GetMoBean() { return m_lMoBean; }
 	void	SetMoBean(long lMoBean) { m_lMoBean = lMoBean; }
 	long	GetRplMoney() { return m_lRplMoney; }
@@ -245,27 +245,27 @@ public:
 	void	SetGarnerWiner(short siswiner){m_sGarnerWiner = siswiner;}
 	uplayer     _Team[MAX_TEAM_MEMBER];
 
-	//生活技能
+	// life skills
 	std::string & GetLifeSkillinfo(){return m_strLifeSkillinfo;}
-	dbc::Char	m_szGuildName[defGUILD_NAME_LEN];	//所属公会名字，公会ID属性为0时本值无效.
+	dbc::Char	m_szGuildName[defGUILD_NAME_LEN];	//name of the guild this character belongs to; this value is invalid when the guild ID attribute is 0.
 	dbc::Char	m_szGuildMotto[defGUILD_MOTTO_LEN];
 	dbc::Char	m_szStallName[ROLE_MAXNUM_STALL_NUM];
 	bool		m_bIsGuildLeader;	//0-非会长;1-会长
 	struct
 	{
-		BitMaskStatus m_GuildState;	//客户交互期间公会相关状态位屏蔽码字段,值参照定义:enum EGuildState
+		BitMaskStatus m_GuildState;	//guild state mask field, masked while the client is interacting; see the definition of enum EGuildState
 
-		uLong m_GuildStatus;	//公会状态
-		uLong m_lGuildID;		//玩家申请公会成员期间要求玩家确认是否覆盖先前的申请时先前选择的公会ID.
-		uLong m_lTempGuildID;	//玩家申请公会临时记录信息
-		dbc::Char m_szTempGuildName[defGUILD_NAME_LEN];	//玩家申请公会成员期间要求玩家确认是否覆盖先前的申请时先前选择的公会名字.
+		uLong m_GuildStatus;	//guild state
+		uLong m_lGuildID;		//while the player is applying to join a guild, the guild ID of the earlier choice, asked for when the player must confirm overriding the earlier application.
+		uLong m_lTempGuildID;	//temporary record of the player's guild application
+		dbc::Char m_szTempGuildName[defGUILD_NAME_LEN];	//while the player is applying to join a guild, the guild name of the earlier choice, asked for when the player must confirm overriding the earlier application.
 	};
 protected:
 	int         _nTeamMemberCnt;
 	DWORD		_dwTeamLeaderID;
 
 private:
-	struct // 对应实体数组的索引（由CEntityAlloc类来配置）
+	struct // index into the entity array (configured by the CEntityAlloc class)
 	{
 
 		dbc::Long	m_lID;
@@ -276,35 +276,35 @@ private:
 	bool	bIsValid;
 	char	m_szPassword[ROLE_MAXSIZE_PASSWORD2+1];
 
-	long	m_lMoBean;		//摩豆数量
-	long	m_lRplMoney;	//代币数量
-	long	m_lVipID;		//VIP类型
+	long	m_lMoBean;		//MoDou count
+	long	m_lRplMoney;	//token count
+	long	m_lVipID;		//VIP type
 
     DWORD       m_dwLoginID;    //  Account DB ID
-	DWORD		m_dwDBActId;	// 数据库账户ID
-	dbc::Char	m_chGMLev;		// GM等级
+	DWORD		m_dwDBActId;	// database account ID
+	dbc::Char	m_chGMLev;		// GM level
 	long		m_lMapMaskDBID;
-	dbc::Char	m_chActName[ACT_NAME_LEN];	// 账号名
+	dbc::Char	m_chActName[ACT_NAME_LEN];	// account name
 
-	CCharacter*	m_pCtrlCha;		// 当前控制角色
+	CCharacter*	m_pCtrlCha;		// currently controlled character
 
-	CCharacter* m_pMainCha;		// 主体角色
-	DWORD		m_dwLaunchID;	// 角色出海船只ID
-	BYTE		m_byNumBoat;	// 船只的数量
+	CCharacter* m_pMainCha;		// master character
+	DWORD		m_dwLaunchID;	// ID of the boat the character takes to sea
+	BYTE		m_byNumBoat;	// number of boats
 	CCharacter* m_Boat[MAX_CHAR_BOAT];
 
-	dbc::uLong	m_ulLoginCha[2];	// 登陆角色（类型，数据库ID.0 原始角色，1 船）
+	dbc::uLong	m_ulLoginCha[2];	// the character logged in (type, database ID. 0 original character, 1 boat)
 
-	// 临时数据
+	// temporary data
 	struct
 	{
-		USHORT		m_sBerthID;	// 出海船只出海数据存储
+		USHORT		m_sBerthID;	// storage for the sea-going boat data
 		USHORT		m_sxPos;
 		USHORT		m_syPos;
 		USHORT		m_sDir;			
 	};
 
-	// 大地图
+	// big map
 	struct
 	{
 		long		m_lLightSize;
@@ -313,7 +313,7 @@ private:
 		char		m_chMapMaskChange;
 	};
 
-	// 银行
+	// bank
 	struct
 	{
 		CCharacter	*m_pCBankNpc;
@@ -323,21 +323,21 @@ private:
 		bool		m_bBankChange[MAX_BANK_NUM];
 	};
 
-	// 建造的船只
+	// boat under construction
 	CCharacter*		m_pMakingBoat;
 
-	// 摆摊信息
+	// stall information
 	mission::CStallData* m_pStallData;
 
-	// 队伍挑战
+	// party challenge
 	struct
 	{
-		dbc::Char	m_chChallengeType;		// 挑战类型
-		dbc::Long	m_lChallengeParam[2 + MAX_TEAM_MEMBER * 2 * 2];	// 挑战的对象信息
-		CTimer		m_timerChallenge;		// 挑战邀请计时器
+		dbc::Char	m_chChallengeType;		// challenge type
+		dbc::Long	m_lChallengeParam[2 + MAX_TEAM_MEMBER * 2 * 2];	// challenge target information
+		CTimer		m_timerChallenge;		// challenge invitation timer
 	};
 
-	// 道具修理
+	// item repair
 	struct
 	{
 		bool		m_bInRepair;
@@ -348,7 +348,7 @@ private:
 		CCharacter*	m_pCRepairman;
 	};
 
-	// 道具精炼/合成
+	// item refining/synthesis
 	struct
 	{
 		bool		m_bInForge;
@@ -357,12 +357,12 @@ private:
 		CCharacter*	m_pCForgeman;
 	};
 
-	//彩票设置
+	//lottery settings
 	struct
 	{
 		CCharacter*	m_pCLotteryman;
 	};
-	//竞技场设置Add by sunny.sun20080716
+	//arena settings. Added by sunny.sun20080716
 	struct
 	{
 		CCharacter * m_pCAmphitheaterman;

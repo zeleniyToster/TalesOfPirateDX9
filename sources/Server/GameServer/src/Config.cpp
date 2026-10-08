@@ -52,10 +52,10 @@ void CGameConfig::SetDefault()
 	strcpy(m_szInfoPwd, "");
 	m_nSection = 0;
 
-	m_bLogAI		= FALSE;	// 是否打开AI的log
-	m_bLogCha		= FALSE;	// 是否打开角色的log
-	m_bLogCal		= FALSE;	// 是否打开数值计算的log
-	m_bLogMission	= FALSE;	// 是否打开Mission的log
+	m_bLogAI		= FALSE;	// whether AI logging is on
+	m_bLogCha		= FALSE;	// whether character logging is on
+	m_bLogCal		= FALSE;	// whether value calculation logging is on
+	m_bLogMission	= FALSE;	// whether Mission logging is on
 
 	m_bSuperCmd     = FALSE;
 
@@ -132,7 +132,7 @@ bool CGameConfig::Load(char *pszFileName)
 					m_nGateCnt++;
             }
         }
-        else if(strKey=="info") // 解析InfoServer IP和port
+        else if(strKey=="info") // parses the InfoServer IP and port
         {
             string strList[4];
             int nCnt = Util_ResolveTextLine(strValue.c_str(), strList, 4, ',');
@@ -169,9 +169,9 @@ bool CGameConfig::Load(char *pszFileName)
 		else if (strKey == "BaseID")
 		{
 			size_t stPos = 0;
-			if ((stPos = strValue.find("0x")) != std::string::npos || (stPos = strValue.find("0X")) != std::string::npos) // 十六进制值
+			if ((stPos = strValue.find("0x")) != std::string::npos || (stPos = strValue.find("0X")) != std::string::npos) // hexadecimal value
 				sscanf(strValue.c_str(), "%x", &m_ulBaseID);
-			else // 十进制值
+			else // decimal value
 				sscanf(strValue.c_str(), "%d", &m_ulBaseID);
 		}
 		else if(strKey=="max_ply")

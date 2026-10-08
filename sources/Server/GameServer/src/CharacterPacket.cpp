@@ -66,7 +66,7 @@ void CCharacter::WriteBaseInfo(WPACKET &pkret, Char chLookType)
 	WRITE_LONG(pkret, GetPos().y);
 	WRITE_LONG(pkret, GetRadius());
 	WRITE_SHORT(pkret, GetAngle());
-	// 队长ID
+	// team leader ID
 	CPlayer	*pCPly = GetPlayer();
 	if (pCPly)
 		WRITE_LONG(pkret, pCPly->getTeamLeaderID());
@@ -111,7 +111,7 @@ void CCharacter::WriteSkillbag(WPACKET &pk, int nSynType)
 	CCharacter	*pCCtrlCha = GetPlyCtrlCha();
 	bool	bIsBoatCtrl = pCCtrlCha->IsBoat();
 	bool	bAddBoatSkill = false;
-	if (bIsBoatCtrl) // 主控是船角色，则加入船的默认技能
+	if (bIsBoatCtrl) // if the master is a boat character, add the boat's default skill
 	{
 		pSkillGrid = pCCtrlCha->m_CSkillBag.GetSkillContByNum(0);
 		if (pSkillGrid)
@@ -191,7 +191,7 @@ void CCharacter::WriteKitbag(CKitbag &CKb, WPACKET &WtPk, int nSynType)
 			WRITE_SHORT(WtPk, 0);
 			continue;
 		}
-		// 有道具
+		// has items
 		WRITE_SHORT(WtPk, pGridCont->sID);
 		WRITE_LONG(WtPk, pGridCont->dwDBID	);
 		WRITE_SHORT(WtPk, pGridCont->sNeedLv);
@@ -206,7 +206,7 @@ void CCharacter::WriteKitbag(CKitbag &CKb, WPACKET &WtPk, int nSynType)
 		WRITE_LONG(WtPk, pGridCont->expiration);
 
 		pItemRec = GetItemRecordInfo( pGridCont->sID );
-		if( pItemRec->sType == enumItemTypeBoat ) // 船道具，写入船的WorldID，用于客户端将道具与船角色挂钩
+		if( pItemRec->sType == enumItemTypeBoat ) // a boat item; write the boat's WorldID so the client can tie the item to the boat character
 		{
 			CCharacter	*pCBoat = GetPlayer()->GetBoat((DWORD)pGridCont->GetDBParam(enumITEMDBP_INST_ID));
 			if (pCBoat)
@@ -217,7 +217,7 @@ void CCharacter::WriteKitbag(CKitbag &CKb, WPACKET &WtPk, int nSynType)
 
 		WRITE_LONG(WtPk, pGridCont->GetDBParam(enumITEMDBP_FORGE));
 		WRITE_LONG(WtPk, pGridCont->GetDBParam(enumITEMDBP_INST_ID));
-		if (pGridCont->IsInstAttrValid()) // 存在实例属性
+		if (pGridCont->IsInstAttrValid()) // the instance attribute exists
 		{
 			WRITE_CHAR(WtPk, 1);
 			for (int j = 0; j < defITEM_INSTANCE_ATTR_NUM; j++)
@@ -227,9 +227,9 @@ void CCharacter::WriteKitbag(CKitbag &CKb, WPACKET &WtPk, int nSynType)
 			}
 		}
 		else
-			WRITE_CHAR(WtPk, 0); // 不存在实例属性
+			WRITE_CHAR(WtPk, 0); // the instance attribute does not exist
 	}
-	WRITE_SHORT(WtPk, -1); // 结束标志
+	WRITE_SHORT(WtPk, -1); // end marker
 }
 
 // client: ReadChaLookPacket
@@ -327,7 +327,7 @@ void CCharacter::WriteLookData(WPACKET &WtPk, Char chLookType, Char chSynType)
 	WRITE_SHORT(WtPk, pLook->sTypeID);
 	if( m_CChaAttr.GetAttr(ATTR_CHATYPE) == enumCHACTRL_PLAYER && IsBoat() )
 	{
-		WRITE_CHAR( WtPk, 1); // 船的外观
+		WRITE_CHAR( WtPk, 1); // boat appearance
 		WRITE_SHORT( WtPk, pLook->sPosID );
 		WRITE_SHORT( WtPk, pLook->sBoatID );
 		WRITE_SHORT( WtPk, pLook->sHeader );
@@ -391,7 +391,7 @@ void CCharacter::WriteLookData(WPACKET &WtPk, Char chLookType, Char chSynType)
 					WRITE_LONG(WtPk, pItem->expiration);
 
 				}
-				if(chLookType!=LOOK_SELF) // 除非是自身通知, 否则不需要下面的信息
+				if(chLookType!=LOOK_SELF) // unless this is a notification to self, the information below is not needed
 				{
 					WRITE_CHAR(WtPk, 0);
 					continue;
@@ -461,7 +461,7 @@ void CCharacter::WriteLookData(WPACKET &WtPk, Char chLookType, Char chSynType)
 				WRITE_LONG(WtPk, pItem->expiration);
 			}
 
-			//if(chLookType!=LOOK_SELF) // 除非是自身通知, 否则不需要下面的信息
+			//if(chLookType!=LOOK_SELF) // unless this is a notification to self, the information below is not needed
 			//{
 			//	WRITE_CHAR(WtPk, 0);
 			//	continue;
@@ -485,7 +485,7 @@ void CCharacter::WriteLookData(WPACKET &WtPk, Char chLookType, Char chSynType)
 	}
 }
 
-// 注意该函数使用道具栏的改变标志。
+// note that this function uses the item slot change flags.
 bool CCharacter::WriteAppendLook(CKitbag &CKb, WPACKET &pk, bool bInit)
 {
 	SItemGrid	*pGridCont;
@@ -541,6 +541,6 @@ void CCharacter::WriteItemChaBoat(WPACKET &WtPk, CCharacter *pCBoat)
 	pCBoat->WriteBaseInfo(WtPk);
 	pCBoat->WriteAttr(WtPk, enumATTRSYN_INIT);
 	pCBoat->m_CKitbag.SetChangeFlag(true);
-	pCBoat->WriteKitbag(pCBoat->m_CKitbag, WtPk, enumSYN_KITBAG_INIT); // 道具栏
+	pCBoat->WriteKitbag(pCBoat->m_CKitbag, WtPk, enumSYN_KITBAG_INIT); // item slot
 	pCBoat->WriteSkillState(WtPk);
 }

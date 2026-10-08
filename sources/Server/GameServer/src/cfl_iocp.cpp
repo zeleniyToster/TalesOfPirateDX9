@@ -12,7 +12,7 @@ using namespace std;
 void cfl_printf(char const* fmt, ...)
     {
     char buf[2048];
-    int len; // len 要放在 buf 后面定义
+    int len; // len must be defined after buf
 
     va_list args;
     va_start(args, fmt);

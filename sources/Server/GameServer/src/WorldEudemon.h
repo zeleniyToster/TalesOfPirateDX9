@@ -18,26 +18,26 @@ namespace mission
 
 		virtual void SetType() { m_byType = EUDEMON; }
 
-		// 网络消息处理函数
+		// network message handler
 		virtual HRESULT MsgProc( CCharacter& character, RPACKET& packet );
 		
-		// 装载世界守护神配置信息
+		// loads the world guardian configuration information
 		virtual BOOL Load( const char szMsgProc[], const char szName[], dbc::uLong ulID );
 
 	private:
-		// 装载脚本信息
+		// loads the script information
 		virtual BOOL InitScript( const char szFunc[], const char szName[] );
 		
 	};
 
-	// 暂时未用
+	// not used at the moment
 	class CEudemonManager
 	{
 	public:
 		CEudemonManager();
 		~CEudemonManager();
 
-		// 装载世界守护神列表，生成世界守护神
+		// loads the world guardian list and generates the world guardians
 		BOOL	Load( const char szTable[] );
 
 	private:

@@ -3,12 +3,12 @@
 
 #include "TChar.h"
 
-// 从给定字符窜(_TCHAR *in)的给定位置(long *in_from)获取字符窜，
-// 直到遇到字符窜列表(_TCHAR *end_list)中的任一字符时结束
+// gets a string from the given position (long *in_from) of the given string (_TCHAR *in),
+// ending when any character of the string list (_TCHAR *end_list) is met
 long StringGet(_TCHAR *out, long out_max, _TCHAR *in, long *in_from, _TCHAR *end_list, long end_len);
 
 
-// 从给定字符窜(_TCHAR *in)的给定位置(long *in_from)剔除字符窜列表(_TCHAR *end_list)中的任一字符
+// removes any character of the string list (_TCHAR *end_list) from the given position (long *in_from) of the given string (_TCHAR *in)
 void StringSkipCompartment(_TCHAR *in, long *in_from, _TCHAR *skip_list, long skip_len);
 
 

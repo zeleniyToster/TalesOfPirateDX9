@@ -18,34 +18,34 @@ namespace mission
 		CCharMission();
 		~CCharMission();
 
-		// 任务记录标签保存读取
+		// mission record tag save and load
 		BOOL	MisInit( char* pszBuf );
 		BOOL	MisGetData( char* pszBuf, DWORD dwSize );
 
-		// 任务历史记录标签存储
+		// mission history record tag storage
 		BOOL	MisInitRecord( char* pszBuf );
 		BOOL	MisGetRecord( char* pszBuf, DWORD dwSize );
 
-		// 任务触发器保存和读取
+		// mission trigger save and load
 		BOOL	MisInitTrigger( char* pszBuf );
 		BOOL	MisGetTrigger( char* pszBuf, DWORD dwSize );
 
-		// 随机任务完成计数
+		// random mission completion count
 		BOOL	MisInitMissionCount( char* pszBuf );
 		BOOL	MisGetMissionCount( char* pszBuf, DWORD dwSize );
 
 		void	MisClear();
 		void	SetMisChar( CCharacter& character ) { m_pRoleChar = &character; }
 
-		// 触发器事件处理
+		// trigger event handling
 		BOOL	MisEventProc( TRIGGER_EVENT e, WPARAM wParam, LPARAM lParam );
 
-		// 记录信息
+		// record information
 		BOOL	MisAddTrigger( const TRIGGER_DATA& Data );
 		BOOL	MisClearTrigger( WORD wTriggerID );
 		BOOL	MisDelTrigger( WORD wTriggerID );
 
-		// 任务操作
+		// mission operation
 		BOOL	MisAddRole( WORD wRoleID, WORD wScriptID );
 		BOOL	MisHasRole( WORD wRoleID );
 		BOOL	MisClearRole( WORD wRoleID );
@@ -53,13 +53,13 @@ namespace mission
 		BOOL	MisIsRoleFull() { return m_byNumMission >= ROLE_MAXNUM_MISSION; }
 		BOOL	MisGetMisScript( WORD wRoleID, WORD& wScriptID );
 
-		// 设置任务完成标记
+		// sets the mission completion flag
 		BOOL	MisSetMissionComplete( WORD wRoleID );
 		BOOL	MisSetMissionPending( WORD wRoleID );
 		BOOL	MisSetMissionFailure( WORD wRoleID );
 		BOOL	MisHasMissionFailure( WORD wRoleID );
 
-		// 任务标签
+		// mission tag
 		BOOL	MisSetFlag( WORD wRoleID, WORD wFlag );
 		BOOL	MisClearFlag( WORD wRoleID, WORD wFlag );
 		BOOL	MisIsSet( WORD wRoleID, WORD wFlag );
@@ -70,7 +70,7 @@ namespace mission
 		BOOL	MisIsRecord( WORD wRec );
 		BOOL	MisIsValidRecord( WORD wRec );
 
-		// 记录视野内NPC的针对该角色的任务状态信息
+		// records the mission state information, for this character, of the NPCs in view
 		BOOL	MisAddMissionState( DWORD dwNpcID, BYTE byID, BYTE byState );
 		BOOL	MisGetMissionState( DWORD dwNpcID, BYTE& byState );
 		BOOL    MisClearMissionState( DWORD dwNpcID );
@@ -79,33 +79,33 @@ namespace mission
 		BOOL	MisGetCharMission( DWORD dwNpcID, BYTE byID, BYTE& byState );
 		BOOL	MisGetNextMission( DWORD dwNpcID, BYTE& byIndex, BYTE& byID, BYTE& byState );
 
-		// 任务快捷临时数据信息操作
+		// mission shortcut temporary data information operations
 		void	MisSetMissionPage( DWORD dwNpcID, BYTE byPrev, BYTE byNext, BYTE byState );
 		BOOL	MisGetMissionPage( DWORD dwNpcID, BYTE& byPrev, BYTE& byNext, BYTE& byState );
 		void	MisSetTempData( DWORD dwNpcID, WORD wID, BYTE byState, BYTE byMisType );
 		BOOL	MisGetTempData( DWORD dwNpcID, WORD& wID, BYTE& byState, BYTE& byMisType );
 		
-		// 查询任务日志信息
+		// queries the mission log information
 		void	MisGetMisLog();
 		void	MisGetMisLogInfo( WORD wMisID );
 		void	MisLogClear( WORD wMisID );
 		void	MisLogAdd( WORD wMisID, BYTE byState );
 
-		// 随机任务接口操作信息
+		// random mission interface operation information
 		BOOL	MisHasRandMission( WORD wRoleID );
 		BOOL	MisAddRandMission( WORD wRoleID, WORD wScriptID, BYTE byType, BYTE byLevel, DWORD dwExp, DWORD dwMoney, USHORT sPrizeData, USHORT sPrizeType, BYTE byNumData );
 		BOOL	MisSetRandMissionData( WORD wRoleID, BYTE byIndex, const mission::MISSION_DATA& RandData );
 		BOOL	MisGetRandMission( WORD wRoleID, BYTE& byType, BYTE& byLevel, DWORD& dwExp, DWORD& dwMoney, USHORT& sPrizeData, USHORT& sPrizeType, BYTE& byNumData );
 		BOOL	MisGetRandMissionData( WORD wRoleID, BYTE byIndex, mission::MISSION_DATA& RandData );
 
-		// 检测送给npc的物品(接受物品的NPC取走物品后，记录一个标记，是否取走用该标记标识)
+		// checks the items given to the NPC (once the accepting NPC has taken the items, a flag is recorded and used to tell whether they were taken)
 		BOOL	MisHasSendNpcItemFlag( WORD wRoleID, WORD wNpcID );
 		BOOL	MisNoSendNpcItemFlag( WORD wRoleID, WORD wNpcID );
 		BOOL	MisTakeRandMissionNpcItem( WORD wRoleID, WORD wNpcID, USHORT& sItemID );
 		BOOL	MisTakeAllRandNpcItem( WORD wRoleID );
 		BOOL	MisHasRandMissionNpc( WORD wRoleID, WORD wNpcID, WORD wAreaID );		
 
-		// 添加一个护送NPC
+		// adds an escort NPC
 		BOOL	MisAddFollowNpc( WORD wRoleID, BYTE byIndex, WORD wNpcCharID, CCharacter* pNpc, BYTE byAiType );
 		BOOL	MisClearFollowNpc( WORD wRoleID, BYTE byIndex );
 		BOOL	MisClearAllFollowNpc( WORD wRoleID );
@@ -113,7 +113,7 @@ namespace mission
 		BOOL	MisIsFollowNpc( WORD wRoleID, BYTE byIndex, WORD wNpcCharID );
 		BOOL	MisLowDistFollowNpc( WORD wRoleID, BYTE byIndex );
 
-		// 完成一个随机任务
+		// completes a random mission
 		BOOL	MisCompleteRandMission( WORD wRoleID );
 		BOOL	MisFailureRandMission( WORD wRoleID );
 		BOOL	MisAddRandMissionNum( WORD wRoleID );
@@ -123,27 +123,27 @@ namespace mission
 		WORD	MisGetRandMissionCount( WORD wRoleID );
 		WORD	MisGetRandMissionNum( WORD wRoleID );
 
-		// 检测是否任务需要物品
+		// checks whether the mission needs items
 		BOOL	MisNeedItem( USHORT sItemID );
 
-		// 重新刷新获取物品触发器的计数
+		// resets the count of the item acquisition trigger
 		void	MisRefreshItemCount( USHORT sItemID );
 		BOOL	MisGetItemCount( WORD wRoleID, USHORT sItemID, USHORT& sCount );
 
-		// 角色离线
+		// character going offline
 		void	MisLogout();
 		void	MisLogin();
 		void	MisEnterMap();
 		void	MisGooutMap();
 		void	MisEnterBoat( CCharacter* pBoat );
 
-		// 任务事件实体交互等待时间
+		// mission event entity interaction wait time
 		void	SetEntityTime( DWORD dwTime ) { m_dwEntityTime = dwTime; }
 		BOOL	GetEntityTime( DWORD& dwTime ) { dwTime = m_dwEntityTime; return dwTime != 0; }
 
 	protected:
 		
-		// 预分配重用缓冲，初始化信息
+		// pre-allocates and reuses the buffer, initialises the information
 		void	Initially();
 		void	Finally();
 
@@ -152,7 +152,7 @@ namespace mission
 		void	ClearRoleTrigger( WORD wRoleID );
 		BOOL	CancelRole( WORD wRoleID, WORD wScriptID );
 
-		// 任务事件处理函数
+		// mission event handler
 		void	KillWare( USHORT sWareID );
 		void	GetItem( USHORT sItemID, USHORT sCount );
 		void	TimeOut( USHORT sTime );
@@ -161,29 +161,29 @@ namespace mission
 		void	CharBorn();
 		void	EquipItem( USHORT sItemID, USHORT sTriID );
 
-		// 根据数据库存储的信息版本转换到当前版本信息
+		// converts the version stored in the database to the current version
 		BOOL ConvertMissionInfo( const char* pszBuf, int nEdition );
 		BOOL ConvertTriggerInfo( const char* pszBuf, int nEdition );
 		BOOL ConvertMisCountInfo( const char* pszBuf, int nEdition );
 		BOOL ConvertMissionRecord( const char* pszBuf, int nEdition );
 
-		// 角色任务信息(触发器、标签、历史记录)
+		// character mission information (triggers, tags, history)
 		BYTE			m_byNumTrigger;
 		TRIGGER_DATA	m_Trigger[ROLE_MAXNUM_CHARTRIGGER];
 		BYTE			m_byNumMission;
 		MISSION_INFO	m_Mission[ROLE_MAXNUM_MISSION];
 		ROLE_RECORDINFO m_RoleRecord;
-		BYTE			m_byNumGotoMap; // 切换地图单元事件触发器计数
-		RAND_MISSION_COUNT	m_MissionCount[ROLE_MAXNUM_MISSIONCOUNT]; // 完成随机任务计数
+		BYTE			m_byNumGotoMap; // map cell switch event trigger count
+		RAND_MISSION_COUNT	m_MissionCount[ROLE_MAXNUM_MISSIONCOUNT]; // random mission completion count
 		BYTE			m_byNumMisCount;
-		BYTE			m_byOnline;		// 该角色是否在线
+		BYTE			m_byOnline;		// whether this character is online
 
-		// 视野内NPC的针对该角色任务信息
+		// mission information, for this character, of the NPCs in view
 		MISSION_STATE   m_MissionState[ROLE_MAXNUM_INSIDE_NPCCOUNT];
-		BYTE			m_byStateIndex; // 任务状态快捷索引
+		BYTE			m_byStateIndex; // mission state shortcut index
 		BYTE			m_byNumState;
 
-		// 任务对话信息临时记录
+		// temporary record of mission dialog information
 		DWORD			m_dwTalkNpcID;
 		WORD			m_wIndex;
 		BYTE			m_byState;
@@ -192,10 +192,10 @@ namespace mission
 		BYTE			m_byPrev;
 		BYTE			m_byNext;
 
-		// 事件实体交互等待时间
+		// event entity interaction wait time
 		DWORD			m_dwEntityTime;
 
-		// 角色指针
+		// character pointer
 		CCharacter*		m_pRoleChar;
 
 	};

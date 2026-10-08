@@ -51,7 +51,7 @@ private:
 
 };
 
-// 地图动态入口单元
+// dynamic map entry cell
 class	CDynMapEntryCell
 {
 public:
@@ -117,7 +117,7 @@ private:
 	void*		m_pPos;
 };
 
-// 动态地图入口链表，纪录本进程的所有当前存在的动态入口
+// dynamic map entry chain, recording every dynamic entry currently existing in this process
 class	CDynMapEntry
 {
 public:
@@ -138,10 +138,10 @@ private:
 
 extern CDynMapEntry g_CDMapEntry;
 
-// 队伍挑战地图入口
+// party challenge map entry
 extern void	g_SetTeamFightMapName(const char *cszMapName);
 
-extern char	g_szTFightMapName[MAX_MAPNAME_LENGTH];	// 队伍挑战地图名
+extern char	g_szTFightMapName[MAX_MAPNAME_LENGTH];	// party challenge map name
 //
 
 #endif // MAPENTRY_H

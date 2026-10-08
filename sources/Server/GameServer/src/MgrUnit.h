@@ -41,7 +41,7 @@
 //	MgrUnit		*m_pALast;
 //};
 //
-//class CActiveMgrUnitL // 激活的管理单元链表
+//class CActiveMgrUnitL // chain of active management cells
 //{
 //public:
 //	CActiveMgrUnitL()

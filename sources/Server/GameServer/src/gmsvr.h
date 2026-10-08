@@ -59,9 +59,9 @@ public:
     std::string ipaddr;
     unsigned short port;
     
-    // Player 双链表
+    // Player doubly linked list
     GatePlayer* m_playerlist;
-	GatePlayer* m_listcurplayer;	// 用于遍历链表
+	GatePlayer* m_listcurplayer;	// used to walk the chain
     std::string m_gtname;
     
     };

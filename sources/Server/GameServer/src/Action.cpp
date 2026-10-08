@@ -57,8 +57,8 @@ bool CAction::Add(dbc::Short sActionType, void *pActionData)
 T_E}
 
 //=============================================================================
-// sActionType 刚完成的动作类型.0，表示首次执行动作队列
-// sActionState 行动执行的结果
+// sActionType the type of the action just completed. 0 means the action queue is running for the first time
+// sActionState the result of running the action
 //=============================================================================
 bool CAction::DoNext(Short sActionType, Short sActionState)
 {T_B

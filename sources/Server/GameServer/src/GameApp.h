@@ -65,13 +65,13 @@ class GateServer;
 
 struct SDBLogData
 {
-	int		nLoc;			// 在pool中的位置
-	char	szLog[8192];	// 字符串内容
+	int		nLoc;			// position in the pool
+	char	szLog[8192];	// string content
 	SDBLogData():nLoc(0) {}
 };
 
 
-class CDBLogMgr // 管理即将写入db的log
+class CDBLogMgr // manages the logs about to be written to the DB
 {
 
 public:
@@ -87,7 +87,7 @@ public:
 	
 	
 	
-	// 可以Log 5个字符串字段, 最后一个长度为8000字符以内
+	// can log 5 string fields, the last one up to 8000 characters
 	void Log(const char *type, const char *c1, const char *c2, const char *c3, const char *c4, const char *p, BOOL bAddToList = TRUE);
 
 	// Add by lark.li 20080324 begin
@@ -95,28 +95,28 @@ public:
 	// End
 
 	void HandleLogList();
-	void FlushLogList();  // GameServer关闭的时候, 保证剩下的log都写入DB
+	void FlushLogList();  // when GameServer shuts down, makes sure the remaining logs are written to the DB
 	
-	int	GetLogLeft()				{ return _nLogLeft;		} // 还剩下的没有处理的log数量, 可以输出到监控界面
-	int	SetPerLogCnt(int nCnt)		{ _nPerLogCnt = nCnt;	} // 设置每次写入的数量, 可以动态调整
-	int GetPerLogCnt()				{ return _nPerLogCnt;   } // 用来监控输出
+	int	GetLogLeft()				{ return _nLogLeft;		} // number of unprocessed logs left; can be reported to a monitoring screen
+	int	SetPerLogCnt(int nCnt)		{ _nPerLogCnt = nCnt;	} // sets how many are written each time; can be adjusted dynamically
+	int GetPerLogCnt()				{ return _nPerLogCnt;   } // used for monitoring output
 
 protected:
 	
 	std::list<SDBLogData*>	_LogList;
-	int					_nPerLogCnt;				// 每次写入的最大log数量
-	int					_nLogLeft;					// 还剩下的log数量
-	SDBLogData			_LogPool[MAX_DBLOG_POOL];	// 存放要被log的数据, 该pool被循环使用
-	int					_nPoolUseLoc;				// 当前正被使用的pool的位置
+	int					_nPerLogCnt;				// maximum number of logs written per batch
+	int					_nLogLeft;					// number of logs remaining
+	SDBLogData			_LogPool[MAX_DBLOG_POOL];	// holds the data to be logged; this pool is reused in rotation
+	int					_nPoolUseLoc;				// position of the pool currently in use
 };
 
 struct SVolunteer
 {
-	char szName[defENTITY_NAME_LEN];	// 姓名
+	char szName[defENTITY_NAME_LEN];	// name
 	unsigned long ulID;					// ID
-	long lLevel;						// 等级
-	long lJob;							// 职业
-	char szMapName[256];				// 地图
+	long lLevel;						// level
+	long lJob;							// class
+	char szMapName[256];				// map
 };
 
 class	CGameApp : public CDBLogMgr
@@ -130,7 +130,7 @@ public:
 	BOOL    InitMap();
     void	Run(DWORD dwCurTime);
 
-	// 与网络消息有关的4个处理接口函数
+	// the four handler functions related to network messages
 	void	ProcessNetMsg(int nMsgType, GateServer *pGate, RPACKET pkt);
 	void    OnGateConnected(GateServer *pGate, RPACKET pkt);
 	void	OnGateDisconnect(GateServer *pGate, RPACKET pkt);
@@ -142,8 +142,8 @@ public:
 	void	ProcessDynMapEntry(GateServer *pGate, RPACKET pkt);
 	void	ProcessInterGameMsg(unsigned short usCmd, GateServer *pGate, RPACKET pkt);
 	void	ProcessGroupBroadcast(unsigned short usCmd, GateServer *pGate, RPACKET pkt);
-	void	ProcessGarner2Update(RPACKET pkt);//乱斗白银城
-    // 处理InfoServer消息
+	void	ProcessGarner2Update(RPACKET pkt);// melee Silver City
+    // handles InfoServer messages
     void    ProcessInfoMsg(pNetMessage msg, short sType, InfoServer *pInfo);
     void    ProcessMsg(pNetMessage msg, InfoServer *pInfo);
     void    OnInfoConnected(InfoServer *pInfo);
@@ -184,14 +184,14 @@ public:
 	void		SetGlobalRates(float droprate, float exprate) { m_fGlobalDropRate = droprate; m_fGlobalExpRate = exprate; }
 	float		GetGlobalDropRate() { return m_fGlobalDropRate; }
 	float		GetGlobalExpRate() { return m_fGlobalExpRate; }
-	// 重载所有npc脚本信息
+	// reloads all NPC script information
 	BOOL		ReloadNpcInfo( CCharacter& character );
 	mission::CNpc* FindNpc( const char szName[] );
 
-	// 召唤NPC出现一段时间
+	// a summoned NPC appears for a while
 	BOOL		SummonNpc( BYTE byMapID, USHORT sAreaID, const char szNpc[], USHORT sTime );
 
-	// 创建实体
+	// creates the entity
 	mission::CEventEntity* CreateEntity( BYTE byType ) { return m_pCEntSpace->GetEventEntity( byType ); }
 	
 	void		NotiGameReset(unsigned long ulLeftSec);
@@ -204,7 +204,7 @@ public:
 	void		InitSStateTraOnTime();
 	long		GetSStateTraOnTime(unsigned char uchStateID, unsigned char uchStateLv);
 
-	void		DataStatistic(void); // 信息统计
+	void		DataStatistic(void); // information statistics
 	CCharacter*	FindPlayerChaByName(const char* cszChaName);
 	CCharacter*	FindPlayerChaByNameLua(const char* cszChaName);
 	int FindPlayerChaByActNameLua(const char* cszChaName,CCharacter* chas[3]);
@@ -215,12 +215,12 @@ public:
 	CCharacter*	FindChaByName(const char* cszChaName);
 	CPlayer*	FindPlayerByDBChaID(unsigned long ulDBChaID);
 
-	void		WorldNotice(const char *szString); // 通知本组所有GameServer上的玩家
+	void		WorldNotice(const char *szString); // notifies the players on every GameServer of this group
 	void		GuildNotice(unsigned long guildID, const char *szString);
 	void		ScrollNotice(const char * szString,int SetNum, DWORD color = 0xFFFFFF00);//Add by sunny.sun20080804
 	void		GMNotice(const char * szString);//add by sunny.sun 20080821
-	void		LocalNotice(const char *szString); // 通知本GameServer上的玩家
-	void		ChaNotice(const char *szNotiString, const char *szChaName = ""); // 通知指定玩家
+	void		LocalNotice(const char *szString); // notifies the players on this GameServer
+	void		ChaNotice(const char *szNotiString, const char *szChaName = ""); // notifies the given player
 
 	bool		IsChaAttrMaxValInit(void) {return m_bChaAttrMaxValInit;}
 	void		ChaAttrMaxValInit(bool bSet) {m_bChaAttrMaxValInit = bSet;}
@@ -246,7 +246,7 @@ public:
 	DWORD	m_dwChaCnt;
 	DWORD	m_dwPlayerCnt;
 	DWORD	m_dwActiveMgrUnit;
-	dbc::InterLockedLong   m_dwRunStep;	// 性能监控
+	dbc::InterLockedLong   m_dwRunStep;	// performance monitoring
 	
 	BOOL	m_bExecLuaCmd;
 	std::string	m_strMapNameList;
@@ -259,7 +259,7 @@ public:
 	dbc::PreAllocHeap<CChaListNode>			m_ChaListHeap;
 	dbc::PreAllocHeap<CStateCellNode>		m_StateCellNodeHeap;
 
-	// 用于信息统计
+	// used for information statistics
 	dbc::Long	m_lCabinHeapNum;
 	dbc::Long	m_lTradeDataHeapNum;
 	dbc::Long	m_lSkillTDataHeapNum;
@@ -271,7 +271,7 @@ public:
 	Identity			m_Ident;
 	Identity			m_ItemIdent;
 
-	struct // GameServer结束
+	struct // GameServer shutdown
 	{
 		unsigned long	m_ulLeftSec;
 	    CTimer			m_CTimerReset;
@@ -286,7 +286,7 @@ protected:
 	void	MapMgrRun(DWORD dwCurTime);
 
 protected:
-	CMapRes* m_MapList[MAX_MAP];		// 维护一个指向所有子地图的列表
+	CMapRes* m_MapList[MAX_MAP];		// maintains a list of all sub-maps
 	short	 m_mapnum;
 	
 	CChaRecordSet 	   *m_CChaRecordSet;
@@ -300,14 +300,14 @@ protected:
 	CLifeLvRecordSet   *m_CLifeLvRecord;
 	CHairRecordSet	   *m_CHairRecord;
 
-	std::map<DWORD, CPlayer*>  _PlayerIdx;  // 从DB ID映射到Player指针
+	std::map<DWORD, CPlayer*>  _PlayerIdx;  // maps from DB ID to the Player pointer
 
-	std::vector<SVolunteer>	m_vecVolunteerList;	// 志愿者列表
+	std::vector<SVolunteer>	m_vecVolunteerList;	// volunteer list
 
 	struct
 	{
-		CPlayer		*pCPlayerL;	  // 记录与对应socket连接的玩家
-		CPlayer		*pCCurPlayer; // 用于搜索玩家链表
+		CPlayer		*pCPlayerL;	  // records the player connected to the matching socket
+		CPlayer		*pCCurPlayer; // used to search the player chain
 	} m_GatePlayer[MAX_GATE];                                                                
 
 public:
@@ -322,7 +322,7 @@ private:
     DWORD   _dwTempRunCnt;
 	float   m_fGlobalDropRate;
 	float   m_fGlobalExpRate;
-	// 纪录不同等级不同技能的相关数值
+	// records the values related to skills of each level
 	struct
 	{
 		CSkillTempData	*m_pCSkillTData[defMAX_SKILL_NO + 1][defMAX_SKILL_LV + 1];
@@ -330,7 +330,7 @@ private:
 		char			m_chSkillSetLv;
 	};
 
-	long	m_lSStateTraOnTime[AREA_STATE_MAXID + 1][SKILL_STATE_LEVEL + 1];	// 从地表转移到角色身上的状态的持续时间
+	long	m_lSStateTraOnTime[AREA_STATE_MAXID + 1][SKILL_STATE_LEVEL + 1];	// duration of the state transferred from the terrain onto the character
 
     CTimer	m_CTimerItem;
 
@@ -393,7 +393,7 @@ inline	CPlayer*	CGameApp::GetPlayerByMainChaName(	const	char*	sMainChaName	)
 	return	NULL;
 T_E};
 
-// 取对应等级技能的相关数据，如果该数据还没有初始化，则执行初始化动作。
+// takes the data for the skill of the given level; if it is not initialised yet, initialises it
 inline CSkillTempData* CGameApp::GetSkillTData(short sSkillNo, char chSkillLv)
 {
 	if (!m_pCSkillTData[sSkillNo][chSkillLv])
@@ -408,7 +408,7 @@ inline CSkillTempData* CGameApp::GetSkillTData(short sSkillNo, char chSkillLv)
 
 		m_sSkillSetNo = sSkillNo;
 		m_chSkillSetLv = chSkillLv;
-		// SP消耗
+		// SP cost
 		if (strcmp(pCSkillRec->szUseSP, "0"))
 		{
 			if (g_CParser.DoString(pCSkillRec->szUseSP, enumSCRIPT_RETURN_NUMBER, 1, enumSCRIPT_PARAM_NUMBER, 1, chSkillLv, DOSTRING_PARAM_END))
@@ -416,7 +416,7 @@ inline CSkillTempData* CGameApp::GetSkillTData(short sSkillNo, char chSkillLv)
 		}
 		else
 			m_pCSkillTData[sSkillNo][chSkillLv]->sUseSP = 0;
-		// “耐久度“消耗
+		// 'durability' cost
 		if (strcmp(pCSkillRec->szUseEndure, "0"))
 		{
 			if (g_CParser.DoString(pCSkillRec->szUseEndure, enumSCRIPT_RETURN_NUMBER, 1, enumSCRIPT_PARAM_NUMBER, 1, chSkillLv, DOSTRING_PARAM_END))
@@ -424,7 +424,7 @@ inline CSkillTempData* CGameApp::GetSkillTData(short sSkillNo, char chSkillLv)
 		}
 		else
 			m_pCSkillTData[sSkillNo][chSkillLv]->sUseEndure = 0;
-		// “能量“消耗
+		// 'energy' cost
 		if (strcmp(pCSkillRec->szUseEnergy, "0"))
 		{
 			if (g_CParser.DoString(pCSkillRec->szUseEnergy, enumSCRIPT_RETURN_NUMBER, 1, enumSCRIPT_PARAM_NUMBER, 1, chSkillLv, DOSTRING_PARAM_END))
@@ -432,15 +432,15 @@ inline CSkillTempData* CGameApp::GetSkillTData(short sSkillNo, char chSkillLv)
 		}
 		else
 			m_pCSkillTData[sSkillNo][chSkillLv]->sUseEnergy = 0;
-		// 技能区域
+		// skill area
 		m_pCSkillTData[sSkillNo][chSkillLv]->sRange[0] = enumRANGE_TYPE_NONE;
 		if (strcmp(pCSkillRec->szSetRange, "0"))
 			g_CParser.DoString(pCSkillRec->szSetRange, enumSCRIPT_RETURN_NONE, 0, enumSCRIPT_PARAM_NUMBER, 1, chSkillLv, DOSTRING_PARAM_END);
-		// 技能状态
+		// skill state
 		m_pCSkillTData[sSkillNo][chSkillLv]->sStateParam[0] = SSTATE_NONE;
 		if (strcmp(pCSkillRec->szRangeState, "0"))
 			g_CParser.DoString(pCSkillRec->szRangeState, enumSCRIPT_RETURN_NONE, 0, enumSCRIPT_PARAM_NUMBER, 1, chSkillLv, DOSTRING_PARAM_END);
-		// 再施用间隔
+		// reuse interval
 		if (strcmp(pCSkillRec->szFireSpeed, "0"))
 		{
 			if (g_CParser.DoString(pCSkillRec->szFireSpeed, enumSCRIPT_RETURN_NUMBER, 1, enumSCRIPT_PARAM_NUMBER, 1, chSkillLv, DOSTRING_PARAM_END))
@@ -473,7 +473,7 @@ inline void CGameApp::SetSkillTDataState(short *psState)
 	memcpy(m_pCSkillTData[m_sSkillSetNo][m_chSkillSetLv]->sStateParam, psState, sizeof(short) * defSKILL_STATE_PARAM_NUM);
 }
 
-// 初始化地表状态转移到角色身上所持续的时间
+// initialises the duration of the state transferred from the terrain onto the character
 inline void CGameApp::InitSStateTraOnTime()
 {
 	memset(m_lSStateTraOnTime, 0, sizeof(m_lSStateTraOnTime));
@@ -498,7 +498,7 @@ inline long CGameApp::GetSStateTraOnTime(unsigned char uchStateID, unsigned char
 	return m_lSStateTraOnTime[uchStateID][uchStateLv];
 }
 
-// 根据名称搜索本进程的所有角色
+// searches every character in this process by name
 inline CCharacter* CGameApp::FindPlayerChaByName(const char* cszChaName)
 {
 	BEGINGETGATE();
@@ -521,7 +521,7 @@ inline CCharacter* CGameApp::FindPlayerChaByName(const char* cszChaName)
 			pCha = pCPlayer->GetCtrlCha();
 			if (!pCha)
 				continue;
-			if (!strcmp(pCha->GetName(), cszChaName)) // 找到角色
+			if (!strcmp(pCha->GetName(), cszChaName)) // finds the character
 				return pCha;
 		}
 	}
@@ -552,7 +552,7 @@ inline CCharacter* CGameApp::FindPlayerChaByNameLua(const char* cszChaName)
 
 			if (!pCha)
 				continue;
-			if (!strcmp(pCha->GetPlayer()->GetMainCha()->GetName(), cszChaName)) // 找到角色
+			if (!strcmp(pCha->GetPlayer()->GetMainCha()->GetName(), cszChaName)) // finds the character
 				return pCha;
 		}
 	}
@@ -587,7 +587,7 @@ inline int CGameApp::FindPlayerChaByActNameLua(const char* cszChaName, CCharacte
 
 			if (!pCha)
 				continue;
-			if (!strcmp(pCha->GetPlayer()->GetActName(), cszChaName)) // 找到角色
+			if (!strcmp(pCha->GetPlayer()->GetActName(), cszChaName)) // finds the character
 				chas[count++] = pCha;
 		}
 	}
@@ -628,7 +628,7 @@ inline bool CGameApp::DealAllInGuild(int guildID, const char* luaFunc, const cha
 	return true;
 }
 
-// 根据WorldID搜索本进程的所有角色
+// searches every character in this process by WorldID
 inline CCharacter* CGameApp::FindPlayerChaByID(unsigned long ulChaID)
 {
 	BEGINGETGATE();
@@ -651,7 +651,7 @@ inline CCharacter* CGameApp::FindPlayerChaByID(unsigned long ulChaID)
 			pCha = pCPlayer->GetCtrlCha();
 			if (!pCha)
 				continue;
-			if (pCha->GetID() == ulChaID) // 找到角色
+			if (pCha->GetID() == ulChaID) // finds the character
 				return pCha;
 		}
 	}
@@ -659,7 +659,7 @@ inline CCharacter* CGameApp::FindPlayerChaByID(unsigned long ulChaID)
 	return 0;
 }
 
-// 根据数据ID搜索本进程的所有玩家
+// searches every player by data ID
 inline CPlayer* CGameApp::FindPlayerByDBChaID(unsigned long ulDBChaID)
 {
 	BEGINGETGATE();
@@ -678,7 +678,7 @@ inline CPlayer* CGameApp::FindPlayerByDBChaID(unsigned long ulDBChaID)
 				LG("player chain error", "player number:%u, %s\n", GETPLAYERCOUNT(pGateServer), "FindPlayerChaByID");
 				break;
 			}
-			if (pCPlayer->GetDBChaId() == ulDBChaID) // 找到角色
+			if (pCPlayer->GetDBChaId() == ulDBChaID) // finds the character
 				return pCPlayer;
 		}
 	}
@@ -686,7 +686,7 @@ inline CPlayer* CGameApp::FindPlayerByDBChaID(unsigned long ulDBChaID)
 	return 0;
 }
 
-// 根据WorldID搜索本进程的所有主角色
+// searches every master character by WorldID
 inline CCharacter* CGameApp::FindMainPlayerChaByID(unsigned long ulChaID)
 {
 	BEGINGETGATE();
@@ -709,7 +709,7 @@ inline CCharacter* CGameApp::FindMainPlayerChaByID(unsigned long ulChaID)
 			pCha = pCPlayer->GetMainCha();
 			if (!pCha)
 				continue;
-			if (pCha->GetID() == ulChaID) // 找到角色
+			if (pCha->GetID() == ulChaID) // finds the character
 				return pCha;
 		}
 	}
@@ -717,7 +717,7 @@ inline CCharacter* CGameApp::FindMainPlayerChaByID(unsigned long ulChaID)
 	return 0;
 }
 
-// 根据WorldID搜索本进程的所有角色
+// searches every character by WorldID
 inline CCharacter* CGameApp::FindChaByID(unsigned long ulChaID)
 {
 	CCharacter	*pCCha;
@@ -750,7 +750,7 @@ enum EChaTimerAction
 };
 
 
-struct SSwitchMapInfo // 地图切换信息
+struct SSwitchMapInfo // map switch information
 {
 	SubMap		*pSrcMap;
 	char		szSrcMapName[256];
@@ -763,10 +763,10 @@ extern bool             g_bLogEntity;
 
 extern CGameApp*        g_pGameApp;
 extern CItemRecordAttr* g_pCItemAttr;
-extern CCharacter*		g_pCSystemCha;		// 系统角色
-extern SubMap *			g_pScriptMap;		// 脚本用初始化地图信息全局变量
-extern long				g_lDeftMMaskLight;	// 大地图默认照亮范围
-extern std::string			g_strChaState[2];	// 0，存放主角色的技能状态。1，存放船的技能状态
+extern CCharacter*		g_pCSystemCha;		// system characters
+extern SubMap *			g_pScriptMap;		// script globals holding the map initialisation information
+extern long				g_lDeftMMaskLight;	// default lit range of the big map
+extern std::string			g_strChaState[2];	// 0, holds the skill state of the master character. 1, holds the skill state of the boat
 extern uLong			g_ulCurID;
 extern Long				g_lCurHandle;
 extern HANDLE			hConsole;

@@ -22,8 +22,8 @@ namespace mission
 			USHORT sItemID;			
 		};
 		TRADE_ITEM_DATA ItemArray[ROLE_MAXNUM_TRADEDATA];
-		BYTE  byItemCount;						// 物品计数
-		DWORD dwMoney;							// 交易钱数
+		BYTE  byItemCount;						// item count
+		DWORD dwMoney;							// money involved in the trade
 		DWORD dwIMP;
 
 	} TRADE_DATA, *PTRADE_DATA;
@@ -49,20 +49,20 @@ namespace mission
 		{
 			struct
 			{
-				BYTE  bTradeStart : 1;		// 交易是否开始
-				BYTE  bReqTrade : 1;		// 请求方交易数据确认
-				BYTE  bAcpTrade : 1;		// 接受方交易数据确认
-				BYTE  bReqOk : 1;			// 请求方交易操作确认
-				BYTE  bAcpOk : 1;			// 接受方交易操作确认
-				BYTE  byParam : 3;			// 保留
+				BYTE  bTradeStart : 1;		// whether the trade has started
+				BYTE  bReqTrade : 1;		// the requesting side has confirmed the trade data
+				BYTE  bAcpTrade : 1;		// the accepting side has confirmed the trade data
+				BYTE  bReqOk : 1;			// the requesting side has confirmed the trade operation
+				BYTE  bAcpOk : 1;			// the accepting side has confirmed the trade operation
+				BYTE  byParam : 3;			// reserved
 			};
 			BYTE byValue;
 		};
 		//USHORT sxPos, syPos;		// 交易地点信息
-		TRADE_DATA ReqTradeData;	// 请求方交易数据信息
-		TRADE_DATA AcpTradeData;	// 接受方交易数据信息
+		TRADE_DATA ReqTradeData;	// the requesting side's trade data
+		TRADE_DATA AcpTradeData;	// the accepting side's trade data
 		
-		DWORD dwTradeTime;			// 交易时间计时(交易超过规定操作时间，系统取消交易操作，回收缓冲区)
+		DWORD dwTradeTime;			// trade timer: if the trade runs past the allotted time, the system cancels the trade and recycles the buffer
 	};
 
 	class CTradeSystem
@@ -71,19 +71,19 @@ namespace mission
 		CTradeSystem();
 		~CTradeSystem();
 
-		// 交易操作
+		// trade operation
 		BOOL Request( BYTE byType, CCharacter& character, DWORD dwAcceptID );
 		BOOL Accept( BYTE byType, CCharacter& character,  DWORD dwRequestID );
 		BOOL Cancel( BYTE byType, CCharacter& character,  DWORD dwCharID );
 		
-		// 角色离线清除交易信息
+		// clears the trade information when the character goes offline
 		BOOL Clear( BYTE byType, CCharacter& character );
 
-		// 确认交易信息和操作
+		// confirms the trade information and operation
 		BOOL ValidateItemData( BYTE byType, CCharacter& character, DWORD dwCharID );
 		BOOL ValidateTrade( BYTE byType, CCharacter& character, DWORD dwCharID );
 
-		// 放置或者取走物品到交易栏
+		// places or takes an item into or out of the trade slot
 		BOOL AddItem( BYTE byType, CCharacter& character, DWORD dwCharID, BYTE byOpType, BYTE byIndex, BYTE byItemIndex, BYTE byCount );
 		BOOL AddMoney( BYTE byType, CCharacter& charactar, DWORD dwCharID, BYTE byOpType, DWORD dwMoney );
 		BOOL AddIMP(BYTE byType, CCharacter& charactar, DWORD dwCharID, BYTE byOpType, DWORD dwMoney);
@@ -96,19 +96,19 @@ namespace mission
 #pragma pack( push, before_InfoNet )
 #pragma pack( 8 )
 
-    //商城订单信息
+    // shop order information
     struct SOrderData
     {        
-        long long	lOrderID;  //订单号
-        long		lComID;    //商品ID
-		long		lNum;	   //数量
-        long		ChaID;	   //角色数据库ID
+        long long	lOrderID;  // order number
+        long		lComID;    // goods ID
+		long		lNum;	   // quantity
+        long		ChaID;	   // character database ID
 		long		lRecDBID;
 		char		ChaName[defENTITY_NAME_LEN];
 		DWORD		dwTickCount;
     };
 
-	//商品信息
+	// goods information
 	struct SItemData
 	{
 		SItemData():pItemArray(NULL)
@@ -155,18 +155,18 @@ namespace mission
 			return *this;
 		}
 
-		StoreInfo   store_head;       //  商品信息头
-		ItemInfo	*pItemArray;      //  道具信息体
+		StoreInfo   store_head;       //  goods information header
+		ItemInfo	*pItemArray;      //  item information body
 	};
 
-    //商城系统
+    // shop system
     class CStoreSystem
     {
     public:
         CStoreSystem();
         ~CStoreSystem();
 
-        //用户购买道具
+        // user buys an item
         BOOL Request( CCharacter *pCha, long lComID );
 		BOOL Accept( long long lOrderID, RoleInfo *ChaInfo );
 		BOOL Accept( CCharacter *pCha, long lComID );
@@ -176,20 +176,20 @@ namespace mission
 		BOOL AcceptVIP(long long lOrderID, RoleInfo *ChaInfo, DWORD dwVipParam);
 		BOOL CancelVIP(long long lOrderID);
 
-		//用户获取商品列表
+		// user fetches the goods list
 		BOOL RequestItemList(CCharacter *pCha, long lClsID, short sPage, short sNum);
 
-		//用户请求兑换代币
+		// user asks to exchange currency
 		BOOL RequestChange(CCharacter *pCha, long lNum);
 		BOOL AcceptChange(long long lOrderID, RoleInfo *ChaInfo);
 		BOOL CancelChange(long long lOrderID);
 
-		//查询角色信息
+		// looks up character information
 		BOOL RequestRoleInfo(CCharacter *pCha);
 		BOOL AcceptRoleInfo(long long lOrderID, RoleInfo *ChaInfo);
 		BOOL CancelRoleInfo(long long lOrderID);
 
-		//查询交易记录
+		// looks up trade records
 		BOOL RequestRecord(CCharacter *pCha, long lNum);
 		BOOL AcceptRecord(long long lOrderID, HistoryInfo *pRecord);
 		BOOL CancelRecord(long long lOrderID);
@@ -202,10 +202,10 @@ namespace mission
 		BOOL AcceptGMRecv(long long lOrderID, MailInfo *pMi);
 		BOOL CancelGMRecv(long long lOrderID);
 
-		//用户开启商城
+		// user opens the shop
 		BOOL Open(CCharacter *pCha, long vip);
 
-		//商城列表
+		// shop list
 		BOOL GetItemList();
 		BOOL GetAfficheList();
 
@@ -222,26 +222,26 @@ namespace mission
 		void SetValid() { m_bValid = true; }
 		BOOL IsValid() { return m_bValid; }
 
-        void Run( DWORD dwCurTime, DWORD dwIntervalTime, DWORD dwOrderTime );    //处理订单列表
+        void Run( DWORD dwCurTime, DWORD dwIntervalTime, DWORD dwOrderTime );    // handles the order list
         
     private:
-		//查询商品
+		// looks up goods
 		long		GetClassId(long lComID);
 		cChar		*GetClassName(long lClsID);
 		SItemData	*GetItemData(long lComID);
 		BOOL		DelItemData(long lComID);
 
-		//订单操作
+		// order operation
 		BOOL		PushOrder(CCharacter *pCha, long long lOrderID, long lComID, long lNum);
 		SOrderData	PopOrder(long long lOrderID);
 		BOOL		HasOrder(long long lOrderID);
 
 		//map<long long, SOrderData>		m_OrderList;		//订单列表
 		std::vector<SOrderData>				m_OrderList;
-		std::map<long, long>					m_ItemSearchList;	//商品ID和分类的映射关系
-		std::map< long, std::vector<SItemData> >	m_ItemList;			//商品列表
-		std::vector<ClassInfo>				m_ItemClass;		//商品分类
-		std::vector<AfficheInfo>				m_AfficheList;		//公告列表
+		std::map<long, long>					m_ItemSearchList;	// mapping between goods ID and category
+		std::map< long, std::vector<SItemData> >	m_ItemList;			// goods list
+		std::vector<ClassInfo>				m_ItemClass;		// goods categories
+		std::vector<AfficheInfo>				m_AfficheList;		// announcement list
 		BOOL							m_bValid;
         
     };

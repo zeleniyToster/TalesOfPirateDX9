@@ -23,15 +23,15 @@ namespace mission
 
 		void	Clear();
 
-		// 装载精练数据信息
+		// loads the refining data information
 		BOOL	LoadForgeData( char szName[] );
 		
-		// 精练物品
+		// the item being refined
 		void	ForgeItem( CCharacter& character, BYTE byIndex );
 
 	private:
 
-		// 精练数据集
+		// refining data set
 		CForgeRecordSet* m_pRecordSet;
 	};
 

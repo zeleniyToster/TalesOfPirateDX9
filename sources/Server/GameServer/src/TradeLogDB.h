@@ -3,7 +3,7 @@
 #include <time.h>
 
 
-// Log专用表
+// table dedicated to the log
 class CTradeTableLog : public cfl_rs
 {
 public:

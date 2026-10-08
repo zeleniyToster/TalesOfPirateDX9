@@ -62,52 +62,52 @@ public:
 	
 public:
 
-	// 请注意此处不要放置任何非固定内存尺寸的变量, 比如模板, string之类的,
-	// 此类将被直接写盘和读盘
-	char    m_szGateIP[MAX_GATE][64];  // GateIP地址列表
-    int     m_nGatePort[MAX_GATE];     // Gate Port列表
-    int     m_nGateCnt;                // Gate数量
+	// note: do not place any variable of non-fixed memory size here, such as templates or strings,
+	// those are written to and read from disk verbatim
+	char    m_szGateIP[MAX_GATE][64];  // Gate IP address list
+    int     m_nGatePort[MAX_GATE];     // Gate port list
+    int     m_nGateCnt;                // number of Gates
     char    m_szInfoIP[64];            // InfoServer IP
     int     m_nInfoPort;               // InfoServer Port
-	char	m_szInfoPwd[33];		   // InfoServer验证码
-	int		m_nSection;				   // 小区号
+	char	m_szInfoPwd[33];		   // InfoServer verification code
+	int		m_nSection;				   // shard number
     char    m_szMapList[MAX_MAP][MAX_MAPNAME_LENGTH];
-	BYTE	m_btMapOK[MAX_MAP];		   // 地图是否初始化成功
-	int     m_nMapCnt;				   // 地图数量
-	char	m_szEqument[MAX_MAPNAME_LENGTH];   // 世界守护神
-    char    m_szName[64];			   // 服务器名字
+	BYTE	m_btMapOK[MAX_MAP];		   // whether the map initialised successfully
+	int     m_nMapCnt;				   // number of maps
+	char	m_szEqument[MAX_MAPNAME_LENGTH];   // world guardian
+    char    m_szName[64];			   // server name
 	char	m_szDBIP[64];			   // DB IP
-	char	m_szDBUsr[32];			   // DB 用户名
-	char	m_szDBPass[32];			   // DB 密码
+	char	m_szDBUsr[32];			   // DB user name
+	char	m_szDBPass[32];			   // DB password
 
 	// Add by lark.li 20080321 begin
 	char	m_szTradeLogDBIP[64];			   // DB IP
 	char	m_szTradeLogDBName[32];			   // DB IP
-	char	m_szTradeLogDBUsr[32];			   // DB 用户名
-	char	m_szTradeLogDBPass[32];			   // DB 密码
+	char	m_szTradeLogDBUsr[32];			   // DB user name
+	char	m_szTradeLogDBPass[32];			   // DB password
 
 	BOOL	m_bTradeLogIsConfig;
 	// End
 	char	m_szDBName[32];            // kong@pkodev.net 09.22.2017
 
-	long	m_lSocketAlive;            // Socket保持活动
-	int		m_nMaxPly;                 // 最大玩家数
-	int		m_nMaxCha;                 // 最大角色数
-	int		m_nMaxItem;                // 最大道具数
-	int		m_nMaxTNpc;                // 最大对话NPC
-	unsigned long	m_ulBaseID;        // 服务器的ID基数
-	long	m_lItemShowTime;           // 道具存在时间
-	long	m_lItemProtTime;           // 道具保护时间
-	long	m_lSayInterval;            // 喊话间隔
-	char	m_szResDir[255];		   // 运行资源所在的目录
-	char	m_szLogDir[255];		   // Log所在的目录
-	char	m_chMapMask;               // 是否存取大地图
-	long	m_lDBSave;                 // 数据库定时存盘时间间隔
+	long	m_lSocketAlive;            // socket keepalive
+	int		m_nMaxPly;                 // maximum number of players
+	int		m_nMaxCha;                 // maximum number of characters
+	int		m_nMaxItem;                // maximum number of items
+	int		m_nMaxTNpc;                // maximum number of dialog NPCs
+	unsigned long	m_ulBaseID;        // server ID base
+	long	m_lItemShowTime;           // item lifetime
+	long	m_lItemProtTime;           // item protection time
+	long	m_lSayInterval;            // shout interval
+	char	m_szResDir[255];		   // directory holding the runtime resources
+	char	m_szLogDir[255];		   // directory holding the log
+	char	m_chMapMask;               // whether the big map is saved and loaded
+	long	m_lDBSave;                 // interval between periodic database saves
 
-	BOOL	m_bLogAI;				   // 是否打开AI的log
-	BOOL	m_bLogCha;				   // 是否打开角色的log
-	BOOL	m_bLogCal;				   // 是否打开数值计算的log
-	BOOL	m_bLogMission;			   // 是否打开Mission的log
+	BOOL	m_bLogAI;				   // whether AI logging is on
+	BOOL	m_bLogCha;				   // whether character logging is on
+	BOOL	m_bLogCal;				   // whether value calculation logging is on
+	BOOL	m_bLogMission;			   // whether Mission logging is on
 
 	BOOL	m_bSuperCmd;
 	
@@ -122,7 +122,7 @@ public:
 	char	m_szChaosMap[32];
 	DWORD	m_dwStallTime;		
 	
-	BOOL	m_bLogDB;				   // 是否把玩家行为记录到数据库
+	BOOL	m_bLogDB;				   // whether player actions are recorded in the database
 	BOOL    m_bInstantIGS;
 
 	long	m_lWeather;

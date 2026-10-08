@@ -12,7 +12,7 @@ namespace mission
 {
 	struct BOAT_SYNC_ATTR
 	{
-		char szName[BOAT_MAXSIZE_NAME];	// 船只名称
+		char szName[BOAT_MAXSIZE_NAME];	// boat name
 		USHORT	sBoatID;
 		BYTE	byHeader;
 		BYTE	byEngine;
@@ -30,11 +30,11 @@ namespace mission
 		CCharBoat();
 		~CCharBoat();
 		
-		// 装载船只建造数据表信息
+		// loads the boat construction table information
 		BOOL	Load( const char szBoat[], const char szPart[] );
 		CCharacter* SummonBoat( USHORT sBoatID );
 
-		// 建造船只
+		// builds the boat
 		BOOL	LoadBoat( CCharacter& owner, char chType );
 		BOOL	CreateBoat( CCharacter& owner, DWORD dwBoatID, char chType );
 		BOOL	Create( CCharacter& owner, USHORT sBoatID, USHORT sBerthID );
@@ -63,5 +63,5 @@ namespace mission
 
 }
 
-// 造船厂全局类
+// shipyard global class
 extern mission::CCharBoat g_CharBoat;

@@ -5,7 +5,7 @@
 #include "TryUtil.h"
 
 //--------------------------------------------------------
-//                   AI控制所需的接口函数
+//                   interface functions required by AI control
 //--------------------------------------------------------
 
 void CCharacter::SrcFightTar(CFightAble *pTar, dbc::Short sSkillID)

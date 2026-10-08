@@ -24,40 +24,40 @@ public:
 
 	struct STarget
 	{
-		// 此结构及含义同SFightInit的对应结构
+		// this structure and its meaning match the corresponding one in SFightInit
 		struct
 		{
-			dbc::Char		chType;	// 0，无目标。1，目标是实体。2，目标是坐标
+			dbc::Char		chType;	// 0, no target. 1, the target is an entity. 2, the target is coordinates
 			dbc::Long		lInfo1;
 			dbc::Long		lInfo2;
 		};
 		//
-		dbc::uLong	ulDist;		// 对目标的距离（厘米）
+		dbc::uLong	ulDist;		// distance to the target (cm)
 	};
 
 	struct SMoveInit
 	{
 		//dbc::uLong	ulSpeed;		// 移动速度（厘米/秒）
-		dbc::uShort	usPing;			// 一个网络来回的时间
+		dbc::uShort	usPing;			// time for one network round trip
 
-		SPointList	SInflexionInfo;	// 需要执行移动的点序列
-		STarget		STargetInfo;	// 移动的目标信息
+		SPointList	SInflexionInfo;	// sequence of points to move through
+		STarget		STargetInfo;	// movement target information
 
-		dbc::Short	sStopState;		// 移动停止后的状态（enumEXISTS_WAITING, enumEXISTS_SLEEPING）
+		dbc::Short	sStopState;		// state after the movement stops (enumEXISTS_WAITING, enumEXISTS_SLEEPING)
 	};
 
 	struct SMoveProc
 	{
-		dbc::Short	sCurInflexion;	// 当前转弯点
+		dbc::Short	sCurInflexion;	// current turning point
 
-		dbc::uLong	ulElapse;		// 预移动耗时（毫秒）
+		dbc::uLong	ulElapse;		// predicted movement time (milliseconds)
 		dbc::uLong	ulCacheTick;
 
-		dbc::Short	sState;		// 参见CompCommand.h中的EMoveState枚举类型
-		dbc::Char	chRequestState;	// 请求的移动状态：0，无请求。1，请求停止移动。2，请求开始移动
-		dbc::Char	chLagMove;		// 0，不缓存移动请求。1，缓存
+		dbc::Short	sState;		// see the EMoveState enumeration in CompCommand.h
+		dbc::Char	chRequestState;	// the requested movement state: 0, no request. 1, request to stop. 2, request to start
+		dbc::Char	chLagMove;		// 0, do not buffer movement requests. 1, buffer
 
-		SPointList	SNoticePoint;	// 通告给终端的点序列
+		SPointList	SNoticePoint;	// sequence of points notified to the terminals
 	};
 
 	struct SMoveRedundance
@@ -103,7 +103,7 @@ protected:
 	bool		SetMoveOnInfo(SMoveInit* pSMoveI);
 
 private:
-	virtual void AfterStepMove(void){}; // 处理地图切换，该函数没有放在AttemptMove例程中，是因为AfterStepMove可能进行地图切换而导致当前地图为空，而AttemptMove之后可能进行视野通告，地图不能为空
+	virtual void AfterStepMove(void){}; // handles the map switch. This function is not placed inside the AttemptMove routine because AfterStepMove may switch maps and leave the current map empty, while the visibility notification after AttemptMove needs a non-empty map
 	virtual void SubsequenceMove(){};
 
 	void BeginMove(dbc::uLong ulElapse = 0);
@@ -116,8 +116,8 @@ private:
 	Point NearlyPointFromPointToLine(const Point *pPort1, const Point *pPort2, const Point *pCenter);
 	bool SegmentEnterCircle(Point *pSPort1, Point *pSPort2, Circle *pSCircle, Point *pResult);
 
-	dbc::uShort	m_usHeartbeatFreq;	// 移动执行的心跳（频率），单位（毫秒）
-	dbc::uLong	m_ulHeartbeatTick;	// 单位（毫秒）
+	dbc::uShort	m_usHeartbeatFreq;	// movement execution heartbeat (frequency), in milliseconds
+	dbc::uLong	m_ulHeartbeatTick;	// in milliseconds
 	bool		m_bOnMove;
 
 	CTimer		m_timeRun;

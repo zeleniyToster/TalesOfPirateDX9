@@ -29,13 +29,13 @@ OuterServer::~OuterServer()
 	ShutDown(12*1000);
 T_E}
 
-bool	OuterServer::OnConnect(DataSocket *datasock)					//返回值:true-允许连接,false-不允许连接
+bool	OuterServer::OnConnect(DataSocket *datasock)					//return value: true - connection allowed, false - connection not allowed
 {T_B
 	datasock->SetRecvBuf(32*1024); 
 	datasock->SetSendBuf(32*1024);
 	LG(g_szConnectLog, "GateServer Cconnected! IP = [%s] port = %d\n",  datasock->GetPeerIP() , datasock->GetPeerPort());
 
-    // 通知应用层，连上一个 GateServer
+    // notifies the application layer that a GateServer has been connected
     WPacket wpkt = g_gmsvr->GetWPacket();
     wpkt.WriteCmd(CMD_MM_GATE_CONNECT);
     wpkt.WriteChar(0);
@@ -53,13 +53,13 @@ void	OuterServer::OnDisconnect(DataSocket *datasock,int reason)		//reason值:0-�
 
 	if (gt->IsValid())
 	{
-		// 通知逻辑层与该Gate的连接断开
+		// notifies the logic layer that the connection to that Gate has dropped
 		WPacket WtPk=g_gmsvr->GetWPacket();
 		WtPk.WriteCmd(CMD_MM_GATE_RELEASE);
 		WtPk.WriteChar(0);
 		AddPK(datasock, WtPk);
 
-        // 清理GateServer
+        // cleans up the GateServer
         gt->Invalid();      
     }
 T_E}
@@ -115,7 +115,7 @@ long ToGateServer::Process()
 	DWORD	dwConnectTick = 0;
 	
 	dwTick = dwCurTick = GetTickCount();
-	dwTick -= dwConnectTick; // 保证线程运行后立即执行连接GateServer的操作
+	dwTick -= dwConnectTick; // makes sure the connect-GateServer operation runs as soon as the thread starts
 
 	while (!GetExitFlag())
     {
@@ -130,7 +130,7 @@ long ToGateServer::Process()
 		
 		dwLastRunTick = dwCurTick;
 
-		// 对未连接的 GateServer 进行连接
+		// connects to every GateServer that is not yet connected
 		if (dwCurTick - dwTick >= dwConnectTick)
 	    {
 			dwTick = dwCurTick;

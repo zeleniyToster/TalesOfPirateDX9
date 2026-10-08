@@ -23,10 +23,10 @@
 
 #define defENTI_ENTEVENT 0x06000000
 #define defENTI_ENTBASE(n) (defENTI_ENTEVENT + (n<<24))
-#define defENTI_ALLOC_TYPE_ENTBASE			defENTI_ENTBASE(1)	// 基本类型事件实体
-#define defENTI_ALLOC_TYPE_ENTRESOURCE		defENTI_ENTBASE(2)	// 资源类型事件实体
-#define defENTI_ALLOC_TYPE_ENTTRANSIT		defENTI_ENTBASE(3)	// 传送类型事件实体
-#define defENTI_ALLOC_TYPE_ENTBERTH			defENTI_ENTBASE(4)	// 停泊类型事件实体
+#define defENTI_ALLOC_TYPE_ENTBASE			defENTI_ENTBASE(1)	// basic type event entity
+#define defENTI_ALLOC_TYPE_ENTRESOURCE		defENTI_ENTBASE(2)	// resource type event entity
+#define defENTI_ALLOC_TYPE_ENTTRANSIT		defENTI_ENTBASE(3)	// teleport type event entity
+#define defENTI_ALLOC_TYPE_ENTBERTH			defENTI_ENTBASE(4)	// docking type event entity
 
 template <class T>
 class CAlloc
@@ -37,18 +37,18 @@ public:
 
 	void  clear();
 
-	// 获取分配计数
+	// get the allocation count
 	LONG getHoldSize()  const { return m_lHoldSize; }
 	LONG getMaxHoldSize()  const { return m_lMaxHoldSize; }
 	LONG getAllocSize() const { return m_lAllocSize; }
 	
-	// 分配指定类型数据
+	// allocate data of the given type
 	bool  create( LONG lSize, LONG lFlag = 0 );
 	T*	  alloc();
 	void  destroy( T* pData );
 	void  destroy( LONG lID );
 
-	// 循环搜索分配数据信息
+	// searches in a loop for allocation data
 	void  begin();
 	T*	  end();
 	T*    next();
@@ -136,7 +136,7 @@ T* CAlloc< T >::alloc()
 template<class T>
 void CAlloc< T >::destroy( T* pData )
 {
-	// 暂未实现，机制原因目前支持下面的接口
+	// not implemented yet; for mechanical reasons only the interface below is supported
 }
 
 template<class T>

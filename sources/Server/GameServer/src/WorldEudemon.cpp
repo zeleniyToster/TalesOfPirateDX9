@@ -26,7 +26,7 @@ namespace mission
 	{T_B
 		if( szFunc[0] == '0' ) return TRUE;
 
-		// 初始化NPC脚本全局变量信息
+		// initialises the NPC script global variable information
 		lua_getglobal( g_pLuaState, "ResetNpcInfo" );
 		if( !lua_isfunction( g_pLuaState, -1 ) )
 		{
@@ -51,7 +51,7 @@ namespace mission
 		}
 		lua_settop(g_pLuaState, 0);
 
-		// 调用NPC初始化全局变量信息入口函数
+		// calls the NPC initialise-global-variables entry function
 		lua_getglobal( g_pLuaState, szFunc );
 		if( !lua_isfunction( g_pLuaState, -1 ) )
 		{
@@ -73,7 +73,7 @@ namespace mission
 		}
 		lua_settop(g_pLuaState, 0);
 
-		// 获取NPC的对话信息和交易信息
+		// gets the NPC dialog and trade information
 		lua_getglobal( g_pLuaState, "GetNpcInfo" );
 		if( !lua_isfunction( g_pLuaState, -1 ) )
 		{
@@ -105,10 +105,10 @@ namespace mission
 	{
 		Clear();
 
-		// 初始化npc脚本信息
+		// initialises the NPC script information
 		InitScript( szMsgProc, szName );
 		
-		// npc配置表编号
+		// NPC configuration table number
 		m_sNpcID = 0;
 
 		// 
@@ -120,7 +120,7 @@ namespace mission
 		sprintf(szLogName, "Cha-%s+%u", GetName(), GetID());
 		m_CLog.SetLogName(szLogName);
 
-		// 默认使用第一个角色信息
+		// uses the first character information by default
 		m_pCChaRecord = (CChaRecord*)GetChaRecordInfo( 1 );
 		m_cat = (SHORT)m_pCChaRecord->lID;
 
@@ -132,7 +132,7 @@ namespace mission
     
 	HRESULT CWorldEudemon::MsgProc( CCharacter& character, RPACKET& packet )
 	{
-		// 调用NPC脚本对话处理函数
+		// calls the NPC script dialog handler
 		lua_getglobal( g_pLuaState, "NpcProc" );
 		if( !lua_isfunction( g_pLuaState, -1 ) )
 		{

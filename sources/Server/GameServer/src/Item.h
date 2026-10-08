@@ -14,10 +14,10 @@
 
 #define defITEM_ON_TICK		3 * 60 * 1000
 
-enum EItemProtType // 道具保护类型
+enum EItemProtType // item protection type
 {
-	enumITEM_PROT_OWN,	// 自己外的其他人
-	enumITEM_PROT_TEAM,	// 队伍外的其他人
+	enumITEM_PROT_OWN,	// anyone other than the owner
+	enumITEM_PROT_TEAM,	// anyone outside the party
 };
 
 class CItem : public Entity
@@ -54,12 +54,12 @@ private:
 	dbc::Char	m_chSpawType;
 	dbc::Long	m_lFromEntityID;
 	dbc::uLong	m_ulStartTick;
-	dbc::uLong	m_ulOnTick;		// 为0，则永不销毁
+	dbc::uLong	m_ulOnTick;		// 0 means it is never destroyed
 
-	dbc::Char	m_chProtType;	// 保护类型
-	dbc::uLong	m_ulProtOnTick;	// 保护时间，0则永久保护
-	dbc::uLong	m_ulProtID;		// 道具保护的角色ID
-	dbc::uLong	m_ulProtHandle;	// 道具保护的角色Handle
+	dbc::Char	m_chProtType;	// protection type
+	dbc::uLong	m_ulProtOnTick;	// protection time; 0 means permanent protection
+	dbc::uLong	m_ulProtID;		// character ID that owns the item protection
+	dbc::uLong	m_ulProtHandle;	// character handle that owns the item protection
 
 	virtual void OnBeginSeen(CCharacter *pCCha);
 	virtual void OnEndSeen(CCharacter *pCCha);

@@ -8,9 +8,9 @@
 #include "GameApp.h"
 
 
-BOOL Guild::lua_CreateGuild(CCharacter* pCha)//创建公会,1-海军,2-海盗
+BOOL Guild::lua_CreateGuild(CCharacter* pCha)//creates the guild, 1 navy, 2 pirate
 {
-	if(pCha->GetPlayer()->m_GuildState.IsFalse(emGuildGetName))//请求用户输入公会名和密码
+	if(pCha->GetPlayer()->m_GuildState.IsFalse(emGuildGetName))//asks the user for the guild name and password
 	{
 		pCha->GetPlayer()->m_GuildState.SetBit(emGuildGetName);
 
@@ -73,7 +73,7 @@ void Guild::cmd_CreateGuild(CCharacter* pCha, bool confirm, cChar *guildname, cC
 	}
 	if (g_CParser.DoString("AskGuildItem", enumSCRIPT_RETURN_NUMBER, 1, enumSCRIPT_PARAM_LIGHTUSERDATA, 1, pCha, DOSTRING_PARAM_END))
 	{
-		if (!g_CParser.GetReturnNumber(0))	//条件不满足
+		if (!g_CParser.GetReturnNumber(0))	//conditions not met
 			return;
 	}
 	else
@@ -88,9 +88,9 @@ void Guild::cmd_CreateGuild(CCharacter* pCha, bool confirm, cChar *guildname, cC
 		return;
 	}
 
-	//调用同步公会名字函数
-	pCha->SetGuildName( l_guildname );//设置公会名字
-	pCha->SetGuildID( l_guildid	);		//设置公会ID
+	//calls the guild name synchronisation function
+	pCha->SetGuildName( l_guildname );//sets the guild name
+	pCha->SetGuildID( l_guildid	);		//sets the guild ID
 	pCha->SetGuildState( 0 );
 	pCha->guildPermission = emGldPermMax;
 	pCha->SyncGuildInfo();
@@ -99,9 +99,9 @@ void Guild::cmd_CreateGuild(CCharacter* pCha, bool confirm, cChar *guildname, cC
 	//pCha->setAttr(ATTR_GUILD_TYPE,pCha->GetPlayer()->m_cGuildType);//设置公会类型
 	//pCha->setAttr(ATTR_GUILD_STATE,0);			//设置公会状态
 
-	//调用lua脚本扣除物品Begin
+	//calls the lua script to deduct the item Begin
 	g_CParser.DoString("DeductGuildItem", enumSCRIPT_RETURN_NONE, 0, enumSCRIPT_PARAM_LIGHTUSERDATA, 1, pCha, DOSTRING_PARAM_END);
-	//调用lua脚本扣除物品End
+	//calls the lua script to deduct the item End
 	
 	//pCha->SystemNotice("公会创建成功.");
 	pCha->SystemNotice(RES_STRING(GM_GUILD_CPP_00006));
@@ -113,16 +113,16 @@ void Guild::cmd_CreateGuild(CCharacter* pCha, bool confirm, cChar *guildname, cC
 	
 	g_pGameApp->ScrollNotice(l_str, 2);
 }
-BOOL Guild::lua_ListAllGuild(CCharacter* pCha)			//开始给客户端传递列表，向客户端发生一个开始列表命令，由NPC对话触发一次
+BOOL Guild::lua_ListAllGuild(CCharacter* pCha)			//start passing the list to the client; the client is sent a begin-list command, triggered once by the NPC dialog
 {
 	cmd_ListAllGuild(pCha);
 	return TRUE;
 }
-void Guild::cmd_ListAllGuild(CCharacter* pCha)			//调用一次返回20行，由客户端命令分次调用，直到返回所有行
+void Guild::cmd_ListAllGuild(CCharacter* pCha)			//each call returns 20 rows; the client command calls it in batches until all rows are returned
 {
 	game_db.ListAllGuild(pCha,7);
 }
-void Guild::cmd_GuildTryFor(CCharacter* pCha, uLong guildid)			//申请加入公会
+void Guild::cmd_GuildTryFor(CCharacter* pCha, uLong guildid)			//applies to join the guild
 {
 	if(!guildid)
 	{
@@ -134,7 +134,7 @@ void Guild::cmd_GuildTryFor(CCharacter* pCha, uLong guildid)			//申请加入公
 	{
 		if (g_CParser.DoString("AskJoinGuild", enumSCRIPT_RETURN_NUMBER, 1, enumSCRIPT_PARAM_LIGHTUSERDATA, 1, pCha, DOSTRING_PARAM_END))
 		{
-			if (!g_CParser.GetReturnNumber(0))	//条件不满足
+			if (!g_CParser.GetReturnNumber(0))	//conditions not met
 				return;
 		}
 		else

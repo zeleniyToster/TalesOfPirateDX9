@@ -6,10 +6,10 @@ using namespace std;
 
 std::list<CCharacter*> g_HelpNPCList;
 
-// 添加出生地与出生点
+// adds a birthplace and a spawn point
 int lua_AddBirthPoint(lua_State *L)
 {T_B
-	// 参数合法性判别
+	// argument validity check
     BOOL bValid = (lua_gettop(L)==4 && lua_isstring(L, 1) && lua_isstring(L, 2) && lua_isnumber(L, 3) && lua_isnumber(L, 4));
 	if(!bValid) 
     {
@@ -27,7 +27,7 @@ int lua_AddBirthPoint(lua_State *L)
 	return 0;
 T_E}
 
-// 清除所有出生地与出生点
+// clears every birthplace and spawn point
 int lua_ClearAllBirthPoint(lua_State *L)
 {T_B
 	g_BirthMgr.ClearAll();
@@ -122,7 +122,7 @@ void TL(int nType, const char *pszCha1, const char *pszCha2, const char *pszTrad
 
 map<string, string> g_HelpList;
 
-// 添加帮助信息, 接受2个参数: 关键字 帮助文字
+// adds help information; takes 2 arguments: keyword, help text
 int lua_AddHelpInfo(lua_State *L)
 {
 	BOOL bValid = (lua_gettop(L)==2  && lua_isstring(L, 1) && lua_isstring(L, 2));
@@ -179,7 +179,7 @@ void AddHelpNPC(CCharacter *pNPC)
 }
 
 
-// 通过脚本添加帮助NPC
+// adds a help NPC through a script
 int lua_AddHelpNPC(lua_State *L)
 {
 	BOOL bValid = (lua_gettop(L)==1 && lua_isstring(L, 1));
@@ -188,9 +188,9 @@ int lua_AddHelpNPC(lua_State *L)
 		return 0;
 	}
 	
-	const char *pszName  = (const char*)lua_tostring(L, 1); // 获得帮助NPC的名字
+	const char *pszName  = (const char*)lua_tostring(L, 1); // gets the name of a help NPC
 	
-	// 按名字查找NPC对象
+	// looks up the NPC object by name
 	g_pGameApp->BeginGetTNpc();
 	mission::CTalkNpc*	pCTNpc;
 	while (pCTNpc = g_pGameApp->GetNextTNpc())
@@ -208,10 +208,10 @@ int lua_ClearHelpNPC(lua_State *L)
 	return 0;
 }
 
-// 测试DBLog
+// test DBLog
 int lua_TestDBLog(lua_State *L)
 {
-	// 参数合法性判别
+	// argument validity check
     BOOL bValid = (lua_gettop (L)==1 && lua_isnumber(L, 1));
 	if(!bValid) 
     {
@@ -257,7 +257,7 @@ T_E}
 void RegisterLuaAI(lua_State *L)
 {T_B
 	
-	// 通用
+	// general
 	REGFN(view);
 	REGFN(EXLG);
 	REGFN(PRINT);
@@ -321,7 +321,7 @@ void RegisterLuaAI(lua_State *L)
 	REGFN(DelCha);
 	REGFN(SetChaLifeTime);
 	
-	// 数值计算
+	// value calculation
 	REGFN(SetChaAttrMax);
 	REGFN(GetChaDefaultName);
 	REGFN(SetChaAttrI);
@@ -329,31 +329,31 @@ void RegisterLuaAI(lua_State *L)
 	REGFN(IsPlayer);
 	REGFN(IsChaInRegion);
 	
-	// 组队
+	// party
 	REGFN(IsChaInTeam);
 	REGFN(GetTeamCha);
 
-	// 出生地与出生点
+	// birthplace and spawn point
 	REGFN(AddBirthPoint);
 	REGFN(ClearAllBirthPoint);
 
-	// 天气区域
+	// weather area
 	REGFN(AddWeatherRegion);
 	REGFN(ClearMapWeather);
 
-	// 帮助NPC
+	// help NPC
 	REGFN(AddHelpInfo);
 	REGFN(AddHelpNPC);
 	REGFN(ClearHelpNPC);
 
-	// 船只计时
+	// boat timer
 	REGFN(SetBoatCtrlTick);
 	REGFN(GetBoatCtrlTick);
 
     REGFN(GetRoleID);
 	REGFN(UnlockItem);
 	REGFN(SetMonsterAttr);
-	// 测试脚本
+	// test script
 	REGFN(TestDBLog);
 	
 T_E}

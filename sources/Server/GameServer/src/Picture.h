@@ -29,7 +29,7 @@ public:
 private:
 	void SetSize(uInt size) { m_size = size; }
 
-	std::string m_strName; //文件名
+	std::string m_strName; //file name
 	char m_nID;
 	char *_img;
 	uInt m_size;

@@ -13,7 +13,7 @@ char g_szEntiAlloc[256] = "EntityAlloc";
 
 CEntityAlloc::CEntityAlloc(long lChaNum, long lItemNum, long lTNpcNum)
 {T_B
-	// 分配实体内存
+	// allocate entity memory
 	m_ChaAlloc.create( lChaNum, defENTI_ALLOC_TYPE_CHA );
 	m_ItemAlloc.create( lItemNum, defENTI_ALLOC_TYPE_ITEM );
 	m_TalkNpcAlloc.create( lTNpcNum, defENTI_ALLOC_TYPE_TNPC );
@@ -31,7 +31,7 @@ CEntityAlloc::~CEntityAlloc()
 T_E}
 
 //=============================================================================
-// 取一个闲置的角色。
+// takes an idle character.
 //=============================================================================
 CCharacter* CEntityAlloc::GetNewCha()
 {T_B
@@ -46,7 +46,7 @@ CCharacter* CEntityAlloc::GetNewCha()
 T_E}
 
 //=============================================================================
-// 取一个闲置的道具。
+// takes an idle item.
 //=============================================================================
 CItem* CEntityAlloc::GetNewItem()
 {T_B
@@ -61,7 +61,7 @@ CItem* CEntityAlloc::GetNewItem()
 T_E}
 
 //=============================================================================
-// 取一个闲置的对话NPC。
+// takes an idle dialog NPC.
 //=============================================================================
 mission::CTalkNpc* CEntityAlloc::GetNewTNpc()
 {T_B
@@ -76,29 +76,29 @@ mission::CTalkNpc* CEntityAlloc::GetNewTNpc()
 T_E}
 
 //=============================================================================
-// 取一个闲置的对话事件实体。
+// takes an idle dialog event entity.
 //=============================================================================
 mission::CEventEntity* CEntityAlloc::GetEventEntity( BYTE byType )
 {
 	switch( byType )
 	{
-	case mission::BASE_ENTITY:			// 基本实体
+	case mission::BASE_ENTITY:			// basic entity
 		{
 		}
 		break;
 
-	case mission::RESOURCE_ENTITY:		// 资源实体
+	case mission::RESOURCE_ENTITY:		// resource entity
 		{
 			return m_ResourceAlloc.alloc();
 		}
 		break;
 
-	case mission::TRANSIT_ENTITY:		// 传送实体
+	case mission::TRANSIT_ENTITY:		// teleport entity
 		{
 		}
 		break;
 
-	case mission::BERTH_ENTITY:			// 停泊实体
+	case mission::BERTH_ENTITY:			// docking entity
 		{
 			return m_BerthAlloc.alloc();
 		}
@@ -117,7 +117,7 @@ mission::CEventEntity* CEntityAlloc::GetEventEntity( BYTE byType )
 }
 
 //=============================================================================
-// 取一个有效实体
+// takes a valid entity
 //=============================================================================
 Entity* CEntityAlloc::GetEntity(long lID)
 {T_B
@@ -149,7 +149,7 @@ Entity* CEntityAlloc::GetEntity(long lID)
 T_E}
 
 //=============================================================================
-// 释放一个有效实体
+// releases a valid entity
 //=============================================================================
 void CEntityAlloc::ReturnEntity(long lID)
 {T_B
@@ -182,7 +182,7 @@ T_E}
 //=============================================================================
 
 //=============================================================================
-// 取一个闲置的玩家。
+// takes an idle player.
 //=============================================================================
 CPlayer* CPlayerAlloc::GetNewPly()
 {T_B
