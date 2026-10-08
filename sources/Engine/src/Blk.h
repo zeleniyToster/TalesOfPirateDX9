@@ -1,37 +1,37 @@
-#pragma once
+ï»¿#pragma once
 
 #include <windows.h>
 // ------------------------ IMG_HEADER ---------------------------------//
 struct IMG_HEADER 
 {
-	DWORD	m_dwMarks;		// ±êÖ¾Î» 'RYO'
-	WORD	m_LibType;		// ±»´ò°üµÄÍ¼ÏñÀàÐÍ
-	WORD	m_wPackedDirectory;	// Í¼Ïñ°üÖÐ±»´ò°üµÄÄ¿Â¼Êý,¡¡×î´óÔÊÐíÊýÁ¿ 65535
+	DWORD	m_dwMarks;		// æ ‡å¿—ä½ 'RYO'
+	WORD	m_LibType;		// è¢«æ‰“åŒ…çš„å›¾åƒç±»åž‹
+	WORD	m_wPackedDirectory;	// å›¾åƒåŒ…ä¸­è¢«æ‰“åŒ…çš„ç›®å½•æ•°,ã€€æœ€å¤§å…è®¸æ•°é‡ 65535
 
-	WORD	m_wGridX;		// ¸ÃÍ¼°üÄÚËùÓÐÍ¼ÏñµÄµÄÖØÐÄÎ»ÖÃ
-	WORD	m_wGridY;		// ¸ÃÍ¼°üÄÚËùÓÐÍ¼ÏñµÄµÄÖØÐÄÎ»ÖÃ
-	WORD	m_wVer;			//	°æ±¾ºÅ
+	WORD	m_wGridX;		// è¯¥å›¾åŒ…å†…æ‰€æœ‰å›¾åƒçš„çš„é‡å¿ƒä½ç½®
+	WORD	m_wGridY;		// è¯¥å›¾åŒ…å†…æ‰€æœ‰å›¾åƒçš„çš„é‡å¿ƒä½ç½®
+	WORD	m_wVer;			//	ç‰ˆæœ¬å·
 
-	BYTE	m_bAlphaInfo;	//	Alpha ÐÅÏ¢
-	BYTE	m_bShadowInfo;	//	Shadow ÐÅÏ¢
+	BYTE	m_bAlphaInfo;	//	Alpha ä¿¡æ¯
+	BYTE	m_bShadowInfo;	//	Shadow ä¿¡æ¯
 };
 
 // ----------------------- IMG_BLOCK ------------------------------------//
-struct IMG_BLOCK					//	Í¼Ïñ¿éÐÅÏ¢
+struct IMG_BLOCK					//	å›¾åƒå—ä¿¡æ¯
 {	
-	BYTE	m_byPixelDepth;			// ÏñËØÎ»Éî
-	BYTE	m_byUseRle;				// ÊÇ·ñÊ¹ÓÃRLE
-	BYTE	m_byUseAlpha;			// ÊÇ·ñÓÐAlphaÍ¨µÀ
+	BYTE	m_byPixelDepth;			// åƒç´ ä½æ·±
+	BYTE	m_byUseRle;				// æ˜¯å¦ä½¿ç”¨RLE
+	BYTE	m_byUseAlpha;			// æ˜¯å¦æœ‰Alphaé€šé“
 	BYTE	m_byNone1;
 
-	WORD	m_wPalCount;			// ¿éÖÐÊ¹ÓÃµ½µÄÉ«ÅÌÊýÁ¿»ùÊý
-	WORD	m_wWidth;				// Í¼Ïñ¿í¶È
-	WORD	m_wHeight;				// Í¼Ïñ¸ß¶È
+	WORD	m_wPalCount;			// å—ä¸­ä½¿ç”¨åˆ°çš„è‰²ç›˜æ•°é‡åŸºæ•°
+	WORD	m_wWidth;				// å›¾åƒå®½åº¦
+	WORD	m_wHeight;				// å›¾åƒé«˜åº¦
 
-	WORD	m_wTotalWidthBlock;		// ¿íµÄÊý¾Ý¿éÊýÁ¿
-	WORD	m_wTotalHeightBlock;	// ¸ßµÄÊý¾Ý¿éÊýÁ¿	
-	WORD	m_wTailBlockWidth;		// Ä©Î²µÄ¿é¿í
-	WORD	m_wTailBlockHeight;		// Ä©Î²µÄ¿é¸ß
+	WORD	m_wTotalWidthBlock;		// å®½çš„æ•°æ®å—æ•°é‡
+	WORD	m_wTotalHeightBlock;	// é«˜çš„æ•°æ®å—æ•°é‡	
+	WORD	m_wTailBlockWidth;		// æœ«å°¾çš„å—å®½
+	WORD	m_wTailBlockHeight;		// æœ«å°¾çš„å—é«˜
 	BYTE	m_byNone2;
 	BYTE	m_byNone3;
 
@@ -50,7 +50,7 @@ struct _RGB
 	bool operator == (_RGB& v) {return ( (0x00ffffff & this->operator DWORD() ) == (0x00ffffff & v.operator DWORD() ) );}
 	_RGB& operator = (DWORD dwRGB){ (*this) = (*(_RGB*)&dwRGB); return *this;}
 
-	//·µ»ØÁ½ÑÕÉ«µÄ²îÖµ
+	//è¿”å›žä¸¤é¢œè‰²çš„å·®å€¼
 	unsigned int Difference(_RGB& v){ 
 		int dr,dg,db;
 		dr=(int)r-(int)v.r;

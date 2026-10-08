@@ -1,7 +1,7 @@
-//----------------------------------------------------------------------
-// Ãû³Æ:ÓÃÓÚÊµÏÖÁÄÌì½çÃæ
-// ×÷Õß:lh 2005-02-26
-// ×îºóĞŞ¸ÄÈÕÆÚ:2004-10-20
+ï»¿//----------------------------------------------------------------------
+// åç§°:ç”¨äºå®ç°èŠå¤©ç•Œé¢
+// ä½œè€…:lh 2005-02-26
+// æœ€åä¿®æ”¹æ—¥æœŸ:2004-10-20
 //----------------------------------------------------------------------
 #pragma once
 #include "UIGlobalVar.h"
@@ -20,13 +20,13 @@ class CItemObj;
 
 enum eSendTeamMsg
 {
-	enumSTM_ADD_GROUP,  // ĞÂÔö×é,²ÎÊı1:CTeam*
-	enumSTM_DEL_GROUP,  // É¾³ı×é,²ÎÊı1:CTeam*
-	enumSTM_ADD_MEMBER, // ĞÂÔö×é³ÉÔ±,²ÎÊı:CMember*
-	enumSTM_DEL_MEMBER, // É¾³ı×é³ÉÔ±,²ÎÊı:CMember*
+	enumSTM_ADD_GROUP,  // æ–°å¢ç»„,å‚æ•°1:CTeam*
+	enumSTM_DEL_GROUP,  // åˆ é™¤ç»„,å‚æ•°1:CTeam*
+	enumSTM_ADD_MEMBER, // æ–°å¢ç»„æˆå‘˜,å‚æ•°:CMember*
+	enumSTM_DEL_MEMBER, // åˆ é™¤ç»„æˆå‘˜,å‚æ•°:CMember*
 	enumSTM_AFTER_DEL_MEMBER,
-	enumSTM_NODE_CHANGE,// µ±Ç°½Úµã·¢Éú±ä»¯,²ÎÊı:CMember*
-	enumSTM_NODE_DATA_CHANGE,   // ½ÚµãÀ©Õ¹ÄÚÈİ·¢Éú±ä»¯,ÓÃÓÚ×é¶ÓµÄÑª,Ä§·¨,¼¶±ğµÈ·¢Éú±ä»¯Ê±Í¨Öª,²ÎÊı:CMember*
+	enumSTM_NODE_CHANGE,// å½“å‰èŠ‚ç‚¹å‘ç”Ÿå˜åŒ–,å‚æ•°:CMember*
+	enumSTM_NODE_DATA_CHANGE,   // èŠ‚ç‚¹æ‰©å±•å†…å®¹å‘ç”Ÿå˜åŒ–,ç”¨äºç»„é˜Ÿçš„è¡€,é­”æ³•,çº§åˆ«ç­‰å‘ç”Ÿå˜åŒ–æ—¶é€šçŸ¥,å‚æ•°:CMember*
 };
 
 class CGuiTime;
@@ -37,7 +37,7 @@ class CChat : public CUIInterface
 public:
     enum 
     {
-        MAX_MEMBER = 4,         // ×î¶à³ÉÔ±Êı
+        MAX_MEMBER = 4,         // æœ€å¤šæˆå‘˜æ•°
     };
 
     CChat();
@@ -45,12 +45,12 @@ public:
     bool Init();
     void End();
 
-    void RefreshTeam();         // Ë¢ĞÂ×é¶Ó½çÃæ
+    void RefreshTeam();         // åˆ·æ–°ç»„é˜Ÿç•Œé¢
 
-	// Ë¢ĞÂ×é¶Ó³ÉÔ±Êı¾İ
+	// åˆ·æ–°ç»„é˜Ÿæˆå‘˜æ•°æ®
 	void RefreshTeamData( CMember* pCurMember );		
 
-    void ClearTeam();           // Çå³ı×é¶Ó½çÃæ
+    void ClearTeam();           // æ¸…é™¤ç»„é˜Ÿç•Œé¢
     int  TeamSend( DWORD dwMsg, void* pData=NULL, DWORD dwParam=0 );
 
 	void SortOnlineFrnd();
@@ -71,18 +71,18 @@ public:
 	static bool		_UpdateFrndInfo(CMember *pMember);
 	//static void		LoadFilterText(const char *text);
 	static bool		_UpdateSelfInfo();
-	static DWORD	_dwSelfID;			// ×Ô¼ºµÄID
-	static DWORD	_dwSelfIcon;			// ×Ô¼ºµÄÍ·Ïñ
-	static std::string	_strSelfMottoName;		// ×Ô¼ºµÄ×ùÓÒÃú
+	static DWORD	_dwSelfID;			// è‡ªå·±çš„ID
+	static DWORD	_dwSelfIcon;			// è‡ªå·±çš„å¤´åƒ
+	static std::string	_strSelfMottoName;		// è‡ªå·±çš„åº§å³é“­
 	static CMember* _curSelectMember;
 
 
 public:
-	CForm*          frmChatManage;          // Chat½çÃæ
+	CForm*          frmChatManage;          // Chatç•Œé¢
 	//static CForm*	_frmDetails;
 	CForm*       GetDetailsForm()    { return _frmDetails;    }
-	//×é¶Ó½çÃæ
-	static CForm*          frmTeamMenber[MAX_MEMBER];		// nTag¼ÇÂ¼HummanID
+	//ç»„é˜Ÿç•Œé¢
+	static CForm*          frmTeamMenber[MAX_MEMBER];		// nTagè®°å½•HummanID
 	static CProgressBar*   proTeamMenberHP[MAX_MEMBER];
 	static CProgressBar*   proTeamMenberSP[MAX_MEMBER];
 	static CLabelEx*       labMenberName[MAX_MEMBER];
@@ -104,30 +104,30 @@ private:
 
 private:
 
-	static CForm*          _frmQQ;			 // QQ½çÃæ
+	static CForm*          _frmQQ;			 // QQç•Œé¢
 
 	static CForm*          _frmAddFriend;	 
 	static CForm*          _frmChangeSytle;
 	static CForm*			_frmEditMotto;
 	static CForm*          _frmDetails;
 	static CForm*          _frmBlockPlayer;
-    static CTeamMgr*       _pTeamMgr;        // ×é¶Ó¹ÜÀíÆ÷
+    static CTeamMgr*       _pTeamMgr;        // ç»„é˜Ÿç®¡ç†å™¨
 	CTreeView*		m_pQQTreeView;
-	CTreeGridNode*  _pFrndNode;              // ºÃÓÑ½Úµã
+	CTreeGridNode*  _pFrndNode;              // å¥½å‹èŠ‚ç‚¹
 
-    CTreeGridNode*  _pGroupNode;             // ¶ÓÎé½Úµã
-	//ÆÁ±ÎÂ·ÈËÁÄÌì
+    CTreeGridNode*  _pGroupNode;             // é˜Ÿä¼èŠ‚ç‚¹
+	//å±è”½è·¯äººèŠå¤©
 
-    //CTreeGridNode*  _pRoadNode;              // Â·ÈË½Úµã
-	static CTreeGridNode*  _pGuildNode;      // ¹«»á½Úµã
+    //CTreeGridNode*  _pRoadNode;              // è·¯äººèŠ‚ç‚¹
+	static CTreeGridNode*  _pGuildNode;      // å…¬ä¼šèŠ‚ç‚¹
 	static CTreeGridNode*  _pSessionNode;
-	static CTreeGridNode*  _pMasterNode;	// Ê¦¸µ
-	static CTreeGridNode*  _pPrenticeNode;	// Í½µÜ
+	static CTreeGridNode*  _pMasterNode;	// å¸ˆå‚…
+	static CTreeGridNode*  _pPrenticeNode;	// å¾’å¼Ÿ
 	
-	static CTreeGridNode*  _pGMNode;	// Í½µÜ
+	static CTreeGridNode*  _pGMNode;	// å¾’å¼Ÿ
 	static CTreeGridNode*  _pBlockedNode;
 	
-	static CCharacter2D*   _pCharacter[MAX_MEMBER]; // ×é¶ÓÍâ¹Û
+	static CCharacter2D*   _pCharacter[MAX_MEMBER]; // ç»„é˜Ÿå¤–è§‚
 	static CEdit*	_pEditFrndName;
 
 	static CEdit*	_pEditMotto;

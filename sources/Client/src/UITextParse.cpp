@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "uitextparse.h"
 #include "UIGuiData.h"
 #include "uigraph.h"
@@ -39,7 +39,7 @@ void CTextParse::Render( string str, int x, int y,  DWORD color, ALLIGN allign, 
 
 	while ( i < length)
 	{
-		if ( str[i]  & 0x80)  //ºº×Ö
+		if ( str[i]  & 0x80)  //æ±‰å­—
 		{
 			strLine += str.substr(i ,2) ;
 			i+=2;		 		
@@ -51,7 +51,7 @@ void CTextParse::Render( string str, int x, int y,  DWORD color, ALLIGN allign, 
 				_strTwoChar =  str.substr(i+1 ,2);
 
 			index  = InitEx( _strTwoChar );
-			//Èç¹ûË÷ÒıÔÚ0~iPicNum,Æ½ÇÒË÷ÒıËù¶ÔÓ¦µÄÍ¼Ôª´æÔÚ, Ôò±íÊ¾½øĞĞÍ¼Ôª´¦Àí
+			//å¦‚æœç´¢å¼•åœ¨0~iPicNum,å¹³ä¸”ç´¢å¼•æ‰€å¯¹åº”çš„å›¾å…ƒå­˜åœ¨, åˆ™è¡¨ç¤ºè¿›è¡Œå›¾å…ƒå¤„ç†
 			static CGraph* pGraph = NULL;
 			pGraph = GetFace(index);
 			if (pGraph) //(index >=0 && index < iPicNum && _files[index].pGraph ) 
@@ -60,8 +60,8 @@ void CTextParse::Render( string str, int x, int y,  DWORD color, ALLIGN allign, 
 				int nX =  CGuiFont::s_Font.GetWidth( str.substr(0, i).c_str() );
 				int nX2 =(int) GetRender().DrawConvertX2((float) nX );
 		
-				strLine += "   "; //µ½µ×ÊÇ1¸ö¿Õ¸ñ£¬2¸ö¿Õ¸ñ£¬3¸ö¿Õ¸ñ£¿£¿£¿//added by billy			
-				pGraph->Next() ;  // Âú×ã±íÇéµÄ¶¯»­Ğ§¹û :04-11-19
+				strLine += "   "; //åˆ°åº•æ˜¯1ä¸ªç©ºæ ¼ï¼Œ2ä¸ªç©ºæ ¼ï¼Œ3ä¸ªç©ºæ ¼ï¼Ÿï¼Ÿï¼Ÿ//added by billy			
+				pGraph->Next() ;  // æ»¡è¶³è¡¨æƒ…çš„åŠ¨ç”»æ•ˆæœ :04-11-19
 				pGraph->Render( iPosX + nX2, iPosY );
 				i+=3;
 			}
@@ -98,7 +98,7 @@ void CTextParse::RenderEx( string str, int x, int y, DWORD color, float scale )
 	int 	i=0;
 	while ( i < length)
 	{
-		if ( str[i]  & 0x80)  //ºº×Ö
+		if ( str[i]  & 0x80)  //æ±‰å­—
 		{
 			strLine += str.substr(i ,2) ;
 			i+=2;		 		
@@ -110,7 +110,7 @@ void CTextParse::RenderEx( string str, int x, int y, DWORD color, float scale )
 				_strTwoChar =  str.substr(i+1 ,2);
 
 			index  = InitEx( _strTwoChar ) ;
-			//Èç¹ûË÷ÒıÔÚ0~iPicNum,Æ½ÇÒË÷ÒıËù¶ÔÓ¦µÄÍ¼Ôª´æÔÚ, Ôò±íÊ¾½øĞĞÍ¼Ôª´¦Àí 		
+			//å¦‚æœç´¢å¼•åœ¨0~iPicNum,å¹³ä¸”ç´¢å¼•æ‰€å¯¹åº”çš„å›¾å…ƒå­˜åœ¨, åˆ™è¡¨ç¤ºè¿›è¡Œå›¾å…ƒå¤„ç† 		
 			static CGraph* pGraph = NULL;
 			pGraph = GetFace(index);
 			if (pGraph) //index >=0 && index <= iPicNum && _files[index].pGraph ) 
@@ -119,9 +119,9 @@ void CTextParse::RenderEx( string str, int x, int y, DWORD color, float scale )
 				int nX =  CGuiFont::s_Font.GetWidth(str.substr(0, i).c_str() );
 				int nX2 =(int) GetRender().DrawConvertX2((float) nX );
 		
-				strLine += "   "; //µ½µ×ÊÇ1¸ö¿Õ¸ñ£¬2¸ö¿Õ¸ñ£¬3¸ö¿Õ¸ñ£¿£¿£¿//added by billy
+				strLine += "   "; //åˆ°åº•æ˜¯1ä¸ªç©ºæ ¼ï¼Œ2ä¸ªç©ºæ ¼ï¼Œ3ä¸ªç©ºæ ¼ï¼Ÿï¼Ÿï¼Ÿ//added by billy
 				
-				pGraph->Next();  // Âú×ã±íÇéµÄ¶¯»­Ğ§¹û :04-11-19
+				pGraph->Next();  // æ»¡è¶³è¡¨æƒ…çš„åŠ¨ç”»æ•ˆæœ :04-11-19
 				pGraph->Render( iPosX + nX2 , iPosY  );
 				i+=3;
 			}
@@ -195,6 +195,6 @@ CGraph* CTextParse::GetFace( DWORD nIndex )
 
 int  CTextParse::InitLink()
 {
-	//_str½øĞĞ´¦Àí,½¨Á¢Á´±í
+	//_strè¿›è¡Œå¤„ç†,å»ºç«‹é“¾è¡¨
 	return 1;
 }

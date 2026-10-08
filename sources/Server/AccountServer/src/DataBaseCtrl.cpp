@@ -1,4 +1,4 @@
-#define _CRTDBG_MAP_ALLOC
+ï»¿#define _CRTDBG_MAP_ALLOC
 #include "stdafx.h"
 #include <stdlib.h>
 #include <crtdbg.h>
@@ -54,10 +54,10 @@ bool CDataBaseCtrl::CreateObject()
 		return false;
 	C_PRINT("success!\n");
 
-	//³õÊ¼»¯²¢²âÊÔÊý¾Ý¿â×Ö¶Î
+	// initialise and validate the database fields
 	try
 	{
-        //  TOM±íÃûÒÑÐÞ¸Ä
+        //  the TOM table name has been changed
 		//if (g_TomService.IsEnable())
 		//{
 		//	//m_pDataBase->ExecuteSQL("update tom_account set login_status=0, from_server='', last_login_tick=0");
@@ -151,7 +151,7 @@ bool CDataBaseCtrl::Connect()
 {
 	if (IsConnect()) return true;
 
-	//½¨Á¢Êý¾Ý¿â¶ÔÏó
+	// create the database object
 	try
 	{
 		m_pDataBase=new CSQLDatabase();
@@ -169,7 +169,7 @@ bool CDataBaseCtrl::Connect()
 		return false;
 	}
 
-	//Á¬½ÓÊý¾Ý¿â
+	// connect to the database
 	char buf[512] = {0};
 	sprintf(buf, "DRIVER={ODBC Driver 17 for SQL Server};SERVER=%s;UID=%s;PWD=%s;DATABASE=%s;Encrypt=no;TrustServerCertificate=yes", 
 		m_strServerIP.c_str(), m_strUserID.c_str(), m_strUserPwd.c_str(), m_strServerDB.c_str());
@@ -479,7 +479,7 @@ bool CDataBaseCtrl::UserLogoutMap(std::string strUserName)
 	m_mapUsers.erase(strUserName.c_str());
 	
 	CTimeSpan ctSpan=CTime::GetCurrentTime() - sData.ctLoginTime;
-	if (ctSpan > CTimeSpan(5) && ctSpan < CTimeSpan(30, 0, 0, 0))	//¼ÇÂ¼ÓÐÐ§Ê±¼ä5Ãëµ½30Ìì
+	if (ctSpan > CTimeSpan(5) && ctSpan < CTimeSpan(30, 0, 0, 0))	// validity window: from 5 seconds up to 30 days
 	{
 		char buf[1024];
 		__int64 i64Span = ctSpan.GetTotalSeconds();

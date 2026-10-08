@@ -1,4 +1,4 @@
-#include "Stdafx.h"
+ï»¿#include "Stdafx.h"
 #include "MPTile.h"
 #include "MPMath.h"
 #include "lwTimer.h"
@@ -14,7 +14,7 @@ int MPTile::Offset[4][2] =
 
 
 //--------------------------- 
-// Ôö¼ÓÌùÍ¼²ã(¾­µä°¡, ¹»¼ò½à)
+// å¢åŠ è´´å›¾å±‚(ç»å…¸å•Š, å¤Ÿç®€æ´)
 //---------------------------
 void MPTile::AddTexLayer(BYTE btTexNo, BYTE btAlphaNo)
 {
@@ -86,7 +86,7 @@ void MPTile::AddTexLayer(BYTE btTexNo, BYTE btAlphaNo)
 	TexLayer[0].btAlphaNo = 15;
 	if(btValid < 4)
 	{
-		TexLayer[btValid].btTexNo = 0; // ´Ë²ã¿ªÊ¼ÎŞĞ§
+		TexLayer[btValid].btTexNo = 0; // æ­¤å±‚å¼€å§‹æ— æ•ˆ
 	}
 }
 
@@ -95,7 +95,7 @@ MPTileVertex		MPTile::_TVertex[4];
 MPSeaTileVertex		MPTile::_SVertex[4];
 
 //-----------------------------
-// µ÷ÊÔäÖÈ¾, ·ÇVertexBuffer·½Ê½
+// è°ƒè¯•æ¸²æŸ“, éVertexBufferæ–¹å¼
 //-----------------------------
 
 
@@ -103,8 +103,8 @@ MPSeaTileVertex		MPTile::_SVertex[4];
 void MPTile::RenderTerrain(int nX, int nY, MPTile *TileList[4])
 {
     // begin by lsh
-    // ÕâÀïÓĞ¹ØµÃµ½render state ambient µÄÑÕÉ«Ó¦¸ÃÊ¹ÓÃÍ³Ò»µÄ»º´æ
-    // ²»ÊÇÃ¿´Îrender¶¼Í¨¹ıdeviceÀ´¶¯Ì¬µÃµ½
+    // è¿™é‡Œæœ‰å…³å¾—åˆ°render state ambient çš„é¢œè‰²åº”è¯¥ä½¿ç”¨ç»Ÿä¸€çš„ç¼“å­˜
+    // ä¸æ˜¯æ¯æ¬¡renderéƒ½é€šè¿‡deviceæ¥åŠ¨æ€å¾—åˆ°
     lwColorValue4b amb, vert_amb, c, t, x;
     g_Render.GetDevice()->GetRenderState(D3DRS_AMBIENT, &amb.color);
     // end by lsh

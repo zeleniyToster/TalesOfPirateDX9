@@ -1,7 +1,7 @@
-//----------------------------------------------------------------------
-// Ãû³Æ:¼¼ÄÜ
-// ×÷Õß:lh 2004-11-07
-// ×îºóÐÞ¸ÄÈÕÆÚ:
+ï»¿//----------------------------------------------------------------------
+// åç§°:æŠ€èƒ½
+// ä½œè€…:lh 2004-11-07
+// æœ€åŽä¿®æ”¹æ—¥æœŸ:
 //----------------------------------------------------------------------
 #pragma once
 #include "UICommand.h"
@@ -37,8 +37,8 @@ public:
 
 	enum eSpecialType
 	{
-		enumHighLight  = 1,	// Ò»Ö±ÏÔÊ¾¸ßÁÁ
-		enumNotUpgrade = 2	// ²»ÔÊÐíÊÖ¶¯Éý¼¶
+		enumHighLight  = 1,	// ä¸€ç›´æ˜¾ç¤ºé«˜äº®
+		enumNotUpgrade = 2	// ä¸å…è®¸æ‰‹åŠ¨å‡çº§
 	};
 
 	bool			GetIsSpecial(eSpecialType SpecialType);
@@ -61,11 +61,11 @@ protected:
 	DWORD			_dwPlayTime;
     DWORD           _dwRecordTime;
 
-    static CGuiPic  _imgActive;		// ÏÔÊ¾¼¤»îµÄ±ß¿ò
+    static CGuiPic  _imgActive;		// æ˜¾ç¤ºæ¿€æ´»çš„è¾¹æ¡†
 
 };
 
-// ÄÚÁªº¯Êý
+// å†…è”å‡½æ•°
 inline int CSkillCommand::_GetSkillTime()  
 { 
     return _pSkill->GetFireSpeed();

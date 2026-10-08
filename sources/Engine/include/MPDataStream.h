@@ -1,10 +1,10 @@
-#ifndef MPDataStream_H
+ï»¿#ifndef MPDataStream_H
 #define MPDataStream_H
 
 #include "MPEffPrerequisites.h"
 #include "MPSharedPtr.h"
 
-/** Í¨ÓÃÀàÓÃÓÚ°ü×°¶ÁÈëµÄÊı¾İ.
+/** é€šç”¨ç±»ç”¨äºåŒ…è£…è¯»å…¥çš„æ•°æ®.
 @remarks
 This class performs basically the same tasks as std::basic_istream, 
 except that it does not have any formatting capabilities, and is
@@ -14,37 +14,37 @@ stream interfaces. As such, this is an abstraction of a set of
 wrapper classes which pretend to be standard stream classes but 
 can actually be implemented quite differently. 
 @par
-	Í¨³£Èç¹û²å¼ş»òÓ¦ÓÃ³ÌĞòÌá¹©ArchiveFactory£¬ÄÇÃ´Ò²Ó¦Ìá¹©¿ÉÒÔ·ÃÎÊÄÇÖÖ
-ArchiveÊı¾İÁ÷µÄMPDataStreamµÄÅÉÉúÀà£¬³ı·ÇÄ¬ÈÏÌá¹©µÄ¿ÉÒÔÂú×ãÒªÇó
+	é€šå¸¸å¦‚æœæ’ä»¶æˆ–åº”ç”¨ç¨‹åºæä¾›ArchiveFactoryï¼Œé‚£ä¹ˆä¹Ÿåº”æä¾›å¯ä»¥è®¿é—®é‚£ç§
+Archiveæ•°æ®æµçš„MPDataStreamçš„æ´¾ç”Ÿç±»ï¼Œé™¤éé»˜è®¤æä¾›çš„å¯ä»¥æ»¡è¶³è¦æ±‚
 @note
-	ÓÉÓÚĞÔÄÜµÄÒªÇó£¬ÕâÀï²»±£Ö¤ËüÊÇÏß³Ì°²È«µÄ¡£Èç¹ûÄãÏ£ÍûÒì²½·ÃÎÊÊı¾İÁ÷
-Äã±ØĞë×Ô¼º×éÖ¯»¥³âÁ¿£¬±ÜÃâ¾ºÕù
+	ç”±äºæ€§èƒ½çš„è¦æ±‚ï¼Œè¿™é‡Œä¸ä¿è¯å®ƒæ˜¯çº¿ç¨‹å®‰å…¨çš„ã€‚å¦‚æœä½ å¸Œæœ›å¼‚æ­¥è®¿é—®æ•°æ®æµ
+ä½ å¿…é¡»è‡ªå·±ç»„ç»‡äº’æ–¥é‡ï¼Œé¿å…ç«äº‰
 */
 class MINDPOWER_API MPDataStream
 {
 public:
-	/// ¹¹Ôìº¯ÊıÓÃÀ´´´½¨ÄäÃûµÄÁ÷
+	/// æ„é€ å‡½æ•°ç”¨æ¥åˆ›å»ºåŒ¿åçš„æµ
 	MPDataStream() : m_Size(0) {}
-	/// ¹¹Ôìº¯ÊıÓÃÀ´´´½¨ÃüÃûµÄÁ÷
+	/// æ„é€ å‡½æ•°ç”¨æ¥åˆ›å»ºå‘½åçš„æµ
 	MPDataStream(const String& name) : m_Name(name), m_Size(0) {}
 	virtual ~MPDataStream() {}
 
-	// Á÷²Ù×÷
+	// æµæ“ä½œ
 	template<typename T> MPDataStream& operator>>(T& val);
-	/** ´ÓÁ÷ÖĞ¶ÁÈ¡ËùĞè×Ö½ÚµÄÊı¾İ, µ±Óöµ½eofÔòÍ£Ö¹.
-	@param buf »º´æµÄÖ¸Õë
-	@param count ĞèÒª¶ÁÈ¡µÄ×Ö½ÚÊı
-	@returns ¶ÁÈ¡µÄ×Ö½ÚÊı
+	/** ä»æµä¸­è¯»å–æ‰€éœ€å­—èŠ‚çš„æ•°æ®, å½“é‡åˆ°eofåˆ™åœæ­¢.
+	@param buf ç¼“å­˜çš„æŒ‡é’ˆ
+	@param count éœ€è¦è¯»å–çš„å­—èŠ‚æ•°
+	@returns è¯»å–çš„å­—èŠ‚æ•°
 	*/
 	virtual size_t read(void* buf, size_t count) = 0;
-	/** ´ÓÁ÷ÖĞµÃµ½Ò»ĞĞÊı¾İ.
+	/** ä»æµä¸­å¾—åˆ°ä¸€è¡Œæ•°æ®.
 	@remarks
-		·Ö¸ô·û²»°üº¬ÔÚ·µ»ØµÄÊı¾İÖĞ,²¢ÇÒ»á±»Ìø¹ı£¬ËùÒÔÏÂ´Î¶ÁÈ¡µÄÊ±ºòÒ²²»
-	»á³öÏÖ.»º´æÖĞ½«°üº¬ÖĞÖ¹·û.
-	@param buf »º´æµÄÖ¸Õë
-	@param maxCount ¶ÁÈ¡Ò»ĞĞÊı¾İµÄ×î´ó³¤¶È£¬²»°üÀ¨ÖĞÖ¹·û
-	@param delim ·Ö¸ô·û
-	@returns ¶ÁÈ¡µÄ×Ö½ÚÊı£¬²»°üÀ¨ÖĞÖ¹·û
+		åˆ†éš”ç¬¦ä¸åŒ…å«åœ¨è¿”å›çš„æ•°æ®ä¸­,å¹¶ä¸”ä¼šè¢«è·³è¿‡ï¼Œæ‰€ä»¥ä¸‹æ¬¡è¯»å–çš„æ—¶å€™ä¹Ÿä¸
+	ä¼šå‡ºç°.ç¼“å­˜ä¸­å°†åŒ…å«ä¸­æ­¢ç¬¦.
+	@param buf ç¼“å­˜çš„æŒ‡é’ˆ
+	@param maxCount è¯»å–ä¸€è¡Œæ•°æ®çš„æœ€å¤§é•¿åº¦ï¼Œä¸åŒ…æ‹¬ä¸­æ­¢ç¬¦
+	@param delim åˆ†éš”ç¬¦
+	@returns è¯»å–çš„å­—èŠ‚æ•°ï¼Œä¸åŒ…æ‹¬ä¸­æ­¢ç¬¦
 	*/
 	virtual size_t readLine(char* buf, size_t maxCount, const String& delim = "\n") = 0;
 
@@ -61,43 +61,43 @@ public:
 	*/
 	virtual String getLine( bool trimAfter = true );
 
-	/** ÒÔ×Ö·û´®µÄĞÎÊ½·µ»ØÕû¸öÁ÷µÄÊı¾İ. */
+	/** ä»¥å­—ç¬¦ä¸²çš„å½¢å¼è¿”å›æ•´ä¸ªæµçš„æ•°æ®. */
 	virtual String getAsString(void);
 
-	/** ´ÓÁ÷ÖĞÌø¹ıÒ»ĞĞ.
-	@param delim ĞĞ·Ö¸ô·û
-	@returns ·µ»ØÌø¹ıµÄ×Ö½ÚÊı
+	/** ä»æµä¸­è·³è¿‡ä¸€è¡Œ.
+	@param delim è¡Œåˆ†éš”ç¬¦
+	@returns è¿”å›è·³è¿‡çš„å­—èŠ‚æ•°
 	*/
 	virtual size_t skipLine(const String& delim = "\n") = 0;
 
-	/** Ìø¹ıÖÆ¶¨µÄ×Ö½ÚÊı,Ò²¿ÉÒÔÊÇÒ»¸ö¸ºÖµ£¬ÕâÊ±½«ÏòÇ°Ìø¹ıÖÆ¶¨×Ö½ÚµÄÊı¾İ. */
+	/** è·³è¿‡åˆ¶å®šçš„å­—èŠ‚æ•°,ä¹Ÿå¯ä»¥æ˜¯ä¸€ä¸ªè´Ÿå€¼ï¼Œè¿™æ—¶å°†å‘å‰è·³è¿‡åˆ¶å®šå­—èŠ‚çš„æ•°æ®. */
 	virtual void skip(long count) = 0;
 
-	/** ½«Á÷¶ÁÈ¡Ö¸ÕëÒÆµ½Ö¸¶¨µÄ×Ö½Ú´¦.
+	/** å°†æµè¯»å–æŒ‡é’ˆç§»åˆ°æŒ‡å®šçš„å­—èŠ‚å¤„.
 	*/
 	virtual void seek( size_t pos ) = 0;
 
-	/** ·µ»ØÄ¿Ç°Ö¸Õëµ½Í·µÄÆ«ÒÆ */
+	/** è¿”å›ç›®å‰æŒ‡é’ˆåˆ°å¤´çš„åç§» */
 	virtual size_t tell(void) const = 0;
 
-	/** Èç¹ûµ½´ïeof£¬·µ»Øtrue.*/
+	/** å¦‚æœåˆ°è¾¾eofï¼Œè¿”å›true.*/
 	virtual bool eof(void) const = 0;
 
-	/** ¹Ø±ÕÁ÷. */
+	/** å…³é—­æµ. */
 	virtual void close(void) = 0;
 
-	/** ·µ»ØÁ÷µÄÊı¾İµÄ´óĞ¡£¬Èç¹û²»È·¶¨¿ÉÄÜÎª0. */
+	/** è¿”å›æµçš„æ•°æ®çš„å¤§å°ï¼Œå¦‚æœä¸ç¡®å®šå¯èƒ½ä¸º0. */
 	size_t size(void) const { return m_Size; }
-	/// ·µ»ØÁ÷µÄÃû×Ö£¬Èç¹ûÓĞµÄ»°.
+	/// è¿”å›æµçš„åå­—ï¼Œå¦‚æœæœ‰çš„è¯.
 	const String& getName(void) const { return m_Name; }
 
 protected:
-	/// ÓÃÓÚ±êÊ¶×ÊÔ´µÄÃû×Ö£¨±ÈÈç×ÊÔ´Ãû£©(¿ÉÑ¡)
+	/// ç”¨äºæ ‡è¯†èµ„æºçš„åå­—ï¼ˆæ¯”å¦‚èµ„æºåï¼‰(å¯é€‰)
 	String m_Name;		
-	/// Á÷ÖĞÊı¾İµÄ´óĞ¡(Èç¹û²»ÄÜ¾ö¶¨Êı¾İµÄ´óĞ¡¿ÉÒÔÎª0)
+	/// æµä¸­æ•°æ®çš„å¤§å°(å¦‚æœä¸èƒ½å†³å®šæ•°æ®çš„å¤§å°å¯ä»¥ä¸º0)
 	size_t m_Size;
 #define MP_STREAM_TEMP_SIZE 128
-	/// ¸ñÊ½¶ÁÈ¡µÄÁÙÊ±»º³åÇø
+	/// æ ¼å¼è¯»å–çš„ä¸´æ—¶ç¼“å†²åŒº
 	char m_TmpArea[MP_STREAM_TEMP_SIZE];
 };
 
@@ -105,70 +105,70 @@ typedef MPSharedPtr<MPDataStream> MPDataStreamPtr;
 typedef std::list<MPDataStreamPtr> MPDataStreamList;
 typedef MPSharedPtr<MPDataStreamList> MPDataStreamListPtr;
 
-/** DataStreamµÄ¹«ÓÃÅÉÉúÀà£¬ÓÃÓÚ´¦ÀíÄÚ´æÖĞµÄÁ÷Êı¾İ.*/
+/** DataStreamçš„å…¬ç”¨æ´¾ç”Ÿç±»ï¼Œç”¨äºå¤„ç†å†…å­˜ä¸­çš„æµæ•°æ®.*/
 class MINDPOWER_API MPMemoryDataStream : public MPDataStream
 {
 public:
 
-	/** ½«ÒÑÓĞµÄÄÚ´æ¿é°ü×°³ÉÁ÷.
-	@param pMem ÏÖ´æÄÚ´æµÄÖ¸Õë
-	@param size ÄÚ´æ¿éµÄ´óĞ¡£¨×Ö½Ú£©
-	@param freeOnClose Èç¹ûÎªtrue£¬µ±Á÷ÊÍ·ÅÊ±£¬ÄÚ´æ½«»á±»ÊÍ·Å.
+	/** å°†å·²æœ‰çš„å†…å­˜å—åŒ…è£…æˆæµ.
+	@param pMem ç°å­˜å†…å­˜çš„æŒ‡é’ˆ
+	@param size å†…å­˜å—çš„å¤§å°ï¼ˆå­—èŠ‚ï¼‰
+	@param freeOnClose å¦‚æœä¸ºtrueï¼Œå½“æµé‡Šæ”¾æ—¶ï¼Œå†…å­˜å°†ä¼šè¢«é‡Šæ”¾.
 	*/
 	MPMemoryDataStream(void* pMem, size_t size, bool freeOnClose = false);
-	/** ½«ÒÑÓĞµÄÄÚ´æ¿é°ü×°³ÉÃüÃûµÄÁ÷.
-	@param name Á÷µÄÃû×Ö
-	@param pMem ÏÖ´æÄÚ´æµÄÖ¸Õë
-	@param size ÄÚ´æ¿éµÄ´óĞ¡£¨×Ö½Ú£©
-	@param freeOnClose Èç¹ûÎªtrue£¬µ±Á÷ÊÍ·ÅÊ±£¬ÄÚ´æ½«»á±»ÊÍ·Å.
+	/** å°†å·²æœ‰çš„å†…å­˜å—åŒ…è£…æˆå‘½åçš„æµ.
+	@param name æµçš„åå­—
+	@param pMem ç°å­˜å†…å­˜çš„æŒ‡é’ˆ
+	@param size å†…å­˜å—çš„å¤§å°ï¼ˆå­—èŠ‚ï¼‰
+	@param freeOnClose å¦‚æœä¸ºtrueï¼Œå½“æµé‡Šæ”¾æ—¶ï¼Œå†…å­˜å°†ä¼šè¢«é‡Šæ”¾.
 	*/
 	MPMemoryDataStream(const String& name, void* pMem, size_t size, 
 		bool freeOnClose = false);
-	/** ¸ù¾İÁíÒ»¸öÁ÷µÄ´´½¨Ò»¸öÁ÷.
-	@param sourceStream ÁíÒ»¸öÊı¾İÁ÷
-	@param freeOnClose Èç¹ûÎªtrue£¬µ±Á÷ÊÍ·ÅÊ±£¬ÄÚ´æ½«»á±»ÊÍ·Å.
+	/** æ ¹æ®å¦ä¸€ä¸ªæµçš„åˆ›å»ºä¸€ä¸ªæµ.
+	@param sourceStream å¦ä¸€ä¸ªæ•°æ®æµ
+	@param freeOnClose å¦‚æœä¸ºtrueï¼Œå½“æµé‡Šæ”¾æ—¶ï¼Œå†…å­˜å°†ä¼šè¢«é‡Šæ”¾.
 	*/
 	MPMemoryDataStream(MPDataStream& sourceStream, bool freeOnClose = true);
-	/** ¸ù¾İÁíÒ»¸öÁ÷µÄ´´½¨Ò»¸öÁ÷.
-	@param sourceStream ÁíÒ»¸öÊı¾İÁ÷(ÈõÒıÓÃ)
-	@param freeOnClose Èç¹ûÎªtrue£¬µ±Á÷ÊÍ·ÅÊ±£¬ÄÚ´æ½«»á±»ÊÍ·Å.
+	/** æ ¹æ®å¦ä¸€ä¸ªæµçš„åˆ›å»ºä¸€ä¸ªæµ.
+	@param sourceStream å¦ä¸€ä¸ªæ•°æ®æµ(å¼±å¼•ç”¨)
+	@param freeOnClose å¦‚æœä¸ºtrueï¼Œå½“æµé‡Šæ”¾æ—¶ï¼Œå†…å­˜å°†ä¼šè¢«é‡Šæ”¾.
 	*/
 	MPMemoryDataStream(MPDataStreamPtr& sourceStream, bool freeOnClose = true);
-	/** ¸ù¾İÁíÒ»¸öÁ÷µÄ´´½¨Ò»¸öÃüÃûµÄÁ÷.
-	@param name Á÷µÄÃû×Ö
-	@param sourceStream ÁíÒ»¸öÊı¾İÁ÷
-	@param freeOnClose Èç¹ûÎªtrue£¬µ±Á÷ÊÍ·ÅÊ±£¬ÄÚ´æ½«»á±»ÊÍ·Å.
+	/** æ ¹æ®å¦ä¸€ä¸ªæµçš„åˆ›å»ºä¸€ä¸ªå‘½åçš„æµ.
+	@param name æµçš„åå­—
+	@param sourceStream å¦ä¸€ä¸ªæ•°æ®æµ
+	@param freeOnClose å¦‚æœä¸ºtrueï¼Œå½“æµé‡Šæ”¾æ—¶ï¼Œå†…å­˜å°†ä¼šè¢«é‡Šæ”¾.
 	*/
 	MPMemoryDataStream(const String& name, MPDataStream& sourceStream, 
 		bool freeOnClose = true);
-	/** ¸ù¾İÁíÒ»¸öÁ÷µÄ´´½¨Ò»¸öÃüÃûµÄÁ÷.
-	@param name Á÷µÄÃû×Ö
-	@param sourceStream ÁíÒ»¸öÊı¾İÁ÷(ÈõÒıÓÃ)
-	@param freeOnClose Èç¹ûÎªtrue£¬µ±Á÷ÊÍ·ÅÊ±£¬ÄÚ´æ½«»á±»ÊÍ·Å.
+	/** æ ¹æ®å¦ä¸€ä¸ªæµçš„åˆ›å»ºä¸€ä¸ªå‘½åçš„æµ.
+	@param name æµçš„åå­—
+	@param sourceStream å¦ä¸€ä¸ªæ•°æ®æµ(å¼±å¼•ç”¨)
+	@param freeOnClose å¦‚æœä¸ºtrueï¼Œå½“æµé‡Šæ”¾æ—¶ï¼Œå†…å­˜å°†ä¼šè¢«é‡Šæ”¾.
 	*/
 	MPMemoryDataStream(const String& name, const MPDataStreamPtr& sourceStream, 
 		bool freeOnClose = true);
-	/** ´´½¨Ò»¸ö¿ÕµÄÁ÷.
-	@param size Á÷µÄ´óĞ¡
-	@param freeOnClose Èç¹ûÎªtrue£¬µ±Á÷ÊÍ·ÅÊ±£¬ÄÚ´æ½«»á±»ÊÍ·Å.
+	/** åˆ›å»ºä¸€ä¸ªç©ºçš„æµ.
+	@param size æµçš„å¤§å°
+	@param freeOnClose å¦‚æœä¸ºtrueï¼Œå½“æµé‡Šæ”¾æ—¶ï¼Œå†…å­˜å°†ä¼šè¢«é‡Šæ”¾.
 	*/
 	MPMemoryDataStream(size_t size, bool freeOnClose = true);
-	/** ´´½¨Ò»¸ö¿ÕµÄÃüÃûµÄÁ÷.
-	@param name Á÷µÄÃû×Ö
-	@param size Á÷µÄ´óĞ¡
-	@param freeOnClose Èç¹ûÎªtrue£¬µ±Á÷ÊÍ·ÅÊ±£¬ÄÚ´æ½«»á±»ÊÍ·Å.
+	/** åˆ›å»ºä¸€ä¸ªç©ºçš„å‘½åçš„æµ.
+	@param name æµçš„åå­—
+	@param size æµçš„å¤§å°
+	@param freeOnClose å¦‚æœä¸ºtrueï¼Œå½“æµé‡Šæ”¾æ—¶ï¼Œå†…å­˜å°†ä¼šè¢«é‡Šæ”¾.
 	*/
 	MPMemoryDataStream(const String& name, size_t size, bool freeOnClose = true);
 
 	~MPMemoryDataStream();
 
-	/** µÃµ½Õâ¸öÁ÷ÄÚ´æ¿éµÄÆğÊ¼Ö¸Õë. */
+	/** å¾—åˆ°è¿™ä¸ªæµå†…å­˜å—çš„èµ·å§‹æŒ‡é’ˆ. */
 	uchar* getPtr(void) { return m_Data; }
 
-	/** µÃµ½Õâ¸öÁ÷Ä¿Ç°Ö¸ÏòµÄÖ¸Õë. */
+	/** å¾—åˆ°è¿™ä¸ªæµç›®å‰æŒ‡å‘çš„æŒ‡é’ˆ. */
 	uchar* getCurrentPtr(void) { return m_Pos; }
 
-	/** ÉèÖÃÊÇ·ñÔÚÁ÷¹Ø±ÕÊ±ÊÍ·ÅÄÚ´æ. */
+	/** è®¾ç½®æ˜¯å¦åœ¨æµå…³é—­æ—¶é‡Šæ”¾å†…å­˜. */
 	void setFreeOnClose(bool free) { m_FreeOnClose = free; }
 
 	/** @copydoc DataStream::read		*/
@@ -189,43 +189,43 @@ public:
 	void close(void);
 
 protected:
-	/// Ö¸ÏòÊı¾İÓò¿ªÍ·µÄÖ¸Õë
+	/// æŒ‡å‘æ•°æ®åŸŸå¼€å¤´çš„æŒ‡é’ˆ
 	uchar* m_Data;
-	/// Ö¸ÏòÄ¿Ç°ËùÔÚÎ»ÖÃµÄÖ¸Õë
+	/// æŒ‡å‘ç›®å‰æ‰€åœ¨ä½ç½®çš„æŒ‡é’ˆ
 	uchar* m_Pos;
-	/// Ö¸ÏòÊı¾İÓò½áÎ²µÄÖ¸Õë
+	/// æŒ‡å‘æ•°æ®åŸŸç»“å°¾çš„æŒ‡é’ˆ
 	uchar* m_End;
-	/// µ±¹Ø±ÕÊ±ÊÇ·ñÉ¾´ÊÊı¾İ
+	/// å½“å…³é—­æ—¶æ˜¯å¦åˆ è¯æ•°æ®
 	bool m_FreeOnClose;			
 };
 
 typedef MPSharedPtr<MPMemoryDataStream> MPMemoryDataStreamPtr;
 
-/** DataStreamµÄ¹«ÓÃÅÉÉúÀà,ÓÃÓÚ´¦Àístd::basic_istreamµÄÊı¾İ.*/
+/** DataStreamçš„å…¬ç”¨æ´¾ç”Ÿç±»,ç”¨äºå¤„ç†std::basic_istreamçš„æ•°æ®.*/
 class MINDPOWER_API MPFileStreamDataStream : public MPDataStream
 {
 public:
-	/** ´Ó±ê×¼µÄstlÁ÷¹¹½¨Á÷
-	@param s stlÁ÷µÄÖ¸Õë
-	@param freeOnClose Èç¹ûÎªtrue£¬µ±Á÷ÊÍ·ÅÊ±£¬ÄÚ´æ½«»á±»ÊÍ·Å.
+	/** ä»æ ‡å‡†çš„stlæµæ„å»ºæµ
+	@param s stlæµçš„æŒ‡é’ˆ
+	@param freeOnClose å¦‚æœä¸ºtrueï¼Œå½“æµé‡Šæ”¾æ—¶ï¼Œå†…å­˜å°†ä¼šè¢«é‡Šæ”¾.
 	*/
 	MPFileStreamDataStream(std::ifstream* s, bool freeOnClose = true);
-	/** ´Ó±ê×¼µÄstlÁ÷¹¹½¨ÃüÃûÁ÷
-	@param name Á÷µÄÃû×Ö
-	@param s stlÁ÷µÄÖ¸Õë
-	@param freeOnClose Èç¹ûÎªtrue£¬µ±Á÷ÊÍ·ÅÊ±£¬ÄÚ´æ½«»á±»ÊÍ·Å.
+	/** ä»æ ‡å‡†çš„stlæµæ„å»ºå‘½åæµ
+	@param name æµçš„åå­—
+	@param s stlæµçš„æŒ‡é’ˆ
+	@param freeOnClose å¦‚æœä¸ºtrueï¼Œå½“æµé‡Šæ”¾æ—¶ï¼Œå†…å­˜å°†ä¼šè¢«é‡Šæ”¾.
 	*/
 	MPFileStreamDataStream(const String& name, std::ifstream* s, bool freeOnClose = true);
-	/** ´Ó±ê×¼µÄstlÁ÷¹¹½¨ÃüÃûÁ÷, ²¢¸æÖªÆä´óĞ¡
+	/** ä»æ ‡å‡†çš„stlæµæ„å»ºå‘½åæµ, å¹¶å‘ŠçŸ¥å…¶å¤§å°
 	@remarks
 	This variant tells the class the size of the stream too, which 
 	means this class does not need to seek to the end of the stream 
 	to determine the size up-front. This can be beneficial if you have
 	metadata about the contents of the stream already.
-	@param name Á÷µÄÃû×Ö
-	@param s stlÁ÷µÄÖ¸Õë
-	@param size Á÷µÄ´óĞ¡£¨×Ö½Ú£©
-	@param freeOnClose Èç¹ûÎªtrue£¬µ±Á÷ÊÍ·ÅÊ±£¬ÄÚ´æ½«»á±»ÊÍ·Å.
+	@param name æµçš„åå­—
+	@param s stlæµçš„æŒ‡é’ˆ
+	@param size æµçš„å¤§å°ï¼ˆå­—èŠ‚ï¼‰
+	@param freeOnClose å¦‚æœä¸ºtrueï¼Œå½“æµé‡Šæ”¾æ—¶ï¼Œå†…å­˜å°†ä¼šè¢«é‡Šæ”¾.
 	*/
 	MPFileStreamDataStream(const String& name, std::ifstream* s, size_t size, bool freeOnClose = true);
 
@@ -253,13 +253,13 @@ protected:
 	bool m_FreeOnClose;			
 };
 
-/** DataStreamµÄ¹«ÓÃÅÉÉúÀà,ÓÃÓÚ´¦ÀíC·ç¸ñµÄÎÄ¼ş´¦ÀíµÄÊı¾İ.*/
+/** DataStreamçš„å…¬ç”¨æ´¾ç”Ÿç±»,ç”¨äºå¤„ç†Cé£æ ¼çš„æ–‡ä»¶å¤„ç†çš„æ•°æ®.*/
 class MINDPOWER_API MPFileHandleDataStream : public MPDataStream
 {
 public:
-	/// ´Óc·ç¸ñÎÄ¼ş·½Ê½¹¹½¨Á÷
+	/// ä»cé£æ ¼æ–‡ä»¶æ–¹å¼æ„å»ºæµ
 	MPFileHandleDataStream(FILE* handle);
-	/// ´Óc·ç¸ñÎÄ¼ş·½Ê½¹¹½¨ÃüÃûÁ÷
+	/// ä»cé£æ ¼æ–‡ä»¶æ–¹å¼æ„å»ºå‘½åæµ
 	MPFileHandleDataStream(const String& name, FILE* handle);
 	~MPFileHandleDataStream();
 

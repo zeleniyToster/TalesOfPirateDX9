@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "netguild.h"
 #include "netcommand.h"
 #include "uiguildmgr.h"
@@ -48,7 +48,7 @@ BOOL MC_LISTGUILD(LPRPACKET pk)
 	}
 	return TRUE;
 }
-void CM_GUILD_TRYFOR(uLong	guildid)	//ÉêÇë¼ÓÈë¹«»á
+void CM_GUILD_TRYFOR(uLong	guildid)	//ç”³è¯·åŠ å…¥å…¬ä¼š
 {
 	WPacket l_wpk	=g_NetIF->GetWPacket();
 	l_wpk.WriteCmd(CMD_CM_GUILD_TRYFOR);
@@ -61,7 +61,7 @@ BOOL MC_GUILD_TRYFORCFM(LPRPACKET pk)
 	NetMC_GUILD_TRYFORCFM(pk.ReadString());
 	return TRUE;
 }
-void CM_GUILD_TRYFORCFM(bool confirm)	//È·ÈÏ¼ÓÈëconfirm =true;
+void CM_GUILD_TRYFORCFM(bool confirm)	//ç¡®è®¤åŠ å…¥confirm =true;
 {
 	WPacket l_wpk	=g_NetIF->GetWPacket();
 	l_wpk.WriteCmd(CMD_CM_GUILD_TRYFORCFM);
@@ -69,7 +69,7 @@ void CM_GUILD_TRYFORCFM(bool confirm)	//È·ÈÏ¼ÓÈëconfirm =true;
 
 	g_NetIF->SendPacketMessage(l_wpk);
 }
-void CM_GUILD_LISTTRYPLAYER()			//¹ÜÀí
+void CM_GUILD_LISTTRYPLAYER()			//ç®¡ç†
 {
 	WPacket	l_wpk	=g_NetIF->GetWPacket();
 	l_wpk.WriteCmd(CMD_CM_GUILD_LISTTRYPLAYER);
@@ -144,11 +144,11 @@ BOOL PC_GUILD(LPRPACKET pk)
 	case MSG_GUILD_START:
 		{
 			uChar l_num		=pk.ReverseReadChar();
-			uLong lPacketIndex = pk.ReverseReadLong(); // ±¨ÎÄ±àºÅ(´Ó0¿ªÊ¼)
+			uLong lPacketIndex = pk.ReverseReadLong(); // æŠ¥æ–‡ç¼–å·(ä»0å¼€å§‹)
 			static int nGuildCount = 0;
 
 			//if(!g_guild_start_begin)
-			if(lPacketIndex == 0 && l_num > 0)	// µÚÒ»¸öÊı¾İ°ü
+			if(lPacketIndex == 0 && l_num > 0)	// ç¬¬ä¸€ä¸ªæ•°æ®åŒ…
 			{
 				//g_guild_start_begin	=true;
 				uLong	l_guildid	=pk.ReadLong();
@@ -182,7 +182,7 @@ BOOL PC_GUILD(LPRPACKET pk)
 
 				//NetPC_GUILD_START(l_online,l_chaid,l_chaname,l_motto,l_job,l_degree,l_icon,l_permission);
 			}
-			if(l_num <20)	// ×îºóÒ»¸öÊı¾İ°ü
+			if(l_num <20)	// æœ€åä¸€ä¸ªæ•°æ®åŒ…
 			{
 				nGuildCount = 20 * lPacketIndex + l_num;
 			//	NetPC_GUILD_START_END();

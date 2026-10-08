@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+Ôªø#include "StdAfx.h"
 #include "uiprogressbar.h"
 #include "GameApp.h"
 
@@ -50,7 +50,7 @@ void CProgressBar::_Copy(const CProgressBar& rhs)
 CProgressBar::~CProgressBar()
 {
 	//delete _pImage;
-	SAFE_DELETE(_pImage); // UIµ±ª˙¥¶¿Ì
+	SAFE_DELETE(_pImage); // UIÂΩìÊú∫Â§ÑÁêÜ
 }
 
 void CProgressBar::Refresh()

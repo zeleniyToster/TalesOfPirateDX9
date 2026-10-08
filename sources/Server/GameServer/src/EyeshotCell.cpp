@@ -1,4 +1,4 @@
-//=============================================================================
+ï»¿//=============================================================================
 // FileName: EyeshotCell.cpp
 // Creater: ZhangXuedong
 // Date: 2005.04.29
@@ -46,7 +46,7 @@ CEyeshotCell::~CEyeshotCell()
 	}
 }
 
-// ÊµÌåpCEnt½øÈëÊÓÒ°µ¥Ôª£¬Ö´ĞĞ¿ÉÊÓ»¯²Ù×÷
+// å®ä½“pCEntè¿›å…¥è§†é‡å•å…ƒï¼Œæ‰§è¡Œå¯è§†åŒ–æ“ä½œ
 void CEyeshotCell::EnterEyeshot(Entity *pCEnt)
 {T_B
 	for (short i = 0; i < m_sStateCellNum; i++)

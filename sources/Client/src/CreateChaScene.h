@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "Scene.h"
 
@@ -38,7 +38,7 @@ namespace GUI
 class CSelectChaScene;
 
 /**
- * ÕªÒª£ºcopy from Jack
+ * æ‘˜è¦ï¼šcopy from Jack
  *
  * @author: Michael Chen
  * @date: 2005-04-26
@@ -96,8 +96,8 @@ public:
 };
 
 /**
- * ÕªÒª£º±¾ÀàÖ÷Òª´¦ÀíµÇÂ½Á÷³ÌÖĞµÄ´´½¨½ÇÉ«³¡¾°,°üÀ¨³¡¾°¶¯»­ºÍGUI±íµ¥.
- * ¡¡¡¡¡¡±¾Àà¼Ì³Ğ×ÔCGameSceneÀà.
+ * æ‘˜è¦ï¼šæœ¬ç±»ä¸»è¦å¤„ç†ç™»é™†æµç¨‹ä¸­çš„åˆ›å»ºè§’è‰²åœºæ™¯,åŒ…æ‹¬åœºæ™¯åŠ¨ç”»å’ŒGUIè¡¨å•.
+ * ã€€ã€€ã€€æœ¬ç±»ç»§æ‰¿è‡ªCGameSceneç±».
  *
  * @author: Michael Chen
  * @date: 2005-04-26
@@ -116,13 +116,13 @@ public:
         m_pkLastScene = pkLastScene; 
     }
 
-    virtual void        LoadingCall();          // ÔÚ×°ÔØloadingºó,Ë¢ĞÂ
+    virtual void        LoadingCall();          // åœ¨è£…è½½loadingå,åˆ·æ–°
 
-	CForm*			frmRoleInfo;		// ¶¨Òå½ÇÉ«³õ²½½éÉÜ½çÃæ  ¸Ã½çÃæ½öÔÚ½øÈë´´½¨½ÇÉ«½çÃæÊ±ÏÔÊ¾
+	CForm*			frmRoleInfo;		// å®šä¹‰è§’è‰²åˆæ­¥ä»‹ç»ç•Œé¢  è¯¥ç•Œé¢ä»…åœ¨è¿›å…¥åˆ›å»ºè§’è‰²ç•Œé¢æ—¶æ˜¾ç¤º
 
 
 protected:
-    //³¡¾°Ïà¹Øº¯Êı
+    //åœºæ™¯ç›¸å…³å‡½æ•°
     virtual void		_FrameMove(DWORD dwTimeParam);
     virtual void		_Render();
 
@@ -132,13 +132,13 @@ protected:
     virtual bool		_Init();	
 	virtual bool		_Clear();
 
-    //UIÏà¹Øº¯Êı
+    //UIç›¸å…³å‡½æ•°
     bool                _InitUI();
 
-    //äÖÈ¾UI 3DÄ£ĞÍ
+    //æ¸²æŸ“UI 3Dæ¨¡å‹
     void                RenderCha(int x,int y) const;
 
-    //»Øµôº¯Êı
+    //å›æ‰å‡½æ•°
     static void     _ChaFoundFrmMouseEvent(CCompent *pSender, int nMsgType, 
                                            int x, int y, DWORD dwKey);
     static void     _ChaCityFrmMouseEvent(CCompent *pSender, int nMsgType, 
@@ -173,7 +173,7 @@ protected:
     {
         LEFT = -1, RIGHT = 1,
     };
-    // Âß¼­º¯Êı
+    // é€»è¾‘å‡½æ•°
     void            ChangeFace(eDirectType enumDirect = LEFT);
     void            ChangeHair(eDirectType enumDirect = LEFT);
     void            ChangeCity(eDirectType enumDirect = LEFT) const;
@@ -217,19 +217,19 @@ private:
 	void			ShowCityZone(int index);
 
 private:
-    // 3D ³¡¾°
+    // 3D åœºæ™¯
     LoginScene_CreateCha m_LoginSceneCreateCha;
 
-    // UI ½çÃæ
+    // UI ç•Œé¢
 
-    // ½ÇÉ«´´½¨½çÃæ
+    // è§’è‰²åˆ›å»ºç•Œé¢
     static CForm*			    frmChaFound; 
     static CEdit*               edtName;
     static CMemo*               memChaDescribe;
     static CLabel*              labHair;
     static CLabel*              labFace;
 
-    // ½ÇÉ«³ÇÊĞÑ¡Ôñ½çÃæ
+    // è§’è‰²åŸå¸‚é€‰æ‹©ç•Œé¢
     static CForm*               frmChaCity;
     static CMemo*               memChaDescribe2;
     static CLabel*              labCity;
@@ -240,24 +240,24 @@ private:
     static int					m_nCurCityIndex;   
 	static bool					bShowDialog;
 
-    // ÍË³ö²Ëµ¥½çÃæ
+    // é€€å‡ºèœå•ç•Œé¢
     static CForm*               frmQuit;
 
-    static int  nHairTestCnt[MAX_HAIR_NUM];			//ËÄ¸öÈËÎïÍ··¢µÄ¿ªÊ¼±àºÅ
-    static int  nFaceTestCnt[MAX_FACE_NUM];			//ËÄ¸öÈËÎïÁ³ĞÎµÄ¿ªÊ¼±àºÅ
+    static int  nHairTestCnt[MAX_HAIR_NUM];			//å››ä¸ªäººç‰©å¤´å‘çš„å¼€å§‹ç¼–å·
+    static int  nFaceTestCnt[MAX_FACE_NUM];			//å››ä¸ªäººç‰©è„¸å½¢çš„å¼€å§‹ç¼–å·
     static int nSelHairNum[MAX_CHA_NUM];
     static int nSelFaceNum[MAX_CHA_NUM];
 
 
 private:
 
-    int m_nSelChaIndex;                     //Ñ¡ÖĞÈËÎïµÄ±àºÅ(Í¬Ê±×÷Îªµ±Ç°½ÇÉ«ÃèÊöĞòºÅ)
-    std::string m_sName;                         //½ÇÉ«Ãû
-    int m_nCurHairIndex;                    //µ±Ç°µÄ·¢ĞÍ±àºÅ
-    int m_nCurFaceIndex;                    //µ±Ç°µÄÁ³ĞÍ±àºÅ
-    int m_nChaRotate;                       //ÉÏ´ÎÈËÎïµÄÆ«ÒÆ½Ç¶È(-180~+180)						
+    int m_nSelChaIndex;                     //é€‰ä¸­äººç‰©çš„ç¼–å·(åŒæ—¶ä½œä¸ºå½“å‰è§’è‰²æè¿°åºå·)
+    std::string m_sName;                         //è§’è‰²å
+    int m_nCurHairIndex;                    //å½“å‰çš„å‘å‹ç¼–å·
+    int m_nCurFaceIndex;                    //å½“å‰çš„è„¸å‹ç¼–å·
+    int m_nChaRotate;                       //ä¸Šæ¬¡äººç‰©çš„åç§»è§’åº¦(-180~+180)						
 
-    CSelectChaScene* m_pkLastScene;           //ÉÏÒ»¸ö³¡¾°
+    CSelectChaScene* m_pkLastScene;           //ä¸Šä¸€ä¸ªåœºæ™¯
 
 	static const int CHA_NUM = 4;
 	CCharacter* m_pChaForUI[CHA_NUM];
@@ -278,11 +278,11 @@ private:
 
 	CImage*			imgChaView[ROLE_ALL_INFO_COUNT];
 
-	CForm*			frmLanchInfo;		// ¶¨ÒåÀ¶çù×ªÖ°Â·Ïß½éÉÜ½çÃæ    ¸Ã½çÃæ½öÔÚ½øÈë´´½¨½ÇÉ«½çÃæºóÑ¡ÔñÀ¶çùºóÏÔÊ¾
-	CForm*			frmAimiInfo;		// ¶¨Òå°¬Ã××ªÖ°Â·Ïß½éÉÜ½çÃæ    ¸Ã½çÃæ½öÔÚ½øÈë´´½¨½ÇÉ«½çÃæºóÑ¡Ôñ°¬Ã×ºóÏÔÊ¾
-	CForm*			frmFelierInfo;		// ¶¨Òå·ÆÀû¶ø×ªÖ°Â·Ïß½éÉÜ½çÃæ    ¸Ã½çÃæ½öÔÚ½øÈë´´½¨½ÇÉ«½çÃæºóÑ¡Ôñ·ÆÀû¶øºóÏÔÊ¾
-	CForm*			frmCaxiusInfo;		// ¶¨Òå¿¨Î÷Ë¹×ªÖ°Â·Ïß½éÉÜ½çÃæ    ¸Ã½çÃæ½öÔÚ½øÈë´´½¨½ÇÉ«½çÃæºóÑ¡Ôñ¿¨Î÷Ë¹ºóÏÔÊ¾
-	CForm*			frmRoleAllInfo;		// ¶¨Òå½ÇÉ«ÏêÏ¸½éÉÜ½çÃæ    ¸Ã½çÃæ½öÔÚ½øÈë¸÷½ÇÉ«×ªÖ°Â·Ïß½éÉÜ½çÃæºóµã»÷ÈÎÒâÒ»¸ö½ÇÉ«ºóÏÔÊ¾
+	CForm*			frmLanchInfo;		// å®šä¹‰è“ç¦è½¬èŒè·¯çº¿ä»‹ç»ç•Œé¢    è¯¥ç•Œé¢ä»…åœ¨è¿›å…¥åˆ›å»ºè§’è‰²ç•Œé¢åé€‰æ‹©è“ç¦åæ˜¾ç¤º
+	CForm*			frmAimiInfo;		// å®šä¹‰è‰¾ç±³è½¬èŒè·¯çº¿ä»‹ç»ç•Œé¢    è¯¥ç•Œé¢ä»…åœ¨è¿›å…¥åˆ›å»ºè§’è‰²ç•Œé¢åé€‰æ‹©è‰¾ç±³åæ˜¾ç¤º
+	CForm*			frmFelierInfo;		// å®šä¹‰è²åˆ©è€Œè½¬èŒè·¯çº¿ä»‹ç»ç•Œé¢    è¯¥ç•Œé¢ä»…åœ¨è¿›å…¥åˆ›å»ºè§’è‰²ç•Œé¢åé€‰æ‹©è²åˆ©è€Œåæ˜¾ç¤º
+	CForm*			frmCaxiusInfo;		// å®šä¹‰å¡è¥¿æ–¯è½¬èŒè·¯çº¿ä»‹ç»ç•Œé¢    è¯¥ç•Œé¢ä»…åœ¨è¿›å…¥åˆ›å»ºè§’è‰²ç•Œé¢åé€‰æ‹©å¡è¥¿æ–¯åæ˜¾ç¤º
+	CForm*			frmRoleAllInfo;		// å®šä¹‰è§’è‰²è¯¦ç»†ä»‹ç»ç•Œé¢    è¯¥ç•Œé¢ä»…åœ¨è¿›å…¥å„è§’è‰²è½¬èŒè·¯çº¿ä»‹ç»ç•Œé¢åç‚¹å‡»ä»»æ„ä¸€ä¸ªè§’è‰²åæ˜¾ç¤º
 
 	CMemo*			memChaDescribeUp;
 	CMemo*			memChaDescribeDown;

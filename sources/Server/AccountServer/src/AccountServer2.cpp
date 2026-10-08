@@ -1052,7 +1052,7 @@ WPacket AuthThread::AccountLogin(DataSocket* datasock)
 	}
 	else if (m_AcctInfo.nStatus == ACCOUNT_SAVING)
 	{
-		//帐号在锁定状态(保存角色)
+		// account is locked (character save in progress)
 		if (m_AcctInfo.nProtectTime >= 0 && m_AcctInfo.nProtectTime < SAVING_TIME)
 		{
 			wpkt.WriteShort(ERR_AP_SAVING);

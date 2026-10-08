@@ -1,4 +1,4 @@
-#ifndef MPColorValue_H
+ï»¿#ifndef MPColorValue_H
 #define MPColorValue_H
 
 #include "MindPowerAPI.h"
@@ -8,9 +8,9 @@ typedef unsigned int RGBA;
 typedef unsigned int ARGB;
 typedef unsigned int ABGR;
 
-/** ±íÊ¾ÑÕÉ«µÄÀà.
+/** è¡¨ç¤ºé¢œè‰²çš„ç±».
 @remarks
-	ÑÕÉ«ÓÉ4¸ö³ÉÔ±×é³É£¬Ã¿Ò»¸ö³ÉÔ±¶¼ÊÇÓÉ0.0µ½1.0µÄ¸¡µãÊı×é³É
+	é¢œè‰²ç”±4ä¸ªæˆå‘˜ç»„æˆï¼Œæ¯ä¸€ä¸ªæˆå‘˜éƒ½æ˜¯ç”±0.0åˆ°1.0çš„æµ®ç‚¹æ•°ç»„æˆ
 */
 class MINDPOWER_API MPColorValue
 {
@@ -36,30 +36,30 @@ public:
 		float val[4];
 	};
 
-	/** ÒÔRGBAĞÎÊ½·µ»ØÑÕÉ«.
+	/** ä»¥RGBAå½¢å¼è¿”å›é¢œè‰².
 	*/
 	RGBA getAsRGBA(void) const;
 
-	/** ÒÔARGBĞÎÊ½·µ»ØÑÕÉ«.
+	/** ä»¥ARGBå½¢å¼è¿”å›é¢œè‰².
 	*/
 	ARGB getAsARGB(void) const;
 
-	/** ÒÔABGRĞÎÊ½·µ»ØÑÕÉ« */
+	/** ä»¥ABGRå½¢å¼è¿”å›é¢œè‰² */
 	ABGR getAsABGR(void) const;
 
-	/** ÒÔRGBAĞÎÊ½ÉèÖÃÑÕÉ«.
+	/** ä»¥RGBAå½¢å¼è®¾ç½®é¢œè‰².
 	*/
 	void setAsRGBA(const RGBA val);
 
-	/** ÒÔARGBĞÎÊ½ÉèÖÃÑÕÉ«.
+	/** ä»¥ARGBå½¢å¼è®¾ç½®é¢œè‰².
 	*/
 	void setAsARGB(const ARGB val);
 
-	/** ÒÔABGRĞÎÊ½ÉèÖÃÑÕÉ«.
+	/** ä»¥ABGRå½¢å¼è®¾ç½®é¢œè‰².
 	*/
 	void setAsABGR(const ABGR val);
 
-	// Ò»ÔªÊıÑ§²Ù×÷
+	// ä¸€å…ƒæ•°å­¦æ“ä½œ
 	inline MPColorValue& operator += ( const MPColorValue& rkVector )
 	{
 		r += rkVector.r;
@@ -115,7 +115,7 @@ public:
 };
 
 //=============================================================================
-// ¶şÔªÊıÑ§²Ù×÷
+// äºŒå…ƒæ•°å­¦æ“ä½œ
 //=============================================================================
 inline const MPColorValue operator +(const MPColorValue& lhs, const MPColorValue& rhs)
 {

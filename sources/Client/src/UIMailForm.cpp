@@ -1,4 +1,4 @@
-
+ï»¿
 #include "stdafx.h"
 #include "gameapp.h"
 #include "UIMailForm.h"
@@ -111,7 +111,7 @@ namespace GUI
 	{
 		if(strlen(edtQuestionTitle->GetCaption()) < 16)
 		{
-			g_pGameApp->MsgBox(g_oLangRec.GetString(914));	// ÓÊ¼şÄÚÈİ²»µÃÉÙÓÚ8¸öºº×Ö£¨16¸öÓ¢ÎÄ×Ö£©£¡
+			g_pGameApp->MsgBox(g_oLangRec.GetString(914));	// é‚®ä»¶å†…å®¹ä¸å¾—å°‘äº8ä¸ªæ±‰å­—ï¼ˆ16ä¸ªè‹±æ–‡å­—ï¼‰ï¼
 			return;
 		}
 
@@ -126,7 +126,7 @@ namespace GUI
 	void CMailMgr::_evtQuestionFormEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey)
 	{
 		string strName = pSender->GetName();
-		if(strName == "btnSubmit")	// Ìá½»ÎÊÌâ
+		if(strName == "btnSubmit")	// æäº¤é—®é¢˜
 		{
 			g_stUIMail.SubmitQuestion();
 		}

@@ -1,80 +1,80 @@
-#pragma once
+ï»¿#pragma once
 
 enum EActionNumber
 {
-    POSE_WAITING =       01,//	ÆÕÍ¨waiting	
-    POSE_SHOW =          02,//	°Ú¿ápose	
-    POSE_SLEEP =         03,//	ÐÝÃß
-    POSE_WAITING2 =      04,//	½ä±¸waiting	
-    POSE_RUN =           05,//	ÆÕÍ¨±¼ÅÜ	
-    POSE_RUN2 =          06,//	½ä±¸±¼ÅÜ	
-    POSE_ATTACK =        07,//	ÆÕÍ¨¹¥»÷1
-    POSE_ATTACK1 =       8, //	ÆÕÍ¨¹¥»÷2
-    POSE_ATTACK2 =       9, //	ÆÕÍ¨¹¥»÷3
-    POSE_POWER_ATTACK =  10,//  ÖØ»÷
-    POSE_SKILL1 =        11,//	¼¼ÄÜ£±
-    POSE_SKILL2 =        12,//	¼¼ÄÜ£²
-    POSE_SKILL3 =        13,//	¼¼ÄÜ£³
-    POSE_SKILL4 =        14,//	¼¼ÄÜ£´	011	
-    POSE_SKILL5 =        15,//	¼¼ÄÜ£µ	012	
-    POSE_SEAT =          16,//	ÆÕÍ¨×øÏÂ	
-    POSE_DIE =           17,//	ËÀÍö(Í¨ÓÃ)	
-    POSE_WAVE =          18,//	»ÓÊÖ(Í¨ÓÃ)	
-    POSE_CRY =           19,//	´ó¿Þ(Í¨ÓÃ)	
-    POSE_JUMP =          20,//	È¸Ô¾(Í¨ÓÃ)	
-    POSE_ANGER =         21,//	ÉúÆø(Í¨ÓÃ)	
-    POSE_DARE =          22,//	ÌôÐÆ(Í¨ÓÃ)	
-    POSE_GAY =           23,//	×ÔÁµ(ÄÐÍ¨ÓÃ)
-    POSE_EMOTE7 =        24,//	±íÇé¶¯×÷7	
-    POSE_EMOTE8 =        25,//	±íÇé¶¯×÷8	
-    POSE_EMOTE9 =        26,//	±íÇé¶¯×÷9	
-    POSE_EMOTE10 =       27,//	±íÇé¶¯×÷10	
-    POSE_MINE =          28,//	ÍÚ¿ó(³¡¾°»¥¶¯
-    POSE_COLLECT =       29,//	²É¼¯(³¡¾°»¥¶¯
-    POSE_SEAT2 =         30,//	×øµÊ×Ó(³¡¾°»¥
-    POSE_LEAN =          31,//	¿¿Ç½(³¡¾°»¥¶¯
-    POSE_LEAN2 =         32,//	¿¿Ê÷(³¡¾°»¥¶¯
-    POSE_HAPPY =         33,//	½ÇÉ«»¥¶¯(³¡¾°»¥¶¯)
-    POSE_HAPPY7 =        34,//	³¡¾°»¥¶¯¶¯×÷7
-    POSE_HAPPY8 =        35,//	³¡¾°»¥¶¯¶¯×÷8
-    POSE_HAPPY9 =        36,//	³¡¾°»¥¶¯¶¯×÷9
-    POSE_HAPPY10 =       37,//	³¡¾°»¥¶¯¶¯×÷10
-    POSE_RESERVED1 =     38,//	±¸ÓÃ¶¯×÷1	
-    POSE_FALLDOWN =      39,//	±¸ÓÃ¶¯×÷2	
-    POSE_SKILL6 =        40,//	¼¼ÄÜ¶¯×÷6	
-    POSE_SKILL7 =        41,//	¼¼ÄÜ¶¯×÷7	
-    POSE_FLY_WAITING =   42,//	·ÉÐÐ				//POSE_SKILL8 =        42,//	¼¼ÄÜ¶¯×÷8	
-    POSE_FLY_RUN =       43,//	·ÉÐÐÒÆ¶¯			//POSE_SKILL9 =        43,//	¼¼ÄÜ¶¯×÷9	
-    POSE_FLY_SHOW =      44,//	¿ÕÖÐ°Ú¿á			//POSE_SKILL10 =       44,//	¼¼ÄÜ¶¯×÷10	
-    POSE_FLY_SEAT =      45,//	Ðü¿Õ×øÏÂ			//POSE_SKILL11 =       45,//	¼¼ÄÜ¶¯×÷11	
-    POSE_SKILL12 =       46,//	¼¼ÄÜ¶¯×÷12	
-    POSE_SKILL13 =       47,//	¼¼ÄÜ¶¯×÷13	
-    POSE_SKILL14 =       48,//	¼¼ÄÜ¶¯×÷14	
-    POSE_SKILL15 =       49,//	¼¼ÄÜ¶¯×÷15	
-    POSE_SKILL16 =       50,//	¼¼ÄÜ¶¯×÷16	
-    POSE_SKILL17 =       51,//	¼¼ÄÜ¶¯×÷17	
-    POSE_SKILL18 =       52,//	¼¼ÄÜ¶¯×÷18	
-    POSE_SKILL19 =       53,//	¼¼ÄÜ¶¯×÷19	
-    POSE_SKILL20 =       54,//	¼¼ÄÜ¶¯×÷20	
+    POSE_WAITING =       01,//	æ™®é€šwaiting	
+    POSE_SHOW =          02,//	æ‘†é…·pose	
+    POSE_SLEEP =         03,//	ä¼‘çœ 
+    POSE_WAITING2 =      04,//	æˆ’å¤‡waiting	
+    POSE_RUN =           05,//	æ™®é€šå¥”è·‘	
+    POSE_RUN2 =          06,//	æˆ’å¤‡å¥”è·‘	
+    POSE_ATTACK =        07,//	æ™®é€šæ”»å‡»1
+    POSE_ATTACK1 =       8, //	æ™®é€šæ”»å‡»2
+    POSE_ATTACK2 =       9, //	æ™®é€šæ”»å‡»3
+    POSE_POWER_ATTACK =  10,//  é‡å‡»
+    POSE_SKILL1 =        11,//	æŠ€èƒ½ï¼‘
+    POSE_SKILL2 =        12,//	æŠ€èƒ½ï¼’
+    POSE_SKILL3 =        13,//	æŠ€èƒ½ï¼“
+    POSE_SKILL4 =        14,//	æŠ€èƒ½ï¼”	011	
+    POSE_SKILL5 =        15,//	æŠ€èƒ½ï¼•	012	
+    POSE_SEAT =          16,//	æ™®é€šåä¸‹	
+    POSE_DIE =           17,//	æ­»äº¡(é€šç”¨)	
+    POSE_WAVE =          18,//	æŒ¥æ‰‹(é€šç”¨)	
+    POSE_CRY =           19,//	å¤§å“­(é€šç”¨)	
+    POSE_JUMP =          20,//	é›€è·ƒ(é€šç”¨)	
+    POSE_ANGER =         21,//	ç”Ÿæ°”(é€šç”¨)	
+    POSE_DARE =          22,//	æŒ‘è¡…(é€šç”¨)	
+    POSE_GAY =           23,//	è‡ªæ‹(ç”·é€šç”¨)
+    POSE_EMOTE7 =        24,//	è¡¨æƒ…åŠ¨ä½œ7	
+    POSE_EMOTE8 =        25,//	è¡¨æƒ…åŠ¨ä½œ8	
+    POSE_EMOTE9 =        26,//	è¡¨æƒ…åŠ¨ä½œ9	
+    POSE_EMOTE10 =       27,//	è¡¨æƒ…åŠ¨ä½œ10	
+    POSE_MINE =          28,//	æŒ–çŸ¿(åœºæ™¯äº’åŠ¨
+    POSE_COLLECT =       29,//	é‡‡é›†(åœºæ™¯äº’åŠ¨
+    POSE_SEAT2 =         30,//	åå‡³å­(åœºæ™¯äº’
+    POSE_LEAN =          31,//	é å¢™(åœºæ™¯äº’åŠ¨
+    POSE_LEAN2 =         32,//	é æ ‘(åœºæ™¯äº’åŠ¨
+    POSE_HAPPY =         33,//	è§’è‰²äº’åŠ¨(åœºæ™¯äº’åŠ¨)
+    POSE_HAPPY7 =        34,//	åœºæ™¯äº’åŠ¨åŠ¨ä½œ7
+    POSE_HAPPY8 =        35,//	åœºæ™¯äº’åŠ¨åŠ¨ä½œ8
+    POSE_HAPPY9 =        36,//	åœºæ™¯äº’åŠ¨åŠ¨ä½œ9
+    POSE_HAPPY10 =       37,//	åœºæ™¯äº’åŠ¨åŠ¨ä½œ10
+    POSE_RESERVED1 =     38,//	å¤‡ç”¨åŠ¨ä½œ1	
+    POSE_FALLDOWN =      39,//	å¤‡ç”¨åŠ¨ä½œ2	
+    POSE_SKILL6 =        40,//	æŠ€èƒ½åŠ¨ä½œ6	
+    POSE_SKILL7 =        41,//	æŠ€èƒ½åŠ¨ä½œ7	
+    POSE_FLY_WAITING =   42,//	é£žè¡Œ				//POSE_SKILL8 =        42,//	æŠ€èƒ½åŠ¨ä½œ8	
+    POSE_FLY_RUN =       43,//	é£žè¡Œç§»åŠ¨			//POSE_SKILL9 =        43,//	æŠ€èƒ½åŠ¨ä½œ9	
+    POSE_FLY_SHOW =      44,//	ç©ºä¸­æ‘†é…·			//POSE_SKILL10 =       44,//	æŠ€èƒ½åŠ¨ä½œ10	
+    POSE_FLY_SEAT =      45,//	æ‚¬ç©ºåä¸‹			//POSE_SKILL11 =       45,//	æŠ€èƒ½åŠ¨ä½œ11	
+    POSE_SKILL12 =       46,//	æŠ€èƒ½åŠ¨ä½œ12	
+    POSE_SKILL13 =       47,//	æŠ€èƒ½åŠ¨ä½œ13	
+    POSE_SKILL14 =       48,//	æŠ€èƒ½åŠ¨ä½œ14	
+    POSE_SKILL15 =       49,//	æŠ€èƒ½åŠ¨ä½œ15	
+    POSE_SKILL16 =       50,//	æŠ€èƒ½åŠ¨ä½œ16	
+    POSE_SKILL17 =       51,//	æŠ€èƒ½åŠ¨ä½œ17	
+    POSE_SKILL18 =       52,//	æŠ€èƒ½åŠ¨ä½œ18	
+    POSE_SKILL19 =       53,//	æŠ€èƒ½åŠ¨ä½œ19	
+    POSE_SKILL20 =       54,//	æŠ€èƒ½åŠ¨ä½œ20	
 };
 
 struct SActionInfo
 {
-	short		m_sActionNO;	// ¶¯×÷±àºÅ
-	//short		m_sStartFrame;	// ÆðÊ¼Ö¡
-	//short		m_sEndFrame;	// ½áÊøÖ¡
+	short		m_sActionNO;	// åŠ¨ä½œç¼–å·
+	//short		m_sStartFrame;	// èµ·å§‹å¸§
+	//short		m_sEndFrame;	// ç»“æŸå¸§
 
-	//short		m_sKeyFrameNum;	// ¹Ø¼üÖ¡¸öÊý
-	//short		*m_sKeyFrame;	// ¹Ø¼üÖ¡¼¯
+	//short		m_sKeyFrameNum;	// å…³é”®å¸§ä¸ªæ•°
+	//short		*m_sKeyFrame;	// å…³é”®å¸§é›†
     lwPoseInfo info;
 };
 
 struct SCharacterAction
 {
-	short		m_iCharacterType;	// ½ÇÉ«ÀàÐÍ
-	short		m_iMaxActionNum;	// ½ÇÉ«µÄ×î´ó¶¯×÷Êý(´ÓÎÄ¼þÖÐ¶Áµ½µÄ½ÇÉ«µÄ×î´ó¶¯×÷ºÅ)
-	short		m_iActualActionNum;	// ½ÇÉ«µÄÓÐÐ§¶¯×÷Êý(´ÓÎÄ¼þÖÐ¶Áµ½µÄ½ÇÉ«µÄ¶¯×÷¸öÊý)
-	SActionInfo	*m_SActionInfo;		// ½ÇÉ«µ¥¸ö¶¯×÷ÐÅÏ¢
+	short		m_iCharacterType;	// è§’è‰²ç±»åž‹
+	short		m_iMaxActionNum;	// è§’è‰²çš„æœ€å¤§åŠ¨ä½œæ•°(ä»Žæ–‡ä»¶ä¸­è¯»åˆ°çš„è§’è‰²çš„æœ€å¤§åŠ¨ä½œå·)
+	short		m_iActualActionNum;	// è§’è‰²çš„æœ‰æ•ˆåŠ¨ä½œæ•°(ä»Žæ–‡ä»¶ä¸­è¯»åˆ°çš„è§’è‰²çš„åŠ¨ä½œä¸ªæ•°)
+	SActionInfo	*m_SActionInfo;		// è§’è‰²å•ä¸ªåŠ¨ä½œä¿¡æ¯
 };
 
 class	CGameCharacterAction
@@ -94,8 +94,8 @@ public:
 	bool		GetCharAction(int iCharType, SCharacterAction *SCharAct);
 
 protected:
-	short		m_iMaxCharacterType;		// ×î´ó½ÇÉ«ÀàÐÍÊý(´ÓÎÄ¼þÖÐ¶Áµ½µÄ×î´óµÄ½ÇÉ«ÀàÐÍºÅ)
-	short		m_iActualCharacterType;		// ÓÐÐ§½ÇÉ«ÀàÐÍÊý(´ÓÎÄ¼þÖÐ¶Áµ½µÄ½ÇÉ«¸öÊý)
+	short		m_iMaxCharacterType;		// æœ€å¤§è§’è‰²ç±»åž‹æ•°(ä»Žæ–‡ä»¶ä¸­è¯»åˆ°çš„æœ€å¤§çš„è§’è‰²ç±»åž‹å·)
+	short		m_iActualCharacterType;		// æœ‰æ•ˆè§’è‰²ç±»åž‹æ•°(ä»Žæ–‡ä»¶ä¸­è¯»åˆ°çš„è§’è‰²ä¸ªæ•°)
 	SCharacterAction	*m_SCharacterAction;
 };
 

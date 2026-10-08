@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "uitreeview.h"
 #include "uiformmgr.h"
 
@@ -74,7 +74,7 @@ bool CTreeNodeObj::ClearAllChild()
 	for( TreeNodes::iterator it=_ndChilds.begin(); it!=_ndChilds.end(); ++it )
 	{
 		//delete *it;
-		SAFE_DELETE(*it); // UIµ±»ú´¦Àí
+		SAFE_DELETE(*it); // UIå½“æœºå¤„ç†
 	}
 
 	_ndChilds.clear();
@@ -96,7 +96,7 @@ bool CTreeNodeObj::DelNode( CTreeNodeObj* pNode )
 				_pOwn->GetSelect()->CancelSelect();
 			}
 			//delete *it;
-			SAFE_DELETE(*it); // UIµ±»ú´¦Àí
+			SAFE_DELETE(*it); // UIå½“æœºå¤„ç†
 			
 			_ndChilds.erase( it );
 			return true;
@@ -180,7 +180,7 @@ bool CTreeNodeObj::MouseRun( int x, int y, DWORD key )
 		CWaitCursor lock;
 		_pOwn->Refresh();
 
-		// µã»÷Ê÷½áµãµÄ +/- Ê±Ò²»á´¥·¢Êó±êµã»÷ÊÂ¼ş£¬+32 ÊÇÎªÁËÊ¹µã»÷ÄÜÂäÔÚ½áµãÉÏ¶ø²»ÊÇ +/- ÉÏ
+		// ç‚¹å‡»æ ‘ç»“ç‚¹çš„ +/- æ—¶ä¹Ÿä¼šè§¦å‘é¼ æ ‡ç‚¹å‡»äº‹ä»¶ï¼Œ+32 æ˜¯ä¸ºäº†ä½¿ç‚¹å‡»èƒ½è½åœ¨ç»“ç‚¹ä¸Šè€Œä¸æ˜¯ +/- ä¸Š
 		if(_pOwn->evtMouseDown) _pOwn->evtMouseDown(_pOwn, x + 32, y, key);
 
 		return false;
@@ -397,7 +397,7 @@ CTreeGridNode::~CTreeGridNode()
     for( vitems::iterator it=_items.begin(); it!=_items.end(); ++it )
 	{
         //delete *it;
-		SAFE_DELETE(*it); // UIµ±»ú´¦Àí
+		SAFE_DELETE(*it); // UIå½“æœºå¤„ç†
 	}
 
     _items.clear();
@@ -518,7 +518,7 @@ void CTreeGridNode::Clear()
     for( vitems::iterator it=_items.begin(); it!=_items.end(); ++it )
 	{
         //delete *it;
-		SAFE_DELETE(*it); // UIµ±»ú´¦Àí
+		SAFE_DELETE(*it); // UIå½“æœºå¤„ç†
 	}
 
     _items.clear();
@@ -536,7 +536,7 @@ bool CTreeGridNode::DelItem( CItemObj* item )
 			_pOwn->GetSelect()->CancelSelect();
 		}
 		//delete *it;
-		SAFE_DELETE(*it); // UIµ±»ú´¦Àí
+		SAFE_DELETE(*it); // UIå½“æœºå¤„ç†
 
 		_pOwn->DelItemCall( *it );
 		_items.erase(it);
@@ -585,7 +585,7 @@ bool CTreeGridNode::DelItem( const char* str )
 				_pOwn->GetSelect()->CancelSelect();
 			}
 			//delete *it;
-			SAFE_DELETE(*it); // UIµ±»ú´¦Àí
+			SAFE_DELETE(*it); // UIå½“æœºå¤„ç†
 
 			_pOwn->DelItemCall( *it );
 		    _items.erase(it);
@@ -658,7 +658,7 @@ void CTreeView::Render()
 	{
 		_pImage->Render( GetX(), GetY() );
 
-		// ÓÉÓÚÊ÷ÔÚÑ¡ÖĞÊ±µÄÑ¡ÖĞÍ¼Ïó¿ÉÒÔÔÚÇ°¿ÉÒÔÔÚºó,ËùÒÔÔÚSelectItemÖĞÔÙ¾ö¶¨»­µÄË³Ğò
+		// ç”±äºæ ‘åœ¨é€‰ä¸­æ—¶çš„é€‰ä¸­å›¾è±¡å¯ä»¥åœ¨å‰å¯ä»¥åœ¨å,æ‰€ä»¥åœ¨SelectItemä¸­å†å†³å®šç”»çš„é¡ºåº
 		_pSelectItem->Render();
 
 		if( _pScroll->GetIsShow() ) _pScroll->Render();

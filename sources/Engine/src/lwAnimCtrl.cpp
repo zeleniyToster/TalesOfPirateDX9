@@ -1,4 +1,4 @@
-//
+ï»¿//
 #include "stdafx.h"
 
 #include "lwAnimCtrl.h"
@@ -124,7 +124,7 @@ __ret:
 
 LW_RESULT lwAnimCtrlBone::_UpdateFrameDataBone(lwMatrix44** o_mat_ptr, lwMatrix44* mat_buf, float frame, DWORD start_frame, DWORD end_frame, BOOL loop_flag)
 {
-    // Õâ¸ö°æ±¾ÒÑ¾­Ê¹ÓÃÏßĞÔ²åÖµÀ´¼ÆËãÖ¡Êı¾İ
+    // è¿™ä¸ªç‰ˆæœ¬å·²ç»ä½¿ç”¨çº¿æ€§æ’å€¼æ¥è®¡ç®—å¸§æ•°æ®
     LW_RESULT ret = LW_RET_FAILED;
 
     DWORD i;
@@ -138,8 +138,8 @@ LW_RESULT lwAnimCtrlBone::_UpdateFrameDataBone(lwMatrix44** o_mat_ptr, lwMatrix4
 
 
     // by lsh
-    // ÕâÀïframe > _data._frame_num Ã»ÓĞÓÃ">="ÊÇÒòÎªÎÒÃÇÔÚ¿¼ÂÇPLAY_LOOPµÄÇé¿öÊ±
-    // ĞèÒª²åÖµµÚ0Ö¡ºÍµÚ_data._frame_num - 1Ö¡µÄÊı¾İ
+    // è¿™é‡Œframe > _data._frame_num æ²¡æœ‰ç”¨">="æ˜¯å› ä¸ºæˆ‘ä»¬åœ¨è€ƒè™‘PLAY_LOOPçš„æƒ…å†µæ—¶
+    // éœ€è¦æ’å€¼ç¬¬0å¸§å’Œç¬¬_data._frame_num - 1å¸§çš„æ•°æ®
     if(frame < 0.0f || frame > _data._frame_num)
     {
         ret = ERR_INVALID_PARAM;
@@ -333,12 +333,12 @@ lwMatrix44* lwAnimCtrlBone::GetDummyRTM(DWORD id)
 
 LW_RESULT lwAnimCtrlBone::SetFrame(float frame, DWORD start_frame, DWORD end_frame)
 {
-    // Õâ¸ö°æ±¾ÒÑ¾­Ê¹ÓÃÏßĞÔ²åÖµÀ´¼ÆËãÖ¡Êı¾İ
+    // è¿™ä¸ªç‰ˆæœ¬å·²ç»ä½¿ç”¨çº¿æ€§æ’å€¼æ¥è®¡ç®—å¸§æ•°æ®
     LW_RESULT ret = LW_RET_FAILED;
 
     // by lsh
-    // ÕâÀïframe > _data._frame_num Ã»ÓĞÓÃ">="ÊÇÒòÎªÎÒÃÇÔÚ¿¼ÂÇPLAY_LOOPµÄÇé¿öÊ±
-    // ĞèÒª²åÖµµÚ0Ö¡ºÍµÚ_data._frame_num - 1Ö¡µÄÊı¾İ
+    // è¿™é‡Œframe > _data._frame_num æ²¡æœ‰ç”¨">="æ˜¯å› ä¸ºæˆ‘ä»¬åœ¨è€ƒè™‘PLAY_LOOPçš„æƒ…å†µæ—¶
+    // éœ€è¦æ’å€¼ç¬¬0å¸§å’Œç¬¬_data._frame_num - 1å¸§çš„æ•°æ®
     if(frame < 0.0f || frame > _data._frame_num)
     {
         ret = ERR_INVALID_PARAM;
@@ -424,7 +424,7 @@ __rt_get_value:
         if(LW_FAILED(_BuildRunTimeBoneMatrix(_bone_rtmat_seq, frame, start_frame, end_frame)))
             goto __ret;
 
-#else  // Ò»ÏÂ´úÂëÒÑ¾­Ê¹ÓÃ_BuildRunTimeBoneMatrixÌæ´ú
+#else  // ä¸€ä¸‹ä»£ç å·²ç»ä½¿ç”¨_BuildRunTimeBoneMatrixæ›¿ä»£
         DWORD i;
         lwMatrix44* mat_run;
         DWORD parent_id;

@@ -1,10 +1,10 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "packfile.h"
 
 //---------------------------------------------------------------------------
 // class CPackFile
 //---------------------------------------------------------------------------
-CPackFile::CPackFile(void) // ÎÄ¼ş´ò°ü
+CPackFile::CPackFile(void) // æ–‡ä»¶æ‰“åŒ…
 {
 	_pPackFile = NULL;
 }
@@ -84,7 +84,7 @@ bool	CPackFile::LoadPackFile(char* pszFile)
 	return true;
 }
 
-void	CPackFile::Clear() // ´ò°üÎÄ¼şĞÅÏ¢Çå³ş
+void	CPackFile::Clear() // æ‰“åŒ…æ–‡ä»¶ä¿¡æ¯æ¸…æ¥š
 {
 	if(_pPackFile)
 		fclose(_pPackFile);

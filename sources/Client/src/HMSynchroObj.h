@@ -1,10 +1,10 @@
-#pragma once
+ï»¿#pragma once
 
 class CSynchroManage;
 class CServerHarm;
 class CCharacter;
 
-// ÓÃÓÚ¿Í»§¶ËÍ¬²½Óë·şÎñÆ÷µÄÏÔÊ¾
+// ç”¨äºå®¢æˆ·ç«¯åŒæ­¥ä¸æœåŠ¡å™¨çš„æ˜¾ç¤º
 class CStateSynchro
 {
     friend class CSynchroManage;
@@ -12,7 +12,7 @@ public:
     CStateSynchro();
     virtual ~CStateSynchro();
 
-    // ½«µ±Ç°°ü°´²ÎÊı±ÈÀı·Ö¸ô³ö(´´½¨)ÁíÒ»¸ö°ü
+    // å°†å½“å‰åŒ…æŒ‰å‚æ•°æ¯”ä¾‹åˆ†éš”å‡º(åˆ›å»º)å¦ä¸€ä¸ªåŒ…
     virtual CStateSynchro*   Gouge( float fRate )    { return NULL;  }
 
     void    Exec();
@@ -36,13 +36,13 @@ protected:
 	CServerHarm*	_pServerHarm;
 
 private:
-    int				_nID;				// CSynchroManageµÄË÷Òı
-	DWORD			_dwExecTime;		// Ö´ĞĞÊ±¼ä
+    int				_nID;				// CSynchroManageçš„ç´¢å¼•
+	DWORD			_dwExecTime;		// æ‰§è¡Œæ—¶é—´
 	DWORD			_dwCreateTime;
 
 };
 
-// ÓÃÓÚ¹ÜÀíÍ¬²½°ü£¬Ê¹Æä°´Ò»¶¨Ë³ĞòÖ´ĞĞ
+// ç”¨äºç®¡ç†åŒæ­¥åŒ…ï¼Œä½¿å…¶æŒ‰ä¸€å®šé¡ºåºæ‰§è¡Œ
 class CSynchroManage
 {
     friend class CStateSynchro;
@@ -57,7 +57,7 @@ public:
     static CSynchroManage* I() { return _pInstance;     }
 
 private:
-    void    _CollectEmpty();        // ÓÉÓÚÍ·Î²ÒÑ¾­Ïà½Ó£¬µ«Êµ¼ÊÈÔÓĞ¿Õ¼ä£¬ÊÕ¼¯Ê£Óà¿Õ¼ä
+    void    _CollectEmpty();        // ç”±äºå¤´å°¾å·²ç»ç›¸æ¥ï¼Œä½†å®é™…ä»æœ‰ç©ºé—´ï¼Œæ”¶é›†å‰©ä½™ç©ºé—´
 
 private:
     int     _AddState( CStateSynchro* pState );
@@ -71,15 +71,15 @@ private:
     };
 
     CStateSynchro*  _All[MAX_SIZE];
-    DWORD           _dwHead, _dwTail;       // Í·Î²ÓĞĞ§Çø
-    DWORD           _nSynchroNum;           // ÓĞĞ§×´Ì¬¸öÊı
+    DWORD           _dwHead, _dwTail;       // å¤´å°¾æœ‰æ•ˆåŒº
+    DWORD           _nSynchroNum;           // æœ‰æ•ˆçŠ¶æ€ä¸ªæ•°
 
 private:
     static CSynchroManage* _pInstance;
 
 };
 
-// ÄÚÁªº¯Êı
+// å†…è”å‡½æ•°
 inline void CStateSynchro::Exec()
 { 
     _isExec = true; 

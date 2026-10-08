@@ -1,4 +1,4 @@
-// stdafx.h : include file for standard system include files,
+ï»¿// stdafx.h : include file for standard system include files,
 // or project specific include files that are used frequently, but
 // are changed infrequently
 //
@@ -27,7 +27,7 @@
 #include <bitset>
 #include <tuple>
 
-namespace GUI  //¶¨ÒåÃû×Ö¿Õ¼ä
+namespace GUI  //å®šä¹‰åå­—ç©ºé—´
 {
 };
 
@@ -41,7 +41,7 @@ using namespace GUI;
 
 #include "LanguageRecord.h"
 
-extern CLanguageRecord g_oLangRec;	// ¶àÓïÑÔÉùÃ÷
+extern CLanguageRecord g_oLangRec;	// å¤šè¯­è¨€å£°æ˜
 
 inline VOID D3DUtil_InitMaterialI( D3DMATERIALX& mtrl, FLOAT r, FLOAT g, FLOAT b,
                            FLOAT a )
@@ -57,9 +57,9 @@ inline VOID D3DUtil_InitMaterialI( D3DMATERIALX& mtrl, FLOAT r, FLOAT g, FLOAT b
 
 //#define APP_DEBUG
 
-#define _LOG_NAME_		// ÓÃÓÚÊä³ö½ÇÉ«Ãû×Ö,¿ì½İ¼ü
+#define _LOG_NAME_		// ç”¨äºè¾“å‡ºè§’è‰²åå­—,å¿«æ·é”®
 
-// #define FLOAT_INVALID   // ¶¨ÒåÕâ¸öºêºó£¬½«¼ì²â¸¡µãÒì³£,ÒÑÖªcaLuaÖĞÓĞ¸¡µãÒì³£
+// #define FLOAT_INVALID   // å®šä¹‰è¿™ä¸ªå®åï¼Œå°†æ£€æµ‹æµ®ç‚¹å¼‚å¸¸,å·²çŸ¥caLuaä¸­æœ‰æµ®ç‚¹å¼‚å¸¸
 
 //#define USE_TIMERPERIOD
 #define WM_USER_TIMER (WM_USER+99)
@@ -69,4 +69,4 @@ inline VOID D3DUtil_InitMaterialI( D3DMATERIALX& mtrl, FLOAT r, FLOAT g, FLOAT b
 
 #define CLIENT_BUILD
 
-// #define KOP_TOM			// ÓÃÓÚTOMÆ½Ì¨
+// #define KOP_TOM			// ç”¨äºTOMå¹³å°

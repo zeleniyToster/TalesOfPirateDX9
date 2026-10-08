@@ -1,4 +1,4 @@
-/**
+ï»¿/**
  *  @file singleton.h
  *
  *  singleton.h, v 1.0 2004/9/21 13:14:05 shanghai China
@@ -149,8 +149,8 @@ protected:
 	inline static std::unique_ptr<T> _instance = nullptr;
     };
 
-// Õâ¸ö°æ±¾µÄsingletonÊµÏÖºÜ¿ì»á±»¶ªÆú£¬ÒòÎªËü²»ÄÜºÜÈİÒ×µØ±»À©³äÎª¶àÏß³Ì°²È«µÄ
-// ËùÒÔ²»ÍÆ¼öÊ¹ÓÃÕâ¸ösingleton template
+// è¿™ä¸ªç‰ˆæœ¬çš„singletonå®ç°å¾ˆå¿«ä¼šè¢«ä¸¢å¼ƒï¼Œå› ä¸ºå®ƒä¸èƒ½å¾ˆå®¹æ˜“åœ°è¢«æ‰©å……ä¸ºå¤šçº¿ç¨‹å®‰å…¨çš„
+// æ‰€ä»¥ä¸æ¨èä½¿ç”¨è¿™ä¸ªsingleton template
 #if 1
 template <class T>
 class CSingleton

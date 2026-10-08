@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "Tools.h"
 #include <strstream> 
 
@@ -45,7 +45,7 @@ string ConvertNumToChinese( int num )
 	
 	char nChar = 0;
 	int nZeroNum = 0;				
-	bool IsBigMark = false;		// ÓÃÓÚÍò£¬ÒÚµÄÌØÊâ´¦Àí£¬ÔÚÈ«ÊÇÁãÊ±
+	bool IsBigMark = false;		// ç”¨äºä¸‡ï¼Œäº¿çš„ç‰¹æ®Šå¤„ç†ï¼Œåœ¨å…¨æ˜¯é›¶æ—¶
 	int nHigh = 0;
 	int nLen = 0;
 	while( *pszPos )
@@ -53,7 +53,7 @@ string ConvertNumToChinese( int num )
 		nChar = *pszPos++;
 		nLen = (int)strlen(pszPos);
 
-		// ÖĞ²¿µÄ¶à¸öÁãºÏ²¢ÎªÒ»¸öÁã,ÇÒÎ²²¿µÄÁãÒ²²»ÏÔÊ¾
+		// ä¸­éƒ¨çš„å¤šä¸ªé›¶åˆå¹¶ä¸ºä¸€ä¸ªé›¶,ä¸”å°¾éƒ¨çš„é›¶ä¹Ÿä¸æ˜¾ç¤º
 		if( nChar=='0' )
 		{
 			nZeroNum++;
@@ -67,7 +67,7 @@ string ConvertNumToChinese( int num )
 		else
 		{
 			IsBigMark = true;
-			if( nZeroNum>0 )    // ´ÓÁã¿ªÊ¼ºó,Åöµ½µÄµÚÒ»¸ö·ÇÁã
+			if( nZeroNum>0 )    // ä»é›¶å¼€å§‹å,ç¢°åˆ°çš„ç¬¬ä¸€ä¸ªéé›¶
 			{
 				nZeroNum = 0;
 				str << g_oLangRec.GetString(421);
@@ -86,7 +86,7 @@ string ConvertNumToChinese( int num )
 				}
 				str << szHigh[nHigh];
 
-				// Íò£¬ÒÚµÄÌØÊâ´¦Àí
+				// ä¸‡ï¼Œäº¿çš„ç‰¹æ®Šå¤„ç†
 				if( nHigh==3 || nHigh==7 )
 				{
 					IsBigMark = false;
@@ -96,7 +96,7 @@ string ConvertNumToChinese( int num )
 	}
     str << ends;
 
-	// Í·ÎªÒ»Ê®,Ê¡ÂÔÒ»
+	// å¤´ä¸ºä¸€å,çœç•¥ä¸€
 	string rv = str.str();
 	if( rv.length()>=4 && rv.substr( 0, 4 ) == g_oLangRec.GetString(437) )
 		return rv.substr( 2, rv.length() );

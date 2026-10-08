@@ -1,4 +1,4 @@
-//
+ï»¿//
 #pragma once
 
 #include "lwHeader.h"
@@ -169,7 +169,7 @@ struct lwTexInfo
     DWORD byte_alignment_flag;
     DWORD type; // file texture or user-defined texture
     // user-defined texture
-    DWORD width; // µ±Ê¹ÓÃTEX_TYPE_DATAµÄÊ±ºò£¬width±íÊ¾data size
+    DWORD width; // å½“ä½¿ç”¨TEX_TYPE_DATAçš„æ—¶å€™ï¼Œwidthè¡¨ç¤ºdata size
     DWORD height;
     // file texture
     DWORD colorkey_type;

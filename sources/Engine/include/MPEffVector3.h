@@ -1,4 +1,4 @@
-#ifndef MPEffVector3_H
+ï»¿#ifndef MPEffVector3_H
 #define MPEffVector3_H
 
 #include "MindPowerAPI.h"
@@ -19,7 +19,7 @@ public:
 
 	D3DXVECTOR3& GetDXValue()	{ return m_vSelf; }
 
-	// ÊıÑ§²Ù×÷
+	// æ•°å­¦æ“ä½œ
 	inline MPEffVector3 operator + ( const MPEffVector3& rkVector ) const
 	{
 		MPEffVector3 kSum;
@@ -60,16 +60,16 @@ public:
 		return D3DXVec3LengthSq(&m_vSelf);
 	}
 
-	/** µ¥Î»»¯ÏòÁ¿.
+	/** å•ä½åŒ–å‘é‡.
 	@note
-		Õâ¸öº¯Êı²»»áÒòÁãÏòÁ¿¶ø±ÀÀ££¬µ«Èç¹ûÊÇÁãÏòÁ¿Ôò²»»á¸Ä±äËûµÄÔªËØ
-	@returns ÏòÁ¿µÄÏÈÇ°³¤¶È.
+		è¿™ä¸ªå‡½æ•°ä¸ä¼šå› é›¶å‘é‡è€Œå´©æºƒï¼Œä½†å¦‚æœæ˜¯é›¶å‘é‡åˆ™ä¸ä¼šæ”¹å˜ä»–çš„å…ƒç´ 
+	@returns å‘é‡çš„å…ˆå‰é•¿åº¦.
 	*/
 	inline float normalise()
 	{
 		float fLength = D3DXVec3Length(&m_vSelf);
 
-		// ¶ÔÓÚÁãÏòÁ¿Ò²¿ÉÒÔÊ¹ÓÃ£¬²»¹ı²¢²»¸Ä±äÈÎºÎÖµ
+		// å¯¹äºé›¶å‘é‡ä¹Ÿå¯ä»¥ä½¿ç”¨ï¼Œä¸è¿‡å¹¶ä¸æ”¹å˜ä»»ä½•å€¼
 		if ( fLength > 1e-06f )
 		{
 			D3DXVec3Normalize(&m_vSelf, &m_vSelf);
@@ -79,7 +79,7 @@ public:
 	}
 
 
-	/** ²úÉúÒ»¸ö´¹Ö±µÄÏòÁ¿.
+	/** äº§ç”Ÿä¸€ä¸ªå‚ç›´çš„å‘é‡.
 	@remarks
 	This method will return a vector which is perpendicular to this
 	vector. There are an infinite number of possibilities but this 
@@ -92,10 +92,10 @@ public:
 
 		MPEffVector3 perp = this->crossProduct( MPEffVector3::UNIT_X );
 
-		// ¼ì²é³¤¶È length
+		// æ£€æŸ¥é•¿åº¦ length
 		if( perp.squaredLength() < fSquareZero )
 		{
-			/* Õâ¸öÖáÊÇYÖá£¬ËùÒÔÒª»»Ò»¸öÖá.
+			/* è¿™ä¸ªè½´æ˜¯Yè½´ï¼Œæ‰€ä»¥è¦æ¢ä¸€ä¸ªè½´.
 			*/
 			perp = this->crossProduct( MPEffVector3::UNIT_Y );
 		}
@@ -111,15 +111,15 @@ public:
 	}
 
 
-	/** ÔÚ¸ø¶¨µÄ×î´ó½Ç¶ÈÄÚ²úÉúÒ»¸öËæ»úµÄÏòÁ¿.
+	/** åœ¨ç»™å®šçš„æœ€å¤§è§’åº¦å†…äº§ç”Ÿä¸€ä¸ªéšæœºçš„å‘é‡.
 	@remarks
-		Õâ¸ö·½·¨¼ÙÉèËæ»úÊıµÄÖÖ×ÓÒÑ¾­²úÉú
+		è¿™ä¸ªæ–¹æ³•å‡è®¾éšæœºæ•°çš„ç§å­å·²ç»äº§ç”Ÿ
 	@param 
-	angle ¸ø¶¨µÄ×î´óÆ«ÒÆ½Ç¶È
+	angle ç»™å®šçš„æœ€å¤§åç§»è§’åº¦
 	@param 
-	up ÈÎºÎ´¹Ö±Õâ¸öÏòÁ¿µÄÏòÁ¿
+	up ä»»ä½•å‚ç›´è¿™ä¸ªå‘é‡çš„å‘é‡
 	@returns 
-		Æ«ÒÆÕâ¸öÏòÁ¿Ëæ»ú½Ç¶ÈµÄÏòÁ¿¡£Õâ¸öËæ»úÏòÁ¿Ã»ÓĞµ¥Î»»¯
+		åç§»è¿™ä¸ªå‘é‡éšæœºè§’åº¦çš„å‘é‡ã€‚è¿™ä¸ªéšæœºå‘é‡æ²¡æœ‰å•ä½åŒ–
 	*/
 	inline MPEffVector3 randomDeviant( const MPRadian& angle,
 		const MPEffVector3& up = MPEffVector3::ZERO ) const
@@ -128,7 +128,7 @@ public:
 
 		if (up == MPEffVector3::ZERO)
 		{
-			// ´´½¨Ò»¸öÏòÉÏµÄÏòÁ¿
+			// åˆ›å»ºä¸€ä¸ªå‘ä¸Šçš„å‘é‡
 			newUp = this->perpendicular();
 		}
 		else
@@ -136,7 +136,7 @@ public:
 			newUp = up;
 		}
 
-		// ½«upÏòÁ¿ÈÆ×Å·½ÏòÏòÁ¿Ğı×ªËæ»ú½Ç¶È
+		// å°†upå‘é‡ç»•ç€æ–¹å‘å‘é‡æ—‹è½¬éšæœºè§’åº¦
 		MPEffQuaternion q;
 		q.FromAngleAxis( MPRadian(MPEffectMath::UnitRandom() * MPEffectMath::TWO_PI), *this );
 		newUp = q * newUp;
@@ -146,7 +146,7 @@ public:
 		return q * (*this);
 	}
 
-	// ÌØÊâµÄÖµ
+	// ç‰¹æ®Šçš„å€¼
 	static const MPEffVector3 ZERO;
 	static const MPEffVector3 UNIT_X;
 	static const MPEffVector3 UNIT_Y;

@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "HMManage.h"
 #include "SkillRecord.h"
 #include "STStateObj.h"
@@ -188,12 +188,12 @@ void CServerHarm::SetIsOuter( bool v )
 		{
 			if( _pSkill->IsHarmRange() )
 			{
-				// ·¶Î§¼¼ÄÜ£¬ÏÂÒ»´ÎÄÜÖ´ĞĞÍê
+				// èŒƒå›´æŠ€èƒ½ï¼Œä¸‹ä¸€æ¬¡èƒ½æ‰§è¡Œå®Œ
 				return;
 			}
 			else if( _nReadyExec<(int)_harm.size() )
 			{
-				// µ¥¸ö¼¼ÄÜ½«¶àÓà²¿·ÖÖ´ĞĞµô
+				// å•ä¸ªæŠ€èƒ½å°†å¤šä½™éƒ¨åˆ†æ‰§è¡Œæ‰
 				ExecAll( (int)_harm.size() - _nReadyExec );
 				return;
 			}
@@ -201,7 +201,7 @@ void CServerHarm::SetIsOuter( bool v )
 
 		if( !_harm.empty() ) ExecAll();
 
-		// ÓĞÍâ²¿Ö´ĞĞÊ±,ÓÉÍâ²¿Ö´ĞĞ½áÊø
+		// æœ‰å¤–éƒ¨æ‰§è¡Œæ—¶,ç”±å¤–éƒ¨æ‰§è¡Œç»“æŸ
 		if( _nReadyExec<=0 )
 		{
 			LG( _pCha->getLogName(), "CServerHarm Over(Outer), FightID[%d]\n", GetFightID() );

@@ -1,7 +1,7 @@
-#ifndef MPSingleton_H
+ï»¿#ifndef MPSingleton_H
 #define MPSingleton_H
 
-/** Ä£°åÀàÓÃÓÚ´´½¨µ¥ÀıÊµÌå
+/** æ¨¡æ¿ç±»ç”¨äºåˆ›å»ºå•ä¾‹å®ä½“
 */
 template <typename T> class MPSingleton
 {

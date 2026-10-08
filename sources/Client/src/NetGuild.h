@@ -1,20 +1,20 @@
-#pragma once
+ï»¿#pragma once
 
 #include "NetIF.h"
 #include "PacketCmd.h"
 
 /****************************************************************
-		·¢ËÍPacket´ò°üº¯ÊýÉùÃ÷¶Î
-		Ìí¼Ó:·þÎñÆ÷¿ª·¢ÈËÔ±
-		ÐÞ¸Ä:·þÎñÆ÷¿ª·¢ÈËÔ±
-		µ÷ÓÃ:¿Í»§¶Ë¿ª·¢ÈËÔ±
-		´úÂëÌåÇëÌîÈëÎÄ¼þ"NetPkXXX.cpp"(×¢Òâ:ÓÐPk,ÒâÎªÍøÂç°ü´¦ÀíµÄcppÎÄ¼þ)
+		å‘é€Packetæ‰“åŒ…å‡½æ•°å£°æ˜Žæ®µ
+		æ·»åŠ :æœåŠ¡å™¨å¼€å‘äººå‘˜
+		ä¿®æ”¹:æœåŠ¡å™¨å¼€å‘äººå‘˜
+		è°ƒç”¨:å®¢æˆ·ç«¯å¼€å‘äººå‘˜
+		ä»£ç ä½“è¯·å¡«å…¥æ–‡ä»¶"NetPkXXX.cpp"(æ³¨æ„:æœ‰Pk,æ„ä¸ºç½‘ç»œåŒ…å¤„ç†çš„cppæ–‡ä»¶)
 *****************************************************************/
-extern void	CM_GUILD_PUTNAME(bool confirm,cChar *guildname,cChar *passwd);	//·¢ËÍ´´½¨¹«»áµÄÃû×Ö
-extern void CM_GUILD_TRYFOR(uLong	guildid);	//ÉêÇë¼ÓÈë¹«»á
-extern void CM_GUILD_TRYFORCFM(bool confirm);	//È·ÈÏ¼ÓÈëconfirm =true;
-extern void CM_GUILD_LISTTRYPLAYER();			//¹ÜÀíCMD_CM_GUILD_LISTTRYMEMBER
-extern void CM_GUILD_APPROVE(uLong	chaid);		//¹ÜÀíÈËÔ±Åú×¼ÉêÇëÈË¼ÓÈë
+extern void	CM_GUILD_PUTNAME(bool confirm,cChar *guildname,cChar *passwd);	//å‘é€åˆ›å»ºå…¬ä¼šçš„åå­—
+extern void CM_GUILD_TRYFOR(uLong	guildid);	//ç”³è¯·åŠ å…¥å…¬ä¼š
+extern void CM_GUILD_TRYFORCFM(bool confirm);	//ç¡®è®¤åŠ å…¥confirm =true;
+extern void CM_GUILD_LISTTRYPLAYER();			//ç®¡ç†CMD_CM_GUILD_LISTTRYMEMBER
+extern void CM_GUILD_APPROVE(uLong	chaid);		//ç®¡ç†äººå‘˜æ‰¹å‡†ç”³è¯·äººåŠ å…¥
 extern void CM_GUILD_REJECT(uLong	chaid);
 extern void CM_GUILD_KICK(uLong		chaid);
 extern void CM_GUILD_LEAVE();
@@ -26,11 +26,11 @@ extern void CM_GUILD_LEIZHU( BYTE byLevel, DWORD dwMoney );
 
 
 /****************************************************************
-		½ÓÊÕPacketºóµ÷ÓÃµÄ±¾µØ½Ó¿ÚÉùÃ÷¶Î
-		Ìí¼Ó:·þÎñÆ÷¿ª·¢ÈËÔ±
-		ÐÞ¸Ä:¿Í»§¶Ë¿ª·¢ÈËÔ±
-		µ÷ÓÃ:¡°½ÓÊÕµÄPacket½âÎöº¯ÊýÉùÃ÷¶Î¡±¶ÔÓ¦º¯Êý
-		´úÂëÌåÇëÌîÈëÎÄ¼þ"NetXXX.cpp"(×¢Òâ:Ã»ÓÐPk,Ïà¶ÔÓÚNetPkXXX,Ã»ÓÐ°ü´¦Àí)
+		æŽ¥æ”¶PacketåŽè°ƒç”¨çš„æœ¬åœ°æŽ¥å£å£°æ˜Žæ®µ
+		æ·»åŠ :æœåŠ¡å™¨å¼€å‘äººå‘˜
+		ä¿®æ”¹:å®¢æˆ·ç«¯å¼€å‘äººå‘˜
+		è°ƒç”¨:â€œæŽ¥æ”¶çš„Packetè§£æžå‡½æ•°å£°æ˜Žæ®µâ€å¯¹åº”å‡½æ•°
+		ä»£ç ä½“è¯·å¡«å…¥æ–‡ä»¶"NetXXX.cpp"(æ³¨æ„:æ²¡æœ‰Pk,ç›¸å¯¹äºŽNetPkXXX,æ²¡æœ‰åŒ…å¤„ç†)
 *****************************************************************/
 extern void NetMC_GUILD_GETNAME();
 extern void NetMC_LISTGUILD_BEGIN();
@@ -61,11 +61,11 @@ extern void NetMC_GUILD_CHALLINFO( const NET_GUILD_CHALLINFO& Info );
 
 
 /****************************************************************
-		½ÓÊÕµÄPacket½âÎöº¯ÊýÉùÃ÷¶Î
-		Ìí¼Ó:·þÎñÆ÷¿ª·¢ÈËÔ±
-		ÐÞ¸Ä:·þÎñÆ÷¿ª·¢ÈËÔ±
-		µ÷ÓÃ:NetIF::HandlePacketMessage
-		´úÂëÌåÇëÌîÈëÎÄ¼þ"NetPkXXX.cpp"(×¢Òâ:ÓÐPk,ÒâÎªÍøÂç°ü´¦ÀíµÄcppÎÄ¼þ)
+		æŽ¥æ”¶çš„Packetè§£æžå‡½æ•°å£°æ˜Žæ®µ
+		æ·»åŠ :æœåŠ¡å™¨å¼€å‘äººå‘˜
+		ä¿®æ”¹:æœåŠ¡å™¨å¼€å‘äººå‘˜
+		è°ƒç”¨:NetIF::HandlePacketMessage
+		ä»£ç ä½“è¯·å¡«å…¥æ–‡ä»¶"NetPkXXX.cpp"(æ³¨æ„:æœ‰Pk,æ„ä¸ºç½‘ç»œåŒ…å¤„ç†çš„cppæ–‡ä»¶)
 *****************************************************************/
 extern BOOL	MC_GUILD_GETNAME(LPRPACKET pk);
 extern bool	g_listguild_begin;

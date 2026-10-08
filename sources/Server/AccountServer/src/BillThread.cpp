@@ -1,4 +1,4 @@
-#define _CRTDBG_MAP_ALLOC
+ï»¿#define _CRTDBG_MAP_ALLOC
 #include <stdlib.h>
 #include <crtdbg.h>
 
@@ -106,7 +106,7 @@ int BillThread::Run()
 {
 	while (!GetExitFlag() || (GetPkTotal() != 0))
 	{
-		PeekPacket(1000);		// ¸øÓÚ1ÃëµÄÊ±¼äÀ´²É¼¯¶ÓÁÐÖÐµÄÍøÂç°ü
+		PeekPacket(1000);		// allow one second to drain the queued packets off the network
 	}
 
 	ExitThread();
@@ -115,7 +115,7 @@ int BillThread::Run()
 
 void BillThread::ProcessData(DataSocket* datasock, RPacket& rpkt)
 {
-	bool bRetry = true;				//¿´²»¶®ÓÐÊ²Ã´ÓÃÍ¾£¬±£Áô(2005-11-30,Arcol). ²¹³ä:¿ÉÄÜÊÇ¸´ÖÆAuthQueue::ProcessData(DataSocket* datasock, RPacket& rpkt)µÄ´¦Àí,´Ë²ÎÊýÓÃÓÚÖØÁ¬½ÓÊý¾Ý¿â,µ«ÔÚ´ËÎÞÒâÒå
+	bool bRetry = true;				// purpose unclear, kept as is (2005-11-30, Arcol). Note: it looks like a copy of the AuthQueue::ProcessData(DataSocket*, RPacket&) handling; there the parameter is used to reconnect to the database, here it serves no purpose
 	char const* lpszName = NULL;
 	unsigned short usCmd = rpkt.ReadCmd();
 
@@ -168,12 +168,12 @@ void BillThread::ProcessData(DataSocket* datasock, RPacket& rpkt)
 		catch (CSQLException* se)
 		{
 			LG("BillProcessDataExcp", "SQL Exception: %s\n", se->m_strError.c_str());
-			bRetry = false; // ²âÊÔÖÐ£¬·Å¹ý
+			bRetry = false; // tolerated while testing
 		}
 		catch (...)
 		{
 			LG("BillProcessDataExcp", "Unknown exception raised from BillService::ProcessData()\n");
-			bRetry = false; // ·ÇÊý¾Ý¿âÔì³ÉµÄÒì³£·Å¹ý
+			bRetry = false; // tolerate exceptions that did not come from the database
 		}
 	}
 }

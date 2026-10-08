@@ -1,4 +1,4 @@
-#include "udpclient.h"
+ï»¿#include "udpclient.h"
 #include <windows.h>
 #include <algorithm>
 #include <functional>
@@ -14,7 +14,7 @@ namespace client_udp
 	}
 }
 
-// ÁíÍâÒ»ÖÖÊµÏÖ·½·¨£¬²»ÓÃ´Óbinary_functionÅÉÉú
+// å¦å¤–ä¸€ç§å®ç°æ–¹æ³•ï¼Œä¸ç”¨ä»binary_functionæ´¾ç”Ÿ
 //template <class T>
 //class NameIsEqual
 //{

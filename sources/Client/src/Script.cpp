@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "script.h"
 #include <iostream>
 #include "caLua.h"
@@ -75,7 +75,7 @@ CScript::CScript()
 		return;
 	}
 
-	// Ñ°ÕÒµ±Ç°¶ÓÁĞÊÇ·ñÓĞ¿ÕÎ»,Èç¹ûÃ»ÓĞ¿ÕÎ»,Ôö¼Óµ½Ä©Î²	
+	// å¯»æ‰¾å½“å‰é˜Ÿåˆ—æ˜¯å¦æœ‰ç©ºä½,å¦‚æœæ²¡æœ‰ç©ºä½,å¢åŠ åˆ°æœ«å°¾	
 	for( DWORD i=_dwLastFree+1; i<_dwCount; ++i )
 	{
 		if( !_AllObj[i] )
@@ -242,12 +242,12 @@ bool CScriptMgr::DoString( const char* szFunc, const char* szFormat, ... )
 		LG( "float", g_oLangRec.GetString(380), szFunc, szFormat );
 	}
 
-	int narg, nres;		// ²ÎÊı¼°·µ»ØÖµ¸öÊı
+	int narg, nres;		// å‚æ•°åŠè¿”å›å€¼ä¸ªæ•°
 
 	va_list vl;
 	va_start( vl, szFormat );
 	lua_getglobal( _pLuaState, szFunc );
-	if (!lua_isfunction(_pLuaState, -1)) // ²»ÊÇº¯ÊıÃû
+	if (!lua_isfunction(_pLuaState, -1)) // ä¸æ˜¯å‡½æ•°å
 	{
 		lua_settop(_pLuaState, 0);
 		LG( "luaerror", "Func is Error, Func:%s, Fromat:%s\n", szFunc, szFormat );
@@ -360,7 +360,7 @@ string	CScriptMgr::GetStoneHint( const char* szHintFun, int Lv )
 	}
 
 	lua_getglobal(_pLuaState, szHintFun);
-	if (!lua_isfunction(_pLuaState, -1)) // ²»ÊÇº¯ÊıÃû
+	if (!lua_isfunction(_pLuaState, -1)) // ä¸æ˜¯å‡½æ•°å
 	{
 		lua_pop(_pLuaState, 1);
 		return g_oLangRec.GetString(382);

@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "STNpcTalk.h"
 #include "actor.h"
 #include "Character.h"
@@ -80,7 +80,7 @@ bool CShopState::_Start()
 CPickState::CPickState(CActor* p)
 : CActionState(p), _pItem(NULL)
 {
-	_IsOver = true;		// ¶¯×÷Ö±½Ó½áÊøÁË
+	_IsOver = true;		// åŠ¨ä½œç›´æŽ¥ç»“æŸäº†
     _IsSend = true;
 }
 
@@ -108,7 +108,7 @@ bool CPickState::_Start()
 CEventState::CEventState(CActor* p)
 : CActionState(p), _pNode(NULL), _pEvent(0)
 {
-	_IsOver = true;		// ¶¯×÷Ö±½Ó½áÊøÁË
+	_IsOver = true;		// åŠ¨ä½œç›´æŽ¥ç»“æŸäº†
 }
 
 bool CEventState::_Start()
@@ -175,7 +175,7 @@ void CFeedState::End()
 
 
 //---------------------------------------------------------------------------
-// CFeteState		 add by Philip.Wu  2006-06-20  ¼Àìë×´Ì¬
+// CFeteState		 add by Philip.Wu  2006-06-20  ç¥­ç¥€çŠ¶æ€
 //---------------------------------------------------------------------------
 CFeteState::CFeteState(CActor* p)
 : CActionState(p)
@@ -186,7 +186,7 @@ bool CFeteState::_Start()
 {
 	_IsBeforeShow = g_stUIEquip.GetItemForm()->GetIsShow();
 	if( !_IsBeforeShow ) g_stUIEquip.GetItemForm()->Show();
-	CCursor::I()->SetCursor( CCursor::stRepair );	// Í¼±ê´ýÐÞ¸Ä
+	CCursor::I()->SetCursor( CCursor::stRepair );	// å›¾æ ‡å¾…ä¿®æ”¹
 	return true;
 }
 

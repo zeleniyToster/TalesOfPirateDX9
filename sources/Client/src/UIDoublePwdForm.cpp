@@ -1,4 +1,4 @@
-
+ï»¿
 #include "StdAfx.h"
 #include "UIDoublePwdForm.h"
 #include "UIStoreForm.h"
@@ -18,12 +18,12 @@ namespace GUI
 	}
 
 
-	// ³õÊ¼»¯¶ş´ÎÃÜÂëËùÓĞµÄ½çÃæ
+	// åˆå§‹åŒ–äºŒæ¬¡å¯†ç æ‰€æœ‰çš„ç•Œé¢
 	bool CDoublePwdMgr::Init()
 	{
 		CFormMgr& mgr = CFormMgr::s_Mgr;
 
-		// ¶ş´ÎÃÜÂë´´½¨±íµ¥
+		// äºŒæ¬¡å¯†ç åˆ›å»ºè¡¨å•
 		frmDoublePwdCreate = mgr.Find("frmDoublePwdCreate");
 		if(! frmDoublePwdCreate) return false;
 
@@ -42,7 +42,7 @@ namespace GUI
 		edtDoublePwdCreateRetry->SetIsPassWord(true);
 
 
-		// ¶ş´ÎÃÜÂëĞŞ¸Ä±íµ¥
+		// äºŒæ¬¡å¯†ç ä¿®æ”¹è¡¨å•
 		frmDoublePwdAlter = mgr.Find("frmDoublePwdAlter");
 		if(! frmDoublePwdAlter) return false;
 
@@ -66,7 +66,7 @@ namespace GUI
 		edtDoublePwdAlterNewRetry->SetIsPassWord(true);
 
 
-		// ¶ş´ÎÃÜÂëÊäÈë±íµ¥
+		// äºŒæ¬¡å¯†ç è¾“å…¥è¡¨å•
 		frmDoublePwd = mgr.Find("frmDoublePwd");
 		if(! frmDoublePwd) return false;
 
@@ -79,7 +79,7 @@ namespace GUI
 		edtDoublePwd->SetIsPassWord(true);
 
 
-		// ¶ş´ÎÃÜÂëÊäÈëÈí¼üÅÌ
+		// äºŒæ¬¡å¯†ç è¾“å…¥è½¯é”®ç›˜
 		frmDoublePwdInput = mgr.Find("frmDoublePwdInput");
 		if(! frmDoublePwdInput) return false;
 
@@ -87,7 +87,7 @@ namespace GUI
 		frmDoublePwdInput->evtClose             = _evtFormClose;
 
 
-		// ´´½¨¶ş´ÎÃÜÂëµÄÌáÊ¾
+		// åˆ›å»ºäºŒæ¬¡å¯†ç çš„æç¤º
 		frmDoublePwdInfo = mgr.Find("frmDoublePwdInfo");
 		if(! frmDoublePwdInfo) return false;
 
@@ -95,14 +95,14 @@ namespace GUI
 	}
 
 
-	// ¹Ø±Õ¶ş´ÎÃÜÂë
+	// å…³é—­äºŒæ¬¡å¯†ç 
 	void CDoublePwdMgr::CloseForm()
 	{
 		CloseAllForm();
 	}
 
 
-	// ¶ş´ÎÃÜÂëÊÇ·ñºÏ·¨
+	// äºŒæ¬¡å¯†ç æ˜¯å¦åˆæ³•
 	bool CDoublePwdMgr::IsPwdValid(const char* szStr)
 	{
 		if(! szStr)
@@ -118,7 +118,7 @@ namespace GUI
 	}
 
 
-	// ÏÔÊ¾´´½¨±íµ¥
+	// æ˜¾ç¤ºåˆ›å»ºè¡¨å•
 	void CDoublePwdMgr::ShowCreateForm()
 	{
 		CloseAllForm();
@@ -145,7 +145,7 @@ namespace GUI
 	}
 
 
-	// ÏÔÊ¾ĞŞ¸Ä±íµ¥
+	// æ˜¾ç¤ºä¿®æ”¹è¡¨å•
 	void CDoublePwdMgr::ShowAlterForm()
 	{
 		CloseAllForm();
@@ -165,7 +165,7 @@ namespace GUI
 	}
 
 
-	// ÏÔÊ¾ÊäÈë±íµ¥
+	// æ˜¾ç¤ºè¾“å…¥è¡¨å•
 	void CDoublePwdMgr::ShowDoublePwdForm()
 	{
 		CloseAllForm();
@@ -184,34 +184,34 @@ namespace GUI
 	}
 
 
-	// ¹Ø±ÕÈ«²¿±íµ¥
+	// å…³é—­å…¨éƒ¨è¡¨å•
 	void CDoublePwdMgr::CloseAllForm()
 	{
-		// ¹Ø±Õ´´½¨±íµ¥
+		// å…³é—­åˆ›å»ºè¡¨å•
 		if(frmDoublePwdCreate && frmDoublePwdCreate->GetIsShow())
 		{
 			frmDoublePwdCreate->Close();
 		}
 
-		// ¹Ø±ÕĞŞ¸Ä±íµ¥
+		// å…³é—­ä¿®æ”¹è¡¨å•
 		if(frmDoublePwdAlter && frmDoublePwdAlter->GetIsShow())
 		{
 			frmDoublePwdAlter->Close();
 		}
 
-		// ¹Ø±Õ¶ş´ÎÃÜÂëÊäÈë±íµ¥
+		// å…³é—­äºŒæ¬¡å¯†ç è¾“å…¥è¡¨å•
 		if(frmDoublePwd && frmDoublePwd->GetIsShow())
 		{
 			frmDoublePwd->Close();
 		}
 
-		// ¹Ø±Õ¶ş´ÎÃÜÂëÈí¼üÅÌ±íµ¥
+		// å…³é—­äºŒæ¬¡å¯†ç è½¯é”®ç›˜è¡¨å•
 		if(frmDoublePwdInput && frmDoublePwdInput->GetIsShow())
 		{
 			frmDoublePwdInput->Close();
 		}
 
-		// ¹Ø±Õ´´½¨¶ş´ÎÃÜÂëÌáÊ¾
+		// å…³é—­åˆ›å»ºäºŒæ¬¡å¯†ç æç¤º
 		if(frmDoublePwdInfo && frmDoublePwdInfo->GetIsShow())
 		{
 			frmDoublePwdInfo->Close();
@@ -219,7 +219,7 @@ namespace GUI
 	}
 
 
-	// ÏÔÊ¾¶ş´ÎÃÜÂëÈí¼üÅÌ
+	// æ˜¾ç¤ºäºŒæ¬¡å¯†ç è½¯é”®ç›˜
 	void CDoublePwdMgr::ShowDoublePwdKeyboardForm()
 	{
 		if(! frmDoublePwdInput)
@@ -231,7 +231,7 @@ namespace GUI
 	}
 
 
-	// ·¢ËÍÉ¾³ı½ÇÉ«ÏûÏ¢
+	// å‘é€åˆ é™¤è§’è‰²æ¶ˆæ¯
 	void CDoublePwdMgr::SendDeleteCharactor()
 	{
 		CSelectChaScene* pScene = dynamic_cast<CSelectChaScene*>(g_pGameApp->GetCurScene());
@@ -240,14 +240,14 @@ namespace GUI
 	}
 
 
-	// ·¢ËÍ±³°ü½âËøÏûÏ¢
+	// å‘é€èƒŒåŒ…è§£é”æ¶ˆæ¯
 	void CDoublePwdMgr::SendPackageUnlock()
 	{
 		CS_UnlockKitbag(g_stUIDoublePwd.edtDoublePwd->GetCaption());
 	}
 
-	 // ·¢ËÍµÀ¾ß½âËøÏûÏ¢ add by ning.yan 2008-11-11 begin
-	void CDoublePwdMgr::SendItemUnlock()// ±»ËøµÀ¾ßµÄÎ»ÖÃºÍid
+	 // å‘é€é“å…·è§£é”æ¶ˆæ¯ add by ning.yan 2008-11-11 begin
+	void CDoublePwdMgr::SendItemUnlock()// è¢«é”é“å…·çš„ä½ç½®å’Œid
 	{
 		CS_UnlockItem(g_stUIDoublePwd.edtDoublePwd->GetCaption(), lockGridID);
 		g_stUIDoublePwd.CloseAllForm();
@@ -286,7 +286,7 @@ namespace GUI
 	}
 	// end
 
-	// ·¢ËÍÉÌ³Ç´ò¿ªÏûÏ¢
+	// å‘é€å•†åŸæ‰“å¼€æ¶ˆæ¯
 	void CDoublePwdMgr::SendPackageStoreOpen()
 	{
 		if(! g_stUIStore.ResetLastOperate())
@@ -300,7 +300,7 @@ namespace GUI
 		CloseAllForm();
 	}
 
-	void CDoublePwdMgr::SendGameRequest()// ±»ËøµÀ¾ßµÄÎ»ÖÃºÍid
+	void CDoublePwdMgr::SendGameRequest()// è¢«é”é“å…·çš„ä½ç½®å’Œid
 	{
 		CS_SendGameRequest(g_stUIDoublePwd.edtDoublePwd->GetCaption());
 		
@@ -308,7 +308,7 @@ namespace GUI
 	} 
 
 
-	// ¶ÔÈí¼üÅÌ°´Å¥½øĞĞËæ»úÅÅÁĞ
+	// å¯¹è½¯é”®ç›˜æŒ‰é’®è¿›è¡Œéšæœºæ’åˆ—
 	void CDoublePwdMgr::RandomInputButton()
 	{
 		CTextButton* btnNum[10] = {0};
@@ -350,7 +350,7 @@ namespace GUI
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-	// ´´½¨¶ş´ÎÃÜÂë±íµ¥°´Å¥ÊÂ¼ş
+	// åˆ›å»ºäºŒæ¬¡å¯†ç è¡¨å•æŒ‰é’®äº‹ä»¶
 	void CDoublePwdMgr::_evtCreateFromMouseEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey)
 	{
 		string strName = pSender->GetName();
@@ -361,8 +361,8 @@ namespace GUI
 
 			if(! IsPwdValid(g_stUIDoublePwd.edtDoublePwdCreate->GetCaption()))
 			{
-				// ÃÜÂëÖ»ÄÜÊÇÊı×Ö
-				g_pGameApp->MsgBox(g_oLangRec.GetString(797));//"¶ş´ÎÃÜÂëÖ»ÄÜÓĞ 0 ~ 9 Êı×Ö×é³É£¬ÇëÖØĞÂÊäÈë"
+				// å¯†ç åªèƒ½æ˜¯æ•°å­—
+				g_pGameApp->MsgBox(g_oLangRec.GetString(797));//"äºŒæ¬¡å¯†ç åªèƒ½æœ‰ 0 ~ 9 æ•°å­—ç»„æˆï¼Œè¯·é‡æ–°è¾“å…¥"
 
 				g_stUIDoublePwd.edtDoublePwdCreate->SetCaption("");
 				g_stUIDoublePwd.edtDoublePwdCreateRetry->SetCaption("");
@@ -371,8 +371,8 @@ namespace GUI
 
 			if(6 > nPwdLen || 12 < nPwdLen)
 			{
-				// ÃÜÂë³¤¶È²»ÔÚ 6 ~ 12 Ö®¼ä
-				g_pGameApp->MsgBox(g_oLangRec.GetString(798));//"¶ş´ÎÃÜÂë³¤¶È²»ÔÚ 6 ~ 12£¬ÇëÖØĞÂÊäÈë"
+				// å¯†ç é•¿åº¦ä¸åœ¨ 6 ~ 12 ä¹‹é—´
+				g_pGameApp->MsgBox(g_oLangRec.GetString(798));//"äºŒæ¬¡å¯†ç é•¿åº¦ä¸åœ¨ 6 ~ 12ï¼Œè¯·é‡æ–°è¾“å…¥"
 
 				g_stUIDoublePwd.edtDoublePwdCreate->SetCaption("");
 				g_stUIDoublePwd.edtDoublePwdCreateRetry->SetCaption("");
@@ -382,21 +382,21 @@ namespace GUI
 			if(0 != strcmp(g_stUIDoublePwd.edtDoublePwdCreate->GetCaption(), 
 						   g_stUIDoublePwd.edtDoublePwdCreateRetry->GetCaption()))
 			{
-				// Á½´ÎÃÜÂë²»Í¬
-				g_pGameApp->MsgBox(g_oLangRec.GetString(799));//"Á½´ÎÊäÈëµÄÃÜÂë²»Í¬£¬ÇëÖØĞÂÊäÈë"
+				// ä¸¤æ¬¡å¯†ç ä¸åŒ
+				g_pGameApp->MsgBox(g_oLangRec.GetString(799));//"ä¸¤æ¬¡è¾“å…¥çš„å¯†ç ä¸åŒï¼Œè¯·é‡æ–°è¾“å…¥"
 
 				g_stUIDoublePwd.edtDoublePwdCreate->SetCaption("");
 				g_stUIDoublePwd.edtDoublePwdCreateRetry->SetCaption("");
 				return;
 			}
 
-			// Á½´ÎÃÜÂëÏàÍ¬£¬Ïò·şÎñÆ÷·¢ËÍ´´½¨¶ş´ÎÃÜÂëÏûÏ¢
+			// ä¸¤æ¬¡å¯†ç ç›¸åŒï¼Œå‘æœåŠ¡å™¨å‘é€åˆ›å»ºäºŒæ¬¡å¯†ç æ¶ˆæ¯
 			CS_CreatePassword2(g_stUIDoublePwd.edtDoublePwdCreate->GetCaption());
 			CCursor::I()->SetCursor(CCursor::stWait);
 		}
 		else
 		{
-			// ÓÃ»§È¡Ïû
+			// ç”¨æˆ·å–æ¶ˆ
 			extern TOM_SERVER g_TomServer;
 			if( g_TomServer.bEnable )
 			{
@@ -404,7 +404,7 @@ namespace GUI
 				return;
 			}
 
-			// ÍË³öÑ¡ÈË³¡¾°
+			// é€€å‡ºé€‰äººåœºæ™¯
 			CS_Logout();
 			CS_Disconnect(DS_DISCONN);
 			g_pGameApp->LoadScriptScene( enumLoginScene );
@@ -412,7 +412,7 @@ namespace GUI
 	}
 
 
-	// ĞŞ¸Ä¶ş´ÎÃÜÂë±íµ¥°´Å¥ÊÂ¼ş
+	// ä¿®æ”¹äºŒæ¬¡å¯†ç è¡¨å•æŒ‰é’®äº‹ä»¶
 	void CDoublePwdMgr::_evtAlterFromMouseEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey)
 	{
 		string strName = pSender->GetName();
@@ -422,8 +422,8 @@ namespace GUI
 		{
 			if(! IsPwdValid(g_stUIDoublePwd.edtDoublePwdAlterNew->GetCaption()))
 			{
-				// ÃÜÂëÖ»ÄÜÊÇÊı×Ö
-				g_pGameApp->MsgBox(g_oLangRec.GetString(797));//"¶ş´ÎÃÜÂëÖ»ÄÜÓĞ 0 ~ 9 Êı×Ö×é³É£¬ÇëÖØĞÂÊäÈë"
+				// å¯†ç åªèƒ½æ˜¯æ•°å­—
+				g_pGameApp->MsgBox(g_oLangRec.GetString(797));//"äºŒæ¬¡å¯†ç åªèƒ½æœ‰ 0 ~ 9 æ•°å­—ç»„æˆï¼Œè¯·é‡æ–°è¾“å…¥"
 
 				g_stUIDoublePwd.edtDoublePwdAlterOld->SetCaption("");
 				g_stUIDoublePwd.edtDoublePwdAlterNew->SetCaption("");
@@ -434,8 +434,8 @@ namespace GUI
 			int nPwdLen = (int) strlen(g_stUIDoublePwd.edtDoublePwdAlterNew->GetCaption());
 			if(6 > nPwdLen || 12 < nPwdLen)
 			{
-				// ÃÜÂë³¤¶È²»ÔÚ 6 ~ 12 Ö®¼ä
-				g_pGameApp->MsgBox(g_oLangRec.GetString(798));//"¶ş´ÎÃÜÂë³¤¶È²»ÔÚ 6 ~ 12£¬ÇëÖØĞÂÊäÈë"
+				// å¯†ç é•¿åº¦ä¸åœ¨ 6 ~ 12 ä¹‹é—´
+				g_pGameApp->MsgBox(g_oLangRec.GetString(798));//"äºŒæ¬¡å¯†ç é•¿åº¦ä¸åœ¨ 6 ~ 12ï¼Œè¯·é‡æ–°è¾“å…¥"
 
 				g_stUIDoublePwd.edtDoublePwdAlterOld->SetCaption("");
 				g_stUIDoublePwd.edtDoublePwdAlterNew->SetCaption("");
@@ -446,8 +446,8 @@ namespace GUI
 			if(0 != strcmp(g_stUIDoublePwd.edtDoublePwdAlterNew->GetCaption(), 
 						   g_stUIDoublePwd.edtDoublePwdAlterNewRetry->GetCaption()))
 			{
-				// Á½´ÎÃÜÂë²»Í¬
-				g_pGameApp->MsgBox(g_oLangRec.GetString(799));//"Á½´ÎÊäÈëµÄÃÜÂë²»Í¬£¬ÇëÖØĞÂÊäÈë"
+				// ä¸¤æ¬¡å¯†ç ä¸åŒ
+				g_pGameApp->MsgBox(g_oLangRec.GetString(799));//"ä¸¤æ¬¡è¾“å…¥çš„å¯†ç ä¸åŒï¼Œè¯·é‡æ–°è¾“å…¥"
 
 				g_stUIDoublePwd.edtDoublePwdAlterOld->SetCaption("");
 				g_stUIDoublePwd.edtDoublePwdAlterNew->SetCaption("");
@@ -455,7 +455,7 @@ namespace GUI
 				return;
 			}
 
-			// Á½´ÎÃÜÂëÏàÍ¬£¬Ïò·şÎñÆ÷·¢ËÍĞŞ¸Ä¶ş´ÎÃÜÂëÏûÏ¢
+			// ä¸¤æ¬¡å¯†ç ç›¸åŒï¼Œå‘æœåŠ¡å™¨å‘é€ä¿®æ”¹äºŒæ¬¡å¯†ç æ¶ˆæ¯
 			CS_UpdatePassword2(g_stUIDoublePwd.edtDoublePwdAlterOld->GetCaption(), g_stUIDoublePwd.edtDoublePwdAlterNew->GetCaption());
 		}
 		else
@@ -465,7 +465,7 @@ namespace GUI
 	}
 
 
-	// ÊäÈë¶ş´ÎÃÜÂë±íµ¥°´Å¥ÊÂ¼ş
+	// è¾“å…¥äºŒæ¬¡å¯†ç è¡¨å•æŒ‰é’®äº‹ä»¶
 	void CDoublePwdMgr::_evtDoublePwdFromMouseEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey)
 	{
 		string strName = pSender->GetName();
@@ -487,7 +487,7 @@ namespace GUI
 				g_stUIDoublePwd.SendPackageStoreOpen();
 				break;
 
-			// add by ning.yan 2008-11-11 µÀ¾ß½âËø begin
+			// add by ning.yan 2008-11-11 é“å…·è§£é” begin
 			case ITEM_UNLOCK:
 				g_stUIDoublePwd.SendItemUnlock();
 				break;// end
@@ -508,7 +508,7 @@ namespace GUI
 	}
 
 
-	// ¶ş´ÎÃÜÂëÊäÈëÈí¼üÅÌ±íµ¥°´Å¥ÊÂ¼ş
+	// äºŒæ¬¡å¯†ç è¾“å…¥è½¯é”®ç›˜è¡¨å•æŒ‰é’®äº‹ä»¶
 	void CDoublePwdMgr::_evtInputFromMouseEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey)
 	{
 		if(! g_stUIDoublePwd.edtFocusEditBox)
@@ -522,19 +522,19 @@ namespace GUI
 
 		if(strName == "btnClear")
 		{
-			// Çå¿Õ°´Å¥
+			// æ¸…ç©ºæŒ‰é’®
 			g_stUIDoublePwd.edtFocusEditBox->SetCaption("");
 		}
 		else if('0' <= cNumber && cNumber <= '9' && strPwd.size() < 12)
 		{ 
-			// Êı×Ö¼ü
+			// æ•°å­—é”®
 			strPwd += cNumber;
 			g_stUIDoublePwd.edtFocusEditBox->SetCaption(strPwd.c_str());
 		}
 	}
 
 
-	// ±à¼­¿ò¼¤»îÊÂ¼ş£¨±£´æÏÂ¼¤»îµÄ±à¼­¿ò£©
+	// ç¼–è¾‘æ¡†æ¿€æ´»äº‹ä»¶ï¼ˆä¿å­˜ä¸‹æ¿€æ´»çš„ç¼–è¾‘æ¡†ï¼‰
 	void CDoublePwdMgr::_evtEditFocus(CGuiData* pSender)
 	{
 		CEdit* edtTemp = dynamic_cast<CEdit*>(pSender);
@@ -545,7 +545,7 @@ namespace GUI
 	}
 
 
-	// ¹Ø±Õ´°ÌåÊÂ¼ş
+	// å…³é—­çª—ä½“äº‹ä»¶
 	void CDoublePwdMgr::_evtFormClose(CForm* pForm, bool& IsClose)
 	{
 		//g_stUIDoublePwd.CloseAllForm();

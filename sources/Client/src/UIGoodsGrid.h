@@ -1,8 +1,8 @@
-//----------------------------------------------------------------------
-// Ãû³Æ:µÀ¾ßÀ¸
-// ×÷Õß:lh 2004-10-27
-// ÓÃÍ¾:µÀ¾ßÀ¸ÖÐÃ¿Ò»¸öµÀ¾ß,×°±¸¾ù¿ÉÍÏ¶¯,Ã¿Ò»×°±¸ÏÂ¶¼ÓÐÊý×Ö´ú±í¸öÊý
-// ×îºóÐÞ¸ÄÈÕÆÚ:
+ï»¿//----------------------------------------------------------------------
+// åç§°:é“å…·æ 
+// ä½œè€…:lh 2004-10-27
+// ç”¨é€”:é“å…·æ ä¸­æ¯ä¸€ä¸ªé“å…·,è£…å¤‡å‡å¯æ‹–åŠ¨,æ¯ä¸€è£…å¤‡ä¸‹éƒ½æœ‰æ•°å­—ä»£è¡¨ä¸ªæ•°
+// æœ€åŽä¿®æ”¹æ—¥æœŸ:
 //----------------------------------------------------------------------
 #pragma once
 #include "UICommandCompent.h"
@@ -22,9 +22,9 @@ class CGoodsGrid : public CCommandCompent
 public:
 	enum eShowStyle
 	{
-		enumSmall,		// Õý³£ÏÔÊ¾Í¼±ê·½Ê½
-		enumSale,		// ÏÔÊ¾ÊÛ³ö
-		enumOwnDef		// ×Ô¶¨ÒåÏÔÊ¾
+		enumSmall,		// æ­£å¸¸æ˜¾ç¤ºå›¾æ ‡æ–¹å¼
+		enumSale,		// æ˜¾ç¤ºå”®å‡º
+		enumOwnDef		// è‡ªå®šä¹‰æ˜¾ç¤º
 	};
 
 
@@ -79,7 +79,7 @@ public:
 	void ResetItemSelections();
 
 	int				GetFreeIndex();
-    void            GetFreeIndex( int* nFree, int& nCount, int nSize );     // nFreeÎªintÊý×é,nCountÎªÊý×éÖÐ¶àÉÙ¸öÖµÓÐÐ§,nSizeÎªnFreeµÄ»º³å¸öÊý
+    void            GetFreeIndex( int* nFree, int& nCount, int nSize );     // nFreeä¸ºintæ•°ç»„,nCountä¸ºæ•°ç»„ä¸­å¤šå°‘ä¸ªå€¼æœ‰æ•ˆ,nSizeä¸ºnFreeçš„ç¼“å†²ä¸ªæ•°
 	bool			DelItem( int nIndex );
 	bool			SetItem( unsigned int nIndex, CCommandObj* pItem );
 	bool			SwapItem( unsigned int nFirst, unsigned int nSecond );
@@ -97,16 +97,16 @@ public:
 	int				GetMaxNum() const { return _nMaxNum; }
 	int				GetCurNum()	const { return _nCurNum; }
 
-    int             FindCommand( CCommandObj* p );  // ·µ»Ø´óÓÚÁã³É¹¦,Ê§°Ü·µ»Ø-1 
+    int             FindCommand( CCommandObj* p );  // è¿”å›žå¤§äºŽé›¶æˆåŠŸ,å¤±è´¥è¿”å›ž-1 
 
 	void			SetItemValid( bool v );
 
 	int				GetFirstShow() const { return _nFirst; }
 
-	int				GetEmptyGridCount();	// ±í¸ñÖÐ¿Õ¸ñ¸ñ×Ó¸öÊý
-	int				GetUsedGridCount();		// ±í¸ñÖÐÒÑÊ¹ÓÃ¸ñ×Ó¸öÊý
+	int				GetEmptyGridCount();	// è¡¨æ ¼ä¸­ç©ºæ ¼æ ¼å­ä¸ªæ•°
+	int				GetUsedGridCount();		// è¡¨æ ¼ä¸­å·²ä½¿ç”¨æ ¼å­ä¸ªæ•°
 
-public:	// ÊÂ¼þ
+public:	// äº‹ä»¶
     GuiThrowItemEvent   evtThrowItem;
     GuiSwapItemEvent    evtSwapItem;
     GuiDragInGridEvent	evtBeforeAccept;
@@ -118,7 +118,7 @@ private:
 	void			_Copy( const CGoodsGrid& rhs );
 	void			_SetSelf();
 	void			_ClearItem();
-	int				_GetHitItem( int x, int y );		// ·µ»Ø-1Ê§°Ü£¬·ñÔò·µ»ØË÷Òý
+	int				_GetHitItem( int x, int y );		// è¿”å›ž-1å¤±è´¥ï¼Œå¦åˆ™è¿”å›žç´¢å¼•
 
 protected:
 	static void		_OnScrollChange(CGuiData *pSender) {
@@ -127,22 +127,22 @@ protected:
 	void			_OnScrollChange();
 
 protected:
-	CGuiPic*		_pImage;					// ±³¾°
+	CGuiPic*		_pImage;					// èƒŒæ™¯
 	CScroll*		_pScroll;
-	CGuiPic*		_pUnit;						// µ¥Ôª¸ñÍ¼Æ¬
+	CGuiPic*		_pUnit;						// å•å…ƒæ ¼å›¾ç‰‡
 
 	CCommandObj**	_pItems;
 
 protected:
 	eShowStyle		_eShowStyle;
 
-	int				_nUnitHeight, _nUnitWidth;	// µ¥Ôª¿í¸ß 
-	int				_nSpaceX, _nSpaceY;			// µ¥Ôª¼ä¾à
+	int				_nUnitHeight, _nUnitWidth;	// å•å…ƒå®½é«˜ 
+	int				_nSpaceX, _nSpaceY;			// å•å…ƒé—´è·
 
-	int				_nRow, _nCol;				// ÏÔÊ¾µÄÐÐÁÐ
-	int				_nMaxNum;					// ¸ñ×ÓÊý,ÐÐÁÐµÄÕûÊý±¶
+	int				_nRow, _nCol;				// æ˜¾ç¤ºçš„è¡Œåˆ—
+	int				_nMaxNum;					// æ ¼å­æ•°,è¡Œåˆ—çš„æ•´æ•°å€
 
-	// ÓëÖÜÎ§±ß¿òµÄ¾àÀë
+	// ä¸Žå‘¨å›´è¾¹æ¡†çš„è·ç¦»
 	int				_nLeftMargin;
 	int				_nTopMargin;
 	int				_nRightMargin;
@@ -156,17 +156,17 @@ private:
 
 private:
 	int				_nStartX, _nStartY;
-	int				_nPageShowNum;				// Ò»Ò³ÄÜÏÔÊ¾µÄ¸öÊý
+	int				_nPageShowNum;				// ä¸€é¡µèƒ½æ˜¾ç¤ºçš„ä¸ªæ•°
 	int				_nTotalW, _nTotalH;
 
-	int				_nFirst, _nLast;			// ÏÔÊ¾Ê±µÄµÚÒ»¸öºÍ×îºóÒ»¸ö
+	int				_nFirst, _nLast;			// æ˜¾ç¤ºæ—¶çš„ç¬¬ä¸€ä¸ªå’Œæœ€åŽä¸€ä¸ª
 
 	CCommandObj*	_pDragItem;
-	int				_nDragIndex;				// ÍÏ¶¯Ê±µÄË÷Òý
+	int				_nDragIndex;				// æ‹–åŠ¨æ—¶çš„ç´¢å¼•
 	int				_nDragOffX, _nDragOffY;
 	int				_nDragRow,	_nDragCol;
 
-	int				_nCurNum;					// µ±Ç°ÎïÆ·ÊýÁ¿
+	int				_nCurNum;					// å½“å‰ç‰©å“æ•°é‡
 	bool			_IsShowHint;
 
 private:
@@ -181,7 +181,7 @@ private:
 
 };
 
-// ÄÚÁªº¯Êý
+// å†…è”å‡½æ•°
 inline void CGoodsGrid::SetSpace( int x, int y )	
 { 
 	if( x >= 0 )	_nSpaceX=x; 

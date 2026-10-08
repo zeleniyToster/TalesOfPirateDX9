@@ -1,5 +1,5 @@
-
+﻿
 #include "pch.h"
 
-// ���Զ�����Ԥ����ͷ�ļ�logutil.pch
+// 会自动产生预编译头文件logutil.pch
 //

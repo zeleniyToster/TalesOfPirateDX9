@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 class CCharacter;
 struct stNetTeamChaPart;
@@ -9,20 +9,20 @@ namespace GUI
 // 
 enum  eTeamStyle
 {
-	enumTeamFrnd,       // ºÃÓÑ
-    enumTeamGroup,      // ¶ÓÎé
-    enumTeamGuild,      // ĞĞ»á
-    enumTeamRoad,       // Â·ÈË
-	enumTeamMaster,		// Ê¦¸µ
-	enumTeamPrentice,	// Í½µÜ
-	enumTeamGM,	// Í½µÜ
+	enumTeamFrnd,       // å¥½å‹
+    enumTeamGroup,      // é˜Ÿä¼
+    enumTeamGuild,      // è¡Œä¼š
+    enumTeamRoad,       // è·¯äºº
+	enumTeamMaster,		// å¸ˆå‚…
+	enumTeamPrentice,	// å¾’å¼Ÿ
+	enumTeamGM,	// å¾’å¼Ÿ
 	enumTeamBlocked,
 };
 
 enum  eShowStyle
 {
-	enumShowQQName,       // ÏÔÊ¾Ãû×Ö
-	enumShowQQMotto,      // ÏÔÊ¾×ùÓÒÃú
+	enumShowQQName,       // æ˜¾ç¤ºåå­—
+	enumShowQQMotto,      // æ˜¾ç¤ºåº§å³é“­
 };
 
 
@@ -60,8 +60,8 @@ private:
 	bool	 _bOnline;
 	BYTE	 _byWork;
     long     _nMaxHp;   
-    long     _nHp;      // Ñª
-    long     _nSp;      // Ä§·¨
+    long     _nHp;      // è¡€
+    long     _nSp;      // é­”æ³•
     long     _nLv;
     long     _nMaxSp;
 
@@ -112,7 +112,7 @@ public:
 	static eShowStyle _nShowStyle;
 
 private:
-    std::string          _strName;       // Ãû×Ö
+    std::string          _strName;       // åå­—
 	std::string			_strMotto;
 	std::string			_strJob;
 	std::string			_strShowName;
@@ -185,18 +185,18 @@ public:
 	static  void	SetTeamLeaderID( DWORD v )	{ _dwTeamLeaderID=v;	}
 
 private:
-	CTeam*  _pFrndTeam;				// ºÃÓÑ
-    CTeam*  _pGroupTeam;			// ¶ÓÎé
-    CTeam*  _pRoadTeam;				// Â·ÈË
-	CTeam*	_pMasterTeam;			// Ê¦¸µ
-	CTeam*	_pPrenticeTeam;			// Í½µÜ
-	CTeam*	_pGMTeam;			// Í½µÜ
+	CTeam*  _pFrndTeam;				// å¥½å‹
+    CTeam*  _pGroupTeam;			// é˜Ÿä¼
+    CTeam*  _pRoadTeam;				// è·¯äºº
+	CTeam*	_pMasterTeam;			// å¸ˆå‚…
+	CTeam*	_pPrenticeTeam;			// å¾’å¼Ÿ
+	CTeam*	_pGMTeam;			// å¾’å¼Ÿ
 	CTeam*  _pBlockedTeam;
 
 	static DWORD	_dwTeamLeaderID;
 
 };
 
-// ÄÚÁªº¯Êı
+// å†…è”å‡½æ•°
 
 }

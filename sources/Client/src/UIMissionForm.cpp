@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "uimissionform.h"
 #include "uiform.h"
 #include "uimemo.h"
@@ -9,7 +9,7 @@ using namespace std;
 
 using namespace GUI;
 //---------------------------------------------------------------------------
-// class CMissionMgr  ÓÃ»§ÈÎÎñ¹ÜÀíÀà
+// class CMissionMgr  ç”¨æˆ·ä»»åŠ¡ç®¡ç†ç±»
 //---------------------------------------------------------------------------
 
 CMissionMgr::CMissionMgr()
@@ -28,9 +28,9 @@ CMissionMgr::~CMissionMgr()
 {
 }
 
-bool CMissionMgr::Init() // ÓÃ»§ÈÎÎñÐÅÏ¢³õÊ¼»¯
+bool CMissionMgr::Init() // ç”¨æˆ·ä»»åŠ¡ä¿¡æ¯åˆå§‹åŒ–
 {
-	//npcÈÎÎñ
+	//npcä»»åŠ¡
 	m_pMisForm = _FindForm("frmNPCMission" ); 
 	if( !m_pMisForm )
 	{	
@@ -86,7 +86,7 @@ void CMissionMgr::_MouseEvent( CCompent *pSender, int nMsgType, int x, int y, DW
 	string strName = pSender->GetName();
 	if( stricmp( "frmNPCMission", pSender->GetForm()->GetName() ) ==  0 )
 	{
-		// Èç¹ûÊÇÍË³ö°´Å¥,Ôò¹Ø±Õ¸Ã±íµ¥
+		// å¦‚æžœæ˜¯é€€å‡ºæŒ‰é’®,åˆ™å…³é—­è¯¥è¡¨å•
 		if( strName == "btnNo" || strName == "btnClose" )
 		{
 			pSender->GetForm()->Close();
@@ -120,17 +120,17 @@ void CMissionMgr::ShowMissionPage( DWORD dwNpcID, BYTE byCmd, const NET_MISPAGE&
 	m_pMisBtn1->SetIsShow( false );
 	m_pMisBtn2->SetIsShow( false );
 
-	if (byCmd == ROLE_MIS_BTNACCEPT )  //½ÓÊÜ°´Å¥
+	if (byCmd == ROLE_MIS_BTNACCEPT )  //æŽ¥å—æŒ‰é’®
 	{
 		m_pMisBtn1->SetIsShow( true );		
 	}
-	else if (byCmd == ROLE_MIS_BTNDELIVERY )  //Íê³É°´Å¥
+	else if (byCmd == ROLE_MIS_BTNDELIVERY )  //å®ŒæˆæŒ‰é’®
 	{		
 		m_pMisBtn2->SetIsShow( true );
 		m_pMisBtn2->SetIsEnabled( true );
 		m_pMisInfo->SetIsSelect( TRUE );
 	}
-	else if ( byCmd == ROLE_MIS_BTNPENDING )//ÒÑ½ÓÊÜ£¬µ«Î´Íê³É
+	else if ( byCmd == ROLE_MIS_BTNPENDING )//å·²æŽ¥å—ï¼Œä½†æœªå®Œæˆ
 	{
 		m_pMisBtn2->SetIsShow( true );
 		m_pMisBtn2->SetIsEnabled( false );

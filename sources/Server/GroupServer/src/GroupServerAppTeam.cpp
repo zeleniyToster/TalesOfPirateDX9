@@ -1,4 +1,4 @@
-#include "stdafx.h"
+Ôªø#include "stdafx.h"
 #include <iostream>
 #include "GroupServerApp.h"
 #include "GameCommon.h"
@@ -17,11 +17,11 @@ void GroupServerApp::CP_TEAM_INVITE(Player *ply,DataSocket *datasock,RPacket &pk
 
 	if(ply->GetTeam() && ply->GetLeader() !=ply)
 	{
-		//ply->SendSysInfo("÷ª”–∂”≥§≤≈ƒ‹∑¢≥ˆ◊È∂”—˚«Î°£");
+		//ply->SendSysInfo("Âè™ÊúâÈòüÈïøÊâçËÉΩÂèëÂá∫ÁªÑÈòüÈÇÄËØ∑„ÄÇ");
 		ply->SendSysInfo(RES_STRING(GP_GROUPSERVERAPPTEAM_CPP_00001));
 	}else if(ply->GetTeam() && ply->GetTeam()->GetTotal() >=const_team.MemberMax)
 	{
-		//ply->SendSysInfo("ƒ„µƒ∂”ŒÈ≥…‘± ˝“—æ≠¥ÔµΩ¡ÀœµÕ≥‘ –Ìµƒ…œœﬁ¡À°£");
+		//ply->SendSysInfo("‰Ω†ÁöÑÈòü‰ºçÊàêÂëòÊï∞Â∑≤ÁªèËææÂà∞‰∫ÜÁ≥ªÁªüÂÖÅËÆ∏ÁöÑ‰∏äÈôê‰∫Ü„ÄÇ");
 		ply->SendSysInfo(RES_STRING(GP_GROUPSERVERAPPTEAM_CPP_00002));
 	}else
 	{
@@ -36,19 +36,19 @@ void GroupServerApp::CP_TEAM_INVITE(Player *ply,DataSocket *datasock,RPacket &pk
 		if(!l_invited_ply || l_invited_ply->m_currcha <0 ||l_invited_ply ==ply)
 		{
 			char l_buf[256];
-			//sprintf(l_buf,"ƒ„À˘—˚«ÎµƒÕÊº“°æ%s°øµ±«∞≤ª‘⁄œﬂ…œ°£",l_invited_name);
+			//sprintf(l_buf,"‰Ω†ÊâÄÈÇÄËØ∑ÁöÑÁé©ÂÆ∂„Äê%s„ÄëÂΩìÂâç‰∏çÂú®Á∫ø‰∏ä„ÄÇ",l_invited_name);
 			sprintf(l_buf,RES_STRING(GP_GROUPSERVERAPPTEAM_CPP_00003),l_invited_name);
 			ply->SendSysInfo(l_buf);
 		}else if(l_invited_ply->GetTeam())
 		{
 			char l_buf[256];
-			//sprintf(l_buf,"ƒ„À˘—˚«ÎµƒÕÊº“°æ%s°øµ±«∞¥¶”⁄◊È∂”◊¥Ã¨°£",l_invited_name);
+			//sprintf(l_buf,"‰Ω†ÊâÄÈÇÄËØ∑ÁöÑÁé©ÂÆ∂„Äê%s„ÄëÂΩìÂâçÂ§Ñ‰∫éÁªÑÈòüÁä∂ÊÄÅ„ÄÇ",l_invited_name);
 			sprintf(l_buf,RES_STRING(GP_GROUPSERVERAPPTEAM_CPP_00004),l_invited_name);
 			ply->SendSysInfo(l_buf);
 		}
 		else if (l_invited = l_invited_ply->TeamFindInvitedByInviterChaID(ply->m_chaid[ply->m_currcha]))
 		{
-			//ply->SendSysInfo(dstring("ƒ˙µ±«∞∂‘°æ")<<l_invited_name<<"°ø“—æ≠”–“ª∏ˆŒ¥æˆµƒ◊È∂”—˚«Î£¨«Î…‘∞≤Œ„‘Í°£");
+			//ply->SendSysInfo(dstring("ÊÇ®ÂΩìÂâçÂØπ„Äê")<<l_invited_name<<"„ÄëÂ∑≤ÁªèÊúâ‰∏Ä‰∏™Êú™ÂÜ≥ÁöÑÁªÑÈòüÈÇÄËØ∑ÔºåËØ∑Á®çÂÆâÊØãË∫Å„ÄÇ");
 			char l_buf[256];
 			sprintf(l_buf, RES_STRING(GP_GROUPSERVERAPPTEAM_CPP_00005), l_invited_name);
 			ply->SendSysInfo(l_buf);
@@ -64,7 +64,7 @@ void GroupServerApp::CP_TEAM_INVITE(Player *ply,DataSocket *datasock,RPacket &pk
 			if(l_ptinviter )
 			{
 				char l_buf[256];
-				//sprintf(l_buf,"ƒ„À˘—˚«Îµƒ◊È∂”ÕÊº“°æ%s°ø”…”⁄±ª—˚«Îπ˝∂‡∂¯¥¶”⁄∑±√¶◊¥Ã¨,ƒ„∂‘∆‰µƒ—˚«Î“—±ªœµÕ≥»°œ˚°£",l_invited_name);
+				//sprintf(l_buf,"‰Ω†ÊâÄÈÇÄËØ∑ÁöÑÁªÑÈòüÁé©ÂÆ∂„Äê%s„ÄëÁî±‰∫éË¢´ÈÇÄËØ∑ËøáÂ§öËÄåÂ§Ñ‰∫éÁπÅÂøôÁä∂ÊÄÅ,‰Ω†ÂØπÂÖ∂ÁöÑÈÇÄËØ∑Â∑≤Ë¢´Á≥ªÁªüÂèñÊ∂à„ÄÇ",l_invited_name);
 				sprintf(l_buf,RES_STRING(GP_GROUPSERVERAPPTEAM_CPP_00007),l_invited_name);
 				l_ptinviter->SendSysInfo(l_buf);
 
@@ -90,7 +90,7 @@ void GroupServerApp::CP_TEAM_REFUSE(Player *ply,DataSocket *datasock,RPacket &pk
 	if(l_inviter && l_inviter->m_currcha >=0 && l_inviter.m_chaid ==l_inviter->m_chaid[l_inviter->m_currcha])
 	{
 		char l_buf[256];
-		//sprintf(l_buf,"ÕÊº“°æ%s°øæ‹æ¯¡Àƒ˙µƒ◊È∂”—˚«Î°£",ply->m_chaname[ply->m_currcha].c_str());
+		//sprintf(l_buf,"Áé©ÂÆ∂„Äê%s„ÄëÊãíÁªù‰∫ÜÊÇ®ÁöÑÁªÑÈòüÈÇÄËØ∑„ÄÇ",ply->m_chaname[ply->m_currcha].c_str());
 		sprintf(l_buf,RES_STRING(GP_GROUPSERVERAPPTEAM_CPP_00008),ply->m_chaname[ply->m_currcha].c_str());
 		l_inviter->SendSysInfo(l_buf);
 	}
@@ -98,8 +98,8 @@ void GroupServerApp::CP_TEAM_REFUSE(Player *ply,DataSocket *datasock,RPacket &pk
 void GroupServerApp::MP_TEAM_CREATE(Player *ply,DataSocket *datasock,RPacket &pk)
 {
 	bool bInvited = false;
-	cChar *szName1 = pk.ReadString(); // ∂”‘±
-	cChar *szName2 = pk.ReadString(); // ∂”≥§
+	cChar *szName1 = pk.ReadString(); // team member
+	cChar *szName2 = pk.ReadString(); // team leader
 
 	Player *pPly = FindPlayerByChaName(szName2);
 	Player *pPly2 = FindPlayerByChaName(szName1);
@@ -107,21 +107,21 @@ void GroupServerApp::MP_TEAM_CREATE(Player *ply,DataSocket *datasock,RPacket &pk
 	if(!pPly || !pPly2)
 	{
 		LogLine	l_line(g_LogMaster);
-		//l_line<<newln<<"MP_TEAM_CREATE()≥…‘±≤ª‘⁄œﬂ!";
+		//l_line<<newln<<"MP_TEAM_CREATE()ÊàêÂëò‰∏çÂú®Á∫ø!";
 		l_line<<newln<<"MP_TEAM_CREATE() member is offline!";
 		return;
 	}
 
-	//—˚«Î
+	// invite
 	if(pPly->GetTeam() && pPly->GetLeader() !=pPly)
 	{
-		//pPly->SendSysInfo("ƒ˙≤ª «∂”≥§!");
+		//pPly->SendSysInfo("ÊÇ®‰∏çÊòØÈòüÈïø!");
 		pPly->SendSysInfo(RES_STRING(GP_GROUPSERVERAPPTEAM_CPP_00010));
-		//pPly2->SendSysInfo("∂‘∑Ω≤ª «∂”≥§!");
+		//pPly2->SendSysInfo("ÂØπÊñπ‰∏çÊòØÈòüÈïø!");
 		pPly2->SendSysInfo(RES_STRING(GP_GROUPSERVERAPPTEAM_CPP_00011));
 	}else if(pPly->GetTeam() && pPly->GetTeam()->GetTotal() >=const_team.MemberMax)
 	{
-		//pPly->SendSysInfo("ƒ„µƒ∂”ŒÈ≥…‘± ˝“—æ≠¥ÔµΩ¡ÀœµÕ≥‘ –Ìµƒ…œœﬁ¡À!");
+		//pPly->SendSysInfo("‰Ω†ÁöÑÈòü‰ºçÊàêÂëòÊï∞Â∑≤ÁªèËææÂà∞‰∫ÜÁ≥ªÁªüÂÖÅËÆ∏ÁöÑ‰∏äÈôê‰∫Ü!");
 		pPly->SendSysInfo(RES_STRING(GP_GROUPSERVERAPPTEAM_CPP_00002));
 		pPly2->SendSysInfo(RES_STRING(GP_GROUPSERVERAPPTEAM_CPP_00012));
 	}else
@@ -132,7 +132,7 @@ void GroupServerApp::MP_TEAM_CREATE(Player *ply,DataSocket *datasock,RPacket &pk
 		if(!l_invited_name ||l_len >16)
 		{
 			LogLine	l_line(g_LogMaster);
-			//l_line<<newln<<"MP_TEAM_CREATE()–’√˚≥§∂»∑«∑®!";
+			//l_line<<newln<<"MP_TEAM_CREATE()ÂßìÂêçÈïøÂ∫¶ÈùûÊ≥ï!";
 			l_line<<newln<<"MP_TEAM_CREATE() name length is invalid!";
 			return;
 		}
@@ -140,18 +140,18 @@ void GroupServerApp::MP_TEAM_CREATE(Player *ply,DataSocket *datasock,RPacket &pk
 		if(!l_invited_ply || l_invited_ply->m_currcha <0 ||l_invited_ply == pPly)
 		{
 			char l_buf[256];
-			//sprintf(l_buf,"ÕÊº“°æ%s°øµ±«∞≤ª‘⁄œﬂ…œ!",l_invited_name);
+			//sprintf(l_buf,"Áé©ÂÆ∂„Äê%s„ÄëÂΩìÂâç‰∏çÂú®Á∫ø‰∏ä!",l_invited_name);
 			sprintf(l_buf,RES_STRING(GP_GROUPSERVERAPPTEAM_CPP_00014),l_invited_name);
 			pPly->SendSysInfo(l_buf);
 		}else if(l_invited_ply->GetTeam())
 		{
 			char l_buf[256];
-			//sprintf(l_buf,"ÕÊº“°æ%s°øµ±«∞¥¶”⁄◊È∂”◊¥Ã¨°£",l_invited_name);
+			//sprintf(l_buf,"Áé©ÂÆ∂„Äê%s„ÄëÂΩìÂâçÂ§Ñ‰∫éÁªÑÈòüÁä∂ÊÄÅ„ÄÇ",l_invited_name);
 			sprintf(l_buf,RES_STRING(GP_GROUPSERVERAPPTEAM_CPP_00015),l_invited_name);
 			pPly->SendSysInfo(l_buf);
 		}else if(l_invited =l_invited_ply->TeamFindInvitedByInviterChaID(pPly->m_chaid[pPly->m_currcha]))
 		{
-			//pPly->SendSysInfo(dstring("ƒ˙µ±«∞∂‘°æ")<<l_invited_name<<"°ø“—æ≠”–“ª∏ˆŒ¥æˆµƒ◊È∂”—˚«Î£¨«Î…‘∞≤Œ„‘Í°£");
+			//pPly->SendSysInfo(dstring("ÊÇ®ÂΩìÂâçÂØπ„Äê")<<l_invited_name<<"„ÄëÂ∑≤ÁªèÊúâ‰∏Ä‰∏™Êú™ÂÜ≥ÁöÑÁªÑÈòüÈÇÄËØ∑ÔºåËØ∑Á®çÂÆâÊØãË∫Å„ÄÇ");
 			char l_buf[256];
 			sprintf(l_buf,RES_STRING(GP_GROUPSERVERAPPTEAM_CPP_00005),l_invited_name);
 			pPly->SendSysInfo(l_buf);
@@ -161,7 +161,7 @@ void GroupServerApp::MP_TEAM_CREATE(Player *ply,DataSocket *datasock,RPacket &pk
 			if(l_ptinviter )
 			{
 				char l_buf[256];
-				//sprintf(l_buf,"ÕÊº“°æ%s°ø¥¶”⁄∑±√¶◊¥Ã¨,ƒ„∂‘∆‰µƒ—˚«Î“—±ªœµÕ≥»°œ˚°£",l_invited_name);
+				//sprintf(l_buf,"Áé©ÂÆ∂„Äê%s„ÄëÂ§Ñ‰∫éÁπÅÂøôÁä∂ÊÄÅ,‰Ω†ÂØπÂÖ∂ÁöÑÈÇÄËØ∑Â∑≤Ë¢´Á≥ªÁªüÂèñÊ∂à„ÄÇ",l_invited_name);
 				sprintf(l_buf,RES_STRING(GP_GROUPSERVERAPPTEAM_CPP_00016),l_invited_name);
 				l_ptinviter->SendSysInfo(l_buf);
 			}
@@ -170,7 +170,7 @@ void GroupServerApp::MP_TEAM_CREATE(Player *ply,DataSocket *datasock,RPacket &pk
 		}
 	}
 
-	//Ω” ‹—˚«Î
+	// accept the invitation
 	if(bInvited)
 	{
 		cChar *szInviterName = szName2;
@@ -178,14 +178,14 @@ void GroupServerApp::MP_TEAM_CREATE(Player *ply,DataSocket *datasock,RPacket &pk
 		if(l_count &&(l_count >const_team.MemberMax))
 		{
 			pPly2->LeaveTeam();
-			//pPly2->SendSysInfo("ƒ„“™º”»Îµƒ◊È∂”≥…‘± ˝“—¥ÔµΩ‘ –Ìµƒ…œœﬁ°£");
+			//pPly2->SendSysInfo("‰Ω†Ë¶ÅÂä†ÂÖ•ÁöÑÁªÑÈòüÊàêÂëòÊï∞Â∑≤ËææÂà∞ÂÖÅËÆ∏ÁöÑ‰∏äÈôê„ÄÇ");
 			pPly2->SendSysInfo(RES_STRING(GP_GROUPSERVERAPPTEAM_CPP_00017));
 		}else if(l_count)
 		{
 			LogLine	l_line(g_LogMaster);
-			//l_line<<newln<<"ÕÊº“"<<pPly2->m_chaname[pPly2->m_currcha]<<"º”»Î¡À◊È∂”"<<pPly2->GetLeader()->m_chaname[pPly2->GetLeader()->m_currcha]<<endln;
+			//l_line<<newln<<"Áé©ÂÆ∂"<<pPly2->m_chaname[pPly2->m_currcha]<<"Âä†ÂÖ•‰∫ÜÁªÑÈòü"<<pPly2->GetLeader()->m_chaname[pPly2->GetLeader()->m_currcha]<<endln;
 			l_line<<newln<<"player "<<pPly2->m_chaname[pPly2->m_currcha]<<" add team "<<pPly2->GetLeader()->m_chaname[pPly2->GetLeader()->m_currcha]<<endln;
-			//Õ®÷™Client◊È≥…‘±±‰ªØ
+			// notify the client of the team membership change
 			{
 				Team		*	l_team	=pPly2->GetTeam();
 
@@ -216,7 +216,7 @@ void GroupServerApp::MP_TEAM_CREATE(Player *ply,DataSocket *datasock,RPacket &pk
 
 				SendToClient(l_plylst,l_plynum,l_wpk);
 			}
-			//Õ®÷™GameServer◊È≥…‘±±‰ªØ
+			// notify the GameServer of the team membership change
 			{
 				Team		*	l_team	=pPly2->GetTeam();
 				Player		*	l_plyr;
@@ -258,7 +258,7 @@ void GroupServerApp::MP_TEAM_CREATE(Player *ply,DataSocket *datasock,RPacket &pk
 						sock->SendData(l_wpk);
 					}
 					LogLine	l_line(g_LogMaster);
-					//l_line<<newln<<"MP_TEAM_CREATE()»∑»œToGameServerµƒº”»Î◊È∂”≤Ÿ◊˜∑¢ÀÕ¡À ˝æ›µΩGateServer";
+					//l_line<<newln<<"MP_TEAM_CREATE()Á°ÆËÆ§ToGameServerÁöÑÂä†ÂÖ•ÁªÑÈòüÊìç‰ΩúÂèëÈÄÅ‰∫ÜÊï∞ÊçÆÂà∞GateServer";
 					l_line<<newln<<"MP_TEAM_CREATE() send ToGameServer data to GateServer";
 				}
 			}
@@ -267,7 +267,7 @@ void GroupServerApp::MP_TEAM_CREATE(Player *ply,DataSocket *datasock,RPacket &pk
 	else
 	{
 		LogLine l_line(g_LogMaster);
-		//l_line<<newln<<"MP_TEAM_CREATE()—˚«Î ß∞‹";
+		//l_line<<newln<<"MP_TEAM_CREATE()ÈÇÄËØ∑Â§±Ë¥•";
 		l_line<<newln<<"MP_TEAM_CREATE() invite failed";
 	}
 }
@@ -278,14 +278,14 @@ void GroupServerApp::CP_TEAM_ACCEPT(Player *ply,DataSocket *datasock,RPacket &pk
 	if(l_count &&(l_count >const_team.MemberMax))
 	{
 		ply->LeaveTeam();
-		//ply->SendSysInfo("ƒ„“™º”»Îµƒ◊È∂”≥…‘± ˝“—¥ÔµΩ‘ –Ìµƒ…œœﬁ°£");
+		//ply->SendSysInfo("‰Ω†Ë¶ÅÂä†ÂÖ•ÁöÑÁªÑÈòüÊàêÂëòÊï∞Â∑≤ËææÂà∞ÂÖÅËÆ∏ÁöÑ‰∏äÈôê„ÄÇ");
 		ply->SendSysInfo(RES_STRING(GP_GROUPSERVERAPPTEAM_CPP_00017));
 	}else if(l_count)
 	{
 		LogLine	l_line(g_LogTeam);
-		//l_line<<newln<<"ÕÊº“"<<ply->m_chaname[ply->m_currcha]<<"º”»Î¡À◊È∂”"<<ply->GetLeader()->m_chaname[ply->GetLeader()->m_currcha]<<endln;
+		//l_line<<newln<<"Áé©ÂÆ∂"<<ply->m_chaname[ply->m_currcha]<<"Âä†ÂÖ•‰∫ÜÁªÑÈòü"<<ply->GetLeader()->m_chaname[ply->GetLeader()->m_currcha]<<endln;
 		l_line<<newln<<"player "<<ply->m_chaname[ply->m_currcha]<<"add team"<<ply->GetLeader()->m_chaname[ply->GetLeader()->m_currcha]<<endln;
-		//Õ®÷™Client◊È≥…‘±±‰ªØ
+		// notify the client of the team membership change
 		{
 			Team		*	l_team	=ply->GetTeam();
 
@@ -316,7 +316,7 @@ void GroupServerApp::CP_TEAM_ACCEPT(Player *ply,DataSocket *datasock,RPacket &pk
 
 			SendToClient(l_plylst,l_plynum,l_wpk);
 		}
-		//Õ®÷™GameServer◊È≥…‘±±‰ªØ
+		// notify the GameServer of the team membership change
 		{
 			Team		*	l_team	=ply->GetTeam();
 			Player		*	l_plyr;
@@ -358,7 +358,7 @@ void GroupServerApp::CP_TEAM_ACCEPT(Player *ply,DataSocket *datasock,RPacket &pk
 					sock->SendData(l_wpk);
 				}
 				LogLine	l_line(g_LogTeam);
-				//l_line<<newln<<"»∑»œToGameServerµƒº”»Î◊È∂”≤Ÿ◊˜∑¢ÀÕ¡À ˝æ›µΩGateServer";
+				//l_line<<newln<<"Á°ÆËÆ§ToGameServerÁöÑÂä†ÂÖ•ÁªÑÈòüÊìç‰ΩúÂèëÈÄÅ‰∫ÜÊï∞ÊçÆÂà∞GateServer";
 				l_line<<newln<<"MP_TEAM_CREATE() send ToGameServer data to GateServer";
 			}
 		}
@@ -372,7 +372,7 @@ void GroupServerApp::CP_TEAM_LEAVE(Player *ply,DataSocket *datasock,RPacket &pk)
 	long	l_count		=ply->LeaveTeam();
 	if(l_count)
 	{
-		//Õ®÷™Client◊È≥…‘±±‰ªØ
+		// notify the client of the team membership change
 		{
 			WPacket	l_wpk	=GetWPacket();
 			l_wpk.WriteCmd(CMD_PC_TEAM_REFRESH);
@@ -400,7 +400,7 @@ void GroupServerApp::CP_TEAM_LEAVE(Player *ply,DataSocket *datasock,RPacket &pk)
 			l.unlock();
 			SendToClient(l_plylst,l_plynum,l_wpk);
 		}
-		//Õ®÷™GameServer◊È≥…‘±±‰ªØ
+		// notify the GameServer of the team membership change
 		{
 			Player		*	l_plyr;
 			GateServer	*	l_gate[30];for(int i=0;i<30;i++)l_gate[i]=0;
@@ -447,8 +447,8 @@ void GroupServerApp::CP_TEAM_LEAVE(Player *ply,DataSocket *datasock,RPacket &pk)
 				l_team->GetLeader()->LeaveTeam();
 			}
 			LogLine	l_line(g_LogTeam);
-			/*l_line<<newln<<"ÕÊº“"<<ply->m_chaname[ply->m_currcha]<<"¿Îø™¡À◊È∂”"
-				<<l_leader->m_chaname[l_leader->m_currcha]<<(l_count ==2?",∂”ŒÈΩ‚…¢°£":"°£")
+			/*l_line<<newln<<"Áé©ÂÆ∂"<<ply->m_chaname[ply->m_currcha]<<"Á¶ªÂºÄ‰∫ÜÁªÑÈòü"
+				<<l_leader->m_chaname[l_leader->m_currcha]<<(l_count ==2?",Èòü‰ºçËß£Êï£„ÄÇ":"„ÄÇ")
 				<<endln;
 			*/
 			l_line<<newln<<"player "<<ply->m_chaname[ply->m_currcha]<<"leave team "
@@ -472,7 +472,7 @@ void GroupServerApp::CP_TEAM_KICK(Player *ply,DataSocket *datasock,RPacket &pk)
 	if( !pKicker ) 
 	{
 		LogLine	l_line(g_LogTeam);
-		//l_line<<newln<<"∂”≥§"<<ply->m_chaname[ply->m_currcha]<<"Ãﬂ≥ˆ∂”‘±≤ª¥Ê‘⁄£°ID["
+		//l_line<<newln<<"ÈòüÈïø"<<ply->m_chaname[ply->m_currcha]<<"Ë∏¢Âá∫ÈòüÂëò‰∏çÂ≠òÂú®ÔºÅID["
 		//	<<dwKickedID<<"]"<<endln;
 		l_line<<newln<<"captain "<<ply->m_chaname[ply->m_currcha]<<"killed member not exsit! ID["
 			<<dwKickedID<<"]"<<endln;
@@ -481,7 +481,7 @@ void GroupServerApp::CP_TEAM_KICK(Player *ply,DataSocket *datasock,RPacket &pk)
 	long	l_count		=pKicker->LeaveTeam();
 	if(l_count)
 	{
-		//Õ®÷™Client◊È≥…‘±±‰ªØ
+		// notify the client of the team membership change
 		{
 			WPacket	l_wpk	=GetWPacket();
 			l_wpk.WriteCmd(CMD_PC_TEAM_REFRESH);
@@ -509,7 +509,7 @@ void GroupServerApp::CP_TEAM_KICK(Player *ply,DataSocket *datasock,RPacket &pk)
 			l.unlock();
 			SendToClient(l_plylst,l_plynum,l_wpk);
 		}
-		//Õ®÷™GameServer◊È≥…‘±±‰ªØ
+		// notify the GameServer of the team membership change
 		{
 			Player		*	l_plyr;
 			GateServer	*	l_gate[30];for(int i=0;i<30;i++)l_gate[i]=0;
@@ -556,8 +556,8 @@ void GroupServerApp::CP_TEAM_KICK(Player *ply,DataSocket *datasock,RPacket &pk)
 				l_team->GetLeader()->LeaveTeam();
 			}
 			LogLine	l_line(g_LogTeam);
-			/*l_line<<newln<<"ÕÊº“"<<pKicker->m_chaname[ply->m_currcha]<<"±ª∂”≥§Ãﬂ≥ˆ¡À◊È∂”"
-				<<l_leader->m_chaname[l_leader->m_currcha]<<(l_count ==2?",∂”ŒÈΩ‚…¢°£":"°£")
+			/*l_line<<newln<<"Áé©ÂÆ∂"<<pKicker->m_chaname[ply->m_currcha]<<"Ë¢´ÈòüÈïøË∏¢Âá∫‰∫ÜÁªÑÈòü"
+				<<l_leader->m_chaname[l_leader->m_currcha]<<(l_count ==2?",Èòü‰ºçËß£Êï£„ÄÇ":"„ÄÇ")
 				<<endln;
 			*/
 			l_line<<newln<<"player"<<pKicker->m_chaname[ply->m_currcha]<<"killed by captain"
@@ -599,7 +599,7 @@ void Player::TeamInvitedCheck(Invited	*invited)
 	}else if(GetTeam() && GetTeam()->GetTotal()>1)
 	{
 		char l_buf[256];
-		//sprintf(l_buf,"ƒ„—˚«Îµƒ°æ%s°ø“—æ≠º”»Î¡À±µƒ◊È∂”£¨ƒ„µƒ—˚«Î±ª»°œ˚°£",m_chaname[m_currcha].c_str());
+		//sprintf(l_buf,"‰Ω†ÈÇÄËØ∑ÁöÑ„Äê%s„ÄëÂ∑≤ÁªèÂä†ÂÖ•‰∫ÜÂà´ÁöÑÁªÑÈòüÔºå‰Ω†ÁöÑÈÇÄËØ∑Ë¢´ÂèñÊ∂à„ÄÇ",m_chaname[m_currcha].c_str());
 		sprintf(l_buf,RES_STRING(GP_GROUPSERVERAPPTEAM_CPP_00028),m_chaname[m_currcha].c_str());
 		l_inviter->SendSysInfo(l_buf);
 
@@ -612,7 +612,7 @@ void Player::TeamInvitedCheck(Invited	*invited)
 	}else if(g_gpsvr->GetCurrentTick() -invited->m_tick	>=g_gpsvr->const_team.PendTimeOut)
 	{
 		char l_buf[256];
-		//sprintf(l_buf,"ƒ„∂‘°æ%s°øµƒ◊È∂”—˚«Î“—≥¨π˝%d√Î÷”√ª”–ªÿ”¶£¨œµÕ≥◊‘∂Ø»°œ˚¡Àƒ„µƒ—˚«Î°£",m_chaname[m_currcha].c_str(),g_gpsvr->const_team.PendTimeOut/1000);
+		//sprintf(l_buf,"‰Ω†ÂØπ„Äê%s„ÄëÁöÑÁªÑÈòüÈÇÄËØ∑Â∑≤Ë∂ÖËøá%dÁßíÈíüÊ≤°ÊúâÂõûÂ∫îÔºåÁ≥ªÁªüËá™Âä®ÂèñÊ∂à‰∫Ü‰Ω†ÁöÑÈÇÄËØ∑„ÄÇ",m_chaname[m_currcha].c_str(),g_gpsvr->const_team.PendTimeOut/1000);
 		sprintf(l_buf,RES_STRING(GP_GROUPSERVERAPPTEAM_CPP_00029),m_chaname[m_currcha].c_str(),g_gpsvr->const_team.PendTimeOut/1000);
 		l_inviter->SendSysInfo(l_buf);
 
@@ -672,7 +672,7 @@ void GroupServerApp::MP_SWITCH(Player *ply)
 		}
 
 		LogLine	l_line(g_LogTeam);
-		//l_line<<newln<<"ÕÊº“"<<ply->m_chaname[ply->m_currcha]<<"“ÚŒ™Ã¯◊™µÿÕºÀ¢–¬¡À◊È∂”"<<l_leader->m_chaname[l_leader->m_currcha];
+		//l_line<<newln<<"Áé©ÂÆ∂"<<ply->m_chaname[ply->m_currcha]<<"Âõ†‰∏∫Ë∑≥ËΩ¨Âú∞ÂõæÂà∑Êñ∞‰∫ÜÁªÑÈòü"<<l_leader->m_chaname[l_leader->m_currcha];
 		l_line<<newln<<"player"<<ply->m_chaname[ply->m_currcha]<<"refresh team by switch map"<<l_leader->m_chaname[l_leader->m_currcha];
 	}
 }

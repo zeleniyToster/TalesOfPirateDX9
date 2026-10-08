@@ -1,4 +1,4 @@
-// NpcRecord.h Created by knight-gongjian 2004.11.24.
+ï»¿// NpcRecord.h Created by knight-gongjian 2004.11.24.
 //---------------------------------------------------------
 #pragma once
 
@@ -16,10 +16,10 @@
 class CNpcRecord : public CRawDataInfo
 {
 public:
-	char szNpc[NPC_MAX_NAMESIZE];		// npcÎÄ¼şÃû
-	char szName[NPC_MAX_NAMESIZE];		// µØÍ¼ÖĞÏÔÊ¾npcÃû³Æ
-	USHORT ulCharID;	// ½ÇÉ«ÁĞ±í±àºÅË÷Òı
-	USHORT x, y;		// npcÎ»ÖÃĞÅÏ¢
+	char szNpc[NPC_MAX_NAMESIZE];		// npcæ–‡ä»¶å
+	char szName[NPC_MAX_NAMESIZE];		// åœ°å›¾ä¸­æ˜¾ç¤ºnpcåç§°
+	USHORT ulCharID;	// è§’è‰²åˆ—è¡¨ç¼–å·ç´¢å¼•
+	USHORT x, y;		// npcä½ç½®ä¿¡æ¯
 	USHORT w, h;
 	USHORT usParam1, usParam2;
 };

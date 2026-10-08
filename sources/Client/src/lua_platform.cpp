@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "GameConfig.h"
 
 #ifdef _LUA_GAME
@@ -38,7 +38,7 @@ void InitLuaPlatform()
 
     lua_register(L, "sysAddHelpString", lua_sysAddHelpString);
     
-    // util¶ÔÏó²Ù×÷º¯Êı
+    // utilå¯¹è±¡æ“ä½œå‡½æ•°
     g_luaFNList.push_back("[util]");
     REGFN(MsgBox);
     REGFN(GetTickCount);
@@ -47,7 +47,7 @@ void InitLuaPlatform()
     REGFN(SysInfo);
     g_luaFNList.push_back("\r");
 
-    // app¶ÔÏó²Ù×÷º¯Êı
+    // appå¯¹è±¡æ“ä½œå‡½æ•°
     g_luaFNList.push_back("[app]");
     REGFN(appGetCurScene);
     REGFN(appSetCaption);
@@ -56,7 +56,7 @@ void InitLuaPlatform()
     //lua_dofile(L, "scripts/gamesdk/app.lua");
     g_luaFNList.push_back("\r");
     
-    // scene¶ÔÏó²Ù×÷º¯Êı
+    // sceneå¯¹è±¡æ“ä½œå‡½æ•°
     g_luaFNList.push_back("[scene]");
     REGFN(sceAddObj);
     REGFN(sceRemoveObj);
@@ -68,7 +68,7 @@ void InitLuaPlatform()
     //lua_dofile(L, "scripts/gamesdk/scene.lua");
     g_luaFNList.push_back("\r");
     
-    // object¶ÔÏó²Ù×÷º¯Êı
+    // objectå¯¹è±¡æ“ä½œå‡½æ•°
     g_luaFNList.push_back("[object]");
     REGFN(objSetPos);
     REGFN(objGetPos);
@@ -86,7 +86,7 @@ void InitLuaPlatform()
     //lua_dofile(L, "scripts/gamesdk/object.lua");
     g_luaFNList.push_back("\r");
 
-    // ¾µÍ·¶ÔÏó²Ù×÷º¯Êı
+    // é•œå¤´å¯¹è±¡æ“ä½œå‡½æ•°
     g_luaFNList.push_back("[camera]");
     REGFN(camGetCenter);
     REGFN(camSetCenter);
@@ -97,13 +97,13 @@ void InitLuaPlatform()
     REGFN(camSetAngle);
     g_luaFNList.push_back("\r");
 
-    // Input¶ÔÏó²Ù×÷º¯Êı
+    // Inputå¯¹è±¡æ“ä½œå‡½æ•°
     g_luaFNList.push_back("[input]");
     REGFN(IsKeyDown);
     //lua_dofile(L, "scripts/gamesdk/input.lua");
     g_luaFNList.push_back("\r");
 
-    // UI¶ÔÏó²Ù×÷º¯Êı
+    // UIå¯¹è±¡æ“ä½œå‡½æ•°
     g_luaFNList.push_back("[UI]");
     REGFN(uiHideAll);
     // lua_dofile(L, "scripts/gamesdk/input.lua");

@@ -1,4 +1,4 @@
-#ifndef UI_MAKE_EQUIP_FORM_H
+ï»¿#ifndef UI_MAKE_EQUIP_FORM_H
 #define UI_MAKE_EQUIP_FORM_H
 
 #include "UIGlobalVar.h"
@@ -37,10 +37,10 @@ namespace GUI
 		void		SetType(int type) { m_iType = type; }
 		int			GetType() const { return m_iType; }
 
-		static const int MAKE_EQUIP_TYPE = 2;	//ºÏ³ÉÀàĞÍ£¨Ğ­ÒéÖĞÓÃ£©
-		static const int EQUIP_FUSION_TYPE = 4;	//×°±¸ÈÛºÏ
-		static const int EQUIP_UPGRADE_TYPE = 5;//×°±¸Éı¼¶
-		static const int ELF_SHIFT_TYPE     = 6;//¾«Áé¶ş×ª
+		static const int MAKE_EQUIP_TYPE = 2;	//åˆæˆç±»å‹ï¼ˆåè®®ä¸­ç”¨ï¼‰
+		static const int EQUIP_FUSION_TYPE = 4;	//è£…å¤‡ç†”åˆ
+		static const int EQUIP_UPGRADE_TYPE = 5;//è£…å¤‡å‡çº§
+		static const int ELF_SHIFT_TYPE     = 6;//ç²¾çµäºŒè½¬
 
 		
 		void		PushEquipUpgradeItem(int iIndex, CItemCommand& rItem);
@@ -73,12 +73,12 @@ namespace GUI
 		void		ClearEquipList(int iIndex);
 
 		/*
-		 *	Help Function:ÓÃÓÚÍ³Ò»´¦ÀíÍÏ¶¯ÊÂ¼ş
+		 *	Help Function:ç”¨äºç»Ÿä¸€å¤„ç†æ‹–åŠ¨äº‹ä»¶
 		 */
 		//void		DragEvtEquipItem(int index, CGuiData *pSender, CCommandObj* pItem, bool& isAccept);
 
 		/*
-		 *	ÊÇ·ñ±¦Ê¯ºÏ³É
+		 *	æ˜¯å¦å®çŸ³åˆæˆ
 		 */
 		bool		IsMakeGem();	
 		bool		CanPushStone(int iIndex, CItemCommand& rItem);
@@ -87,7 +87,7 @@ namespace GUI
 		//void		SetMakeEquipUI();
 
 		/*
-		 *	ÍĞ·Å¾íÖáÏà¹Ø
+		 *	æ‰˜æ”¾å·è½´ç›¸å…³
 		 */
 		//void		PushRouleau(CItemCommand& rItem);
 		void		PopRouleau();
@@ -95,43 +95,43 @@ namespace GUI
 		void		PushNewEquips(CItemRecord& rRouleauRecord);
 
 		/*
-		 *	ÍĞ·Å±¦Ê¯Ïà¹Ø
+		 *	æ‰˜æ”¾å®çŸ³ç›¸å…³
 		 */
 		void		PushGemItem(int iIndex, CItemCommand& rItem);
 		void		PopGemItem(int iIndex);
 
 		/*
-		 *	ÍĞ·ÅÆäËûºÏ³ÉÔ­ÁÏÏà¹Ø
+		 *	æ‰˜æ”¾å…¶ä»–åˆæˆåŸæ–™ç›¸å…³
 		 */
 		void		PushEquipItem(int iIndex, CItemCommand& rItem);
 		void		PopEquipItem(int iIndex);
 
 		/*
-		 *	ÍÏ·ÅÈÛºÏÎïÆ·
+		 *	æ‹–æ”¾ç†”åˆç‰©å“
 		 */
 		void		PushEquipFusionItem(int iIndex, CItemCommand& rItem);
 		void		PopEquipFusionItem(int iIndex);
 
 		/*
-		 *	ÍÏ·ÅÉı¼¶ÎïÆ·
+		 *	æ‹–æ”¾å‡çº§ç‰©å“
 		 */
 		//void		PushEquipUpgradeItem(int iIndex, CItemCommand& rItem);
 		void		PopEquipUpgradeItem(int iIndex);
 
 		/*
-		 *	ÍÏ·Å×îºóºÏ³ÉÎïÏà¹Ø
+		 *	æ‹–æ”¾æœ€ååˆæˆç‰©ç›¸å…³
 		 */
 		void		PushLastEquip(CItemCommand& rItem);
 		void		PopLastEquip();
 
 		/*
-		 *  ÍÏ·Å¾«Áé¶ş×ªÏà¹Ø
+		 *  æ‹–æ”¾ç²¾çµäºŒè½¬ç›¸å…³
 		 */
 		void		PushElfShiftItem(int iIndex, CItemCommand& rItem);
 		void		PopElfShiftItem(int iIndex);
 
 		/*
-		 *	Êµ¼ÊÖ´ĞĞÍĞ·Å²Ù×÷µÄº¯Êı
+		 *	å®é™…æ‰§è¡Œæ‰˜æ”¾æ“ä½œçš„å‡½æ•°
 		 */
 		//void		PushItem(int iIndex, CItemCommand& rItem, int iItemNum);
 		void		PopItem(int iIndex);
@@ -149,19 +149,19 @@ namespace GUI
 		bool		IsEquipUpgradeSpar(CItemCommand& rItem);
 		bool		IsFusionEquip(CItemCommand& rItem);
 
-		bool        IsElfShiftStone(CItemCommand& rItem);	// ÊÇ·ñÊÇ¾«Áé¶ş×ªËùĞèµÄ¶ñÄ§¹ûÊµ
-		bool        IsElfShiftItem(CItemCommand& rItem);	// ÊÇ·ñÊÇ¾«Áé
+		bool        IsElfShiftStone(CItemCommand& rItem);	// æ˜¯å¦æ˜¯ç²¾çµäºŒè½¬æ‰€éœ€çš„æ¶é­”æœå®
+		bool        IsElfShiftItem(CItemCommand& rItem);	// æ˜¯å¦æ˜¯ç²¾çµ
 
 
 	private:
-		static const int STONE_ITEM_NUM = 2;	//±¦Ê¯ºÏ³ÉÊıÁ¿
-		static const int ITEM_NUM = 4;			//ÆäËûºÏ³ÉÊıÁ¿
-		static const int FUSION_NUM = 3;		//ÈÛºÏItemÊıÁ¿
-		static const int UPGRADE_NUM = 2;		//Éı¼¶ItemÊıÁ¿
-		static const int SHIFT_NUM   = 2;       //¾«Áé¶ş×ªItemÊıÁ¿
+		static const int STONE_ITEM_NUM = 2;	//å®çŸ³åˆæˆæ•°é‡
+		static const int ITEM_NUM = 4;			//å…¶ä»–åˆæˆæ•°é‡
+		static const int FUSION_NUM = 3;		//ç†”åˆItemæ•°é‡
+		static const int UPGRADE_NUM = 2;		//å‡çº§Itemæ•°é‡
+		static const int SHIFT_NUM   = 2;       //ç²¾çµäºŒè½¬Itemæ•°é‡
 
-		static const int GEM_ROULEAU_TYPE = 47;	//±¦Ê¯¾íÖáµÀ¾ßÀàĞÍºÅ
-		static const int EQUIP_ROULEAU_TYPE = 48;//µÀ¾ßºÏ³É¾íÖáDºÅ
+		static const int GEM_ROULEAU_TYPE = 47;	//å®çŸ³å·è½´é“å…·ç±»å‹å·
+		static const int EQUIP_ROULEAU_TYPE = 48;//é“å…·åˆæˆå·è½´Då·
 		static const int GEN_STONE_TYPE = 49;
 		static const int FORGE_STONE_TYPE = 50;
 		static const int EQUIP_FUSION_ROULEAU_TYPE = 60;
@@ -174,7 +174,7 @@ namespace GUI
 
 
 		static const long MAKE_EQUIP_MONEY = 50000;
-		static const long EQUIP_FUSION_MONEY = 1000;	// ÈÛºÏ³ËÒÔµÄÇ®Êı
+		static const long EQUIP_FUSION_MONEY = 1000;	// ç†”åˆä¹˜ä»¥çš„é’±æ•°
 		static const long EQUIP_UPGRADE_MONEY = 10000;
 
 		CForm*			frmMakeEquip;
@@ -187,8 +187,8 @@ namespace GUI
 		CTextButton	*	btnYes;
 
 		struct EquipInfo {
-			int iPos;		// ÎïÆ·À¸Î»µÄÎ»ÖÃË÷Òı
-			int iNum;		// ÎïÆ·µÄÊıÁ¿
+			int iPos;		// ç‰©å“æ ä½çš„ä½ç½®ç´¢å¼•
+			int iNum;		// ç‰©å“çš„æ•°é‡
 		};
 		typedef std::vector<EquipInfo*> EquipList;
 		typedef EquipList::iterator EquipListIter;

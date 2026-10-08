@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+Ôªø#include "StdAfx.h"
 #include "uiimage.h"
 
 using namespace GUI;
@@ -25,14 +25,14 @@ CImage& CImage::operator=(const CImage& rhs)
 CImage::~CImage(void)
 {
 	//delete _pImage;
-	SAFE_DELETE(_pImage);	// UIµ±ª˙¥¶¿Ì
+	SAFE_DELETE(_pImage);	// UIÂΩìÊú∫Â§ÑÁêÜ
 }
 
 void CImage::Render()
 {	
 	if( CDrag::IsDraging(this) )
 	{
-		// œ‘ æÕœ∂Ø◊¥Ã¨ 
+		// ÊòæÁ§∫ÊãñÂä®Áä∂ÊÄÅ 
 		_pImage->Render( GetX() + CDrag::GetDrag()->GetDragX(), GetY() + CDrag::GetDrag()->GetDragY(), DROP_ALPHA );
 		return;
 	}
@@ -88,7 +88,7 @@ CFrameImage& CFrameImage::operator=(const CFrameImage& rhs)
 CFrameImage::~CFrameImage(void)
 {
 	//delete _pImage;
-	SAFE_DELETE(_pImage); // UIµ±ª˙¥¶¿Ì
+	SAFE_DELETE(_pImage); // UIÂΩìÊú∫Â§ÑÁêÜ
 }
 
 void CFrameImage::Render()
@@ -97,7 +97,7 @@ void CFrameImage::Render()
 
 	if( CDrag::IsDraging(this) )
 	{
-		// œ‘ æÕœ∂Ø◊¥Ã¨ 
+		// ÊòæÁ§∫ÊãñÂä®Áä∂ÊÄÅ 
 		_pImage->Render( GetX() + CDrag::GetDrag()->GetDragX(), GetY() + CDrag::GetDrag()->GetDragY(), DROP_ALPHA );
 		return;
 	}
@@ -156,7 +156,7 @@ CFlashImage& CFlashImage::operator=(const CFlashImage& rhs)
 CFlashImage::~CFlashImage(void)
 {
 	//delete _pImage;
-	SAFE_DELETE(_pImage); // UIµ±ª˙¥¶¿Ì
+	SAFE_DELETE(_pImage); // UIÂΩìÊú∫Â§ÑÁêÜ
 }
 
 void CFlashImage::Init()

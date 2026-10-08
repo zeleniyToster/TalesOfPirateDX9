@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "TableData.h"
 
 #define MAX_GROUP_GATE   5
@@ -12,7 +12,7 @@ typedef std::map<int, ReginList> ReginListMap;
 
 extern std::string g_serverset;
 
-// ´ú±íÒ»×é·şÎñÆ÷
+// ä»£è¡¨ä¸€ç»„æœåŠ¡å™¨
 class CServerGroupInfo : public CRawDataInfo
 {
 public:
@@ -70,7 +70,7 @@ public:
 
 public:
 
-	int		m_nCurGroupList[MAX_REGION][MAX_REGION_GROUP]; // ·ÅÖÃµ±Ç°Ñ¡ÖĞµÄÇøÀïÃæµÄËùÓĞGroup
+	int		m_nCurGroupList[MAX_REGION][MAX_REGION_GROUP]; // æ”¾ç½®å½“å‰é€‰ä¸­çš„åŒºé‡Œé¢çš„æ‰€æœ‰Group
 	int		m_nCurGroupCnt[MAX_REGION];
 
 	char    m_szRegionName[MAX_REGION][32];
@@ -80,7 +80,7 @@ public:
 
 protected:
     
-	static CServerSet* _Instance; // Ïàµ±ÓÚµ¥¼ü, °Ñ×Ô¼º¼Ç×¡
+	static CServerSet* _Instance; // ç›¸å½“äºå•é”®, æŠŠè‡ªå·±è®°ä½
 
     virtual CRawDataInfo* _CreateRawDataArray(int nCnt)
     {
@@ -112,7 +112,7 @@ protected:
         CServerGroupInfo *pInfo = (CServerGroupInfo*)pRawDataInfo;
         
 		strcpy(pInfo->szRegion, ParamList[0].c_str());
-		for(int i = 0; i < MAX_GROUP_GATE; i++) // ¶ÁÈë5¸ö¿ÉÄÜµÄgate ip
+		for(int i = 0; i < MAX_GROUP_GATE; i++) // è¯»å…¥5ä¸ªå¯èƒ½çš„gate ip
 		{
 			strcpy(pInfo->szGateIP[i], ParamList[i + 1].c_str());
 			if(strcmp(pInfo->szGateIP[i], "0")==0)
@@ -132,7 +132,7 @@ protected:
     
 		for (size_t i = 0; i < m_nRegionCnt; i++)
 		{
-			if (strcmp(m_szRegionName[i], pInfo->szRegion) == 0) // ÇøÃû·ûºÏ
+			if (strcmp(m_szRegionName[i], pInfo->szRegion) == 0) // åŒºåç¬¦åˆ
 			{
 				m_nCurGroupList[i][m_nCurGroupCnt[i]] = pInfo->nID;
 				m_nCurGroupCnt[i]++;
@@ -142,13 +142,13 @@ protected:
 	}
 };
 
-// Í¨¹ı×é±àºÅ, È¡µÃ×éµÄGateIPĞÅÏ¢
+// é€šè¿‡ç»„ç¼–å·, å–å¾—ç»„çš„GateIPä¿¡æ¯
 inline CServerGroupInfo* GetServerGroupInfo(int nGroupID)
 {
     return (CServerGroupInfo*)CServerSet::I()->GetRawDataInfo(nGroupID);
 }
 
-// Í¨¹ı×éÃû×Ö, È¡µÃ×éµÄGateIPĞÅÏ¢
+// é€šè¿‡ç»„åå­—, å–å¾—ç»„çš„GateIPä¿¡æ¯
 inline CServerGroupInfo* GetServerGroupInfo(const char *pszGroupName)
 {
     return (CServerGroupInfo*)CServerSet::I()->GetRawDataInfo(pszGroupName);
@@ -167,7 +167,7 @@ inline const char* GetCurServerGroupName(int nRegionNo, int nGroupNo)
 	return GetServerGroupInfo(nNo)->szDataName;
 }
 
-// Ôö¼ÓÓÎÏ·ÇøÓòĞÅÏ¢ Michael Chen 2005-06-01
+// å¢åŠ æ¸¸æˆåŒºåŸŸä¿¡æ¯ Michael Chen 2005-06-01
 inline int GetRegionCnt()
 {
 	return CServerSet::I()->m_nRegionCnt;
@@ -181,7 +181,7 @@ inline const char* GetCurRegionName(int nRegionNo)
 	return CServerSet::I()->m_szRegionName[nRegionNo];
 }
 
-// Í¨¹ı×é±àºÅ, Ñ¡ÖĞÒ»¸öGateIP
+// é€šè¿‡ç»„ç¼–å·, é€‰ä¸­ä¸€ä¸ªGateIP
 inline const char *SelectGroupIP(int nRegionNo, int nGroupNo)
 {
 	LG("connect", "Select Region %d Group %d\n", nRegionNo, nGroupNo);

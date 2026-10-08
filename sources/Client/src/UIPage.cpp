@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+Ôªø#include "StdAfx.h"
 #include "uipage.h"
 
 using namespace GUI;
@@ -115,7 +115,7 @@ CPage& CPage::operator=(const CPage& rhs)
 CPage::~CPage(void)
 {
 	//delete _pImage;
-	SAFE_DELETE(_pImage); // UIµ±ª˙¥¶¿Ì
+	SAFE_DELETE(_pImage); // UIÂΩìÊú∫Â§ÑÁêÜ
 }
 
 void CPage::Init()

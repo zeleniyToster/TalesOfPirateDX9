@@ -1,6 +1,6 @@
-//----------------------------------------------------------------------
-// Ãû³Æ:RichEdit
-// ×÷Õß:lh 2005-07-11
+ï»¿//----------------------------------------------------------------------
+// åç§°:RichEdit
+// ä½œè€…:lh 2005-07-11
 //----------------------------------------------------------------------
 #pragma once
 #include "uicompent.h"
@@ -33,11 +33,11 @@ private:
 	void	_Copy( const CRichEdit& rhs );
 	
 private:
-	char		_szEnter[16];	// ÓÃÓÚ¼ÆËãÊäÈëµÄbuf
+	char		_szEnter[16];	// ç”¨äºè®¡ç®—è¾“å…¥çš„buf
 	int			_nEnterPos;
 
 	CEditArticle	_cArticle;
-	bool			_IsReadyOnly;			// ÊÇ·ñÖ»¶Á
+	bool			_IsReadyOnly;			// æ˜¯å¦åªè¯»
 	CEditKey*		_pEditKey;
 
 };

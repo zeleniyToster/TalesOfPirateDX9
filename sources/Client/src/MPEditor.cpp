@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "MPEditor.h"
 #include "GameApp.h"
 #include "Character.h"
@@ -44,7 +44,7 @@ void MPEditor::Init(int nMapID)
 	m_bSmooth                   = false; 
 
 	_AttribIndex = 0;	
-	_IslandIndex = TILE_ISLAND_MAX_VALUE + 1; // ÖÃ¸ö·Ç·¨Öµ
+	_IslandIndex = TILE_ISLAND_MAX_VALUE + 1; // ç½®ä¸ªéæ³•å€¼
     _is_erase = false;
     
     
@@ -52,13 +52,13 @@ void MPEditor::Init(int nMapID)
     CMapInfo *pMapInfo = GetMapInfo(nMapID);
     if(pMapInfo)
     {
-        char szTip[64]; sprintf(szTip, "¿ªÊ¼±à¼­µØÍ¼[%s]", pMapInfo->szName);
+        char szTip[64]; sprintf(szTip, "å¼€å§‹ç¼–è¾‘åœ°å›¾[%s]", pMapInfo->szName);
 
 		MPMapFileHeader maphdr;
 		if (_getMapHeader(pMapInfo->szName, maphdr))
 			{
 			if (createAttribFile(pMapInfo->szName, maphdr.nWidth, maphdr.nHeight))
-				openAttribFile(pMapInfo->szName); // »á×Ô¶¯¹Ø±ÕÎÄ¼ş
+				openAttribFile(pMapInfo->szName); // ä¼šè‡ªåŠ¨å…³é—­æ–‡ä»¶
 			Tip(szTip);
 			}
 		else
@@ -66,7 +66,7 @@ void MPEditor::Init(int nMapID)
     }
     else
     {
-        LG("error", "msgÃ»ÓĞÕÒµ½µØÍ¼ÁĞ±íĞÅÏ¢ MapID = %d\n", nMapID);
+        LG("error", "msgæ²¡æœ‰æ‰¾åˆ°åœ°å›¾åˆ—è¡¨ä¿¡æ¯ MapID = %d\n", nMapID);
     }
     */
     
@@ -273,7 +273,7 @@ void MPEditor::PlaceTerrain(int nType, int nX, int nY, int nTexNo)
 
 	if (nType == 1)
 		{
-		// 1ºÅË¢, ËÄ¸ö½Ç
+		// 1å·åˆ·, å››ä¸ªè§’
 		int nAlphaNo[4] = { 1, 2, 4, 8 };
 		for (int i = 0; i < 4; i++)
 			{
@@ -284,7 +284,7 @@ void MPEditor::PlaceTerrain(int nType, int nX, int nY, int nTexNo)
 		}
 	else if (nType == 2)
 		{
-		// 2ºÅË¢£¬»­4¸öTile
+		// 2å·åˆ·ï¼Œç”»4ä¸ªTile
 		for (int i = 0; i < 2; ++ i)
 			for (int j = 0; j < 2; ++ j)
 				{
@@ -296,7 +296,7 @@ void MPEditor::PlaceTerrain(int nType, int nX, int nY, int nTexNo)
 
 				pTile->AddTexLayer(nTexNo, 15);
 
-				if (m_bEnableTextureAlphaBlend == FALSE) continue; // ²»²úÉú¹ı¶É
+				if (m_bEnableTextureAlphaBlend == FALSE) continue; // ä¸äº§ç”Ÿè¿‡æ¸¡
 
 				pTile = pCurTerrain->GetTile(x - 1, y - 1);
 				if(pTile) pTile->AddTexLayer(nTexNo, 1);
@@ -325,7 +325,7 @@ void MPEditor::PlaceTerrain(int nType, int nX, int nY, int nTexNo)
 		}
 	else if (nType == 3)
 		{
-		// 3ºÅË¢£¬»­16¸öTile
+		// 3å·åˆ·ï¼Œç”»16ä¸ªTile
 		for (int i = 0; i < 4; ++ i)
 			for (int j = 0; j < 4; ++ j)
 				{
@@ -337,7 +337,7 @@ void MPEditor::PlaceTerrain(int nType, int nX, int nY, int nTexNo)
 
 				pTile->AddTexLayer(nTexNo, 15);
 
-				if (m_bEnableTextureAlphaBlend == FALSE) continue; // ²»²úÉú¹ı¶É
+				if (m_bEnableTextureAlphaBlend == FALSE) continue; // ä¸äº§ç”Ÿè¿‡æ¸¡
 
 				pTile = pCurTerrain->GetTile(x - 1, y - 1);
 				if(pTile) pTile->AddTexLayer(nTexNo, 1);
@@ -384,7 +384,7 @@ void MPEditor::SetTerrainInvalid(int nType)
 		}
 	else if (nType == 2)
 		{
-		// 2ºÅË¢£¬»­4¸öTile
+		// 2å·åˆ·ï¼Œç”»4ä¸ªTile
 		for (int i = 0; i < 2; ++ i)
 			for (int j = 0; j < 2; ++ j)
 				{
@@ -396,7 +396,7 @@ void MPEditor::SetTerrainInvalid(int nType)
 		}
 	else if (nType == 3)
 		{
-		// 3ºÅË¢£¬»­16¸öTile
+		// 3å·åˆ·ï¼Œç”»16ä¸ªTile
 		for (int i = 0; i < 4; ++ i)
 			for (int j = 0; j < 4; ++ j)
 				{
@@ -552,22 +552,22 @@ void MPEditor::SystemReport(DWORD dwTimeParam)
 
     MPTerrain *pCurTerrain = GetCurTerrain();
     
-    // Êä³öÏîÄ¿ÁĞ±í
+    // è¾“å‡ºé¡¹ç›®åˆ—è¡¨
     
     // Performance :
     
     // FPS 
-    // ÏµÍ³×Ü¶à±ßĞÎÊıÁ¿  FrameMoveÊ±¼ä  äÖÈ¾Ê±¼ä
-    // ³¡¾°Îï¼ş×ÜÊı  ¶à±ßĞÎÊıÁ¿  äÖÈ¾Ê±¼ä
-    // ½ÇÉ«×ÜÊı      ¶à±ßĞÎÊıÁ¿  äÖÈ¾Ê±¼ä
+    // ç³»ç»Ÿæ€»å¤šè¾¹å½¢æ•°é‡  FrameMoveæ—¶é—´  æ¸²æŸ“æ—¶é—´
+    // åœºæ™¯ç‰©ä»¶æ€»æ•°  å¤šè¾¹å½¢æ•°é‡  æ¸²æŸ“æ—¶é—´
+    // è§’è‰²æ€»æ•°      å¤šè¾¹å½¢æ•°é‡  æ¸²æŸ“æ—¶é—´
 
-    // ÌØĞ§×ÜÊı      äÖÈ¾Ê±¼ä
-    // ÏµÍ³Õ¼ÓÃÄÚ´æ  Õ¼ÓÃÏÔ´æ
+    // ç‰¹æ•ˆæ€»æ•°      æ¸²æŸ“æ—¶é—´
+    // ç³»ç»Ÿå ç”¨å†…å­˜  å ç”¨æ˜¾å­˜
 
     // GameLogic :
     
-    // Ö÷½ÇÃû×Ö ×ø±ê  ·½Ïò
-    // Ä£ĞÍĞÅÏ¢ ×°±¸   
+    // ä¸»è§’åå­— åæ ‡  æ–¹å‘
+    // æ¨¡å‹ä¿¡æ¯ è£…å¤‡   
     static DWORD g_dwLastReportTick = 0;
     DWORD dwTerrainTime = 0;
     DWORD dwSeaTime     = 0;
@@ -703,12 +703,12 @@ void MPEditor::FrameMove(DWORD dwTimeParam)
 	SystemReport(dwTimeParam);
     HandleKeyContinue();
 	
-	// ¶Ô¹ÖÎï½øĞĞÍ³¼Æ
+	// å¯¹æ€ªç‰©è¿›è¡Œç»Ÿè®¡
 
 	if(g_Config.m_bEditor)
 	{
 		//g_Render.EnablePrint(INFO_DEBUG, TRUE);
-		short sMonsterStatus[1000]; // 1000¹ÖµÄÊıÁ¿
+		short sMonsterStatus[1000]; // 1000æ€ªçš„æ•°é‡
 		memset(sMonsterStatus, 0, 1000 * 2);
 
 		CGameScene *pScene = GetCurScene();
@@ -805,14 +805,14 @@ void MPEditor::Render()
     float fX = pCurScene->GetMouseMapX();
 	float fY = pCurScene->GetMouseMapY();
 	
-	float const fTileSize = 1.0f; // ³¤¿íÒ»Ñù
-	float const fTileMod = fTileSize / 2; // °ë³¤
+	float const fTileSize = 1.0f; // é•¿å®½ä¸€æ ·
+	float const fTileMod = fTileSize / 2; // åŠé•¿
 	int tx = int(fX);
 	int ty = int(fY);
 
 	if ((m_bModifyHeight && m_nBrushNo == 1)
 		|| (!m_bModifyHeight && m_nBrushNo == 2)
-		|| m_nBrushNo == 3) // 2ºÅË¢ºÍ3ºÅË¢ÊÇĞèÒªĞŞÕı×ø±êµÄ
+		|| m_nBrushNo == 3) // 2å·åˆ·å’Œ3å·åˆ·æ˜¯éœ€è¦ä¿®æ­£åæ ‡çš„
 		{
 		if (fX - tx > fTileMod)
 			tx += 1;
@@ -826,7 +826,7 @@ void MPEditor::Render()
 	m_nSelectX = nX;
 	m_nSelectY = nY;
 	
-    // Èç¹û´¦ÔÚÏÂÃæÌõ¼şµÄ±à¼­×´Ì¬£¬²»ĞèÒªäÖÈ¾Ë¢×Ó
+    // å¦‚æœå¤„åœ¨ä¸‹é¢æ¡ä»¶çš„ç¼–è¾‘çŠ¶æ€ï¼Œä¸éœ€è¦æ¸²æŸ“åˆ·å­
     if(m_nSelTypeID) return;
 
     g_Render.SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_DIFFUSE );
@@ -839,7 +839,7 @@ void MPEditor::Render()
 	g_Render.SetFVF(D3DFVF_XYZ | D3DFVF_DIFFUSE);			
 	g_Render.EnableZBuffer(FALSE);
 	g_Render.EnableAlpha(TRUE);
-	g_Render.SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW); // µ¥ÃæäÖÈ¾
+	g_Render.SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW); // å•é¢æ¸²æŸ“
    	g_Render.SetRenderState( D3DRS_LIGHTING, FALSE );
     g_Render.SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 	g_Render.SetRenderState(D3DRS_SRCBLEND,  D3DBLEND_SRCALPHA);	 // blend the colors based on the
@@ -855,19 +855,19 @@ void MPEditor::Render()
 	{
 		if (m_nBrushNo == 1)
 		{
-			// »­1¸öTile
+			// ç”»1ä¸ªTile
 			_RenderSelTile(nX, nY);
 		}
 		else if (m_nBrushNo == 2)
 		{
-			// »­4¸öTile
+			// ç”»4ä¸ªTile
 			for (int i = 0; i < 2; ++ i)
 				for (int j = 0; j < 2; ++ j)
                     _RenderSelTile(nX + (j - 1), nY + (i - 1));
 		}
 		else if (m_nBrushNo == 3)
 		{
-			// »­16¸öTile
+			// ç”»16ä¸ªTile
 			for (int i = 0; i < 4; ++ i)
 				for (int j = 0; j < 4; ++ j)
 					_RenderSelTile(nX + (j - 2), nY + (i - 2));
@@ -969,12 +969,12 @@ void MPEditor::Render()
 			}
 		}
 
-		// äÖÈ¾Ë¢×Ó
+		// æ¸²æŸ“åˆ·å­
 		if (m_nBrushNo == 1)
 		{
 			if (m_bModifyHeight)
 			{
-				// À­¸ß£¬Òª»­4¸öTile
+				// æ‹‰é«˜ï¼Œè¦ç”»4ä¸ªTile
 				for (int i = 0; i < 2; ++ i)
 					for (int j = 0; j < 2; ++ j)
 						_RenderSelTile(nX + (j - 1), nY + (i - 1));
@@ -985,7 +985,7 @@ void MPEditor::Render()
 		{
 			if (m_bModifyHeight)
 			{
-				// À­¸ß£¬Òª»­9¸öTile
+				// æ‹‰é«˜ï¼Œè¦ç”»9ä¸ªTile
 				for (int i = 0; i < 3; ++ i)
 					for (int j = 0; j < 3; ++ j)
 						_RenderSelTile(nX + (j - 1), nY + (i - 1));
@@ -1001,7 +1001,7 @@ void MPEditor::Render()
 		{
 			if (m_bModifyHeight)
 			{
-				// À­¸ß£¬Òª»­16¸öTile
+				// æ‹‰é«˜ï¼Œè¦ç”»16ä¸ªTile
 				for (int i = 0; i < 4; ++ i)
 					for (int j = 0; j < 4; ++ j)
 						_RenderSelTile(nX + (j - 2), nY + (i - 2));
@@ -1201,7 +1201,7 @@ BOOL MPEditor::MouseButtonDown(int nButton)
 		    _SetAttrib();
         }
     }
-	else // ÓÒ¼ü°´ÏÂ
+	else // å³é”®æŒ‰ä¸‹
 	{
 	    if(g_pGameApp->IsShiftPress())
         {
@@ -1216,7 +1216,7 @@ BOOL MPEditor::MouseButtonDown(int nButton)
 	}
 
 
-    // Ô­UPÊÂ¼ş
+    // åŸUPäº‹ä»¶
 	if(nButton==0)
 	{
 		//if(IsEnable()==FALSE) return FALSE;
@@ -1251,7 +1251,7 @@ BOOL MPEditor::MouseButtonDown(int nButton)
 							}
 							pCha->ResetAITick();
 
-                            // ²âÊÔNPC×´Ì¬µÀ¾ß
+                            // æµ‹è¯•NPCçŠ¶æ€é“å…·
                             //DWORD state = ROLE_MIS_DELIVERY;
                             //switch( rand() % 3 )
                             //{
@@ -1624,7 +1624,7 @@ void MPEditor::MouseMove(int nOffsetX, int nOffsetY)
         {
             if(m_bIsBrushColor)
             {
-                // ÎüÑÕÉ«
+                // å¸é¢œè‰²
                 MPTile *pTile = pCurScene->GetTerrain()->GetTile(m_nSelectX, m_nSelectY);
                 // pTile->dwColor;
                 extern CEditor g_stUIEditor;
@@ -1775,7 +1775,7 @@ void MPEditor::_RenderHeightmap()
     MPTerrain *pCurTerrain = GetCurTerrain();
     if(!pCurTerrain) return;
 
-    //äÖÈ¾¸ß¶ÈºĞ×Ó
+    //æ¸²æŸ“é«˜åº¦ç›’å­
 	int iRadius = 10;
 	D3DXVECTOR3	vpos;
 	vpos.x = int(pCurTerrain->GetShowCenterX()) - iRadius + 0.25f;
@@ -2114,10 +2114,10 @@ void MPEditor::CancelProperty(void)
 unsigned char MPEditor::_getTileAttribMask(unsigned char attrib_btn_index)
 	{
 	//switch (attrib_btn_index)
-	//	// attrib_btn_indexÊÇEditorÉÏÇøÓòÊôĞÔ°´Å¥µÄË÷Òı£¬´Ó1µ½16
+	//	// attrib_btn_indexæ˜¯Editorä¸ŠåŒºåŸŸå±æ€§æŒ‰é’®çš„ç´¢å¼•ï¼Œä»1åˆ°16
 	//	{
 	//	case 1:
-	//		return enumAREA_TYPE_SEA; // µÚÒ»¸ö°´Å¥ÊÇº£ÑóÊôĞÔ
+	//		return enumAREA_TYPE_SEA; // ç¬¬ä¸€ä¸ªæŒ‰é’®æ˜¯æµ·æ´‹å±æ€§
 	//	default:
 	//		return 0;
 	//	}
@@ -2159,7 +2159,7 @@ void MPEditor::_renderTileAttrib(int nX, int nY, int nAttribIndex)
 		int k = 140;
 		switch(nAttribIndex)
 		{
-			case 1:  // Â½µØÊôĞÔ
+			case 1:  // é™†åœ°å±æ€§
 				v[i].dwColor = D3DCOLOR_ARGB(k, 100, 255, 25);
 				break;
 			case 2:

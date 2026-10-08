@@ -1,4 +1,4 @@
-//================================================================
+ï»¿//================================================================
 // It must be permitted by Dabo.Zhang that this program is used for
 // any purpose in any situation.
 // Copyright (C) Dabo.Zhang 2000-2004
@@ -8,7 +8,7 @@
 //=================================================================
 #pragma once
 
-#include "dstring.h"		//±ÜÃâ³åÍ»£¬Packet.hÍ·ÎÄ¼þ±¾Éí²¢²»Ê¹ÓÃ¡£
+#include "dstring.h"		// avoids a name clash; Packet.h itself does not use it
 #include "BaseBuf.h"
 
 _DBC_BEGIN
@@ -68,7 +68,7 @@ public:
 	bool		WriteFloat(float fVal);
 
 	operator bool()const			{return rptr<rbuf>::operator bool();}
-	uLong		HasData()const		{return (*this)?m_wpos:0;}//·µ»ØÖµ£º·Ç0£¬·µ»ØÒÑÐ´Êý¾ÝµÄ×Ö½ÚÊý£»0£¬ÎÞÊý¾ÝÒÑÐ´¡£
+	uLong		HasData()const		{return (*this)?m_wpos:0;}// return value: non-zero = number of bytes already written; 0 = nothing written yet
 	uLong		Size()const			{return	(*this)?(*this)->Size():0;}
 	uLong		Head()const			{return m_head;}
 private:
@@ -139,11 +139,11 @@ public:
 	uLong		ReverseReadLong();
 	LONG64 ReverseReadLongLong();
 	uint64_t	ReverseReadAddress();
-	bool		DiscardLast(uLong len);//·µ»ØÖµ£ºtrue-³É¹¦£»false-¶ªÆúÊ§°Ü(¶ªÆúµÄ³¤¶È´óÓÚ°üËùÓµÓÐµÄÊý¾Ý³¤¶È£¬²»×÷ÈÎºÎ¸Ä±ä)
+	bool		DiscardLast(uLong len);// return value: true = success; false = nothing discarded because the requested length exceeds the data the packet holds
 
 	operator bool()const				{return rptr<rbuf>::operator bool();}
 	uLong		HasData()const			{return (bool(*this)&&(m_len>(m_head +em_cmdsize)))?(m_len -m_head -em_cmdsize):0;}
-	//RemainData()·µ»ØÖµ£º·Ç0£¬·µ»Ø¿É¶ÁÊý¾ÝµÄ×Ö½ÚÊý£»0£¬ÎÞÊý¾Ý¿É¶Á¡£
+	// RemainData() return value: non-zero = number of readable bytes; 0 = nothing to read
 	uLong		RemainData()const		{return (bool(*this)&&(m_len>(m_head +em_cmdsize +m_rpos)))?(m_len -m_head -em_cmdsize -m_rpos):0;}
 	uLong		Size()const				{return	(*this)?(*this)->Size():0;}
 	uLong		GetDataLen()const;

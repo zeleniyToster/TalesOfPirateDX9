@@ -1,4 +1,4 @@
-//
+ï»¿//
 #pragma once
 
 #include "lwHeader.h"
@@ -28,11 +28,11 @@ const DWORD EXP_OBJ_VERSION_1_0_0_0 = 0x1000;
 const DWORD EXP_OBJ_VERSION_1_0_0_1 = 0x1001;
 const DWORD EXP_OBJ_VERSION_1_0_0_2 = 0x1002;
 
-// µ÷Õûµ¼³öboneÊ¹ÓÃquaternion·½Ê½±£´æĞÅÏ¢Ê±£¬±£´æÃ¿Ò»Ö¡µÄposĞÅÏ¢¶ø²»ÊÇµÚÒ»Ö¡
+// è°ƒæ•´å¯¼å‡ºboneä½¿ç”¨quaternionæ–¹å¼ä¿å­˜ä¿¡æ¯æ—¶ï¼Œä¿å­˜æ¯ä¸€å¸§çš„posä¿¡æ¯è€Œä¸æ˜¯ç¬¬ä¸€å¸§
 const DWORD EXP_OBJ_VERSION_1_0_0_3 = 0x1003;
-// µ÷ÕûlwMeshInfo½á¹¹£¬Ôö¼Óbone_infl_factorºÍvertex_decl_seq±äÁ¿
+// è°ƒæ•´lwMeshInfoç»“æ„ï¼Œå¢åŠ bone_infl_factorå’Œvertex_decl_seqå˜é‡
 const DWORD EXP_OBJ_VERSION_1_0_0_4 = 0x1004;
-// Ôö¼ÓĞÂµÄ¶¯»­ÀàĞÍlwAnimDataMtlOpacty
+// å¢åŠ æ–°çš„åŠ¨ç”»ç±»å‹lwAnimDataMtlOpacty
 const DWORD EXP_OBJ_VERSION_1_0_0_5 = 0x1005;
 
 const DWORD EXP_OBJ_VERSION = EXP_OBJ_VERSION_1_0_0_5;
@@ -528,9 +528,9 @@ public:
 
     DWORD GetDataSize() const;
 
-    // start_frame,end_frame ÓÃÀ´±êÃ÷frameÈ¡²åÖµ¼ÆËãÊ±ºòµÄ±ß½ç
-    // Èç¹ûstart_frame == LW_INVALID_INDEXºÍend_frame == LW_INVALID_INDEX
-    // Ôò²»×÷Ö¡±ß½ç²Ã¼õ
+    // start_frame,end_frame ç”¨æ¥æ ‡æ˜frameå–æ’å€¼è®¡ç®—æ—¶å€™çš„è¾¹ç•Œ
+    // å¦‚æœstart_frame == LW_INVALID_INDEXå’Œend_frame == LW_INVALID_INDEX
+    // åˆ™ä¸ä½œå¸§è¾¹ç•Œè£å‡
     LW_RESULT GetValue(lwMatrix44* mat, DWORD bone_id, float frame, DWORD start_frame, DWORD end_frame);
 
     inline void SetBoneNum(DWORD num) { _bone_num = num; }

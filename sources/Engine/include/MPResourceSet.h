@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 #include "MindPowerAPI.h"
 #include "TableData.h"
 
-//Èç¹û¶¨ÒåÁË¸Ãºê×ÊÔ´ÎÄ¼ş½«°´ÕÕ½Å±¾ÎÄ¼ş¼ÓÔØ
+//å¦‚æœå®šä¹‰äº†è¯¥å®èµ„æºæ–‡ä»¶å°†æŒ‰ç…§è„šæœ¬æ–‡ä»¶åŠ è½½
 //#define USE_RESOURCE_SCRIPT
-#define RESOURCE_SCRIPT 0		// 0-²»Ê¹ÓÃ×ÊÔ´½Å±¾£¬1-×ÊÔ´½Å±¾¶¨Òå£¬2-×ÊÔ´½Å±¾Ê¹ÓÃ²âÊÔÊ±£¬ 3-ÕıÊ½Ê¹ÓÃ×ÊÔ´½Å±¾ÎÄ¼ş
+#define RESOURCE_SCRIPT 0		// 0-ä¸ä½¿ç”¨èµ„æºè„šæœ¬ï¼Œ1-èµ„æºè„šæœ¬å®šä¹‰ï¼Œ2-èµ„æºè„šæœ¬ä½¿ç”¨æµ‹è¯•æ—¶ï¼Œ 3-æ­£å¼ä½¿ç”¨èµ„æºè„šæœ¬æ–‡ä»¶
 
 #pragma warning(disable: 4275)
 
@@ -46,7 +46,7 @@ public:
 		return m_pInstance; 
 	}
 
-	static MPResourceSet* m_pInstance; // Ïàµ±ÓÚµ¥¼ü, °Ñ×Ô¼º¼Ç×¡
+	static MPResourceSet* m_pInstance; // ç›¸å½“äºå•é”®, æŠŠè‡ªå·±è®°ä½
 
 public:
 	MPResourceSet(int nIDStart, int nIDCnt) : CRawDataSet(nIDStart, nIDCnt)

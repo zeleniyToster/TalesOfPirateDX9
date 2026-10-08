@@ -1,4 +1,4 @@
-
+ï»¿
 #include "stdafx.h"
 #include "UIBreakForm.h"
 #include "uiformmgr.h"
@@ -81,18 +81,18 @@ namespace GUI
                     {
                         switch(pItemCommand->GetItemInfo()->sType)
                         {
-                        case 1:     //  ½£
-                        case 2:     //  ¾Ş½£
-                        case 3:     //  ¹­
-                        case 4:     //  »ğÇ¹
-                        case 7:     //  Ø°Ê×
-                        case 9:     //  ·¨ÕÈ
-                        case 11:     //  ¶ÜÅÆ
-                        case 20:     //  Ã±×Ó
-                        case 22:     //  ÒÂ·ş
-                        case 23:     //  ÊÖÌ×
-                        case 24:     //  Ğ¬×Ó
-                        case 27:     //  ÎÆÉí
+                        case 1:     //  å‰‘
+                        case 2:     //  å·¨å‰‘
+                        case 3:     //  å¼“
+                        case 4:     //  ç«æª
+                        case 7:     //  åŒ•é¦–
+                        case 9:     //  æ³•æ–
+                        case 11:     //  ç›¾ç‰Œ
+                        case 20:     //  å¸½å­
+                        case 22:     //  è¡£æœ
+                        case 23:     //  æ‰‹å¥—
+                        case 24:     //  é‹å­
+                        case 27:     //  çº¹èº«
                             {
                                 PushItem(i, *pItemCommand, true);
                             }  break;
@@ -246,26 +246,26 @@ namespace GUI
 
     void CBreakMgr::PopItem(int iIndex, bool bRetry/* = false*/)
     {
-        //  ÊÇ·ñËø¶¨
+        //  æ˜¯å¦é”å®š
         if(bLock)
         {
             return;
         }
-        // É¾³ıCmdÖĞµÄItem£¬¸ÃItem»áÔÚPushItem()ÖĞÓÉnewÉú³É
+        // åˆ é™¤Cmdä¸­çš„Itemï¼Œè¯¥Itemä¼šåœ¨PushItem()ä¸­ç”±newç”Ÿæˆ
 		CItemCommand* pItemCommand =  dynamic_cast<CItemCommand*>(cmdBreak[iIndex]->GetCommand());
 		if (! pItemCommand)
             return;
 
-		cmdBreak[iIndex]->DelCommand();	// ¸Ãº¯Êı½«É¾³ıdelete Item
+		cmdBreak[iIndex]->DelCommand();	// è¯¥å‡½æ•°å°†åˆ é™¤delete Item
 
-		// ½«ItemÏàÓ¦µÄÎïÆ·À¸»Ö¸´³É¿ÉÓÃ
+		// å°†Itemç›¸åº”çš„ç‰©å“æ æ¢å¤æˆå¯ç”¨
 		CCommandObj* pItem = g_stUIEquip.GetGoodsGrid()->GetItem(iBreakPos[iIndex]);
 		if (pItem)
 		{
 			pItem->SetIsValid(true);
 		}
 
-		// ¼ÇÂ¼ItemÔÚÎïÆ·À¸ÖĞµÄÎ»ÖÃ
+		// è®°å½•Itemåœ¨ç‰©å“æ ä¸­çš„ä½ç½®
         if(!bRetry)
         {
             iBreakPos[iIndex] = NO_USE;
@@ -274,34 +274,34 @@ namespace GUI
 
     void CBreakMgr::PushItem(int iIndex, CItemCommand& rItem, bool bRetry/* = false*/)
     {
-        //  ÊÇ·ñËø¶¨
+        //  æ˜¯å¦é”å®š
         if(bLock)
         {
             return;
         }
-        // ÅĞ¶ÏµÀ¾ßÊÇ·ñ¿ÉÒÔÍÏ
+        // åˆ¤æ–­é“å…·æ˜¯å¦å¯ä»¥æ‹–
 		if(! rItem.GetIsValid())
 		{
 			return;
 		}
 
-		// ²é¿´Ô­À´µÄCmdÖĞÊÇ·ñÒÑ¾­ÓĞItemÁË£¬Èç¹ûÓĞÔòÒÆ³ö
+		// æŸ¥çœ‹åŸæ¥çš„Cmdä¸­æ˜¯å¦å·²ç»æœ‰Itemäº†ï¼Œå¦‚æœæœ‰åˆ™ç§»å‡º
 		CItemCommand* pItemCommand =  dynamic_cast<CItemCommand*>(cmdBreak[iIndex]->GetCommand());
 		if (pItemCommand)
 		{
 			PopItem(iIndex);
 		}
 
-		// ¼ÇÂ¼ItemÔÚÎïÆ·À¸ÖĞµÄÎ»ÖÃ
+		// è®°å½•Itemåœ¨ç‰©å“æ ä¸­çš„ä½ç½®
         if(!bRetry)
         {
             iBreakPos[iIndex] = g_stUIEquip.GetGoodsGrid()->GetDragIndex();
         }
 
-		// ½«ItemÏàÓ¦µÄÎïÆ·À¸»Òµ÷
+		// å°†Itemç›¸åº”çš„ç‰©å“æ ç°è°ƒ
 		rItem.SetIsValid(false);
 
-		// ½«´´½¨µÄItem·ÅÈëCmdÖĞ£¬ÕâÀïÓÃnew½«»áÔÚPopItem()ÖĞÉ¾³ı
+		// å°†åˆ›å»ºçš„Itemæ”¾å…¥Cmdä¸­ï¼Œè¿™é‡Œç”¨newå°†ä¼šåœ¨PopItem()ä¸­åˆ é™¤
 		CItemCommand* pItemCmd = new CItemCommand(rItem);
 		pItemCmd->SetIsValid(true);
 		cmdBreak[iIndex]->AddCommand(pItemCmd);
@@ -413,18 +413,18 @@ namespace GUI
             return;
         switch(pItemCommand->GetItemInfo()->sType)
         {
-        case 1:     //  ½£
-        case 2:     //  ¾Ş½£
-        case 3:     //  ¹­
-        case 4:     //  »ğÇ¹
-        case 7:     //  Ø°Ê×
-        case 9:     //  ·¨ÕÈ
-        case 11:     //  ¶ÜÅÆ
-        case 20:     //  Ã±×Ó
-        case 22:     //  ÒÂ·ş
-        case 23:     //  ÊÖÌ×
-        case 24:     //  Ğ¬×Ó
-        case 27:     //  ÎÆÉí
+        case 1:     //  å‰‘
+        case 2:     //  å·¨å‰‘
+        case 3:     //  å¼“
+        case 4:     //  ç«æª
+        case 7:     //  åŒ•é¦–
+        case 9:     //  æ³•æ–
+        case 11:     //  ç›¾ç‰Œ
+        case 20:     //  å¸½å­
+        case 22:     //  è¡£æœ
+        case 23:     //  æ‰‹å¥—
+        case 24:     //  é‹å­
+        case 27:     //  çº¹èº«
             {}  break;
         default:
             {

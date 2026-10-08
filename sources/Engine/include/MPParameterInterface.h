@@ -1,9 +1,9 @@
-#ifndef MPParameterInterface_H
+ï»¿#ifndef MPParameterInterface_H
 #define MPParameterInterface_H
 
 #include "MPEffPrerequisites.h"
 
-/// ¿ÉÓÃµÄ²ÎÊıÁĞ±í
+/// å¯ç”¨çš„å‚æ•°åˆ—è¡¨
 enum MPParameterType
 {
 	PT_BOOL,
@@ -22,7 +22,7 @@ enum MPParameterType
 	PT_COLOURVALUE
 };
 
-/// ²ÎÊı¶¨Òå,ÓÃÓÚÖ§³ÖMPParameterIntefaceµÄ·´Éä»úÖÆ
+/// å‚æ•°å®šä¹‰,ç”¨äºæ”¯æŒMPParameterIntefaceçš„åå°„æœºåˆ¶
 class MINDPOWER_API MPParameterDef
 {
 public:
@@ -34,7 +34,7 @@ public:
 };
 typedef std::vector<MPParameterDef> MPParameterList;
 
-/** ²ÎÊı¶ÔÏóµÃµ½/ÉèÖÃ²ÎÊıµÄ³éÏóÀà.*/
+/** å‚æ•°å¯¹è±¡å¾—åˆ°/è®¾ç½®å‚æ•°çš„æŠ½è±¡ç±».*/
 class MINDPOWER_API MPParamCommand
 {
 public:
@@ -49,13 +49,13 @@ class MINDPOWER_API MPParamDictionary
 {
 	friend class MPParameterInterface;
 protected:
-	/// ²ÎÊı¶¨Òå
+	/// å‚æ•°å®šä¹‰
 	MPParameterList m_ParamDefs;
 
-	/// ÓÃÓÚget/setµÄ²ÎÊı¶ÔÏó
+	/// ç”¨äºget/setçš„å‚æ•°å¯¹è±¡
 	ParamCommandMap m_ParamCommands;
 
-	/** ·µ»ØÓĞÃû²ÎÊıµÄ²ÎÊı¶ÔÏó. */
+	/** è¿”å›æœ‰åå‚æ•°çš„å‚æ•°å¯¹è±¡. */
 	MPParamCommand* getParamCommand(const String& name)
 	{
 		ParamCommandMap::iterator i = m_ParamCommands.find(name);
@@ -84,10 +84,10 @@ protected:
 public:
 	MPParamDictionary()  {}
 
-	/** Ôö¼ÓÕâ¸öÀàµÄ²ÎÊı¶¨Òå. 
-	@param paramDef ²ÎÊıµÄMPParameterDef¶ÔÏó
-	@param paramCmd ²ÎÊıÃüÁîÅÉÉúÀà¶ÔÏóµÄÖ¸ÕëÓÃÓÚ´¦Àígetting/setting.
-	NB: Õâ¸öÀà²»Îö¹¹Õâ¸öÖ¸Õë
+	/** å¢åŠ è¿™ä¸ªç±»çš„å‚æ•°å®šä¹‰. 
+	@param paramDef å‚æ•°çš„MPParameterDefå¯¹è±¡
+	@param paramCmd å‚æ•°å‘½ä»¤æ´¾ç”Ÿç±»å¯¹è±¡çš„æŒ‡é’ˆç”¨äºå¤„ç†getting/setting.
+	NB: è¿™ä¸ªç±»ä¸ææ„è¿™ä¸ªæŒ‡é’ˆ
 
 	*/
 	void addParameter(const MPParameterDef& paramDef, MPParamCommand* paramCmd)
@@ -104,12 +104,12 @@ public:
 
 typedef std::map<String, MPParamDictionary> MPParamDictionaryMap;
 
-/** ¶¨ÒåÊ¹ÓÃ·´Éä·ç¸ñ£¬ÉèÖÃ×Ô¶¨Òå²ÎÊıµÄ¹«¹²½Ó¿Ú.
+/** å®šä¹‰ä½¿ç”¨åå°„é£æ ¼ï¼Œè®¾ç½®è‡ªå®šä¹‰å‚æ•°çš„å…¬å…±æ¥å£.
 @remarks
-	Õâ¸öÀà±£´æÁË¹©×ÓÀàÊ¹ÓÃµÄÀà¾²Ì¬Ãû×Ö-²ÎÊımap×Öµä¡£¸ü¶àÏ¸½ÚÇë²é¿´MPParamDictionary. 
+	è¿™ä¸ªç±»ä¿å­˜äº†ä¾›å­ç±»ä½¿ç”¨çš„ç±»é™æ€åå­—-å‚æ•°mapå­—å…¸ã€‚æ›´å¤šç»†èŠ‚è¯·æŸ¥çœ‹MPParamDictionary. 
 @remarks
-	ÒªÊ¹ÓÃÕâ¸öÀà£¬Ã¿¸ö×ÓÀà±ØĞëÔÚ¹¹Ôìº¯ÊıÖĞµ÷ÓÃcreateParamDictionary£¬À´´´
-	½¨ÄÇ¸öÀàµÄ²ÎÊı×Öµä.
+	è¦ä½¿ç”¨è¿™ä¸ªç±»ï¼Œæ¯ä¸ªå­ç±»å¿…é¡»åœ¨æ„é€ å‡½æ•°ä¸­è°ƒç”¨createParamDictionaryï¼Œæ¥åˆ›
+	å»ºé‚£ä¸ªç±»çš„å‚æ•°å­—å…¸.
 */
 class MINDPOWER_API MPParameterInterface
 {
@@ -151,12 +151,12 @@ public:
 
 	virtual String getParameter(const String& name) const
 	{
-		// µÃµ½×Öµä
+		// å¾—åˆ°å­—å…¸
 		const MPParamDictionary* dict = getParamDictionary();
 
 		if (dict)
 		{
-			// ²éÕÒ²ÎÊı¶ÔÏó
+			// æŸ¥æ‰¾å‚æ•°å¯¹è±¡
 			const MPParamCommand* cmd = dict->getParamCommand(name);
 
 			if (cmd)
@@ -165,18 +165,18 @@ public:
 			}
 		}
 
-		// Ê§°Ü
+		// å¤±è´¥
 		return "";
 	}
 
 	virtual void copyParametersTo(MPParameterInterface* dest) const
 	{
-		// µÃµ½×Öµä
+		// å¾—åˆ°å­—å…¸
 		const MPParamDictionary* dict = getParamDictionary();
 
 		if (dict)
 		{
-			// ±éÀú×Ô¼ºµÄ²ÎÊı
+			// éå†è‡ªå·±çš„å‚æ•°
 			ParameterList::const_iterator i;
 
 			for (i = dict->mParamDefs.begin(); 
@@ -192,14 +192,14 @@ public:
 	static void cleanupDictionary () ;
 
 protected:
-	/** ÄÚ²¿·½·¨ÓÃÓÚ´´½¨ÀàµÄ²ÎÊı×Öµä.
+	/** å†…éƒ¨æ–¹æ³•ç”¨äºåˆ›å»ºç±»çš„å‚æ•°å­—å…¸.
 	@remarks
-		Õâ¸ö·½·¨½«»á¼ì²éÕâ¸öÀàµÄ²ÎÊı×Öµä,Èç¹û²»´æÔÚÔò´´½¨Ò»¸ö.NB:±ØĞëÌá
-	¹©ÀàµÄÃû×Ö(RTTIÃ»ÓĞÊ¹ÓÃ)
+		è¿™ä¸ªæ–¹æ³•å°†ä¼šæ£€æŸ¥è¿™ä¸ªç±»çš„å‚æ•°å­—å…¸,å¦‚æœä¸å­˜åœ¨åˆ™åˆ›å»ºä¸€ä¸ª.NB:å¿…é¡»æ
+	ä¾›ç±»çš„åå­—(RTTIæ²¡æœ‰ä½¿ç”¨)
 	@param
-	className ÀàÃû(×ÖµäÓÃ)
+	className ç±»å(å­—å…¸ç”¨)
 	@returns
-		true Èç¹û×Öµä±»´´½¨, false Èç¹û×ÖµäÒÑ¾­´æÔÚ
+		true å¦‚æœå­—å…¸è¢«åˆ›å»º, false å¦‚æœå­—å…¸å·²ç»å­˜åœ¨
 	*/
 	bool createParamDictionary(const String& className)
 	{
@@ -215,9 +215,9 @@ protected:
 
 protected:
 
-	/// ²ÎÊı×Öµä
+	/// å‚æ•°å­—å…¸
 	static MPParamDictionaryMap m_sDictionary;
-	/// ÓÃÓÚ²éÕÒµÄÀàÃû (±ØĞëÓÉ×ÓÀà³õÊ¼»¯)
+	/// ç”¨äºæŸ¥æ‰¾çš„ç±»å (å¿…é¡»ç”±å­ç±»åˆå§‹åŒ–)
 	String m_ParamDictName;
 
 };

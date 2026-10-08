@@ -1,4 +1,4 @@
-#include "Stdafx.h"
+ï»¿#include "Stdafx.h"
 #include "GameApp.h"
 #include "Character.h"
 #include "Scene.h"
@@ -102,18 +102,18 @@ void CGameApp::_HandleMsg(DWORD dwTypeID, DWORD dwParam1, DWORD dwParam2)
 					{
 						if( !g_ChaExitOnTime.TimeArrived() )
 						{
-							//·ÇµÇÂ½³¡¾°¶Ï¿ªÁ¬½Ó
+							//éç™»é™†åœºæ™¯æ–­å¼€è¿æ¥
 							char szBuf[256] = { 0 };
 							if( g_NetIF )
 							{
-								// modify by Philip.Wu  2006-06-09  ·ÇÊÕ·ÑÏµÍ³²»ÌáÊ¾ÓÃ»§³äÖµ
+								// modify by Philip.Wu  2006-06-09  éæ”¶è´¹ç³»ç»Ÿä¸æç¤ºç”¨æˆ·å……å€¼
 								if(g_Config.m_IsBill)
 								{
 									sprintf( szBuf, g_oLangRec.GetString(136), g_oLangRec.GetString(137), dwParam1 );
 								}
 								else
 								{
-									//sprintf( szBuf, "ÄúÏÖÔÚÒÑÓë·şÎñÆ÷¶Ï¿ªÁ¬½Ó,È·¶¨ºó½«·µ»ØµÇÂ¼½çÃæ\nÔ­Òò:%s[%d]", "ÄúÒÑÔÚÆäËûµØ·½µÇÂ½£¡", dwParam1 );
+									//sprintf( szBuf, "æ‚¨ç°åœ¨å·²ä¸æœåŠ¡å™¨æ–­å¼€è¿æ¥,ç¡®å®šåå°†è¿”å›ç™»å½•ç•Œé¢\nåŸå› :%s[%d]", "æ‚¨å·²åœ¨å…¶ä»–åœ°æ–¹ç™»é™†ï¼", dwParam1 );
 
 									const auto reason = g_NetIF->GetDisconnectErrText(dwParam1);
 									sprintf(szBuf, reason.c_str());
@@ -134,8 +134,8 @@ void CGameApp::_HandleMsg(DWORD dwTypeID, DWORD dwParam1, DWORD dwParam2)
 						}
 					}
 					else
-					{	//µÇÂ½³¡¾°ÄÚ¶Ï¿ªÁ¬½Ó
-						//ÅĞ¶ÏÃÜÂëÊÇ·ñ´íÎó
+					{	//ç™»é™†åœºæ™¯å†…æ–­å¼€è¿æ¥
+						//åˆ¤æ–­å¯†ç æ˜¯å¦é”™è¯¯
 						CLoginScene *pkLogin = dynamic_cast<CLoginScene*>(scene);
 						if (pkLogin && pkLogin->IsPasswordError())
 						{

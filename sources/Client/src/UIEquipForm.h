@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "UIGlobalVar.h"
 #include "NetProtocol.h"
 #include "SkillRecord.h"
@@ -12,7 +12,7 @@ namespace GUI
 {
 class CItemCommand;
 
-// ¼¼ÄÜ£¬µÀ¾ß£¬¿ì½İ·½Ê½£¬×°±¸
+// æŠ€èƒ½ï¼Œé“å…·ï¼Œå¿«æ·æ–¹å¼ï¼Œè£…å¤‡
 class CEquipMgr : public CUIInterface
 {
 public:
@@ -25,23 +25,23 @@ public:
     void            UpdataEquipSpy( const stNetChangeChaPart& SPart, CCharacter* pCha );
     void            UpdataEquipData( const stNetChangeChaPart& SPart, CCharacter* pCha );
 
-    void            UpdateShortCut( stNetShortCut& stShortCut );		// ¸üĞÂ¿ì½İÀ¸
-	void			DelFastCommand( CCommandObj* pObj );				// É¾³ıµ±Ç°¿ì½İÀ¸
+    void            UpdateShortCut( stNetShortCut& stShortCut );		// æ›´æ–°å¿«æ·æ 
+	void			DelFastCommand( CCommandObj* pObj );				// åˆ é™¤å½“å‰å¿«æ·æ 
     bool            ExecFastKey( int key );
 	void			FastChange(int nIndex, short sGridID, char chType,bool update = false);
 
-	void            CloseAllForm();		// ¹Ø±Õ´°Ìå
+	void            CloseAllForm();		// å…³é—­çª—ä½“
 
-	// ½«¿ì½İÀ¸ÓëµÀ¾ßÀ¸±È½Ï,Óë·şÎñÆ÷²»ÏàÍ¬µÄ¿ì½İÀ¸,Ïò·şÎñÆ÷·¢ËÍĞ­Òé¸üĞÂ¿ì½İÀ¸,·µ»Ø¸üĞÂµÄ¸öÊı
-	// ÓÃÓÚµÀ¾ßÔÚµÀ¾ßÀ¸½»»»Ê±
+	// å°†å¿«æ·æ ä¸é“å…·æ æ¯”è¾ƒ,ä¸æœåŠ¡å™¨ä¸ç›¸åŒçš„å¿«æ·æ ,å‘æœåŠ¡å™¨å‘é€åè®®æ›´æ–°å¿«æ·æ ,è¿”å›æ›´æ–°çš„ä¸ªæ•°
+	// ç”¨äºé“å…·åœ¨é“å…·æ äº¤æ¢æ—¶
 	int				RefreshServerShortCut();							
 
-	CGoodsGrid* GetGoodsGrid() { return grdItem; }	// ²Ù×÷µÀ¾ßÀ¸±í¸ñ
-	CForm* GetItemForm() { return frmInv; }   // ²Ù×÷µÀ¾ß±íµ¥
+	CGoodsGrid* GetGoodsGrid() { return grdItem; }	// æ“ä½œé“å…·æ è¡¨æ ¼
+	CForm* GetItemForm() { return frmInv; }   // æ“ä½œé“å…·è¡¨å•
 
 	CForm* stateDrags;
 
-	// ´Ó×°±¸À¸Ğ¶ÔØµÀ¾ßµ½µÀ¾ßÀ¸
+	// ä»è£…å¤‡æ å¸è½½é“å…·åˆ°é“å…·æ 
 	void			UnfixToGrid( CCommandObj* pItem, int nGridID, int nLink );
 
 	CSkillRecord*	FindSkill( int nID );
@@ -55,14 +55,14 @@ public:
 	
 	void 			UpdateIMP(int imp);
 
-	// »ñµÃµÀ¾ßÔÚµ±Ç°±³°üÖĞ×ÜµÄ¸öÊı
+	// è·å¾—é“å…·åœ¨å½“å‰èƒŒåŒ…ä¸­æ€»çš„ä¸ªæ•°
 	int				GetItemCount(int nID);
 
 	static CGuiPic*		GetChargePic( unsigned int n );
 
 	void ShowSellPrompt();
-    static void		evtThrowItemEvent(CGuiData *pSender,int id,bool& isThrow);					// ´ÓµÀ¾ßÀ¸ÖĞÈÓ³öµÀ¾ß
-    static void		evtSwapItemEvent(CGuiData *pSender,int nFirst, int nSecond, bool& isSwap); // µÀ¾ßÀ¸ÖĞ½»»»µÀ¾ß
+    static void		evtThrowItemEvent(CGuiData *pSender,int id,bool& isThrow);					// ä»é“å…·æ ä¸­æ‰”å‡ºé“å…·
+    static void		evtSwapItemEvent(CGuiData *pSender,int nFirst, int nSecond, bool& isSwap); // é“å…·æ ä¸­äº¤æ¢é“å…·
 
 protected:
 	virtual bool Init();
@@ -105,20 +105,20 @@ private:
 	static void		_evtSpyFormShow(CGuiData *pSender);
 
 	static void		_evtSkillUpgrade(CSkillList *pSender, CSkillCommand* pSkill);
-    static void		_evtFastChange(CGuiData *pSender, CCommandObj* pItem, bool& isAccept);		// ¿ì½İÀ¸·¢Éú±ä»¯
-	static void		_evtEquipEvent(CGuiData *pSender, CCommandObj* pItem, bool& isAccept);		// ´ÓµÀ¾ßÀ¸ÖĞ×°±¸µ½×°±¸À¸
-	static void		_evtThrowEquipEvent(CGuiData *pSender, CCommandObj* pItem, bool& isThrow);  // ´Ó×°±¸À¸ÈÓ³ö×°±¸
+    static void		_evtFastChange(CGuiData *pSender, CCommandObj* pItem, bool& isAccept);		// å¿«æ·æ å‘ç”Ÿå˜åŒ–
+	static void		_evtEquipEvent(CGuiData *pSender, CCommandObj* pItem, bool& isAccept);		// ä»é“å…·æ ä¸­è£…å¤‡åˆ°è£…å¤‡æ 
+	static void		_evtThrowEquipEvent(CGuiData *pSender, CCommandObj* pItem, bool& isThrow);  // ä»è£…å¤‡æ æ‰”å‡ºè£…å¤‡
 
 	static void		_evtButtonClickEvent( CGuiData *pSender, int x, int y, DWORD key);
 	static void		_evtRMouseGridEvent(CGuiData *pSender,CCommandObj* pItem,int nGridID);
 
 	bool			_UpdataEquip( SItemGrid& Item, int nLink );
 	bool			_UpdataEquipSpy( SItemGrid& Item, int nLink );
-    void			_ActiveFast( int num );         // ¼¤»îµÚ¼¸À¸
+    void			_ActiveFast( int num );         // æ¿€æ´»ç¬¬å‡ æ 
 
 	static void		_evtItemFormMouseEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey);
 
-	// ¼ÓËø MSGBOX È·ÈÏ
+	// åŠ é” MSGBOX ç¡®è®¤
 	static void		_CheckLockMouseEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey);
 
 	static void _RotateChaLeft(CGuiData *sender, int x, int y, DWORD key );
@@ -137,31 +137,31 @@ private:
 	static int				lIMP;
 	CForm*			frmSkill;
 
-    CLabel*         labPoint;                   // Ê£Óà¼¼ÄÜµãÊı
-    CLabel*         labPointLife;               // Ê£ÓàÉú»î¼¼ÄÜµãÊı
-    CSkillList*     lstFightSkill;              // Õ½¶·¼¼ÄÜÀ¸
-    CSkillList*     lstLifeSkill;               // Éú»î¼¼ÄÜÀ¸
-    CSkillList*     lstSailSkill;               // º½º£¼¼ÄÜÀ¸
+    CLabel*         labPoint;                   // å‰©ä½™æŠ€èƒ½ç‚¹æ•°
+    CLabel*         labPointLife;               // å‰©ä½™ç”Ÿæ´»æŠ€èƒ½ç‚¹æ•°
+    CSkillList*     lstFightSkill;              // æˆ˜æ–—æŠ€èƒ½æ 
+    CSkillList*     lstLifeSkill;               // ç”Ÿæ´»æŠ€èƒ½æ 
+    CSkillList*     lstSailSkill;               // èˆªæµ·æŠ€èƒ½æ 
 
 	CTextButton* btnOpenTempBag;
 	
 	
 	CCheckBox* chkLinkEqForm;
 	
-	CForm*			frmItemSpy;					// µÀ¾ß±íµ¥
-	CGoodsGrid*     grdItem;					// µÀ¾ßÀ¸
-	COneCommand*    cnmEquip[enumEQUIP_NUM];    // ×°±¸À¸
-	COneCommand*    cnmEquipSpy[enumEQUIP_NUM];    // ×°±¸À¸
+	CForm*			frmItemSpy;					// é“å…·è¡¨å•
+	CGoodsGrid*     grdItem;					// é“å…·æ 
+	COneCommand*    cnmEquip[enumEQUIP_NUM];    // è£…å¤‡æ 
+	COneCommand*    cnmEquipSpy[enumEQUIP_NUM];    // è£…å¤‡æ 
     stNetChangeChaPart    stEquip;
     stNetChangeChaPart    stEquipSpy;
     stNetShortCut         _stShortCut;
 
-    int				_nFastCur;					// ¿ì½İÀ¸Ä¿Ç°ÔÚµÚ¼¸Î»
+    int				_nFastCur;					// å¿«æ·æ ç›®å‰åœ¨ç¬¬å‡ ä½
     CFastCommand**  _pFastCommands;
-	CLabel*			_pActiveFastLabel;			// ÓÃÓÚ¼¤»î¿ì½İÀ¸µÄÒ³Âë
+	CLabel*			_pActiveFastLabel;			// ç”¨äºæ¿€æ´»å¿«æ·æ çš„é¡µç 
 
-	CLabel*			lblGold;					// ½ğÇ®
-	CImage*			imgItem4;					// µÀ¾ßÇ°4¸ñµÄÍ¼Æ¬
+	CLabel*			lblGold;					// é‡‘é’±
+	CImage*			imgItem4;					// é“å…·å‰4æ ¼çš„å›¾ç‰‡
 
 	CImage*			imgLock;
 	CImage*			imgUnLock;
@@ -218,23 +218,23 @@ private:
 	vskill		_skills;
 
 	typedef std::vector<int>	ints;
-	vskill		_cancels;			// ¿É±»»÷»îµÄ¼¼ÄÜ×´Ì¬
+	vskill		_cancels;			// å¯è¢«å‡»æ´»çš„æŠ€èƒ½çŠ¶æ€
 
 	typedef std::vector<CSkillStateRecord*>  states;
-	states		_charges;			// ³äµçµÄ¼¼ÄÜ×´Ì¬
+	states		_charges;			// å……ç”µçš„æŠ€èƒ½çŠ¶æ€
 
 	static CGuiPic	_imgCharges[enumEQUIP_NUM];
 
 	struct SSplitItem
 	{
-		static void		_evtSplitItemEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey);	// ²ğ·ÖµÀ¾ß»Øµ÷
+		static void		_evtSplitItemEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey);	// æ‹†åˆ†é“å…·å›è°ƒ
 		int			nFirst;
 		int			nSecond;
 		CCharacter*	pSelf;
 	};
 	static SSplitItem	SSplit;
 
-public:	// ĞŞÀíµÀ¾ßÏà¹Ø
+public:	// ä¿®ç†é“å…·ç›¸å…³
 	void	ShowRepairMsg( const char* pItemName, long lMoney );
 	void    SetIsShow(bool bShow);
 

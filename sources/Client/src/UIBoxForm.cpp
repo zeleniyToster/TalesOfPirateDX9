@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "uiboxform.h"
 #include "uiform.h"
 #include "uiedit.h"
@@ -27,7 +27,7 @@ CForm* CBoxMgr::_cfrmError = NULL;
 //---------------------------------------------------------------------------
 bool CBoxMgr::Init()
 {
-	// ½»Ò×¶Ô»°¿ò
+	// äº¤æ˜“å¯¹è¯æ¡†
     CForm* frmTrade  = _FindForm("frmTrade");   
 	if ( !frmTrade ) return false;
 
@@ -43,7 +43,7 @@ bool CBoxMgr::Init()
 
 	_cTrade.Init( frmTrade );
 
-	// Ñ¡Ôñ¶Ô»°¿ò
+	// é€‰æ‹©å¯¹è¯æ¡†
     CForm* frmSelect  = _FindForm("frmSelect");   
 	if ( !frmSelect ) return false;
 	//frmSelect->SetPos( g_Render.GetScrWidth(), g_Render.GetScrHeight() - 151 );
@@ -53,7 +53,7 @@ bool CBoxMgr::Init()
 
 	_cSelect.Init( frmSelect );
 
-	// ÊäÈëÊıÁ¿¶Ô»°¿ò
+	// è¾“å…¥æ•°é‡å¯¹è¯æ¡†
     CForm* frmNumber = _FindForm("frmNumber");
     if( !frmNumber ) return false;
 
@@ -67,7 +67,7 @@ bool CBoxMgr::Init()
 	_cNumber.Init( frmNumber );
 
 
-	// ÊäÈëÃÜÂë¶Ô»°¿ò
+	// è¾“å…¥å¯†ç å¯¹è¯æ¡†
 	CForm* frmPassword = _FindForm("frmPass");
 	if( !frmPassword ) return false;
 
@@ -80,7 +80,7 @@ bool CBoxMgr::Init()
 	_cPassword.Init( frmPassword );
 
 
-	// Ò»¸öĞÅÏ¢¶Ô»°¿ò
+	// ä¸€ä¸ªä¿¡æ¯å¯¹è¯æ¡†
     CForm* frmError  = _FindForm("frmError");   
 	if ( !frmError ) return false;
 
@@ -120,7 +120,7 @@ void CBoxMgr::_ClearBox( CHideForm& list )
 
 		if(frm->GetPointer())
 		{
-			delete frm->GetPointer(); // UIµ±»ú´¦Àí
+			delete frm->GetPointer(); // UIå½“æœºå¤„ç†
 			frm->SetPointer( NULL );
 		}
 	}
@@ -171,7 +171,7 @@ stTradeBox* CBoxMgr::ShowTradeBox( FormMouseEvent evtForm, float fUnitMoney, int
 		t->edtNumber->SetCaption( "" );
 	}
 	t->nTotalNum = nTotalNum;
-	t->fUnitMoney = (float)(int)fUnitMoney;				// ÓÎÏ·½öÏÔÊ¾È¡ÕûºóµÄÊı×Ö call ÂŞÍş
+	t->fUnitMoney = (float)(int)fUnitMoney;				// æ¸¸æˆä»…æ˜¾ç¤ºå–æ•´åçš„æ•°å­— call ç½—å¨
 	return t;
 }
 

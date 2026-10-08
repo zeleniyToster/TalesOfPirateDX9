@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 
 #include "UIHaircutForm.h"
 #include "HairTool.h"
@@ -32,7 +32,7 @@ namespace GUI
 	CHaircutMgr::~CHaircutMgr()
 	{
 		//delete m_pHairTools;
-		SAFE_DELETE(m_pHairTools); // UIµ±»ú´¦Àí
+		SAFE_DELETE(m_pHairTools); // UIå½“æœºå¤„ç†
 	}
 
 	//~ ==================================================================
@@ -74,7 +74,7 @@ namespace GUI
 			return Error(g_oLangRec.GetString(616),
 						 frmHaircut->GetName(), "labHairMoney");
 
-		// ×óÓÒÑ¡Ôñ°´Å¥
+		// å·¦å³é€‰æ‹©æŒ‰é’®
 		CTextButton* btnLeftColor = (CTextButton*)frmHaircut->Find("btnLeftColor");
 		if( !btnLeftColor ) 
 		{
@@ -164,7 +164,7 @@ namespace GUI
 		if (!pMainCha){ LG( "haircut", g_oLangRec.GetString(617) ); return; }
 
 		m_pHairTools->RefreshCha( pMainCha->GetDefaultChaInfo()->lID );
-		//ÉèÖÃ½çÃæÊı¾İ
+		//è®¾ç½®ç•Œé¢æ•°æ®
 		
 		if( (m_dwHairTypeMaxNum = m_pHairTools->GetHairMax()) <= 0 ) 
 		{
@@ -172,10 +172,10 @@ namespace GUI
 			return;
 		}
 
-		//Ã¿´Î´ò¿ªÊ±ÉèÖÃÈËÎïÕıÃæ
+		//æ¯æ¬¡æ‰“å¼€æ—¶è®¾ç½®äººç‰©æ­£é¢
 		m_nChaRotate = 0;
 
-		//ÏÔÊ¾½çÃæ
+		//æ˜¾ç¤ºç•Œé¢
 		frmHaircut->Show();
 
 		CCharacter* pCha = CGameApp::GetCurScene()->AddCharacter( pMainCha->getTypeID() );
@@ -236,7 +236,7 @@ namespace GUI
 			}
 		}
 
-		// ËÑË÷µÀ¾ß
+		// æœç´¢é“å…·
 		CItemCommand* propItem = NULL;
 		for (int i(0); i<defHAIR_MAX_ITEM; i++)
 		{
@@ -264,21 +264,21 @@ namespace GUI
 			}
 			
 			if (j < pGrid->GetMaxNum())
-			{	//ÕÒµ½
+			{	//æ‰¾åˆ°
 				m_iGoodsIndex[i] = j;
 				pItem->SetIsValid( false );
 			}
 			else
-			{	// Ã»ÓĞÕÒµ½
+			{	// æ²¡æœ‰æ‰¾åˆ°
 				m_iGoodsIndex[i] = -1;
 				propItem->SetIsValid( false );
 			}
 		}
 	
-		// ¸Ä±äÍ··¢
+		// æ”¹å˜å¤´å‘
 		if (m_pCurrMainCha)
 		{
-			// ÉèÖÃµ¥Ïß³Ì¼ÓÔØ×ÊÔ´,·ÀÖ¹ÉÁË¸
+			// è®¾ç½®å•çº¿ç¨‹åŠ è½½èµ„æº,é˜²æ­¢é—ªçƒ
 			lwIByteSet* res_bs = g_Render.GetInterfaceMgr()->res_mgr->GetByteSet();
 			BYTE loadtex_flag = res_bs->GetValue(OPT_RESMGR_LOADTEXTURE_MT);
 			BYTE loadmesh_flag = res_bs->GetValue(OPT_RESMGR_LOADMESH_MT);
@@ -326,7 +326,7 @@ namespace GUI
 	{
 		m_dwHairColorIndex += ((int)(enumDirect));
 
-		// Ñ­»·ÒÆ¶¯
+		// å¾ªç¯ç§»åŠ¨
 		m_dwHairColorIndex = (m_dwHairColorIndex + m_dwHairColorMaxNum) % m_dwHairColorMaxNum;
 
 		Refresh(m_dwHairTypeIndex, m_dwHairColorIndex);
@@ -337,7 +337,7 @@ namespace GUI
 	{
 		m_dwHairTypeIndex += ((int)(enumDirect));
 
-		// Ñ­»·ÒÆ¶¯
+		// å¾ªç¯ç§»åŠ¨
 		m_dwHairTypeIndex = (m_dwHairTypeIndex + m_dwHairTypeMaxNum) % m_dwHairTypeMaxNum;
 
 		Refresh(m_dwHairTypeIndex, 0);

@@ -1,4 +1,4 @@
-//add by ALLEN 2007-10-19
+ï»¿//add by ALLEN 2007-10-19
 #pragma once
 
 
@@ -22,7 +22,7 @@
 namespace GUI
 {
 
-// ½ÌÌÃ¾¹ÅÄ
+// æ•™å ‚ç«Ÿæ‹
 class CChurchChallengeMgr : public CUIInterface
 {
 public:

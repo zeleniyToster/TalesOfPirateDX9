@@ -9,7 +9,7 @@
 #pragma once
 
 #ifndef USING_TAO				//ʹ��Win32����Platform SDK
-#include <winsock2.h>			//ȷ�������µ�WinSock2.2�汾
+#include <winsock2.h>			// pulls in WinSock 2.2 (the 2.2 revision)
 #include <windows.h>
 #else
 #include "TAOSpecial.h"

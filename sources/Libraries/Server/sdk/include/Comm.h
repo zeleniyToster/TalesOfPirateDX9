@@ -1,4 +1,4 @@
-//================================================================
+ï»¿//================================================================
 // It must be permitted by Dabo.Zhang that this program is used for
 // any purpose in any situation.
 // Copyright (C) Dabo.Zhang 2000-2003
@@ -8,8 +8,8 @@
 //=================================================================
 #pragma once
 
-#ifndef	USING_TAO		//Ê¹ÓÃWin32»ù±¾Platform SDK
-#include <winsock2.h>		//È·±£µ÷ÓÃÐÂµÄWinSock2.2°æ±¾
+#ifndef	USING_TAO		// use the base Win32 Platform SDK
+#include <winsock2.h>		// pulls in WinSock 2.2 (the 2.2 revision)
 #include <windows.h>
 #else
 #include "TAOSpecial.h"
@@ -53,15 +53,15 @@ class TcpCommApp
 public:
 	static	int		WSAStartup();
 	static	void	WSACleanup();
-//Íâ²¿µ÷ÓÃ
-	virtual	bool	OnConnect(DataSocket *datasock){return true;}	//·µ»ØÖµ:true-ÔÊÐíÁ¬½Ó,false-²»ÔÊÐíÁ¬½Ó
-	virtual	void	OnConnected(DataSocket *datasock){}			//·µ»ØÖµ:true-ÔÊÐíÁ¬½Ó,false-²»ÔÊÐíÁ¬½Ó
-	virtual	void	OnDisconnect(DataSocket *datasock,int reason){}//reasonÖµ:0-±¾µØ³ÌÐòÕý³£ÍË³ö;-1-Socket´íÎó;-3-ÍøÂç±»¶Ô·½¹Ø±Õ;-5-°ü³¤¶È³¬¹ýÏÞÖÆ;-7-×èÈûÌ«ÑÏÖØÁË;-9-KeepAliveÊ§°Ü
+// entry points called by the upper layer
+	virtual	bool	OnConnect(DataSocket *datasock){return true;}	// return value: true = allow the connection, false = refuse it
+	virtual	void	OnConnected(DataSocket *datasock){}			// return value: true = allow the connection, false = refuse it
+	virtual	void	OnDisconnect(DataSocket *datasock,int reason){}// reason: 0 = local process shut down normally; -1 = socket error; -3 = connection closed by the peer; -5 = packet length out of range; -7 = blocking too severe; -9 = keepalive failed
 	virtual	void	OnProcessData(DataSocket *datasock,RPacket &recvbuf)=0;
 	virtual	void	OnSendAll(DataSocket *datasock){}
-	virtual	bool	OnSendBlock(DataSocket *datasock){return false;}//·µ»ØÖµ:true-ÔÊÐí¼ÌÐøµÈ´ý,false-¶Ï¿ªÕâ¸öÁ¬½Ó
-	virtual bool	OnEncrypt(DataSocket* datasock, char* ciphertext, uLong ciphertext_len, cChar* text, uLong& len);			//¼ÓÃÜ
-	virtual bool	OnDecrypt(DataSocket* datasock, char* ciphertext, uLong& len) { return false; }	//½âÃÜ
+	virtual	bool	OnSendBlock(DataSocket *datasock){return false;}// return value: true = keep waiting, false = drop this connection
+	virtual bool	OnEncrypt(DataSocket* datasock, char* ciphertext, uLong ciphertext_len, cChar* text, uLong& len);			// encrypt
+	virtual bool	OnDecrypt(DataSocket* datasock, char* ciphertext, uLong& len) { return false; }	// decrypt
 	virtual void	TaskDispatcher(Task *)=0;
 
 	long			SendData(DataSocket *datasock,WPacket sendbuf);
@@ -77,7 +77,7 @@ public:
 	uLong			GetRecvTime(DataSocket *datasock)const{if(datasock){return datasock->m_recvtime;}else{return uLong(long(-1));}}
 	std::string			GetDisconnectErrText(int reason) const;
 
-//const³ÉÔ±
+// const members
 	cLong					__maxsndque;
 	cuLong					__len_offset,__pkt_maxlen;
 	cuChar					__len_size{};
@@ -116,7 +116,7 @@ class TcpClientApp:public TcpCommApp
 {
 	friend class TcpServerApp;
 public:
-	TcpClientApp(RPCMGR *rpc,ThreadPool *processor,ThreadPool *communicator,bool mode =true);//mode =false Ç¿ÖÆ¡°Êý¾Ý°ü¡±²»½øÈë´¦ÀíÏß³Ì³Ø
+	TcpClientApp(RPCMGR *rpc,ThreadPool *processor,ThreadPool *communicator,bool mode =true);// mode = false forces the packet to be handled inline instead of on the thread pool
 	~TcpClientApp(){};
 	DataSocket *	Connect(cChar *hostname,uShort port,SOCKET *sock_out =0);
 private:
@@ -126,9 +126,9 @@ private:
 class TcpServerApp:public TcpClientApp
 {
 public:
-	TcpServerApp(RPCMGR *rpc,ThreadPool *processor,ThreadPool *communicator,bool mode =true);//mode =false Ç¿ÖÆ¡°Êý¾Ý¡±°ü²»½øÈë´¦ÀíÏß³Ì³Ø
+	TcpServerApp(RPCMGR *rpc,ThreadPool *processor,ThreadPool *communicator,bool mode =true);// mode = false forces the packet to be handled inline instead of on the thread pool
 	~TcpServerApp();
-	int				OpenListenSocket(uShort port,cChar *cp);	//·µ»ØÖµ0£º³É¹¦£»1£ºÊ§°Ü
+	int				OpenListenSocket(uShort port,cChar *cp);	// return value: 0 = success, 1 = failure
 	void			CloseListenSocket();
 	const SOCKET	GetListenSocket()const	{return __socket;}
 	cChar	*		GetListenIP()const		{return __localaddr;}
@@ -141,8 +141,8 @@ private:
 
 	bool	volatile	__acceptflag;
 	SOCKET	volatile	__socket;
-	uShort				__port;							//·þÎñÆ÷ÕìÌý¶Ë¿Ú(Ö÷»ú×Ö½ÚË³Ðò)
-	char				__localaddr[16];				//·þÎñÆ÷ÕìÌýµØÖ·(IP)
+	uShort				__port;							// server listen port (host byte order)
+	char				__localaddr[16];				// server listen address (IP)
 };
 
 #pragma pack(pop)

@@ -1,4 +1,4 @@
-#pragma pack(push)
+ï»¿#pragma pack(push)
 #pragma pack(1)
 
 struct SAttribFileHeader
@@ -60,7 +60,7 @@ inline DWORD CAttribData::_ReadSectionIdx(DWORD dwSectionNo)
     DWORD dwOffset = 0; fread(&dwOffset, sizeof(DWORD), 1, _fp);
     if(_bDebug)
     {
-        //LG(GetDataName(), "¶ÁÈ¡Ë÷ÒıÇøÊı¾İ[%d %d], Offset = %d\n", dwSectionNo % _nSectionCntX, dwSectionNo / _nSectionCntY, dwOffset);
+        //LG(GetDataName(), "è¯»å–ç´¢å¼•åŒºæ•°æ®[%d %d], Offset = %d\n", dwSectionNo % _nSectionCntX, dwSectionNo / _nSectionCntY, dwOffset);
 		LG(GetDataName(), "read index data [%d %d], Offset = %d\n", dwSectionNo % _nSectionCntX, dwSectionNo / _nSectionCntY, dwOffset);
     }
     return dwOffset;
@@ -72,7 +72,7 @@ inline void CAttribData::_WriteSectionIdx(DWORD dwSectionNo, DWORD dwOffset)
     fwrite(&dwOffset, sizeof(DWORD), 1, _fp);
     if(_bDebug)
     {
-        //LG(GetDataName(), "Ğ´ÈëË÷ÒıÇøÊı¾İ[%d %d], Offset = %d\n", dwSectionNo % _nSectionCntX, dwSectionNo / _nSectionCntY, dwOffset);
+        //LG(GetDataName(), "å†™å…¥ç´¢å¼•åŒºæ•°æ®[%d %d], Offset = %d\n", dwSectionNo % _nSectionCntX, dwSectionNo / _nSectionCntY, dwOffset);
 		LG(GetDataName(), "write index data [%d %d], Offset = %d\n", dwSectionNo % _nSectionCntX, dwSectionNo / _nSectionCntY, dwOffset);
     }
 }

@@ -552,7 +552,7 @@ void ToGameServer::MC_ENTERMAP(dbc::DataSocket* datasock, dbc::RPacket& recvbuf)
 void ToGameServer::MC_STARTEXIT(dbc::DataSocket* datasock, dbc::RPacket& recvbuf)
 {
 	RPacket	l_rpk = recvbuf;
-	uShort	l_aimnum = l_rpk.ReverseReadShort();					//l_aimnum永远等于1
+	uShort	l_aimnum = l_rpk.ReverseReadShort();					// l_aimnum is always 1
 	auto l_ply = ToPointer<ClientConnection>(recvbuf.ReverseReadLong());
 	if (l_ply)
 	{
@@ -564,7 +564,7 @@ void ToGameServer::MC_STARTEXIT(dbc::DataSocket* datasock, dbc::RPacket& recvbuf
 void ToGameServer::MC_CANCELEXIT(dbc::DataSocket* datasock, dbc::RPacket& recvbuf)
 {
 	RPacket	l_rpk = recvbuf;
-	uShort	l_aimnum = l_rpk.ReverseReadShort();					//l_aimnum永远等于1
+	uShort	l_aimnum = l_rpk.ReverseReadShort();					// l_aimnum is always 1
 	auto l_ply = ToPointer<ClientConnection>(recvbuf.ReverseReadLong());
 	if (l_ply)
 	{
@@ -589,7 +589,7 @@ void ToGameServer::MT_PALYEREXIT(dbc::DataSocket* datasock, dbc::RPacket& recvbu
 			auto const l_lockStat = std::lock_guard{ l_ply->m_mtxstat };
 			//printf( "PlayerExit id = %d, status = %d\n", l_ply->m_actid, l_ply->m_status );
 			uLong	l_ulMilliseconds = 30 * 1000;
-			if (l_ply->m_status == ClientConnection::Status::Playing && l_ply->m_exit == ClientConnection::Status::CharacterSelection) // 选择角色
+			if (l_ply->m_status == ClientConnection::Status::Playing && l_ply->m_exit == ClientConnection::Status::CharacterSelection) // character selection
 			{
 				WPacket l_wpk = g_gtsvr->gp_conn->GetWPacket();
 				l_wpk.WriteCmd(CMD_TP_ENDPLAY);
@@ -606,7 +606,7 @@ void ToGameServer::MT_PALYEREXIT(dbc::DataSocket* datasock, dbc::RPacket& recvbu
 				}
 				else
 				{
-					//返回给Client
+					// send back to the client
 					l_wpk.WriteCmd(CMD_MC_ENDPLAY);
 					//SendData(datasock,l_wpk);
 					g_gtsvr->cli_conn->SendData(l_ply->m_datasock, l_wpk);
@@ -620,7 +620,7 @@ void ToGameServer::MT_PALYEREXIT(dbc::DataSocket* datasock, dbc::RPacket& recvbu
 					}
 				}
 			}
-			else if (l_ply->m_status == ClientConnection::Status::Playing && l_ply->m_exit == ClientConnection::Status::Playing) // 登出释放资源
+			else if (l_ply->m_status == ClientConnection::Status::Playing && l_ply->m_exit == ClientConnection::Status::Playing) // logging out, release resources
 			{
 				/*
 				WPacket l_wpk = g_gtsvr->gp_conn->GetWPacket();
@@ -641,8 +641,8 @@ void ToGameServer::MT_PALYEREXIT(dbc::DataSocket* datasock, dbc::RPacket& recvbu
 				l_wpk.WriteLong(l_ply->gp_addr);
 				l_ply->gp_addr = 0;
 				RPacket l_retpk = g_gtsvr->gp_conn->SyncCall(g_gtsvr->gp_conn->get_datasock(), l_wpk, l_ulMilliseconds);
-				//printf( "PlayerExit 释放角色id = %d, status = %d\n", l_ply->m_actid, l_ply->m_status );
-				g_gtsvr->cli_conn->Disconnect(l_ply->m_datasock, 0, -23);	//－23错误码表示GameServer要求踢掉某人
+				//printf( "PlayerExit releasing character id = %d, status = %d\n", l_ply->m_actid, l_ply->m_status );
+				g_gtsvr->cli_conn->Disconnect(l_ply->m_datasock, 0, -23);	// reason -23 means the GameServer asked for this player to be kicked
 				l_ply->Free();
 			}
 		}

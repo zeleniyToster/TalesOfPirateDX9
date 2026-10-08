@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "UIPKDialog.h"
 #include "NetProtocol.h"
 #include "UIFormMgr.h"
@@ -19,7 +19,7 @@ bool CPkDialog::Init()
 {
 	CFormMgr &mgr = CFormMgr::s_Mgr;
 
-	{	// pk ¿ªÊ¼Ç°µÄ¶Ô»°¿ò
+	{	// pk å¼€å§‹å‰çš„å¯¹è¯æ¡†
 		frmTeamPkStart = mgr.Find("frmTeamPK");
 		if ( !frmTeamPkStart)
 		{
@@ -56,11 +56,11 @@ bool CPkDialog::Init()
 	}
 
 	{
-		 // pk ½áÊøºóµÄ¶Ô»°¿ò
+		 // pk ç»“æŸåçš„å¯¹è¯æ¡†
 		//frmTeamPkEnd = mgr.Find("frmfrmTeamPkStart");
 		//if ( !frmTeamPkEnd)
 		//{
-		//	LG("gui", "npc.cluÖĞÃ»ÓĞ¶¨Òå½çÃæfrmfrmTeamPk");
+		//	LG("gui", "npc.cluä¸­æ²¡æœ‰å®šä¹‰ç•Œé¢frmfrmTeamPk");
 		//	return false;
 		//}
 		//frmTeamPkEnd->evtEntrustMouseEvent = _MainMousePkEndEvent;
@@ -71,7 +71,7 @@ bool CPkDialog::Init()
 		//	sprintf(szBuf, "lvEndTeam%d", i);
 		//	lvEndTeams[i] = dynamic_cast<CListView*>(frmTeamPkEnd->Find(szBuf));
 		//	if (!lvEndTeams[i]) 
-		//		return Error("npc.clu½çÃæ<%s>ÉÏÕÒ²»µ½¿Ø¼ş<%s>",
+		//		return Error("npc.cluç•Œé¢<%s>ä¸Šæ‰¾ä¸åˆ°æ§ä»¶<%s>",
 		//					 frmTeamPkEnd->GetName(), 
 		//					 szBuf);
 		//}

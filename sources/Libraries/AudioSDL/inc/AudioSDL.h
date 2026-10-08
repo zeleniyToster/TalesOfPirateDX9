@@ -1,7 +1,7 @@
-
+ï»¿
 //---------------------------
 //
-//  ÒôÆµ²¥·Å
+//  éŸ³é¢‘æ’­æ”¾
 //  by Jampe
 //  2007/03/28
 //
@@ -22,52 +22,52 @@ class AudioSDL : public _singleton<AudioSDL>
 public:
     ~AudioSDL();
 
-    //  ³õÊ¼»¯ÉùÒôÏµÍ³
+    //  åˆå§‹åŒ–å£°éŸ³ç³»ç»Ÿ
     bool init();
 
-    //  ÊÍ·ÅÉùÒôÏµÍ³
+    //  é‡Šæ”¾å£°éŸ³ç³»ç»Ÿ
     void release();
 
-    //  ÉùÒôÏµÍ³ÊÇ·ñÓĞĞ§
+    //  å£°éŸ³ç³»ç»Ÿæ˜¯å¦æœ‰æ•ˆ
     bool is_valid();
 
-    //  »ñÈ¡ÒôÀÖ×ÊÔ´Ë÷Òı
+    //  è·å–éŸ³ä¹èµ„æºç´¢å¼•
     ulong get_resID(const char* resource, int type);
 
-    //  ²¥·Å
+    //  æ’­æ”¾
     bool play(ulong id, bool loop = false);
 
-    //  ½¥Èë
+    //  æ¸å…¥
     bool fadeIn(ulong id, int ms, bool loop = false);
 
-    //  ½¥ÍË
+    //  æ¸é€€
     bool fadeOut(ulong id, int ms);
 
-    //  Í£Ö¹²¥·Å
+    //  åœæ­¢æ’­æ”¾
     bool stop(ulong id);
 
-    //  ÔİÍ£
+    //  æš‚åœ
     bool pause(ulong id);
 
-    //  »Ö¸´
+    //  æ¢å¤
     bool resume(ulong id);
 
-    //  ÖØÖÃ(½öÒôÀÖÓĞĞ§.ÈçMP3,OGGµÈ)
+    //  é‡ç½®(ä»…éŸ³ä¹æœ‰æ•ˆ.å¦‚MP3,OGGç­‰)
     bool rewind(ulong id);
 
-    //  ÊÇ·ñÕıÔÚ²¥·Å
+    //  æ˜¯å¦æ­£åœ¨æ’­æ”¾
     bool is_playing(ulong id);
 
-    //  ÊÇ·ñÔİÍ£
+    //  æ˜¯å¦æš‚åœ
     bool is_paused(ulong id);
 
-    //  ÊÇ·ñÍ£Ö¹
+    //  æ˜¯å¦åœæ­¢
     bool is_stopped(ulong id);
 
-    //  µ÷ÕûÒôÁ¿
+    //  è°ƒæ•´éŸ³é‡
     bool volume(ulong id, int vol);
 
-    //  ¼ì²â×ÊÔ´ÓĞĞ§ĞÔ(Çå³ş³¬Ê±Î´ÒıÓÃ×ÊÔ´)(Ãë)
+    //  æ£€æµ‹èµ„æºæœ‰æ•ˆæ€§(æ¸…æ¥šè¶…æ—¶æœªå¼•ç”¨èµ„æº)(ç§’)
     void checkRes(ulong timeout = 300);
 
 protected:

@@ -1,4 +1,4 @@
-#ifndef MPEffectMath_H
+ï»¿#ifndef MPEffectMath_H
 #define MPEffectMath_H
 
 #include "MindPowerAPI.h"
@@ -6,12 +6,12 @@
 #include <string>
 #include <math.h>
 
-/// Ç°ÖÃÉùÃ÷
+/// å‰ç½®å£°æ˜
 class MPDegree;
 
-/** ¸ø³öµÄ½Ç¶ÈÒÔ»¡¶ÈÎªµ¥Î»µÄ°ü×°Àà.
+/** ç»™å‡ºçš„è§’åº¦ä»¥å¼§åº¦ä¸ºå•ä½çš„åŒ…è£…ç±».
 @remarks
-»¡¶ÈÖµºÍ½Ç¶ÈÖµ¿ÉÒÔÏà»¥×ª»»£¬¶øÇÒ×ª»»»á×Ô¶¯½øĞĞ
+å¼§åº¦å€¼å’Œè§’åº¦å€¼å¯ä»¥ç›¸äº’è½¬æ¢ï¼Œè€Œä¸”è½¬æ¢ä¼šè‡ªåŠ¨è¿›è¡Œ
 */
 class MPRadian
 {
@@ -51,9 +51,9 @@ public:
 	bool operator >  ( const MPRadian& r ) const { return m_fRad >  r.m_fRad; }
 };
 
-/** ¸ø³öµÄ½Ç¶ÈÒÔ½Ç¶ÈÎªµ¥Î»µÄ°ü×°Àà.
+/** ç»™å‡ºçš„è§’åº¦ä»¥è§’åº¦ä¸ºå•ä½çš„åŒ…è£…ç±».
 @remarks
-»¡¶ÈÖµºÍ½Ç¶ÈÖµ¿ÉÒÔÏà»¥×ª»»£¬¶øÇÒ×ª»»»á×Ô¶¯½øĞĞ
+å¼§åº¦å€¼å’Œè§’åº¦å€¼å¯ä»¥ç›¸äº’è½¬æ¢ï¼Œè€Œä¸”è½¬æ¢ä¼šè‡ªåŠ¨è¿›è¡Œ
 */
 class MPDegree
 {
@@ -93,7 +93,7 @@ public:
 	bool operator >  ( const MPDegree& d ) const { return m_fDeg >  d.m_fDeg; }
 };
 
-// ÕâĞ©º¯Êı²»ÄÜÔÚMPRadianÀàÄÚ¶¨Òå£¬ÒòÎªÕâĞ©º¯ÊıĞèÒªMPDegreeÀàµÄ¶¨Òå
+// è¿™äº›å‡½æ•°ä¸èƒ½åœ¨MPRadianç±»å†…å®šä¹‰ï¼Œå› ä¸ºè¿™äº›å‡½æ•°éœ€è¦MPDegreeç±»çš„å®šä¹‰
 inline MPRadian::MPRadian(const MPDegree& d) : m_fRad(d.valueRadians()) {
 }
 inline const MPRadian& MPRadian::operator =(const MPDegree& d) { 
@@ -113,19 +113,19 @@ inline MPRadian& MPRadian::operator -=(const MPDegree& d) {
 }
 
 
-/** Õâ¸öÀàÌá¹©¹«¹²ÊıÑ§º¯ÊıµÄ·ÃÎÊ.
+/** è¿™ä¸ªç±»æä¾›å…¬å…±æ•°å­¦å‡½æ•°çš„è®¿é—®.
 @remarks
-´ó¶àÊıÊıÑ§º¯Êı¶¼ÊÇCÔËĞĞÊ±¿âº¯ÊıµÄ±ğÃû¡£ÕâÀïÓÃ±ğÃûÊ¹½«À´»áÌá¹©¸ü
-ÓÅ»¯µÄº¯Êı³ÉÎª¿ÉÄÜ£¬»ò¸ù¾İ¸ü¿ìµÄÔËĞĞÊ±¿â»òÆäËû×Ô¶¨ÒåÊıÑ§¿â
+å¤§å¤šæ•°æ•°å­¦å‡½æ•°éƒ½æ˜¯Cè¿è¡Œæ—¶åº“å‡½æ•°çš„åˆ«åã€‚è¿™é‡Œç”¨åˆ«åä½¿å°†æ¥ä¼šæä¾›æ›´
+ä¼˜åŒ–çš„å‡½æ•°æˆä¸ºå¯èƒ½ï¼Œæˆ–æ ¹æ®æ›´å¿«çš„è¿è¡Œæ—¶åº“æˆ–å…¶ä»–è‡ªå®šä¹‰æ•°å­¦åº“
 @note
-<br>ÕâÀïÊÇ¸ù¾İMgcMath.hÕª×Ô
+<br>è¿™é‡Œæ˜¯æ ¹æ®MgcMath.hæ‘˜è‡ª
 <a href="http://www.magic-software.com">Wild Magic</a>.
 */
 class MINDPOWER_API MPEffectMath
 {
 public:
-	/** ½Ç¶Èµ¥Î». Õâ¸ö¹¦ÄÜÊ¹½Ç¶Èµ¥Î»ÄÜ¹»Í¬Ê±Ê¹ÓÃÉÏÃæµÄ½Ç¶ÈºÍ»¡¶ÈÖÆ.
-	µ±½âÎöÎÄ¼şÊ±£¬Õâ¸ö¹¦ÄÜ½«»á×Ô¶¯Ê¹ÓÃ¡£ÕâĞ©ÓÃ·¨¿É²é¿´AngleÀà
+	/** è§’åº¦å•ä½. è¿™ä¸ªåŠŸèƒ½ä½¿è§’åº¦å•ä½èƒ½å¤ŸåŒæ—¶ä½¿ç”¨ä¸Šé¢çš„è§’åº¦å’Œå¼§åº¦åˆ¶.
+	å½“è§£ææ–‡ä»¶æ—¶ï¼Œè¿™ä¸ªåŠŸèƒ½å°†ä¼šè‡ªåŠ¨ä½¿ç”¨ã€‚è¿™äº›ç”¨æ³•å¯æŸ¥çœ‹Angleç±»
 	*/
 	enum AngleUnit
 	{
@@ -134,31 +134,31 @@ public:
 	};
 
 protected:
-	// APIÄÚ²¿Ê¹ÓÃµÄ½Ç¶Èµ¥Î»
+	// APIå†…éƒ¨ä½¿ç”¨çš„è§’åº¦å•ä½
 	static AngleUnit m_sAngleUnit;
 
-	/// Èı½Çº¯Êı±íÓÉ¹¹Ôìº¯Êı¾ö¶¨.
+	/// ä¸‰è§’å‡½æ•°è¡¨ç”±æ„é€ å‡½æ•°å†³å®š.
 	static int m_TrigTableSize;
 
-	/// »¡¶ÈÖµ -> Èı½Çº¯Êı±íÖĞ×îĞ¡±íÊ¾»¡¶È ( m_TrigTableSize / 2 * PI )
+	/// å¼§åº¦å€¼ -> ä¸‰è§’å‡½æ•°è¡¨ä¸­æœ€å°è¡¨ç¤ºå¼§åº¦ ( m_TrigTableSize / 2 * PI )
 	static float m_TrigTableFactor;
 	static float* m_SinTable;
 	static float* m_TanTable;
 
-	/** ¹¹½¨Èı½Çº¯Êı±í £¨Ë½ÓĞ£©*/
+	/** æ„å»ºä¸‰è§’å‡½æ•°è¡¨ ï¼ˆç§æœ‰ï¼‰*/
 	void buildTrigTables();
 
 	static float SinTable (float fValue);
 	static float TanTable (float fValue);
 
 public:        
-	/** Ä¬ÈÏ¹¹Ôìº¯Êı.
+	/** é»˜è®¤æ„é€ å‡½æ•°.
 	@param
-		trigTableSize ÉèÖÃÄÚ²¿Ê¹ÓÃÈı½Çº¯Êı±íµÄ´óĞ¡£¨¿ÉÑ¡²ÎÊı£©
+		trigTableSize è®¾ç½®å†…éƒ¨ä½¿ç”¨ä¸‰è§’å‡½æ•°è¡¨çš„å¤§å°ï¼ˆå¯é€‰å‚æ•°ï¼‰
 	*/
 	MPEffectMath(unsigned int trigTableSize = 4096);
 
-	/** Ä¬ÈÏÎö¹¹º¯Êı.
+	/** é»˜è®¤ææ„å‡½æ•°.
 	*/
 	~MPEffectMath();
 
@@ -172,78 +172,78 @@ public:
 
 	static const std::string BLANK;
 
-/// ½Ç¶È»¡¶ÈÏà¹Ø
+/// è§’åº¦å¼§åº¦ç›¸å…³
 	static inline float DegreesToRadians(float degrees) { return degrees * fDeg2Rad; }
 	static inline float RadiansToDegrees(float radians) { return radians * fRad2Deg; }
-	/** Õâ¸öº¯ÊıÓÃÓÚÉèÖÃÕû¸öAPIÊ¹ÓÃµÄ½Ç¶Èµ¥Î»£¨»¡¶È»ò½Ç¶È£©	*/
+	/** è¿™ä¸ªå‡½æ•°ç”¨äºè®¾ç½®æ•´ä¸ªAPIä½¿ç”¨çš„è§’åº¦å•ä½ï¼ˆå¼§åº¦æˆ–è§’åº¦ï¼‰	*/
 	static void setAngleUnit(AngleUnit unit);
-	/** µÃµ½Õû¸öAPIÕıÔÚÊ¹ÓÃµÄ½Ç¶Èµ¥Î». */
+	/** å¾—åˆ°æ•´ä¸ªAPIæ­£åœ¨ä½¿ç”¨çš„è§’åº¦å•ä½. */
 	static AngleUnit getAngleUnit(void);
 
-	/** ½«µ±Ç°µÄ½Ç¶Èµ¥Î»×ª»»³Ë»¡¶È. */
+	/** å°†å½“å‰çš„è§’åº¦å•ä½è½¬æ¢ä¹˜å¼§åº¦. */
 	static float AngleUnitsToRadians(float units);
-	/** ½«»¡¶È×ª»»³Éµ±Ç°µÄ½Ç¶Èµ¥Î». */
+	/** å°†å¼§åº¦è½¬æ¢æˆå½“å‰çš„è§’åº¦å•ä½. */
 	static float RadiansToAngleUnits(float radians);
-	/** ½«µ±Ç°µÄ½Ç¶Èµ¥Î»×ª»»³Ë½Ç¶È. */
+	/** å°†å½“å‰çš„è§’åº¦å•ä½è½¬æ¢ä¹˜è§’åº¦. */
 	static float AngleUnitsToDegrees(float units);
-	/** ½«½Ç¶È×ª»»³Éµ±Ç°µÄ½Ç¶Èµ¥Î». */
+	/** å°†è§’åº¦è½¬æ¢æˆå½“å‰çš„è§’åº¦å•ä½. */
 	static float DegreesToAngleUnits(float degrees);
 
-/// Ëæ»úÊıÏà¹Ø
+/// éšæœºæ•°ç›¸å…³
 	static float UnitRandom ();  // [0,1]
 	static float RangeRandom (float fLow, float fHigh);  // in [fLow,fHigh]
 
-/// Èı½Çº¯ÊıÏà¹Ø
-	/** Sine º¯Êı.
+/// ä¸‰è§’å‡½æ•°ç›¸å…³
+	/** Sine å‡½æ•°.
 	@param
-		fValue ½ÇµÄ»¡¶ÈÖµ
+		fValue è§’çš„å¼§åº¦å€¼
 	@param
-		useTables Èç¹ûÎªÕæ, Ê¹ÓÃ²é±í¶ø²»ÊÇÍ¨¹ı¼ÆËã£¬ÕâÑù»á¸ü¿ìµ«¾«¶È½µµÍ.
+		useTables å¦‚æœä¸ºçœŸ, ä½¿ç”¨æŸ¥è¡¨è€Œä¸æ˜¯é€šè¿‡è®¡ç®—ï¼Œè¿™æ ·ä¼šæ›´å¿«ä½†ç²¾åº¦é™ä½.
 	*/
 	static inline float Sin (const MPRadian& fValue, bool useTables = false) {
 		return (!useTables) ? float(sin(fValue.valueRadians())) : SinTable(fValue.valueRadians());
 	}
-	/** Sine º¯Êı.
+	/** Sine å‡½æ•°.
 	@param
-		fValue ½ÇµÄ»¡¶ÈÖµ
+		fValue è§’çš„å¼§åº¦å€¼
 	@param
-		useTables Èç¹ûÎªÕæ, Ê¹ÓÃ²é±í¶ø²»ÊÇÍ¨¹ı¼ÆËã£¬ÕâÑù»á¸ü¿ìµ«¾«¶È½µµÍ.
+		useTables å¦‚æœä¸ºçœŸ, ä½¿ç”¨æŸ¥è¡¨è€Œä¸æ˜¯é€šè¿‡è®¡ç®—ï¼Œè¿™æ ·ä¼šæ›´å¿«ä½†ç²¾åº¦é™ä½.
 	*/
 	static inline float Sin (float fValue, bool useTables = false) {
 		return (!useTables) ? float(sin(fValue)) : SinTable(fValue);
 	}
-	/** Cosine º¯Êı.
+	/** Cosine å‡½æ•°.
 	@param
-		fValue ½ÇµÄ»¡¶ÈÖµ
+		fValue è§’çš„å¼§åº¦å€¼
 	@param
-		useTables Èç¹ûÎªÕæ, Ê¹ÓÃ²é±í¶ø²»ÊÇÍ¨¹ı¼ÆËã£¬ÕâÑù»á¸ü¿ìµ«¾«¶È½µµÍ.
+		useTables å¦‚æœä¸ºçœŸ, ä½¿ç”¨æŸ¥è¡¨è€Œä¸æ˜¯é€šè¿‡è®¡ç®—ï¼Œè¿™æ ·ä¼šæ›´å¿«ä½†ç²¾åº¦é™ä½.
 	*/
 	static inline float Cos (const MPRadian& fValue, bool useTables = false) {
 		return (!useTables) ? float(cos(fValue.valueRadians())) : SinTable(fValue.valueRadians() + HALF_PI);
 	}
 	/** Cosine function.
 	@param
-		fValue ½ÇµÄ»¡¶ÈÖµ
+		fValue è§’çš„å¼§åº¦å€¼
 	@param
-		useTables Èç¹ûÎªÕæ, Ê¹ÓÃ²é±í¶ø²»ÊÇÍ¨¹ı¼ÆËã£¬ÕâÑù»á¸ü¿ìµ«¾«¶È½µµÍ.
+		useTables å¦‚æœä¸ºçœŸ, ä½¿ç”¨æŸ¥è¡¨è€Œä¸æ˜¯é€šè¿‡è®¡ç®—ï¼Œè¿™æ ·ä¼šæ›´å¿«ä½†ç²¾åº¦é™ä½.
 	*/
 	static inline float Cos (float fValue, bool useTables = false) {
 		return (!useTables) ? float(cos(fValue)) : SinTable(fValue + HALF_PI);
 	}
-	/** Tangent º¯Êı.
+	/** Tangent å‡½æ•°.
 	@param
-		fValue ½ÇµÄ»¡¶ÈÖµ
+		fValue è§’çš„å¼§åº¦å€¼
 	@param
-		useTables Èç¹ûÎªÕæ, Ê¹ÓÃ²é±í¶ø²»ÊÇÍ¨¹ı¼ÆËã£¬ÕâÑù»á¸ü¿ìµ«¾«¶È½µµÍ.
+		useTables å¦‚æœä¸ºçœŸ, ä½¿ç”¨æŸ¥è¡¨è€Œä¸æ˜¯é€šè¿‡è®¡ç®—ï¼Œè¿™æ ·ä¼šæ›´å¿«ä½†ç²¾åº¦é™ä½.
 	*/
 	static inline float Tan (const MPRadian& fValue, bool useTables = false) {
 		return (!useTables) ? float(tan(fValue.valueRadians())) : TanTable(fValue.valueRadians());
 	}
 	/** Tangent function.
 	@param
-		fValue ½ÇµÄ»¡¶ÈÖµ
+		fValue è§’çš„å¼§åº¦å€¼
 	@param
-		useTables Èç¹ûÎªÕæ, Ê¹ÓÃ²é±í¶ø²»ÊÇÍ¨¹ı¼ÆËã£¬ÕâÑù»á¸ü¿ìµ«¾«¶È½µµÍ.
+		useTables å¦‚æœä¸ºçœŸ, ä½¿ç”¨æŸ¥è¡¨è€Œä¸æ˜¯é€šè¿‡è®¡ç®—ï¼Œè¿™æ ·ä¼šæ›´å¿«ä½†ç²¾åº¦é™ä½.
 	*/
 	static inline float Tan (float fValue, bool useTables = false) {
 		return (!useTables) ? float(tan(fValue)) : TanTable(fValue);

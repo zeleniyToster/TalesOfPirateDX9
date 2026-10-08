@@ -1,4 +1,4 @@
-
+﻿
 #include "stdafx.h"
 #include "GameWG.h"
 #include "PacketCmd.h"
@@ -22,7 +22,7 @@ CGameWG::~CGameWG(void)
 }
 
 
-// ˢ�µ�ǰ�������ģ��
+// 刷新当前进程里的模块
 bool CGameWG::RefreshModule(void)
 {
     bool          bRet        = false;
@@ -40,7 +40,7 @@ bool CGameWG::RefreshModule(void)
 
 		if(Module32First(hModuleSnap.get(), &me32)) 
 		{
-			// ������ǰ�����������ģ��
+			// 遍历当前进程里的所有模块
 			do
 			{
 				strModule = me32.szModule;
@@ -52,7 +52,7 @@ bool CGameWG::RefreshModule(void)
 		}
 		else
 		{
-			// ö��ʧ��
+			// 枚举失败
 			bRet = false;
 		}
 	}
@@ -65,7 +65,7 @@ bool CGameWG::RefreshModule(void)
 }
 
 
-// �Ƿ�ʹ���ˡ�������ʹ�����
+// 是否使用了“海盗天使”外挂
 bool CGameWG::IsUseHdts(void)
 {
 	if (m_lstModule.contains("hookit.dll"))
@@ -77,14 +77,14 @@ bool CGameWG::IsUseHdts(void)
 }
 
 
-// �����߳�
+// 启动线程
 void CGameWG::BeginThread(void)
 {
     m_hThread = (HANDLE)_beginthreadex(0, 0, Run, this, 0, 0);
 }
 
 
-// ��ȫ��ֹ�߳�
+// 安全终止线程
 void CGameWG::SafeTerminateThread()
 {
 	if(m_hThread)
@@ -97,30 +97,30 @@ void CGameWG::SafeTerminateThread()
 }
 
 
-// �̻߳ص�
+// 线程回调
 UINT CALLBACK CGameWG::Run(void* param)
 {
 	CGameWG* pGameWG = (CGameWG*)(param);
 
 	for(;;)
 	{
-		Sleep(60 * 1000);	// һ����ˢһ��
+		Sleep(60 * 1000);	// 一分钟刷一次
 
 		if(! g_NetIF || ! g_NetIF->IsConnected())
 		{
-			// ����δ����
+			// 网络未连接
 			continue;
 		}
 
 		if(! pGameWG->RefreshModule())
 		{
-			// ˢ��ģ���б�
+			// 刷新模块列表
 			continue;
 		}
 
 		if(pGameWG->IsUseHdts())
 		{
-			// ʹ������ҡ�������ʹ��
+			// 使用了外挂“海盗天使”
 
 			CS_ReportWG(g_oLangRec.GetString(143));
 			break;

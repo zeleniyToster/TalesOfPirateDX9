@@ -1,4 +1,4 @@
-//
+ï»¿//
 
 #include "stdafx.h"
 #include "lwExpObj.h"
@@ -195,7 +195,7 @@ LW_RESULT lwMtlTexInfo_Load(lwMtlTexInfo* info, FILE* fp, DWORD version)
                 t->tss_set[j].value1 = rsv->value;
             }
         }
-        //¼æÈİ¾É°æ±¾µÄÎÄ¼şµ¼³ö
+        //å…¼å®¹æ—§ç‰ˆæœ¬çš„æ–‡ä»¶å¯¼å‡º
         if(info->tex_seq[0].format == D3DFMT_A4R4G4B4)
         {
             info->tex_seq[0].format = D3DFMT_A1R5G5B5;
@@ -207,14 +207,14 @@ LW_RESULT lwMtlTexInfo_Load(lwMtlTexInfo* info, FILE* fp, DWORD version)
         return LW_RET_FAILED;
     }
 
-    // ÕâÀïÖ¸¶¨mipmap level = 3
+    // è¿™é‡ŒæŒ‡å®šmipmap level = 3
     //if(info->tex_seq[0].colorkey_type == COLORKEY_TYPE_NONE)
     {
         info->tex_seq[0].pool = D3DPOOL_MANAGED;
         info->tex_seq[0].level = D3DX_DEFAULT;
     }
 
-    // ¼æÈİ°æ±¾ÉèÖÃ
+    // å…¼å®¹ç‰ˆæœ¬è®¾ç½®
     BOOL transp_flag = 0;
     lwRenderStateAtom* rsa;
     DWORD i = 0;
@@ -412,8 +412,8 @@ LW_RESULT lwAnimDataTexUV::GetValue(lwMatrix44* mat, float frame)
 
     //if(_data_seq[frame].w_angle != 0.0f) {
 
-    //    // DirectX¶ÔÓÚUV¾ØÕóµÄµÄ¼ÆËãĞèÒªUVÈ¡¸ºÖµ²ÅÄÜµÃµ½ĞèÒªµÄĞ§¹û
-    //    // ¿ÉÄÜÊÇÄ³¸ö¿ª¹ØÃ»ÓĞÉèÖÃÕıÈ·
+    //    // DirectXå¯¹äºUVçŸ©é˜µçš„çš„è®¡ç®—éœ€è¦UVå–è´Ÿå€¼æ‰èƒ½å¾—åˆ°éœ€è¦çš„æ•ˆæœ
+    //    // å¯èƒ½æ˜¯æŸä¸ªå¼€å…³æ²¡æœ‰è®¾ç½®æ­£ç¡®
     //    lwMatrix44 tmp;
     //    lwMatrix44Identity(&tmp);
 
@@ -923,8 +923,8 @@ LW_RESULT lwAnimDataBone::GetValue(lwMatrix44* mat, DWORD bone_id, float frame, 
         goto __ret;
 
     // by lsh
-    // ÕâÀïframe > _frame_num Ã»ÓĞÓÃ">="ÊÇÒòÎªÎÒÃÇÔÚ¿¼ÂÇPLAY_LOOPµÄÇé¿öÊ±
-    // ĞèÒª²åÖµµÚ0Ö¡ºÍµÚ_data._frame_num - 1Ö¡µÄÊı¾İ
+    // è¿™é‡Œframe > _frame_num æ²¡æœ‰ç”¨">="æ˜¯å› ä¸ºæˆ‘ä»¬åœ¨è€ƒè™‘PLAY_LOOPçš„æƒ…å†µæ—¶
+    // éœ€è¦æ’å€¼ç¬¬0å¸§å’Œç¬¬_data._frame_num - 1å¸§çš„æ•°æ®
     if(frame < 0 || frame > _frame_num)
         goto __ret;
 
@@ -973,9 +973,9 @@ LW_RESULT lwAnimDataBone::GetValue(lwMatrix44* mat, DWORD bone_id, float frame, 
 
             if (max_f == _frame_num)
             {
-                // ÕâÀïÎÒÃÇ²åÖµµÚ0Ö¡ºÍµÚ_data._frame_num - 1Ö¡µÄÊı¾İ
+                // è¿™é‡Œæˆ‘ä»¬æ’å€¼ç¬¬0å¸§å’Œç¬¬_data._frame_num - 1å¸§çš„æ•°æ®
                 max_f = 0;
-                //max_f = _frame_num - 1; ²»×÷±ß½ç½Ø¶Ï
+                //max_f = _frame_num - 1; ä¸ä½œè¾¹ç•Œæˆªæ–­
             }
 
 #if 0

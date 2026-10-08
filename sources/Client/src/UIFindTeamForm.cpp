@@ -1,4 +1,4 @@
-
+ï»¿
 #include "stdafx.h"
 #include "UIFindTeamForm.h"
 #include "UIBoxForm.h"
@@ -9,7 +9,7 @@
 #include "UIBoatForm.h"
 #include "UIGlobalVar.h"
 #include "Character.h"
-#include <jobtype.h>	// common ¿â
+#include <jobtype.h>	// common åº“
 extern const char* g_szJobName[MAX_JOB_TYPE];
 
 using namespace std;
@@ -30,7 +30,7 @@ namespace GUI
 	bool CFindTeamMgr::Init()
 	{
 		//
-		// Ñ°ÕÒ×é¶Ó
+		// å¯»æ‰¾ç»„é˜Ÿ
 		//
 		frmFindTeam = CFormMgr::s_Mgr.Find("frmFindTeam");
 		if(! frmFindTeam)
@@ -209,7 +209,7 @@ namespace GUI
 	}
 
 
-	// Ñ°ÕÒ×é¶Ó½çÃæ°´Å¥ÏûÏ¢´¦Àí
+	// å¯»æ‰¾ç»„é˜Ÿç•Œé¢æŒ‰é’®æ¶ˆæ¯å¤„ç†
 	void CFindTeamMgr::_evtFindTeamMouseButton(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey)
 	{
 		string strName = pSender->GetName();
@@ -230,12 +230,12 @@ namespace GUI
 		}
 		else if(strName == "btnAddme")
 		{
-			// Ìí¼Óµ½Ñ°Çó×é¶ÓÁÐ±íÖÐ
+			// æ·»åŠ åˆ°å¯»æ±‚ç»„é˜Ÿåˆ—è¡¨ä¸­
 			CS_VolunteerAdd();
 		}
 		else if(strName == "btnDelme")
 		{
-			// ´ÓÑ°Çó×é¶ÓÁÐ±íÖÐÏû³ý
+			// ä»Žå¯»æ±‚ç»„é˜Ÿåˆ—è¡¨ä¸­æ¶ˆé™¤
 			CS_VolunteerDel();
 		}
 		else if(strName.substr(0, 10) == "btnSubmit_")
@@ -257,7 +257,7 @@ namespace GUI
 			int nSeq = strName[strName.size() - 1] - '0';
 			if(0 <= nSeq && nSeq < FINDTEAM_PAGE_SIZE)
 			{
-				// ·¢³ö×é¶ÓÇëÇó
+				// å‘å‡ºç»„é˜Ÿè¯·æ±‚
 				if(g_stUIFindTeam.labName[nSeq]->GetIsShow())
 				{
 					CS_VolunteerSel(g_stUIFindTeam.labName[nSeq]->GetCaption());
@@ -267,7 +267,7 @@ namespace GUI
 	}
 
 
-	// ×é¶ÓÉêÇë»Øµ÷
+	// ç»„é˜Ÿç”³è¯·å›žè°ƒ
 	void CFindTeamMgr::_evtFindTeamCheckEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey)
 	{
 		CS_VolunteerAsr(nMsgType == CForm::mrYes, g_stUIFindTeam.m_strTeamLeader.c_str());

@@ -1,4 +1,4 @@
-//  [10/14/2005]	´ÓAccountServer2ÎÄ¼şÀï½øĞĞÄ£¿é²ğ·Ö,·ÖÀë³ö´ËÄ£¿é - by Arcol
+ï»¿//  [10/14/2005] module split out of AccountServer2.cpp - by Arcol
 #pragma once
 
 #ifndef _MYTHREAD_H_
@@ -6,7 +6,7 @@
 
 #include "Comm.h"
 
-// Ïß³Ì»ùÀà
+// thread base class
 class MyThread
 {
 public:

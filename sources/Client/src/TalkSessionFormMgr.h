@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 //#define MAX_SESSION_FORM 4
 
@@ -6,11 +6,11 @@
 
 enum  eTalkSessionStyle
 {
-	enumTalkSessionHidden,			// Òş²ØÑùÊ½
-	enumTalkSessionInform,			// Í¨ÖªÑùÊ½
-	enumTalkSessionNormal,			// Õı³£Ä£Ê½
-	enumTalkSessionSmall,			// Ğ¡´°¿ÚÄ£Ê½
-	enumTalkSessionMinimize,		// ×îĞ¡Ä£Ê½
+	enumTalkSessionHidden,			// éšè—æ ·å¼
+	enumTalkSessionInform,			// é€šçŸ¥æ ·å¼
+	enumTalkSessionNormal,			// æ­£å¸¸æ¨¡å¼
+	enumTalkSessionSmall,			// å°çª—å£æ¨¡å¼
+	enumTalkSessionMinimize,		// æœ€å°æ¨¡å¼
 };
 
 struct stNetSessCreate;
@@ -32,8 +32,8 @@ public:
 	void*       GetSessionFormPointer()            { return _pPointer;     }
 
 private:
-	std::string          _strName;       // Ãû×Ö
-	std::string          _strMotto;      // Ãû×Ö
+	std::string          _strName;       // åå­—
+	std::string          _strMotto;      // åå­—
 	DWORD			_nID;			// ID
 	DWORD			_nIcon_id;
 	void*           _pPointer;

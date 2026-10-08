@@ -1,4 +1,4 @@
-//
+ï»¿//
 #include "stdafx.h"
 #include "lwDeviceObject.h"
 #include "lwSystem.h"
@@ -960,7 +960,7 @@ LW_RESULT lwDeviceObject::SetStreamSource(UINT stream_num, IDirect3DVertexBuffer
     if(stream_num >= LW_MAX_STREAM_NUM)
         goto __ret;
 
-    //ÕâÀï²»ÄÜÖ»ÅĞ¶Ïstream_data£¬»¹ĞèÒªÅĞ¶Ïoffset_byte,stride
+    //è¿™é‡Œä¸èƒ½åªåˆ¤æ–­stream_dataï¼Œè¿˜éœ€è¦åˆ¤æ–­offset_byte,stride
     //if(_vb_value[stream_num] == stream_data)
     //    goto __addr_ok;
     
@@ -979,7 +979,7 @@ LW_RESULT lwDeviceObject::SetIndices(IDirect3DIndexBufferX* index_data, UINT bas
 {
     LW_RESULT ret = LW_RET_FAILED;
 
-    //ÕâÀï²»ÄÜÖ»ÅĞ¶Ïindex_data£¬»¹ĞèÒªÅĞ¶Ïbase_vert_index
+    //è¿™é‡Œä¸èƒ½åªåˆ¤æ–­index_dataï¼Œè¿˜éœ€è¦åˆ¤æ–­base_vert_index
     //if(_ib_value == index_data)
     //    goto __addr_ok;
     

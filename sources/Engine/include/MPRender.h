@@ -1,6 +1,6 @@
-// D3D Render ·â×°D3DµÄÏà¹Ø²Ù×÷
-// ¼¸¸öÖ÷Òª¹¦ÄÜÎª :  View Type¹ÜÀí
-//                   WorldViewRegion¹ÜÀí
+ï»¿// D3D Render å°è£…D3Dçš„ç›¸å…³æ“ä½œ
+// å‡ ä¸ªä¸»è¦åŠŸèƒ½ä¸º :  View Typeç®¡ç†
+//                   WorldViewRegionç®¡ç†
 // 					 BeginRender, EndRender()
 //                   Ray Tracing
 //                   Draw Basic Geometry 
@@ -30,12 +30,12 @@
 
 enum INFO_TYPE
 {
-// ÊäÈëĞÅÏ¢ÀàĞÍ¶¨Òå
-	 INFO_DEBUG  = 0,  // µ÷ÊÔ×¨ÓÃ
-	 INFO_PERF      ,  // ÏÔÊ¾Performance×¨ÓÃ
-	 INFO_CMD       ,  // ÏÔÊ¾ConsoleÎÄ×Ö×¨ÓÃ
-	 INFO_FPS       ,  // FPS×¨ÓÃ
-	 INFO_GAME         // ÓÎÏ·×¨ÓÃ
+// è¾“å…¥ä¿¡æ¯ç±»å‹å®šä¹‰
+	 INFO_DEBUG  = 0,  // è°ƒè¯•ä¸“ç”¨
+	 INFO_PERF      ,  // æ˜¾ç¤ºPerformanceä¸“ç”¨
+	 INFO_CMD       ,  // æ˜¾ç¤ºConsoleæ–‡å­—ä¸“ç”¨
+	 INFO_FPS       ,  // FPSä¸“ç”¨
+	 INFO_GAME         // æ¸¸æˆä¸“ç”¨
 };
 
 
@@ -48,8 +48,8 @@ struct MPLine
 
 struct MPCullInfo              
 {
-    D3DXVECTOR3 vecFrustum[8];    // Æ½½ØÍ·µÄ8¸ö¶¥µã
-    D3DXPLANE planeFrustum[6];    // Æ½½ØÍ·µÄ6¸öÃæ
+    D3DXVECTOR3 vecFrustum[8];    // å¹³æˆªå¤´çš„8ä¸ªé¡¶ç‚¹
+    D3DXPLANE planeFrustum[6];    // å¹³æˆªå¤´çš„6ä¸ªé¢
 };  //added by billy 
 
 //class  CMPFont;
@@ -227,10 +227,10 @@ public:
     
     enum VIEW_TYPE
 	{
-		VIEW_SCREEN = 0, // ÒÔÕû¸öÆÁÄ»×öÎªView
-		VIEW_WORLD     , // ÒÔWorldViewµÄÇøÓò×÷ÎªView
-		VIEW_UI ,         // ½çÃæÍ¨³£ĞèÒªµÄÆ½ÃæäÖÈ¾View
-        VIEW_3DUI ,      // 3D½çÃæ
+		VIEW_SCREEN = 0, // ä»¥æ•´ä¸ªå±å¹•åšä¸ºView
+		VIEW_WORLD     , // ä»¥WorldViewçš„åŒºåŸŸä½œä¸ºView
+		VIEW_UI ,         // ç•Œé¢é€šå¸¸éœ€è¦çš„å¹³é¢æ¸²æŸ“View
+        VIEW_3DUI ,      // 3Dç•Œé¢
 	};
 
 	void	AddLine(const VECTOR3& v1, const VECTOR3& v2, DWORD dwColor = 0xFFFFFFFF);
@@ -265,36 +265,36 @@ protected:
     // Direct 3D
     IDirect3DX*             _pD3D;
     HWND                    _hWnd;
-	//CD3DFont*				_pFont; // ÄÚ²¿±£ÁôÒ»¸öFont¶ÔÏó×öÒ»Ğ©Êä³ö²Ù×÷D3DXMATRIXA16			_matWorld;
+	//CD3DFont*				_pFont; // å†…éƒ¨ä¿ç•™ä¸€ä¸ªFontå¯¹è±¡åšä¸€äº›è¾“å‡ºæ“ä½œD3DXMATRIXA16			_matWorld;
 	//{lemon modify@2004.9.3
 	CMPFont*				_pFont;
 	//@}
 	IDirect3DDeviceX*		_pD3DDevice;
     D3DVIEWPORTX            _view;
-    int                     _nScrWidth;         // ÆÁÄ»¿í¶È
-    int                     _nScrHeight;        // ÆÁÄ»¸ß¶È
+    int                     _nScrWidth;         // å±å¹•å®½åº¦
+    int                     _nScrHeight;        // å±å¹•é«˜åº¦
     int                     _nColorBit;
     BOOL                    _bFullScreen;
     D3DXMATRIXA16		    _matProjWorld;
-	D3DXMATRIXA16			_matViewWorld;		// µ±Ç°ÊÀ½çView	Matrix
-	D3DXMATRIXA16			_matUIView;			// µ±Ç°½çÃæÓÃView Matrix
-	D3DXMATRIXA16			_matUIProj;			// µ±Ç°½çÃæÓÃProj Matrix
-	D3DXMATRIXA16			_matViewProj;		// = Proj * View, ÎªÁËÌá¸ßGetRayµÄËÙ¶È¶øÁÙÊ±´æ·Å		
+	D3DXMATRIXA16			_matViewWorld;		// å½“å‰ä¸–ç•ŒView	Matrix
+	D3DXMATRIXA16			_matUIView;			// å½“å‰ç•Œé¢ç”¨View Matrix
+	D3DXMATRIXA16			_matUIProj;			// å½“å‰ç•Œé¢ç”¨Proj Matrix
+	D3DXMATRIXA16			_matViewProj;		// = Proj * View, ä¸ºäº†æé«˜GetRayçš„é€Ÿåº¦è€Œä¸´æ—¶å­˜æ”¾		
     D3DXMATRIXA16           _mat3DUIView;
     D3DXMATRIXA16           _mat3DUIProj;
 	
-	int                     _nWorldViewStartX;  // ÆÁÄ»ÉÏÏÔÊ¾ÓÎÏ·ÊÀ½çµÄÆğµãÎ»ÖÃ
+	int                     _nWorldViewStartX;  // å±å¹•ä¸Šæ˜¾ç¤ºæ¸¸æˆä¸–ç•Œçš„èµ·ç‚¹ä½ç½®
     int                     _nWorldViewStartY;  
-    int                     _nWorldViewWidth;   // ÆÁÄ»ÉÏÏÔÊ¾ÓÎÏ·ÊÀ½çµÄ³ß´ç
+    int                     _nWorldViewWidth;   // å±å¹•ä¸Šæ˜¾ç¤ºæ¸¸æˆä¸–ç•Œçš„å°ºå¯¸
     int                     _nWorldViewHeight;
-    DWORD                   _dwBackgroundColor; // ÆÁÄ»±³¾°Çå³ıÑÕÉ«
+    DWORD                   _dwBackgroundColor; // å±å¹•èƒŒæ™¯æ¸…é™¤é¢œè‰²
     DWORD                   _dwClearFlag;
     BOOL                    _bClearTarget;
     BOOL                    _bClearStencil;
     BOOL                    _bClearZBuffer;
 	float                   _fWorldViewFOV;
 	 float					_fAspect;
-	int						_nCurViewType;      // ±ÜÃâSetCurrentViewÖĞÖØ¸´ÉèÖÃ
+	int						_nCurViewType;      // é¿å…SetCurrentViewä¸­é‡å¤è®¾ç½®
 	float					_fNearClip;
 	float					_fFarClip;
 	

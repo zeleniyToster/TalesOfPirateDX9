@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "streadydie.h"
 #include "Actor.h"
 #include "Character.h"
@@ -31,7 +31,7 @@ bool CReadyDieState::_Start()
     GetActor()->SetState( _state );
 	_pCha->GetScene()->GetSign()->ChaDisappear( _pCha );	
 
-    // ÓÐ¹¥»÷·½Ê±,¼ÆËã´Ó¹¥»÷·½·´·½Ïò·É³ö
+    // æœ‰æ”»å‡»æ–¹æ—¶,è®¡ç®—ä»Žæ”»å‡»æ–¹åæ–¹å‘é£žå‡º
 	if( _pCha->IsMainCha() )
 	{
 		g_stUIStart.MainChaDied();

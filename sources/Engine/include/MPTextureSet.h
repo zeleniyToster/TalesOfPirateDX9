@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "TableData.h"
 #include "MPRender.h"
@@ -117,7 +117,7 @@ public:
 
 protected:
 
-	static MPTexSet* _Instance; // Ïàµ±ÓÚµ¥¼ü, °Ñ×Ô¼º¼Ç×¡
+	static MPTexSet* _Instance; // ç›¸å½“äºå•é”®, æŠŠè‡ªå·±è®°ä½
     
     virtual CRawDataInfo* _CreateRawDataArray(int nIDCnt)
 	{
@@ -160,7 +160,7 @@ protected:
 
 	virtual BOOL _IsFull()
 	{
-		// Èç¹ûÏÔ´æÕ¼ÓÃ³¬¹ı8M,Ôò¿ªÊ¼½øĞĞ½çÃæÌùÍ¼ºÍµØ±íÌùÍ¼µÄ¶¯Ì¬ÊÍ·Å
+		// å¦‚æœæ˜¾å­˜å ç”¨è¶…è¿‡8M,åˆ™å¼€å§‹è¿›è¡Œç•Œé¢è´´å›¾å’Œåœ°è¡¨è´´å›¾çš„åŠ¨æ€é‡Šæ”¾
 		DWORD dwMem = g_Render.GetRegisteredDevMemSize();
 		if(rand()%100 < 2)
 		{
@@ -225,7 +225,7 @@ protected:
 
 
 
-			// Õë¶ÔddsÎÄ¼ş¸ñÊ½²»ĞèÒªÉèÖÃ£¬Ö»ÅĞ¶Ïtga¸ñÊ½
+			// é’ˆå¯¹ddsæ–‡ä»¶æ ¼å¼ä¸éœ€è¦è®¾ç½®ï¼Œåªåˆ¤æ–­tgaæ ¼å¼
 			/*
 			BYTE* pbtBuf = LoadRawFileData(pTexInfo);
 			if(pbtBuf)
@@ -483,7 +483,7 @@ protected:
 };
 
 //--------------
-// ¿ì½İÈ«¾Öº¯Êı:
+// å¿«æ·å…¨å±€å‡½æ•°:
 //--------------
 
 inline lwITex* GetTexByID(int nID, BOOL bRequest = FALSE)
@@ -492,7 +492,7 @@ inline lwITex* GetTexByID(int nID, BOOL bRequest = FALSE)
     return tex;
 }
 
-inline IDirect3DTextureX* GetTextureByID(int nID, BOOL bRequest = FALSE) // Í¨¹ıIDÈ¡µÃTexture±íÃæ
+inline IDirect3DTextureX* GetTextureByID(int nID, BOOL bRequest = FALSE) // é€šè¿‡IDå–å¾—Textureè¡¨é¢
 {
 #ifdef USE_MANAGED_TEXTURE
     lwITex* tex = (lwITex*)MPTexSet::I()->GetRawData(nID, bRequest);
@@ -519,7 +519,7 @@ inline SIZE GetTextureSizeByID(int nID)
     return sz;
 }
 
-inline int GetTextureID(const char *pszDataName)  // Í¨¹ıÃû×ÖÈ¡µÃTexture ID, Èç¹ûÊÇ¶¯Ì¬ID·½Ê½ÓÖÃ»ÓĞ²éÕÒµ½ID, ¾Í»á×Ô¶¯·ÖÅäÒ»¸ö, ·µ»Ø-1±íÊ¾Ê§°Ü
+inline int GetTextureID(const char *pszDataName)  // é€šè¿‡åå­—å–å¾—Texture ID, å¦‚æœæ˜¯åŠ¨æ€IDæ–¹å¼åˆæ²¡æœ‰æŸ¥æ‰¾åˆ°ID, å°±ä¼šè‡ªåŠ¨åˆ†é…ä¸€ä¸ª, è¿”å›-1è¡¨ç¤ºå¤±è´¥
 {
     if(MPTexSet::I()!=NULL)
 	{
@@ -529,7 +529,7 @@ inline int GetTextureID(const char *pszDataName)  // Í¨¹ıÃû×ÖÈ¡µÃTexture ID, Èç¹
 	return 0;
 }
 
-inline MPTexInfo* GetTextureInfo(int nID) // Í¨¹ıIDÈ¡µÃTextureÃèÊöĞÅÏ¢
+inline MPTexInfo* GetTextureInfo(int nID) // é€šè¿‡IDå–å¾—Textureæè¿°ä¿¡æ¯
 {
 	if(MPTexSet::I()!=NULL)
 	{
@@ -547,7 +547,7 @@ inline BOOL IsAlphaTexture(int nID)
 
 inline BOOL IsTextureExist(const char *pszDataName)
 {
-    if(MPTexSet::I()->IsEnablePack()==FALSE) // ·Ç´ò°ü·½Ê½ÏÂ
+    if(MPTexSet::I()->IsEnablePack()==FALSE) // éæ‰“åŒ…æ–¹å¼ä¸‹
     {
         if(Util_IsFileExist((char*)pszDataName))
         {

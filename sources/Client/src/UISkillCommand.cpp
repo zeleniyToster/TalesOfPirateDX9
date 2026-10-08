@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "uiskillcommand.h"
 #include "Scene.h"
 #include "GameApp.h"
@@ -68,16 +68,16 @@ CSkillCommand& CSkillCommand::operator=( const CSkillCommand& rhs )
 CSkillCommand::~CSkillCommand()
 {
     //delete _pImage;
-	SAFE_DELETE(_pImage); // UIµ±»ú´¦Àí
+	SAFE_DELETE(_pImage); // UIå½“æœºå¤„ç†
 }
 
 void CSkillCommand::Render( int x, int y )
 {
 	if( _pSkill->GetSkillGrid().chState )
 		_pImage->Render( x, y );
-	//else if(338 <= _pSkill->sID && _pSkill->sID <= 341)	// Éú»î¼¼ÄÜÌØÊâ´¦Àí
+	//else if(338 <= _pSkill->sID && _pSkill->sID <= 341)	// ç”Ÿæ´»æŠ€èƒ½ç‰¹æ®Šå¤„ç†
 	//	_pImage->Render( x, y );
-	//else if(_pSkill->sID == 459)	// ×ªÉú¼¼ÄÜ
+	//else if(_pSkill->sID == 459)	// è½¬ç”ŸæŠ€èƒ½
 	//	_pImage->Render( x, y );
 	else if( GetIsSpecial(enumHighLight) )
 		_pImage->Render( x, y );
@@ -105,7 +105,7 @@ bool CSkillCommand::UseCommand(bool value)
 	CCharacter* pCha = CGameScene::GetMainCha();
 	if( !pCha ) return false;
 
-	// ±»¶¯¼¼ÄÜ£¬²»Ö´ĞĞ
+	// è¢«åŠ¨æŠ€èƒ½ï¼Œä¸æ‰§è¡Œ
 	if( !_pSkill->GetIsUse() )
 		return false;
 
@@ -163,7 +163,7 @@ bool CSkillCommand::IsAllowUse()
 	CCharacter* pCha = g_stUIBoat.GetHuman();
 	if( !pCha ) return false;
 
-	if(g_stUIBank.GetBankGoodsGrid()->GetForm()->GetIsShow())	// Î÷ÃÅÎÄµµĞŞ¸Ä£¬´ò¿ªÒøĞĞÊ±²»ÔÊĞí·Å¼¼ÄÜ
+	if(g_stUIBank.GetBankGoodsGrid()->GetForm()->GetIsShow())	// è¥¿é—¨æ–‡æ¡£ä¿®æ”¹ï¼Œæ‰“å¼€é“¶è¡Œæ—¶ä¸å…è®¸æ”¾æŠ€èƒ½
 	{
 		g_pGameApp->SysInfo( g_oLangRec.GetString(748) );
 		return false;
@@ -181,7 +181,7 @@ bool CSkillCommand::IsAllowUse()
 		return false;
 	}
 
-    // ÔÊĞíÊ¹ÓÃµÄÁ½ÖÖÇé¿ö:1.Ã»ÓĞÔÙÊ©·ÅÊ±¼ä,2.ÒÑµ½´ïÔÙÊ©·ÅÊ±¼ä
+    // å…è®¸ä½¿ç”¨çš„ä¸¤ç§æƒ…å†µ:1.æ²¡æœ‰å†æ–½æ”¾æ—¶é—´,2.å·²åˆ°è¾¾å†æ–½æ”¾æ—¶é—´
     if( _GetSkillTime()<=0 ) 
 	{
 		return true;
@@ -343,14 +343,14 @@ bool CSkillCommand::GetIsSpecial(eSpecialType SpecialType)
 	{
 	case enumHighLight:
 		{
-			if(338 <= nID && nID <= 341) return true;	// Éú»î¼¼ÄÜÌØÊâ´¦Àí
-			if(459 == nID) return true;					// ×ªÉú¼¼ÄÜ
+			if(338 <= nID && nID <= 341) return true;	// ç”Ÿæ´»æŠ€èƒ½ç‰¹æ®Šå¤„ç†
+			if(459 == nID) return true;					// è½¬ç”ŸæŠ€èƒ½
 		}
 		break;
 
 	case enumNotUpgrade:
 		{
-			if(453 <= nID && nID <= 459) return true;	// ×ªÉú¼¼ÄÜ
+			if(453 <= nID && nID <= 459) return true;	// è½¬ç”ŸæŠ€èƒ½
 		}
 		break;
 

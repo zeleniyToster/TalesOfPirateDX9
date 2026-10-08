@@ -1,8 +1,8 @@
-//------------------------------------------------------------------------
-//	2005/3/26	Arcol	ÐÞÕý¶¨Ê±Æ÷ÔË×÷Ê±ÉèÖÃ¶¨Ê±Æ÷ÒýÆð³ö´íµÄBUG
-//	2005/3/24	Arcol	¼ÓÈë¶¨Ê±Æ÷
-//	2005/4/13	Arcol	ÐÞ¸Ä±íµ¥·ç¸ñ,Ö§³ÖÆÁÄ»¸÷±ßµÄÏà¶ÔÎ»ÖÃÉèÖÃ
-//	2005/5/17	Arcol	É¾³ý¶¨Ê±Æ÷Ïà¹Ø´úÂë£¨¶¨Ê±Æ÷ÒÑ±»×ö³É¶ÀÁ¢¿Ø¼þ£©
+ï»¿//------------------------------------------------------------------------
+//	2005/3/26	Arcol	ä¿®æ­£å®šæ—¶å™¨è¿ä½œæ—¶è®¾ç½®å®šæ—¶å™¨å¼•èµ·å‡ºé”™çš„BUG
+//	2005/3/24	Arcol	åŠ å…¥å®šæ—¶å™¨
+//	2005/4/13	Arcol	ä¿®æ”¹è¡¨å•é£Žæ ¼,æ”¯æŒå±å¹•å„è¾¹çš„ç›¸å¯¹ä½ç½®è®¾ç½®
+//	2005/5/17	Arcol	åˆ é™¤å®šæ—¶å™¨ç›¸å…³ä»£ç ï¼ˆå®šæ—¶å™¨å·²è¢«åšæˆç‹¬ç«‹æŽ§ä»¶ï¼‰
 //------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "uiform.h"
@@ -100,7 +100,7 @@ void CForm::_Copy( const CForm* rhs )
 CForm::~CForm()
 {
 	//delete _pImage;
-	SAFE_DELETE(_pImage); // UIµ±»ú´¦Àí
+	SAFE_DELETE(_pImage); // UIå½“æœºå¤„ç†
 	_TempleteClear();
 
 	CFormMgr::s_Mgr._DelMemory( this );
@@ -222,7 +222,7 @@ void CForm::Init()
 
 void CForm::OnSetScreen()
 {
-	int sw, sh;     // Êµ¼ÊÏÔÊ¾ÇøÓò
+	int sw, sh;     // å®žé™…æ˜¾ç¤ºåŒºåŸŸ
 	RECT rc;
 	::GetClientRect( g_pGameApp->GetHWND(), &rc );
 	sw = rc.right  - rc.left;
@@ -240,7 +240,7 @@ void CForm::OnSetScreen()
 		_nOffHeight = 0;
 	}
 
-	//¸ù¾Ý²»Í¬µÄ±íµ¥ÀàÐÍÉè¶¨ÆäÎ»ÖÃ
+	//æ ¹æ®ä¸åŒçš„è¡¨å•ç±»åž‹è®¾å®šå…¶ä½ç½®
 	switch( _formStyle)
 	{
 	case fsNone:
@@ -301,13 +301,13 @@ void CForm::OnSetScreen()
 
 //void CForm::OnSetScreen()
 //{
-//	int sw, sh;     // Êµ¼ÊÏÔÊ¾ÇøÓò
+//	int sw, sh;     // å®žé™…æ˜¾ç¤ºåŒºåŸŸ
 //	RECT rc;
 //	::GetClientRect( g_pGameApp->GetHWND(), &rc );
 //	sw = rc.right  - rc.left;
 //	sh = rc.bottom - rc.top;
 //
-//	//¸ù¾Ý²»Í¬µÄ±íµ¥ÀàÐÍÉè¶¨ÆäÎ»ÖÃ
+//	//æ ¹æ®ä¸åŒçš„è¡¨å•ç±»åž‹è®¾å®šå…¶ä½ç½®
 //	switch( _formStyle)
 //	{
 //	case fsNone:
@@ -499,7 +499,7 @@ bool CForm::SetNextActiveCompent( bool isNext )
     int n = 0;
     int max = (int)_actives.size();
 
-    // ¼¤»îÏÂÒ»¸ö¿Ø¼þ
+    // æ¿€æ´»ä¸‹ä¸€ä¸ªæŽ§ä»¶
     if( isNext )
     {
         do
@@ -669,7 +669,7 @@ void CForm::_OnActive()
 	{
         if( _pActive->evtLost ) _pActive->evtLost( this );
 
-		// ÔÚÁ½¸ö·ÇÄ£Ì¬´°¿ÚÇ°ÇÐ»»½¹µã
+		// åœ¨ä¸¤ä¸ªéžæ¨¡æ€çª—å£å‰åˆ‡æ¢ç„¦ç‚¹
 		if( !_pActive->GetIsModal() && !GetIsModal() )
 		{
 			CFormMgr::s_Mgr._UpdataShowForm( this );

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 
 #include "MPRender.h"
@@ -35,10 +35,10 @@ struct MPLineVertex
 	DWORD		dwColor;
 };
 
-struct MPTileTex  // µ¥Ò»ÌùÍ¼²ã  
+struct MPTileTex  // å•ä¸€è´´å›¾å±‚  
 {
-	BYTE	btTexNo;	 // ÌùÍ¼±àºÅ
-	BYTE	btAlphaNo;	 // AlphaÍ¼±àºÅ
+	BYTE	btTexNo;	 // è´´å›¾ç¼–å·
+	BYTE	btAlphaNo;	 // Alphaå›¾ç¼–å·
 	MPTileTex()
 		:btTexNo(0), btAlphaNo(0)	{}
 	
@@ -60,8 +60,8 @@ inline float _getObjHeight(BYTE btValue, int no)
 {
     BYTE btLevel = btValue & 63;
     float f = (float)btLevel;
-    f*=5.0f; // Ã¿¸ö¼¶±ğ´ú±í5ÀåÃ×
-    if(btValue & 64) // ¸ºÊı
+    f*=5.0f; // æ¯ä¸ªçº§åˆ«ä»£è¡¨5å˜ç±³
+    if(btValue & 64) // è´Ÿæ•°
     {
         return f / 100.0f * -1.0f;
     }
@@ -83,7 +83,7 @@ inline BYTE _setObjHeight(BYTE btOldValue, float fHeight, int no)
          btOldValue&=191;
      }
      BYTE btLevel = (BYTE)(fHeight / 0.05f);
-     btOldValue&=192; // Çå³ı6Î»¸ß¶È
+     btOldValue&=192; // æ¸…é™¤6ä½é«˜åº¦
      btOldValue|=btLevel;
      return btOldValue;
 }
@@ -93,17 +93,17 @@ struct MINDPOWER_API MPTile
 {
 	static	int		Offset[4][2];
 
-    MPTileTex		TexLayer[4]; // ×î¶à4²ãÖØµş
-	DWORD			dwColor;	 // ×óÉÏ½ÇµÚÒ»¸ö¶¥µãµÄÑÕÉ«
-    short           sRegion;     // ÇøÓòÊôĞÔ
-    BYTE            btIsland;    // µºÓìÊôĞÔ
-    BYTE            btBlock[4];  // 4¸ö·Ö¸ñµÄÕÏ°­¼ÇÂ¼
+    MPTileTex		TexLayer[4]; // æœ€å¤š4å±‚é‡å 
+	DWORD			dwColor;	 // å·¦ä¸Šè§’ç¬¬ä¸€ä¸ªé¡¶ç‚¹çš„é¢œè‰²
+    short           sRegion;     // åŒºåŸŸå±æ€§
+    BYTE            btIsland;    // å²›å±¿å±æ€§
+    BYTE            btBlock[4];  // 4ä¸ªåˆ†æ ¼çš„éšœç¢è®°å½•
     
-	float			fHeight;     // ×óÉÏ½ÇµÚÒ»¸ö¶¥µãµÄ¸ß¶È
+	float			fHeight;     // å·¦ä¸Šè§’ç¬¬ä¸€ä¸ªé¡¶ç‚¹çš„é«˜åº¦
 	
     //lemon add@2004.10.18
-	DWORD			dwTColor;	 // ÁÙÊ±¶¥µãµÄÑÕÉ«
-    DWORD           dwXColor;    // »ìºÏºóµÄÑÕÉ«
+	DWORD			dwTColor;	 // ä¸´æ—¶é¡¶ç‚¹çš„é¢œè‰²
+    DWORD           dwXColor;    // æ··åˆåçš„é¢œè‰²
 
 public:
     
@@ -118,7 +118,7 @@ public:
 			TexLayer[i].btTexNo = TexLayer[i].btAlphaNo = 0;
 		    btBlock[i] = 0;
         }
-		sRegion  = 0; // Ä¬ÈÏÎªº£Ë®, ÇøÓòÊôĞÔ = 0
+		sRegion  = 0; // é»˜è®¤ä¸ºæµ·æ°´, åŒºåŸŸå±æ€§ = 0
         btIsland = 0;
     }
 

@@ -1,4 +1,4 @@
-//
+ï»¿//
 #pragma once
 
 #include "lwHeader.h"
@@ -54,10 +54,10 @@ LW_BEGIN
 
 #define LW_RENDER_CTRL_PROC_NUM         512
 
-// Ã¿¸öPrimitive×î¶à¿ÉÒÔÓÐLW_MAX_OBJ_DUMMY_NUM¸öDummy£¬ÆäÖÐÓÃÓÚµÃµ½Äæ¾ØÕóµÄDummy¸öÊýÎª
-// LW_MAX_OBJ_DUMMY_INV_NUM¸ö£¬ËùÒÔÕâÀï¹æ¶¨ÔÚmaxÖÐÖÆ×÷dummyµÄÊ±ºòdummyµÄid¾ßÓÐ·¶Î§ÏÞÖÆ
-// ¾ßÌåÊýÖµÈçÏÂ£ºdummy_0 - dummy_3ÓÃÀ´×÷ÎªLW_MAX_OBJ_DUMMY_INV_NUM
-//               dummy_4 - dummy_7ÓÃÀ´×÷ÎªÌØÐ§»òÕßÆäËû²»ÐèÒªInverse MatrixµÄÁ´½Óid
+// æ¯ä¸ªPrimitiveæœ€å¤šå¯ä»¥æœ‰LW_MAX_OBJ_DUMMY_NUMä¸ªDummyï¼Œå…¶ä¸­ç”¨äºŽå¾—åˆ°é€†çŸ©é˜µçš„Dummyä¸ªæ•°ä¸º
+// LW_MAX_OBJ_DUMMY_INV_NUMä¸ªï¼Œæ‰€ä»¥è¿™é‡Œè§„å®šåœ¨maxä¸­åˆ¶ä½œdummyçš„æ—¶å€™dummyçš„idå…·æœ‰èŒƒå›´é™åˆ¶
+// å…·ä½“æ•°å€¼å¦‚ä¸‹ï¼šdummy_0 - dummy_3ç”¨æ¥ä½œä¸ºLW_MAX_OBJ_DUMMY_INV_NUM
+//               dummy_4 - dummy_7ç”¨æ¥ä½œä¸ºç‰¹æ•ˆæˆ–è€…å…¶ä»–ä¸éœ€è¦Inverse Matrixçš„é“¾æŽ¥id
 #define LW_MAX_OBJ_DUMMY_NUM            16
 #define LW_MAX_OBJ_DUMMY_INV_NUM        4
 
@@ -77,8 +77,8 @@ enum
 enum
 {
     GEOMOBJ_TYPE_GENERIC =              0,
-    GEOMOBJ_TYPE_CHECK_BB =             1, //ÎÞ·½ÏòÅÐ¶Ï
-    GEOMOBJ_TYPE_CHECK_BB2 =            2, //ÓÐ·½ÏòÅÐ¶Ï£¬ÕâÀï¶¨ÒåÓÐÐ§·½ÏòÎª( 0, 1, 0 )
+    GEOMOBJ_TYPE_CHECK_BB =             1, //æ— æ–¹å‘åˆ¤æ–­
+    GEOMOBJ_TYPE_CHECK_BB2 =            2, //æœ‰æ–¹å‘åˆ¤æ–­ï¼Œè¿™é‡Œå®šä¹‰æœ‰æ•ˆæ–¹å‘ä¸º( 0, 1, 0 )
 };
 
 enum

@@ -1,4 +1,4 @@
-
+ï»¿
 #pragma once
 
 
@@ -21,41 +21,41 @@ namespace GUI
 	class CEdit;
 	class CTextButton;
 
-	// ¶ş´ÎÃÜÂë½çÃæ
+	// äºŒæ¬¡å¯†ç ç•Œé¢
 	class CDoublePwdMgr : public CUIInterface	
 	{
 	public:
 
 		CDoublePwdMgr();
 
-		// ÏÔÊ¾´´½¨±íµ¥
+		// æ˜¾ç¤ºåˆ›å»ºè¡¨å•
 		void ShowCreateForm();
 
-		// ÏÔÊ¾ĞŞ¸Ä±íµ¥
+		// æ˜¾ç¤ºä¿®æ”¹è¡¨å•
 		void ShowAlterForm();
 
-		// ÏÔÊ¾ÊäÈë±íµ¥
+		// æ˜¾ç¤ºè¾“å…¥è¡¨å•
 		void ShowDoublePwdForm();
 
-		// ¹Ø±ÕÈ«²¿±íµ¥
+		// å…³é—­å…¨éƒ¨è¡¨å•
 		void CloseAllForm();
 
-		// »ñµÃ±íµ¥ÊÇ·ñÒÑÏÔÊ¾
+		// è·å¾—è¡¨å•æ˜¯å¦å·²æ˜¾ç¤º
 		bool GetIsShowCreateForm()    { return frmDoublePwdCreate->GetIsShow(); }
 		bool GetIsShowAlterForm()     { return frmDoublePwdAlter->GetIsShow();  }
 		bool GetIsShowDoublePwdForm() { return frmDoublePwd->GetIsShow();       }
 
-		// ÉèÖÃÊäÈë¶ş´ÎÃÜÂëºóÖ´ĞĞÀàĞÍ
+		// è®¾ç½®è¾“å…¥äºŒæ¬¡å¯†ç åæ‰§è¡Œç±»å‹
 		void SetType(int nType) { m_nType = nType; }
 		int  GetType()          { return  m_nType; }
 
 		void SetLockGridID(int id) { lockGridID = id; }
 
 		static const int MC_REQUEST	= -1;
-		static const int DELETE_CHARACTOR	= 1;	// É¾³ıµ±Ç°½ÇÉ«
-		static const int PACKAGE_UNLOCK		= 2;	// ±³°ü½âËø
-		static const int STORE_OPEN_ASK		= 3;	// ÉÌ³Ç´ò¿ª
-		static const int ITEM_UNLOCK		= 4;	// µÀ¾ß½âËø  ning.yan 2008-11-10
+		static const int DELETE_CHARACTOR	= 1;	// åˆ é™¤å½“å‰è§’è‰²
+		static const int PACKAGE_UNLOCK		= 2;	// èƒŒåŒ…è§£é”
+		static const int STORE_OPEN_ASK		= 3;	// å•†åŸæ‰“å¼€
+		static const int ITEM_UNLOCK		= 4;	// é“å…·è§£é”  ning.yan 2008-11-10
 		static const int MULTI_ITEM_UNLOCK = 5;
 		static const int SHOW_EXCHANGEFORM	= 5;
 
@@ -64,82 +64,82 @@ namespace GUI
 		virtual bool Init();
 		virtual void CloseForm();
 
-		// ÏÔÊ¾¶ş´ÎÃÜÂëÈí¼üÅÌ
+		// æ˜¾ç¤ºäºŒæ¬¡å¯†ç è½¯é”®ç›˜
 		void ShowDoublePwdKeyboardForm();
 
-		// ÉèÖÃ¾Û½¹µÄÃÜÂë±à¼­¿ò
+		// è®¾ç½®èšç„¦çš„å¯†ç ç¼–è¾‘æ¡†
 		void SetFocusEditBox(CEdit* edt) { edtFocusEditBox = edt; }
 
-		// ·¢ËÍÉ¾³ı½ÇÉ«ÏûÏ¢
+		// å‘é€åˆ é™¤è§’è‰²æ¶ˆæ¯
 		void SendDeleteCharactor();
 
-		// ·¢ËÍ±³°ü½âËøÏûÏ¢
+		// å‘é€èƒŒåŒ…è§£é”æ¶ˆæ¯
 		void SendPackageUnlock();
 
-		// ·¢ËÍµÀ¾ß½âËøÏûÏ¢
+		// å‘é€é“å…·è§£é”æ¶ˆæ¯
 		void SendItemUnlock(); //add by ning.yan 2008-11-11
 
 		void SendUnlockSelectedItems();
-		// ·¢ËÍÉÌ³Ç´ò¿ªÏûÏ¢
+		// å‘é€å•†åŸæ‰“å¼€æ¶ˆæ¯
 		void SendPackageStoreOpen();
 
 		void SendGameRequest();
 
-		// ¶ÔÈí¼üÅÌ°´Å¥½øĞĞËæ»úÅÅÁĞ
+		// å¯¹è½¯é”®ç›˜æŒ‰é’®è¿›è¡Œéšæœºæ’åˆ—
 		void RandomInputButton();
 
 	private:
 
-		// ´´½¨¶ş´ÎÃÜÂë±íµ¥
+		// åˆ›å»ºäºŒæ¬¡å¯†ç è¡¨å•
 		CForm*      frmDoublePwdCreate;
 		CEdit*		edtDoublePwdCreate;
 		CEdit*      edtDoublePwdCreateRetry;
 
-		// ĞŞ¸Ä¶ş´ÎÃÜÂë±íµ¥
+		// ä¿®æ”¹äºŒæ¬¡å¯†ç è¡¨å•
 		CForm*      frmDoublePwdAlter;
 		CEdit*		edtDoublePwdAlterOld;
 		CEdit*		edtDoublePwdAlterNew;
 		CEdit*		edtDoublePwdAlterNewRetry;
 
-		// ÊäÈë¶ş´ÎÃÜÂë±íµ¥
+		// è¾“å…¥äºŒæ¬¡å¯†ç è¡¨å•
 		CForm*      frmDoublePwd;
 		CEdit*      edtDoublePwd;
 
-		// ¶ş´ÎÃÜÂëÊäÈëÈí¼üÅÌ±íµ¥
+		// äºŒæ¬¡å¯†ç è¾“å…¥è½¯é”®ç›˜è¡¨å•
 		CForm*      frmDoublePwdInput;
 
-		// ´´½¨¶ş´ÎÃÜÂëÊ±µÄÌáÊ¾
+		// åˆ›å»ºäºŒæ¬¡å¯†ç æ—¶çš„æç¤º
 		CForm*		frmDoublePwdInfo;
 
-		// ½¹µãÃÜÂë±à¼­¿ò
+		// ç„¦ç‚¹å¯†ç ç¼–è¾‘æ¡†
 		CEdit*		edtFocusEditBox;
 
-		// ÀàĞÍ
+		// ç±»å‹
 		int         m_nType;
 
 		int lockGridID; //TODO: No default value
 
 	private:
 
-		// ´´½¨¶ş´ÎÃÜÂë±íµ¥°´Å¥ÊÂ¼ş
+		// åˆ›å»ºäºŒæ¬¡å¯†ç è¡¨å•æŒ‰é’®äº‹ä»¶
 		static void _evtCreateFromMouseEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey);
 
-		// ĞŞ¸Ä¶ş´ÎÃÜÂë±íµ¥°´Å¥ÊÂ¼ş
+		// ä¿®æ”¹äºŒæ¬¡å¯†ç è¡¨å•æŒ‰é’®äº‹ä»¶
 		static void _evtAlterFromMouseEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey);
 
-		// ÊäÈë¶ş´ÎÃÜÂë±íµ¥°´Å¥ÊÂ¼ş
+		// è¾“å…¥äºŒæ¬¡å¯†ç è¡¨å•æŒ‰é’®äº‹ä»¶
 		static void _evtDoublePwdFromMouseEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey);
 
-		// ¶ş´ÎÃÜÂëÊäÈëÈí¼üÅÌ±íµ¥°´Å¥ÊÂ¼ş
+		// äºŒæ¬¡å¯†ç è¾“å…¥è½¯é”®ç›˜è¡¨å•æŒ‰é’®äº‹ä»¶
 		static void _evtInputFromMouseEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey);
 
-		// ±à¼­¿ò¼¤»îÊÂ¼ş£¨±£´æÏÂ¼¤»îµÄ±à¼­¿ò£©
+		// ç¼–è¾‘æ¡†æ¿€æ´»äº‹ä»¶ï¼ˆä¿å­˜ä¸‹æ¿€æ´»çš„ç¼–è¾‘æ¡†ï¼‰
 		static void _evtEditFocus(CGuiData* pSender);
 
-		// ¹Ø±Õ´°ÌåÊÂ¼ş
+		// å…³é—­çª—ä½“äº‹ä»¶
 		static void _evtFormClose(CForm* pForm, bool& IsClose );
 
-		// ¶ş´ÎÃÜÂëÊÇ·ñºÏ·¨
+		// äºŒæ¬¡å¯†ç æ˜¯å¦åˆæ³•
 		static bool IsPwdValid(const char* szStr);
 
 	}; // end of class CDoublePwdMgr

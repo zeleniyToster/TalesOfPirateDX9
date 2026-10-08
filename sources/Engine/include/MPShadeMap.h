@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 //#include "i_effect.h"
 
 class   MPRender;
@@ -9,8 +9,8 @@ class   CMPResManger;
 #define		SHADE_SINGLE		1
 #define		SHADE_ANI			2
 
-#define  MAXRADIUS	9.0f;//!Ó°×Ó×î´óµÄ°ë¾¶,ÔÚ7Ö®ÄÚ¿ÉÒÔÓÃvs,7ÒÔÉÏÖ»ÄÜÓÃsoft
-#define	 MAXTILE	5 //!Ó°×Ó×î´óËùÄÜÕ¼ÓÃµÄ¸ñ×ÓµÄÊıÁ¿
+#define  MAXRADIUS	9.0f;//!å½±å­æœ€å¤§çš„åŠå¾„,åœ¨7ä¹‹å†…å¯ä»¥ç”¨vs,7ä»¥ä¸Šåªèƒ½ç”¨soft
+#define	 MAXTILE	5 //!å½±å­æœ€å¤§æ‰€èƒ½å ç”¨çš„æ ¼å­çš„æ•°é‡
 
 class MINDPOWER_API  CMPShadeMap// : public CEffectBase
 {
@@ -22,7 +22,7 @@ public:
 	void				setTextureName(s_string& strName);
 	s_string			getTextureName(){return _strTexName;}
 	void				BoundingRes(CMPResManger	*m_CResMagr);
-	//!´´½¨µÄÓ°×Ó°ë¾¶´óĞ¡Èç¹û´óÓÚ4Ôò²»ÄÜ´´½¨¡£
+	//!åˆ›å»ºçš„å½±å­åŠå¾„å¤§å°å¦‚æœå¤§äº4åˆ™ä¸èƒ½åˆ›å»ºã€‚
 	bool				CreateShadeMap(float fRadius = 0.8f);
 
 	bool				SetGridNum(int iNum);
@@ -31,7 +31,7 @@ public:
 	virtual void		Render();
 
 	virtual void		RenderVS();
-	//!Èç¹ûÓ²¼ş²»Ö§³ÖVSÔòÊ¹ÓÃ
+	//!å¦‚æœç¡¬ä»¶ä¸æ”¯æŒVSåˆ™ä½¿ç”¨
 	void				RenderSoft();
 	virtual void		MoveTo(D3DXVECTOR3 SVerPos, MPMap* pMap, float	fAngle = 0);
 

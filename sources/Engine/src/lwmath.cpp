@@ -1,4 +1,4 @@
-//
+Ôªø//
 #include "stdafx.h"
 #include "lwMath.h"
 
@@ -896,7 +896,7 @@ int lwCheckVectorInTriangle2D2(int* flag,const lwVector2* vp,const lwVector2* v1
 	lwVec2Sub(&vec_3,v3,vp);
 
 	if( *vp == *v1 ) {		
-		*flag = 0; // µ„÷ÿ∫œ
+		*flag = 0; // ÁÇπÈáçÂêà
 		return 3;
 	}
 	else if( *vp == *v2 ) {
@@ -916,7 +916,7 @@ int lwCheckVectorInTriangle2D2(int* flag,const lwVector2* vp,const lwVector2* v1
 	if( lwFloatZero(vz1,esp) )  {
 		if( lwVec2Dot( &vec_1, &vec_2 ) > 0 )
 			return 0;
-		*flag = 0; // ±ﬂ÷ÿ∫œ
+		*flag = 0; // ËæπÈáçÂêà
 		return 2;
 	}
 	else if( lwFloatZero(vz2,esp) ) {
@@ -933,7 +933,7 @@ int lwCheckVectorInTriangle2D2(int* flag,const lwVector2* vp,const lwVector2* v1
 	}
 
 	if( (vz1<0.0f && vz2<0.0f && vz3<0.0f) || (vz1>0.0f && vz2>0.0f && vz3>0.0f) ) {		 
-        return 1;// ¿Ô√Ê
+        return 1;// ÈáåÈù¢
 	}
     else
         return 0;
@@ -1409,8 +1409,8 @@ int lwIntersectBoxBoxAABB( const lwBox* b1, const lwBox* b2 )
 }
 int lwIntersectBoxBoxOBB( const lwBox* b1, const lwBox* b2, const lwMatrix44* mat )
 {
-    //∑Ω∑®“ª œ»∑÷±◊ˆ3∏ˆ√ÊµƒÕ∂”∞≈–∂œ£¨◊Ó∫Û◊ˆƒ⁄∑®œﬂ≈–∂œ
-    //∑Ω∑®∂˛ µ√µΩ÷––ƒµ„¡¨œﬂœÚ¡ø£¨≈–∂œ∏√œÚ¡ø∫Õboxµƒhalf_sizeµƒπÿœµ
+    //ÊñπÊ≥ï‰∏Ä ÂÖàÂàÜÂà´ÂÅö3‰∏™Èù¢ÁöÑÊäïÂΩ±Âà§Êñ≠ÔºåÊúÄÂêéÂÅöÂÜÖÊ≥ïÁ∫øÂà§Êñ≠
+    //ÊñπÊ≥ï‰∫å ÂæóÂà∞‰∏≠ÂøÉÁÇπËøûÁ∫øÂêëÈáèÔºåÂà§Êñ≠ËØ•ÂêëÈáèÂíåboxÁöÑhalf_sizeÁöÑÂÖ≥Á≥ª
     //lwVector3 b_cen( b.GetCenter() );
     //lwVec3Mat44Mul( &b_cen, mat );
     //lwVector3 vec_cen;
@@ -1425,7 +1425,7 @@ int lwIntersectBoxBoxOBB( const lwBox* b1, const lwBox* b2, const lwMatrix44* ma
     //    float r1 = ea[i];
     //    float r2 = b.GetCenter()
     //}
-    ////∑Ω∑®»˝ Ω´b÷–µƒ∞À∏ˆµ„≥À“‘matæÿ’Û£¨»ª∫Û≈–∂œ’‚∞À∏ˆµ„ «∑Ò‘⁄box÷–
+    ////ÊñπÊ≥ï‰∏â Â∞Üb‰∏≠ÁöÑÂÖ´‰∏™ÁÇπ‰πò‰ª•matÁü©ÈòµÔºåÁÑ∂ÂêéÂà§Êñ≠ËøôÂÖ´‰∏™ÁÇπÊòØÂê¶Âú®box‰∏≠
     //lwMatrix44 mat_inv;
     //lwMatrix44Inverse( &mat_inv, mat );
 
@@ -1753,7 +1753,7 @@ int lwGetVecNormalAxisMapping(int* i1,int* i2,const lwVector3* vec)
 	int ret;
     lwVector3 vn( fabsf(vec->x),fabsf(vec->y),fabsf(vec->z) );
 
-	// »Áπ˚∑®œÚ¡ø»˝Œ¨◊¯±Íµƒƒ≥∏ˆ∑÷¡øµƒæ¯∂‘÷µ◊Ó¥Û£¨Œ“√«æÕø…“‘—°‘Ò”Î∏√◊¯±Í÷·¥π÷±µƒ∆Ω√Ê◊˜Œ™Õ∂”∞∆Ω√Ê
+	// Â¶ÇÊûúÊ≥ïÂêëÈáè‰∏âÁª¥ÂùêÊ†áÁöÑÊüê‰∏™ÂàÜÈáèÁöÑÁªùÂØπÂÄºÊúÄÂ§ßÔºåÊàë‰ª¨Â∞±ÂèØ‰ª•ÈÄâÊã©‰∏éËØ•ÂùêÊ†áËΩ¥ÂûÇÁõ¥ÁöÑÂπ≥Èù¢‰Ωú‰∏∫ÊäïÂΩ±Âπ≥Èù¢
     if( vn.x > vn.y ) {
       if( vn.x > vn.z ) { 
 		  t1 = 1; 
@@ -1793,7 +1793,7 @@ int lwCheckVectorInTriangle3D( const lwVector3* v, const lwVector3* v0, const lw
 
 	lwGetVecNormalAxisMapping( &i1, &i2, n );
 
-	// begin “‘œ¬¥˙¬Î“ª÷™∞ÎΩ‚,≤ª√˜∞◊µƒ «a,b¥˙±Ìµƒ“‚“Â	
+	// begin ‰ª•‰∏ã‰ª£Á†Å‰∏ÄÁü•ÂçäËß£,‰∏çÊòéÁôΩÁöÑÊòØa,b‰ª£Ë°®ÁöÑÊÑè‰πâ	
 #if 1
     lwVector3 p( (*v)[i1] - (*v0)[i1],
                 (*v1)[i1] - (*v0)[i1],
@@ -1820,7 +1820,7 @@ int lwCheckVectorInTriangle3D( const lwVector3* v, const lwVector3* v0, const lw
     return (a>=0 && (a+b)<=1);
 	// end
 #else
-	// begin µ⁄∂˛÷÷∑Ω∑®
+	// begin Á¨¨‰∫åÁßçÊñπÊ≥ï
 	lwVector2 vh( (*v)[i1], (*v)[i2] );
 	lwVector2 v1( (*v0)[i1], (*v0)[i2] );
 	lwVector2 v2( (*v1)[i1], (*v1)[i2] );
@@ -1854,7 +1854,7 @@ int lwCheckVectorInTriangle3D2( int* flag, const lwVector3* v, const lwVector3* 
 	lwVector2 va( (*v0)[i1], (*v0)[i2] );
 	lwVector2 vb( (*v1)[i1], (*v1)[i2] );
 	lwVector2 vc( (*v2)[i1], (*v2)[i2] );
-	// ’‚∂˘Œ“œ£Õ˚∑µªÿ÷µ÷–∞¸∫¨∏√µ„µƒŒª÷√–≈œ¢,À˘“‘”√lwCheckVectorInTriangle2D2
+	// ËøôÂÑøÊàëÂ∏åÊúõËøîÂõûÂÄº‰∏≠ÂåÖÂê´ËØ•ÁÇπÁöÑ‰ΩçÁΩÆ‰ø°ÊÅØ,ÊâÄ‰ª•Áî®lwCheckVectorInTriangle2D2
 	return lwCheckVectorInTriangle2D2( flag, &vh, &va, &vb, &vc );
 }
 
@@ -2043,7 +2043,7 @@ float lwGetDirTurnAngle( const lwVector2* src_dir, const lwVector2* dst_dir )
 {   
     // check dir
     float dotv = lwVec2Dot( src_dir, dst_dir );
-    // floatº∆À„¥Ê‘⁄œ∏Œ¢ŒÛ≤Ó≥ˆœ÷1.0000113¿‡À∆«Èøˆ£¨∂¯‘⁄acosf(1.0000113)º∆À„µ√µΩ∑«∑®µƒ÷µ
+    // floatËÆ°ÁÆóÂ≠òÂú®ÁªÜÂæÆËØØÂ∑ÆÂá∫Áé∞1.0000113Á±ª‰ººÊÉÖÂÜµÔºåËÄåÂú®acosf(1.0000113)ËÆ°ÁÆóÂæóÂà∞ÈùûÊ≥ïÁöÑÂÄº
     if( dotv > 1.0f )
         dotv = 1.0f;
     float acsv = acosf( dotv );

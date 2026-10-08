@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "uilabel.h"
 
 using namespace GUI;
@@ -49,10 +49,10 @@ void CLabelEx::_Copy( const CLabelEx& rhs )
 
 void CLabelEx::Render()
 {
-	DWORD dwOldShadow = _clShadow;	// ±£´æÄ¬ÈÏÒõÓ°ÑÕÉ«
-	DWORD dwOldColor  = _color;		// ±£´æÏÂÄ¬ÈÏµÄÑÕÉ«
+	DWORD dwOldShadow = _clShadow;	// ä¿å­˜é»˜è®¤é˜´å½±é¢œè‰²
+	DWORD dwOldColor  = _color;		// ä¿å­˜ä¸‹é»˜è®¤çš„é¢œè‰²
 
-	if(_IsFlash)	// ÎÄ×ÖÉÁË¸
+	if(_IsFlash)	// æ–‡å­—é—ªçƒ
 	{
 		DWORD dwColorID = (GetTickCount() & 1023) >> 8;
 		DWORD dwColor = 0;
@@ -80,7 +80,7 @@ void CLabelEx::Render()
 	{
 		if ( _IsCenter == 0 )
 		{
-			//if(_caption == "°×Òø³Ç")
+			//if(_caption == "ç™½é“¶åŸ")
 			//	CGuiFont::s_Font.BRender( _nFontIndex, "", GetX(), GetY(), _color, _clShadow );
 			//else
 				CGuiFont::s_Font.BRender( _nFontIndex, (const char*)_caption.c_str(), GetX(), GetY(), _color, _clShadow );
@@ -116,6 +116,6 @@ void CLabelEx::Render()
 		}
 	}
 
-	_clShadow = dwOldShadow;	// »¹Ô­³ÉÔ­À´µÄÒõÓ°ÑÕÉ«
-	_color    = dwOldColor;		//?»¹Ô­³ÉÔ­À´µÄÑÕÉ«
+	_clShadow = dwOldShadow;	// è¿˜åŸæˆåŸæ¥çš„é˜´å½±é¢œè‰²
+	_color    = dwOldColor;		//?è¿˜åŸæˆåŸæ¥çš„é¢œè‰²
 }

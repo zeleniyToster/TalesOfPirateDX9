@@ -1,4 +1,4 @@
-#ifndef MPSharedPtr_H
+ï»¿#ifndef MPSharedPtr_H
 #define MPSharedPtr_H
 
 #include "MPEffPrerequisites.h"
@@ -10,11 +10,11 @@ protected:
 	unsigned int* m_pUseCount;
 
 public:
-	MP_AUTO_SHARED_MUTEX; // ¹«ÓĞ·ÃÎÊÈ¨ÏŞÔÊĞíÍâ²¿Ëø¶¨
+	MP_AUTO_SHARED_MUTEX; // å…¬æœ‰è®¿é—®æƒé™å…è®¸å¤–éƒ¨é”å®š
 
-	/** Ä¬ÈÏ¹¹Ôìº¯Êı£¬²¢Ã»ÓĞ³õÊ¼»¯SharedPtr
+	/** é»˜è®¤æ„é€ å‡½æ•°ï¼Œå¹¶æ²¡æœ‰åˆå§‹åŒ–SharedPtr
 	@remarks
-	<b>Î£ÏÕ!</b> ÔÚÄãÊ¹ÓÃSharedPtrÖ®Ç°±ØĞëµ÷ÓÃbind() .
+	<b>å±é™©!</b> åœ¨ä½ ä½¿ç”¨SharedPträ¹‹å‰å¿…é¡»è°ƒç”¨bind() .
 	*/
 	MPSharedPtr() : m_pRep(0), m_pUseCount(0) {}
 
@@ -25,7 +25,7 @@ public:
 
 	MPSharedPtr(const MPSharedPtr& r) 
 	{
-		// Ëø¶¨²¢¿½±´ÆäËûmutexµÄÖ¸Õë
+		// é”å®šå¹¶æ‹·è´å…¶ä»–mutexçš„æŒ‡é’ˆ
 		MP_LOCK_MUTEX(*(r.MP_AUTO_MUTEX_NAME));
 		MP_COPY_AUTO_SHARED_MUTEX(r.MP_AUTO_MUTEX_NAME);
 
@@ -43,7 +43,7 @@ public:
 			return *this;
 		release();
 
-		// Ëø¶¨²¢¿½±´ÆäËûmutexµÄÖ¸Õë
+		// é”å®šå¹¶æ‹·è´å…¶ä»–mutexçš„æŒ‡é’ˆ
 		MP_LOCK_MUTEX(*(r.MP_AUTO_MUTEX_NAME));
 		MP_COPY_AUTO_SHARED_MUTEX(r.MP_AUTO_MUTEX_NAME);
 
@@ -64,9 +64,9 @@ public:
 	inline T* operator->() const { assert(m_pRep); return m_pRep; }
 	inline T* get() const { return m_pRep; }
 
-	/** ½«Ö¸Õë°ó¶¨µ½SharedPtrÉÏ.
+	/** å°†æŒ‡é’ˆç»‘å®šåˆ°SharedPträ¸Š.
 	@remarks
-		ÕâÀï¼ÙÉèSharedPtr²¢Ã»ÓĞ³õÊ¼»¯!
+		è¿™é‡Œå‡è®¾SharedPtrå¹¶æ²¡æœ‰åˆå§‹åŒ–!
 	*/
 	void bind(T* rep) {
 		assert(!pRep && !pUseCount);
@@ -88,7 +88,7 @@ public:
 	inline void setNull(void) { 
 		if (m_pRep)
 		{
-			// ÔÚÄÚ²¿Îö¹¹£¬ÕâÀï²»Ëø¶¨£¨Ë«ÅĞ¶Ï£©
+			// åœ¨å†…éƒ¨ææ„ï¼Œè¿™é‡Œä¸é”å®šï¼ˆåŒåˆ¤æ–­ï¼‰
 			release();
 			m_pRep = 0;
 			m_pUseCount = 0;
@@ -102,7 +102,7 @@ protected:
 	{
 		bool destroyThis = false;
 		{
-			// ½öÔÚÓĞÏŞµÄ·¶Î§ÄÚËø¶¨×Ô¼ºµÄmutex(ÔÚÎö¹¹Ö®Ç°±ØĞë½âËø)
+			// ä»…åœ¨æœ‰é™çš„èŒƒå›´å†…é”å®šè‡ªå·±çš„mutex(åœ¨ææ„ä¹‹å‰å¿…é¡»è§£é”)
 			MP_LOCK_AUTO_SHARED_MUTEX;
 
 			if (m_pUseCount)
@@ -112,7 +112,7 @@ protected:
 					destroyThis = true;
 				}
 			}
-			// µ½ÕâÀï×Ô¶¯½âËø£¨²é¿´boost°ïÖú£©
+			// åˆ°è¿™é‡Œè‡ªåŠ¨è§£é”ï¼ˆæŸ¥çœ‹boostå¸®åŠ©ï¼‰
 		}
 		if (destroyThis)
 			destroy();
@@ -120,8 +120,8 @@ protected:
 
 	virtual void destroy(void)
 	{
-		// Èç¹ûÄãÔÚÕâÓöµ½±ÀÀ££¬Äã¿Ï¶¨ÔÚ½áÊø³ÌĞòÖ®Ç°Ã»ÓĞÊÍ·ÅÖ¸Õë
-		// ÔÚ½áÊø³ÌĞòÖ®Ç°Ê¹ÓÃsetNull(),»òÈ·±£ÄãµÄÖ¸ÕëÔÚ³ÌĞò½áÊøÇ°³¬³öËüµÄ·¶Î§£¨×Ô¶¯Îö¹¹£©
+		// å¦‚æœä½ åœ¨è¿™é‡åˆ°å´©æºƒï¼Œä½ è‚¯å®šåœ¨ç»“æŸç¨‹åºä¹‹å‰æ²¡æœ‰é‡Šæ”¾æŒ‡é’ˆ
+		// åœ¨ç»“æŸç¨‹åºä¹‹å‰ä½¿ç”¨setNull(),æˆ–ç¡®ä¿ä½ çš„æŒ‡é’ˆåœ¨ç¨‹åºç»“æŸå‰è¶…å‡ºå®ƒçš„èŒƒå›´ï¼ˆè‡ªåŠ¨ææ„ï¼‰
 		delete m_pRep;
 		delete m_pUseCount;
 		MP_DELETE_AUTO_SHARED_MUTEX;

@@ -1,4 +1,4 @@
-//
+ï»¿//
 #include "stdafx.h"
 
 #if 1
@@ -304,11 +304,11 @@ LW_RESULT lwNodePrimitive::Load(lwIGeomObjInfo* geom_info, const char* tex_path,
     LoadRenderCtrl(&info->rcci);
 
     // base info
-    // warning:×¢Òâ£¬ÕâÀïµÄ_typeÓÃÀ´±íÊ¾MODELNODE_µÄÀàÐÍ
-    // ²»ÄÜÓÃµ¼³öµÄÐÅÏ¢typeÀ´¸²¸Ç£¡£¡£¡
+    // warning:æ³¨æ„ï¼Œè¿™é‡Œçš„_typeç”¨æ¥è¡¨ç¤ºMODELNODE_çš„ç±»åž‹
+    // ä¸èƒ½ç”¨å¯¼å‡ºçš„ä¿¡æ¯typeæ¥è¦†ç›–ï¼ï¼ï¼
     //_type = info->type;
 
-    // »ù±¾ÐÅÏ¢_id, _link_id, _link_parent_idµÈÒÑ¾­ÔÚlwLoadModelInfoÖÐÉèÖÃ
+    // åŸºæœ¬ä¿¡æ¯_id, _link_id, _link_parent_idç­‰å·²ç»åœ¨lwLoadModelInfoä¸­è®¾ç½®
     //_id = info->id;
     _mat_local = info->mat_local;
     //_state_ctrl = info->state_ctrl;
@@ -1008,13 +1008,13 @@ void lwNodePrimitive::SetOpacity(float opacity)
     //_state_ctrl.SetState(STATE_TRANSPARENT, opacity == 1.0f ? 0 : 1);
 }
 
-// SetParent¶ÔÓÚparentÊÇVertexBlendCtrlÊ±µÄÎÊÌâ
-// 1.µ÷ÕûlwAnimCtrlAgentÖÐANIM_CTRL_TYPE_BONEµÄ¶ÔÏó
-// 2.ÖØÉè_ref_ctrl_obj_bone
-// 3.ÖØÉèlwRenderCtrlAgentÖÐvs_typeºÍvs_ctrl£¬ÒòÎªvs_type¾ßÓÐ×Ô¶¨ÒåÐÔÖÊ
-//   ËùÒÔÎÞ·¨Í¨¹ýfvf»òÕßÆäËû·½Ê½½øÐÐÄÚ²¿Æ¥Åä£¬ÕâÀï½¨Òévs_typeºÍvs_ctrl
-//   ×öÍâ²¿ÏÔÊ¾ÖØÉè
-//   ¿ÉÒÔ²»ÐèÒªÖØÉèvs_type£¨ÖØÉèÐ§ÂÊÂÔ¸ß£©,ÐèÒªÖØÉèvs_ctrl
+// SetParentå¯¹äºŽparentæ˜¯VertexBlendCtrlæ—¶çš„é—®é¢˜
+// 1.è°ƒæ•´lwAnimCtrlAgentä¸­ANIM_CTRL_TYPE_BONEçš„å¯¹è±¡
+// 2.é‡è®¾_ref_ctrl_obj_bone
+// 3.é‡è®¾lwRenderCtrlAgentä¸­vs_typeå’Œvs_ctrlï¼Œå› ä¸ºvs_typeå…·æœ‰è‡ªå®šä¹‰æ€§è´¨
+//   æ‰€ä»¥æ— æ³•é€šè¿‡fvfæˆ–è€…å…¶ä»–æ–¹å¼è¿›è¡Œå†…éƒ¨åŒ¹é…ï¼Œè¿™é‡Œå»ºè®®vs_typeå’Œvs_ctrl
+//   åšå¤–éƒ¨æ˜¾ç¤ºé‡è®¾
+//   å¯ä»¥ä¸éœ€è¦é‡è®¾vs_typeï¼ˆé‡è®¾æ•ˆçŽ‡ç•¥é«˜ï¼‰,éœ€è¦é‡è®¾vs_ctrl
 LW_RESULT lwNodePrimitive::SetParent(lwINode* parent)
 {
     LW_RESULT ret = LW_RET_FAILED;
@@ -2272,7 +2272,7 @@ LW_RESULT lwNodePrimitive_PlayPoseAll(lwINodePrimitive* obj, const lwPlayPoseInf
         {
             ctrl_obj = anim_agent->GetAnimCtrlObj(i);
 
-            // lwAnimCtrlObjBoneÔÚlwPrimitiveÖÐ×îÎªÈÝÆ÷¶ø·Ç¶¯»­¿ØÖÆÆ÷
+            // lwAnimCtrlObjBoneåœ¨lwPrimitiveä¸­æœ€ä¸ºå®¹å™¨è€ŒéžåŠ¨ç”»æŽ§åˆ¶å™¨
             ctrl_obj->GetTypeInfo(&type_info);
             if (type_info.type == ANIM_CTRL_TYPE_BONE)
                 continue;

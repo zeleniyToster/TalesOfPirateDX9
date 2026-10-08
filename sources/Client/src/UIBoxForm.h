@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "UIGlobalVar.h"
 #include "uicloneform.h"
 #include "uiform.h"
@@ -16,7 +16,7 @@ struct stTradeBox
 	CEdit*	edtNumber;
 	CLabel* labName;
 
-	// ÓÃ»§Êı¾İ
+	// ç”¨æˆ·æ•°æ®
 	float	fUnitMoney;
 	int		nTotalNum;
 
@@ -29,7 +29,7 @@ struct stSelectBox
 	CForm*  frmDialog;
 	CLabel* labInfo;
 
-	// ÓÃ»§Êı¾İ
+	// ç”¨æˆ·æ•°æ®
 	DWORD	dwTag;
 	DWORD	dwParam;
 	void*	pointer;
@@ -46,7 +46,7 @@ struct stNumBox
 	CEdit*	edtNumber;
 	CLabel* labInfo;
 
-	// ÓÃ»§Êı¾İ
+	// ç”¨æˆ·æ•°æ®
 	int		nTotalNum;
 	void*	pointer;
 };
@@ -64,7 +64,7 @@ struct stMsgBox
 	CForm*  frmDialog;
 	CLabel* labInfo;
 	
-	// ÓÃ»§Êı¾İ
+	// ç”¨æˆ·æ•°æ®
 };
 
 struct stMsgTimeBox
@@ -72,27 +72,27 @@ struct stMsgTimeBox
 	CForm*  frmDialog;
 	CLabel* labInfo;
 
-	// ÓÃ»§Êı¾İ
+	// ç”¨æˆ·æ•°æ®
 	short teamID;
 };
 
-// Ò»Ğ©Í¨ÓÃ¶Ô»°¿ò
+// ä¸€äº›é€šç”¨å¯¹è¯æ¡†
 class CBoxMgr : public CUIInterface
 {
 public:
-	// ½»Ò×ÓÃµÄ¶Ô»°¿ò
+	// äº¤æ˜“ç”¨çš„å¯¹è¯æ¡†
 	static stTradeBox*		ShowTradeBox( FormMouseEvent evtForm=NULL, float fUnitMoney=0, int nTotalNum=-1, const char* szName=NULL );
 
-	// Ñ¡ÔñÈ·¶¨»òÈ¡ÏûµÄ¶Ô»°¿ò
+	// é€‰æ‹©ç¡®å®šæˆ–å–æ¶ˆçš„å¯¹è¯æ¡†
 	static stSelectBox*		ShowSelectBox( FormMouseEvent evtForm=NULL, const char* szTitle=NULL, bool bModal=false );
 
-	// ÊäÈëÊıÁ¿¶Ô»°¿ò
+	// è¾“å…¥æ•°é‡å¯¹è¯æ¡†
 	static stNumBox*		ShowNumberBox( FormMouseEvent evtForm=NULL, int nTotalNum=-1, const char* szTitle=NULL, bool IsMax=true, bool bModal=true );
 
-	// ÊäÈëÃÜÂë¶Ô»°¿ò
+	// è¾“å…¥å¯†ç å¯¹è¯æ¡†
 	static stPasswordBox*	ShowPasswordBox( FormMouseEvent evtForm=NULL, const char* szTitle=NULL, const char* szPassword=NULL, bool bModal=true );
 
-	// ÏÔÊ¾Ò»¸ö¶Ô»°¿ò
+	// æ˜¾ç¤ºä¸€ä¸ªå¯¹è¯æ¡†
 	static stMsgBox*		ShowMsgBox( FormMouseEvent evtForm=NULL, const char* szTitle=NULL, bool bModal=true );
 
 	static stMsgTimeBox*	ShowMsgTime(  FormMouseEvent evtForm=NULL, const char* szTitle=NULL, int iSeconds = 60 );
@@ -110,22 +110,22 @@ private:
 	CForm*		_FindForm(const char * frmName);
 
 private:
-	// ½»Ò×ÊıÁ¿¶Ô»°¿ò:ÊıÁ¿,×Ü¼Û
+	// äº¤æ˜“æ•°é‡å¯¹è¯æ¡†:æ•°é‡,æ€»ä»·
 	static CHideForm	_cTrade;	
 
-	// Ñ¡ÔñÊÇ,»òÕßÈ¡Ïû
+	// é€‰æ‹©æ˜¯,æˆ–è€…å–æ¶ˆ
 	static CHideForm	_cSelect;	
 
-	// ÊäÈëÊıÁ¿¶Ô»°¿ò
+	// è¾“å…¥æ•°é‡å¯¹è¯æ¡†
 	static CHideForm	_cNumber;
 
-	// ÊäÈëÃÜÂë¶Ô»°¿ò
+	// è¾“å…¥å¯†ç å¯¹è¯æ¡†
 	static CHideForm	_cPassword;
 
-	// ÏÔÊ¾Ò»¸ö¶Ô»°¿ò
+	// æ˜¾ç¤ºä¸€ä¸ªå¯¹è¯æ¡†
 	static CHideForm	_cMsg;
 
-	// ¼ÆÊ±ÓÃTick
+	// è®¡æ—¶ç”¨Tick
 	static CForm*	_cfrmError;
 	static DWORD    _cTick;
 	static int		_cSeconds;

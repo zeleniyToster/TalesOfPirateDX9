@@ -1,4 +1,4 @@
-
+ï»¿
 #pragma once
 
 
@@ -20,7 +20,7 @@
 
 
 
-// ¶ÁÈ¡ÄÚ´æBMPÍ¼Æ¬£¬ÔİÊ±Ö»Ö§³ÖºÚ°×Í¼Æ¬
+// è¯»å–å†…å­˜BMPå›¾ç‰‡ï¼Œæš‚æ—¶åªæ”¯æŒé»‘ç™½å›¾ç‰‡
 class CImageBMP
 {
 public:
@@ -72,7 +72,7 @@ namespace GUI
 	private:
 
 		CForm*			frmNumAnswer;
-		CForm*			frmFast;	// ½ö×÷Îª×ø±ê²ÎÕÕ£¬²»×÷ÈÎºÎ´¦Àí
+		CForm*			frmFast;	// ä»…ä½œä¸ºåæ ‡å‚ç…§ï¼Œä¸ä½œä»»ä½•å¤„ç†
 		CEdit*			edtUserInput;
 		CLabelEx*		labTimeLeft;
 		C3DCompent*		ui3dCheckCode;

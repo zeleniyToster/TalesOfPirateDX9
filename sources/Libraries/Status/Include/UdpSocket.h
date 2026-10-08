@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <winsock.h>
 
@@ -9,7 +9,7 @@ public:
 	virtual ~CUdpSocket();
 	virtual void Close();
 
-	bool	IsCreate();			// ÊÇ·ñÒÑ¾­´´½¨
+	bool	IsCreate();			// æ˜¯å¦å·²ç»åˆ›å»º
 
 	bool	RegeditReadEvent( HWND hWnd, DWORD dwMessage );
 	bool	OnNetworkEvent( WPARAM wParam, LPARAM lParam );

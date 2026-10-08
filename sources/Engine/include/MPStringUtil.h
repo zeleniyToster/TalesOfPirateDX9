@@ -1,4 +1,4 @@
-#ifndef MPStringUtil_H
+ï»¿#ifndef MPStringUtil_H
 #define MPStringUtil_H
 
 #include "MPEffPrerequisites.h"
@@ -10,26 +10,26 @@ public:
 	typedef std::stringstream StrStreamType;
 
 public:
-	/** ÒÆÈ¥ÈÎºÎ¿Õ¸ñ×Ö·û, ±ê×¼¿Õ¸ñ°üÀ¨¿Õ¸ñ»òTabsbeµÈµÈ.
+	/** ç§»å»ä»»ä½•ç©ºæ ¼å­—ç¬¦, æ ‡å‡†ç©ºæ ¼åŒ…æ‹¬ç©ºæ ¼æˆ–Tabsbeç­‰ç­‰.
 	@remarks
-	¿ÉÒÔÖ¸¶¨ÊÇ·ñÒÆÈ¥Ç°¶Ë»òºóÃæµÄ¿Õ¸ñ£¬Ä¬ÈÏ¶¼ÒÆÈ¥.
+	å¯ä»¥æŒ‡å®šæ˜¯å¦ç§»å»å‰ç«¯æˆ–åé¢çš„ç©ºæ ¼ï¼Œé»˜è®¤éƒ½ç§»å».
 	*/
 	static void trim( String& str, bool left = true, bool right = true );
 
-	/** ·µ»ØMPStringVector£¬°üÀ¨ÔÚ·Ö¸ô·ûÖ®¼äµÄËùÓĞ×Ó´®.
+	/** è¿”å›MPStringVectorï¼ŒåŒ…æ‹¬åœ¨åˆ†éš”ç¬¦ä¹‹é—´çš„æ‰€æœ‰å­ä¸².
 	@param 
-	delims ·Ö¸ô·ûÁĞ±í
+	delims åˆ†éš”ç¬¦åˆ—è¡¨
 	@param 
-	maxSplits Ö´ĞĞ·Ö¸ôµÄ×î´ó´ÎÊı¡£Èç¹ûÎª0ÔòÎŞÏŞ´Î·Ö¸ô£¬Èç¹û·Ö¸ô´ÎÊı´óÓÚ0
-	Ôò·Ö¸ôµ½µÄ×Ó´®ÊıÁ¿´ïµ½Õâ¸öÊıÎªÖ¹.
+	maxSplits æ‰§è¡Œåˆ†éš”çš„æœ€å¤§æ¬¡æ•°ã€‚å¦‚æœä¸º0åˆ™æ— é™æ¬¡åˆ†éš”ï¼Œå¦‚æœåˆ†éš”æ¬¡æ•°å¤§äº0
+	åˆ™åˆ†éš”åˆ°çš„å­ä¸²æ•°é‡è¾¾åˆ°è¿™ä¸ªæ•°ä¸ºæ­¢.
 	*/
 	static MPStringVector split( const std::string& str, const std::string& delims = "\t\n ", unsigned int maxSplits = 0);
 
-	/** ½«×Ö·û´®ÖĞµÄ×Ö·ûÈ«²¿×ª»»³ÉĞ¡Ğ´.
+	/** å°†å­—ç¬¦ä¸²ä¸­çš„å­—ç¬¦å…¨éƒ¨è½¬æ¢æˆå°å†™.
 	*/
 	static void toLowerCase( String& str );
 
-	/** ½«×Ö·û´®ÖĞµÄ×Ö·ûÈ«²¿×ª»»³É´óĞ´Ğ´.
+	/** å°†å­—ç¬¦ä¸²ä¸­çš„å­—ç¬¦å…¨éƒ¨è½¬æ¢æˆå¤§å†™å†™.
 	*/
 	static void toUpperCase( String& str );
 

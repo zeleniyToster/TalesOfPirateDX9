@@ -1,4 +1,4 @@
-#ifdef _LUA_GAME
+ï»¿#ifdef _LUA_GAME
 
 extern "C"
 {
@@ -8,11 +8,11 @@ extern "C"
     #include <lualib.h>
 }
 
-// luaº¯Êý·µ»ØÖµ¶¨Òå
-#define LUA_FALSE			0 // ·µ»Ø´íÎó
-#define LUA_TRUE			1 // ·µ»ØÕýÈ·
+// luaå‡½æ•°è¿”å›žå€¼å®šä¹‰
+#define LUA_FALSE			0 // è¿”å›žé”™è¯¯
+#define LUA_TRUE			1 // è¿”å›žæ­£ç¡®
 
-// ³ö´íµ÷ÊÔÊä³ö
+// å‡ºé”™è°ƒè¯•è¾“å‡º
 #define PARAM_ERROR        { LG("lua", g_oLangRec.GetString(183),__FUNCTION__ ); }
 #define SCENE_NULL_ERROR   { LG("lua", g_oLangRec.GetString(184), __FUNCTION__);         }
 

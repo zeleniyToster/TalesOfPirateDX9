@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "caLua.h"
 #include "UIRender.h"
 //#include <typeinfo>
@@ -287,7 +287,7 @@ int CDrag::BeginMouseRun( CGuiData* gui, bool InRect, int x, int y, DWORD key )
                 _nDragX = x - _nStartX;
                 _nDragY = y - _nStartY;
 
-                // ¿ªÊ¼ÍÏ¶¯
+                // å¼€å§‹æ‹–åŠ¨
                 if( (abs(_nStartX - x)>=(int)_nYareLen || abs(_nStartY - y)>=(int)_nYareLen) )
                 {
                     _eState = stDrag;
@@ -317,7 +317,7 @@ void CDrag::Reset()
 
 bool CDrag::MouseRun( int x, int y, DWORD key )
 {
-    // ÍÏ¶¯Íê±Ï
+    // æ‹–åŠ¨å®Œæ¯•
     if( key & Mouse_LUp )
     {
         if( _IsUseGrid )
@@ -640,7 +640,7 @@ void UIRender::SetScreen( int w, int h, bool isFull )
 {
 	_IsFullScreen = isFull;
 
-    int sw, sh;     // Êµ¼ÊÏÔÊ¾ÇøÓò
+    int sw, sh;     // å®žé™…æ˜¾ç¤ºåŒºåŸŸ
     RECT rc;
     ::GetClientRect( g_pGameApp->GetHWND(), &rc );
     sw = rc.right  - rc.left;	
@@ -748,7 +748,7 @@ bool CGuiPic::LoadImage( int frame, int nTextureID, int tx, int ty, int tw, int 
 	pTex->nTexSY	= ty;
 	pTex->nTexW	= tw;
 	pTex->nTexH	= th;
-	if( scale_x<=0.000001f ) // ÌùÍ¼À­Éýµ½´°¿Ú³ß´ç
+	if( scale_x<=0.000001f ) // è´´å›¾æ‹‰å‡åˆ°çª—å£å°ºå¯¸
 	{
 		if( _pParent )
 		{
@@ -1011,7 +1011,7 @@ bool CGuiFont::Clear()
 	{
 		(*it)->ReleaseFont();
 		//delete (*it);
-		SAFE_DELETE(*it); // UIµ±»ú´¦Àí
+		SAFE_DELETE(*it); // UIå½“æœºå¤„ç†
 	}
 
 	_fonts.clear();
@@ -1161,10 +1161,10 @@ void CEdit::ShowFocus()
 {
 	if( !IsNormal() ) return;
 
-	RefreshText();   // Ë¢ÐÂÎÄ×ÖÏÔÊ¾
-	RefreshCursor(); // Ë¢ÐÂ¹â±êÏÔÊ¾
+	RefreshText();   // åˆ·æ–°æ–‡å­—æ˜¾ç¤º
+	RefreshCursor(); // åˆ·æ–°å…‰æ ‡æ˜¾ç¤º
 
-	// ÏÔÊ¾ÉÁË¸¹â±ê
+	// æ˜¾ç¤ºé—ªçƒå…‰æ ‡
 	++_nCursorFlashCount;
 	if( _nCursorFlashCount>=10 )
 	{
@@ -1173,7 +1173,7 @@ void CEdit::ShowFocus()
 	}
 	if( _bCursorIsShow )
 	{
-		//²ÉÓÃ¾ø¶Ô×ø±êÈ·¶¨¹â±êµÄÎ»ÖÃ
+		//é‡‡ç”¨ç»å¯¹åæ ‡ç¡®å®šå…‰æ ‡çš„ä½ç½®
 		//GetRender().RenderTextureAbsRect( _nCursorX, _nCursorY, &_CursorImage );
 		GetRender().FillFrame( _nCursorX, _nCursorY, _nCursorX+2, _nCursorY+_nCursorHeight, _nCursorColor );
 	}
@@ -1481,7 +1481,7 @@ inline void UIRender::RenderSprite(LPTEXTURE tex, RECT* rc, VECTOR2* vscale, VEC
 
 		RECT* prc = &pCliper->GetClipRect();
 
-		// ¨ª?D??¨²2?????¨ªa¡ê?2???¨º?
+		// Ã­?D??Ãº2?????Ã­aï¿¡?2???Ãª?
 		if (vdest->x > prc->right || vdest->x < prc->left - w)
 		{
 			return;

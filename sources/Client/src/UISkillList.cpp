@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "UISkillList.h"
 #include "uiform.h"
 #include "uiformmgr.h"
@@ -49,7 +49,7 @@ CSkillList::~CSkillList(void)
     //delete _pImage;
     //delete _pSelect;
 
-	SAFE_DELETE(_pImage);	// UIµ±»ú´¦Àí
+	SAFE_DELETE(_pImage);	// UIå½“æœºå¤„ç†
 	SAFE_DELETE(_pSelect);
 }
 
@@ -76,7 +76,7 @@ void CSkillList::_Copy( const CSkillList& rhs )
 
 void CSkillList::Init()
 {
-    // ³õÊ¼»¯¿Ø¼ş
+    // åˆå§‹åŒ–æ§ä»¶
     if( _nRowHeight<=0 ) _nRowHeight=34;
     if( _nUnitHeight<=0 || _nUnitHeight>_nRowHeight ) _nUnitHeight=_nRowHeight;
 
@@ -90,7 +90,7 @@ void CSkillList::Init()
 
     _pSelect->SetScale( GetWidth()-_nLeftMargin-_nRightMargin-_nUnitWidth - _pScroll->GetWidth(), _nUnitHeight );
 
-    // ²âÊÔ
+    // æµ‹è¯•
     if( GetCommand(0) ) return;
     
     CSkillRecord *info;
@@ -128,7 +128,7 @@ void CSkillList::Render()
         y += _nRowHeight;
     }
 
-	// ÏÔÊ¾Éı¼¶°´Å¥
+	// æ˜¾ç¤ºå‡çº§æŒ‰é’®
     y = _nSY1 + _nButtonOffY;
     for( int i=_nShowFirst; i<_nShowLast; i++ )
     {
@@ -440,7 +440,7 @@ void CSkillList::Clear()
     for( skills::iterator it=_skills.begin(); it!=_skills.end(); it++ )
     {
         //delete *it;
-		SAFE_DELETE(*it);	// UIµ±»ú´¦Àí
+		SAFE_DELETE(*it);	// UIå½“æœºå¤„ç†
     }
     _skills.clear();
 }

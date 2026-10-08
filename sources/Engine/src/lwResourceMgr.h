@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "lwHeader.h"
 #include "lwStdInc.h"
@@ -360,11 +360,11 @@ public:
 };
 
 // remarks by lsh
-// ÓĞ¹ØlwMeshºÍlwMeshInfoÖ®¼äµÄ¹ØÏµ
-// 1¡£lwMeshInfo×÷Îª´¿´âµÄCÀàĞÍ½á¹¹Ìå£¬ÔÙ¹ØÁªÒ»×éconstructºÍdestructµÈµÄ¸¨Öúº¯Êı¡£
-//    lwMesh¾ÛºÏ¸Ã½á¹¹Ìå
-// 2¡£lwMeshInfoÊÇÒ»¸öclass£¬Í¬Ê±ÓµÓĞlwIMeshInfoµÄ½Ó¿Ú·½Ê½
-//    lwMesh¼Ì³Ğ£¨»òÒıÓÃ½Ó¿ÚÖ¸Õë£©¸ÃÀà£¬ÔÚĞ§ÂÊÉÏ²»ÄÜ½ÓÊÜ
+// æœ‰å…³lwMeshå’ŒlwMeshInfoä¹‹é—´çš„å…³ç³»
+// 1ã€‚lwMeshInfoä½œä¸ºçº¯ç²¹çš„Cç±»å‹ç»“æ„ä½“ï¼Œå†å…³è”ä¸€ç»„constructå’Œdestructç­‰çš„è¾…åŠ©å‡½æ•°ã€‚
+//    lwMeshèšåˆè¯¥ç»“æ„ä½“
+// 2ã€‚lwMeshInfoæ˜¯ä¸€ä¸ªclassï¼ŒåŒæ—¶æ‹¥æœ‰lwIMeshInfoçš„æ¥å£æ–¹å¼
+//    lwMeshç»§æ‰¿ï¼ˆæˆ–å¼•ç”¨æ¥å£æŒ‡é’ˆï¼‰è¯¥ç±»ï¼Œåœ¨æ•ˆç‡ä¸Šä¸èƒ½æ¥å—
 // 
 class lwMesh : public lwIMesh
 {
@@ -715,8 +715,8 @@ public:
     LW_RESULT GetTex( lwITex** ret_obj, DWORD id );
     LW_RESULT GetAnimCtrl( lwIAnimCtrl** ret_obj, DWORD id );
 
-    // Ö±½Ó×¢²á£¬²»Í¨¹ıÎÄ¼ş·½Ê½²éÕÒ£¬ÔÚÕâÖÖÇé¿öÏÂÒ»µ©ÄÚ´æÊı¾İ±»É¾³ı£¬ÏÔ´æÊı¾İ½«´´½¨Ê§°Ü
-    // ÊÊÓÃÓÚÒ»Ğ©°ïÖúĞÔµÄÎïÌå£¬ÈçBoundingBoxµÈ
+    // ç›´æ¥æ³¨å†Œï¼Œä¸é€šè¿‡æ–‡ä»¶æ–¹å¼æŸ¥æ‰¾ï¼Œåœ¨è¿™ç§æƒ…å†µä¸‹ä¸€æ—¦å†…å­˜æ•°æ®è¢«åˆ é™¤ï¼Œæ˜¾å­˜æ•°æ®å°†åˆ›å»ºå¤±è´¥
+    // é€‚ç”¨äºä¸€äº›å¸®åŠ©æ€§çš„ç‰©ä½“ï¼Œå¦‚BoundingBoxç­‰
     LW_RESULT RegisterMesh( lwIMesh* obj );
     LW_RESULT RegisterTex( lwITex* obj );
     LW_RESULT RegisterAnimCtrl( lwIAnimCtrl* obj );
@@ -738,7 +738,7 @@ public:
 
     LW_RESULT QueryMesh( DWORD* ret_id, const lwResFileMesh* rfm );
     LW_RESULT QueryTex( DWORD* ret_id, const char* file_name );
-    // Ä¿Ç°Ö»ÓĞRegisterAnimDataÊ±ºòÊ¹ÓÃRES_FILE_TYPE_GENERIC»òRES_FILE_TYPE_GEOMETRYÎÄ¼şÀàĞÍµÄ×ÊÔ´²ÅÓĞĞ§
+    // ç›®å‰åªæœ‰RegisterAnimDataæ—¶å€™ä½¿ç”¨RES_FILE_TYPE_GENERICæˆ–RES_FILE_TYPE_GEOMETRYæ–‡ä»¶ç±»å‹çš„èµ„æºæ‰æœ‰æ•ˆ
     LW_RESULT QueryAnimCtrl( DWORD* ret_id, const lwResFileAnimData* info );
 
     LW_VOID ReleaseObject();

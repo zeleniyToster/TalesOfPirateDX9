@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "uiitem.h"
 #include "uitextparse.h"
 
@@ -91,7 +91,7 @@ void CColorItem::ParseScript( const char szScript[], USHORT sStartCom, DWORD dwD
 		{
 			if( strDesp.size() > 0 )
 			{
-				// Ìí¼ÓÎÄ×ÖÏÔÊ¾Êı¾İµ½ÁĞ±íÖĞ
+				// æ·»åŠ æ–‡å­—æ˜¾ç¤ºæ•°æ®åˆ°åˆ—è¡¨ä¸­
 				ITEM_TEXT_DATA Data;
 				Data.dwColor = dwColor;
 				Data.sxPos = sxPos;
@@ -104,7 +104,7 @@ void CColorItem::ParseScript( const char szScript[], USHORT sStartCom, DWORD dwD
 			pszTemp++;
 			if( pszTemp[0] == 'p' )
 			{
-				dwColor = 0xFFFF00FF; // ×ÏÉ«
+				dwColor = 0xFFFF00FF; // ç´«è‰²
 				if( pszTemp[1] == '>' )
 				{
 					pszTemp++;
@@ -158,16 +158,16 @@ void CColorItem::ParseScript( const char szScript[], USHORT sStartCom, DWORD dwD
 			}
 			else
 			{
-				// Î´ÖªÀàĞÍ±¨´í£¡
+				// æœªçŸ¥ç±»å‹æŠ¥é”™ï¼
 				continue;
 			}
 
-			// Ê¹ÓÃĞÂµÄ×Ö·û¼ÇÂ¼
+			// ä½¿ç”¨æ–°çš„å­—ç¬¦è®°å½•
 			pszTemp++;
 		}
 		else if( pszTemp[0] == '>' )
 		{
-			// Ìí¼ÓÎÄ×ÖÏÔÊ¾Êı¾İµ½ÁĞ±íÖĞ
+			// æ·»åŠ æ–‡å­—æ˜¾ç¤ºæ•°æ®åˆ°åˆ—è¡¨ä¸­
 			ITEM_TEXT_DATA Data;
 			Data.dwColor = dwColor;
 			Data.sxPos = sxPos;
@@ -181,7 +181,7 @@ void CColorItem::ParseScript( const char szScript[], USHORT sStartCom, DWORD dwD
 			continue;
 		}
 
-		// ÅĞ¶ÏÊÇ·ñÒ»¸öGBK
+		// åˆ¤æ–­æ˜¯å¦ä¸€ä¸ªGBK
 		BOOL bFlag1 = 0x81 <= (BYTE)pszTemp[0] && (BYTE)pszTemp[0] <= 0xFE;
 		BOOL bFlag2 = (0x40 <= (BYTE)pszTemp[1] && (BYTE)pszTemp[1] <= 0x7E) || (0x7E <= (BYTE)pszTemp[1] && (BYTE)pszTemp[1] <= 0xFE);
 		if( bFlag1 && bFlag2 )
@@ -190,7 +190,7 @@ void CColorItem::ParseScript( const char szScript[], USHORT sStartCom, DWORD dwD
 			szData[1] = pszTemp[1];
 			strDesp += szData;
 			
-			// ÒÆ¶¯ÁĞºÍÖ¸ÏòÏÂÒ»¸ö×Ö·û
+			// ç§»åŠ¨åˆ—å’ŒæŒ‡å‘ä¸‹ä¸€ä¸ªå­—ç¬¦
 			sCom += 2;
 			pszTemp += 2;
 		}
@@ -199,7 +199,7 @@ void CColorItem::ParseScript( const char szScript[], USHORT sStartCom, DWORD dwD
 			szData[0] = pszTemp[0];
 			strDesp += szData;
 			
-			// ÒÆ¶¯ÁĞºÍÖ¸ÏòÏÂÒ»¸ö×Ö·û
+			// ç§»åŠ¨åˆ—å’ŒæŒ‡å‘ä¸‹ä¸€ä¸ªå­—ç¬¦
 			sCom++;
 			pszTemp++;
 		}
@@ -256,12 +256,12 @@ void CItemRow::_Clear()
 		if( _items[i] != _GetNullItem() )
 		{
 			//delete _items[i];
-			SAFE_DELETE(_items[i]); // UIµ±»ú´¦Àí
+			SAFE_DELETE(_items[i]); // UIå½“æœºå¤„ç†
 		}
 	}
 
 	//delete [] _items;
-	SAFE_DELETE_ARRAY(_items); // UIµ±»ú´¦Àí
+	SAFE_DELETE_ARRAY(_items); // UIå½“æœºå¤„ç†
 	_pTag = NULL;
 }
 
@@ -285,27 +285,27 @@ void CItemRow::SetColor( DWORD c )
 //---------------------------------------------------------------------------
 // class CItemEx
 //---------------------------------------------------------------------------
-void CItemEx::ProcessString( int length ) // ²ÎÊı£º½ÇÉ«Ãû³ÆµÄ³¤¶È
+void CItemEx::ProcessString( int length ) // å‚æ•°ï¼šè§’è‰²åç§°çš„é•¿åº¦
 {
-	_strLine[0] = _str.substr( 0 , length ); //µÚÒ»ĞĞÏÔÊ¾½ÇÉ«µÄÃû³Æ
+	_strLine[0] = _str.substr( 0 , length ); //ç¬¬ä¸€è¡Œæ˜¾ç¤ºè§’è‰²çš„åç§°
 
-	if ( _str.size() - length <= 32)  //Êµ¼ÊÎÄ×Ö²»×ã32¸ö×Ö·û,Ôò2ĞĞÏÔÊ¾
+	if ( _str.size() - length <= 32)  //å®é™…æ–‡å­—ä¸è¶³32ä¸ªå­—ç¬¦,åˆ™2è¡Œæ˜¾ç¤º
 	{
 		_strLine[1] = _str.substr (length , _str.size() - length ) ;
 		_nLineNum = 2;
 	}
-	else       //Êµ¼ÊÎÄ×Ö³¤ÓÚ32¸ö×Ö·û,Ôò3ĞĞÏÔÊ¾,×î¶à3ĞĞ
+	else       //å®é™…æ–‡å­—é•¿äº32ä¸ªå­—ç¬¦,åˆ™3è¡Œæ˜¾ç¤º,æœ€å¤š3è¡Œ
 	{
 		int i ;
 		i = length ;					
-		while((int) _strLine[1].size() < 32 )   //µÚ2ĞĞ
+		while((int) _strLine[1].size() < 32 )   //ç¬¬2è¡Œ
 		{
-			if ( _str[i] & 0x80 ) //ºº×Ö
+			if ( _str[i] & 0x80 ) //æ±‰å­—
 			{
 				_strLine[1] +=  _str.substr (i , 2  );
 				i += 2 ;
 			}						
-			else //ÆäËû×Ö·û
+			else //å…¶ä»–å­—ç¬¦
 			{
 				//Modify by sunny.sun20080901
 				//begin
@@ -344,7 +344,7 @@ void CItemEx::ProcessString( int length ) // ²ÎÊı£º½ÇÉ«Ãû³ÆµÄ³¤¶È
 			}
 		}
 
-		while ( (int)_strLine[1].size() >= 32 && (int)_strLine[2].size() < 32 && i < (int)_str.size()) //µÚ3ĞĞ
+		while ( (int)_strLine[1].size() >= 32 && (int)_strLine[2].size() < 32 && i < (int)_str.size()) //ç¬¬3è¡Œ
 		{
 			if ( _str[i] & 0x80 )
 			{

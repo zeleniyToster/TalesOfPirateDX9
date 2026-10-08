@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "mpcamera.h"
 
@@ -200,7 +200,7 @@ public:
 	float	MIN_SCALE;
 
 public:
-	//»º³å¸úËæ
+	//ç¼“å†²è·Ÿéš
 	void	SetBufVel(DWORD	dwVel, int iCha)
 	{
 		//m_maxVel = ((float)dwVel ) / 100;
@@ -212,7 +212,7 @@ public:
 	void	BeginMove();
 	void	EndMove();
 
-	void	InitPos(float fX,float fY,float fZ,bool bRestoreCustom=true);	// bRestoreCustom²ÎÊıÎªtrue£¬±íÊ¾Çå³ıÓÃ»§¶Ô¾µÍ·µÄ¸Ä±ä
+	void	InitPos(float fX,float fY,float fZ,bool bRestoreCustom=true);	// bRestoreCustomå‚æ•°ä¸ºtrueï¼Œè¡¨ç¤ºæ¸…é™¤ç”¨æˆ·å¯¹é•œå¤´çš„æ”¹å˜
 	void	AddPoint(float fX,float fY,float fZ);
 	void	Update();
 

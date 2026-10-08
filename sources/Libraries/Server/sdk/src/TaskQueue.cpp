@@ -1,4 +1,4 @@
-//================================================================
+ï»¿//================================================================
 // It must be permitted by Dabo.Zhang that this program is used for
 // any purpose in any situation.
 // Copyright (C) Dabo.Zhang 2000-2003
@@ -130,7 +130,7 @@ long Task::WaitMe()
 {
 	TaskWait	*l_taskwait;
 	bool		l_canwait	=false;
-	long		l_retval	=NOTWAITSTATE;	//Ïß³ÌÃ»ÓÐ´¦ÓÚ¿ÉµÈ´ý×´Ì¬
+	long		l_retval	=NOTWAITSTATE;	// the thread is not in a waitable state
 	__mtxtaskwait.lock();
 	try
 	{

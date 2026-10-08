@@ -1,23 +1,23 @@
-#ifndef MPFactoryObj_H
+ï»¿#ifndef MPFactoryObj_H
 #define MPFactoryObj_H
 
-/** ³éÏó¹¤³§Àà. ±¾ÉíÃ»ÓĞÈÎºÎ¹¦ÄÜ, µ«ÅÉÉúÀà¿ÉÒÔÔö¼Ó¹¦ÄÜ.
+/** æŠ½è±¡å·¥å‚ç±». æœ¬èº«æ²¡æœ‰ä»»ä½•åŠŸèƒ½, ä½†æ´¾ç”Ÿç±»å¯ä»¥å¢åŠ åŠŸèƒ½.
 */
 template< typename T > class FactoryObj
 {
 public:
 	virtual ~FactoryObj() {};
 
-	/** ·µ»Ø¹¤³§ÀàĞÍ.	*/
+	/** è¿”å›å·¥å‚ç±»å‹.	*/
 	virtual const string& getType() const = 0;
 
-	/** ´´½¨Ò»¸öĞÂ¶ÔÏó.
-	@param name ´´½¨¶ÔÏóµÄÃû×Ö
-	@return ÓÉÕâ¸ö¹¤³§´´½¨µÄ¶ÔÏó¡£Õâ¸ö¶ÔÏóµÄÀàĞÍÒÀÀµÓÚ¹¤³§.
+	/** åˆ›å»ºä¸€ä¸ªæ–°å¯¹è±¡.
+	@param name åˆ›å»ºå¯¹è±¡çš„åå­—
+	@return ç”±è¿™ä¸ªå·¥å‚åˆ›å»ºçš„å¯¹è±¡ã€‚è¿™ä¸ªå¯¹è±¡çš„ç±»å‹ä¾èµ–äºå·¥å‚.
 	*/
 	virtual T* createInstance( const string& name ) = 0;    
-	/** Îö¹¹Ò»¸öÓÉÕâ¸ö¹¤³§´´½¨µÄ¶ÔÏó.
-	@param ptr Ö¸ÏòĞèÒª±³Îö¹¹µÄ¶ÔÏóÖ¸Õë
+	/** ææ„ä¸€ä¸ªç”±è¿™ä¸ªå·¥å‚åˆ›å»ºçš„å¯¹è±¡.
+	@param ptr æŒ‡å‘éœ€è¦èƒŒææ„çš„å¯¹è±¡æŒ‡é’ˆ
 	*/
 	virtual void destroyInstance( T* ) = 0;    
 };

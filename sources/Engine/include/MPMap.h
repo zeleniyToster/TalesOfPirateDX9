@@ -1,4 +1,4 @@
-#ifndef _MPMAP_H_
+ï»¿#ifndef _MPMAP_H_
 #define _MPMAP_H_
 #include "ZRBlock.h"
 #include "MPTile.h"
@@ -15,11 +15,11 @@
 
 struct MPActiveMapSection
 {
-	MPTile*		pTileData;							// Ö¸ÏòÊµ¼ÊµÄTileÊı¾İ
-	int			nX;									// MapSectionËùÔÚµÄÎ»ÖÃ
+	MPTile*		pTileData;							// æŒ‡å‘å®é™…çš„Tileæ•°æ®
+	int			nX;									// MapSectionæ‰€åœ¨çš„ä½ç½®
 	int			nY;
-	DWORD		dwActiveTime;						// ×îºóÒ»´ÎÊ¹ÓÃµÄÊ±¼ä
-	DWORD		dwDataOffset;						// ÎÄ¼şÊı¾İÖ¸ÕëÎ»ÖÃ = 0, ±íÊ¾Ã»ÓĞÊı¾İ
+	DWORD		dwActiveTime;						// æœ€åä¸€æ¬¡ä½¿ç”¨çš„æ—¶é—´
+	DWORD		dwDataOffset;						// æ–‡ä»¶æ•°æ®æŒ‡é’ˆä½ç½® = 0, è¡¨ç¤ºæ²¡æœ‰æ•°æ®
 	
 	void	Init()
 	{
@@ -127,20 +127,20 @@ public:
     void        SetSeaDefaultColor(DWORD dwColor)       { _dwSeaDefaultColor = dwColor;           }
     void        UpdateRender(BOOL bReset = FALSE)       
     { 
-        if(bReset) _nUpdateRender = 2; // ĞèÒªÖØĞÂÉú³ÉGroup (±ÈÈç¶ÁÅÌ, ÊÓÒ°±ä»¯)
-        else       _nUpdateRender = 1; // Ö»ĞèÒªÖØĞÂ²úÉúVB(±ÈÈç±à¼­Æ÷, µÆ¹âÑÕÉ«¸üĞÂ)
+        if(bReset) _nUpdateRender = 2; // éœ€è¦é‡æ–°ç”ŸæˆGroup (æ¯”å¦‚è¯»ç›˜, è§†é‡å˜åŒ–)
+        else       _nUpdateRender = 1; // åªéœ€è¦é‡æ–°äº§ç”ŸVB(æ¯”å¦‚ç¼–è¾‘å™¨, ç¯å…‰é¢œè‰²æ›´æ–°)
     }
 
-    float       GetGridHeight(int x, int y);    // x,yÎªĞ¡¸ñ×Ó×ø±ê
-    BYTE        IsGridBlock(int x, int y);      // x,yÎªĞ¡¸ñ×Ó×ø±ê
-	float		GetTileHeight(int x, int y);    // x,yÎª´ó¸ñ×ÓÃ××ø±ê
-	short       GetTileRegionAttr(int x, int y);// x,yÎª´ó¸ñ×ÓÃ××ø±ê
+    float       GetGridHeight(int x, int y);    // x,yä¸ºå°æ ¼å­åæ ‡
+    BYTE        IsGridBlock(int x, int y);      // x,yä¸ºå°æ ¼å­åæ ‡
+	float		GetTileHeight(int x, int y);    // x,yä¸ºå¤§æ ¼å­ç±³åæ ‡
+	short       GetTileRegionAttr(int x, int y);// x,yä¸ºå¤§æ ¼å­ç±³åæ ‡
 
 public:
 
     DWORD       m_dwTerrainRenderTime;
     DWORD       m_dwSeaRenderTime;
-    DWORD       m_dwLoadingTime[3]; // ×î½ü3´Î²»Îª0µÄ¶ÁÅÌÊ±¼ä
+    DWORD       m_dwLoadingTime[3]; // æœ€è¿‘3æ¬¡ä¸ä¸º0çš„è¯»ç›˜æ—¶é—´
     DWORD       m_dwMaxLoadingTime;
     DWORD       m_dwActiveSectionCnt;
     DWORD       m_dwBatchTime;
@@ -197,16 +197,16 @@ protected:
 	
     int _nWidth{ 0 };
 	int _nHeight{ 0 };
-	int _nSectionWidth{ 0 }; // Ã¿Ò»¿éSectionµÄ¿í¶ÈºÍ¸ß¶È
+	int _nSectionWidth{ 0 }; // æ¯ä¸€å—Sectionçš„å®½åº¦å’Œé«˜åº¦
 	int _nSectionHeight{ 0 };
-	int _nSectionCntX{ 0 }; // µØÍ¼Ë®Æ½·½ÏòÉÏSectionµÄ¿éÊı
-	int _nSectionCntY{ 0 }; // µØÍ¼´¹Ö±·½ÏòÉÏSectionµÄ¿éÊı
-	int _nSectionCnt{ 0 }; // µØÍ¼ÉÏSectionµÄ×Ü¿éÊı
+	int _nSectionCntX{ 0 }; // åœ°å›¾æ°´å¹³æ–¹å‘ä¸ŠSectionçš„å—æ•°
+	int _nSectionCntY{ 0 }; // åœ°å›¾å‚ç›´æ–¹å‘ä¸ŠSectionçš„å—æ•°
+	int _nSectionCnt{ 0 }; // åœ°å›¾ä¸ŠSectionçš„æ€»å—æ•°
 
-	float _fShowCenterX{ 0 }; // ¶¯Ì¬¶ÁÈëµÄÖĞĞÄÎ»ÖÃ
+	float _fShowCenterX{ 0 }; // åŠ¨æ€è¯»å…¥çš„ä¸­å¿ƒä½ç½®
 	float _fShowCenterY{ 0 };
 
-	int _nShowWidth{ 0 }; // ¿ÉÊÓ·¶Î§
+	int _nShowWidth{ 0 }; // å¯è§†èŒƒå›´
 	int _nShowHeight{ 0 };
 
 
@@ -218,12 +218,12 @@ protected:
 	int							    _nSectionStartY{ 0 };
     DWORD*                          _pOffsetIdx{ nullptr };
 
-	MAP_PROC					_pfnProc{ nullptr };			// ¦Ì?¨ª??¡¥¨¬??¨¢¨¨???¦Ì¡Â¨ª¡§?ao¡¥¨ºy
+	MAP_PROC					_pfnProc{ nullptr };			// Î¼?Ã­??Ë‰Ã¬??Ã¡Ã¨???Î¼Ã·Ã­Â¨?aoË‰Ãªy
 	
-	FILE*						_fp{ nullptr };				// ¦Ì?¨ª????t??¡À¨²
-	BOOL						_bEdit{ TRUE };		// ¨º?¡¤??¨¦¡À¨¤?-
+	FILE*						_fp{ nullptr };				// Î¼?Ã­????t??Â±Ãº
+	BOOL						_bEdit{ TRUE };		// Ãª?Â·??Ã©Â±Ã ?-
 	BOOL						_bSeaVisible{ TRUE };
-	BOOL						_bShowCenterPoint{ FALSE };	// ¨º?¡¤???¨º??1¦Ì?o¨ª?1¦Ì??¨´?¨²Section
+	BOOL						_bShowCenterPoint{ FALSE };	// Ãª?Â·???Ãª??1Î¼?oÃ­?1Î¼??Ã¹?ÃºSection
 
 	int _nWaterLoopFrame{ 0 };
 	BOOL _bUseVB{ FALSE };
@@ -321,7 +321,7 @@ inline void CopyMapSection(MPActiveMapSection *pSource, MPActiveMapSection *pDes
    memcpy(pDest->pTileData, pSource->pTileData, sizeof(MPTile) * 64);
 }
 
-inline float MPMap::GetTileHeight(int x, int y) // ´ó¸ñ×Ó×ø±ê
+inline float MPMap::GetTileHeight(int x, int y) // å¤§æ ¼å­åæ ‡
 {
     int offx = x - _nLastTileStartX;
     int offy = y - _nLastTileStartY;
@@ -332,7 +332,7 @@ inline float MPMap::GetTileHeight(int x, int y) // ´ó¸ñ×Ó×ø±ê
     return _fTileHeightBuffer[offy][offx];
 }
 
-inline short MPMap::GetTileRegionAttr(int x, int y) // ´ó¸ñ×Ó×ø±ê
+inline short MPMap::GetTileRegionAttr(int x, int y) // å¤§æ ¼å­åæ ‡
 {
     int offx = x - _nLastTileStartX;
     int offy = y - _nLastTileStartY;
@@ -361,7 +361,7 @@ inline float MPMap::GetGridHeight(int x, int y) // Small grid coordinates
 	}
 }
 
-inline BYTE MPMap::IsGridBlock(int x, int y) // Ğ¡¸ñ×Ó×ø±ê
+inline BYTE MPMap::IsGridBlock(int x, int y) // å°æ ¼å­åæ ‡
 {
     int offx = x - _nLastGridStartX;
     int offy = y - _nLastGridStartY;

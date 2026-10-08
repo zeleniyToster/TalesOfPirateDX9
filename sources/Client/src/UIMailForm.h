@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 
 #include "UIGlobalVar.h"
@@ -29,13 +29,13 @@ namespace GUI
 
 	private:
 
-		// ÎÊÌâ±íµ¥
+		// é—®é¢˜è¡¨å•
 		CForm*		frmQuestion;
 		CEdit*		edtQuestionTitle;
 		CMemo*		memCentent;
 		static void _evtQuestionFormEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey);
 
-		// »Ø´ğ±íµ¥
+		// å›ç­”è¡¨å•
 		CForm*		frmAnswer;
 		CMemo*		memMiss;
 	};

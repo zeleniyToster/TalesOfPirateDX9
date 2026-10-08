@@ -1,4 +1,4 @@
-#ifndef UI_HAIRCUT_FORM_H
+ï»¿#ifndef UI_HAIRCUT_FORM_H
 #define UI_HAIRCUT_FORM_H
 
 #include "UIGlobalVar.h"
@@ -19,8 +19,8 @@ namespace GUI
 		CHaircutMgr();
 		~CHaircutMgr();
 
-		void ShowHaircutForm();			// ·şÎñÆ÷ÒªÇó´ò¿ªÀí·¢½çÃæ
-		void Clear();					// ·şÎñÆ÷¹Ø±ÕÀí·¢½çÃæ
+		void ShowHaircutForm();			// æœåŠ¡å™¨è¦æ±‚æ‰“å¼€ç†å‘ç•Œé¢
+		void Clear();					// æœåŠ¡å™¨å…³é—­ç†å‘ç•Œé¢
 
 		void Refresh(DWORD dwHairType, DWORD dwHairColor);
 		void RenderCha(int x,int y);
@@ -40,7 +40,7 @@ namespace GUI
 		void ChangeHairColor(eDirectType enumDirect = LEFT);
 		void ChangeHairType(eDirectType enumDirect = LEFT);
 
-		//UIµÄ»Øµ÷º¯Êı
+		//UIçš„å›è°ƒå‡½æ•°
 		static void _MainMouseHaircutEvent(CCompent *pSender, int nMsgType, 
 										   int x, int y, DWORD dwKey);
 		static void _MainOnCloseEvent( CForm* pForm, bool& IsClose );
@@ -59,7 +59,7 @@ namespace GUI
 
 
 	private:
-		//Àí·¢UI
+		//ç†å‘UI
 		CForm			* frmHaircut;
 		COneCommand		* cmdProp[defHAIR_MAX_ITEM];
 		CLabel			* lblHairColor;

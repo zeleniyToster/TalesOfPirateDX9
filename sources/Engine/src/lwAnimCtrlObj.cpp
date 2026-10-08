@@ -1,4 +1,4 @@
-//
+ï»¿//
 #include "stdafx.h"
 #include "lwAnimCtrlObj.h"
 #include "lwPoseCtrl.h"
@@ -34,7 +34,7 @@ LW_RESULT lwAnimCtrlObjMat::Clone(lwIAnimCtrlObjMat** ret_obj)
         goto __ret;
 
     o->AttachAnimCtrl(_anim_ctrl);
-    // ÕâÀïÒÔºóÐèÒªÊ¹ÓÃlwAnimCtrl_RefÀ´»ñµÃÒýÓÃ¼ÆÊý
+    // è¿™é‡Œä»¥åŽéœ€è¦ä½¿ç”¨lwAnimCtrl_Refæ¥èŽ·å¾—å¼•ç”¨è®¡æ•°
     if(_anim_ctrl->GetRegisterID() != LW_INVALID_INDEX)
     {
         _res_mgr->AddRefAnimCtrl(_anim_ctrl, 1);
@@ -184,7 +184,7 @@ LW_RESULT lwAnimCtrlObjBone::Clone(lwIAnimCtrlObjBone** ret_obj)
         goto __ret;
 
     o->AttachAnimCtrl(_anim_ctrl);
-    // ÕâÀïÒÔºóÐèÒªÊ¹ÓÃlwAnimCtrl_RefÀ´»ñµÃÒýÓÃ¼ÆÊý
+    // è¿™é‡Œä»¥åŽéœ€è¦ä½¿ç”¨lwAnimCtrl_Refæ¥èŽ·å¾—å¼•ç”¨è®¡æ•°
     if(_anim_ctrl->GetRegisterID() != LW_INVALID_INDEX)
     {
         _res_mgr->AddRefAnimCtrl(_anim_ctrl, 1);
@@ -327,8 +327,8 @@ LW_RESULT lwAnimCtrlObjBone::UpdateHelperObject(lwIHelperObject* helper_obj)
 {
     LW_RESULT ret = LW_RET_FAILED;
 
-    // ÕâÀï²»ÓÃIsPlaying()À´×÷ÎªÅÐ¶ÏÌõ¼þ£¬ÒòÎªµ±lwAnimCtrlObjBoneÎª
-    // ÈÝÆ÷Ê±£¬Æä²¢²»×öPlaying£¬µ«ÊÇÐèÒª¸üÐÂHelperObject
+    // è¿™é‡Œä¸ç”¨IsPlaying()æ¥ä½œä¸ºåˆ¤æ–­æ¡ä»¶ï¼Œå› ä¸ºå½“lwAnimCtrlObjBoneä¸º
+    // å®¹å™¨æ—¶ï¼Œå…¶å¹¶ä¸åšPlayingï¼Œä½†æ˜¯éœ€è¦æ›´æ–°HelperObject
     //if(!IsPlaying() || helper_obj == 0)
     if(_dummy_rtm_num == 0 || helper_obj == 0)
         goto __addr_ret_ok;
@@ -422,7 +422,7 @@ LW_RESULT lwAnimCtrlObjTexUV::Clone(lwIAnimCtrlObjTexUV** ret_obj)
         goto __ret;
 
     o->AttachAnimCtrl(_anim_ctrl);
-    // ÕâÀïÒÔºóÐèÒªÊ¹ÓÃlwAnimCtrl_RefÀ´»ñµÃÒýÓÃ¼ÆÊý
+    // è¿™é‡Œä»¥åŽéœ€è¦ä½¿ç”¨lwAnimCtrl_Refæ¥èŽ·å¾—å¼•ç”¨è®¡æ•°
     if(_anim_ctrl->GetRegisterID() != LW_INVALID_INDEX)
     {
         _res_mgr->AddRefAnimCtrl(_anim_ctrl, 1);
@@ -563,7 +563,7 @@ LW_RESULT lwAnimCtrlObjTexImg::Clone(lwIAnimCtrlObjTexImg** ret_obj)
         goto __ret;
 
     o->AttachAnimCtrl(_anim_ctrl);
-    // ÕâÀïÒÔºóÐèÒªÊ¹ÓÃlwAnimCtrl_RefÀ´»ñµÃÒýÓÃ¼ÆÊý
+    // è¿™é‡Œä»¥åŽéœ€è¦ä½¿ç”¨lwAnimCtrl_Refæ¥èŽ·å¾—å¼•ç”¨è®¡æ•°
     if(_anim_ctrl->GetRegisterID() != LW_INVALID_INDEX)
     {
         _res_mgr->AddRefAnimCtrl(_anim_ctrl, 1);
@@ -704,7 +704,7 @@ LW_RESULT lwAnimCtrlObjMtlOpacity::Clone(lwIAnimCtrlObjMtlOpacity** ret_obj)
         goto __ret;
 
     o->AttachAnimCtrl(_anim_ctrl);
-    // ÕâÀïÒÔºóÐèÒªÊ¹ÓÃlwAnimCtrl_RefÀ´»ñµÃÒýÓÃ¼ÆÊý
+    // è¿™é‡Œä»¥åŽéœ€è¦ä½¿ç”¨lwAnimCtrl_Refæ¥èŽ·å¾—å¼•ç”¨è®¡æ•°
     if(_anim_ctrl->GetRegisterID() != LW_INVALID_INDEX)
     {
         _res_mgr->AddRefAnimCtrl(_anim_ctrl, 1);

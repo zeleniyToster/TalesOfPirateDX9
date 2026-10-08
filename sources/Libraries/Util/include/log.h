@@ -1,4 +1,4 @@
-
+ï»¿
 #ifndef LOG_H_
 #define LOG_H_
 
@@ -10,25 +10,25 @@ void   fLG(const char *pszName, const char *pszFormat, ...);
 
 #define GPL_CONSTANT 2000
 
-// ÉèÖÃLGÊä³öÄ¿Â¼
+// è®¾ç½®LGè¾“å‡ºç›®å½•
 extern "C" void SetLGDir(char const* dir);
 
-// µÃµ½LGÊä³öÄ¿Â¼
+// å¾—åˆ°LGè¾“å‡ºç›®å½•
 void GetLGDir(std::string& dir);
 
-// Ê¹ÄÜLGÖĞµ¯³öMessageBox
+// ä½¿èƒ½LGä¸­å¼¹å‡ºMessageBox
 extern "C" void EnableMsgBox(bool enable = true);
 
-// Ê¹ÄÜËùÓĞµÄLGÊä³ö
+// ä½¿èƒ½æ‰€æœ‰çš„LGè¾“å‡º
 extern "C" void EnableAllLG(bool enable = true);
 
-// Ê¹ÄÜÌØ¶¨µÄLGÊä³ö
+// ä½¿èƒ½ç‰¹å®šçš„LGè¾“å‡º
 extern "C" void EnableLG(char const* type, bool enable = true);
 
-// ÌØµã£ºÒª¼ÇÂ¼ÏÂÃ¿Ò»¸öÊ±¼äµãÉÏµÄLOG
+// ç‰¹ç‚¹ï¼šè¦è®°å½•ä¸‹æ¯ä¸€ä¸ªæ—¶é—´ç‚¹ä¸Šçš„LOG
 //void LG(char const* type, char const* format, ...);
 
-// ÌØµã£ºÖ»¼ÇÂ¼ÏÂµ±Ç°Ê±¼äµãÉÏµÄLOG£¨¸üĞÂ£©
+// ç‰¹ç‚¹ï¼šåªè®°å½•ä¸‹å½“å‰æ—¶é—´ç‚¹ä¸Šçš„LOGï¼ˆæ›´æ–°ï¼‰
 extern "C" void GPL(char const* type, int x, int y, char const* format, ...);
 
 extern "C" int myprintf(char const* fmt, ...);

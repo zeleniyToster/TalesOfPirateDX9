@@ -1,4 +1,4 @@
-
+ï»¿
 #pragma once
 
 #include "uiglobalvar.h"
@@ -27,18 +27,18 @@ namespace GUI
 		void DragItemToEquipGrid(int nIndex);
 
 		static const int NO_USE     = -1;
-		static const int TYPE_COUNT =  4;	// ÀàĞÍ¸öÊı
+		static const int TYPE_COUNT =  4;	// ç±»å‹ä¸ªæ•°
 
-		static const int PURIFY_TYPE      =  7;	// µÀ¾ßÌá´¿
-		static const int ENERGY_TYPE      =  8;	// ±´¿Ç³äµç
-		static const int GETSTONE_TYPE    =  9;	// ÌáÈ¡±¦Ê¯
-		static const int REPAIR_OVEN_TYPE = 10;	// ĞŞÀíÆÆ¹ø
+		static const int PURIFY_TYPE      =  7;	// é“å…·æçº¯
+		static const int ENERGY_TYPE      =  8;	// è´å£³å……ç”µ
+		static const int GETSTONE_TYPE    =  9;	// æå–å®çŸ³
+		static const int REPAIR_OVEN_TYPE = 10;	// ä¿®ç†ç ´é”…
 
-		static const int PURIFY_CELL_COUNT = 2;	// ¸ñ×Ó¸öÊı
-		static const int PURIFY_ONE  = 0;		// ¾«Áé1
-		static const int PURIFY_TWO  = 1;		// ¾«Áé2
+		static const int PURIFY_CELL_COUNT = 2;	// æ ¼å­ä¸ªæ•°
+		static const int PURIFY_ONE  = 0;		// ç²¾çµ1
+		static const int PURIFY_TWO  = 1;		// ç²¾çµ2
 
-		int GetType() {  return m_nType;	}	// ÀàĞÍ
+		int GetType() {  return m_nType;	}	// ç±»å‹
 
 	protected:
 		virtual bool Init();
@@ -68,11 +68,11 @@ namespace GUI
 		void		SendNetProtocol();
 
 
-		static void _evtDragPurifyOne(CGuiData *pSender,CCommandObj* pItem,bool& isAccept);	// ÍÏÈëÎäÆ÷
-		static void _evtDragPurifyTwo(CGuiData *pSender,CCommandObj* pItem,bool& isAccept);	// ÍÏÈëÌá´¿ÎäÆ÷
+		static void _evtDragPurifyOne(CGuiData *pSender,CCommandObj* pItem,bool& isAccept);	// æ‹–å…¥æ­¦å™¨
+		static void _evtDragPurifyTwo(CGuiData *pSender,CCommandObj* pItem,bool& isAccept);	// æ‹–å…¥æçº¯æ­¦å™¨
 
-		static void _evtMainMouseButton(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey);// Êó±êµã»÷°´Å¥ÊÂ¼ş
-		static void _evtClosePurifyForm(CForm* pForm, bool& IsClose);	// ¹Ø±Õ´°ÌåÊÂ¼ş
+		static void _evtMainMouseButton(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey);// é¼ æ ‡ç‚¹å‡»æŒ‰é’®äº‹ä»¶
+		static void _evtClosePurifyForm(CForm* pForm, bool& IsClose);	// å…³é—­çª—ä½“äº‹ä»¶
 	};
 
 }

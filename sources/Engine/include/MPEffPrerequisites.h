@@ -1,8 +1,8 @@
-#ifndef MPEffPrerequisites_H
+Ôªø#ifndef MPEffPrerequisites_H
 #define MPEffPrerequisites_H
 
 //=============================================================================
-// Õ∑Œƒº˛
+// Â§¥Êñá‰ª∂
 //=============================================================================
 #include <cassert>
 #include <cstdio>
@@ -12,7 +12,7 @@
 #include <cstdarg>
 #include <cmath>
 
-// STL »›∆˜
+// STL ÂÆπÂô®
 #include <vector>
 #include <map>
 #include <string>
@@ -35,7 +35,7 @@
 #include "MindPowerAPI.h"
 
 //=============================================================================
-// ¿‡–Õ∂®“Â
+// Á±ªÂûãÂÆö‰πâ
 //=============================================================================
 typedef unsigned char uchar;
 typedef unsigned short ushort;
@@ -45,7 +45,7 @@ typedef std::string String;
 
 
 //=============================================================================
-// ∂‡œﬂ≥Ã
+// Â§öÁ∫øÁ®ã
 //=============================================================================
 #define MP_AUTO_MUTEX_NAME mpMutex
 #if MP_THREAD_SUPPORT
@@ -53,7 +53,7 @@ typedef std::string String;
 #define MP_LOCK_AUTO_MUTEX boost::recursive_mutex::scoped_lock mpAutoMutexLock(MP_AUTO_MUTEX_NAME);
 #define MP_MUTEX(name) mutable boost::recursive_mutex name;
 #define MP_LOCK_MUTEX(name) boost::recursive_mutex::scoped_lock mpNameLock(name);
-// ∫ÕMP_AUTO_MUTEX¿‡À∆£¨µ´mpMutex±ª÷∏’Î≥÷”–
+// ÂíåMP_AUTO_MUTEXÁ±ª‰ººÔºå‰ΩÜmpMutexË¢´ÊåáÈíàÊåÅÊúâ
 #define MP_AUTO_SHARED_MUTEX mutable boost::recursive_mutex *MP_AUTO_MUTEX_NAME;
 #define MP_LOCK_AUTO_SHARED_MUTEX boost::recursive_mutex::scoped_lock mpAutoMutexLock(*OGRE_AUTO_MUTEX_NAME);
 #define MP_NEW_AUTO_SHARED_MUTEX MP_AUTO_MUTEX_NAME = new boost::recursive_mutex();
@@ -72,7 +72,7 @@ typedef std::string String;
 #endif
 
 //=============================================================================
-// «∞÷√…˘√˜
+// ÂâçÁΩÆÂ£∞Êòé
 //=============================================================================
 class MPColorValue;
 class MPEffectMath;

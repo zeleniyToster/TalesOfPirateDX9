@@ -1,4 +1,4 @@
-//
+ï»¿//
 // logutil.cpp
 //
 //  created by claude fan at 2004-8-9
@@ -10,7 +10,7 @@
 
 
 #if 0
-// ÖØ¶¨Ïòprintf
+// é‡å®šå‘printf
 int myprintf(char const* fmt, ...)
     {
     char buf[8192];
@@ -23,7 +23,7 @@ int myprintf(char const* fmt, ...)
     LG2("printf", buf);
     return 1;}
 
-// ÖØ¶¨Ïòfprintf
+// é‡å®šå‘fprintf
 int myfprintf(FILE* fp, char const* fmt, ...)
     {
     char buf[8192];
@@ -38,11 +38,11 @@ int myfprintf(FILE* fp, char const* fmt, ...)
     else LG2("other", buf);
     return 1;}
 
-// ÌØµã£ºÒª¼ÇÂ¼ÏÂÃ¿Ò»¸öÊ±¼äµãÉÏµÄLOG
+// ç‰¹ç‚¹ï¼šè¦è®°å½•ä¸‹æ¯ä¸€ä¸ªæ—¶é—´ç‚¹ä¸Šçš„LOG
 static HWND LG_hwnd = NULL;
 void LG(char const* type, char const* format, ...)
     {
-	// ¼ì²éÊÇ·ñÊ¹ÄÜLOG
+	// æ£€æŸ¥æ˜¯å¦ä½¿èƒ½LOG
 	CLogMgr* logMgr = CLogMgr::Instance();
 	if (logMgr == NULL || !logMgr->IsEnable()) return;
 	CLog* log = logMgr->Add(type);
@@ -57,7 +57,7 @@ void LG(char const* type, char const* format, ...)
 	if (len >= sizeof buf)
         throw std::logic_error("buf overflow, length > 8K\n");
 
-    // µÃµ½µ±Ç°ÈÕÆÚ
+    // å¾—åˆ°å½“å‰æ—¥æœŸ
     SYSTEMTIME st; char tim[100];
     ::GetLocalTime(&st);
     sprintf(tim, "%02d-%02d %02d:%02d:%02d", st.wMonth, st.wDay, st.wHour,
@@ -71,7 +71,7 @@ void LG(char const* type, char const* format, ...)
 
     //////////////////////////////////////////////////////////////////////////
 	//
-	// Ğ´Èë´ÅÅÌÎÄ¼şµÄLOG
+	// å†™å…¥ç£ç›˜æ–‡ä»¶çš„LOG
 #if 0
     string ctx;
     if (strncmp(buf, "msg", 3) != 0)
@@ -93,7 +93,7 @@ void LG(char const* type, char const* format, ...)
 
     //////////////////////////////////////////////////////////////////////////
     //
-    // ·¢ËÍµ½LogviewerµÄLOG
+    // å‘é€åˆ°Logviewerçš„LOG
     if (LG_hwnd == NULL)
         {LG_hwnd = FindWindow(NULL, "kIng Of pIrAtEs lOgvIEwEr");}
 
@@ -125,7 +125,7 @@ void LG(char const* type, char const* format, ...)
 #endif
 
 #if 1
-// ÌØµã£ºÖ»¼ÇÂ¼ÏÂµ±Ç°Ê±¼äµãÉÏµÄLOG£¨¸üĞÂ£©
+// ç‰¹ç‚¹ï¼šåªè®°å½•ä¸‹å½“å‰æ—¶é—´ç‚¹ä¸Šçš„LOGï¼ˆæ›´æ–°ï¼‰
 static HWND GPL_hwnd = NULL;
 void GPL(char const* type, int x, int y, char const* format, ...)
     {
@@ -133,13 +133,13 @@ void GPL(char const* type, int x, int y, char const* format, ...)
 #if 0
     //////////////////////////////////////////////////////////////////////////
     //
-    // ·¢ËÍµ½LogviewerµÄGPL
+    // å‘é€åˆ°Logviewerçš„GPL
     if (GPL_hwnd == NULL)
         {GPL_hwnd = FindWindow(NULL, "kIng Of pIrAtEs lOgvIEwEr");}
 
     if (GPL_hwnd == NULL) return;
 
-    // µÃµ½LOGÄÚÈİ
+    // å¾—åˆ°LOGå†…å®¹
     char buf[1024] = {0};
     va_list args;
     va_start(args, format);
@@ -169,13 +169,13 @@ void GPL(char const* type, int x, int y, char const* format, ...)
 
 #if 0
 
-// Ê¹ÄÜËùÓĞµÄLGÊä³ö
+// ä½¿èƒ½æ‰€æœ‰çš„LGè¾“å‡º
 void EnableAllLG(bool enable /* = true */)
 {
     CLogMgr::Instance()->Enable(enable);
 }
 
-// Ê¹ÄÜÌØ¶¨µÄLGÊä³ö
+// ä½¿èƒ½ç‰¹å®šçš„LGè¾“å‡º
 void EnableLG(char const* type, bool enable /* = true */)
 {
     CLog* pLog = NULL;
@@ -222,7 +222,7 @@ void LG_SetEraseMode(bool bEraseMode /* = true */)
 }
 void LG2(char const* type, char const* format, ...)
 {
-    // ¼ì²éÊÇ·ñÊ¹ÄÜLOG
+    // æ£€æŸ¥æ˜¯å¦ä½¿èƒ½LOG
     CLog2Mgr* pLogMgr = CLog2Mgr::Inst();
     if (pLogMgr == NULL || !pLogMgr->IsEnable()) return;
 
@@ -246,7 +246,7 @@ void LG2(char const* type, char const* format, ...)
 
 void LG3(char const* type, char const* format, ...)
 {
-	// ¼ì²éÊÇ·ñÊ¹ÄÜLOG
+	// æ£€æŸ¥æ˜¯å¦ä½¿èƒ½LOG
 	CLog2Mgr* pLogMgr = CLog2Mgr::Inst();
 	if (pLogMgr == NULL || !pLogMgr->IsEnable()) return;
 

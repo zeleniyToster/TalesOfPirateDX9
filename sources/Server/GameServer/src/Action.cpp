@@ -1,4 +1,4 @@
-//=============================================================================
+ï»¿//=============================================================================
 // FileName: Action.cpp
 // Creater: ZhangXuedong
 // Date: 2004.10.08
@@ -57,8 +57,8 @@ bool CAction::Add(dbc::Short sActionType, void *pActionData)
 T_E}
 
 //=============================================================================
-// sActionType ¸ÕÍê³ÉµÄ¶¯×÷ÀàĞÍ.0£¬±íÊ¾Ê×´ÎÖ´ĞĞ¶¯×÷¶ÓÁĞ
-// sActionState ĞĞ¶¯Ö´ĞĞµÄ½á¹û
+// sActionType åˆšå®Œæˆçš„åŠ¨ä½œç±»å‹.0ï¼Œè¡¨ç¤ºé¦–æ¬¡æ‰§è¡ŒåŠ¨ä½œé˜Ÿåˆ—
+// sActionState è¡ŒåŠ¨æ‰§è¡Œçš„ç»“æœ
 //=============================================================================
 bool CAction::DoNext(Short sActionType, Short sActionState)
 {T_B
@@ -232,7 +232,7 @@ void CActionCache::AddCommand(Short sCommand)
 		pSCarrier = new SAction;
 		if (!pSCarrier)
 		{
-			//THROW_EXCP(excpMem, "»º´æĞĞ¶¯¹ÜÀí¶ÔÏó¹¹Ôì¹ı³ÌÖĞ·ÖÅäÄÚ´æÊ§°Ü");
+			//THROW_EXCP(excpMem, "ç¼“å­˜è¡ŒåŠ¨ç®¡ç†å¯¹è±¡æ„é€ è¿‡ç¨‹ä¸­åˆ†é…å†…å­˜å¤±è´¥");
 			THROW_EXCP(excpMem, RES_STRING(GM_ACTION_CPP_00001));
 		}
 	}

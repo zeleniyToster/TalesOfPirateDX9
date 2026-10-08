@@ -1,11 +1,11 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "uitextbutton.h"
 #include "GameApp.h"
 #include "eventsoundset.h"
 
 using namespace GUI;
 
-CTextButton* CTextButton::m_pCurButton = NULL;	// µ±Ç°¼¤»îµÄButton
+CTextButton* CTextButton::m_pCurButton = NULL;	// å½“å‰æ¿€æ´»çš„Button
 
 CTextButton::CTextButton(CForm& frmOwn)
 : CCompent(frmOwn), _isDown(false), _textColor( 0xffff0000), _eFormModal(CForm::mrNone)
@@ -45,12 +45,12 @@ CTextButton& CTextButton::operator=(const CTextButton& rhs)
 CTextButton::~CTextButton(void)
 {
 	//delete _pImage;
-	SAFE_DELETE(_pImage); // UIµ±»ú´¦Àí
+	SAFE_DELETE(_pImage); // UIå½“æœºå¤„ç†
 }
 
 void CTextButton::Render()
 {
-	// modify by Philip.Wu  2006-08-09  Ö§³Ö°´Å¥ÉÁË¸
+	// modify by Philip.Wu  2006-08-09  æ”¯æŒæŒ‰é’®é—ªçƒ
 	if( _dwFlashCycle > 0 && GetIsEnabled() && (g_pGameApp->GetCurTick() % _dwFlashCycle < _dwFlashCycle / 2))
 		_pImage->Render( GetX(), GetY(), BYTE(128) );
 	else
@@ -83,14 +83,14 @@ bool CTextButton::MouseRun( int x, int y, DWORD key )
 				};
 
 
-				if (evtMouseDBClick && isDoubleClick()) // Á½´Îµã»÷Ê±¼äÉÙÓÚ 500 ºÁÃë£¬ÔòÈÏ¶¨ÎªË«»÷
+				if (evtMouseDBClick && isDoubleClick()) // ä¸¤æ¬¡ç‚¹å‡»æ—¶é—´å°‘äº 500 æ¯«ç§’ï¼Œåˆ™è®¤å®šä¸ºåŒå‡»
 				{
-					_dwLastClick = 0;	// Ë«»÷ºóÖØÖÃ
+					_dwLastClick = 0;	// åŒå‡»åé‡ç½®
 					DoClick(Mouse_LDB);
 				}
 				else
 				{
-					_dwLastClick = GetTickCount();	// ¼ÇÂ¼ÏÂµ±Ç°µã»÷Ê±¼ä£¬ÓÃÓÚÅĞ¶ÏÏÂÒ»´Îµã»÷¼ä¸ô
+					_dwLastClick = GetTickCount();	// è®°å½•ä¸‹å½“å‰ç‚¹å‡»æ—¶é—´ï¼Œç”¨äºåˆ¤æ–­ä¸‹ä¸€æ¬¡ç‚¹å‡»é—´éš”
 					DoClick();
 				}
 
@@ -112,7 +112,7 @@ bool CTextButton::MouseRun( int x, int y, DWORD key )
 			return true;
 		}
 
-		//if( key & Mouse_LDB)	// Ã²ËÆ²»Æğ×÷ÓÃ
+		//if( key & Mouse_LDB)	// è²Œä¼¼ä¸èµ·ä½œç”¨
 		//{
 		//	DoClick(Mouse_LDB);
 		//	return true;
@@ -133,7 +133,7 @@ void CTextButton::DoClick(eMouseState state)
 {
 	g_pGameApp->PlaySound( 26 );
 
-	// modify by Philip.Wu  2007/01/23  À©Õ¹°´Å¥¹¦ÄÜ£¬Ö§³ÖÓÒ¼üºÍË«»÷
+	// modify by Philip.Wu  2007/01/23  æ‰©å±•æŒ‰é’®åŠŸèƒ½ï¼Œæ”¯æŒå³é”®å’ŒåŒå‡»
 	switch(state)
 	{
 	case Mouse_LUp:

@@ -1,4 +1,4 @@
-#ifndef MPIteratorWrappers_H
+ï»¿#ifndef MPIteratorWrappers_H
 #define MPIteratorWrappers_H
 
 template <class T>
@@ -7,15 +7,15 @@ class MPMapIterator
 private:
 	typename T::iterator mCurrent;
 	typename T::iterator mEnd;
-	/// Ë½ÓĞ¹¹Ôìº¯Êı£¬ÒòÎª½ö±ØĞëÌá¹©²ÎÊı
+	/// ç§æœ‰æ„é€ å‡½æ•°ï¼Œå› ä¸ºä»…å¿…é¡»æä¾›å‚æ•°
 	MapIterator() {};
 public:
 	typedef typename T::mapped_type MappedType;
 	typedef typename T::key_type KeyType;
 
-	/** ¹¹Ôìº¯Êı.
+	/** æ„é€ å‡½æ•°.
 	@remarks
-		Ìá¹©startºÍendµü´úÆ÷ÓÃÓÚ³õÊ¼»¯.
+		æä¾›startå’Œendè¿­ä»£å™¨ç”¨äºåˆå§‹åŒ–.
 	*/
 	MapIterator(typename T::iterator start, typename T::iterator end)
 		: mCurrent(start), mEnd(end)

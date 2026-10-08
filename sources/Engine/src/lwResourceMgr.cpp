@@ -1,4 +1,4 @@
-//
+﻿//
 #include "stdafx.h"
 
 
@@ -423,7 +423,7 @@ LW_RESULT lwTex::LoadTexInfo(const lwTexInfo* info, const char* tex_path)
         goto __ret;
     }
 
-    // ���ݾɰ汾format
+    // 兼容旧版本format
     if(_format == D3DFMT_UNKNOWN)
     {
         _format = D3DFMT_A1R5G5B5;
@@ -560,7 +560,7 @@ LW_RESULT lwTex::LoadVideoMemory()
 
 //#undef USE_DDS_FILE
 #if(defined USE_DDS_FILE)
-        // ����汾��Ϊ�˼��ݷ�dds�ļ����
+        // 这个版本是为了兼容非dds文件检查
         lwDDSHeader* dds_header = 0;
         BOOL dds_flag = 1;
         char dds_file[LW_MAX_FILE];
@@ -785,19 +785,19 @@ __load_it:
 		else
         {
             if(FAILED(D3DXCreateTextureFromFileEx(dev_obj->GetDevice(),
-                this->_file_name, //�ļ���
-                0, //�ļ�����������Ϊ�Զ�
-                0, //�ļ��ߣ�������Ϊ�Զ�
-                _level, //��Ҫ���ټ�mipmap��������Ϊ1
-                0, //����������;
-                (D3DFORMAT)_format, //�Զ�����ļ���ʽ
-                _pool, //D3DPOOL_MANAGED, //��DXGraphics����
-                D3DX_FILTER_LINEAR, //D3DX_FILTER_TRIANGLE|D3DX_FILTER_MIRROR, //�������˷���
-                D3DX_DEFAULT,//D3DX_DEFAULT,//D3DX_FILTER_NONE, //mipmap�������˷���
-                _colorkey.color,//0xffff00ff, //͸��ɫ��ɫ
-                NULL, //������ͼ���ʽ�洢�ںα�����
-                NULL, //�����ĵ�ɫ��洢�ںα�����
-                &_tex)))//Ҫ����������
+                this->_file_name, //文件名
+                0, //文件宽，这里设为自动
+                0, //文件高，这里设为自动
+                _level, //需要多少级mipmap，这里设为1
+                0, //此纹理的用途
+                (D3DFORMAT)_format, //自动检测文件格式
+                _pool, //D3DPOOL_MANAGED, //由DXGraphics管理
+                D3DX_FILTER_LINEAR, //D3DX_FILTER_TRIANGLE|D3DX_FILTER_MIRROR, //纹理过滤方法
+                D3DX_DEFAULT,//D3DX_DEFAULT,//D3DX_FILTER_NONE, //mipmap纹理过滤方法
+                _colorkey.color,//0xffff00ff, //透明色颜色
+                NULL, //读出的图像格式存储在何变量中
+                NULL, //读出的调色板存储在何变量中
+                &_tex)))//要创建的纹理
             {
                 goto __ret;
             }
@@ -806,19 +806,19 @@ __load_it:
 #if 0
         IDirect3DTextureX* t;
         if(FAILED(D3DXCreateTextureFromFileEx(dev_obj->GetDevice(),
-            this->_file_name, //�ļ���
-            0, //�ļ�����������Ϊ�Զ�
-            0, //�ļ��ߣ�������Ϊ�Զ�
-            _level, //��Ҫ���ټ�mipmap��������Ϊ1
-            0, //����������;
-            (D3DFORMAT)_format, //�Զ�����ļ���ʽ
-             D3DPOOL_SYSTEMMEM, //D3DPOOL_MANAGED, //��DXGraphics����
-            D3DX_DEFAULT, //D3DX_FILTER_TRIANGLE|D3DX_FILTER_MIRROR, //�������˷���
-            D3DX_DEFAULT,//D3DX_DEFAULT,//D3DX_FILTER_NONE, //mipmap�������˷���
-            _colorkey.color,//0xffff00ff, //͸��ɫ��ɫ
-            NULL, //������ͼ���ʽ�洢�ںα�����
-            NULL, //�����ĵ�ɫ��洢�ںα�����
-            &t)))//Ҫ����������
+            this->_file_name, //文件名
+            0, //文件宽，这里设为自动
+            0, //文件高，这里设为自动
+            _level, //需要多少级mipmap，这里设为1
+            0, //此纹理的用途
+            (D3DFORMAT)_format, //自动检测文件格式
+             D3DPOOL_SYSTEMMEM, //D3DPOOL_MANAGED, //由DXGraphics管理
+            D3DX_DEFAULT, //D3DX_FILTER_TRIANGLE|D3DX_FILTER_MIRROR, //纹理过滤方法
+            D3DX_DEFAULT,//D3DX_DEFAULT,//D3DX_FILTER_NONE, //mipmap纹理过滤方法
+            _colorkey.color,//0xffff00ff, //透明色颜色
+            NULL, //读出的图像格式存储在何变量中
+            NULL, //读出的调色板存储在何变量中
+            &t)))//要创建的纹理
         {
             goto __ret;
         }
@@ -833,19 +833,19 @@ __load_it:
 
 #else
         if(FAILED(D3DXCreateTextureFromFileEx(dev_obj->GetDevice(),
-            this->_file_name, //�ļ���
-            0, //�ļ�����������Ϊ�Զ�
-            0, //�ļ��ߣ�������Ϊ�Զ�
-            _level, //��Ҫ���ټ�mipmap��������Ϊ1
-            0, //����������;
-            (D3DFORMAT)_format, //�Զ�����ļ���ʽ
-            _pool, //D3DPOOL_MANAGED, //��DXGraphics����
-            D3DX_FILTER_LINEAR, //D3DX_FILTER_TRIANGLE|D3DX_FILTER_MIRROR, //�������˷���
-            D3DX_DEFAULT,//D3DX_DEFAULT,//D3DX_FILTER_NONE, //mipmap�������˷���
-            _colorkey.color,//0xffff00ff, //͸��ɫ��ɫ
-            NULL, //������ͼ���ʽ�洢�ںα�����
-            NULL, //�����ĵ�ɫ��洢�ںα�����
-            &_tex)))//Ҫ����������
+            this->_file_name, //文件名
+            0, //文件宽，这里设为自动
+            0, //文件高，这里设为自动
+            _level, //需要多少级mipmap，这里设为1
+            0, //此纹理的用途
+            (D3DFORMAT)_format, //自动检测文件格式
+            _pool, //D3DPOOL_MANAGED, //由DXGraphics管理
+            D3DX_FILTER_LINEAR, //D3DX_FILTER_TRIANGLE|D3DX_FILTER_MIRROR, //纹理过滤方法
+            D3DX_DEFAULT,//D3DX_DEFAULT,//D3DX_FILTER_NONE, //mipmap纹理过滤方法
+            _colorkey.color,//0xffff00ff, //透明色颜色
+            NULL, //读出的图像格式存储在何变量中
+            NULL, //读出的调色板存储在何变量中
+            &_tex)))//要创建的纹理
         {
             goto __ret;
         }
@@ -2633,19 +2633,19 @@ LW_RESULT lwResBufMgr::RegisterSysMemTex(LW_HANDLE* handle, const lwSysMemTexInf
     IDirect3DTextureX* tex;
 
     if(FAILED(D3DXCreateTextureFromFileEx(dev_obj->GetDevice(),
-        info->file_name, //�ļ���
-        0, //�ļ�����������Ϊ�Զ�
-        0, //�ļ��ߣ�������Ϊ�Զ�
-        info->level, //��Ҫ���ټ�mipmap��������Ϊ1
-        0, //����������;
-        (D3DFORMAT)info->format, //�Զ�����ļ���ʽ
+        info->file_name, //文件名
+        0, //文件宽，这里设为自动
+        0, //文件高，这里设为自动
+        info->level, //需要多少级mipmap，这里设为1
+        0, //此纹理的用途
+        (D3DFORMAT)info->format, //自动检测文件格式
         D3DPOOL_SYSTEMMEM,//forced
-        info->filter, //D3DX_FILTER_TRIANGLE|D3DX_FILTER_MIRROR, //�������˷���
-        info->mip_filter,//D3DX_DEFAULT,//D3DX_FILTER_NONE, //mipmap�������˷���
-        info->colorkey,//0xffff00ff, //͸��ɫ��ɫ
-        NULL, //������ͼ���ʽ�洢�ںα�����
-        NULL, //�����ĵ�ɫ��洢�ںα�����
-        &tex)))//Ҫ����������
+        info->filter, //D3DX_FILTER_TRIANGLE|D3DX_FILTER_MIRROR, //纹理过滤方法
+        info->mip_filter,//D3DX_DEFAULT,//D3DX_FILTER_NONE, //mipmap纹理过滤方法
+        info->colorkey,//0xffff00ff, //透明色颜色
+        NULL, //读出的图像格式存储在何变量中
+        NULL, //读出的调色板存储在何变量中
+        &tex)))//要创建的纹理
     {
         goto __ret;
     }

@@ -1,4 +1,4 @@
-// ¾­·ÖÎö,´ËÏîÄ¿½á¹¹´æÔÚÑÏÖØÎÊÌâ,ÓÐ¶à´¦µØ·½Ç·È±Ïß³ÌÍ¬²½¿¼ÂÇ,½¨ÒéÖØÐ´ - by Arcol
+ï»¿// on inspection this module has serious structural problems - several places lack proper thread synchronisation, and a rewrite is recommended - by Arcol
 
 // main.cpp : Defines the entry point for the console application.
 //
@@ -33,7 +33,7 @@ CResourceBundleManage  g_ResourceBundleManage("AccountServer.loc");	//Add by lar
 //BillThread bt;
 
 
-//std::string g_BTSAddr[2] = {"61.152.115.79:7243", "61.152.115.79:7243"}; ¾ÉµÄBTSµØÖ·
+// old BTS addresses
 //std::string g_BTSAddr[2] = {"61.152.115.172:7243", "61.152.115.173:7243"};
 
 void __cdecl Ctrlc_Dispatch(int sig)
@@ -49,17 +49,17 @@ LRESULT OnInitDialog(HWND hwnd)
     //SetWindowText(hwnd, "AccountServer");
     SetWindowText(hwnd, RES_STRING(AS_MAIN_CPP_00008));
 
-	//ÈÏÖ¤
+	// authentication
 	SetDlgItemText(hwnd,IDC_TOP,RES_STRING(AS_MAIN_CPP_00018));
-	//¶ÓÁÐ°ü£º 0
+	// queued packets: 0
 	SetDlgItemText(hwnd,IDC_QUEUECAP,RES_STRING(AS_MAIN_CPP_00019));
-	//²¢·¢Êý£º 0
+	// concurrent tasks: 0
 	SetDlgItemText(hwnd,IDC_TASKCNT,RES_STRING(AS_MAIN_CPP_00020));
 	//GroupServer
 	SetDlgItemText(hwnd,IDC_MID,RES_STRING(AS_MAIN_CPP_00021));
-	//¼Æ·Ñ
+	// billing
 	SetDlgItemText(hwnd,IDC_BOTTOM,RES_STRING(AS_MAIN_CPP_00022));
-	//ÍË³ö
+	// shutdown
 	SetDlgItemText(hwnd,IDOK,RES_STRING(AS_MAIN_CPP_00023));
     // Auth thread report list
     {
@@ -226,12 +226,12 @@ LRESULT OnTimer(HWND hwnd, UINT idEvent)
         }
 
         HWND hQueueCap = GetDlgItem(hwnd, IDC_QUEUECAP);
-        //sprintf(buf, "¶ÓÁÐ°ü£º %d", g_Auth.GetPkTotal());
+        //sprintf(buf, "queued packets: %d", g_Auth.GetPkTotal());
         sprintf(buf, RES_STRING(AS_MAIN_CPP_00024), g_Auth.GetPkTotal());
         SetWindowText(hQueueCap, (LPCTSTR)buf);
 
         HWND hTaskCnt = GetDlgItem(hwnd, IDC_TASKCNT);
-        //sprintf(buf, "²¢·¢Êý£º %d", proc->GetTaskCount());
+        //sprintf(buf, "concurrent tasks: %d", proc->GetTaskCount());
         sprintf(buf, RES_STRING(AS_MAIN_CPP_00025), proc->GetTaskCount());
         SetWindowText(hTaskCnt, (LPCTSTR)buf);
     }
@@ -346,14 +346,14 @@ BOOL CALLBACK MainDlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
         /*
         printf("cBTI_Disconnected [WPARAM=%d, LPARAM=%d]\n", wParam, lParam);
         ++ g_nDisconn;
-        char buf[20]; sprintf(buf, "¶Ï¿ª´ÎÊý£º%d", g_nDisconn);
+        char buf[20]; sprintf(buf, "æ–­å¼€æ¬¡æ•°ï¼š%d", g_nDisconn);
         SetWindowText(GetDlgItem(hwndDlg, IDC_DISCONNCNT), buf);*/
         break;
 
     case cBTI_Closed:
         printf("cBTI_Closed [WPARAM=%d, LPARAM=%d]\n", wParam, lParam);
         break;
-    case cBTI_TIME:     //  ·À³ÁÃÔ
+    case cBTI_TIME:     //  anti-addiction
         g_BillService.AdjustExpScale((long)wParam, (long)lParam);
         break;
 	case WM_USER_LOG:
@@ -410,7 +410,7 @@ int main(int argc, char* argv[])
 
 	T_B
 
-    // ´´½¨Ö÷´°¿Ú
+    // create the main window
 	_CrtSetDbgFlag ( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );		//Add by Arcol (2005-12-2)
 
     g_hMainWnd = CreateMainDialog();
@@ -426,7 +426,7 @@ int main(int argc, char* argv[])
 		return -1;
 	}
 
-    // ³õÊ¼»¯BTI
+    // initialise BTI
 	//if (!g_BillThread.CreateBillingSystem(g_hMainWnd))
 	if (!g_BillService.CreateBillingSystem(g_hMainWnd))
 	{
@@ -436,12 +436,12 @@ int main(int argc, char* argv[])
 		return -1;
 	}
 
-    // Æô¶¯ÈÏÖ¤¼Æ·ÑÏß³Ì
+    // start the authentication / billing threads
 	//bt.Launch();
 	//g_BillThread.Launch();
     atp.Launch();
 
-    // ³õÊ¼»¯ÍøÂç
+    // initialise networking
     TcpCommApp::WSAStartup();
     comm = ThreadPool::CreatePool(10, 10, 256);
 
@@ -456,7 +456,7 @@ int main(int argc, char* argv[])
         Sleep(10 * 1000);
         return -1;
     } catch (...) {
-        //printf("AccountServer³õÊ¼»¯ÆÚ¼ä·¢ÉúÎ´Öª´íÎó£¬ÇëÍ¨Öª¿ª·¢Õß\n");
+        //printf("unknown error while AccountServer was initialising, please notify the developer\n");
    		printf(RES_STRING(AS_MAIN_CPP_00006));
 		comm->DestroyPool();
         TcpCommApp::WSACleanup();
@@ -464,20 +464,20 @@ int main(int argc, char* argv[])
         return -2;
     }
 
-    // ÏûÏ¢Ñ­»·
+    // message loop
     MSG msg;
     while (GetMessage(&msg, NULL, 0, 0)) {
         TranslateMessage(&msg);
         DispatchMessage(&msg);
     }
 
-    // Ð¶ÔØÍøÂç
+    // tear down networking
     delete g_As2;
     if (comm != NULL) comm->DestroyPool();
     if (proc != NULL) proc->DestroyPool();
     TcpCommApp::WSACleanup();
 
-    // ÈÏÖ¤¡¢¼Æ·ÑÏß³ÌÍË³ö
+    // authentication / billing threads exit
     //bt.NotifyToExit();
 	//g_BillThread.NotifyToExit();
     atp.NotifyToExit();
@@ -485,7 +485,7 @@ int main(int argc, char* argv[])
     atp.WaitForExit();
 	//g_BillThread.WaitForExit(-1);
 
-    // ¼ÇÂ¼×îºó×´Ì¬
+    // record the final state
     LG("RunLabel", "\n");
     for (char i = 0; i < AuthThreadPool::AT_MAXNUM; ++ i) {
         LG("RunLabel", "%02d %04d\n", AuthThreadPool::RunLabel[i],

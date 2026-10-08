@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "TableData.h"
 
 class CEventSoundInfo : public CRawDataInfo
@@ -24,7 +24,7 @@ public:
 	}
 
 protected:
-	static CEventSoundSet* _Instance; // Ïàµ±ÓÚµ¥¼ü, °Ñ×Ô¼º¼Ç×¡
+	static CEventSoundSet* _Instance; // ç›¸å½“äºå•é”®, æŠŠè‡ªå·±è®°ä½
 
 	virtual CRawDataInfo* _CreateRawDataArray(int nCnt)
 	{

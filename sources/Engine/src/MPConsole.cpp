@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "MPConsole.h"
 #include "MPRender.h"
 
@@ -151,7 +151,7 @@ void MPConsole::Show(BOOL bShow)
     _bVisible = bShow; 
 }
 
-void MPConsole::FrameMove() // ¹â±êÉÁ¶¯
+void MPConsole::FrameMove() // å…‰æ ‡é—ªåŠ¨
 {
     DWORD dwTick = GetTickCount();
     if(_dwCursorTick==0) _dwCursorTick = dwTick;
