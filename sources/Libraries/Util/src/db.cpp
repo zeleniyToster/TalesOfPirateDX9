@@ -1,4 +1,4 @@
-﻿#include "util.h"
+#include "util.h"
 #include "db.h"
 using namespace std;
 
@@ -9,12 +9,7 @@ using namespace std;
 #define SQL_SUC(sr) (((sr == SQL_SUCCESS) || (sr == SQL_SUCCESS_WITH_INFO) || (sr == SQL_NO_DATA_FOUND)) ? true : false)
 #define DBFAIL(sr) ((sr != SQL_SUCCESS) && (sr != SQL_SUCCESS_WITH_INFO))
 
-// Unicode ODBC wrapper for Wine compatibility (MS ODBC Driver 17 exports only W functions)
-static SQLRETURN exec_direct_w(SQLHSTMT hstmt, const char* sql) {
-    SQLWCHAR wsql[SQL_MAXLEN];
-    MultiByteToWideChar(CP_UTF8, 0, sql, -1, (LPWSTR)wsql, sizeof(wsql) / sizeof(SQLWCHAR));
-    return SQLExecDirectW(hstmt, wsql, SQL_NTS);
-}
+// exec_direct_w() is defined as static inline in db.h
 
 const char g_cchLogUtilDb = 0;
 
@@ -69,10 +64,17 @@ bool cfl_db::handle_err(SQLHANDLE h, SQLSMALLINT t,
     SQLWCHAR wstate[SQL_SQLSTATE_SIZE + 1] = { 0 };
     SQLWCHAR wmsg[SQL_MAX_MESSAGE_LENGTH + 1] = { 0 };
     sqlret = SQLGetDiagRecW(t, h, 1, wstate, &error, wmsg, SQL_MAX_MESSAGE_LENGTH, &msg_len);
-    // Convert back to ANSI for logging
-    WideCharToMultiByte(CP_UTF8, 0, (LPCWSTR)wstate, -1, (char*)state, SQL_SQLSTATE_SIZE + 1, NULL, NULL);
-    WideCharToMultiByte(CP_UTF8, 0, (LPCWSTR)wmsg, -1, (char*)msg, SQL_MAX_MESSAGE_LENGTH + 1, NULL, NULL);
+    // Convert back to ANSI for logging (CP_ACP matches console in Wine/Windows)
+    WideCharToMultiByte(CP_ACP, 0, (LPCWSTR)wstate, -1, (char*)state, SQL_SQLSTATE_SIZE + 1, NULL, NULL);
+    WideCharToMultiByte(CP_ACP, 0, (LPCWSTR)wmsg, -1, (char*)msg, SQL_MAX_MESSAGE_LENGTH + 1, NULL, NULL);
     if (sqlret == SQL_ERROR || sqlret == SQL_INVALID_HANDLE) return false;
+
+    // FORCE ODBC error output to console for Wine debugging
+    printf("[ODBC ERROR] State:%s, Native:%ld, Msg:%s\n", state, (long)error, msg);
+    if (sql != NULL) {
+        printf("[ODBC ERROR] SQL was: %s\n", sql);
+    }
+    fflush(stdout);
 
 	if (_dump_errinfo)
 	{
@@ -214,7 +216,7 @@ bool cfl_db::_connect(string& errinfo)
         SQLWCHAR wconn_str[1024];
         SQLWCHAR woutbuf[2048];
         SQLSMALLINT woutlen = 0;
-        int wlen = MultiByteToWideChar(CP_UTF8, 0, _connstr.c_str(), -1, (LPWSTR)wconn_str, sizeof(wconn_str) / sizeof(SQLWCHAR));
+        int wlen = MultiByteToWideChar(CP_ACP, 0, _connstr.c_str(), -1, (LPWSTR)wconn_str, sizeof(wconn_str) / sizeof(SQLWCHAR));
         if (wlen == 0) {
             errinfo = "Failed to convert connection string to UTF-16\n";
             SQLFreeHandle(SQL_HANDLE_DBC, _hdbc);
@@ -324,9 +326,9 @@ bool cfl_db::connect(const char* source, const char* userid, const char* passwd,
 
         // Unicode ODBC for Wine compatibility
         SQLWCHAR wsource[256], wuserid[256], wpasswd[256];
-        MultiByteToWideChar(CP_UTF8, 0, source, -1, (LPWSTR)wsource, 256);
-        MultiByteToWideChar(CP_UTF8, 0, userid, -1, (LPWSTR)wuserid, 256);
-        MultiByteToWideChar(CP_UTF8, 0, passwd, -1, (LPWSTR)wpasswd, 256);
+        MultiByteToWideChar(CP_ACP, 0, source, -1, (LPWSTR)wsource, 256);
+        MultiByteToWideChar(CP_ACP, 0, userid, -1, (LPWSTR)wuserid, 256);
+        MultiByteToWideChar(CP_ACP, 0, passwd, -1, (LPWSTR)wpasswd, 256);
         sqlret = SQLConnectW(_hdbc, wsource, SQL_NTS, wuserid, SQL_NTS, wpasswd, SQL_NTS);
         if (DBFAIL(sqlret))
         {
@@ -404,7 +406,7 @@ RECONNECT:
 			break;
 		}
 
-		sqlret = SQLSetStmtOption(hstmt, SQL_QUERY_TIMEOUT, timeout);
+		sqlret = SQLSetStmtAttr(hstmt, SQL_ATTR_QUERY_TIMEOUT, (SQLPOINTER)(SQLULEN)timeout, 0);
 		if (DBFAIL(sqlret))		
 		{
 			handle_err(_hdbc, SQL_HANDLE_DBC, sqlret);
@@ -641,7 +643,7 @@ RECONNECT:
             } catch (...) {if (g_cchLogUtilDb == 1) LG2("util_db", "exception raised from _get_row alloc\n"); break;}
 
             try {
-            sqlret = SQLSetStmtOption(hstmt, SQL_QUERY_TIMEOUT, 50);
+            sqlret = SQLSetStmtAttr(hstmt, SQL_ATTR_QUERY_TIMEOUT, (SQLPOINTER)(SQLULEN)50, 0);
             if (DBFAIL(sqlret))
             {
                 handle_err(_hdbc, SQL_HANDLE_DBC, sqlret);
@@ -796,7 +798,7 @@ RECONNECT:
             } catch (...) {if (g_cchLogUtilDb == 1) LG2("util_db", "exception raised from _get_row alloc\n"); break;}
 
             try {
-            sqlret = SQLSetStmtOption(hstmt, SQL_QUERY_TIMEOUT, 50);
+            sqlret = SQLSetStmtAttr(hstmt, SQL_ATTR_QUERY_TIMEOUT, (SQLPOINTER)(SQLULEN)50, 0);
             if (DBFAIL(sqlret))
             {
                 handle_err(_hdbc, SQL_HANDLE_DBC, sqlret);
@@ -955,7 +957,7 @@ RECONNECT:
         } catch (...) {if (g_cchLogUtilDb == 1) LG2("util_db", "exception raised from _get_row3 alloc\n"); break;}
 
         try {
-            sqlret = SQLSetStmtOption(hstmt, SQL_QUERY_TIMEOUT, 50);
+            sqlret = SQLSetStmtAttr(hstmt, SQL_ATTR_QUERY_TIMEOUT, (SQLPOINTER)(SQLULEN)50, 0);
             if (DBFAIL(sqlret))
             {
                 handle_err(_hdbc, SQL_HANDLE_DBC, sqlret);
@@ -1121,7 +1123,7 @@ RECONNECT:
         } catch (...) {if (g_cchLogUtilDb == 1) LG2("util_db", "exception raised from _get_row3 alloc\n"); break;}
 
         try {
-            sqlret = SQLSetStmtOption(hstmt, SQL_QUERY_TIMEOUT, 50);
+            sqlret = SQLSetStmtAttr(hstmt, SQL_ATTR_QUERY_TIMEOUT, (SQLPOINTER)(SQLULEN)50, 0);
             if (DBFAIL(sqlret))
             {
                 handle_err(_hdbc, SQL_HANDLE_DBC, sqlret);
@@ -1238,16 +1240,23 @@ RECONNECT:
     SQLHSTMT hstmt = SQL_NULL_HSTMT;
 	//LG2("util_db", "SQL Statement Length: %d\n", strlen(sql));
 
+    printf("[ODBC DEBUG] cfl_rs::exec_sql_direct, SQL='%s', _hdbc=%p\n", sql, (void*)_hdbc);
+    fflush(stdout);
+
 	do
 	{
         sqlret = SQLAllocHandle(SQL_HANDLE_STMT, _hdbc, &hstmt);
+        printf("[ODBC DEBUG] SQLAllocHandle ret=%d, hstmt=%p\n", (int)sqlret, (void*)hstmt);
+        fflush(stdout);
         if (DBFAIL(sqlret))
         {
             handle_err(_hdbc, SQL_HANDLE_DBC, sqlret);
             break;
         }
 
-		sqlret = SQLSetStmtOption(hstmt, SQL_QUERY_TIMEOUT, timeout);
+		sqlret = SQLSetStmtAttr(hstmt, SQL_ATTR_QUERY_TIMEOUT, (SQLPOINTER)(SQLULEN)timeout, 0);
+        printf("[ODBC DEBUG] SQLSetStmtAttr(SQL_ATTR_QUERY_TIMEOUT,%d) ret=%d\n", timeout, (int)sqlret);
+        fflush(stdout);
 		if (DBFAIL(sqlret))
 		{
 			handle_err(_hdbc, SQL_HANDLE_DBC, sqlret);
@@ -1255,6 +1264,8 @@ RECONNECT:
 		}
 
         sqlret = exec_direct_w(hstmt, sql);
+        printf("[ODBC DEBUG] exec_direct_w returned ret=%d\n", (int)sqlret);
+        fflush(stdout);
 		switch (sqlret)
 		{
 		case SQL_SUCCESS_WITH_INFO:
@@ -1304,7 +1315,7 @@ RECONNECT:
             break;
         }
 
-        sqlret = SQLSetStmtOption(hstmt, SQL_QUERY_TIMEOUT, timeout);
+        sqlret = SQLSetStmtAttr(hstmt, SQL_ATTR_QUERY_TIMEOUT, (SQLPOINTER)(SQLULEN)timeout, 0);
         if (DBFAIL(sqlret))
         {
             handle_err(_hdbc, SQL_HANDLE_DBC, sqlret);
@@ -1384,7 +1395,7 @@ RECONNECT:
             break;
         }
 
-        sqlret = SQLSetStmtOption(hstmt, SQL_QUERY_TIMEOUT, timeout);
+        sqlret = SQLSetStmtAttr(hstmt, SQL_ATTR_QUERY_TIMEOUT, (SQLPOINTER)(SQLULEN)timeout, 0);
         if (DBFAIL(sqlret))
         {
             handle_err(_hdbc, SQL_HANDLE_DBC, sqlret);
@@ -1469,7 +1480,7 @@ bool cfl_rs::getalldata(const char* sql, vector< vector< string > >& data, unsig
                 break;
             }
 
-            sqlret = SQLSetStmtOption(hstmt, SQL_QUERY_TIMEOUT, timeout);
+            sqlret = SQLSetStmtAttr(hstmt, SQL_ATTR_QUERY_TIMEOUT, (SQLPOINTER)(SQLULEN)timeout, 0);
             if ((sqlret != SQL_SUCCESS) && (sqlret != SQL_SUCCESS_WITH_INFO))
             {
                 handle_err(_hdbc, SQL_HANDLE_DBC, sqlret);
@@ -1560,7 +1571,7 @@ bool cfl_rs::get_page_data(char* tablename, char* param, int pagesize, int pagei
                 break;
             }
 
-            sqlret = SQLSetStmtOption(hstmt, SQL_QUERY_TIMEOUT, timeout);
+            sqlret = SQLSetStmtAttr(hstmt, SQL_ATTR_QUERY_TIMEOUT, (SQLPOINTER)(SQLULEN)timeout, 0);
             if ((sqlret != SQL_SUCCESS) && (sqlret != SQL_SUCCESS_WITH_INFO))
             {
                 handle_err(_hdbc, SQL_HANDLE_DBC, sqlret);
@@ -1692,7 +1703,7 @@ RECONNECT:
         } catch (...) {if (g_cchLogUtilDb == 1) LG2("util_db", "exception raised from get() alloc\n"); break;}
 
         try {
-            sqlret = SQLSetStmtOption(hstmt, SQL_QUERY_TIMEOUT, 50);
+            sqlret = SQLSetStmtAttr(hstmt, SQL_ATTR_QUERY_TIMEOUT, (SQLPOINTER)(SQLULEN)50, 0);
             if (DBFAIL(sqlret))
             {
                 handle_err(_hdbc, SQL_HANDLE_DBC, sqlret);
@@ -1786,7 +1797,7 @@ RECONNECT:
 
     do
     {
-        sqlret = SQLSetStmtOption(_hstmt, SQL_QUERY_TIMEOUT, timeout);
+        sqlret = SQLSetStmtAttr(_hstmt, SQL_ATTR_QUERY_TIMEOUT, (SQLPOINTER)(SQLULEN)timeout, 0);
         if (DBFAIL(sqlret))
         {
             handle_err(_hdbc, SQL_HANDLE_DBC, sqlret);
@@ -1902,7 +1913,7 @@ bool friend_tbl::get_friend_dat(friend_dat* farray, int& array_num, unsigned int
                 break;
             }
 
-            sqlret = SQLSetStmtOption(hstmt, SQL_QUERY_TIMEOUT, 50);
+            sqlret = SQLSetStmtAttr(hstmt, SQL_ATTR_QUERY_TIMEOUT, (SQLPOINTER)(SQLULEN)50, 0);
             if ((sqlret != SQL_SUCCESS) && (sqlret != SQL_SUCCESS_WITH_INFO))
             {
                 handle_err(_hdbc, SQL_HANDLE_DBC, sqlret);
@@ -2065,7 +2076,7 @@ bool friend_tbl::get_gm_dat(friend_dat* farray, int& array_num, bool* drop)
                 break;
             }
 
-            sqlret = SQLSetStmtOption(hstmt, SQL_QUERY_TIMEOUT, 50);
+            sqlret = SQLSetStmtAttr(hstmt, SQL_ATTR_QUERY_TIMEOUT, (SQLPOINTER)(SQLULEN)50, 0);
             if ((sqlret != SQL_SUCCESS) && (sqlret != SQL_SUCCESS_WITH_INFO))
             {
                 handle_err(_hdbc, SQL_HANDLE_DBC, sqlret);

@@ -1,4 +1,4 @@
-﻿/**
+/**
 *  @file db.h
 *
 *  db.h, v 2.0 2004/11/24 13:14:05 shanghai China
@@ -10,6 +10,7 @@
 #ifndef _DB_H_
 #define _DB_H_
 
+#include <windows.h>
 #include "sql.h"
 #include "sqltypes.h"
 #include "sqlext.h"
@@ -22,8 +23,8 @@
 
 // Unicode ODBC wrapper for Wine compatibility (MS ODBC Driver 17 exports only W functions)
 static inline SQLRETURN exec_direct_w(SQLHSTMT hstmt, const char* sql) {
-	SQLWCHAR wsql[8192];
-	MultiByteToWideChar(CP_UTF8, 0, sql, -1, (LPWSTR)wsql, sizeof(wsql) / sizeof(SQLWCHAR));
+	SQLWCHAR wsql[SQL_MAXLEN];
+	MultiByteToWideChar(CP_ACP, 0, sql, -1, (LPWSTR)wsql, sizeof(wsql) / sizeof(SQLWCHAR));
 	return SQLExecDirectW(hstmt, wsql, SQL_NTS);
 }
 
