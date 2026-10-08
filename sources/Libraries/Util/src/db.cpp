@@ -1240,9 +1240,14 @@ RECONNECT:
     SQLHSTMT hstmt = SQL_NULL_HSTMT;
 	//LG2("util_db", "SQL Statement Length: %d\n", strlen(sql));
 
+    printf("[ODBC DEBUG] cfl_rs::exec_sql_direct, SQL='%s', _hdbc=%p\n", sql, (void*)_hdbc);
+    fflush(stdout);
+
 	do
 	{
         sqlret = SQLAllocHandle(SQL_HANDLE_STMT, _hdbc, &hstmt);
+        printf("[ODBC DEBUG] SQLAllocHandle ret=%d, hstmt=%p\n", (int)sqlret, (void*)hstmt);
+        fflush(stdout);
         if (DBFAIL(sqlret))
         {
             handle_err(_hdbc, SQL_HANDLE_DBC, sqlret);
@@ -1250,6 +1255,8 @@ RECONNECT:
         }
 
 		sqlret = SQLSetStmtOption(hstmt, SQL_QUERY_TIMEOUT, timeout);
+        printf("[ODBC DEBUG] SQLSetStmtOption(SQL_QUERY_TIMEOUT,%d) ret=%d\n", timeout, (int)sqlret);
+        fflush(stdout);
 		if (DBFAIL(sqlret))
 		{
 			handle_err(_hdbc, SQL_HANDLE_DBC, sqlret);
@@ -1257,6 +1264,8 @@ RECONNECT:
 		}
 
         sqlret = exec_direct_w(hstmt, sql);
+        printf("[ODBC DEBUG] exec_direct_w returned ret=%d\n", (int)sqlret);
+        fflush(stdout);
 		switch (sqlret)
 		{
 		case SQL_SUCCESS_WITH_INFO:
