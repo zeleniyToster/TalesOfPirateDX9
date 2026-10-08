@@ -12,9 +12,9 @@ protected:
 public:
 	MP_AUTO_SHARED_MUTEX; // the public access allows locking from outside
 
-	/** 默认构造函数，并没有初始化SharedPtr
+	/** Default constructor; does not initialise the SharedPtr
 	@remarks
-	<b>危险!</b> 在你使用SharedPtr之前必须调用bind() .
+	<b>Dangerous!</b> bind() must be called before the SharedPtr is used.
 	*/
 	MPSharedPtr() : m_pRep(0), m_pUseCount(0) {}
 
@@ -64,9 +64,9 @@ public:
 	inline T* operator->() const { assert(m_pRep); return m_pRep; }
 	inline T* get() const { return m_pRep; }
 
-	/** 将指针绑定到SharedPtr上.
+	/** Binds a pointer to the SharedPtr.
 	@remarks
-		这里假设SharedPtr并没有初始化!
+		This assumes the SharedPtr has not been initialised!
 	*/
 	void bind(T* rep) {
 		assert(!pRep && !pUseCount);

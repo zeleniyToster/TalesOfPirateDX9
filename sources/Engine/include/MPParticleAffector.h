@@ -6,21 +6,22 @@
 class MPParticleSystem;
 class MPParticle;
 
-/** 实现粒子影响因子接口抽象类.
+/** Abstract class implementing the particle affector interface.
 @remarks
-粒子影响因子是在粒子系统中在粒子的生存期中修改粒子。他们打包成
-类型，比如‘力（vector force）’影响因子，‘衰减器（fader）’影响因子；每
-个类型以不同的方式将修改粒子，使用不同的参数。
+Particle affectors modify particles during their lifetime inside a particle system. They are packaged into
+types, such as a 'vector force' affector or a 'fader' affector; each
+type modifies particles in its own way, using its own parameters.
 @par
-因为你可以使用很多类型的影响因子，引擎没有规定哪些可用因子。它
-提供了一些内在的因子，按它也允许插件或应用程序扩展影响因子。这可以
-通过创建ParticleAffector的子类用来扩展你需要的发射行为，当然同时需要
-创建ParticleAffectorFactory的子类用来创建你的新影响因子的对象。你在
-ParticleSystemManager调用addAffectorFactory注册这个工厂,这样就可以在代
-码或脚本文件中通过名字创建这个新的影响因子
+Because many affector types are possible, the engine does not fix the set of affectors that are available. It
+provides a few built-in ones, and also allows plugins or applications to extend the affector set. This can
+be done by subclassing ParticleAffector to extend the emission behaviour you need, and at the same time
+subclassing ParticleAffectorFactory to create objects of your new affector. You register this factory by
+calling addAffectorFactory on the ParticleSystemManager, after which the new affector can be created by name
+from code or from a script file
 @par
-粒子发射器也是用相同的方式.在创建粒子特效时,这样粒子系统有很大
-的扩展性,可以随意组合粒子影响因子类型和他们的参数.
+Particle emitters are extended in the same way. With that, a particle system becomes highly
+extensible when a particle effect is created, since the affector types and their parameters can be combined
+freely.
 */
 class MINDPOWER_API MPParticleAffector
 {
@@ -29,41 +30,39 @@ public:
 
 	virtual ~MPParticleAffector();
 
-	/** 让影响因子初始化所有新创建的粒子
+	/** Lets the affector initialise every newly created particle
 	@remarks
-	这里是影响因子有机会将他的特效初始化粒子.因子希望初始化一些
-	或所以粒子,这依赖影响因子本身
+	This is where the affector gets the chance to initialise its effect on the particles. An affector may want to initialise some
+	or all particles, depending on the affector itself
 	@param
-	pParticle 需要初始化粒子的指针.
+	pParticle pointer to the particle being initialised.
 	*/
 	virtual void _initParticle(MPParticle* pParticle) { /* by default do nothing */ }
 
-	/** 允许影响因子的数据作用在所有活动的粒子
+	/** Allows the affector data to be applied to all active particles
 	@remarks
-	这里使影响因子有机会将他们的数据作用到系统中的粒子.影响因子
-	希望将他们的特效作用到一些或所有粒子,这些依赖粒子因子的方法
+	This is where the affector gets the chance to apply its data to the particles in the system. An affector
+	may want to apply its effect to some or all particles, depending on the affector method
 	@param
-	pSystem 所作用的粒子系统的指针.
+	pSystem pointer to the particle system being acted on.
 	@param
-	timeElapsed 从上次调用到现在所花的时间(秒).
+	timeElapsed time elapsed since the previous call, in seconds.
 	*/
 	virtual void _affectParticles(MPParticleSystem* pSystem, float timeElapsed) = 0;
 
-	/** 返回影响因子的类型. 
+	/** Returns the affector type. 
 	@remarks
-	这个参数决定了影响因子的类型,这样便可以通过这个参数来创建影
-	响因子
+	This parameter determines the affector type, so that the affector can be created from it
 	*/
 	const String &getType(void) const { return m_Type; }
 protected:
-	/** 内部方法用来为子类设置基本参数定义
+	/** Inner method that sets up the base parameter definitions for subclasses
 	@remarks
-	因为StringInterface包含每个类的参数字典,子类需要调用它来请求
-	基类也把它的参数加入到字典中.不要在构造函数中做这件事,因为构造
-	函数不是以虚函数运行,它没有虚函数的上下文
+	Because StringInterface holds the parameter dictionary of every class, a subclass must call it to request
+	that the base class add its parameters to the dictionary as well. Do not do this in the constructor, because the
+	constructor is not run as a virtual function and has no virtual context
 	@par
-	子类必须在调用这个方法之前调用他们自己的createParamDictionary
-	方法
+	A subclass must call its own createParamDictionary method before calling this method
 	*/
 	void addBaseParameters(void) { /* 实际上没有做任何事 - 将来可能会做一些事 */ }
 

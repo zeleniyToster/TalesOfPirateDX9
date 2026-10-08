@@ -1,7 +1,7 @@
 ﻿#ifndef MPSingleton_H
 #define MPSingleton_H
 
-/** 模板类用于创建单例实体
+/** Template class for creating a singleton entity
 */
 template <typename T> class MPSingleton
 {

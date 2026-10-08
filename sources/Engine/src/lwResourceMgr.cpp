@@ -2645,7 +2645,7 @@ LW_RESULT lwResBufMgr::RegisterSysMemTex(LW_HANDLE* handle, const lwSysMemTexInf
         info->colorkey,// variable that receives the image format that was read
         NULL, // variable that receives the palette that was read
         NULL, // the texture to create
-        &tex)))//要创建的纹理
+        &tex)))//texture to create
     {
         goto __ret;
     }

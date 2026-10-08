@@ -4,7 +4,7 @@
 #include "MPEffPrerequisites.h"
 #include "MPSharedPtr.h"
 
-/** 通用类用于包装读入的数据.
+/** General class wrapping incoming data.
 @remarks
 This class performs basically the same tasks as std::basic_istream, 
 except that it does not have any formatting capabilities, and is
@@ -14,11 +14,11 @@ stream interfaces. As such, this is an abstraction of a set of
 wrapper classes which pretend to be standard stream classes but 
 can actually be implemented quite differently. 
 @par
-	通常如果插件或应用程序提供ArchiveFactory，那么也应提供可以访问那种
-Archive数据流的MPDataStream的派生类，除非默认提供的可以满足要求
+	Usually, if a plugin or application supplies an ArchiveFactory, it should also supply a derived class of MPDataStream that can access that kind of
+	Archive stream, unless the default one is good enough
 @note
-	由于性能的要求，这里不保证它是线程安全的。如果你希望异步访问数据流
-你必须自己组织互斥量，避免竞争
+	Thread safety is not guaranteed here, for performance reasons. If you need asynchronous access to the stream
+	you must organise the mutual exclusion yourself and avoid the race
 */
 class MINDPOWER_API MPDataStream
 {
@@ -31,20 +31,19 @@ public:
 
 	// stream operations
 	template<typename T> MPDataStream& operator>>(T& val);
-	/** 从流中读取所需字节的数据, 当遇到eof则停止.
-	@param buf 缓存的指针
-	@param count 需要读取的字节数
-	@returns 读取的字节数
+	/** Reads the requested number of bytes from the stream, stopping at eof.
+	@param buf pointer to the buffer
+	@param count number of bytes to read
+	@returns number of bytes read
 	*/
 	virtual size_t read(void* buf, size_t count) = 0;
-	/** 从流中得到一行数据.
+	/** Reads a line of data from the stream.
 	@remarks
-		分隔符不包含在返回的数据中,并且会被跳过，所以下次读取的时候也不
-	会出现.缓存中将包含中止符.
-	@param buf 缓存的指针
-	@param maxCount 读取一行数据的最大长度，不包括中止符
-	@param delim 分隔符
-	@returns 读取的字节数，不包括中止符
+		The delimiter is not part of the returned data and is skipped, so it will not turn up on the next read either. The buffer does contain the terminator.
+	@param buf pointer to the buffer
+	@param maxCount maximum length of the line to read, excluding the terminator
+	@param delim the delimiter
+	@returns number of bytes read, excluding the terminator
 	*/
 	virtual size_t readLine(char* buf, size_t maxCount, const String& delim = "\n") = 0;
 
@@ -61,32 +60,32 @@ public:
 	*/
 	virtual String getLine( bool trimAfter = true );
 
-	/** 以字符串的形式返回整个流的数据. */
+	/** Returns the data of the whole stream as a string. */
 	virtual String getAsString(void);
 
-	/** 从流中跳过一行.
-	@param delim 行分隔符
-	@returns 返回跳过的字节数
+	/** Skips a line in the stream.
+	@param delim line delimiter
+	@returns number of bytes skipped
 	*/
 	virtual size_t skipLine(const String& delim = "\n") = 0;
 
-	/** 跳过制定的字节数,也可以是一个负值，这时将向前跳过制定字节的数据. */
+	/** Skips the given number of bytes. A negative value skips backwards over that many bytes. */
 	virtual void skip(long count) = 0;
 
-	/** 将流读取指针移到指定的字节处.
+	/** Moves the stream read pointer to the given byte position.
 	*/
 	virtual void seek( size_t pos ) = 0;
 
-	/** 返回目前指针到头的偏移 */
+	/** Returns the current offset of the pointer from the start */
 	virtual size_t tell(void) const = 0;
 
-	/** 如果到达eof，返回true.*/
+	/** Returns true if eof has been reached.*/
 	virtual bool eof(void) const = 0;
 
-	/** 关闭流. */
+	/** Closes the stream. */
 	virtual void close(void) = 0;
 
-	/** 返回流的数据的大小，如果不确定可能为0. */
+	/** Returns the size of the stream data; may be 0 when unknown. */
 	size_t size(void) const { return m_Size; }
 	/// returns the name of the stream, if it has one
 	const String& getName(void) const { return m_Name; }
@@ -105,70 +104,70 @@ typedef MPSharedPtr<MPDataStream> MPDataStreamPtr;
 typedef std::list<MPDataStreamPtr> MPDataStreamList;
 typedef MPSharedPtr<MPDataStreamList> MPDataStreamListPtr;
 
-/** DataStream的公用派生类，用于处理内存中的流数据.*/
+/** Public derived class of DataStream handling in-memory stream data.*/
 class MINDPOWER_API MPMemoryDataStream : public MPDataStream
 {
 public:
 
-	/** 将已有的内存块包装成流.
-	@param pMem 现存内存的指针
-	@param size 内存块的大小（字节）
-	@param freeOnClose 如果为true，当流释放时，内存将会被释放.
+	/** Wraps an existing memory block as a stream.
+	@param pMem pointer to the existing memory
+	@param size size of the memory block, in bytes
+	@param freeOnClose if true, the memory is freed when the stream is released.
 	*/
 	MPMemoryDataStream(void* pMem, size_t size, bool freeOnClose = false);
-	/** 将已有的内存块包装成命名的流.
-	@param name 流的名字
-	@param pMem 现存内存的指针
-	@param size 内存块的大小（字节）
-	@param freeOnClose 如果为true，当流释放时，内存将会被释放.
+	/** Wraps an existing memory block as a named stream.
+	@param name name of the stream
+	@param pMem pointer to the existing memory
+	@param size size of the memory block, in bytes
+	@param freeOnClose if true, the memory is freed when the stream is released.
 	*/
 	MPMemoryDataStream(const String& name, void* pMem, size_t size, 
 		bool freeOnClose = false);
-	/** 根据另一个流的创建一个流.
-	@param sourceStream 另一个数据流
-	@param freeOnClose 如果为true，当流释放时，内存将会被释放.
+	/** Creates a stream from another stream.
+	@param sourceStream the other data stream
+	@param freeOnClose if true, the memory is freed when the stream is released.
 	*/
 	MPMemoryDataStream(MPDataStream& sourceStream, bool freeOnClose = true);
-	/** 根据另一个流的创建一个流.
-	@param sourceStream 另一个数据流(弱引用)
-	@param freeOnClose 如果为true，当流释放时，内存将会被释放.
+	/** Creates a stream from another stream.
+	@param sourceStream the other data stream (weak reference)
+	@param freeOnClose if true, the memory is freed when the stream is released.
 	*/
 	MPMemoryDataStream(MPDataStreamPtr& sourceStream, bool freeOnClose = true);
-	/** 根据另一个流的创建一个命名的流.
-	@param name 流的名字
-	@param sourceStream 另一个数据流
-	@param freeOnClose 如果为true，当流释放时，内存将会被释放.
+	/** Creates a named stream from another stream.
+	@param name name of the stream
+	@param sourceStream the other data stream
+	@param freeOnClose if true, the memory is freed when the stream is released.
 	*/
 	MPMemoryDataStream(const String& name, MPDataStream& sourceStream, 
 		bool freeOnClose = true);
-	/** 根据另一个流的创建一个命名的流.
-	@param name 流的名字
-	@param sourceStream 另一个数据流(弱引用)
-	@param freeOnClose 如果为true，当流释放时，内存将会被释放.
+	/** Creates a named stream from another stream.
+	@param name name of the stream
+	@param sourceStream the other data stream (weak reference)
+	@param freeOnClose if true, the memory is freed when the stream is released.
 	*/
 	MPMemoryDataStream(const String& name, const MPDataStreamPtr& sourceStream, 
 		bool freeOnClose = true);
-	/** 创建一个空的流.
-	@param size 流的大小
-	@param freeOnClose 如果为true，当流释放时，内存将会被释放.
+	/** Creates an empty stream.
+	@param size size of the stream
+	@param freeOnClose if true, the memory is freed when the stream is released.
 	*/
 	MPMemoryDataStream(size_t size, bool freeOnClose = true);
-	/** 创建一个空的命名的流.
-	@param name 流的名字
-	@param size 流的大小
-	@param freeOnClose 如果为true，当流释放时，内存将会被释放.
+	/** Creates an empty named stream.
+	@param name name of the stream
+	@param size size of the stream
+	@param freeOnClose if true, the memory is freed when the stream is released.
 	*/
 	MPMemoryDataStream(const String& name, size_t size, bool freeOnClose = true);
 
 	~MPMemoryDataStream();
 
-	/** 得到这个流内存块的起始指针. */
+	/** Returns the pointer to the start of this stream's memory block. */
 	uchar* getPtr(void) { return m_Data; }
 
-	/** 得到这个流目前指向的指针. */
+	/** Returns the pointer this stream is currently pointing at. */
 	uchar* getCurrentPtr(void) { return m_Pos; }
 
-	/** 设置是否在流关闭时释放内存. */
+	/** Sets whether the memory is freed when the stream is closed. */
 	void setFreeOnClose(bool free) { m_FreeOnClose = free; }
 
 	/** @copydoc DataStream::read		*/
@@ -201,31 +200,31 @@ protected:
 
 typedef MPSharedPtr<MPMemoryDataStream> MPMemoryDataStreamPtr;
 
-/** DataStream的公用派生类,用于处理std::basic_istream的数据.*/
+/** Public derived class of DataStream handling std::basic_istream data.*/
 class MINDPOWER_API MPFileStreamDataStream : public MPDataStream
 {
 public:
-	/** 从标准的stl流构建流
-	@param s stl流的指针
-	@param freeOnClose 如果为true，当流释放时，内存将会被释放.
+	/** Builds a stream from a standard stl stream
+	@param s pointer to the stl stream
+	@param freeOnClose if true, the memory is freed when the stream is released.
 	*/
 	MPFileStreamDataStream(std::ifstream* s, bool freeOnClose = true);
-	/** 从标准的stl流构建命名流
-	@param name 流的名字
-	@param s stl流的指针
-	@param freeOnClose 如果为true，当流释放时，内存将会被释放.
+	/** Builds a named stream from a standard stl stream
+	@param name name of the stream
+	@param s pointer to the stl stream
+	@param freeOnClose if true, the memory is freed when the stream is released.
 	*/
 	MPFileStreamDataStream(const String& name, std::ifstream* s, bool freeOnClose = true);
-	/** 从标准的stl流构建命名流, 并告知其大小
+	/** Builds a named stream from a standard stl stream, and states its size
 	@remarks
 	This variant tells the class the size of the stream too, which 
 	means this class does not need to seek to the end of the stream 
 	to determine the size up-front. This can be beneficial if you have
 	metadata about the contents of the stream already.
-	@param name 流的名字
-	@param s stl流的指针
-	@param size 流的大小（字节）
-	@param freeOnClose 如果为true，当流释放时，内存将会被释放.
+	@param name name of the stream
+	@param s pointer to the stl stream
+	@param size size of the stream, in bytes
+	@param freeOnClose if true, the memory is freed when the stream is released.
 	*/
 	MPFileStreamDataStream(const String& name, std::ifstream* s, size_t size, bool freeOnClose = true);
 

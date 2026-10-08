@@ -34,7 +34,7 @@ public:
 };
 typedef std::vector<MPParameterDef> MPParameterList;
 
-/** 参数对象得到/设置参数的抽象类.*/
+/** Abstract class through which a parameter object gets and sets its parameters.*/
 class MINDPOWER_API MPParamCommand
 {
 public:
@@ -55,7 +55,7 @@ protected:
 	/// parameter object used for get/set
 	ParamCommandMap m_ParamCommands;
 
-	/** 返回有名参数的参数对象. */
+	/** Returns a parameter object holding a named parameter. */
 	MPParamCommand* getParamCommand(const String& name)
 	{
 		ParamCommandMap::iterator i = m_ParamCommands.find(name);
@@ -84,10 +84,10 @@ protected:
 public:
 	MPParamDictionary()  {}
 
-	/** 增加这个类的参数定义. 
-	@param paramDef 参数的MPParameterDef对象
-	@param paramCmd 参数命令派生类对象的指针用于处理getting/setting.
-	NB: 这个类不析构这个指针
+	/** Adds a parameter definition for this class. 
+	@param paramDef the MPParameterDef of the parameter
+	@param paramCmd pointer to a derived parameter command object used to handle getting/setting.
+	NB: this class does not destroy that pointer
 
 	*/
 	void addParameter(const MPParameterDef& paramDef, MPParamCommand* paramCmd)
@@ -104,12 +104,11 @@ public:
 
 typedef std::map<String, MPParamDictionary> MPParamDictionaryMap;
 
-/** 定义使用反射风格，设置自定义参数的公共接口.
+/** Defines the common interface for setting custom parameters in a reflection-like style.
 @remarks
-	这个类保存了供子类使用的类静态名字-参数map字典。更多细节请查看MPParamDictionary. 
+	This class holds the class static name-to-parameter map dictionary used by subclasses. See MPParamDictionary for details. 
 @remarks
-	要使用这个类，每个子类必须在构造函数中调用createParamDictionary，来创
-	建那个类的参数字典.
+	To use this class every subclass must call createParamDictionary in its constructor to build that class parameter dictionary.
 */
 class MINDPOWER_API MPParameterInterface
 {
@@ -192,14 +191,13 @@ public:
 	static void cleanupDictionary () ;
 
 protected:
-	/** 内部方法用于创建类的参数字典.
+	/** Inner method that creates the parameter dictionary for this class.
 	@remarks
-		这个方法将会检查这个类的参数字典,如果不存在则创建一个.NB:必须提
-	供类的名字(RTTI没有使用)
+		This method checks whether the parameter dictionary for this class exists and creates it if not. NB: the class name must be supplied (RTTI is not used)
 	@param
-	className 类名(字典用)
+	className the class name (used by the dictionary)
 	@returns
-		true 如果字典被创建, false 如果字典已经存在
+		true if the dictionary was created, false if it already existed
 	*/
 	bool createParamDictionary(const String& className)
 	{

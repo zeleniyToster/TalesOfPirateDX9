@@ -60,10 +60,10 @@ public:
 		return D3DXVec3LengthSq(&m_vSelf);
 	}
 
-	/** 单位化向量.
+	/** Normalises the vector.
 	@note
-		这个函数不会因零向量而崩溃，但如果是零向量则不会改变他的元素
-	@returns 向量的先前长度.
+		This does not crash on a zero vector, but a zero vector is left unchanged.
+	@returns the previous length of the vector.
 	*/
 	inline float normalise()
 	{
@@ -79,11 +79,11 @@ public:
 	}
 
 
-	/** 产生一个垂直的向量.
+	/** Produces a perpendicular vector.
 	@remarks
 	This method will return a vector which is perpendicular to this
-	vector. There are an infinite number of possibilities but this 
-	method will guarantee to generate one of them. If you need more 
+	vector. There are an infinite number of possibilities but this
+	method will guarantee to generate one of them. If you need more
 	control you should use the Quaternion class.
 	*/
 	inline MPEffVector3 perpendicular(void) const
@@ -111,15 +111,15 @@ public:
 	}
 
 
-	/** 在给定的最大角度内产生一个随机的向量.
+	/** Produces a random vector within a given maximum angle.
 	@remarks
-		这个方法假设随机数的种子已经产生
-	@param 
-	angle 给定的最大偏移角度
-	@param 
-	up 任何垂直这个向量的向量
-	@returns 
-		偏移这个向量随机角度的向量。这个随机向量没有单位化
+		This method assumes the random number seed has already been generated
+	@param
+	angle maximum offset angle
+	@param
+	up any vector perpendicular to this one
+	@returns
+		a vector offset from this one by a random angle. The random vector is not normalised
 	*/
 	inline MPEffVector3 randomDeviant( const MPRadian& angle,
 		const MPEffVector3& up = MPEffVector3::ZERO ) const

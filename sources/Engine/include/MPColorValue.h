@@ -8,9 +8,9 @@ typedef unsigned int RGBA;
 typedef unsigned int ARGB;
 typedef unsigned int ABGR;
 
-/** 表示颜色的类.
+/** Class that represents a colour.
 @remarks
-	颜色由4个成员组成，每一个成员都是由0.0到1.0的浮点数组成
+	It consists of four members, each a float between 0.0 and 1.0
 */
 class MINDPOWER_API MPColorValue
 {
@@ -36,26 +36,26 @@ public:
 		float val[4];
 	};
 
-	/** 以RGBA形式返回颜色.
+	/** Returns the colour in RGBA form.
 	*/
 	RGBA getAsRGBA(void) const;
 
-	/** 以ARGB形式返回颜色.
+	/** Returns the colour in ARGB form.
 	*/
 	ARGB getAsARGB(void) const;
 
-	/** 以ABGR形式返回颜色 */
+	/** Sets the colour in ABGR form */
 	ABGR getAsABGR(void) const;
 
-	/** 以RGBA形式设置颜色.
+	/** Sets the colour in RGBA form.
 	*/
 	void setAsRGBA(const RGBA val);
 
-	/** 以ARGB形式设置颜色.
+	/** Sets the colour in ARGB form.
 	*/
 	void setAsARGB(const ARGB val);
 
-	/** 以ABGR形式设置颜色.
+	/** Sets the colour in ABGR form.
 	*/
 	void setAsABGR(const ABGR val);
 

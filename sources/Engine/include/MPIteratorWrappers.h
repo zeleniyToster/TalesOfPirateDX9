@@ -13,9 +13,9 @@ public:
 	typedef typename T::mapped_type MappedType;
 	typedef typename T::key_type KeyType;
 
-	/** 构造函数.
+	/** Constructor.
 	@remarks
-		提供start和end迭代器用于初始化.
+		Supplies the start and end iterators used for initialisation.
 	*/
 	MapIterator(typename T::iterator start, typename T::iterator end)
 		: mCurrent(start), mEnd(end)

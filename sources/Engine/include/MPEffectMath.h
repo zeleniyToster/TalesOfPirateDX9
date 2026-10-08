@@ -9,9 +9,9 @@
 /// forward declarations
 class MPDegree;
 
-/** 给出的角度以弧度为单位的包装类.
+/** Wrapper class for an angle expressed in radians.
 @remarks
-弧度值和角度值可以相互转换，而且转换会自动进行
+Radian and degree values convert automatically
 */
 class MPRadian
 {
@@ -51,9 +51,9 @@ public:
 	bool operator >  ( const MPRadian& r ) const { return m_fRad >  r.m_fRad; }
 };
 
-/** 给出的角度以角度为单位的包装类.
+/** Wrapper class for an angle expressed in degrees.
 @remarks
-弧度值和角度值可以相互转换，而且转换会自动进行
+Radian and degree values convert automatically
 */
 class MPDegree
 {
@@ -113,19 +113,20 @@ inline MPRadian& MPRadian::operator -=(const MPDegree& d) {
 }
 
 
-/** 这个类提供公共数学函数的访问.
+/** Provides access to the common math functions.
 @remarks
-大多数数学函数都是C运行时库函数的别名。这里用别名使将来会提供更
-优化的函数成为可能，或根据更快的运行时库或其他自定义数学库
+Most of the functions are aliases of the C runtime library. Aliasing them
+leaves room for optimised replacements later, or for a different, faster
+runtime library.
 @note
-<br>这里是根据MgcMath.h摘自
+<br>Taken from MgcMath.h
 <a href="http://www.magic-software.com">Wild Magic</a>.
 */
 class MINDPOWER_API MPEffectMath
 {
 public:
-	/** 角度单位. 这个功能使角度单位能够同时使用上面的角度和弧度制.
-	当解析文件时，这个功能将会自动使用。这些用法可查看Angle类
+	/** Angle unit. Lets angle units mix degrees and radians.
+	It is applied automatically while parsing files; see the Angle class
 	*/
 	enum AngleUnit
 	{
@@ -145,20 +146,20 @@ protected:
 	static float* m_SinTable;
 	static float* m_TanTable;
 
-	/** 构建三角函数表 （私有）*/
+	/** Builds the trigonometry table (private) */
 	void buildTrigTables();
 
 	static float SinTable (float fValue);
 	static float TanTable (float fValue);
 
 public:        
-	/** 默认构造函数.
+	/** Default constructor.
 	@param
-		trigTableSize 设置内部使用三角函数表的大小（可选参数）
+		trigTableSize size of the internal trigonometry table (optional)
 	*/
 	MPEffectMath(unsigned int trigTableSize = 4096);
 
-	/** 默认析构函数.
+	/** Default destructor.
 	*/
 	~MPEffectMath();
 
@@ -175,18 +176,18 @@ public:
 /// degree / radian related
 	static inline float DegreesToRadians(float degrees) { return degrees * fDeg2Rad; }
 	static inline float RadiansToDegrees(float radians) { return radians * fRad2Deg; }
-	/** 这个函数用于设置整个API使用的角度单位（弧度或角度）	*/
+	/** Sets the angle unit used throughout the API (radians or degrees)	*/
 	static void setAngleUnit(AngleUnit unit);
-	/** 得到整个API正在使用的角度单位. */
+	/** Returns the angle unit currently used by the API. */
 	static AngleUnit getAngleUnit(void);
 
-	/** 将当前的角度单位转换乘弧度. */
+	/** Converts the current angle unit to radians. */
 	static float AngleUnitsToRadians(float units);
-	/** 将弧度转换成当前的角度单位. */
+	/** Converts radians into the current angle unit. */
 	static float RadiansToAngleUnits(float radians);
-	/** 将当前的角度单位转换乘角度. */
+	/** Converts the current angle unit to degrees. */
 	static float AngleUnitsToDegrees(float units);
-	/** 将角度转换成当前的角度单位. */
+	/** Converts degrees into the current angle unit. */
 	static float DegreesToAngleUnits(float degrees);
 
 /// random number related
@@ -194,29 +195,29 @@ public:
 	static float RangeRandom (float fLow, float fHigh);  // in [fLow,fHigh]
 
 /// trigonometry related
-	/** Sine 函数.
+	/** Sine function.
 	@param
-		fValue 角的弧度值
+		fValue the angle in radians
 	@param
-		useTables 如果为真, 使用查表而不是通过计算，这样会更快但精度降低.
+		useTables if true, the value is looked up in a table instead of being computed, which is faster but less accurate
 	*/
 	static inline float Sin (const MPRadian& fValue, bool useTables = false) {
 		return (!useTables) ? float(sin(fValue.valueRadians())) : SinTable(fValue.valueRadians());
 	}
-	/** Sine 函数.
+	/** Sine function.
 	@param
-		fValue 角的弧度值
+		fValue the angle in radians
 	@param
-		useTables 如果为真, 使用查表而不是通过计算，这样会更快但精度降低.
+		useTables if true, the value is looked up in a table instead of being computed, which is faster but less accurate
 	*/
 	static inline float Sin (float fValue, bool useTables = false) {
 		return (!useTables) ? float(sin(fValue)) : SinTable(fValue);
 	}
-	/** Cosine 函数.
+	/** Cosine function.
 	@param
-		fValue 角的弧度值
+		fValue the angle in radians
 	@param
-		useTables 如果为真, 使用查表而不是通过计算，这样会更快但精度降低.
+		useTables if true, the value is looked up in a table instead of being computed, which is faster but less accurate
 	*/
 	static inline float Cos (const MPRadian& fValue, bool useTables = false) {
 		return (!useTables) ? float(cos(fValue.valueRadians())) : SinTable(fValue.valueRadians() + HALF_PI);
@@ -230,11 +231,11 @@ public:
 	static inline float Cos (float fValue, bool useTables = false) {
 		return (!useTables) ? float(cos(fValue)) : SinTable(fValue + HALF_PI);
 	}
-	/** Tangent 函数.
+	/** Tangent function.
 	@param
-		fValue 角的弧度值
+		fValue the angle in radians
 	@param
-		useTables 如果为真, 使用查表而不是通过计算，这样会更快但精度降低.
+		useTables if true, the value is looked up in a table instead of being computed, which is faster but less accurate
 	*/
 	static inline float Tan (const MPRadian& fValue, bool useTables = false) {
 		return (!useTables) ? float(tan(fValue.valueRadians())) : TanTable(fValue.valueRadians());
