@@ -1,9 +1,15 @@
 #include "Packet.h"
 #include "Comm.h"
 
-#define DEBUG_WPACKET 1
-#if DEBUG_WPACKET
+// [NETLOG] packet write diagnostics. Off by default: the stream is opened in the
+// process working directory and grew to ~0.3 MB per session. Added while chasing
+// the GateServer handshake failure (client error 522), which is now fixed.
+// To bring it back: set DIAG_WPACKET_LOG to 1 and uncomment the [NETLOG] lines.
+// See docs/BUILD_NOTES.md.
+#define DIAG_WPACKET_LOG 0
+#if DIAG_WPACKET_LOG
 #include <fstream>
+#include <iostream>
 static std::ofstream wpacket_debug_log("wpacket_debug.log", std::ios::app);
 #define WPACKET_LOG wpacket_debug_log
 #else
@@ -132,7 +138,7 @@ WPacket WPacket::Duplicate()const
 void WPacket::WritePktLen()
 {
 	#if DEBUG_WPACKET
-	WPACKET_LOG << "[WPacket] WritePktLen: START, GetPktLen()=" << GetPktLen() << ", __len_offset=" << __tca->__len_offset << ", __len_size=" << __tca->__len_size << std::endl;
+	// [NETLOG] WPACKET_LOG << "[WPacket] WritePktLen: START, GetPktLen()=" << GetPktLen() << ", __len_offset=" << __tca->__len_offset << ", __len_size=" << __tca->__len_size << std::endl;
 	#endif
 	uLong		l_lenl;
 	uShort		l_lens;
@@ -163,7 +169,7 @@ void WPacket::WritePktLen()
 		}
 	}
 	#if DEBUG_WPACKET
-	WPACKET_LOG << "[WPacket] WritePktLen: END, GetPktLen()=" << GetPktLen() << std::endl;
+	// [NETLOG] WPACKET_LOG << "[WPacket] WritePktLen: END, GetPktLen()=" << GetPktLen() << std::endl;
 	#endif
 }
 //--------------------------------------------------------------------
@@ -209,7 +215,7 @@ bool WPacket::WriteCmd(uShort cmd)
 	}
 	
 	#if DEBUG_WPACKET
-	WPACKET_LOG << "[WPacket] WriteCmd: cmd=" << cmd << ", Size=" << Size() << ", Head=" << Head() << std::endl;
+	// [NETLOG] WPACKET_LOG << "[WPacket] WriteCmd: cmd=" << cmd << ", Size=" << Size() << ", Head=" << Head() << std::endl;
 	#endif
 	
 	return true;
@@ -239,7 +245,7 @@ bool WPacket::WriteChar(uChar ch)
 	MemCpy(GetDataAddr() +GetDataLen(),(cChar *)&ch,sizeof(uChar));
 	m_wpos +=sizeof(uChar);
 	#if DEBUG_WPACKET
-	WPACKET_LOG << "[WPacket] WriteChar: ch=" << (int)ch << ", Size=" << Size() << ", m_wpos=" << m_wpos << std::endl;
+	// [NETLOG] WPACKET_LOG << "[WPacket] WriteChar: ch=" << (int)ch << ", Size=" << Size() << ", m_wpos=" << m_wpos << std::endl;
 	#endif
 	return true;
 }
@@ -269,7 +275,7 @@ bool WPacket::WriteShort(uShort sh)
 	MemCpy(GetDataAddr() + GetDataLen(), reinterpret_cast<char const*>(&sh), sizeof(uShort));
 	m_wpos +=sizeof(uShort);
 	#if DEBUG_WPACKET
-	WPACKET_LOG << "[WPacket] WriteShort: sh=" << sh << ", Size=" << Size() << ", m_wpos=" << m_wpos << std::endl;
+	// [NETLOG] WPACKET_LOG << "[WPacket] WriteShort: sh=" << sh << ", Size=" << Size() << ", m_wpos=" << m_wpos << std::endl;
 	#endif
 	return true;
 }
@@ -299,7 +305,7 @@ bool WPacket::WriteLong(uLong lo)
 	MemCpy(GetDataAddr() + GetDataLen(), reinterpret_cast<char const*>(&lo), sizeof(uLong));
 	m_wpos +=sizeof(uLong);
 	#if DEBUG_WPACKET
-	WPACKET_LOG << "[WPacket] WriteLong: lo=" << lo << ", Size=" << Size() << ", m_wpos=" << m_wpos << std::endl;
+	// [NETLOG] WPACKET_LOG << "[WPacket] WriteLong: lo=" << lo << ", Size=" << Size() << ", m_wpos=" << m_wpos << std::endl;
 	#endif
 	return true;
 }
@@ -338,7 +344,7 @@ bool WPacket::WriteSequence(cChar *seq,uShort len)
 	MemCpy(GetDataAddr() + GetDataLen(), seq, len);
 	m_wpos +=len;
 	#if DEBUG_WPACKET
-	WPACKET_LOG << "[WPacket] WriteSequence: len=" << len << ", Size=" << Size() << ", m_wpos=" << m_wpos << std::endl;
+	// [NETLOG] WPACKET_LOG << "[WPacket] WriteSequence: len=" << len << ", Size=" << Size() << ", m_wpos=" << m_wpos << std::endl;
 	#endif
 	return true;
 }
@@ -376,7 +382,7 @@ bool WPacket::WriteFloat(float fVal)
 	MemCpy(GetDataAddr() + GetDataLen(), (cChar*)&fVal, sizeof(fVal));
 	m_wpos +=sizeof(float);
 	#if DEBUG_WPACKET
-	WPACKET_LOG << "[WPacket] WriteFloat: fVal=" << fVal << ", Size=" << Size() << ", m_wpos=" << m_wpos << std::endl;
+	// [NETLOG] WPACKET_LOG << "[WPacket] WriteFloat: fVal=" << fVal << ", Size=" << Size() << ", m_wpos=" << m_wpos << std::endl;
 	#endif
 	return true;
 }

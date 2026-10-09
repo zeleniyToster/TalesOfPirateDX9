@@ -4,10 +4,16 @@
 #include "Packet.h"
 #include "Comm.h"
 #include "LogStream.h"
-#include <fstream>
 
-#define DEBUG_SENDER 1
-#if DEBUG_SENDER
+// [NETLOG] packet send diagnostics. Off by default: opened in the process
+// working directory and grew to ~0.14 MB per session. Added while chasing the
+// GateServer handshake failure (client error 522), which is now fixed.
+// To bring it back: set DIAG_SENDER_LOG to 1 and uncomment the [NETLOG] lines.
+// See docs/BUILD_NOTES.md.
+#define DIAG_SENDER_LOG 0
+#if DIAG_SENDER_LOG
+#include <fstream>
+#include <iostream>
 static std::ofstream sender_debug_log("sender_debug.log", std::ios::app);
 #define SENDER_LOG sender_debug_log
 #else
@@ -336,9 +342,9 @@ long Sender::Process()
 
 			// (1) send returns actual number of sent bytes - could be less than requested in len parameter.
 			// (2) m_p combined with m_send->GetBufAddr() points to the beginning of the data to-be sent.
-			SENDER_LOG << "[SENDER] BEFORE send() -> m_send: " << static_cast<const void*>(m_send) << ", m_p: " << m_p << ", m_send->m_cpos: " << (m_send ? m_send->m_cpos : 0) << ", socket: " << m_datasock->m_socket << std::endl;
+			// [NETLOG] SENDER_LOG << "[SENDER] BEFORE send() -> m_send: " << static_cast<const void*>(m_send) << ", m_p: " << m_p << ", m_send->m_cpos: " << (m_send ? m_send->m_cpos : 0) << ", socket: " << m_datasock->m_socket << std::endl;
 			l_sendlen = send(m_datasock->m_socket, m_send->GetBufAddr() + m_p, m_send->m_cpos - m_p, 0);
-			SENDER_LOG << "[SENDER] AFTER send() -> l_sendlen: " << l_sendlen << ", WSAGetLastError: " << WSAGetLastError() << std::endl;
+			// [NETLOG] SENDER_LOG << "[SENDER] AFTER send() -> l_sendlen: " << l_sendlen << ", WSAGetLastError: " << WSAGetLastError() << std::endl;
 			if (l_sendlen >= 0)
 			{
 				// Great, we sent atleast one byte.

@@ -24,6 +24,16 @@ bool AudioSDL::init()
 	{
 		return false;
 	}
+	// MIX_DEFAULT_CHANNELS is only 2, which is far too few once several characters are
+	// fighting at once and the UI is clicking. Raise the pool so Mix_PlayChannel does not
+	// start refusing sounds with -1. SDL_Sound::play() recycles its own channel, so this is
+	// headroom for concurrency, not a leak.
+	if(Mix_AllocateChannels(MIX_CHANNEL_COUNT) < 0)
+	{
+		Mix_CloseAudio();
+		SDL_Quit();
+		return false;
+	}
 	return (g_sdl_audio_valid = true);
 }
 

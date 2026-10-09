@@ -20,6 +20,10 @@
 
 #define CHUNK_SIZE              4096
 
+//  number of SDL_mixer channels the game asks for in AudioSDL::init()
+//  MIX_DEFAULT_CHANNELS is 2, which is not enough for several monsters fighting at once
+#define MIX_CHANNEL_COUNT        32
+
 //  for wave
 class SDL_Sound : public SDL_Audio_Base
 {

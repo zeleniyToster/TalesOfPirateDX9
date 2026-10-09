@@ -334,6 +334,7 @@ private:        // �������ֵ��л�,���������
     eBkgMusic           _eSwitchMusic;
     int                 _nCurMusicSize;     // �л�����ʱ��������С
     char                _szBkgMusic[256];   // ������
+    DWORD               _dwMusicFadeStart;  // GetTickCount() when the current crossfade began
     
 	static CSteadyFrame*	_pSteady;
 	static	bool			_MouseInScene;

@@ -44,12 +44,28 @@ bool SDL_Sound::release()
 
 bool SDL_Sound::play()
 {
+    // Free the channel this sound used last time before asking for a new one. SDL_mixer
+    // hands out a fresh channel per Mix_PlayChannel and only recycles it once the chunk
+    // stops on its own, so without this every replay of the same sound permanently
+    // consumed one of the mixer channels. With MIX_CHANNELS channels shared by all sound
+    // effects the pool ran dry mid session, Mix_PlayChannel started returning -1 and every
+    // effect went silent until the process was restarted.
+    if( m_channel >= 0 )
+    {
+        Mix_HaltChannel( m_channel );
+        m_channel = -1;
+    }
     m_channel = Mix_PlayChannel(-1, m_device, m_loop);
     return (-1 != m_channel);
 }
 
 bool SDL_Sound::fadeIn(int ms)
 {
+    if( m_channel >= 0 )
+    {
+        Mix_HaltChannel( m_channel );
+        m_channel = -1;
+    }
     m_channel = Mix_FadeInChannel(-1, m_device, m_loop, ms);
     return (-1 != m_channel);
 }

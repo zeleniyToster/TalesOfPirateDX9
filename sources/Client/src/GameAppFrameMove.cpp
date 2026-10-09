@@ -16,6 +16,11 @@
 #include "UIGlobalVar.h"
 #include "GameConfig.h"
 
+// Length of a background music crossfade, in milliseconds. Time based on purpose: counting
+// frames would make the fade twice as long at 30 FPS as at 60, and the previous code used
+// the target volume as the step count, which broke the fade outright at volume 0 or 1.
+static const DWORD MUSIC_FADE_MS = 500;
+
 #ifndef USE_DSOUND
 #include "AudioThread.h"
 extern CAudioThread g_AudioThread;
@@ -180,50 +185,51 @@ void CGameApp::_FrameMove(DWORD dwTimeParam, bool camMove)		//Vim
 	switch( _eSwitchMusic )
 	{
 	case enumOldMusic:
-		_nCurMusicSize--;
-		if( _nCurMusicSize<=1 )
 		{
-			//::bkg_snd_stop();
-			AudioSDL::get_instance()->stop(::g_dwCurMusicID);
-			if( _szBkgMusic[0]=='\0' )
+			DWORD dwElapsed = GetTickCount() - _dwMusicFadeStart;
+			if( dwElapsed >= MUSIC_FADE_MS )
 			{
-				_eSwitchMusic=enumNoMusic;
+				AudioSDL::get_instance()->stop(::g_dwCurMusicID);
+				g_dwCurMusicID = 0;
+				_nCurMusicSize = 0;
+
+				if( _szBkgMusic[0]=='\0' )
+				{
+					_eSwitchMusic=enumNoMusic;
+				}
+				else
+				{
+					g_dwCurMusicID = AudioSDL::get_instance()->get_resID(_szBkgMusic, TYPE_MP3);
+					AudioSDL::get_instance()->volume(g_dwCurMusicID, 0);
+					if( g_dwCurMusicID )
+						AudioSDL::get_instance()->play( g_dwCurMusicID, true );
+					_dwMusicFadeStart = GetTickCount();
+					_eSwitchMusic=enumNewMusic;
+				}
 			}
 			else
 			{
-				//::bkg_snd_play( _szBkgMusic, true );
-				DWORD OldMusicID = g_dwCurMusicID;
-				g_dwCurMusicID = AudioSDL::get_instance()->get_resID(_szBkgMusic, TYPE_MP3);
-
-				//AudioSDL::get_instance()->play(g_dwCurMusicID, true);
-
-				// �����̣߳����������
-#ifndef USE_DSOUND
-				g_AudioThread.play(g_dwCurMusicID, true);
-#else
-				if( g_dwCurMusicID && ( OldMusicID != g_dwCurMusicID ) )
-					AudioSDL::get_instance()->play( g_dwCurMusicID, true );
-#endif
-				_eSwitchMusic=enumNewMusic;
+				_nCurMusicSize = _nMusicSize - (int)((DWORD)_nMusicSize * dwElapsed / MUSIC_FADE_MS);
+				if( _nCurMusicSize < 0 )	_nCurMusicSize = 0;
+				AudioSDL::get_instance()->volume(::g_dwCurMusicID, _nCurMusicSize);
 			}
-		}
-		else
-		{
-			//::bkg_snd_vol( _nCurMusicSize );
-			AudioSDL::get_instance()->volume(g_dwCurMusicID, _nCurMusicSize);
 		}
 		break;
 
 	case enumNewMusic:
-		_nCurMusicSize++;
-		if( _nCurMusicSize>=_nMusicSize )
 		{
-			_eSwitchMusic=enumMusicPlay;
-		}
-		else
-		{
-			//::bkg_snd_vol( _nCurMusicSize );
-			AudioSDL::get_instance()->volume(g_dwCurMusicID, _nCurMusicSize);
+			DWORD dwElapsed = GetTickCount() - _dwMusicFadeStart;
+			if( dwElapsed >= MUSIC_FADE_MS )
+			{
+				_nCurMusicSize = _nMusicSize;
+				AudioSDL::get_instance()->volume(::g_dwCurMusicID, _nMusicSize);
+				_eSwitchMusic=enumMusicPlay;
+			}
+			else
+			{
+				_nCurMusicSize = (int)((DWORD)_nMusicSize * dwElapsed / MUSIC_FADE_MS);
+				AudioSDL::get_instance()->volume(::g_dwCurMusicID, _nCurMusicSize);
+			}
 		}
 		break;
 	}

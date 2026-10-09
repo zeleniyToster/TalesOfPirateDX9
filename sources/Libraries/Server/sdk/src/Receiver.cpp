@@ -15,10 +15,17 @@
 
 _DBC_USING
 
-#define DEBUG_RECEIVER 1  // Enable debug output for Receiver
+// [NETLOG] packet receive diagnostics. Off by default: opened in the process
+// working directory and grew to ~3 MB per session, several log lines per received
+// packet. Added while chasing the GateServer handshake failure (client error 522),
+// which is now fixed.
+// To bring it back: set DIAG_RECEIVER_LOG to 1 and uncomment the [NETLOG] lines.
+// See docs/BUILD_NOTES.md.
+#define DIAG_RECEIVER_LOG 0
 
-#if DEBUG_RECEIVER
+#if DIAG_RECEIVER_LOG
 #include <fstream>
+#include <iostream>
 static std::ofstream debug_log("receiver_debug.log", std::ios::app);
 #define DEBUG_LOG debug_log
 #else
@@ -66,16 +73,16 @@ void Receiver::Init()
 	m_rpk		=RPacket(m_datasock->GetTcpApp());
 
 	#if DEBUG_RECEIVER
-	DEBUG_LOG << "[RECEIVER INIT] __tca: " << __tca << ", m_datasock->GetTcpApp(): " << m_datasock->GetTcpApp() << std::endl;
-	DEBUG_LOG << "[RECEIVER INIT] m_rpk valid: " << (bool)m_rpk << ", m_rpk.__tca: " << m_rpk.__tca << ", m_rpk.Size(): " << m_rpk.Size() << std::endl;
+	// [NETLOG] DEBUG_LOG << "[RECEIVER INIT] __tca: " << __tca << ", m_datasock->GetTcpApp(): " << m_datasock->GetTcpApp() << std::endl;
+	// [NETLOG] DEBUG_LOG << "[RECEIVER INIT] m_rpk valid: " << (bool)m_rpk << ", m_rpk.__tca: " << m_rpk.__tca << ", m_rpk.Size(): " << m_rpk.Size() << std::endl;
 	#endif
 }
 //--------------------------------------------------
 long Receiver::Process()
 {
 	#if DEBUG_RECEIVER
-	DEBUG_LOG << "[RECEIVER PROCESS START] m_datasock: " << m_datasock << ", __tca: " << __tca << ", m_p: " << m_p << std::endl;
-	DEBUG_LOG << "[RECEIVER PROCESS START] m_rpk valid: " << (bool)m_rpk << ", m_rpk.__tca: " << m_rpk.__tca << ", m_rpk.Size(): " << m_rpk.Size() << std::endl;
+	// [NETLOG] DEBUG_LOG << "[RECEIVER PROCESS START] m_datasock: " << m_datasock << ", __tca: " << __tca << ", m_p: " << m_p << std::endl;
+	// [NETLOG] DEBUG_LOG << "[RECEIVER PROCESS START] m_rpk valid: " << (bool)m_rpk << ", m_rpk.__tca: " << m_rpk.__tca << ", m_rpk.Size(): " << m_rpk.Size() << std::endl;
 	#endif
 
 	int			l_reallen	=0;
@@ -92,15 +99,15 @@ long Receiver::Process()
 
 		// l_reallen is the n bytes received, and the data is written to the buffer in m_rpk
 		#if DEBUG_RECEIVER
-		DEBUG_LOG << "[RECEIVER RECV] BEFORE recv() -> m_rpk valid: " << (bool)m_rpk << ", GetPktAddr: " << static_cast<const void*>(m_rpk.GetPktAddr()) << ", m_p: " << m_p << std::endl;
-		DEBUG_LOG << "[RECEIVER RECV] __bufheap.unit: " << __bufheap.GetUnitSize() << ", __bufheap.used: " << __bufheap.GetUsedNum() << std::endl;
-		DEBUG_LOG << "[RECEIVER RECV] HasSpace: " << HasSpace() << std::endl;
+		// [NETLOG] DEBUG_LOG << "[RECEIVER RECV] BEFORE recv() -> m_rpk valid: " << (bool)m_rpk << ", GetPktAddr: " << static_cast<const void*>(m_rpk.GetPktAddr()) << ", m_p: " << m_p << std::endl;
+		// [NETLOG] DEBUG_LOG << "[RECEIVER RECV] __bufheap.unit: " << __bufheap.GetUnitSize() << ", __bufheap.used: " << __bufheap.GetUsedNum() << std::endl;
+		// [NETLOG] DEBUG_LOG << "[RECEIVER RECV] HasSpace: " << HasSpace() << std::endl;
 		#endif
 
 		l_reallen	=recv(m_datasock->m_socket,const_cast<char*>(m_rpk.GetPktAddr()) + m_p,int(HasSpace()),0);
 
 		#if DEBUG_RECEIVER
-		DEBUG_LOG << "[RECEIVER RECV] AFTER recv() -> l_reallen: " << l_reallen << ", WSAGetLastError: " << WSAGetLastError() << std::endl;
+		// [NETLOG] DEBUG_LOG << "[RECEIVER RECV] AFTER recv() -> l_reallen: " << l_reallen << ", WSAGetLastError: " << WSAGetLastError() << std::endl;
 		#endif
 
 		if(l_reallen >0)
@@ -241,21 +248,21 @@ long Receiver::Process()
 dbc::uLong dbc::Receiver::HasSpace() const
 {
 	#if DEBUG_RECEIVER
-	DEBUG_LOG << "[RECEIVER HasSpace] m_rpk valid: " << (bool)m_rpk << ", m_p: " << m_p << ", m_rpk.GetOffset(): " << m_rpk.GetOffset() << std::endl;
+	// [NETLOG] DEBUG_LOG << "[RECEIVER HasSpace] m_rpk valid: " << (bool)m_rpk << ", m_p: " << m_p << ", m_rpk.GetOffset(): " << m_rpk.GetOffset() << std::endl;
 	#endif
 
 	auto current_size = m_rpk.Size();
 	auto used_size = m_rpk.GetOffset() + m_p;
 
 	#if DEBUG_RECEIVER
-	DEBUG_LOG << "[RECEIVER HasSpace] current_size: " << current_size << ", used_size: " << used_size << std::endl;
+	// [NETLOG] DEBUG_LOG << "[RECEIVER HasSpace] current_size: " << current_size << ", used_size: " << used_size << std::endl;
 	#endif
 
 	if (current_size > used_size)
 	{
 		auto remain_size = m_rpk->Size() - m_rpk.GetOffset() - m_p;
 		#if DEBUG_RECEIVER
-		DEBUG_LOG << "[RECEIVER HasSpace] remain_size: " << remain_size << std::endl;
+		// [NETLOG] DEBUG_LOG << "[RECEIVER HasSpace] remain_size: " << remain_size << std::endl;
 		#endif
 		return remain_size;
 	}

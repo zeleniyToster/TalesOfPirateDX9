@@ -696,6 +696,7 @@ void CGameApp::PlayMusic(int nMusicNo)
     if( !pInfo ) 
     {
         _szBkgMusic[0] = '\0';
+        _dwMusicFadeStart = GetTickCount();
         _eSwitchMusic = enumOldMusic;
         return;
     }
@@ -706,25 +707,30 @@ void CGameApp::PlayMusic(int nMusicNo)
         {
             strncpy( _szBkgMusic, pInfo->szDataName, sizeof(_szBkgMusic) );
 
-            _eSwitchMusic=enumNewMusic;
 			DWORD OldMusicID = g_dwCurMusicID;
 			g_dwCurMusicID = AudioSDL::get_instance()->get_resID(_szBkgMusic, TYPE_MP3);
-			AudioSDL::get_instance()->volume(g_dwCurMusicID, _nCurMusicSize);
+			// Always start from silence. Previously the track was only started when the
+			// new resource ID differed from the old one, so asking for the same music
+			// twice left nothing playing at all.
+			if( OldMusicID )
+				AudioSDL::get_instance()->stop( OldMusicID );
+			AudioSDL::get_instance()->volume(g_dwCurMusicID, 0);
 #ifndef USE_DSOUND
             g_AudioThread.play(g_dwCurMusicID, true);
 #else
-			if( g_dwCurMusicID && ( OldMusicID != g_dwCurMusicID ) )
-			{
-				AudioSDL::get_instance()->stop( OldMusicID );
+			if( g_dwCurMusicID )
 				AudioSDL::get_instance()->play( g_dwCurMusicID, true );
-			}
 #endif
+			_nCurMusicSize = 0;
+			_dwMusicFadeStart = GetTickCount();
+			_eSwitchMusic=enumNewMusic;
 
         }
         break;
     case enumOldMusic:
         {
             strncpy( _szBkgMusic, pInfo->szDataName, sizeof(_szBkgMusic) );
+            _dwMusicFadeStart = GetTickCount();
         }
         break;
     case enumNewMusic:
@@ -732,6 +738,7 @@ void CGameApp::PlayMusic(int nMusicNo)
         if( strncmp( _szBkgMusic, pInfo->szDataName, sizeof(_szBkgMusic) )!=0 )
         {
             strncpy( _szBkgMusic, pInfo->szDataName, sizeof(_szBkgMusic) );
+            _dwMusicFadeStart = GetTickCount();
             _eSwitchMusic = enumOldMusic;
         }
         break;

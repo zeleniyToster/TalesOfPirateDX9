@@ -67,7 +67,8 @@ CGameApp::CGameApp()
  _nSwitchScene(1),
  _IsUserEnabled(true),
  _eSwitchMusic(enumNoMusic), 
- _nCurMusicSize(1)
+ _nCurMusicSize(1),
+ _dwMusicFadeStart(0)
 {
 	LimitCurrentProc();
 	_pDrawPoints = new CDrawPointList;
