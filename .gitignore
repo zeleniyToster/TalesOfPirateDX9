@@ -155,3 +155,13 @@ DatabasePath/GameDtopnet64_log.ldf
 sources/Engine/lib/MindPower3D_D8R.exp
 sources/Engine/lib/MindPower3D_D8R.idb
 /server/GameServer/resource/*/*.bin
+
+# Compiled client tables. These are generated from the .txt files next to them by
+# Client/compiler_table.bat, so keeping them in the repo only produced a diff after every
+# table edit. Untracked with 'git rm --cached'; see docs/BUILD_NOTES.md.
+Client/scripts/table/*.bin
+
+# Local server list. Holds the Gate addresses this client connects to, which differ per
+# machine. The committed copy keeps the original placeholder addresses; the working copy is
+# yours to edit. Format and column meaning: docs/BUILD_NOTES.md
+Client/scripts/table/serverset.txt
