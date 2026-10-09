@@ -25,15 +25,15 @@ AuthorizedGM['admin4'] = 1
 -------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------- ** Modify Global Rates ** -----------------------------------------------
 -------------------------------------------------------------------------------------------------------------------------
-Server.Level.Limit = 80										-- Maximum player level, must also edit "character_lvup.txt" in order to take effect.
+Server.Level.Limit = 150										-- Maximum player level, must also edit "character_lvup.txt" in order to take effect.
 Server.Rates.Modifier = false								-- Activate server experience rate modifier
-Server.Rates.Global.EXP = 1									-- Rate at which a lone player grows.
+Server.Rates.Global.EXP = 10									-- Rate at which a lone player grows.
 Server.Rates.Global.TeamEXP = 1								-- Rate at which an entire player team grows.
-Server.Rates.Global.DROP = 1								-- Rate at which items are dropped.
-Server.Rates.Global.ShipEXP = 1								-- Rate at which a player's boat gains experience.
-Server.Rates.Global.FairyEXP = 1							-- Rate at which a player's fairy grows.
+Server.Rates.Global.DROP = 5								-- Rate at which items are dropped.
+Server.Rates.Global.ShipEXP = 50								-- Rate at which a player's boat gains experience.
+Server.Rates.Global.FairyEXP = 100							-- Rate at which a player's fairy grows.
 Server.Rates.Global.MissionGold = 1							-- The rate that the player receives gold from missions.
-Server.Rates.Global.Resource = 1							-- Rate of gathering resources.
+Server.Rates.Global.Resource = 5							-- Rate of gathering resources.
 -------------------------------------------------------------------------------------------------------------------------
 ------------------------------------------- ** Modify Experience Rate(Map) ** -------------------------------------------
 -------------------------------------------------------------------------------------------------------------------------
@@ -1042,6 +1042,56 @@ DEXP[97] = 3518167765
 DEXP[98] = 3706378269
 DEXP[99] = 3924326032
 DEXP[100] = 4176709541
+DEXP[101] = 4468969644
+DEXP[102] = 4807406843
+DEXP[103] = 5199317119
+DEXP[104] = 5653149219
+DEXP[105] = 6178686791
+DEXP[106] = 6787259299
+DEXP[107] = 7491986263
+DEXP[108] = 8308060087
+DEXP[109] = 9253073575
+DEXP[110] = 10347399194
+DEXP[111] = 11614628261
+DEXP[112] = 13082079521
+DEXP[113] = 14781388080
+DEXP[114] = 16749187391
+DEXP[115] = 19027898993
+DEXP[116] = 21666647028
+DEXP[117] = 24722317253
+DEXP[118] = 28260783374
+DEXP[119] = 32358327142
+DEXP[120] = 37103282825
+DEXP[121] = 42597941506
+DEXP[122] = 48960756259
+DEXP[123] = 56328895743
+DEXP[124] = 64861201265
+DEXP[125] = 74741611059
+DEXP[126] = 86183125600
+DEXP[127] = 99432399438
+DEXP[128] = 114775058542
+DEXP[129] = 132541857784
+DEXP[130] = 153115811306
+DEXP[131] = 176940449484
+DEXP[132] = 204529380494
+DEXP[133] = 236477362604
+DEXP[134] = 273473125887
+DEXP[135] = 316314219769
+DEXP[136] = 365924206484
+DEXP[137] = 423372571100
+DEXP[138] = 489897777325
+DEXP[139] = 566933966134
+DEXP[140] = 656141872775
+DEXP[141] = 759444628665
+DEXP[142] = 879069219986
+DEXP[143] = 1017594496736
+DEXP[144] = 1178006767213
+DEXP[145] = 1363764176425
+DEXP[146] = 1578871256292
+DEXP[147] = 1827965254778
+DEXP[148] = 2116416105025
+DEXP[149] = 2450442189611
+DEXP[150] = 2837244395562
 
 do
     for i = 1, #DEXP, 1 do
