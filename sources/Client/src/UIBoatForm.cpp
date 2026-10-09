@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "uiboatform.h"
 #include "uiform.h"
 #include "uiedit.h"
@@ -18,7 +18,7 @@
 using namespace GUI;
 
 //---------------------------------------------------------------------------
-// class CBoat  ÓÃ»§´¬Àà
+// class CBoat  user boat class
 //---------------------------------------------------------------------------
 CBoat::CBoat() 
 : _chtBoat(0), _frmShipRoom(0)
@@ -26,7 +26,7 @@ CBoat::CBoat()
 {
 }
 
-bool CBoat::Init( int n, CForm* ship, GuiDragInGridEvent evt )  // ÓÃ»§´¬ÐÅÏ¢³õÊ¼»¯
+bool CBoat::Init( int n, CForm* ship, GuiDragInGridEvent evt )  // user boat information initialisation
 {
 	_frmShipRoom = ship;
 	if( !_frmShipRoom ) return false;
@@ -42,9 +42,9 @@ bool CBoat::Init( int n, CForm* ship, GuiDragInGridEvent evt )  // ÓÃ»§´¬ÐÅÏ¢³õÊ
 
 	_grdHold->SetIsHint(false);
 	_grdHold->SetParent(ship);
-	_frmShipRoom->evtEscClose = _evtEscClose;	// °´ ESC ¹Ø±ÕÊÂ¼þ add by Philip.Wu  2006-06-22
+	_frmShipRoom->evtEscClose = _evtEscClose;	// ESC close event add by Philip.Wu  2006-06-22
 
-	// Èç¹ûÃ»ÓÐÊÂ¼þ£¬ÔòÎªÁÙÊ±´¬£¬²»ÄÜ×öÈÎºÎ²Ù×÷
+	// with no event it is a temporary boat and nothing can be done with it
 	if( evt )
 	{
 		_grdHold->evtBeforeAccept = evt;
@@ -59,7 +59,7 @@ void CBoat::_evtHoldGridRMouse(CGuiData *pSender,CCommandObj* pItem,int nGridID)
 {
 	if (!pItem) return;  
 
-	//½»Ò×ËùÓÒ¼ü
+	// exchange right click
 	if (g_stUIBourse.GetForm()->GetIsShow())
 	{
 		CItemCommand* pkItemCmd = dynamic_cast<CItemCommand*>(pItem);
@@ -69,14 +69,14 @@ void CBoat::_evtHoldGridRMouse(CGuiData *pSender,CCommandObj* pItem,int nGridID)
 	}
 }
 
-void CBoat::Reset()  //  Èç¹û½ÇÉ«²»´æÔÚ¾ÍÇå³ýÓÃ»§´¬ÐÅÏ¢
+void CBoat::Reset()  //  if the character does not exist the user boat information is cleared
 {
 	_chtBoat = NULL;
 	_grdHold->Clear();
 }
 
 
-// °´ ESC ¹Ø±Õ´°ÌåÊÂ¼þ£¬½«¸¸´°ÌåÒ²ÉèÖÃÎª²»ÏÔÊ¾  add by Philip.Wu  2006-06-22
+// ESC close window event; the parent window is set to not shown as well  add by Philip.Wu  2006-06-22
 void CBoat::_evtEscClose( CForm* pForm )
 {
 	if(pForm)
@@ -92,12 +92,12 @@ void CBoat::_evtEscClose( CForm* pForm )
 
 
 //---------------------------------------------------------------------------
-// class CBoatMgr ÓÃ»§´¬¹ÜÀíÀà
+// class CBoatMgr user boat management class
 //---------------------------------------------------------------------------
-bool CBoatMgr::Init() // ÓÃ»§´¬¹ÜÀíÐÅÏ¢³õÊ¼»¯
+bool CBoatMgr::Init() // user boat management information initialisation
 {
 	CForm* frm[defMaxBoat+1] = { 0 }; 
-	CForm* frmShipRoom = _FindForm("frmShipRoom"); // ²éÕÒ´¬±íµ¥
+	CForm* frmShipRoom = _FindForm("frmShipRoom"); // looks up the boat form
 	if(!frmShipRoom) return false;
 	frm[0] = frmShipRoom;
 
@@ -138,22 +138,22 @@ void CBoatMgr::End()
 bool CBoatMgr::AddBoat( CCharacter* pBoat )
 {
 	CBoat* p = GetFreeBoat();
-	if( !p ) return false; //ÒÑ¾­µÃµ½×î´óÊýÁ¿ ²»ÄÜÔÙ»ñµÃÃâ·ÑµÄ´¬Ö»
+	if( !p ) return false; //already have the maximum count, no more free boats can be obtained
 
 	p->Link( pBoat );
 	return true;
 }
 
-CBoat*	CBoatMgr::GetFreeBoat()   // »ñµÃÃâ·Ñ´¬Ö»
+CBoat*	CBoatMgr::GetFreeBoat()   // obtains a free boat
 { 
-	for( int i=0; i<defMaxBoat; i++ ) // ¿É×î´ó»ñµÃ´¬Ö»
+	for( int i=0; i<defMaxBoat; i++ ) // the maximum number of boats obtainable
 		if( !_cBoats[i].GetIsValid() )
 			return &_cBoats[i];
 
 	return NULL;
 }
 
-CBoat* CBoatMgr::FindBoat( unsigned int ulWorldID )  // ²éÕÒÓÃ»§ÓÐµÄÈ«²¿´¬
+CBoat* CBoatMgr::FindBoat( unsigned int ulWorldID )  // looks up every boat the user has
 {
 	for( int i=0; i<defMaxBoat; i++ )
 	{
@@ -166,7 +166,7 @@ CBoat* CBoatMgr::FindBoat( unsigned int ulWorldID )  // ²éÕÒÓÃ»§ÓÐµÄÈ«²¿´¬
 	return NULL;
 }
 
-CGoodsGrid*	CBoatMgr::FindGoodsGrid( unsigned int ulWorldID ) // ²éÕÒ´¬ÎïÆ·
+CGoodsGrid*	CBoatMgr::FindGoodsGrid( unsigned int ulWorldID ) // looks up the boat item
 {
 	if( _pHuman && _pHuman->getAttachID()==ulWorldID )
 		return g_stUIEquip.GetGoodsGrid();
@@ -177,7 +177,7 @@ CGoodsGrid*	CBoatMgr::FindGoodsGrid( unsigned int ulWorldID ) // ²éÕÒ´¬ÎïÆ·
 	return NULL;
 }
 
-CCharacter*	CBoatMgr::FindCha( unsigned int ulWorldID ) // ²éÕÒ´¬Ö»Ö÷ÈË
+CCharacter*	CBoatMgr::FindCha( unsigned int ulWorldID ) // looks up the boat owner
 {
 	if( _pHuman && _pHuman->getAttachID()==ulWorldID ) return _pHuman;
 
@@ -187,7 +187,7 @@ CCharacter*	CBoatMgr::FindCha( unsigned int ulWorldID ) // ²éÕÒ´¬Ö»Ö÷ÈË
 	return NULL;
 }
 
-CCharacter* CBoatMgr::ChangeMainCha( unsigned int ulWorldID ) // ÇÐ»»Ö÷½Ç
+CCharacter* CBoatMgr::ChangeMainCha( unsigned int ulWorldID ) // switches the main character
 {
 	CCharacter* pCha = FindCha( ulWorldID );
 	if( pCha ) 
@@ -200,7 +200,7 @@ CCharacter* CBoatMgr::ChangeMainCha( unsigned int ulWorldID ) // ÇÐ»»Ö÷½Ç
 			pScene->SetMainCha( pCha->getID() );
 			g_stUIStart.ShowShipSailForm( pCha->IsBoat() );
 
-			// add by Philip.Wu  2006-07-03  ÇÐ»»µØÍ¼Ê±¹Ø±Õ½»Ò×ºÍ×°±¸´°Ìå£¨BUG´¦Àí£©
+			// add by Philip.Wu  2006-07-03  closes the trade and equipment windows when switching maps (BUG fix)
 			g_stUITrade.CloseAllForm();
 			g_stUIEquip.CloseAllForm();
 		}
@@ -212,7 +212,7 @@ CCharacter* CBoatMgr::ChangeMainCha( unsigned int ulWorldID ) // ÇÐ»»Ö÷½Ç
 	return pCha;
 }
 
-void CBoatMgr::Clear()  //  Çå³ýÓÃ»§ËùÓÐ´¬ÐÅÏ¢
+void CBoatMgr::Clear()  //  clears every boat of the user
 {
 	_pHuman = NULL;
 	for( int i=0; i<defMaxBoat; i++ )
@@ -221,7 +221,7 @@ void CBoatMgr::Clear()  //  Çå³ýÓÃ»§ËùÓÐ´¬ÐÅÏ¢
 	}
 }
 
-CCharacter* CBoatMgr::FindCha( CGoodsGrid* pGoods ) // ÓÉ×°±¸Æ¥Åä²éÕÒ´¬Ö»µÄÖ÷ÈË
+CCharacter* CBoatMgr::FindCha( CGoodsGrid* pGoods ) // finds the boat owner by matching equipment
 {
 	if( pGoods==g_stUIEquip.GetGoodsGrid() )
 		return _pHuman;

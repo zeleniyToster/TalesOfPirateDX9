@@ -1,4 +1,4 @@
-#ifndef MPQuaternion_H
+ï»¿#ifndef MPQuaternion_H
 #define MPQuaternion_H
 
 #include "MindPowerAPI.h"
@@ -20,7 +20,7 @@ public:
 
 	D3DXQUATERNION& GetDXValue() { return m_qSelf; }
 
-	// ¸ù¾İÕâ¸öËÄÔªÊıĞı×ªÕâ¸öÏòÁ¿
+	// rotate this vector by this quaternion
 	MPEffVector3 operator* (const MPEffVector3& rkVector) const;
 
 

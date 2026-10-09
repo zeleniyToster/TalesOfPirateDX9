@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "MPCamera.h"
 
@@ -518,9 +518,9 @@ public:
 	//CMPShadeCtrl*				GetShade(int iIdx);
 	//int							GetShadeNum(){return m_iShadeNum;}
 
-	//!±£´æÁ£×Óµ½ÎÄ¼ş	
+	//! save the particles to a file
 	bool		 SaveToFile(char* pszName);
-	//!×°ÈëÁ£×Ó´ÓÎÄ¼ş
+	//! load the particles from a file
 	bool		 LoadFromFile(char* pszName);
 
 	bool		 LoadFromMemory(CMemoryBuf*	pbuf);
@@ -534,15 +534,15 @@ public:
 	float						m_fLength;
 	float						m_fCurTime;
 
-	//ÎäÆ÷ÍÏÀ­³öÀ´µÄÌõ´ø
+	// the trail dragged by a weapon
 	int							m_iStripNum;
 	CMPStrip*					m_pcStrip;
 
-	//¹Ç÷À¶¯»­
+	// skeletal animation
 	int							m_iModelNum;
 	std::vector<CChaModel*>		m_vecModel;
 
-	////¹Ç÷À¶¯»­
+	//// skeletal animation
 	//int							m_iShadeNum;
 	//std::vector<CMPShadeCtrl>	m_vecShade;
 };

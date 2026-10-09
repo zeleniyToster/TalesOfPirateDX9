@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "MPColorValue.h"
 
 //-----------------------------------------------------------------------------
@@ -13,7 +13,7 @@ RGBA MPColorValue::getAsRGBA(void) const
 	unsigned char val8;
 	unsigned int  val32 = 0;
 
-	// ×ª»»³É32Î»Ä£Ê½
+	// convert to the 32 bit form
 	// (RGBA = 8888)
 
 	// Red
@@ -40,7 +40,7 @@ ARGB MPColorValue::getAsARGB(void) const
 	unsigned char val8;
 	unsigned int val32 = 0;
 
-	// ×ª»»³É32Î»Ä£Ê½
+	// convert to the 32 bit form
 	// (ARGB = 8888)
 
 	// Alpha
@@ -68,7 +68,7 @@ ABGR MPColorValue::getAsABGR(void) const
 	unsigned char val8;
 	unsigned int  val32 = 0;
 
-	// ×ª»»³É32Î»Ä£Ê½
+	// convert to the 32 bit form
 	// (ABRG = 8888)
 
 	// Alpha
@@ -95,7 +95,7 @@ void MPColorValue::setAsRGBA(const RGBA val)
 {
 	unsigned int val32 = val;
 
-	// ´Ó32Î»Ä£Ê½×ª»»»ØÀ´
+	// convert back from the 32 bit form
 	// (RGBA = 8888)
 
 	// Red
@@ -115,7 +115,7 @@ void MPColorValue::setAsARGB(const ARGB val)
 {
 	unsigned int val32 = val;
 
-	// ´Ó32Î»Ä£Ê½×ª»»»ØÀ´
+	// convert back from the 32 bit form
 	// (ARGB = 8888)
 
 	// Alpha
@@ -135,7 +135,7 @@ void MPColorValue::setAsABGR(const ABGR val)
 {
 	unsigned int val32 = val;
 
-	// ´Ó32Î»Ä£Ê½×ª»»»ØÀ´
+	// convert back from the 32 bit form
 	// (ABGR = 8888)
 
 	// Alpha

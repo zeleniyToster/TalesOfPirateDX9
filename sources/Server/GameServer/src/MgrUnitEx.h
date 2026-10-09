@@ -1,4 +1,4 @@
-//=============================================================================
+ï»¿//=============================================================================
 // FileName: MgrUnitEx.h
 // Creater: ZhangXuedong
 // Date: 2005.03.04
@@ -31,7 +31,7 @@ public:
 
 	char			m_chEntiType;
 	Entity			*m_pCEntity;
-	CMgrNode		*m_pCEntMgrNode; // £¨¶ÔÓ¦¸Ã¹ÜÀíµ¥Ôª£©ÊµÌåµ¥Ôª¹ÜÀíÁ´µÄÖ¸Õë
+	CMgrNode		*m_pCEntMgrNode; // pointer to the entity cell management chain of this management cell
 
 	CEntityListNode	*m_pCNext;
 	CEntityListNode	*m_pCLast;
@@ -93,21 +93,21 @@ public:
 
 	void				StateRun(unsigned long ulCurTick, SubMap *pCMap);
 
-	short			m_sPosX;		// Î»ÖÃ
-	short			m_sPosY;		// Î»ÖÃ
-	short			m_sAreaAttr;	// ÇøÓòÊôÐÔ
-	char			m_chIslandID;	// µºÓì±àºÅ
-	long			m_lActiveNum;	// ¼¤»î¼ÆÊý
-	long			m_lEntityNum;	// ÊµÌå×ÜÊý
+	short			m_sPosX;		// position
+	short			m_sPosY;		// position
+	short			m_sAreaAttr;	// area attribute
+	char			m_chIslandID;	// island number
+	long			m_lActiveNum;	// activation count
+	long			m_lEntityNum;	// total number of entities
 
-	CEntityListNode	*m_pCChaIn;		// ¼ÇÂ¼ÖÐÐÄµãÔÚ·¶Î§ÄÚµÄ½ÇÉ«
-	CEntityListNode	*m_pCChaCross;	// ¼ÇÂ¼ÖÐÐÄµã²»ÔÚ·¶Î§ÄÚ£¬µ«Óë·¶Î§Ïà½»µÄ½ÇÉ«
-	CEntityListNode	*m_pCItemIn;		// ¼ÇÂ¼ÖÐÐÄµãÔÚ·¶Î§ÄÚµÄÎïÆ·
-	CEntityListNode	*m_pCItemCross;	// ¼ÇÂ¼ÖÐÐÄµã²»ÔÚ·¶Î§ÄÚ£¬µ«Óë·¶Î§Ïà½»µÄÎïÆ·
+	CEntityListNode	*m_pCChaIn;		// records characters whose centre point is inside the range
+	CEntityListNode	*m_pCChaCross;	// records characters whose centre point is outside the range but which intersect it
+	CEntityListNode	*m_pCItemIn;		// records items whose centre point is inside the range
+	CEntityListNode	*m_pCItemCross;	// records items whose centre point is outside the range but which intersect it
 
-	CSkillState		m_CSkillState;	// µØ±íµÄ¼¼ÄÜ×´Ì¬
+	CSkillState		m_CSkillState;	// skill states on the terrain
 
-	CMgrUnit		*m_pCNext;		// Ö¸Ïò¡°¼¤»îµÄ¹ÜÀíµ¥ÔªÁ´±í¡°µÄÖ¸Õë
+	CMgrUnit		*m_pCNext;		// pointer to the 'chain of active management cells'
 	CMgrUnit		*m_pCLast;
 
 protected:
@@ -306,7 +306,7 @@ inline void CMgrUnit::StateBeginSeen(Entity *pCEnt)
 
 	if (!pCCha)
 		return;
-	if(!pCCha->IsPlayerFocusCha()) // ¸Ã½ÇÉ«²»ÊÇÍæ¼Òµ±Ç°µÄ¿ØÖÆ½¹µã
+	if(!pCCha->IsPlayerFocusCha()) // this character is not the player's current control focus
 		return;
 
 	WPACKET pk	=GETWPACKET();
@@ -315,7 +315,7 @@ inline void CMgrUnit::StateBeginSeen(Entity *pCEnt)
 	WRITE_SHORT(pk, m_sPosY);
 	m_CSkillState.WriteState(pk);
 
-	pCCha->ReflectINFof(pCCha, pk);//Í¨¸æ
+	pCCha->ReflectINFof(pCCha, pk);// notify
 }
 
 inline void CMgrUnit::StateEndSeen(Entity *pCEnt)
@@ -324,7 +324,7 @@ inline void CMgrUnit::StateEndSeen(Entity *pCEnt)
 
 	if (!pCCha)
 		return;
-	if(!pCCha->IsPlayerFocusCha()) // ¸Ã½ÇÉ«²»ÊÇÍæ¼Òµ±Ç°µÄ¿ØÖÆ½¹µã
+	if(!pCCha->IsPlayerFocusCha()) // this character is not the player's current control focus
 		return;
 
 	if (m_CSkillState.m_chStateNum <= 0)
@@ -335,7 +335,7 @@ inline void CMgrUnit::StateEndSeen(Entity *pCEnt)
 	WRITE_SHORT(pk, m_sPosX);
 	WRITE_SHORT(pk, m_sPosY);
 
-	pCCha->ReflectINFof(pCCha, pk);//Í¨¸æ
+	pCCha->ReflectINFof(pCCha, pk);// notify
 }
 
 inline void CMgrUnit::Initially()
@@ -356,7 +356,7 @@ inline void CMgrUnit::Finally()
 {
 }
 
-class CActiveMgrUnitL // ¼¤»îµÄ¹ÜÀíµ¥ÔªÁ´±í
+class CActiveMgrUnitL // chain of active management cells
 {
 public:
 	CActiveMgrUnitL()

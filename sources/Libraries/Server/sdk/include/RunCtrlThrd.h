@@ -75,7 +75,7 @@ private:
 
 			uLong	l_tick	=m_timer.End();
 			AddUsage(l_tick);
-			if(T::TimePrecision>long(l_tick))::Sleep(T::TimePrecision-long(l_tick));	//�����ۻ�CPU���ĵ�ʱ���㷨
+			if(T::TimePrecision>long(l_tick))::Sleep(T::TimePrecision-long(l_tick));	// sleep off whatever CPU time is left over in this slice  [rewritten: original text lost]
 		}catch(...){}}
 		return 0;
 	}

@@ -1,4 +1,4 @@
-
+ï»¿
 #include "SectionData.h"
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -28,7 +28,7 @@ BOOL CSectionDataMgr::Create(int nSectionCntX, int nSectionCntY, const char *psz
    	
     if(_bDebug)
     {
-        //LG(GetDataName(), "¿ªÊ¼´´½¨ÐÂµÄÊý¾ÝÎÄ¼þ[%s], Size = (%d %d)\n", pszMapName, nSectionCntX, nSectionCntY);
+        //LG(GetDataName(), "å¼€å§‹åˆ›å»ºæ–°çš„æ•°æ®æ–‡ä»¶[%s], Size = (%d %d)\n", pszMapName, nSectionCntX, nSectionCntY);
 		LG(GetDataName(), "begin create new data file[%s], Size = (%d %d)\n", pszMapName, nSectionCntX, nSectionCntY);
     }
     
@@ -39,7 +39,7 @@ BOOL CSectionDataMgr::Create(int nSectionCntX, int nSectionCntY, const char *psz
 	_fp = fopen(pszMapName, "wb");
     if(_fp==NULL)
     {
-        //LG(GetDataName(), "msgÎÄ¼þ %s ´´½¨Ê§°Ü!\n", pszMapName);
+        //LG(GetDataName(), "msgæ–‡ä»¶ %s åˆ›å»ºå¤±è´¥!\n", pszMapName);
 		LG(GetDataName(), "msg file %s create failed!\n", pszMapName);
         return FALSE;
     }
@@ -50,7 +50,7 @@ BOOL CSectionDataMgr::Create(int nSectionCntX, int nSectionCntY, const char *psz
 
     int nTotal = GetSectionCnt();
     
-    // Ë÷ÒýÇøÈ«²¿ÌîÐ´Îª0
+    // zero out the whole index area
     _SectionArray = new SDataSection*[nTotal];
 	
     memset(_SectionArray, 0, nTotal * sizeof(SDataSection*));
@@ -62,20 +62,20 @@ BOOL CSectionDataMgr::Create(int nSectionCntX, int nSectionCntY, const char *psz
 
     if(_bDebug)
     {
-        //LG(GetDataName(), "´´½¨½áÊø, TotalSectionCnt = %d!\n", nTotal);
+        //LG(GetDataName(), "åˆ›å»ºç»“æŸ, TotalSectionCnt = %d!\n", nTotal);
 		LG(GetDataName(), "create ok, TotalSectionCnt = %d!\n", nTotal);
     }
     return TRUE;
 }
 
-// ´ÓÎÄ¼þ¶ÁÈë, ²¢¾ö¶¨ÊÇ·ñÐèÒª±à¼­²Ù×÷
+// read from the file, and decide whether editing is allowed
 BOOL CSectionDataMgr::CreateFromFile(const char *pszMapName, BOOL bEdit)
 {
     strcpy(_szFileName, pszMapName);
     
     if(_bDebug)
     {
-       // LG(GetDataName(), "¿ªÊ¼¶ÁÈ¡Êý¾ÝÎÄ¼þ[%s]\n", pszMapName);
+       // LG(GetDataName(), "å¼€å§‹è¯»å–æ•°æ®æ–‡ä»¶[%s]\n", pszMapName);
 		 LG(GetDataName(), "begin read data file [%s]\n", pszMapName);
     }
     
@@ -104,7 +104,7 @@ BOOL CSectionDataMgr::CreateFromFile(const char *pszMapName, BOOL bEdit)
 
     if(!_ReadFileHeader())
     {
-        //LG("map", "msg¶ÁÈ¡ÎÄ¼þÍ·Ê§°Ü, [%s] ¿ÉÄÜÊÇÎÞÐ§Êý¾ÝÎÄ¼þ!\n", pszMapName);
+        //LG("map", "msgè¯»å–æ–‡ä»¶å¤´å¤±è´¥, [%s] å¯èƒ½æ˜¯æ— æ•ˆæ•°æ®æ–‡ä»¶!\n", pszMapName);
 		LG("map", "msg read file failed, [%s] invalid file!\n", pszMapName);
         fclose(fp);
         return FALSE;
@@ -120,7 +120,7 @@ BOOL CSectionDataMgr::CreateFromFile(const char *pszMapName, BOOL bEdit)
 
 SDataSection *CSectionDataMgr::LoadSectionData(int nSectionX, int nSectionY)
 {
-    // ¶ÁÈ¡SectionÊý¾ÝµÄÎÄ¼þÆ«ÒÆÎ»ÖÃ
+    // read the file offset of the section data
     DWORD dwLoc = (nSectionY * _nSectionCntX + nSectionX);
     
     SDataSection *pSection = new SDataSection;
@@ -133,7 +133,7 @@ SDataSection *CSectionDataMgr::LoadSectionData(int nSectionX, int nSectionY)
     {
         pSection->pData = new BYTE[_GetSectionDataSize()];
 		
-        // ¶ÁÈ¡Êµ¼ÊµÄSectionÊý¾Ý
+        // read the actual section data
         fseek(_fp, pSection->dwDataOffset, SEEK_SET);
         if(_bDebug)
         {
@@ -158,7 +158,7 @@ void CSectionDataMgr::SaveSectionData(int nSectionX, int nSectionY)
 	{
 		if(_bDebug)
         {
-            //LG(GetDataName(), "[%d %d]Çø¿éÊý¾ÝË÷ÒýÖµÒÑ¾­´æÔÚ, Ö±½Ó±£´æ!\n", nSectionX, nSectionY);
+            //LG(GetDataName(), "[%d %d]åŒºå—æ•°æ®ç´¢å¼•å€¼å·²ç»å­˜åœ¨, ç›´æŽ¥ä¿å­˜!\n", nSectionX, nSectionY);
 			LG(GetDataName(), "[%d %d] exsit, save directly!\n", nSectionX, nSectionY);
         }
         
@@ -168,15 +168,15 @@ void CSectionDataMgr::SaveSectionData(int nSectionX, int nSectionY)
     {
 	    if(_bDebug)
         {
-            //LG(GetDataName(), "[%d %d]µ½ÎÄ¼þÄ©Î²·ÖÅäÐÂµÄÇø¿éÊý¾Ý¿Õ¼ä\n", nSectionX, nSectionY);
+            //LG(GetDataName(), "[%d %d]åˆ°æ–‡ä»¶æœ«å°¾åˆ†é…æ–°çš„åŒºå—æ•°æ®ç©ºé—´\n", nSectionX, nSectionY);
 			LG(GetDataName(), "[%d %d] alloc new area at file tail \n", nSectionX, nSectionY);
         }
-        // Ê×ÏÈÓ¦¸ÃÑ°ÕÒ·ÏÆúµÄDataÊý¾Ý¶Î
-        // µ«È±·¦·ÏÆúÇøÓòË÷Òý, ËùÒÔÖ»ÄÜµ½ÎÄ¼þÄ©Î²È¥Ìí¼Ó
-        // ÕâÑù»áÔÚÕ³ÌùÊý¾ÝµÄ¹ý³ÌÖÐ²úÉú¿Õ¼äµÄÀË·Ñ
-        // ÐèÒªÔÚ·¢²¼Ê±°ÑÊý¾ÝTrimÒ»´Î, ´Ë¹ý³ÌÓÐµãÏñÎÄ¼þ´ÅÅÌËéÆ¬
+        // first look for a spare Data section
+        // but there is no index of the spare regions, so new data can only be appended at the end of the file
+        // which wastes space as data is pasted in
+        // the data needs to be trimmed once before shipping; the process is a bit like disk defragmentation
 	
-        // µ½ÎÄ¼þÄ©Î²Ìí¼ÓÐÂµÄÊý¾Ý¿é
+        // append a new data block at the end of the file
 	    fseek(_fp, 0, SEEK_END);
 	    pSection->dwDataOffset = ftell(_fp);
     }
@@ -187,13 +187,13 @@ void CSectionDataMgr::SaveSectionData(int nSectionX, int nSectionY)
 
 void CSectionDataMgr::ClearSectionData(int nSectionX, int nSectionY)
 {
-    // Çå³ýÎÄ¼þÀïµÄ¼ÇÂ¼
+    // clear the records in the file
     DWORD dwLoc = (nSectionY * _nSectionCntX + nSectionX);
     _WriteSectionIdx(dwLoc, 0);
 	
-    // Çå³ýÄÚ´æÀïµÄ¼ÇÂ¼
+    // clear the records in memory
     SDataSection *pSection = GetSectionData(nSectionX, nSectionY);
-	if(pSection) // ´ËSectionÒÑ¾­¶ÁÈëÄÚ´æ
+	if(pSection) // this section is already resident in memory
     {
         // _SectionList.remove(pSection);
          *(_SectionArray + dwLoc) = NULL;
@@ -206,7 +206,7 @@ void CSectionDataMgr::CopySectionData(SDataSection *pDest, SDataSection *pSrc)
     DWORD dwLastOffset = pDest->dwDataOffset;
     memcpy(pDest, pSrc, sizeof(SDataSection));
     
-    pDest->dwDataOffset = dwLastOffset; // Êý¾ÝÆ«ÒÆÎ»ÖÃ±£³Ö²»±ä
+    pDest->dwDataOffset = dwLastOffset; // the data offset stays the same
     
     if(pSrc->pData==NULL)
     {
@@ -227,7 +227,7 @@ void CSectionDataMgr::Load(BOOL bFull, DWORD dwTimeParam)
     if(bFull)
     {
         int nTotal = _nSectionCntX * _nSectionCntY;
-        // ¶ÁÈ¡È«²¿SectionÊý¾Ý
+        // read all section data
         for(int i = 0; i < nTotal; i++)
         {
             int nSectionX = i % _nSectionCntX;

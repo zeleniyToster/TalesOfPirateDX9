@@ -1,4 +1,4 @@
-
+ï»¿
 #include "stdafx.h"
 #include "GameApp.h"
 #include "UISpiritForm.h"
@@ -30,7 +30,7 @@ namespace GUI
 	bool CSpiritMgr::Init()
 	{
 		//
-		//  ¾«ÁéÈÚºÏ½çÃæ³õÊ¼»¯
+		//  elf fusion screen initialisation
 		//
 		frmSpiritMarry = CFormMgr::s_Mgr.Find("frmSpiritMarry");
 		if(! frmSpiritMarry)
@@ -82,7 +82,7 @@ namespace GUI
 		cmdSpiritMarry[SPIRIT_MARRY_TWO]->evtBeforeAccept  = _evtDragMarryTwo;
 
 		//
-		//  ¾«ÁéÀÏ»¢»ú½çÃæ³õÊ¼»¯
+		//  elf slot machine screen initialisation
 		//
 		frmSpiritErnie = CFormMgr::s_Mgr.Find("frmSpiritErnie");
 		if(! frmSpiritErnie)
@@ -104,7 +104,7 @@ namespace GUI
 		char szName[32] = {0};
 		for(int i = 0; i < 9; ++i)
 		{
-			// ¾í¶¯Í¼Æ¬
+			// scrolls the image
 			for(int j = 0; j < ERNIE_IMAGE_COUNT; ++j)
 			{
 				sprintf(szName, "imgLine%d_%d", i + 1, j + 1);
@@ -121,7 +121,7 @@ namespace GUI
 
 		for(int i = 0; i < 3; ++i)
 		{
-			// ÏÔÊ¾µÄ¸ñ×Ó
+			// the cell that is displayed
 			for(int j = 0; j < 3; ++j)
 			{
 				int nSeq = i * 3 + j;
@@ -136,7 +136,7 @@ namespace GUI
 				cmdItem[nSeq]->SetIsDrag(false);
 			}
 
-			// ÏÂ×¢ Check
+			// bet Check
 			sprintf(szName, "chkSetmoney%d", i + 1);
 			chkSetmoney[i] = dynamic_cast<CCheckBox*>(frmSpiritErnie->Find(szName));
 			if(! chkSetmoney[i])
@@ -145,7 +145,7 @@ namespace GUI
 				return false;
 			}
 
-			// ÏÂ×¢Ó²±Ò¸öÊıÏÔÊ¾
+			// display of the number of coins bet
 			sprintf(szName, "labUsemoney%d", i + 1);
 			labUsemoney[i] = dynamic_cast<CLabelEx*>(frmSpiritErnie->Find(szName));
 			if(! labUsemoney[i])
@@ -154,7 +154,7 @@ namespace GUI
 				return false;
 			}
 
-			// Í£Ö¹×ª¶¯°´Å¥
+			// the stop spinning button
 			sprintf(szName, "btnStop%d", i + 1);
 			btnStop[i] = dynamic_cast<CTextButton*>(frmSpiritErnie->Find(szName));
 			if(! btnStop[i])
@@ -184,11 +184,11 @@ namespace GUI
 
 	void CSpiritMgr::CloseForm()
 	{
-		// ²»×÷ÈÎºÎ´¦Àí
+		// does nothing
 	}
 
 
-	// Çå³ı½çÃæÉÏËùÓĞµÄ¸ñ×Ó
+	// clears every cell on the screen
 	void CSpiritMgr::ClearAllCommand()
 	{
 		PopItem(SPIRIT_MARRY_ITEM);
@@ -197,7 +197,7 @@ namespace GUI
 	}
 
 
-	// ÏÔÊ¾¾«ÁéÈÚºÏ½çÃæ
+	// shows the elf fusion screen
 	void CSpiritMgr::ShowMarryForm(bool bShow)
 	{
 		if(frmSpiritMarry)
@@ -275,7 +275,7 @@ namespace GUI
 	}
 
 
-	// ¸üĞÂÀÏ»¢»ú
+	// updates the slot machine
 	void CSpiritMgr::UpdateErnieNumber(short nNum, short nID1, short nID2, short nID3)
 	{
 		switch(nNum)
@@ -344,7 +344,7 @@ namespace GUI
 
 	void CSpiritMgr::PushItem(int iIndex, CItemCommand& rItem)
 	{
-		// ²é¿´Ô­À´µÄCmdÖĞÊÇ·ñÒÑ¾­ÓĞItemÁË£¬Èç¹ûÓĞÔòÒÆ³ö
+		// checks whether the original Cmd already has an Item and removes it if so
 		CItemCommand* pItemCommand =  
 			dynamic_cast<CItemCommand*>(cmdSpiritMarry[iIndex]->GetCommand());
 		if (pItemCommand)
@@ -352,17 +352,17 @@ namespace GUI
 			PopItem(iIndex);
 		}
 
-		// ¼ÇÂ¼ItemÔÚÎïÆ·À¸ÖĞµÄÎ»ÖÃ
+		// records the position of the Item in the item slot
 		m_iSpiritItemPos[iIndex] = g_stUIEquip.GetGoodsGrid()->GetDragIndex();
-		// ½«ItemÏàÓ¦µÄÎïÆ·À¸»Òµ÷
+		// greys out the item slot of the Item
 		rItem.SetIsValid(false);
 
-		// ½«´´½¨µÄItem·ÅÈëCmdÖĞ£¬ÕâÀïÓÃnew½«»áÔÚPopItem()ÖĞÉ¾³ı
+		// å°†åˆ›å»ºçš„Itemæ”¾å…¥Cmdä¸­ï¼Œè¿™é‡Œç”¨newå°†ä¼šåœ¨PopItem()ä¸­åˆ é™¤
 		CItemCommand* pItemCmd = new CItemCommand(rItem);
 		pItemCmd->SetIsValid(true);
 		cmdSpiritMarry[iIndex]->AddCommand(pItemCmd);
 
-		// ÊôĞÔ
+		// attribute
 		SItemGrid& oItemGridSrc  = rItem.GetData();
 		SItemGrid& oItemGridDest = pItemCmd->GetData();
 		for(int i = 0; i < defITEM_INSTANCE_ATTR_NUM; ++i)
@@ -375,14 +375,14 @@ namespace GUI
 
 	void CSpiritMgr::PopItem(int iIndex)
 	{
-		// É¾³ıCmdÖĞµÄItem£¬¸ÃItem»áÔÚPushItem()ÖĞÓÉnewÉú³É
+		// åˆ é™¤Cmdä¸­çš„Itemï¼Œè¯¥Itemä¼šåœ¨PushItem()ä¸­ç”±newç”Ÿæˆ
 		CItemCommand* pItemCommand =  
 			dynamic_cast<CItemCommand*>(cmdSpiritMarry[iIndex]->GetCommand());
 		if (! pItemCommand) return;
 
-		cmdSpiritMarry[iIndex]->DelCommand();	// ¸Ãº¯Êı½«É¾³ıdelete Item
+		cmdSpiritMarry[iIndex]->DelCommand();	// this function deletes the Item
 
-		// ½«ItemÏàÓ¦µÄÎïÆ·À¸»Ö¸´³É¿ÉÓÃ
+		// puts the item slot of the Item back to usable
 		CCommandObj* pItem = 
 					g_stUIEquip.GetGoodsGrid()->GetItem(m_iSpiritItemPos[iIndex]);
 		if (pItem)
@@ -390,12 +390,12 @@ namespace GUI
 			pItem->SetIsValid(true);
 		}
 
-		// ¼ÇÂ¼ItemÔÚÎïÆ·À¸ÖĞµÄÎ»ÖÃ
+		// records the position of the Item in the item slot
 		m_iSpiritItemPos[iIndex] = NO_USE;
 	}
 
 
-	// ÊÇ·ñÊÇºÏ·¨µÄ¶ñÄ§¹ûÊµ
+	// whether it is a valid demon fruit
 	bool CSpiritMgr::IsValidSpiritItem(CItemCommand& rItem)
 	{
 		CItemRecord* pItem = rItem.GetItemInfo();
@@ -409,7 +409,7 @@ namespace GUI
 	}
 
 
-	// ÊÇ·ñÊÇºÏ·¨µÄ¾«Áé£¨LV > 20£©
+	// whether it is a valid elf (LV > 20)
 	bool CSpiritMgr::IsValidSpirit(CItemCommand& rItem)
 	{
 		static CItemRecord* pInfo = NULL;
@@ -419,7 +419,7 @@ namespace GUI
 		memset( &s_item, 0, sizeof(SItemHint) );
 		s_item.Convert( rItem.GetData(), pInfo );
 
-		// ¸üĞÂ³èÎïµÈ¼¶,Í·Ïñ
+		// updates the pet level and portrait
 		int nLevel  = s_item.sInstAttr[ITEMATTR_VAL_STR]
 					+ s_item.sInstAttr[ITEMATTR_VAL_AGI] 
 					+ s_item.sInstAttr[ITEMATTR_VAL_DEX] 
@@ -435,7 +435,7 @@ namespace GUI
 	}
 
 
-	// ÉèÖÃ½çÃæ
+	// sets up the screen
 	void CSpiritMgr::SetSpiritUI()
 	{
 		CItemCommand* pItemCommand =  
@@ -465,7 +465,7 @@ namespace GUI
 
 		int nMoney = 0;
 
-		// ¼ÆËã¼Û¸ñ£¨²ß»®ÎÄµµ£©
+		// computes the price (design document)
 		if(nLevel1 < 60 && nLevel2 < 60)
 		{
 			nMoney = (60 - nLevel1) * (60 - nLevel2) * 100;
@@ -478,12 +478,12 @@ namespace GUI
 		pItemCommand = dynamic_cast<CItemCommand*>(cmdSpiritMarry[SPIRIT_MARRY_ITEM]->GetCommand());
 		if(! pItemCommand) return;
 
-		// Èı¸öÀ¸Î»¶¼ÒÑ¾­·ÅÈë£¬ÔÊĞíµã»÷¡°È·¶¨¡±°´Å¥
+		// all three slots are filled, so the 'confirm' button may be clicked
 		btnForgeYes->SetIsEnabled(true);
 	}
 
 
-	// Ìá½»ĞÅÏ¢¸ø·şÎñÆ÷
+	// submits the information to the server
 	void CSpiritMgr::SendSpiritMarryProtocol()
 	{
 		CS_ItemForgeAsk(true, GetType(), m_iSpiritItemPos, SPIRIT_MARRY_CELL_COUNT);
@@ -492,10 +492,10 @@ namespace GUI
 
 ///////////////////////////////////////////////////////////////////////////
 //
-//	½çÃæÏûÏ¢´¦Àí
+//	screen message handling
 //
 
-	// ÍÏÈë¶ñÄ§¹ûÊµ
+	// the demon fruit is dragged in
 	void CSpiritMgr::_evtDragMarryItem(CGuiData *pSender,CCommandObj* pItem,bool& isAccept)
 	{
 		CItemCommand* pItemCommand =  dynamic_cast<CItemCommand*>(pItem);
@@ -511,12 +511,12 @@ namespace GUI
 		}
 		else
 		{
-			g_pGameApp->MsgBox(g_oLangRec.GetString(698));	// "Äú·ÅÈëµÄ²»ÊÇ¶ñÄ§¹ûÊµ£¬ÇëÖØĞÂÑ¡Ôñ¶ñÄ§¹ûÊµ"
+			g_pGameApp->MsgBox(g_oLangRec.GetString(698));	// "æ‚¨æ”¾å…¥çš„ä¸æ˜¯æ¶é­”æœå®ï¼Œè¯·é‡æ–°é€‰æ‹©æ¶é­”æœå®"
 		}
 	}
 
 
-	// ÍÏÈë¾«Áé1
+	// elf 1 is dragged in
 	void CSpiritMgr::_evtDragMarryOne(CGuiData *pSender,CCommandObj* pItem,bool& isAccept)
 	{
 		CItemCommand* pItemCommand =  dynamic_cast<CItemCommand*>(pItem);
@@ -528,13 +528,13 @@ namespace GUI
 		CItemCommand* pStoneItem = dynamic_cast<CItemCommand*>(g_stUISpirit.cmdSpiritMarry[SPIRIT_MARRY_ITEM]->GetCommand());
 		if(NULL == pStoneItem)
 		{
-			g_pGameApp->MsgBox(g_oLangRec.GetString(826));//ÇëÏÈ·ÅÈë¶ñÄ§¹ûÊµ
+			g_pGameApp->MsgBox(g_oLangRec.GetString(826));//please put in the demon fruit first
 			return;
 		}
 
 		if(! pItemCommand->GetIsValid())
 		{
-			g_pGameApp->MsgBox(g_oLangRec.GetString(899));//Äú·ÅÈëµÄ¾«Áé²»ºÏ·¨£¬ÇëÖØĞÂÑ¡Ôñ¾«Áé
+			g_pGameApp->MsgBox(g_oLangRec.GetString(899));//the elf you put in is not valid; please choose the elf again
 			return;
 		}
 
@@ -545,12 +545,12 @@ namespace GUI
 		}
 		else
 		{
-			g_pGameApp->MsgBox(g_oLangRec.GetString(827));//Äú·ÅÈëµÄ²»ÊÇ¾«Áé»òÕßÊÇµÍÓÚ20¼¶µÄ¾«Áé£¬ÇëÖØĞÂÑ¡Ôñ¾«Áé
+			g_pGameApp->MsgBox(g_oLangRec.GetString(827));//what you put in is not an elf, or is an elf below level 20; please choose the elf again
 		}
 	}
 
 
-	// ÍÏÈë¾«Áé2
+	// elf 2 is dragged in
 	void CSpiritMgr::_evtDragMarryTwo(CGuiData *pSender,CCommandObj* pItem,bool& isAccept)
 	{
 		CItemCommand* pItemCommand =  dynamic_cast<CItemCommand*>(pItem);
@@ -568,7 +568,7 @@ namespace GUI
 
 		if(! pItemCommand->GetIsValid())
 		{
-			g_pGameApp->MsgBox(g_oLangRec.GetString(899));//Äú·ÅÈëµÄ¾«Áé²»ºÏ·¨£¬ÇëÖØĞÂÑ¡Ôñ¾«Áé
+			g_pGameApp->MsgBox(g_oLangRec.GetString(899));//the elf you put in is not valid; please choose the elf again
 			return;
 		}
 
@@ -579,12 +579,12 @@ namespace GUI
 		}
 		else
 		{
-			g_pGameApp->MsgBox(g_oLangRec.GetString(827));//Äú·ÅÈëµÄ²»ÊÇ¾«Áé»òÕßÊÇµÍÓÚ20¼¶µÄ¾«Áé£¬ÇëÖØĞÂÑ¡Ôñ¾«Áé
+			g_pGameApp->MsgBox(g_oLangRec.GetString(827));//what you put in is not an elf, or is an elf below level 20; please choose the elf again
 		}
 	}
 
 
-	// Êó±êµã»÷°´Å¥ÊÂ¼ş
+	// mouse button click event
 	void CSpiritMgr::_evtMainMouseButton(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey)
 	{
 		string strName = pSender->GetName();
@@ -597,7 +597,7 @@ namespace GUI
 	}
 
 
-	// ¹Ø±Õ´°ÌåÊÂ¼ş
+	// close window event
 	void CSpiritMgr::_evtCloseMarryForm(CForm* pForm, bool& IsClose)
 	{
 		g_stUISpirit.ClearAllCommand();
@@ -614,7 +614,7 @@ namespace GUI
 			if(dwCurrTickCount - m_dwLastTickCount > ERNIE_SPEED)
 			{
 				//
-				// ÀÏ»¢»ú·­×ª
+				// slot machine flip
 				//
 				m_dwLastTickCount = dwCurrTickCount;
 
@@ -650,7 +650,7 @@ namespace GUI
 				}
 
 				//
-				// ÏÔÊ¾ÎÄ×ÖÉÁ
+				// shows the text flash
 				//
 				DWORD dwColorID = (g_pGameApp->GetCurTick() & 1023) >> 8;
 				DWORD dwColor = 0;
@@ -675,7 +675,7 @@ namespace GUI
 			}
 
 			//
-			// ÏÂ×¢ÏÔÊ¾
+			// bet display
 			//
 			char szBuffer[32] = {0};
 			sprintf(szBuffer, "%d", ERNIE_COIN_COUNT);
@@ -696,7 +696,7 @@ namespace GUI
 	}
 
 
-	// ¾«ÁéÀÏ»¢»ú£¬Êó±êµã»÷ÊÂ¼ş
+	// elf slot machine, mouse click event
 	void CSpiritMgr::_evtErnieMouseButton(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey)
 	{
 		string strName = pSender->GetName();
@@ -718,7 +718,7 @@ namespace GUI
 					nCoinCount += ERNIE_COIN_COUNT;
 			}
 
-			if(nCoinCount > g_stUIEquip.GetItemCount(855))	// ÊÇ·ñÓĞ×ã¹»µÄ¾«ÁéÓ²±Ò
+			if(nCoinCount > g_stUIEquip.GetItemCount(855))	// whether there are enough elf coins
 			{
 				g_stUISpirit.chkSetmoney[0]->SetIsChecked(false);
 				g_stUISpirit.chkSetmoney[1]->SetIsChecked(false);
@@ -729,13 +729,13 @@ namespace GUI
 			}
 
 			int nEmptyCount = g_stUIEquip.GetGoodsGrid()->GetEmptyGridCount();
-			if(ERNIE_EMPTY_COUNT > nEmptyCount)	// ±³°üĞèÒª 5 ¸ö¿Õ¸ñ
+			if(ERNIE_EMPTY_COUNT > nEmptyCount)	// the bag needs 5 free slots
 			{
 				g_pGameApp->MsgBox(g_oLangRec.GetString(890), ERNIE_EMPTY_COUNT);
 				return;
 			}
 
-			if(g_stUIEquip.GetIsLock())	// ±³°üÊÇ·ñËø¶¨
+			if(g_stUIEquip.GetIsLock())	// whether the bag is locked
 			{
 				g_pGameApp->MsgBox(g_oLangRec.GetString(894), ERNIE_EMPTY_COUNT);
 				return;
@@ -760,7 +760,7 @@ namespace GUI
 
 			g_stUISpirit.ClearTigerItem();
 
-			// Í¨Öª·şÎñÆ÷¿ªÊ¼
+			// notifies the server to start
 			CS_TigerStart(  g_stUINpcTalk.GetNpcId(),
 							g_stUISpirit.chkSetmoney[0]->GetIsChecked(),
 							g_stUISpirit.chkSetmoney[1]->GetIsChecked(),
@@ -800,7 +800,7 @@ namespace GUI
 	}
 
 
-	// ¸üĞÂÏÔÊ¾ÄÚÈİ
+	// updates the displayed content
 	void CSpiritMgr::UpdateErnieString(const char* szText)
 	{
 		if(0 == strlen(labLastshow1->GetCaption()))
@@ -829,7 +829,7 @@ namespace GUI
 			{
 				nID[i] = pItem->GetItemInfo()->lID;
 
-				if(nID[i] != 194)	// µ¥¸ö½ğÇ®Ò²ÓĞĞ§
+				if(nID[i] != 194)	// a single coin is valid too
 				{
 					ErnieHightLight(i, false);
 				}
@@ -838,27 +838,27 @@ namespace GUI
 
 		if(nID[0] == nID[3] && nID[0] == nID[6])
 		{
-			//¡¡¡ö¡ö¡ö¡¡£°£³£¶
-			//¡¡¡õ¡õ¡õ¡¡£±£´£·
-			//¡¡¡õ¡õ¡õ¡¡£²£µ£¸
+			//ã€€â– â– â– ã€€ï¼ï¼“ï¼–
+			//ã€€â–¡â–¡â–¡ã€€ï¼‘ï¼”ï¼—
+			//ã€€â–¡â–¡â–¡ã€€ï¼’ï¼•ï¼˜
 			ErnieHightLight(0);
 			ErnieHightLight(3);
 			ErnieHightLight(6);
 		}
 		if(nID[1] == nID[4] && nID[1] == nID[7])
 		{
-			//¡¡¡õ¡õ¡õ
-			//¡¡¡ö¡ö¡ö
-			//¡¡¡õ¡õ¡õ
+			//ã€€â–¡â–¡â–¡
+			//ã€€â– â– â– 
+			//ã€€â–¡â–¡â–¡
 			ErnieHightLight(1);
 			ErnieHightLight(4);
 			ErnieHightLight(7);
 		}
 		if(nID[2] == nID[5] && nID[2] == nID[8])
 		{
-			//¡¡¡õ¡õ¡õ
-			//¡¡¡õ¡õ¡õ
-			//¡¡¡ö¡ö¡ö
+			//ã€€â–¡â–¡â–¡
+			//ã€€â–¡â–¡â–¡
+			//ã€€â– â– â– 
 			ErnieHightLight(2);
 			ErnieHightLight(5);
 			ErnieHightLight(8);
@@ -866,36 +866,36 @@ namespace GUI
 
 		if(nID[3] == nID[4] && nID[3] == nID[5])
 		{
-			//¡¡¡õ¡ö¡õ
-			//¡¡¡õ¡ö¡õ
-			//¡¡¡õ¡ö¡õ
+			//ã€€â–¡â– â–¡
+			//ã€€â–¡â– â–¡
+			//ã€€â–¡â– â–¡
 			ErnieHightLight(3);
 			ErnieHightLight(4);
 			ErnieHightLight(5);
 		}
 		if(nID[2] == nID[4] && nID[2] == nID[6])
 		{
-			//¡¡¡õ¡õ¡ö
-			//¡¡¡õ¡ö¡õ
-			//¡¡¡ö¡õ¡õ
+			//ã€€â–¡â–¡â– 
+			//ã€€â–¡â– â–¡
+			//ã€€â– â–¡â–¡
 			ErnieHightLight(2);
 			ErnieHightLight(4);
 			ErnieHightLight(6);
 		}
 		if(nID[0] == nID[4] && nID[0] == nID[8])
 		{
-			//¡¡¡ö¡õ¡õ
-			//¡¡¡õ¡ö¡õ
-			//¡¡¡õ¡õ¡ö
+			//ã€€â– â–¡â–¡
+			//ã€€â–¡â– â–¡
+			//ã€€â–¡â–¡â– 
 			ErnieHightLight(0);
 			ErnieHightLight(4);
 			ErnieHightLight(8);
 		}
 		if(nID[1] == nID[3] && nID[1] == nID[5] && nID[1] == nID[7])
 		{
-			//¡¡¡õ¡ö¡õ
-			//¡¡¡ö¡õ¡ö
-			//¡¡¡õ¡ö¡õ
+			//ã€€â–¡â– â–¡
+			//ã€€â– â–¡â– 
+			//ã€€â–¡â– â–¡
 			ErnieHightLight(1);
 			ErnieHightLight(3);
 			ErnieHightLight(5);
@@ -903,9 +903,9 @@ namespace GUI
 		}
 		if(nID[0] == nID[2] && nID[0] == nID[6] && nID[0] == nID[8])
 		{
-			//¡¡¡ö¡õ¡ö
-			//¡¡¡õ¡õ¡õ
-			//¡¡¡ö¡õ¡ö
+			//ã€€â– â–¡â– 
+			//ã€€â–¡â–¡â–¡
+			//ã€€â– â–¡â– 
 			ErnieHightLight(0);
 			ErnieHightLight(2);
 			ErnieHightLight(6);
@@ -913,9 +913,9 @@ namespace GUI
 		}
 		if(nID[0] == nID[2] && nID[0] == nID[4] && nID[0] == nID[6] && nID[0] == nID[8])
 		{
-			//¡¡¡ö¡õ¡ö
-			//¡¡¡õ¡ö¡õ
-			//¡¡¡ö¡õ¡ö
+			//ã€€â– â–¡â– 
+			//ã€€â–¡â– â–¡
+			//ã€€â– â–¡â– 
 			ErnieHightLight(0);
 			ErnieHightLight(2);
 			ErnieHightLight(4);
@@ -924,9 +924,9 @@ namespace GUI
 		}
 		if(nID[1] == nID[3] && nID[1] == nID[4] && nID[1] == nID[5] && nID[1] == nID[7])
 		{
-			//¡¡¡õ¡ö¡õ
-			//¡¡¡ö¡ö¡ö
-			//¡¡¡õ¡ö¡õ
+			//ã€€â–¡â– â–¡
+			//ã€€â– â– â– 
+			//ã€€â–¡â– â–¡
 			ErnieHightLight(1);
 			ErnieHightLight(3);
 			ErnieHightLight(4);
@@ -935,9 +935,9 @@ namespace GUI
 		}
 		if(nID[0] == nID[1] && nID[0] == nID[2] && nID[0] == nID[3] && nID[0] == nID[5] && nID[0] == nID[6] && nID[0] == nID[7] && nID[0] == nID[8])
 		{
-			//¡¡¡ö¡ö¡ö
-			//¡¡¡ö¡õ¡ö
-			//¡¡¡ö¡ö¡ö
+			//ã€€â– â– â– 
+			//ã€€â– â–¡â– 
+			//ã€€â– â– â– 
 			ErnieHightLight(0);
 			ErnieHightLight(1);
 			ErnieHightLight(2);

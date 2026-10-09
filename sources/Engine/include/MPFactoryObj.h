@@ -1,23 +1,23 @@
-#ifndef MPFactoryObj_H
+ï»¿#ifndef MPFactoryObj_H
 #define MPFactoryObj_H
 
-/** ³éÏó¹¤³§Àà. ±¾ÉíÃ»ÓĞÈÎºÎ¹¦ÄÜ, µ«ÅÉÉúÀà¿ÉÒÔÔö¼Ó¹¦ÄÜ.
+/** Abstract factory class. It has no function of its own, but derived classes can add some.
 */
 template< typename T > class FactoryObj
 {
 public:
 	virtual ~FactoryObj() {};
 
-	/** ·µ»Ø¹¤³§ÀàĞÍ.	*/
+	/** Returns the factory type.	*/
 	virtual const string& getType() const = 0;
 
-	/** ´´½¨Ò»¸öĞÂ¶ÔÏó.
-	@param name ´´½¨¶ÔÏóµÄÃû×Ö
-	@return ÓÉÕâ¸ö¹¤³§´´½¨µÄ¶ÔÏó¡£Õâ¸ö¶ÔÏóµÄÀàĞÍÒÀÀµÓÚ¹¤³§.
+	/** Creates a new object.
+	@param name name of the object to create
+	@return the object created by this factory; its type depends on the factory.
 	*/
 	virtual T* createInstance( const string& name ) = 0;    
-	/** Îö¹¹Ò»¸öÓÉÕâ¸ö¹¤³§´´½¨µÄ¶ÔÏó.
-	@param ptr Ö¸ÏòĞèÒª±³Îö¹¹µÄ¶ÔÏóÖ¸Õë
+	/** Destroys an object created by this factory.
+	@param ptr pointer to the object to destroy
 	*/
 	virtual void destroyInstance( T* ) = 0;    
 };

@@ -1,7 +1,7 @@
-//----------------------------------------------------------------------
-// Ãû³Æ:¾²Ì¬Í¼Æ¬
-// ×÷Õß:lh 2004-07-21
-// ×îºóĞŞ¸ÄÈÕÆÚ:2004-10-09
+ï»¿//----------------------------------------------------------------------
+// Name: static image
+// Author: lh 2004-07-21
+// Last modified date: 2004-10-09
 //----------------------------------------------------------------------
 #pragma once
 #include "uicompent.h"
@@ -9,7 +9,7 @@
 namespace GUI
 {
 
-// Ò»ÕÅ¼òµ¥¾²Ì¬Í¼Æ¬
+// a simple static image
 class CImage : public CCompent
 {
 public:
@@ -27,14 +27,14 @@ public:
 	CGuiPic*		GetImage() { return _pImage; }
 
 public:
-	GuiMouseEvent	evtMouseDown;		// Êó±ê°´ÏÂÊÂ¼ş
+	GuiMouseEvent	evtMouseDown;		// mouse button pressed event
 
 public:
 	CGuiPic* _pImage;
 
 };
 
-// ´ø±ß¿òµÄÍ¼Æ¬¿Ø¼ş
+// image control with a border
 class CFrameImage : public CCompent
 {
 public:
@@ -52,23 +52,23 @@ public:
 	CFramePic*		GetFrameImage() { return _pImage; }
 
 public:
-	GuiMouseEvent	evtMouseDown;		// Êó±ê°´ÏÂÊÂ¼ş
+	GuiMouseEvent	evtMouseDown;		// mouse button pressed event
 
 protected:
 	CFramePic*		_pImage;
 
 };
 
-//´øĞ§¹ûµÄÍ¼Æ¬
+//image with an effect
 class CFlashImage: public CCompent
 {
 public:
 	enum eStyle
 	{
-		enumNone,		// ¾²Ö¹Í¼Æ¬
-		enumFlash,		// ÉÁË¸
-		enumCartoon,	// ¶¯»­
-		enumRightMove,	// ´Ó×óÖÁÓÒÒÆ¶¯
+		enumNone,		// still image
+		enumFlash,		// blinking
+		enumCartoon,	// animation
+		enumRightMove,	// moves from left to right
 	};
 
 	CFlashImage(CForm& frmOwn, unsigned int max=1 );

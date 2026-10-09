@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 
 #include "UIBankForm.h"
 #include "uiform.h"
@@ -22,11 +22,11 @@ namespace GUI
 	//	CBankMgr 's Members
 	//=======================================================================
 
-	bool CBankMgr::Init()  //ÓÃ»§ÒøĞĞĞÅÏ¢³õÊ¼»¯
+	bool CBankMgr::Init()  //user bank information initialisation
 	{
 		CFormMgr &mgr = CFormMgr::s_Mgr;
 
-		frmBank = mgr.Find("frmNPCstorage");// ²éÕÒNPCÒøĞĞ´æ´¢±íµ¥ 
+		frmBank = mgr.Find("frmNPCstorage");// looks up the NPC bank storage form
 		if ( !frmBank)
 		{
 			LG("gui", g_oLangRec.GetString(438));
@@ -38,7 +38,7 @@ namespace GUI
 		if (!grdBank) 
 			return Error(g_oLangRec.GetString(439),
 						 frmBank->GetName(), "grdNPCstorage");
-		grdBank->evtBeforeAccept = CUIInterface::_evtDragToGoodsEvent;// ÏûÏ¢µÄ´¦Àí ÓĞÍÏÈëÒøĞĞ¾Í»áµ÷ÓÃ CUIInterface::_evtDragToGoodsEvent
+		grdBank->evtBeforeAccept = CUIInterface::_evtDragToGoodsEvent;// message handling; dragging into the bank calls CUIInterface::_evtDragToGoodsEvent
 		grdBank->evtSwapItem = _evtBankToBank;
 		labCharName = dynamic_cast<CLabel*>(frmBank->Find("labOwnerName"));
 		if (!grdBank) 
@@ -48,41 +48,41 @@ namespace GUI
 		return true;
 	}
 
-	void CBankMgr::_evtOnClose( CForm* pForm, bool& IsClose )  // ¹Ø±ÕÓÃ»§ÒøĞĞ
+	void CBankMgr::_evtOnClose( CForm* pForm, bool& IsClose )  // closes the user bank
 	{
 		CS_BeginAction(g_stUIBoat.GetHuman(), enumACTION_CLOSE_BANK, NULL); 
 
-		CFormMgr::s_Mgr.SetEnableHotKey(HOTKEY_BANK, true);		// Î÷ÃÅÎÄµµĞŞ¸Ä
+		CFormMgr::s_Mgr.SetEnableHotKey(HOTKEY_BANK, true);		// revised per the Ximen document
 	}
 
 
 	//-------------------------------------------------------------------------
-	void CBankMgr::ShowBank() // ÏÔÊ¾ÎïÆ·
+	void CBankMgr::ShowBank() // shows the items
 	{
-		// ±£´æ·şÎñÆ÷´«À´µÄÎïÆ·
+		// saves the items sent by the server
 
-		if (!g_stUIBoat.GetHuman()) // ÕÒÈËÎï 
+		if (!g_stUIBoat.GetHuman()) // finds the character
 			return;
 
 		char szBuf[32];
-		sprintf(szBuf, "%s%s", g_stUIBoat.GetHuman()->getName(), g_oLangRec.GetString(440));//ÏÔÊ¾ÈËÎïÃû¼°×¨ÓÃ
-		labCharName->SetCaption(szBuf);//ÉèÖÃ±êÌâÃû×Ö
+		sprintf(szBuf, "%s%s", g_stUIBoat.GetHuman()->getName(), g_oLangRec.GetString(440));//shows the character name and the exclusive item
+		labCharName->SetCaption(szBuf);//sets the title name
 
 		frmBank->Show();
 
-		// ´ò¿ªÍæ¼ÒµÄÎïÆ·À¸
+		// opens the player's item slot
 		if (!g_stUIEquip.GetItemForm()->GetIsShow())
 		{
 			int nLeft, nTop;
 			nLeft = frmBank->GetX2();
 			nTop = frmBank->GetY();
 
-			g_stUIEquip.GetItemForm()->SetPos(nLeft, nTop); //ÎïÆ··ÅÖÃÎ»ÖÃ
-			g_stUIEquip.GetItemForm()->Refresh(); //¸üĞÂÎïÆ·À¸		
-			g_stUIEquip.GetItemForm()->Show();  //±£´æÔÚÎïÆ·À¸
+			g_stUIEquip.GetItemForm()->SetPos(nLeft, nTop); //item placement position
+			g_stUIEquip.GetItemForm()->Refresh(); //updates the item slot
+			g_stUIEquip.GetItemForm()->Show();  //saves in the item slot
 		}
 
-		CFormMgr::s_Mgr.SetEnableHotKey(HOTKEY_BANK, false);		// Î÷ÃÅÎÄµµĞŞ¸Ä
+		CFormMgr::s_Mgr.SetEnableHotKey(HOTKEY_BANK, false);		// revised per the Ximen document
 	}
 
 	//-------------------------------------------------------------------------
@@ -91,14 +91,14 @@ namespace GUI
 #define EQUIP_TYPE 0
 #define BANK_TYPE 1
 
-		// ÉèÖÃ·¢ËÍÍÏ¶¯ÎïÆ·µÄ·şÎñÆ÷ĞÅÏ¢
+		// sets the server information for sending a dragged item
 		m_kNetBank.chSrcType = EQUIP_TYPE;
 		m_kNetBank.sSrcID = rkDrag.GetDragIndex();
-		//m_kNetBank.sSrcNum = ; ÊıÁ¿ÔÚ»Øµ÷º¯ÊıÖĞÉèÖÃ
+		//m_kNetBank.sSrcNum = ; æ•°é‡åœ¨å›è°ƒå‡½æ•°ä¸­è®¾ç½®
 		m_kNetBank.chTarType = BANK_TYPE;
 		m_kNetBank.sTarID = nGridID;
 
-		// ÅĞ¶ÏÎïÆ·ÊÇ·ñÊÇ¿ÉÖØµşµÄÎïÆ·
+		// decides whether the item is stackable
 		CItemCommand* pkItemCmd = dynamic_cast<CItemCommand*>(&rkItem);
 		if (!pkItemCmd)	return false;
 		CItemRecord* pkItemRecord = pkItemCmd->GetItemInfo();
@@ -106,22 +106,22 @@ namespace GUI
 
 		//if(pkItemRecord->sType == 59 && m_kNetBank.sSrcID == 1)
 		//{
-		//	g_pGameApp->MsgBox("ÄúµÄ¾«ÁéÕıÔÚÊ¹ÓÃÖĞ\nÇë¸ü»»µ½ÆäËüÎ»ÖÃ²Å¿É·ÅÈë²Ö¿â");
-		//	return false;	// µÚ¶ş¸ñµÄ¾«Áé²»ÔÊĞíÍÏÈëÒøĞĞ
+		//	g_pGameApp->MsgBox("æ‚¨çš„ç²¾çµæ­£åœ¨ä½¿ç”¨ä¸­\nè¯·æ›´æ¢åˆ°å…¶å®ƒä½ç½®æ‰å¯æ”¾å…¥ä»“åº“");
+		//	return false;	// ç¬¬äºŒæ ¼çš„ç²¾çµä¸å…è®¸æ‹–å…¥é“¶è¡Œ
 		//}
 
 		// if(pkItemRecord->lID == 2520 || pkItemRecord->lID == 2521)
 		if( pkItemRecord->lID == 2520 || pkItemRecord->lID == 2521 || pkItemRecord->lID == 6341 || pkItemRecord->lID == 6343
 		 || pkItemRecord->lID == 6347 || pkItemRecord->lID == 6359 || pkItemRecord->lID == 6370 || pkItemRecord->lID == 6371
 		 || pkItemRecord->lID == 6373 || pkItemRecord->lID >= 6376 && pkItemRecord->lID <= 6378
-		 || pkItemRecord->lID >= 6383 && pkItemRecord->lID <= 6385 )// modify by ning.yan 20080820 ²ß»®ÃàÑò¡¢ÀîºãµÈÌáĞèÇó£¬Ôö¼ÓÒ»Ğ©µÀ¾ß²»×¼´æÒøĞĞ
+		 || pkItemRecord->lID >= 6383 && pkItemRecord->lID <= 6385 )// modify by ning.yan 20080820 the designers Mianyang, Li Heng and others asked for some items that may not be stored in the bank
 		{
-			//g_pGameApp->MsgBox(g_oLangRec.GetString(958));	// "¸ÃµÀ¾ß²»ÔÊĞí´æÈëÒøĞĞ£¡ÇëÖØĞÂÑ¡Ôñ"
-			g_pGameApp->MsgBox(g_oLangRec.GetString(958));	// "¸ÃµÀ¾ß²»ÔÊĞí´æÈëÒøĞĞ£¡ÇëÖØĞÂÑ¡Ôñ"
+			//g_pGameApp->MsgBox(g_oLangRec.GetString(958));	// "è¯¥é“å…·ä¸å…è®¸å­˜å…¥é“¶è¡Œï¼è¯·é‡æ–°é€‰æ‹©"
+			g_pGameApp->MsgBox(g_oLangRec.GetString(958));	// "è¯¥é“å…·ä¸å…è®¸å­˜å…¥é“¶è¡Œï¼è¯·é‡æ–°é€‰æ‹©"
 			return false;
 		}
 		if ( pkItemCmd->GetItemInfo()->GetIsPile() && pkItemCmd->GetTotalNum() > 1 )
-		{	/*´æ·Å¶à¸öÎïÆ·*/
+		{	/*å­˜æ”¾å¤šä¸ªç‰©å“*/
 			m_pkNumberBox = 
 				g_stUIBox.ShowNumberBox(_MoveItemsEvent, pkItemCmd->GetTotalNum(), g_oLangRec.GetString(441), false);
 
@@ -131,12 +131,12 @@ namespace GUI
 				return true;
 		}
 		else
-		{	/*´æ·Åµ¥¸öÎïÆ·*/
+		{	/*å­˜æ”¾å•ä¸ªç‰©å“*/
 			g_stUIBank.m_kNetBank.sSrcNum = 1;
 			CS_BeginAction(g_stUIBoat.GetHuman(), enumACTION_BANK, (void*)&(g_stUIBank.m_kNetBank));
 			return true;
 			//char buf[256] = { 0 };
-			//sprintf(buf, "ÄúÈ·ÈÏ·ÅÈëÒøĞĞ\n[%s]?", pkItemCmd->GetName());
+			//sprintf(buf, "æ‚¨ç¡®è®¤æ”¾å…¥é“¶è¡Œ\n[%s]?", pkItemCmd->GetName());
 			//g_stUIBox.ShowSelectBox(_MoveAItemEvent, buf, true);
 			//return true;
 		}
@@ -145,20 +145,20 @@ namespace GUI
 	//-------------------------------------------------------------------------
 	bool CBankMgr::PopFromBank(CGoodsGrid& rkDrag, CGoodsGrid& rkSelf, int nGridID, CCommandObj& rkItem)
 	{
-		// ÉèÖÃ·¢ËÍÍÏ¶¯ÎïÆ·µÄ·şÎñÆ÷ĞÅÏ¢
+		// sets the server information for sending a dragged item
 		m_kNetBank.chSrcType = BANK_TYPE ;
 		m_kNetBank.sSrcID = rkDrag.GetDragIndex();
-		//m_kNetBank.sSrcNum = ; ÊıÁ¿ÔÚ»Øµôº¯ÊıÖĞÉèÖÃ
+		//m_kNetBank.sSrcNum = ; æ•°é‡åœ¨å›æ‰å‡½æ•°ä¸­è®¾ç½®
 		m_kNetBank.chTarType = EQUIP_TYPE;
 		m_kNetBank.sTarID = nGridID;
 
 
-		// ÅĞ¶ÏÎïÆ·ÊÇ·ñÊÇ¿ÉÖØµşµÄÎïÆ·
+		// decides whether the item is stackable
 		CItemCommand* pkItemCmd = dynamic_cast<CItemCommand*>(&rkItem);
 		if (!pkItemCmd)	return false;
 
 		if ( pkItemCmd->GetItemInfo()->GetIsPile() && pkItemCmd->GetTotalNum() > 1 )
-		{	/*È¡³ö¶à¸öÎïÆ·*/
+		{	/*å–å‡ºå¤šä¸ªç‰©å“*/
 			m_pkNumberBox = 
 				g_stUIBox.ShowNumberBox( _MoveItemsEvent, pkItemCmd->GetTotalNum(), g_oLangRec.GetString(442), false);
 
@@ -168,26 +168,26 @@ namespace GUI
 				return true;
 		}
 		else
-		{	/*´æ·Åµ¥¸öÎïÆ·*/
+		{	/*å­˜æ”¾å•ä¸ªç‰©å“*/
 			g_stUIBank.m_kNetBank.sSrcNum = 1;
 			CS_BeginAction(g_stUIBoat.GetHuman(), enumACTION_BANK, (void*)&(g_stUIBank.m_kNetBank));
 			return true;
 
 			//char buf[256] = { 0 };
-			//sprintf(buf, "ÄúÈ·ÈÏÈ¡³ö\n[%s]?", pkItemCmd->GetName());
+			//sprintf(buf, "æ‚¨ç¡®è®¤å–å‡º\n[%s]?", pkItemCmd->GetName());
 			//g_stUIBox.ShowSelectBox(_MoveAItemEvent, buf, true);
 			//return true;
 		}
 	}
 
 	//-------------------------------------------------------------------------
-	void CBankMgr::_MoveItemsEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey) // ¶à¸öÎïÆ·ÒÆ¶¯
+	void CBankMgr::_MoveItemsEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey) // moves several items
 	{
-		if(nMsgType != CForm::mrYes)  // Íæ¼ÒÊÇ·ñÍ¬ÒâÍÏ¶¯
+		if(nMsgType != CForm::mrYes)  // whether the player agrees to the drag
 			return;
 
 
-		int num =  g_stUIBank.m_pkNumberBox->GetNumber();// ÍÏ¶¯ÎïÆ·Êı 
+		int num =  g_stUIBank.m_pkNumberBox->GetNumber();// number of dragged items
 		if ( num > 0 )
 		{
 			g_stUIBank.m_kNetBank.sSrcNum = num;
@@ -196,17 +196,17 @@ namespace GUI
 	}
 
 	//-------------------------------------------------------------------------
-	void CBankMgr::_MoveAItemEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey) // µ¥¸öµÀ¾ßÒÆ¶¯
+	void CBankMgr::_MoveAItemEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey) // moves a single item
 	{
 		if(nMsgType != CForm::mrYes) 
 			return;
 
 		g_stUIBank.m_kNetBank.sSrcNum = 1;
-		CS_BeginAction(g_stUIBoat.GetHuman(), enumACTION_BANK, (void*)&(g_stUIBank.m_kNetBank));//¸üĞÂÒøĞĞĞÅÏ¢
+		CS_BeginAction(g_stUIBoat.GetHuman(), enumACTION_BANK, (void*)&(g_stUIBank.m_kNetBank));//updates the bank information
 	}
 	
 	//-------------------------------------------------------------------------
-	void CBankMgr::CloseForm()  // ¹Ø±ÕµÀ¾ßÀ¸±íµ¥ 
+	void CBankMgr::CloseForm()  // closes the item slot form
 	{
 		if (frmBank->GetIsShow())
 		{
@@ -216,7 +216,7 @@ namespace GUI
 	}
 
 	//-------------------------------------------------------------------------
-	void CBankMgr::_evtBankToBank(CGuiData *pSender,int nFirst, int nSecond, bool& isSwap) // ÓÃÓÚÓÃ»§ÒøĞĞ±íµ¥ÖĞµÀ¾ß»¥»»
+	void CBankMgr::_evtBankToBank(CGuiData *pSender,int nFirst, int nSecond, bool& isSwap) // used to swap items inside the user bank form
 	{
 		isSwap = false;
 		if( !g_stUIBoat.GetHuman() ) return;

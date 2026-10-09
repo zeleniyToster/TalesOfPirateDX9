@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "UIGlobalVar.h"
 #include "uiform.h"
 #include "uigoodsgrid.h"
@@ -7,26 +7,26 @@ class CCharacter;
 
 namespace GUI
 {
-#define defMaxBoat 3 // ¿É»ñµÃ×î´ó´¬Ö»Êı
+#define defMaxBoat 3 // maximum number of boats obtainable
 
-class CBoat // ´¬ĞÅÏ¢Àà
+class CBoat // boat information class
 {
 public:
 	CBoat();
 	bool Init( int n, CForm* ship, GuiDragInGridEvent evt );
 
-	void		Reset(); // ÖØĞÂÉèÖÃ´¬
-	void		Link( CCharacter* pBoat )	{ _chtBoat = pBoat;			}  // ´¬ÈËÎïºÍ½ÇÉ«ÈËÎï¶ÔÓ¦
-	bool		GetIsValid()				{ return _chtBoat!=NULL;	}  // »ñµÃ½ÇÉ«ĞÅÏ¢
+	void		Reset(); // resets the boat
+	void		Link( CCharacter* pBoat )	{ _chtBoat = pBoat;			}  // the boat character corresponds to the character character
+	bool		GetIsValid()				{ return _chtBoat!=NULL;	}  // gets the character information
 	void		UnLink()					{ _chtBoat=NULL;			}  
 
-	CCharacter* GetCha()			{ return _chtBoat;		}  // ÕÒÈËÎï
-	CGoodsGrid*	GetGoodsGrid()		{ return _grdHold;		}  // »ñµÃ½ÇÉ«µÀ¾ß
-	CForm*		GetForm()			{ return _frmShipRoom;	}  // ÕÒ´¬µÀ¾ßÀ¸ĞÅÏ¢
+	CCharacter* GetCha()			{ return _chtBoat;		}  // finds the character
+	CGoodsGrid*	GetGoodsGrid()		{ return _grdHold;		}  // gets the character item
+	CForm*		GetForm()			{ return _frmShipRoom;	}  // looks up the boat item slot information
 
 private:
 	static void _evtHoldGridRMouse(CGuiData *pSender,CCommandObj* pItem,int nGridID);
-	static void _evtEscClose( CForm* pForm );	// °´ ESC ¹Ø±Õ´°ÌåÊÂ¼ş  add by Philip.Wu  2006-06-22
+	static void _evtEscClose( CForm* pForm );	// ESC close window event  add by Philip.Wu  2006-06-22
 
 private:
 	int				_nIndex;
@@ -42,33 +42,33 @@ class CBoatMgr : public CUIInterface
 public:
 	void	Clear();
 
-	bool	AddBoat( CCharacter* pBoat );  // ÓÃ»§Ìí¼Ó´¬Ö»
-	CBoat*	GetBoat( unsigned int n )		{ return &_cBoats[n];	} // »ñÈ¡´¬Ö»
-	CBoat*	FindBoat( unsigned int ulWorldID );  // ÕÒµ½ÓÃ»§È«²¿´¬Ö»
+	bool	AddBoat( CCharacter* pBoat );  // the user adds a boat
+	CBoat*	GetBoat( unsigned int n )		{ return &_cBoats[n];	} // gets the boat
+	CBoat*	FindBoat( unsigned int ulWorldID );  // finds every boat of the user
 
 	void	SetHuman( CCharacter* p )		{ _pHuman = p;			} 
-	CCharacter*		GetHuman()				{ return _pHuman;		} // ²éÕÒµ±Ç°½ÇÉ«
+	CCharacter*		GetHuman()				{ return _pHuman;		} // looks up the current character
 
-	CGoodsGrid*		FindGoodsGrid( unsigned int ulWorldID );	// ¸ù¾İID²éÕÒ¶ÔÓ¦µÄµÀ¾ßÀ¸
-	CCharacter*		FindCha( unsigned int ulWorldID );         // ²éÕÒ´¬Ö÷ÈË
-	CCharacter*		FindCha( CGoodsGrid* pGoods );   // ÓÉ×°±¸Æ¥Åä²éÕÒ´¬Ö»µÄÖ÷ÈË
+	CGoodsGrid*		FindGoodsGrid( unsigned int ulWorldID );	// looks up the matching item slot by ID
+	CCharacter*		FindCha( unsigned int ulWorldID );         // looks up the boat owner
+	CCharacter*		FindCha( CGoodsGrid* pGoods );   // finds the boat owner by matching equipment
 
-	CCharacter*		ChangeMainCha( unsigned int ulWorldID );	// ÇĞ»»Ö÷½Ç
+	CCharacter*		ChangeMainCha( unsigned int ulWorldID );	// switches the main character
 
-	CBoat*	GetOtherBoat()					{ return &_cOther;		}  // ²é¿´±ğÈË´¬
+	CBoat*	GetOtherBoat()					{ return &_cOther;		}  // views another player's boat
 
 protected:
-	virtual bool Init(); //ÓÃ»§´¬ĞÅÏ¢³õÊ¼»¯
+	virtual bool Init(); //user boat information initialisation
     virtual void End(); 
-	virtual void SwitchMap()				{	Clear();			} // Ìø×ªµØÍ¼Ê±Çå³ı´¬ĞÅÏ¢
+	virtual void SwitchMap()				{	Clear();			} // clears the boat information when jumping to another map
 
 private:
-	CBoat*		GetFreeBoat(); // »ñµÃÃâ·Ñ´¬Ö»
+	CBoat*		GetFreeBoat(); // obtains a free boat
 
 private:
 	CCharacter*	_pHuman;
-	CBoat		_cBoats[defMaxBoat];        // µ±Ç°½ÇÉ«¿ÉÓµÓĞµÄ´¬ÊıÁ¿
-	CBoat		_cOther;					// Ò»¸öÓÃÓÚ²é¿´±ğÈËµÄ´¬²Õ£¬»õÎïÊ±µÄÁÙÊ±±äÁ¿¡¡
+	CBoat		_cBoats[defMaxBoat];        // number of boats the current character may own
+	CBoat		_cOther;					// a temporary variable used to view another player's cargo hold and goods
 
 };
 

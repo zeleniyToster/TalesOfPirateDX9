@@ -1,4 +1,4 @@
-
+ï»¿
 #include "stdafx.h"
 #include "UICookingForm.h"
 #include "uiformmgr.h"
@@ -223,26 +223,26 @@ namespace GUI
 
     void CCookingMgr::PopItem(int iIndex, bool bRetry/* = false*/)
     {
-        //  ÊÇ·ñËø¶¨
+        //  whether it is locked
         if(bLock)
         {
             return;
         }
-        // É¾³ıCmdÖĞµÄItem£¬¸ÃItem»áÔÚPushItem()ÖĞÓÉnewÉú³É
+        // åˆ é™¤Cmdä¸­çš„Itemï¼Œè¯¥Itemä¼šåœ¨PushItem()ä¸­ç”±newç”Ÿæˆ
 		CItemCommand* pItemCommand =  dynamic_cast<CItemCommand*>(cmdCooking[iIndex]->GetCommand());
 		if (! pItemCommand)
             return;
 
-		cmdCooking[iIndex]->DelCommand();	// ¸Ãº¯Êı½«É¾³ıdelete Item
+		cmdCooking[iIndex]->DelCommand();	// this function deletes the Item
 
-		// ½«ItemÏàÓ¦µÄÎïÆ·À¸»Ö¸´³É¿ÉÓÃ
+		// puts the item slot of the Item back to usable
 		CCommandObj* pItem = g_stUIEquip.GetGoodsGrid()->GetItem(iCookingPos[iIndex]);
 		if (pItem && (6 != iIndex))
 		{
 			pItem->SetIsValid(true);
 		}
 
-		// ¼ÇÂ¼ItemÔÚÎïÆ·À¸ÖĞµÄÎ»ÖÃ
+		// records the position of the Item in the item slot
         if(!bRetry)
         {
 		    iCookingPos[iIndex] = NO_USE;
@@ -251,25 +251,25 @@ namespace GUI
 
     void CCookingMgr::PushItem(int iIndex, CItemCommand& rItem, bool bRetry/* = false*/)
     {
-        //  ÊÇ·ñËø¶¨
+        //  whether it is locked
         if(bLock)
         {
             return;
         }
-        // ÅĞ¶ÏµÀ¾ßÊÇ·ñ¿ÉÒÔÍÏ
+        // decides whether the item can be dragged
 		if(! rItem.GetIsValid())
 		{
 			return;
 		}
 
-		// ²é¿´Ô­À´µÄCmdÖĞÊÇ·ñÒÑ¾­ÓĞItemÁË£¬Èç¹ûÓĞÔòÒÆ³ö
+		// checks whether the original Cmd already has an Item and removes it if so
 		CItemCommand* pItemCommand =  dynamic_cast<CItemCommand*>(cmdCooking[iIndex]->GetCommand());
 		if (pItemCommand)
 		{
 			PopItem(iIndex);
 		}
 
-		// ¼ÇÂ¼ItemÔÚÎïÆ·À¸ÖĞµÄÎ»ÖÃ
+		// records the position of the Item in the item slot
         if(!bRetry)
         {
             iCookingPos[iIndex] = g_stUIEquip.GetGoodsGrid()->GetDragIndex();
@@ -277,11 +277,11 @@ namespace GUI
 
         if(6 != iIndex)
         {
-		    // ½«ItemÏàÓ¦µÄÎïÆ·À¸»Òµ÷
+		    // greys out the item slot of the Item
 		    rItem.SetIsValid(false);
         }
 
-		// ½«´´½¨µÄItem·ÅÈëCmdÖĞ£¬ÕâÀïÓÃnew½«»áÔÚPopItem()ÖĞÉ¾³ı
+		// å°†åˆ›å»ºçš„Itemæ”¾å…¥Cmdä¸­ï¼Œè¿™é‡Œç”¨newå°†ä¼šåœ¨PopItem()ä¸­åˆ é™¤
 		CItemCommand* pItemCmd = new CItemCommand(rItem);
 		pItemCmd->SetIsValid(true);
 		cmdCooking[iIndex]->AddCommand(pItemCmd);
@@ -397,7 +397,7 @@ namespace GUI
 
     void CCookingMgr::_evtDragItemBase4(CGuiData *pSender,CCommandObj* pItem,bool& isAccept)
     {
-        //  ²ÄÁÏ1
+        //  material 1
         if(!g_stUICooking.cmdCooking[1]->GetCommand())
         {
             g_pGameApp->MsgBox(g_oLangRec.GetString(896));
@@ -420,7 +420,7 @@ namespace GUI
 
     void CCookingMgr::_evtDragItemBase5(CGuiData *pSender,CCommandObj* pItem,bool& isAccept)
     {
-        //  ²ÄÁÏ2
+        //  material 2
         if(!g_stUICooking.cmdCooking[1]->GetCommand())
         {
             g_pGameApp->MsgBox(g_oLangRec.GetString(896));
@@ -443,7 +443,7 @@ namespace GUI
 
     void CCookingMgr::_evtDragItemBase6(CGuiData *pSender,CCommandObj* pItem,bool& isAccept)
     {
-        //  ²ÄÁÏ3
+        //  material 3
         if(!g_stUICooking.cmdCooking[1]->GetCommand())
         {
             g_pGameApp->MsgBox(g_oLangRec.GetString(896));

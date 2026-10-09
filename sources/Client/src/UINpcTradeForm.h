@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 #include "UIGlobalVar.h"
 #include "NetProtocol.h"
 #include "uiboxform.h"
 
 namespace GUI
 {
-// ÓëNPC½»Ò×
+// trading with an NPC
 class CNpcTradeMgr : public CUIInterface
 {
 public:
@@ -14,13 +14,13 @@ public:
     void        SaleToNpc(BYTE byIndex ,BYTE byCount, USHORT sItemID ,DWORD dwMoney ) ;
     void        BuyFromNpc(BYTE byIndex ,BYTE byCount, USHORT sItemID ,DWORD dwMoney);
 
-	// µÀ¾ßÀ¸ÊÇ·ñÎªNPCµÄµÀ¾ßÀ¸
+	// whether the item slot is the NPC's item slot
 	bool		IsNpcGoods( CGoodsGrid* pGrid );
 
-	// ´ÓNPC´¦ÂòµÀ¾ß
+	// buys an item from the NPC
 	void		LocalBuyFromNpc( CGoodsGrid* pNpcGrid, CGoodsGrid* pSelfGrid, int nGridID, CCommandObj* pItem );
 
-	// ÂôµÀ¾ß¸øNPC
+	// sells an item to the NPC
 	void		LocalSaleToNpc( CGoodsGrid* pNpcGrid, CGoodsGrid* pSelfGrid, int nGridID, CCommandObj* pItem );
 
 	void SellSelectedItems(CGoodsGrid* grid);
@@ -34,7 +34,7 @@ protected:
 	static void		_BuyTradeEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey);
 	static void		_SaleTradeEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey);
 
-	// ÂôÂòµ¥¸ö×°±¸Ê±ÒªÈ·ÈÏ
+	// confirmation when buying or selling a single piece of equipment
 	static void		_BuyEquipYesNoTradeEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey);
 	static void		_SaleEquipYesNoTradeEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey);
 
@@ -52,7 +52,7 @@ private:
 private:
 	CForm*		frmNPCtrade; 
 
-	CGoodsGrid*	grdNPCtradeWeapon; //NPC½»Ò×µÀ¾ß¿Ø¼þ
+	CGoodsGrid*	grdNPCtradeWeapon; //NPC trade item control
 	CGoodsGrid*	grdNPCtradeEquip;
 	CGoodsGrid*	grdNPCtradeOther;
 

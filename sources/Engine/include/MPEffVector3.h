@@ -1,4 +1,4 @@
-#ifndef MPEffVector3_H
+ï»¿#ifndef MPEffVector3_H
 #define MPEffVector3_H
 
 #include "MindPowerAPI.h"
@@ -19,7 +19,7 @@ public:
 
 	D3DXVECTOR3& GetDXValue()	{ return m_vSelf; }
 
-	// ÊýÑ§²Ù×÷
+	// math operations
 	inline MPEffVector3 operator + ( const MPEffVector3& rkVector ) const
 	{
 		MPEffVector3 kSum;
@@ -60,16 +60,16 @@ public:
 		return D3DXVec3LengthSq(&m_vSelf);
 	}
 
-	/** µ¥Î»»¯ÏòÁ¿.
+	/** Normalises the vector.
 	@note
-		Õâ¸öº¯Êý²»»áÒòÁãÏòÁ¿¶ø±ÀÀ££¬µ«Èç¹ûÊÇÁãÏòÁ¿Ôò²»»á¸Ä±äËûµÄÔªËØ
-	@returns ÏòÁ¿µÄÏÈÇ°³¤¶È.
+		This does not crash on a zero vector, but a zero vector is left unchanged.
+	@returns the previous length of the vector.
 	*/
 	inline float normalise()
 	{
 		float fLength = D3DXVec3Length(&m_vSelf);
 
-		// ¶ÔÓÚÁãÏòÁ¿Ò²¿ÉÒÔÊ¹ÓÃ£¬²»¹ý²¢²»¸Ä±äÈÎºÎÖµ
+		// safe for a zero vector, although it leaves the values unchanged
 		if ( fLength > 1e-06f )
 		{
 			D3DXVec3Normalize(&m_vSelf, &m_vSelf);
@@ -79,11 +79,11 @@ public:
 	}
 
 
-	/** ²úÉúÒ»¸ö´¹Ö±µÄÏòÁ¿.
+	/** Produces a perpendicular vector.
 	@remarks
 	This method will return a vector which is perpendicular to this
-	vector. There are an infinite number of possibilities but this 
-	method will guarantee to generate one of them. If you need more 
+	vector. There are an infinite number of possibilities but this
+	method will guarantee to generate one of them. If you need more
 	control you should use the Quaternion class.
 	*/
 	inline MPEffVector3 perpendicular(void) const
@@ -92,10 +92,10 @@ public:
 
 		MPEffVector3 perp = this->crossProduct( MPEffVector3::UNIT_X );
 
-		// ¼ì²é³¤¶È length
+		// checks that the length equals length
 		if( perp.squaredLength() < fSquareZero )
 		{
-			/* Õâ¸öÖáÊÇYÖá£¬ËùÒÔÒª»»Ò»¸öÖá.
+			/* è¿™ä¸ªè½´æ˜¯Yè½´ï¼Œæ‰€ä»¥è¦æ¢ä¸€ä¸ªè½´.
 			*/
 			perp = this->crossProduct( MPEffVector3::UNIT_Y );
 		}
@@ -111,15 +111,15 @@ public:
 	}
 
 
-	/** ÔÚ¸ø¶¨µÄ×î´ó½Ç¶ÈÄÚ²úÉúÒ»¸öËæ»úµÄÏòÁ¿.
+	/** Produces a random vector within a given maximum angle.
 	@remarks
-		Õâ¸ö·½·¨¼ÙÉèËæ»úÊýµÄÖÖ×ÓÒÑ¾­²úÉú
-	@param 
-	angle ¸ø¶¨µÄ×î´óÆ«ÒÆ½Ç¶È
-	@param 
-	up ÈÎºÎ´¹Ö±Õâ¸öÏòÁ¿µÄÏòÁ¿
-	@returns 
-		Æ«ÒÆÕâ¸öÏòÁ¿Ëæ»ú½Ç¶ÈµÄÏòÁ¿¡£Õâ¸öËæ»úÏòÁ¿Ã»ÓÐµ¥Î»»¯
+		This method assumes the random number seed has already been generated
+	@param
+	angle maximum offset angle
+	@param
+	up any vector perpendicular to this one
+	@returns
+		a vector offset from this one by a random angle. The random vector is not normalised
 	*/
 	inline MPEffVector3 randomDeviant( const MPRadian& angle,
 		const MPEffVector3& up = MPEffVector3::ZERO ) const
@@ -128,7 +128,7 @@ public:
 
 		if (up == MPEffVector3::ZERO)
 		{
-			// ´´½¨Ò»¸öÏòÉÏµÄÏòÁ¿
+			// create a vector pointing up
 			newUp = this->perpendicular();
 		}
 		else
@@ -136,7 +136,7 @@ public:
 			newUp = up;
 		}
 
-		// ½«upÏòÁ¿ÈÆ×Å·½ÏòÏòÁ¿Ðý×ªËæ»ú½Ç¶È
+		// rotate the up vector around the direction vector by a random angle
 		MPEffQuaternion q;
 		q.FromAngleAxis( MPRadian(MPEffectMath::UnitRandom() * MPEffectMath::TWO_PI), *this );
 		newUp = q * newUp;
@@ -146,7 +146,7 @@ public:
 		return q * (*this);
 	}
 
-	// ÌØÊâµÄÖµ
+	// special values
 	static const MPEffVector3 ZERO;
 	static const MPEffVector3 UNIT_X;
 	static const MPEffVector3 UNIT_Y;

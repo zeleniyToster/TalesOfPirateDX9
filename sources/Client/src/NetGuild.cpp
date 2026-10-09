@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "netguild.h"
 #include "UIGlobalVar.h"
 #include "GuildMemberData.h"
@@ -271,7 +271,7 @@ void NetPC_GUILD_STOP()
 
 void NetMC_GUILD_MOTTO(cChar *motto)
 {
-	//´Ë»Øµ÷º¯ÊýÒÑ¾­ÎÞÐ§(±»È¡Ïû)-Arcol 2005.10.9
+	//this callback function is no longer used (cancelled) - Arcol 2005.10.9
 	CGuildData::SetGuildMottoName(motto);
 	CUIGuildMgr::RefreshAttribute();
 }

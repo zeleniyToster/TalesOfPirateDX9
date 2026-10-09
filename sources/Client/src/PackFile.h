@@ -1,7 +1,7 @@
-#pragma once
+ï»¿#pragma once
 /************************************************************************/
-/*´ò°üÎÄ¼şÀà:´ò°üÒ»¸öµ±Ç°³ÌĞòÏÂµÄÄ³¸öÄ¿Â¼¼°×ÓÄ¿Â¼¼°ÎÄ¼ş¡£
-/*			ÒÔ¼°´Ó´ò°üÎÄ¼şÖĞ¶ÁÈ¡ÎÄ¼şÊı¾İ¡£
+/*æ‰“åŒ…æ–‡ä»¶ç±»:æ‰“åŒ…ä¸€ä¸ªå½“å‰ç¨‹åºä¸‹çš„æŸä¸ªç›®å½•åŠå­ç›®å½•åŠæ–‡ä»¶ã€‚
+/*			ä»¥åŠä»æ‰“åŒ…æ–‡ä»¶ä¸­è¯»å–æ–‡ä»¶æ•°æ®ã€‚
 /*create by lemon@2005.6.3
 /************************************************************************/
 class CPackFile
@@ -12,29 +12,29 @@ public:
 	~CPackFile();
 	
 
-	struct FileData  // ÎÄ¼şÊı¾İ
+	struct FileData  // file data
 	{
-		s_string strFileName; // ÎÄ¼şÃû
+		s_string strFileName; // file name
 		DWORD offset;   //
-		DWORD length;  // ÎÄ¼ş³¤¶È
+		DWORD length;  // file length
 	};
 
-	struct DirectoryData // ÎÄ¼şÂ·¾¶Êı¾İ
+	struct DirectoryData // file path data
 	{
-		s_string  strDirName; // ÎÄ¼şÂ·¾¶
-		DWORD dwDirNum;  // ÎÄ¼şÄ¿Â¼Êı
-		DWORD dwFileNum; // ÎÄ¼şÊı
-		std::vector<DirectoryData>	vecSubDir; // º¯ÊıDirectoryData()×Ô¶¯Ó¦ÓÃÔÚvecSubDirÉÏ
-		std::vector<FileData>	vecFile; // º¯ÊıFileData()×Ô¶¯Ó¦ÓÃÔÚvecFileÉÏ
+		s_string  strDirName; // file path
+		DWORD dwDirNum;  // number of file directories
+		DWORD dwFileNum; // number of files
+		std::vector<DirectoryData>	vecSubDir; // å‡½æ•°DirectoryData()è‡ªåŠ¨åº”ç”¨åœ¨vecSubDirä¸Š
+		std::vector<FileData>	vecFile; // å‡½æ•°FileData()è‡ªåŠ¨åº”ç”¨åœ¨vecFileä¸Š
 	};
 
-	bool	SaveToPack(const char* pszDirName, const char* pszOutFile, const char* pszFilter = "*.bmp"); // ½«ÎÄ¼ş±£´æ´ò°ü
+	bool	SaveToPack(const char* pszDirName, const char* pszOutFile, const char* pszFilter = "*.bmp"); // saves the file into the pack
 
-	bool	LoadPackFile(char* pszFile); // ¶Á´ò°üÎÄ¼şÊı¾İ
+	bool	LoadPackFile(char* pszFile); // reads the packed file data
 
 	void	Clear(); 
 
-	DirectoryData*	GetDir(char* pszDirName) // »ñÈ¡´ò°üÎÄ¼şµÄÄ¿Â¼
+	DirectoryData*	GetDir(char* pszDirName) // gets a directory of the packed file
 	{
 		if(!_pPackFile)  
 			return NULL;
@@ -43,18 +43,18 @@ public:
 		return FindDir(pszDirName, &_RootDir);
 	}
 protected:
-	bool	PackDirectory(FILE* ptf,DirectoryData* pParentDir,const char* pszDir); // ´ò°üºóÎÄ¼şËùÔÚÄ¿Â¼
-	long	AddFileToTempPack(FILE* pf, const char* pszFileName); // ¼ÓÈëÎÄ¼şµ½´ò°üÎÄ¼şÖĞ
-	long	GetFileDataSize(FileData* pFileData); // »ñÈ¡ÎÄ¼şÊı¾İ´óĞ¡
-	void	SaveFileData(FILE* pf, FileData* pFileData, long offset); //±£´æÎÄ¼şÊı¾İ
-	long	GetDirectorySize(DirectoryData* pDir); // »ñµÃÎÄ¼şÄ¿Â¼Êı¾İ´óĞ¡
-	void	SaveDirData(FILE* pf, DirectoryData* pDir, long offset); // ±£´æÄ¿Â¼Êı¾İ
+	bool	PackDirectory(FILE* ptf,DirectoryData* pParentDir,const char* pszDir); // the directory the packed file ends up in
+	long	AddFileToTempPack(FILE* pf, const char* pszFileName); // adds a file to the packed file
+	long	GetFileDataSize(FileData* pFileData); // gets the size of the file data
+	void	SaveFileData(FILE* pf, FileData* pFileData, long offset); //saves the file data
+	long	GetDirectorySize(DirectoryData* pDir); // gets the size of the file directory data
+	void	SaveDirData(FILE* pf, DirectoryData* pDir, long offset); // saves the directory data
 
 
-	bool	LoadFileData(FileData* pFileData); // ¶ÁÎÄ¼şÊı¾İ				
-	bool	LoadDirData(DirectoryData* pDir);  // ¶ÁÄ¿Â¼Êı¾İ	
+	bool	LoadFileData(FileData* pFileData); // reads the file data
+	bool	LoadDirData(DirectoryData* pDir);  // reads the directory data
 
-	DirectoryData* FindDir(char* pszDirName, DirectoryData* pDir)  // ²éÕÒÎÄ¼ş´æ·ÅÄ¿Â¼
+	DirectoryData* FindDir(char* pszDirName, DirectoryData* pDir)  // looks up the directory a file is stored in
 	{
 		if(pDir->strDirName == pszDirName)
 			return pDir;
@@ -68,18 +68,18 @@ protected:
 		return NULL;
 	}
 public:
-	//µ±Ç°µÄpackÎÄ¼şÃû
+	//the name of the current pack file
 	s_string strName;
 	s_string strFilter;
 
 protected:
 
-	FILE*			_pPackFile; // Òª´ò°üµÄÎÄ¼ş
-	DirectoryData	_RootDir; // Òªµ½±¨µÄÎÄ¼ş¸ùÄ¿Â¼
+	FILE*			_pPackFile; // the files to pack
+	DirectoryData	_RootDir; // the root directory the files go to
 }; 
 
 
-class CMiniPack : public CPackFile // ËöËé´ò°ü
+class CMiniPack : public CPackFile // the tedious work of packing
 {
 public:
 	CMiniPack();

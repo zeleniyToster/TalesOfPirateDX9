@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "uicompent.h"
 #include "uitextbutton.h"
 #include "uigraph.h"
@@ -18,10 +18,10 @@ namespace GUI
 	// 
 	enum MEMO_LINE_TYPE
 	{
-		MEMO_LINE_TITLE,		// ÎÄ×Ö±êÌâ
-		MEMO_LINE_DESP,			// ÎÄ×ÖÃèÊö
-		MEMO_LINE_INTERVAL,		// ¼ä¸ôĞĞ
-		MEMO_LINE_ICON,			// Í¼±ê	
+		MEMO_LINE_TITLE,		// text title
+		MEMO_LINE_DESP,			// text description
+		MEMO_LINE_INTERVAL,		// spacer row
+		MEMO_LINE_ICON,			// icon
 	};
 
 	class CMemo : public CCompent
@@ -52,7 +52,7 @@ namespace GUI
 		bool	MouseScroll( int nScroll ) ;
 
 	public:
-		GuiEvent	evtSelectChange;				// Ñ¡Ôñ·¢ÉúÁË±ä»¯
+		GuiEvent	evtSelectChange;				// the selection changed
 		void	SetMaxNumPerRow(int n) { _nMaxNum = n; }
 		int		GetMaxNumPerRow() {  return _nMaxNum; } 
 		void	SetPageShowNum(int n) {  _nPageShowNum = n; }
@@ -83,14 +83,14 @@ namespace GUI
 		void	_SetScrollRange();
 		void	_Copy( const CMemo& rhs );
 		void	_SetSelf();
-		void	_CheckTextAlign();			// ¼ì²éÎÄ±¾ÅÅÁĞ·½Ê½
-		void	_CheckScroll();			// ¼ì²éÊÇ·ñÏÔÊ¾¹ö¶¯Öá
+		void	_CheckTextAlign();			// checks the text layout mode
+		void	_CheckScroll();			// checks whether the scroll bar is shown
 
 		std::string  _strCaption;
 		std::string  _str[MEMO_MAX_LINE];
 		bool	_IsTextCenter;
 
-		int		_nLeftMargin;	// ÓëÖÜÎ§±ß¿òµÄ¾àÀë
+		int		_nLeftMargin;	// distance to the surrounding border
 		int		_nTopMargin;
 		int		_nRightMargin;
 		int		_nBottomMargin;
@@ -105,7 +105,7 @@ namespace GUI
 		int		_nMisRowNum;
 		int		_nMemoNum;
 		std::string	_strItem[MEMO_MAX_ITEM];
-		std::string	_strItemEx[MEMO_MAX_ITEM];		// ¶îÍâÊı¾İ,²»ÏÔÊ¾
+		std::string	_strItemEx[MEMO_MAX_ITEM];		// extra data, not shown
 		std::string	_strMis[MEMO_MAX_ITEM];
 		int		_nSelectItem{ -1 };
 		int		_nSelectMission{ -1 };
@@ -162,8 +162,8 @@ namespace GUI
 		void        Init();
 
 		bool		MouseScroll( int nScroll ) ;
-		GuiEvent	evtSelectChange; // Ñ¡Ôñ·¢ÉúÁË±ä»¯
-		GuiItemClickEvent evtClickItem;	// µã»÷ÁËÄª¸ö×Ö·û´®
+		GuiEvent	evtSelectChange; // the selection changed
+		GuiItemClickEvent evtClickItem;	// a certain string was clicked
 		void		SetMaxNumPerRow(int n) { _nMaxNum  = n; }
 		int			GetMaxNumPerRow() { return _nMaxNum; } 
 		void		SetRowNum(int n) { _nRowNum = n; }
@@ -194,15 +194,15 @@ namespace GUI
 			CGraph* pIcon;
 			USHORT	sData;
 			BYTE	byData;
-			BYTE	byType;		  // ĞÅÏ¢ÀàĞÍ
-			USHORT	sxPos, syPos; // ĞĞºÍÁĞ
+			BYTE	byType;		  // information type
+			USHORT	sxPos, syPos; // rows and columns
 		};
 
-		// ĞèÒªÏÔÊ¾µÄÈÎÎñÊı¾İĞÅÏ¢
+		// the mission data information that needs to be shown
 		USHORT		m_sNumInfo;
-		MEMO_INFO	m_MemoInfo[MEMO_MAX_LINE];	// ÈÎÎñ½çÃæÏÔÊ¾½âÎöºóÊı¾İ
-		NET_MISPAGE m_PageInfo;					// ÈÎÎñÊı¾İÔ­Ê¼ĞÅÏ¢
-		BOOL		m_bUpdate;					// ÈÎÎñÊı¾İÊÇ·ñÒÑ±»¸üĞÂ
+		MEMO_INFO	m_MemoInfo[MEMO_MAX_LINE];	// the parsed data shown on the mission screen
+		NET_MISPAGE m_PageInfo;					// the original mission data information
+		BOOL		m_bUpdate;					// whether the mission data has been updated
 
 		// Add by lark.li 20080721 begin
 		int	m_SelMem;
@@ -216,7 +216,7 @@ namespace GUI
 		void	_SetScrollRange();
 		void	_Copy( const CMemoEx& rhs );
 		void	_SetSelf();
-		void	_CheckScroll();			// ¼ì²éÊÇ·ñÏÔÊ¾¹ö¶¯Öá
+		void	_CheckScroll();			// checks whether the scroll bar is shown
 		void	ParseMisPage();
 		BOOL	ParseScript( char* pszTemp, USHORT& sNumLine, USHORT& sRow, USHORT& sCom, USHORT sStartCom, USHORT sMaxCom, DWORD dwDefColor, MEMO_INFO* pInfo, USHORT sMaxInfo );
 		BOOL	SelPrizeItem( int nxPos, int nyPos, DWORD dwKey );
@@ -225,14 +225,14 @@ namespace GUI
 		int SelMemInfo(int x, int y, DWORD key);
 		// End
 	private:
-		DWORD	_color;				// ×ÖÌåÑÕÉ«
+		DWORD	_color;				// font colour
 		CScroll*	_pScroll;
-		int		_nFirst, _nLast;	// ÏÔÊ¾µÄµÚÒ»ĞĞºÍ×îºóÒ»ĞĞ
-		int		_nPageShowNum ;		// Ò»Ò³×î¶à¿ÉÒÔÏÔÊ¾µÄĞĞÊı
-		int		_nLeftMargin;	// ÓëÖÜÎ§±ß¿òµÄ¾àÀë
-		int		_nTopMargin;	// ÓëÖÜÎ§±ß¿òµÄ¾àÀë
-		int		_nRightMargin;	// ÓëÖÜÎ§±ß¿òµÄ¾àÀë
-		int		_nBottomMargin;	// ÓëÖÜÎ§±ß¿òµÄ¾àÀë
+		int		_nFirst, _nLast;	// the first row and the last row displayed
+		int		_nPageShowNum ;		// maximum number of rows a page can show
+		int		_nLeftMargin;	// distance to the surrounding border
+		int		_nTopMargin;	// distance to the surrounding border
+		int		_nRightMargin;	// distance to the surrounding border
+		int		_nBottomMargin;	// distance to the surrounding border
 		int		_nRowHeight;
 		int     _nTitleHeight;
 		int     _nIconHeight;
@@ -240,7 +240,7 @@ namespace GUI
 		int     _nRowNum; 
 		int     _nPhraseNum;
 
-		// ¼ÇÂ¼½±ÀøÎïÆ·Ñ¡ÔñÏî
+		// records the reward item selection
 		BYTE	m_bySelPrize;
 		CGuiPic* m_pPrizePic;
 		CGuiPic* m_pPrizeSelPic;
@@ -259,25 +259,25 @@ namespace GUI
 
 	enum MEMO_COL_TYPE
 	{
-		COL_ICON			= 0, // Í¼±ê
-		COL_TEXT			= 1, // ÎÄ±¾
+		COL_ICON			= 0, // icon
+		COL_TEXT			= 1, // text
 	};
 
 	enum MEMO_COLOR_TYPE
 	{
-		TEXT_COLOR_WIGHT	= 0, // °×É«
-		TEXT_COLOR_BLACK	= 1, // ºÚÉ«
-		TEXT_COLOR_RED		= 2, // ºìÉ«
-		TEXT_COLOR_GREEN	= 3, // ÂÌÉ«
-		TEXT_COLOR_BLUE		= 4, // À¶É«
-		TEXT_COLOR_GRAY		= 5, // »ÒÉ«
-		TEXT_COLOR_PURPLE	= 6, // ×ÏÉ«
+		TEXT_COLOR_WIGHT	= 0, // white
+		TEXT_COLOR_BLACK	= 1, // black
+		TEXT_COLOR_RED		= 2, // red
+		TEXT_COLOR_GREEN	= 3, // green
+		TEXT_COLOR_BLUE		= 4, // blue
+		TEXT_COLOR_GRAY		= 5, // grey
+		TEXT_COLOR_PURPLE	= 6, // purple
 	};
 	
 	enum MEMO_FONT_TYPE
 	{
-		TEXT_FONT_9			= 0, // 9ºÅ×Ö
-		TEXT_FONT_10		= 1, // 10ºÅ×Ö
+		TEXT_FONT_9			= 0, // size 9 font
+		TEXT_FONT_10		= 1, // size 10 font
 	};
 
 	class CRichMemo : public CCompent
@@ -295,14 +295,14 @@ namespace GUI
 		virtual bool MouseRun( int x, int y, DWORD key );
 		virtual bool IsHandleMouse() { return true; }
 	
-		// ¹ö¶¯Ìõ´¦Àí
+		// scroll bar handling
 		CScroll* GetScroll() { return m_pScroll; }
 		bool	MouseScroll( int nScroll );
 
-		// ¹ö¶¯Ìõ¹ö¶¯ÊÂ¼ş´¦Àí
+		// scroll bar scrolling event handling
 		void	OnScrollChange();
 
-		// ÉèÖÃ¿Ø¼şÏÔÊ¾ĞÅÏ¢½Ó¿Ú		
+		// interface for setting the control display information
 		void	Clear();
 		void	AddText( const char szTitle[], const char szText[], BYTE byColType, BYTE byFontType );
 		void	SetClipRect( const RECT& rect ) { m_ShowRect = rect; }
@@ -314,38 +314,38 @@ namespace GUI
 		void	AutoScroll();		
 
 	protected:
-		// ÏÔÊ¾ÁĞĞÅÏ¢½á¹¹
+		// column display information structure
 		struct MEMO_COLINFO
 		{
 			std::string  strDesp;
 			CGraph* pIcon;
 			BYTE	byType;
-			DWORD	dwColor;	// ×ÖÌåÑÕÉ«
+			DWORD	dwColor;	// font colour
 			USHORT  sxPos;
 		};
 
-		// Ã¿ĞĞÁĞĞÅÏ¢Êı×é
+		// array of per-row column information
 		typedef std::vector<MEMO_COLINFO> MEMO_COLINFO_ARRAY;
 
-		// ĞĞĞÅÏ¢ÏÔÊ¾½á¹¹
+		// row information display structure
 		struct MEMO_LINE_INFO
 		{
 			MEMO_COLINFO_ARRAY ColInfoArray;
-			BYTE	byFontType; // ×ÖÌåÀàĞÍ
-			USHORT  sFontWidth;	// ÏÔÊ¾×ÖÌå¿í¸ß
+			BYTE	byFontType; // font type
+			USHORT  sFontWidth;	// displayed font width and height
 			USHORT	sFontHeight;
-			USHORT  sHeight;	// ÏÔÊ¾ĞĞ¸ß¶È
+			USHORT  sHeight;	// displayed row height
 		};
 
-		// ËùÓĞĞèÒªÏÔÊ¾µÄĞĞĞÅÏ¢ÁĞ±í
+		// the list of all row information that needs to be shown
 		typedef std::list<MEMO_LINE_INFO*> MEMO_LINEINFO_LIST;
 			MEMO_LINEINFO_LIST	m_LineList;
 
-		// Ã¿¸ö±êÌâ¶ÎĞÅÏ¢½á¹¹
+		// each title segment information structure
 		struct MEMO_SECTION_INFO
 		{
-			BYTE	byFontType; // ×ÖÌåÀàĞÍ
-			USHORT  sFontWidth;	// ÏÔÊ¾×ÖÌå¿í¸ß
+			BYTE	byFontType; // font type
+			USHORT  sFontWidth;	// displayed font width and height
 			USHORT	sFontHeight;
 			DWORD	dwColor;
 			std::string  strTitle;
@@ -363,14 +363,14 @@ namespace GUI
 		CGraph* GetImage( const char szImage[] );
 
 	private:
-		CImageList*	m_pImageList;   // ÏÔÊ¾Í¼ĞÎÁĞ±í
-		CScroll*	m_pScroll;		// ¹ö¶¯Ìõ¿Ø¼ş
-		RECT		m_ShowRect;		// ¿Ø¼şÓĞĞ§ÏÔÊ¾ÇøÓò²Ã¼ô
-		USHORT		m_sMaxLine;		// ×î´ó¿ÉÒÔÏÔÊ¾µÄ¶ÎĞÅÏ¢ÊıÁ¿
-		DWORD		m_dwTitleColor;	// ±êÌâ×ÖÌåµÄÑÕÉ«
-		BYTE		m_byTitleFont;	// ±êÌâ×ÖÌåµÄ´óĞ¡
-		BYTE		m_byDist;		// ÉèÖÃÃ¿ĞĞÏÔÊ¾¼ä¸ô¾àÀë
-		BOOL		m_bAutoScroll;  // ÊÇ·ñ×Ô¶¯¹öÆÁ
+		CImageList*	m_pImageList;   // the list of graphics to display
+		CScroll*	m_pScroll;		// scroll bar control
+		RECT		m_ShowRect;		// clipping of the control's valid display area
+		USHORT		m_sMaxLine;		// maximum number of segment information items that can be shown
+		DWORD		m_dwTitleColor;	// the title font colour
+		BYTE		m_byTitleFont;	// the title font size
+		BYTE		m_byDist;		// sets the spacing between displayed rows
+		BOOL		m_bAutoScroll;  // whether the screen scrolls automatically
 	};
 
 

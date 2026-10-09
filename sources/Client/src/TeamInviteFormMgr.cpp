@@ -1,4 +1,4 @@
-//------------------------------------------------------------------------
+ï»¿//------------------------------------------------------------------------
 //	2005.3.15	Arcol	create this file
 //	2005.4.5	Arcol	add the event handle function
 //------------------------------------------------------------------------
@@ -33,7 +33,7 @@ bool CTeamInviteFormMgr::AddInviteForm(DWORD id,string inviterName)
 	if (!frmAcceptGroup)
 	{
 		//delete node;
-		SAFE_DELETE(node); // UIµ±»ú´¦Àí
+		SAFE_DELETE(node); // UI freeze handling
 		return false;
 	}
 	node->id=id;
@@ -87,7 +87,7 @@ bool CTeamInviteFormMgr::RemoveInviteForm(DWORD id)
 	dupe.Release(node->pForm);
 	m_FormLink.erase(Iter);
 	//delete node;
-	SAFE_DELETE(node); // UIµ±»ú´¦Àí
+	SAFE_DELETE(node); // UI freeze handling
 	return true;
 }
 

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "lwHeader.h"
 #include "lwStdInc.h"
@@ -12,12 +12,12 @@
 LW_BEGIN
 
 // remarks
-// 1¡£¾²Ì¬shader¶¨ÒåºÍÉùÃ÷
-//    Îï¼ş³õÊ¼»¯µÄÊ±ºò¶ÔdeclºÍshader¸³Öµ£¬ÖĞ¼ä²»×÷¹âÕÕ£¬¶¯»­µÄÇĞ»»
-// 2¡£¶¯Ì¬shader¶¨ÒåºÍÉùÃ÷
-//    Îï¼ş³õÊ¼»¯µÄÊ±ºò¶Ôdecl¸³Öµ£¬äÖÈ¾Ê±ºò¸ù¾İ¶¯»­ÀàĞÍ£¬¹âÕÕÀàĞÍÔÚ
-//    lwShaderDeclMgrÖĞ×ö¶¯Ì¬Æ¥Åä²éÕÒ£¨²éÕÒËã·¨¶ÔĞ§ÂÊÓĞÒªÇó£©
-// 3¡£×Ô¶¨ÒåShader¶¨ÒåºÍÉùÃ÷£¨user-defined shader£©
+// 1. static shader declaration and definition
+//    decl and shader are assigned when the object is initialised; no lighting or animation switch happens in between
+// 2. dynamic shader declaration and definition
+//    decl is assigned when the object is initialised; at render time the match is looked up dynamically
+//    in lwShaderDeclMgr based on the animation and lighting types (the lookup algorithm has efficiency requirements)
+// 3. user-defined shader declaration and definition
 
 
 class lwRenderCtrlAgent : public lwIRenderCtrlAgent

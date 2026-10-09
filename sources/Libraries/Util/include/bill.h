@@ -1,4 +1,4 @@
-
+ï»¿
 #ifndef BILL_H_
 #define BILL_H_
 
@@ -9,7 +9,7 @@ public:
     CPAI();
     ~CPAI() {}
 
-    int Login(char const* name, char const* pwd);       //  ÐÞ¸Ä·µ»ØÖµ£¬10000³É¹¦£¬10001Ê§°Ü£¬10004Á¬½ÓÊ§°Ü
+    int Login(char const* name, char const* pwd);       // the return value is modified: 10000 success, 10001 failure, 10004 connection failure
     std::string GetPassport();
 
     std::string LastError();    //  add by jampe

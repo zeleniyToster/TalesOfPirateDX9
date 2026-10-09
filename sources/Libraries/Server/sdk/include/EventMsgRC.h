@@ -1,8 +1,8 @@
-//Application=0xFFF)
+ï»¿//Application=0xFFF)
 //LanguageNames=(English=0x1:MSG00001)
 //LanguageNames=(British=0x809:MSG00809)
 //LanguageNames=(French=0x40c:MSG0040c)
-//·ÖÀà¶¨Òå
+// category definitions
 #define CAT_STARTING 1
 //
 //  Values are 32 bit values layed out as follows:
@@ -45,7 +45,7 @@
 //
 // MessageText:
 //
-//  ·şÎñÆô¶¯
+//  service start
 //
 
 
@@ -55,7 +55,7 @@
 //
 // MessageText:
 //
-//  ·şÎñÔËĞĞ
+//  service run
 //
 
 
@@ -65,11 +65,11 @@
 //
 // MessageText:
 //
-//  ·şÎñÍ£Ö¹
+//  service stop
 //
 
 
-//ÊÂ¼ş¶¨Òå
+// event definitions
 //
 // MessageId: EVT_SUCCESS
 //

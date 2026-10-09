@@ -1,4 +1,4 @@
-// Script.cpp Created by knight-gongjian 2004.12.1.
+ï»¿// Script.cpp Created by knight-gongjian 2004.12.1.
 //---------------------------------------------------------
 #include "stdafx.h"
 #include "Script.h"
@@ -76,7 +76,7 @@ void ReloadLuaSdk()
 	luaL_dofile( g_pLuaState, GetResPath("script/MisScript/NpcDefine.lua") );
 	luaL_dofile( g_pLuaState, GetResPath("script/MisScript/templatesdk.lua") );
 
-	// ÓÉupdateall»á´¥·¢ai_sdk¸üÐÂ
+	// updateall triggers the ai_sdk update
 	luaL_dofile( g_pLuaState, GetResPath("script/birth/birth_conf.lua"));
 	luaL_dofile( g_pLuaState, GetResPath("script/ai/ai.lua") );
 	luaL_dofile( g_pLuaState, GetResPath("script/calculate/skilleffect.lua"));
@@ -84,7 +84,7 @@ void ReloadLuaSdk()
 
 void ReloadNpcScript()
 {
-	// ×°ÔØNPCÈÎÎñÊý¾ÝÐÅÏ¢
+	// loads the NPC mission data information
 	luaL_dofile( g_pLuaState, GetResPath("script/MisScript/MissionScript01.lua") );
 	luaL_dofile( g_pLuaState, GetResPath("script/MisScript/MissionScript02.lua") );
 	luaL_dofile( g_pLuaState, GetResPath("script/MisScript/MissionScript03.lua") );
@@ -97,7 +97,7 @@ void ReloadNpcScript()
 	luaL_dofile( g_pLuaState, GetResPath("script/MisScript/EudemonScript.lua") );
 	luaL_dofile( g_pLuaState, GetResPath("script/MisScript/CharBornScript.lua") );
 
-	// ×°ÔØNPC¶Ô»°Êý¾ÝÐÅÏ¢
+	// loads the NPC dialog data information
 	luaL_dofile( g_pLuaState, GetResPath("script/MisScript/NpcScript01.lua") );
 	luaL_dofile( g_pLuaState, GetResPath("script/MisScript/NpcScript02.lua") );
 	luaL_dofile( g_pLuaState, GetResPath("script/MisScript/NpcScript03.lua") );

@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "Tools.h"
 #include <strstream> 
 
@@ -45,7 +45,7 @@ string ConvertNumToChinese( int num )
 	
 	char nChar = 0;
 	int nZeroNum = 0;				
-	bool IsBigMark = false;		// ÓÃÓÚÍò£¬ÒÚµÄÌØÊâ´¦Àí£¬ÔÚÈ«ÊÇÁãÊ±
+	bool IsBigMark = false;		// special handling for ten thousand and a hundred million, when every digit is zero
 	int nHigh = 0;
 	int nLen = 0;
 	while( *pszPos )
@@ -53,7 +53,7 @@ string ConvertNumToChinese( int num )
 		nChar = *pszPos++;
 		nLen = (int)strlen(pszPos);
 
-		// ÖÐ²¿µÄ¶à¸öÁãºÏ²¢ÎªÒ»¸öÁã,ÇÒÎ²²¿µÄÁãÒ²²»ÏÔÊ¾
+		// several zeroes in the middle are merged into one, and the trailing zeroes are not shown either
 		if( nChar=='0' )
 		{
 			nZeroNum++;
@@ -67,7 +67,7 @@ string ConvertNumToChinese( int num )
 		else
 		{
 			IsBigMark = true;
-			if( nZeroNum>0 )    // ´ÓÁã¿ªÊ¼ºó,Åöµ½µÄµÚÒ»¸ö·ÇÁã
+			if( nZeroNum>0 )    // after starting from zero, the first non-zero digit met
 			{
 				nZeroNum = 0;
 				str << g_oLangRec.GetString(421);
@@ -86,7 +86,7 @@ string ConvertNumToChinese( int num )
 				}
 				str << szHigh[nHigh];
 
-				// Íò£¬ÒÚµÄÌØÊâ´¦Àí
+				// special handling for ten thousand and a hundred million
 				if( nHigh==3 || nHigh==7 )
 				{
 					IsBigMark = false;
@@ -96,7 +96,7 @@ string ConvertNumToChinese( int num )
 	}
     str << ends;
 
-	// Í·ÎªÒ»Ê®,Ê¡ÂÔÒ»
+	// the tens are written ä¸€å in formal Chinese numerals, so the leading ä¸€ is omitted
 	string rv = str.str();
 	if( rv.length()>=4 && rv.substr( 0, 4 ) == g_oLangRec.GetString(437) )
 		return rv.substr( 2, rv.length() );

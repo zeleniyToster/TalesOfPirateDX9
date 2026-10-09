@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "Scene.h"
 #include "UICursor.h"
 #include "scenelight.h"
@@ -29,7 +29,7 @@ public:
 	virtual void	SetScreen( int w, int h, bool IsFull );
 	static void		SetAttackChaColor( BYTE r, BYTE g, BYTE b );
 
-    virtual void    LoadingCall();          // ÔÚ×°ÔØloadingºó,Ë¢ÐÂ
+    virtual void    LoadingCall();          // refreshed after loading finishes
 
 public:
 	CWorldScene(stSceneInitParam& param);
@@ -40,7 +40,7 @@ public:
 
     xShipMgr*		GetShipMgr() { return _pShipMgr; }
 
-    CCharacter*     HitSelectCharacter( int nScrX, int nScrY, int nSelect=0 );			// nSelectÎªÑ¡Ôñ·¶Î§,²Î¿´CCharacter.h-eSelectCha
+    CCharacter*     HitSelectCharacter( int nScrX, int nScrY, int nSelect=0 );			// nSelect is the selection range; see CCharacter.h-eSelectCha
 
 	CMouseDown&		GetMouseDown()			{ return _cMouseDown;		}
 

@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include ".\chatrecord.h"
 
 using namespace std;
@@ -26,7 +26,7 @@ bool CChatRecord::Save(const string name, DWORD number, const string chatData)
 	CreateDirectory("chats",NULL);
 	CreateDirectory(folder,NULL);
 	ofstream chatLog;
-	// ¸Ä±ä±£´æÁÄÌì¼ÇÂ¼·½Ê½  modify by ning.yan  20080725 Begin
+	// changes how the chat log is stored  modify by ning.yan  20080725 Begin
 	//int i=1;
 	//for (;i<1000;i++)
 	//{
@@ -42,7 +42,7 @@ bool CChatRecord::Save(const string name, DWORD number, const string chatData)
 	//}
 	sprintf(buf,"\\%s.txt",name.c_str());
 	m_strPath=folder+string(buf);
-	chatLog.open(m_strPath.c_str(),ios_base::app); // ÒÔ¸½¼ÓÄ£Ê½´ò¿ªÎÄ¼þ£¬ÐÂ½¨ÎÄ¼þ»ò½«Êý¾ÝÐ´µ½ÎÄ¼þÎ²²¿
+	chatLog.open(m_strPath.c_str(),ios_base::app); // opens the file in append mode, creating it or writing the data at the end of the file
 	// End
 	chatLog<<chatData.c_str();
 	chatLog.close();

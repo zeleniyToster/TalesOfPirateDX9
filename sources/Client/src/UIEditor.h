@@ -1,7 +1,7 @@
-//----------------------------------------------------------------------
-// Ãû³Æ:±à¼­Æ÷½çÃæ
-// ×÷Õß:lh 2004-08-21
-// ×îºóÐÞ¸ÄÈÕÆÚ:2004-10-09
+ï»¿//----------------------------------------------------------------------
+// Name: editor screen
+// Author: lh 2004-08-21
+// Last modified date: 2004-10-09
 //----------------------------------------------------------------------
 
 #pragma once
@@ -20,7 +20,7 @@ class CEditor : public CUIInterface
 {
 public:
     CEditor();
-    bool Init();			// ÓÃÓÚ³õÊ¼ÄÚ²¿Ö¸Õë
+    bool Init();			// used to initialise internal pointers
 
     bool Error(const char* strInfo, const char* strFormName, const char* strCompentName) {
         LG("error", strInfo, strFormName, strCompentName );

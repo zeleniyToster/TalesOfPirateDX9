@@ -1,4 +1,4 @@
-//=============================================================================
+Ôªø//=============================================================================
 // FileName: Event.h
 // Creater: ZhangXuedong
 // Date: 2005.10.11
@@ -42,11 +42,11 @@ public:
 protected:
 
 private:
-	dbc::uShort	m_usID;			// ±‡∫≈
-	dbc::uShort	m_usTouchType;	// ¥•∑¢¿‡–Õ
-	dbc::uShort	m_usExecType;	// ÷¥––¿‡–Õ
+	dbc::uShort	m_usID;			// number
+	dbc::uShort	m_usTouchType;	// trigger type
+	dbc::uShort	m_usExecType;	// execute type
 	void		*m_pTableRec;
-	dbc::Char	m_szName[defMAX_EVENT_NAME_LEN];		// √˚≥∆
+	dbc::Char	m_szName[defMAX_EVENT_NAME_LEN];		// name
 
 };
 

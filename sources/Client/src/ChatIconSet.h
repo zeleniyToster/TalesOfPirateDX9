@@ -1,4 +1,4 @@
-#pragma  once
+ï»¿#pragma  once
 
 #include "TableData.h"
 
@@ -17,7 +17,7 @@ public:
 	int		nSmallX;
 	int		nSmallY;
 
-    char	szSmallOff[16];		// ÀëÏßÊ±µÄÍ¼±ê
+    char	szSmallOff[16];		// icon shown while offline
 	int		nSmallOffX;
 	int		nSmallOffY;
 
@@ -43,7 +43,7 @@ public:
     }
 
 protected:
-    static CChatIconSet* _Instance; // Ïàµ±ÓÚµ¥¼ü, °Ñ×Ô¼º¼Ç×¡
+    static CChatIconSet* _Instance; // like a single key, remembers itself
 
     virtual CRawDataInfo* _CreateRawDataArray(int nCnt)
     {

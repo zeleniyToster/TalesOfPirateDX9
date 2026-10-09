@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "uicloneform.h"
 #include "uiform.h"
 #include "uitemplete.h"
@@ -62,7 +62,7 @@ bool CCloneForm::Release( CForm* p )
 
 			if( i!=_nCount )
 			{
-				// ²»ÊÇ×îºóÒ»¸ö£¬Òª½»»»Á½¸ö±íµ¥
+				// not the last one, the two forms have to be swapped
 				CForm* tmp = _vfrm[i];
 				_vfrm[i] = _vfrm[_nCount];
 				_vfrm[_nCount] = tmp;

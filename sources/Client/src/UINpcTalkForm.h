@@ -1,15 +1,15 @@
-#pragma once
+Ôªø#pragma once
 #include "UIGlobalVar.h"
 #include "NetProtocol.h"
 
 namespace GUI
 {
 
-// ”ÎNPCΩªÃ∏
+// talking to an NPC
 class CNpcTalkMgr : public CUIInterface
 {
 public:
-	void			ShowFuncPage( BYTE byFuncPage , BYTE byCount,BYTE byMisNum ,const NET_FUNCPAGE& FuncArray, DWORD dwNpcID ) ;      //œ‘ æ NPCπ¶ƒ‹“≥
+	void			ShowFuncPage( BYTE byFuncPage , BYTE byCount,BYTE byMisNum ,const NET_FUNCPAGE& FuncArray, DWORD dwNpcID ) ;      //shows the NPC function page
 
 	void			AddHelpInfo( const NET_HELPINFO &Info );
 	void			ShowTalkPage( const char *content, BYTE command, DWORD npcID );
@@ -37,7 +37,7 @@ private:
 	CMemo*		memCtrl;
 	
 private:
-	static BYTE		_byTalkStyle;		// Ωª“◊µƒ¿‡–Õ
+	static BYTE		_byTalkStyle;		// the type of trade
 
 	bool		m_bIsNpcTalk;
 

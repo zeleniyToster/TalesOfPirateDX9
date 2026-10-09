@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "TableData.h"
 
@@ -12,7 +12,7 @@ public:
 	{
         for(int i=0; i<7; i++)  sRealPoseID[i] = 0;
     }
-    short sRealPoseID[7]; // 5ÖÖ¶¯×÷ÀàÐÍ, ¿ÕÊÖ, µ¥ÊÖÎäÆ÷, Ë«ÊÖÎäÆ÷, ¹­¼ý.....
+    short sRealPoseID[7]; // 5 action types: bare handed, one handed weapon, two handed weapon, bow and arrow, and so on
 };
 
 
@@ -32,7 +32,7 @@ public:
 
 protected:
 
-	static CPoseSet* _Instance; // Ïàµ±ÓÚµ¥¼ü, °Ñ×Ô¼º¼Ç×¡
+	static CPoseSet* _Instance; // like a single key, remembers itself
    
 	virtual CRawDataInfo* _CreateRawDataArray(int nCnt)
 	{

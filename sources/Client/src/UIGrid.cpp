@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "uigrid.h"
 
 using namespace GUI;
@@ -91,7 +91,7 @@ void CGrid::_Clear()
 	for( memory::iterator it = _memory.begin(); it!=_memory.end(); it++ )
 	{
 		//delete *it;
-		SAFE_DELETE(*it); // UIµ±»ú´¦Àí
+		SAFE_DELETE(*it); // UI freeze handling
 	}
 
 	_memory.clear();
@@ -101,7 +101,7 @@ CGrid::~CGrid(void)
 {
 	_Clear();
 	//delete _pImage;
-	SAFE_DELETE(_pImage); // UIµ±»ú´¦Àí
+	SAFE_DELETE(_pImage); // UI freeze handling
 }
 
 void CGrid::_SetSelf()
@@ -166,11 +166,11 @@ void CGrid::Refresh()
 
 	_pImage->Refresh();
 
-	// _pSizeImgÔÚÓÒÏÂ½Ç
+	// _pSizeImg is at the bottom right
 	_pSizeImg->SetPos( GetWidth()-_pSizeImg->GetWidth(), GetHeight()-_pSizeImg->GetHeight() );
 	_pSizeImg->Refresh();
 
-	// ÏòÇ°°´Å¥£¬ÎÄ×Ö£¬ÏòºóÇ°°´Å¥ÒÀ´ÎÔÚ×óÏÂ½Ç
+	// the forward button, the text and the backward button are in turn at the bottom left
 	_pPriorPage->SetPos( _nMargin, GetHeight()-_pPriorPage->GetHeight()-_nMargin );
 	_pPriorPage->Refresh();
 
@@ -218,7 +218,7 @@ bool CGrid::MouseRun( int x, int y, DWORD key )
 
 		if( _pSizeImg->MouseRun(x,y,key) ) return true;
 
-		// ¼ÆËãÊó±êµã»÷µÃµ½µÄÑ¡Ôñ
+		// computes the selection from the mouse click
 		int col = ( x - _nStartX ) / _nTotalW;
 		int row = ( y - _nStartY ) / _nTotalH;
 		if( col < _nColNum )

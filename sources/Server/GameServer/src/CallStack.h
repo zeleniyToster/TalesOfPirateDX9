@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #ifndef __CALLSTACK_H__
 #define __CALLSTACK_H__
@@ -13,7 +13,7 @@ public:
 	MyStackWalker(DWORD dwProcessId, HANDLE hProcess) : StackWalker(dwProcessId, hProcess) {}
 	virtual void OnOutput(LPCSTR szText) 
 	{
-		//	¼ÆËãÎÄ¼þÃû×Ö¡£
+		//	Builds the file name.
 		char sName[24];
 
 		sprintf( sName, "c:\\exception%d.txt", GetCurrentThreadId() );

@@ -1,4 +1,4 @@
-//================================================================
+ï»¿//================================================================
 // It must be permitted by Dabo.Zhang that this program is used for
 // any purpose in any situation.
 // Copyright (C) Dabo.Zhang 2000-2003
@@ -8,10 +8,10 @@
 //=================================================================
 #pragma once
 
-#ifndef USING_TAO			//Ê¹ÓÃWin32»ù±¾Platform SDK
+#ifndef USING_TAO			// use the base Win32 Platform SDK
 #include <winsock2.h>	
 #include <windows.h>
-	//È·±£µ÷ÓÃĞÂµÄWinSock2.2°æ±¾
+	// pulls in WinSock 2.2 (the 2.2 revision)
 #else
 #include "TAOSpecial.h"
 #endif
@@ -93,9 +93,9 @@ public:
 	
 	void* volatile	m_appinfo{};
 
-	volatile uLong		m_cmdNum;					// ¼ÇÂ¼Ò»ÃëÖÓÄÚÃüÁîµÄ¸öÊı£¬·ÖÎöÍøÂç×´¿ö	
-	volatile uLong		m_lashTick;					// ÉÏÒ»´Î¼ÇÂ¼Ê±¼ä
-	volatile uLong		m_waringNum;				// ¼ÇÂ¼Ò»ÃëÖÓÄÚÃüÁîµÄ¸öÊı£¬·ÖÎöÍøÂç×´¿ö	
+	volatile uLong		m_cmdNum;					// commands seen per second, used for network analysis
+	volatile uLong		m_lashTick;					// tick of the previous sample
+	volatile uLong		m_waringNum;				// commands seen per second, used for network analysis
 
 	short				m_gsCheck;
 

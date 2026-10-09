@@ -1,4 +1,4 @@
-#ifndef MPStringUtil_H
+ï»¿#ifndef MPStringUtil_H
 #define MPStringUtil_H
 
 #include "MPEffPrerequisites.h"
@@ -10,26 +10,26 @@ public:
 	typedef std::stringstream StrStreamType;
 
 public:
-	/** ÒÆÈ¥ÈÎºÎ¿Õ¸ñ×Ö·û, ±ê×¼¿Õ¸ñ°üÀ¨¿Õ¸ñ»òTabsbeµÈµÈ.
+	/** Removes any whitespace characters; the standard set is space, tab and so on.
 	@remarks
-	¿ÉÒÔÖ¸¶¨ÊÇ·ñÒÆÈ¥Ç°¶Ë»òºóÃæµÄ¿Õ¸ñ£¬Ä¬ÈÏ¶¼ÒÆÈ¥.
+	Whether the leading or trailing whitespace is removed can be specified; by default both are.
 	*/
 	static void trim( String& str, bool left = true, bool right = true );
 
-	/** ·µ»ØMPStringVector£¬°üÀ¨ÔÚ·Ö¸ô·ûÖ®¼äµÄËùÓĞ×Ó´®.
-	@param 
-	delims ·Ö¸ô·ûÁĞ±í
-	@param 
-	maxSplits Ö´ĞĞ·Ö¸ôµÄ×î´ó´ÎÊı¡£Èç¹ûÎª0ÔòÎŞÏŞ´Î·Ö¸ô£¬Èç¹û·Ö¸ô´ÎÊı´óÓÚ0
-	Ôò·Ö¸ôµ½µÄ×Ó´®ÊıÁ¿´ïµ½Õâ¸öÊıÎªÖ¹.
+	/** Returns an MPStringVector holding every substring between the delimiters.
+	@param
+	delims list of delimiters
+	@param
+	maxSplits maximum number of splits. 0 splits indefinitely; when the count is greater than 0
+	the split stops once that many substrings have been produced.
 	*/
 	static MPStringVector split( const std::string& str, const std::string& delims = "\t\n ", unsigned int maxSplits = 0);
 
-	/** ½«×Ö·û´®ÖĞµÄ×Ö·ûÈ«²¿×ª»»³ÉĞ¡Ğ´.
+	/** Converts every character of the string to lower case.
 	*/
 	static void toLowerCase( String& str );
 
-	/** ½«×Ö·û´®ÖĞµÄ×Ö·ûÈ«²¿×ª»»³É´óĞ´Ğ´.
+	/** Converts every character of the string to upper case.
 	*/
 	static void toUpperCase( String& str );
 

@@ -1,30 +1,30 @@
-//----------------------------------------------------------------------
-// Ãû³Æ:ÓÎÏ·ÊÂ¼ş
-// ×÷Õß:lh 2004-05-26
-// ÓÃÍ¾:ÓÃÓÚÏìÓ¦ÊÂ¼ş
-// ÊµÏÖ:ÊÂ¼ş±ØĞëÒÀ¸½ÓÚ½ÇÉ«»òµÀ¾ß´æÔÚ
+ï»¿//----------------------------------------------------------------------
+// Name: game event
+// Author: lh 2004-05-26
+// Purpose: used to respond to events
+// Implementation: an event must exist attached to a character or an item
 //----------------------------------------------------------------------
 #pragma once
 
 class CSkillRecord;
 class CCharacter;
 
-// Ğ¡¹¤¾ß,ÓÃÓÚÅĞ¶Ï¹¥»÷µ¥ÌåµÄ¼¼ÄÜÊÇ·ñ¿ÉÊ¹ÓÃ
+// a small helper that decides whether a single target skill can be used
 class CIsSkillUse
 {
 public:
 	CIsSkillUse();
 
-	// ½öÅĞ¶Ï¼¼ÄÜÊÇ·ñ¿ÉÓÃ
+	// only decides whether the skill is available
 	bool		IsValid( CSkillRecord* pSkill, CCharacter* pSelf );
 
-	// ÓÃÓÚ×ÛºÏÅĞ¶ÏÊÇ·ñ¿ÉÓÃ
+	// used for the combined availability decision
 	bool		IsUse( CSkillRecord* pSkill, CCharacter* pSelf, CCharacter* pTarget );
 
-	// ÅĞ¶Ï¼¼ÄÜÊÇ·ñ¿É¶ÔÄ³Íæ¼ÒÊ¹ÓÃ
+	// decides whether the skill can be used on a given player
 	bool		IsAttack( CSkillRecord* pSkill, CCharacter* pSelf, CCharacter* pTarget );		
 
-	// Èç¹û²»ÄÜÊ¹ÓÃ,µÃµ½´íÎóÔ­Òò
+	// if it cannot be used, gives the reason
 	const char*	GetError();	
 
 private:

@@ -1,6 +1,6 @@
-
-// ÓëÒ»¸öÒş²ØµÄWindow Edit¿Ø¼ş°ó¶¨À´´¦ÀíÎÄ×ÖÊäÈë
-// ÒÀ¿¿windows¿Ø¼şÀ´Íê³ÉÎÄ×ÖµÄÌí¼Ó,É¾³ı,ÍË¸ñ,¼ôÇĞ,Õ³Ìù,¹â±êÎ»ÖÃ¼ÆËãµÈ·±ËöµÄ´¦Àí
+ï»¿
+// bound to a hidden Window Edit control to handle text input
+// relies on the windows control to deal with the tedious handling of adding, deleting, backspacing, cutting, pasting text and computing the cursor position
 class CInputBox 
 {
 
@@ -18,26 +18,26 @@ public:
 	void	HandleWindowMsg(DWORD dwMsgType, DWORD dwParam1, DWORD dwParam2);
 	
 	
-	void	SetAccountMode(BOOL bAccount);		// ÉèÖÃÎªÕÊºÅÊäÈëÄ£Ê½, ÆÁ±Îµô¿Õ¸ñ, ¶ººÅµÈ
-	void	SetPasswordMode(BOOL bPassword);	// ÉèÖÃÎªÃÜÂëÄ£Ê½, µÃµ½*ºÅ×Ö·û´®
-	void	SetDigitalMode(BOOL bDigitalMode);	// ÉèÖÃÎªÊı×ÖÄ£Ê½, Ö»½ÓÊÜÊı×ÖÊäÈë
-	void	SetMaxNum(int nMaxNum);				// ÉèÖÃ×î´óÊäÈëµÄÎÄ×ÖÊıÁ¿
-	void	SetMultiMode(BOOL bMultiLine);		// ÉèÖÃÎª¶àĞĞÄ£Ê½	
+	void	SetAccountMode(BOOL bAccount);		// sets account entry mode, blocking spaces, commas and so on
+	void	SetPasswordMode(BOOL bPassword);	// sets password mode, producing a string of '*'
+	void	SetDigitalMode(BOOL bDigitalMode);	// sets numeric mode, accepting only digits
+	void	SetMaxNum(int nMaxNum);				// sets the maximum number of characters
+	void	SetMultiMode(BOOL bMultiLine);		// sets multi-line mode
 	void	SetSel(int nStartChar, int nEndChar);
 
 
-	void	SetCursorTail();					// ½«¹â±êÉèÖÃµ½ÎÄ×ÖÎ²²¿
+	void	SetCursorTail();					// moves the cursor to the end of the text
 	char*	RefreshText();
 	int		RefreshCursor();
 	void	ClearText();
 	char*	SetText(const char *pszText);
-	void	ReplaceSel(const char *pszRplText, BOOL bCanUndo = TRUE);	//Ìæ»»µ±Ç°Ñ¡ÔñÄÚÈİ - added by Arcol
+	void	ReplaceSel(const char *pszRplText, BOOL bCanUndo = TRUE);	//replaces the current selection - added by Arcol
 
 protected:
 
-	char	_szText[1024];	// ÊäÈëµÄÎÄ×Ö
-	int		_nCursorPos;	// ¹â±êÔÚÎÄ×Ö´®ÖĞµÄÎ»ÖÃ
-	BOOL	_bAccountMode;	// ÊÇ·ñÊÇÕÊºÅÄ£Ê½
+	char	_szText[1024];	// the entered text
+	int		_nCursorPos;	// the position of the cursor in the string
+	BOOL	_bAccountMode;	// whether it is in account mode
 	HWND	_hEdit;
 };
 
@@ -85,14 +85,14 @@ inline void CInputBox::SetSel(int nStartChar, int nEndChar)
 
 inline void CInputBox::HandleWindowMsg(DWORD dwMsgType, DWORD dwParam1, DWORD dwParam2)
 {
-	// °ÑÓÎÏ·´°¿ÚµÄwindowsµÄ¼üÅÌÊäÈë´«µİµ½edit¿Ø¼ş
+	// passes the windows keyboard input of the game window on to the edit control
 	// if(!(dwMsgType==WM_KEYDOWN || dwMsgType==WM_CHAR)) return;
 
 	// if(dwMsgType==WM_IME_NOTIFY || dwMsgType==WM_IME_STARTCOMPOSITION) return;
 
 	if(dwMsgType==WM_KEYDOWN || dwMsgType==WM_KEYUP)
 	{
-		if(dwParam1==VK_UP) return; // ÆÁ±ÎµôUP¼ü, ±ÜÃâ´¥·¢Edit¿Ø¼şµÄ¶ÔÓ¦²Ù×÷
+		if(dwParam1==VK_UP) return; // blocks the UP key so the corresponding operation of the Edit control is not triggered
 		// ::SendMessage(_hEdit, WM_KEYDOWN, dwParam1, dwParam2);
 	}
 	else if(dwMsgType==WM_CHAR)

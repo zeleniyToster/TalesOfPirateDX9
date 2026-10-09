@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "Scene.h"
 
@@ -38,7 +38,7 @@ namespace GUI
 class CSelectChaScene;
 
 /**
- * ÕªÒª£ºcopy from Jack
+ * æ‘˜è¦ï¼šcopy from Jack
  *
  * @author: Michael Chen
  * @date: 2005-04-26
@@ -96,8 +96,8 @@ public:
 };
 
 /**
- * ÕªÒª£º±¾ÀàÖ÷Òª´¦ÀíµÇÂ½Á÷³ÌÖĞµÄ´´½¨½ÇÉ«³¡¾°,°üÀ¨³¡¾°¶¯»­ºÍGUI±íµ¥.
- * ¡¡¡¡¡¡±¾Àà¼Ì³Ğ×ÔCGameSceneÀà.
+ * æ‘˜è¦ï¼šæœ¬ç±»ä¸»è¦å¤„ç†ç™»é™†æµç¨‹ä¸­çš„åˆ›å»ºè§’è‰²åœºæ™¯,åŒ…æ‹¬åœºæ™¯åŠ¨ç”»å’ŒGUIè¡¨å•.
+ * ã€€ã€€ã€€æœ¬ç±»ç»§æ‰¿è‡ªCGameSceneç±».
  *
  * @author: Michael Chen
  * @date: 2005-04-26
@@ -116,13 +116,13 @@ public:
         m_pkLastScene = pkLastScene; 
     }
 
-    virtual void        LoadingCall();          // ÔÚ×°ÔØloadingºó,Ë¢ĞÂ
+    virtual void        LoadingCall();          // refreshed after loading finishes
 
-	CForm*			frmRoleInfo;		// ¶¨Òå½ÇÉ«³õ²½½éÉÜ½çÃæ  ¸Ã½çÃæ½öÔÚ½øÈë´´½¨½ÇÉ«½çÃæÊ±ÏÔÊ¾
+	CForm*			frmRoleInfo;		// defines the character introduction screen; it is shown only when entering the character creation screen
 
 
 protected:
-    //³¡¾°Ïà¹Øº¯Êı
+    //scene related functions
     virtual void		_FrameMove(DWORD dwTimeParam);
     virtual void		_Render();
 
@@ -132,13 +132,13 @@ protected:
     virtual bool		_Init();	
 	virtual bool		_Clear();
 
-    //UIÏà¹Øº¯Êı
+    //UI related functions
     bool                _InitUI();
 
-    //äÖÈ¾UI 3DÄ£ĞÍ
+    //renders the UI 3D model
     void                RenderCha(int x,int y) const;
 
-    //»Øµôº¯Êı
+    //callback function
     static void     _ChaFoundFrmMouseEvent(CCompent *pSender, int nMsgType, 
                                            int x, int y, DWORD dwKey);
     static void     _ChaCityFrmMouseEvent(CCompent *pSender, int nMsgType, 
@@ -173,7 +173,7 @@ protected:
     {
         LEFT = -1, RIGHT = 1,
     };
-    // Âß¼­º¯Êı
+    // logic function
     void            ChangeFace(eDirectType enumDirect = LEFT);
     void            ChangeHair(eDirectType enumDirect = LEFT);
     void            ChangeCity(eDirectType enumDirect = LEFT) const;
@@ -217,19 +217,19 @@ private:
 	void			ShowCityZone(int index);
 
 private:
-    // 3D ³¡¾°
+    // 3D scene
     LoginScene_CreateCha m_LoginSceneCreateCha;
 
-    // UI ½çÃæ
+    // UI screen
 
-    // ½ÇÉ«´´½¨½çÃæ
+    // character creation screen
     static CForm*			    frmChaFound; 
     static CEdit*               edtName;
     static CMemo*               memChaDescribe;
     static CLabel*              labHair;
     static CLabel*              labFace;
 
-    // ½ÇÉ«³ÇÊĞÑ¡Ôñ½çÃæ
+    // character city selection screen
     static CForm*               frmChaCity;
     static CMemo*               memChaDescribe2;
     static CLabel*              labCity;
@@ -240,24 +240,24 @@ private:
     static int					m_nCurCityIndex;   
 	static bool					bShowDialog;
 
-    // ÍË³ö²Ëµ¥½çÃæ
+    // exit menu screen
     static CForm*               frmQuit;
 
-    static int  nHairTestCnt[MAX_HAIR_NUM];			//ËÄ¸öÈËÎïÍ··¢µÄ¿ªÊ¼±àºÅ
-    static int  nFaceTestCnt[MAX_FACE_NUM];			//ËÄ¸öÈËÎïÁ³ĞÎµÄ¿ªÊ¼±àºÅ
+    static int  nHairTestCnt[MAX_HAIR_NUM];			// start number of the hair for the four characters
+    static int  nFaceTestCnt[MAX_FACE_NUM];			// start number of the face shape for the four characters
     static int nSelHairNum[MAX_CHA_NUM];
     static int nSelFaceNum[MAX_CHA_NUM];
 
 
 private:
 
-    int m_nSelChaIndex;                     //Ñ¡ÖĞÈËÎïµÄ±àºÅ(Í¬Ê±×÷Îªµ±Ç°½ÇÉ«ÃèÊöĞòºÅ)
-    std::string m_sName;                         //½ÇÉ«Ãû
-    int m_nCurHairIndex;                    //µ±Ç°µÄ·¢ĞÍ±àºÅ
-    int m_nCurFaceIndex;                    //µ±Ç°µÄÁ³ĞÍ±àºÅ
-    int m_nChaRotate;                       //ÉÏ´ÎÈËÎïµÄÆ«ÒÆ½Ç¶È(-180~+180)						
+    int m_nSelChaIndex;                     // number of the selected character (also used as the current character description index)
+    std::string m_sName;                         // character name
+    int m_nCurHairIndex;                    // current hairstyle number
+    int m_nCurFaceIndex;                    // current face shape number
+    int m_nChaRotate;                       // offset angle of the previous character (-180~+180)
 
-    CSelectChaScene* m_pkLastScene;           //ÉÏÒ»¸ö³¡¾°
+    CSelectChaScene* m_pkLastScene;           // the previous scene
 
 	static const int CHA_NUM = 4;
 	CCharacter* m_pChaForUI[CHA_NUM];
@@ -278,11 +278,11 @@ private:
 
 	CImage*			imgChaView[ROLE_ALL_INFO_COUNT];
 
-	CForm*			frmLanchInfo;		// ¶¨ÒåÀ¶çù×ªÖ°Â·Ïß½éÉÜ½çÃæ    ¸Ã½çÃæ½öÔÚ½øÈë´´½¨½ÇÉ«½çÃæºóÑ¡ÔñÀ¶çùºóÏÔÊ¾
-	CForm*			frmAimiInfo;		// ¶¨Òå°¬Ã××ªÖ°Â·Ïß½éÉÜ½çÃæ    ¸Ã½çÃæ½öÔÚ½øÈë´´½¨½ÇÉ«½çÃæºóÑ¡Ôñ°¬Ã×ºóÏÔÊ¾
-	CForm*			frmFelierInfo;		// ¶¨Òå·ÆÀû¶ø×ªÖ°Â·Ïß½éÉÜ½çÃæ    ¸Ã½çÃæ½öÔÚ½øÈë´´½¨½ÇÉ«½çÃæºóÑ¡Ôñ·ÆÀû¶øºóÏÔÊ¾
-	CForm*			frmCaxiusInfo;		// ¶¨Òå¿¨Î÷Ë¹×ªÖ°Â·Ïß½éÉÜ½çÃæ    ¸Ã½çÃæ½öÔÚ½øÈë´´½¨½ÇÉ«½çÃæºóÑ¡Ôñ¿¨Î÷Ë¹ºóÏÔÊ¾
-	CForm*			frmRoleAllInfo;		// ¶¨Òå½ÇÉ«ÏêÏ¸½éÉÜ½çÃæ    ¸Ã½çÃæ½öÔÚ½øÈë¸÷½ÇÉ«×ªÖ°Â·Ïß½éÉÜ½çÃæºóµã»÷ÈÎÒâÒ»¸ö½ÇÉ«ºóÏÔÊ¾
+	CForm*			frmLanchInfo;		// defines the Blue transfer route introduction screen; it is shown only after Blue is selected in the character creation screen
+	CForm*			frmAimiInfo;		// defines the Amy transfer route introduction screen; it is shown only after Amy is selected in the character creation screen
+	CForm*			frmFelierInfo;		// defines the Philippe transfer route introduction screen; it is shown only after Philippe is selected in the character creation screen
+	CForm*			frmCaxiusInfo;		// defines the Cassis transfer route introduction screen; it is shown only after Cassis is selected in the character creation screen
+	CForm*			frmRoleAllInfo;		// defines the detailed character introduction screen; it is shown only after clicking any character on one of the transfer route introduction screens
 
 	CMemo*			memChaDescribeUp;
 	CMemo*			memChaDescribeDown;

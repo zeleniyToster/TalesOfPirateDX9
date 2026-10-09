@@ -1,4 +1,4 @@
-//
+ï»¿//
 #pragma once
 
 #include "lwHeader.h"
@@ -54,10 +54,10 @@ LW_BEGIN
 
 #define LW_RENDER_CTRL_PROC_NUM         512
 
-// Ã¿¸öPrimitive×î¶à¿ÉÒÔÓĞLW_MAX_OBJ_DUMMY_NUM¸öDummy£¬ÆäÖĞÓÃÓÚµÃµ½Äæ¾ØÕóµÄDummy¸öÊıÎª
-// LW_MAX_OBJ_DUMMY_INV_NUM¸ö£¬ËùÒÔÕâÀï¹æ¶¨ÔÚmaxÖĞÖÆ×÷dummyµÄÊ±ºòdummyµÄid¾ßÓĞ·¶Î§ÏŞÖÆ
-// ¾ßÌåÊıÖµÈçÏÂ£ºdummy_0 - dummy_3ÓÃÀ´×÷ÎªLW_MAX_OBJ_DUMMY_INV_NUM
-//               dummy_4 - dummy_7ÓÃÀ´×÷ÎªÌØĞ§»òÕßÆäËû²»ĞèÒªInverse MatrixµÄÁ´½Óid
+// each Primitive may have at most LW_MAX_OBJ_DUMMY_NUM dummies, of which the number used to obtain inverse matrices is
+// LW_MAX_OBJ_DUMMY_INV_NUM, so dummy ids are range limited when authoring in max
+// the ranges are: dummy_0 - dummy_3 serve as the LW_MAX_OBJ_DUMMY_INV_NUM
+//               dummy_4 - dummy_7 are for effects and other link ids that need no inverse matrix
 #define LW_MAX_OBJ_DUMMY_NUM            16
 #define LW_MAX_OBJ_DUMMY_INV_NUM        4
 
@@ -77,8 +77,8 @@ enum
 enum
 {
     GEOMOBJ_TYPE_GENERIC =              0,
-    GEOMOBJ_TYPE_CHECK_BB =             1, //ÎŞ·½ÏòÅĞ¶Ï
-    GEOMOBJ_TYPE_CHECK_BB2 =            2, //ÓĞ·½ÏòÅĞ¶Ï£¬ÕâÀï¶¨ÒåÓĞĞ§·½ÏòÎª( 0, 1, 0 )
+    GEOMOBJ_TYPE_CHECK_BB =             1, // no direction test
+    GEOMOBJ_TYPE_CHECK_BB2 =            2, // with a direction test; the effective direction is defined as (0, 1, 0)
 };
 
 enum

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "TableData.h"
 
@@ -23,28 +23,28 @@ public:
 	
     char	szName[16];
 	
-    int     nType;              // ÀàÐÍ
-   	BYTE    btPointColor[3];    // µã¹âÔ´µÄÑÕÉ«
-    BYTE    btEnvColor[3];      // »·¾³¹âµÄÑÕÉ«
-    BYTE    btFogColor[3];      // ÎíµÄÑÕÉ«
+    int     nType;              // type
+   	BYTE    btPointColor[3];    // colour of the point light
+    BYTE    btEnvColor[3];      // colour of the ambient light
+    BYTE    btFogColor[3];      // colour of the fog
     int     nRange;
     float   Attenuation1;
-    int     nAnimCtrlID;        //µã¹âÔ´¶¯»­ÀàÐÍid
-    // .... ÆäËû²ÎÊý
+    int     nAnimCtrlID;        //point light animation type ID
+    // .... other parameters
     
 
-    int     nStyle;             //  ·ç¸ñ
+    int     nStyle;             //  style
     int		nAttachEffectID;
-    BOOL    bEnablePointLight;  //  ÊÇ·ñÊÕµã¹âÔ´Ó°Ïì
-	BOOL    bEnableEnvLight;    //  ÊÇ·ñÊÕ»·¾³¹âÓ°Ïì    
-    int		nFlag;              //  ÆäËü±ê¼Ç
-    int     nSizeFlag;          //  ³ß´ç±ê¼Ç, Èç¹ûÎï¼þÊÇ³¬´ó³ß´ç, Ôò¿É¼ûÐÔÅÐ¶ÏÌØÊâ
+    BOOL    bEnablePointLight;  //  whether it is affected by the point light
+	BOOL    bEnableEnvLight;    //  whether it is affected by the ambient light
+    int		nFlag;              //  other flags
+    int     nSizeFlag;          //  size flag; if the object is oversized the visibility test is special
 
     char    szEnvSound[11];	
-	int		nEnvSoundDis;		// µ¥Î»:ÀåÃ×
-	int		nPhotoTexID;        //  Í¼±êÌùÍ¼ID
+	int		nEnvSoundDis;		// unit: centimetres
+	int		nPhotoTexID;        //  icon texture ID
     BOOL    bShadeFlag;
-	BOOL	bIsReallyBig;		// ÊÇ·ñÌØ´óÎï¼þ,Added by clp
+	BOOL	bIsReallyBig;		// whether it is an oversized object, added by clp
 
     int     nFadeObjNum;
     int     nFadeObjSeq[16];
@@ -68,7 +68,7 @@ public:
 
 protected:
 
-	static CSceneObjSet* _Instance; // Ïàµ±ÓÚµ¥¼ü, °Ñ×Ô¼º¼Ç×¡
+	static CSceneObjSet* _Instance; // like a single key, remembers itself
    
 	virtual CRawDataInfo* _CreateRawDataArray(int nCnt)
 	{
@@ -103,10 +103,10 @@ protected:
 		
 		strncpy(pInfo->szName, ParamList[0].c_str(), sizeof(pInfo->szName));
 
-        // »ñµÃÎï¼þÀàÐÍ 0 ÆÕÍ¨ÎïÌå 1 ³¡¾°»¥¶¯ÎïÌå 2 ÕÏ°­±ê¼ÇÎïÌå....
+        // gets the object type: 0 ordinary object, 1 scene interactive object, 2 obstacle marker object, and so on
         pInfo->nType             = Str2Int(ParamList[1]);
         
-        // ÀàÐÍ²ÎÊý1 = ParamList[2];
+        // ç±»åž‹å‚æ•°1 = ParamList[2];
         std::string strList1[16], strList2[16];
         int n1 = Util_ResolveTextLine(ParamList[2].c_str(), strList1, 16+1, ',');
         int n2 = Util_ResolveTextLine(ParamList[3].c_str(), strList2, 16+1, ',');
@@ -127,7 +127,7 @@ protected:
             pInfo->btEnvColor[1] = Str2Int(strList1[1]);
             pInfo->btEnvColor[2] = Str2Int(strList1[2]);
             break;
-        case 6: // »·¾³ÒôÐ§
+        case 6: // ambient sound
 			strcpy(pInfo->szEnvSound, strList1[0].c_str());
 			pInfo->nEnvSoundDis = Str2Int( strList2[0] );
             LG("sceneobj", "Read Enviroment Sound [%s]\n", pInfo->szEnvSound);
@@ -147,7 +147,7 @@ protected:
             break;
         }
 
-        // ÀàÐÍ²ÎÊý2 = ParamList[3];
+        // ç±»åž‹å‚æ•°2 = ParamList[3];
 
 	    pInfo->nAttachEffectID   = Str2Int(ParamList[4]);
        	pInfo->bEnableEnvLight   = Str2Int(ParamList[5]);

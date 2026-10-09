@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 
 #include "UIMakeEquipForm.h"
 #include "UIFormMgr.h"
@@ -114,7 +114,7 @@ namespace GUI
 			frmMakeEquip->Refresh();
 			frmMakeEquip->Show();
 
-			//Í¬Ê±´ò¿ªÍæ¼ÒµÄ×°±¸À¸
+			//opens the player's equipment slot as well
 			int x = frmMakeEquip->GetX() + frmMakeEquip->GetWidth();
 			int y = frmMakeEquip->GetY();
 			g_stUIEquip.GetItemForm()->SetPos(x, y);
@@ -201,7 +201,7 @@ namespace GUI
 			break;
 		case EQUIP_FUSION_TYPE:
 			if (iIndex == 0)
-			{	// ÒÆÈ¥Íâ¹Û£¬Í¬Ê±ÒÆÈ¥×°±¸
+			{	// removes the appearance and the equipment as well
 				PopItem(iIndex);
 
 				CItemCommand* pEquipItemCommand = 
@@ -212,11 +212,11 @@ namespace GUI
 				}
 			}
 			else if (iIndex == 1)
-			{	// ÒÆÈ¥×°±¸
+			{	// removes the equipment
 				PopItem(iIndex);
 			}
 			else if (iIndex == 2)
-			{	// ÒÆÈ¥´ß»¯¼Á
+			{	// removes the catalyst
 				PopItem(iIndex);
 			}
 			break;
@@ -272,7 +272,7 @@ namespace GUI
 			return;
 
 		int iNum(0), iPos(-1);
-		// ¸üĞÂÏàÓ¦µÄCOneCommandµÄÊı¾İ
+		// updates the data of the corresponding COneCommand
 		if (pOldItemCommand->GetIsPile())
 		{
 		}
@@ -282,7 +282,7 @@ namespace GUI
 		}
 
 		//int iPos = g_stUIEquip.GetGoodsGrid()->GetDragIndex();
-		//// ¸üĞÂÏàÓ¦µÄEquipList
+		////// updates the corresponding EquipList
 		//EquipInfo* pEquipInfo = new EquipInfo();
 		//pEquipInfo->iPos = iPos;
 		//pEquipInfo->iNum = iNum;
@@ -294,9 +294,9 @@ namespace GUI
 	//-----------------------------------------------------------------------------
 	void CMakeEquipMgr::PopEquipItem(int iIndex)
 	{
-		// Çå³ıÏàÓ¦COneCommandµÄÊı¾İ
+		// clears the data of the corresponding COneCommand
 
-		// Çå³ıÏàÓ¦µÄEquipList
+		// clears the corresponding EquipList
 		ClearEquipList(iIndex);
 	}
 	//-----------------------------------------------------------------------------
@@ -325,7 +325,7 @@ namespace GUI
 			}
 
 			// modify by Philip.Wu  2006-06-11
-			// ÈÛºÏÊ±£¬Íâ¹Û×°±¸ÀàĞÍÎª 27£¬²¢ÇÒÊôĞÔ×°±¸ÀàĞÍÎª 22 Ê±£¬²»×÷Æ¥ÅäÅĞ¶Ï
+			// while fusing, when the appearance equipment type is 27 and the attribute equipment type is 22, no matching check is performed
 			if ((pItemCommand->GetItemInfo()->sType == 27 && rItem.GetItemInfo()->sType == 22) ||
 				(IsSameAppearEquip(rItem, *pItemCommand)))
 			{
@@ -391,7 +391,7 @@ namespace GUI
 	//-----------------------------------------------------------------------------
 	void CMakeEquipMgr::PushRouleau(CItemCommand& rItem)
 	{
-		// ²é¿´ÊÇ·ñÒÑ¾­ÓĞ¾íÖáÁË£¬Èç¹ûÓĞÔòÒÆ³ö¸Ã¾íÖá
+		// checks whether a scroll is already there and removes it if so
 		CItemCommand* pItemCommand =  
 			dynamic_cast<CItemCommand*>(cmdRouleau->GetCommand());
 		if (pItemCommand)
@@ -406,23 +406,23 @@ namespace GUI
 			}
 		}
 
-		// ¼ÇÂ¼¾íÖáÔÚÎïÆ·À¸ÖĞµÄÎ»ÖÃ
+		// records the position of the scroll in the item slot
 		m_iRouleauPos = g_stUIEquip.GetGoodsGrid()->GetDragIndex();
 
-		// ½«¾íÖáÏàÓ¦µÄÎïÆ·À¸»Òµ÷
+		// greys out the item slot of the scroll
 		rItem.SetIsValid(false);
-		// ½«´´½¨µÄCommand·ÅÈë
+		// puts the created Command in
 		CItemCommand* pItemCmd = new CItemCommand(rItem);
 		cmdRouleau->AddCommand(pItemCmd);
 		pItemCmd->SetIsValid(true);
 		
-		// ¸üĞÂÏàÓ¦Åä·½µÄCOneCommandµÄÊı¾İ,ÕâÀï·Ö³ÉÁ½¸öÁ÷³Ì£¬µÀ¾ß¾«Á¶ºÍ±¦Ê¯ºÏ³É
+		// updates the data of the corresponding recipe COneCommand; this is split into two flows, item refining and gem synthesis
 		if (rItem.GetItemInfo()->sType == GEM_ROULEAU_TYPE)
-		{	//±¦Ê¯ºÏ³É
+		{	//gem synthesis
 			PushNewGems();
 		}
 		else
-		{	//µÀ¾ß¾«Á¶
+		{	//item refining
 			PushNewEquips(*(rItem.GetItemInfo()));
 		}
 
@@ -439,7 +439,7 @@ namespace GUI
 	//-----------------------------------------------------------------------------
 	void CMakeEquipMgr::PopRouleau()
 	{
-		// Çå³ıÏàÓ¦COneCommandµÄÊı¾İ
+		// clears the data of the corresponding COneCommand
 		if (m_iRouleauPos == -1)
 			return;
 		
@@ -447,14 +447,14 @@ namespace GUI
 		if (pCmdObj)
 			pCmdObj->SetIsValid(true);
 
-		// É¾³ıÆäÖĞµÄCommand (DelCommand()ÖĞµ÷ÓÃdeleteÉ¾³ı)
+		// åˆ é™¤å…¶ä¸­çš„Command (DelCommand()ä¸­è°ƒç”¨deleteåˆ é™¤)
 		cmdRouleau->DelCommand();
 
-		// Çå³ıÈı¸öÅä·½COneCommandÏàÓ¦µÄÊı¾İ
+		// clears the corresponding data of the three recipe COneCommands
 		for (int i(0); i<ITEM_NUM; ++i)
 			PopItem(i);
 
-		// Çå³ı×îºóºÏ³ÉµÄÎïÆ·
+		// clears the last synthesised item
 		PopLastEquip();
 
 		this->SetMakeEquipUI();
@@ -486,7 +486,7 @@ namespace GUI
 		for (; iter != end; ++iter)
 		{
 			//delete (*iter);
-			SAFE_DELETE(*iter); // UIµ±»ú´¦Àí
+			SAFE_DELETE(*iter); // UI freeze handling
 		}
 		equipItems[iIndex].clear();
 
@@ -495,19 +495,19 @@ namespace GUI
 	//-----------------------------------------------------------------------------
 	void CMakeEquipMgr::Clear()
 	{
-		// Çå³ıUI±íµ¥Êı¾İ
+		// clears the UI form data
 		labForgeGold->SetCaption("");
 		btnYes->SetIsEnabled(false);
 
 
-		// Çå³ı¾íÖá£¨Í¬Ê±»áÇå³ıÆäËûItem£©
+		// clears the scroll (this also clears the other Items)
 		PopRouleau();
 	}
 
 	//-----------------------------------------------------------------------------
 	void CMakeEquipMgr::ClearEquips()
 	{
-		// Çå³ı¾«Á¶¶ÔÓ¦µÄ×°±¸À¸ÎïÆ·
+		// clears the equipment slot item corresponding to the refining
 		EquipListIter iter, end;
 		for (int i(0); i<ITEM_NUM; ++i)
 		{
@@ -529,18 +529,18 @@ namespace GUI
 		if (!pItemRecord)
 			return false;
 
-		//  ²»ÊÇ±¦Ê¯ºÍ¾«Á¶Ê¯Ö±½Ó·µ»Øfalse
+		//  returns false straight away if it is neither a gem nor a refining stone
 		if (pItemRecord->sType != GEN_STONE_TYPE && pItemRecord->sType != FORGE_STONE_TYPE)
 		{
 			g_pGameApp->MsgBox(g_oLangRec.GetString(692));
 			return false;
 		}
 
-		// ¼ì²âÁíÒ»¸öÎ»ÖÃÊÇ·ñÓĞ±¦Ê¯
+		// checks whether the other slot holds a gem
 		int iOtherIndex = iIndex == 0 ? 1 : 0;
 		CItemCommand* pOtherItem = dynamic_cast<CItemCommand* >(cmdItem[iOtherIndex]->GetCommand());
 		if (pOtherItem)
-		{	//ÁíÒ»¸öÎ»ÖÃÓĞ±¦Ê¯£¬Ôò½öµ±IDºÅÏàÍ¬²Å·µ»Øtrue
+		{	//the other slot has a gem, so it returns true only when the IDs match
 			CItemRecord* pOtherItemRecord = pOtherItem->GetItemInfo();
 			if (pItemRecord->lID == pOtherItemRecord->lID)
 			{
@@ -552,7 +552,7 @@ namespace GUI
 				return false;
 			}
 		}
-		else //ÁíÒ»¸öÎ»ÖÃÃ»ÓĞ±¦Ê¯£¬Ö±½Ó·µ»Øtrue
+		else //the other slot has no gem, so it returns true directly
 		{
 			return true;
 		}
@@ -562,7 +562,7 @@ namespace GUI
 	//-----------------------------------------------------------------------------
 	void CMakeEquipMgr::PushItem(int iIndex, CItemCommand& rItem, int iItemNum)
 	{
-		// ²é¿´Ô­À´µÄCmdÖĞÊÇ·ñÒÑ¾­ÓĞItemÁË£¬Èç¹ûÓĞÔòÒÆ³ö
+		// checks whether the original Cmd already has an Item and removes it if so
 		CItemCommand* pItemCommand =  
 			dynamic_cast<CItemCommand*>(cmdItem[iIndex]->GetCommand());
 		if (pItemCommand)
@@ -572,17 +572,17 @@ namespace GUI
 
 		if (iItemNum == 1)
 		{
-			// ¼ÇÂ¼ItemÔÚÎïÆ·À¸ÖĞµÄÎ»ÖÃ
+			// records the position of the Item in the item slot
 			EquipInfo* pEquipInfo = new EquipInfo();
 			pEquipInfo->iPos = g_stUIEquip.GetGoodsGrid()->GetDragIndex();
 			pEquipInfo->iNum = iItemNum;
 			equipItems[iIndex].resize(1);
 			equipItems[iIndex][0] = pEquipInfo;
 
-			// ½«ItemÏàÓ¦µÄÎïÆ·À¸»Òµ÷
+			// greys out the item slot of the Item
 			rItem.SetIsValid(false);
 
-			// ½«´´½¨µÄItem·ÅÈëCmdÖĞ£¬ÕâÀïÓÃnew½«»áÔÚPopItem()ÖĞÉ¾³ı
+			// å°†åˆ›å»ºçš„Itemæ”¾å…¥Cmdä¸­ï¼Œè¿™é‡Œç”¨newå°†ä¼šåœ¨PopItem()ä¸­åˆ é™¤
 			CItemCommand* pItemCmd = new CItemCommand(rItem);
 			pItemCmd->SetIsValid(true);
 			cmdItem[iIndex]->AddCommand(pItemCmd);
@@ -598,13 +598,13 @@ namespace GUI
 	//-----------------------------------------------------------------------------
 	void CMakeEquipMgr::PopItem(int iIndex)
 	{
-		// É¾³ıCmdÖĞµÄItem£¬¸ÃItem»áÔÚPushItem()ÖĞÓÉnewÉú³É
+		// åˆ é™¤Cmdä¸­çš„Itemï¼Œè¯¥Itemä¼šåœ¨PushItem()ä¸­ç”±newç”Ÿæˆ
 		CItemCommand* pItemCommand =  
 			dynamic_cast<CItemCommand*>(cmdItem[iIndex]->GetCommand());
 		if (pItemCommand)
-			cmdItem[iIndex]->DelCommand();	// ¸Ãº¯Êı½«É¾³ıdelete Item
+			cmdItem[iIndex]->DelCommand();	// this function deletes the Item
 
-		// ½«ItemÏàÓ¦µÄÎïÆ·À¸»Òµ÷
+		// greys out the item slot of the Item
 		CCommandObj* pItem(0);
 		EquipListIter iter = equipItems[iIndex].begin();
 		EquipListIter end  = equipItems[iIndex].end();
@@ -633,7 +633,7 @@ namespace GUI
 		{
 			if (this->CanPushStone(iIndex, rItem))
 			{
-				// ²é¿´Ô­À´µÄCmdÖĞÊÇ·ñÒÑ¾­ÓĞItemÁË£¬Èç¹ûÓĞÔòÒÆ³ö
+				// checks whether the original Cmd already has an Item and removes it if so
 				CItemCommand* pItemCommand =  
 					dynamic_cast<CItemCommand*>(cmdItem[iIndex]->GetCommand());
 				if (pItemCommand)
@@ -641,16 +641,16 @@ namespace GUI
 					PopItem(iIndex);
 				}
 
-				// ¼ÇÂ¼ItemÔÚÎïÆ·À¸ÖĞµÄÎ»ÖÃ
+				// records the position of the Item in the item slot
 				EquipInfo* pEquipInfo = new EquipInfo();
 				pEquipInfo->iPos = g_stUIEquip.GetGoodsGrid()->GetDragIndex();
 				pEquipInfo->iNum = 1;
 				equipItems[iIndex].push_back(pEquipInfo);
 
-				// ½«ItemÏàÓ¦µÄÎïÆ·À¸»Òµ÷
+				// greys out the item slot of the Item
 				rItem.SetIsValid(false);
 
-				// ½«´´½¨µÄItem·ÅÈëCmdÖĞ£¬ÕâÀïÓÃnew½«»áÔÚPopItem()ÖĞÉ¾³ı
+				// å°†åˆ›å»ºçš„Itemæ”¾å…¥Cmdä¸­ï¼Œè¿™é‡Œç”¨newå°†ä¼šåœ¨PopItem()ä¸­åˆ é™¤
 				CItemCommand* pItemCmd = new CItemCommand(rItem);
 				pItemCmd->SetIsValid(true);
 				cmdItem[iIndex]->AddCommand(pItemCmd);
@@ -725,7 +725,7 @@ namespace GUI
 		CItemRecord* pEquipRecord = rEquipItem.GetItemInfo();
 		CItemRecord* pAppearRecord = rAppearItem.GetItemInfo();
 
-		// comment by Philip.Wu  2006-08-15  ÔÊĞíÍâ¹Û×°±¸Ò²ÊÇÈÛºÏ¹ıµÄ×°±¸
+		// comment by Philip.Wu  2006-08-15  allows appearance equipment to be fused equipment too
 		//if (IsAppearanceEquip(rEquipItem))
 		//{
 		//	return false;
@@ -764,7 +764,7 @@ namespace GUI
 
 		if (pItemRecord) {
 			short sType = pItemRecord->sType;
-			//	Close by alfred.shi 20080912 Ã±×ÓÒ²¿ÉÒÔ´òÄ¥
+			//	Close by alfred.shi 20080912  hats can be polished too
 			
 			switch(sType){
 				case enumItemTypeSword		:
@@ -793,13 +793,13 @@ namespace GUI
 		return false;
 	}
 	//-----------------------------------------------------------------------------
-	// »Øµ÷º¯Êı
+	// callback function
 	//-----------------------------------------------------------------------------
 	void CMakeEquipMgr::_MainMouseEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey)
 	{
 		string name = pSender->GetName();
 		if( name=="btnClose"  || name == "btnForgeNo" )  
-		{ ///¹Ø±Õ±íµ¥
+		{ ////closes the form
 
 			g_stUIMakeEquip.ShowMakeEquipForm(false);
 			return;
@@ -876,7 +876,7 @@ namespace GUI
 				g_pGameApp->MsgBox(g_oLangRec.GetString(697));
 			}
 			break;
-		case ELF_SHIFT_TYPE:	// ¾«Áé¶ş×ª
+		case ELF_SHIFT_TYPE:	// elf second rebirth
 			if (g_stUIMakeEquip.IsElfShiftStone(*pItemCommand))
 			{
 				g_stUIMakeEquip.PushRouleau(*pItemCommand);
@@ -950,7 +950,7 @@ namespace GUI
 
 
 	//-----------------------------------------------------------------------------
-	// Ë½ÓĞº¯Êı
+	// private function
 	//-----------------------------------------------------------------------------
 	void CMakeEquipMgr::DragEvtEquipItem(int index, CGuiData *pSender, CCommandObj* pItem, bool& isAccept)
 	{
@@ -974,7 +974,7 @@ namespace GUI
 
 		if (!cmdRouleau->GetCommand())
 		{
-			// by Philip.Wu  ĞŞ¸ÄÔ­ÏÈÅĞ¶¨Âß¼­£¬µ±¶¥¸ñ¹Ø¼üµÀ¾ßÊ¾Î´·ÅÈëÊ±£¬ÏÂÃæµÄµÀ¾ß²»ÔÊĞíÍÏÈë
+			// by Philip.Wu  changed the original decision logic: when the top cell key item is not placed, the item below may not be dragged in
 			switch(this->m_iType)
 			{
 			case MAKE_EQUIP_TYPE:
@@ -994,17 +994,17 @@ namespace GUI
 
 			return;
 
-			// ÒÔÏÂÊÇÔ­ÏÈµÄ´¦Àí£¬ÔİÊ±±£Áô
+			// the following is the original handling, kept for now
 			//if (IsEquipMakeRouleau(*pItemCommand) || 
 			//	IsEquipFusionRouleau(*pItemCommand) || 
 			//	IsEquipUpgradeRouleau(*pItemCommand))
 			//{
-			//	g_pGameApp->MsgBox("Çë½«¾íÖá·ÅÈë¶¥¸ñ");
+			//	g_pGameApp->MsgBox("è¯·å°†å·è½´æ”¾å…¥é¡¶æ ¼");
 			//	return;
 			//}
 			//else
 			//{
-			//	g_pGameApp->MsgBox("ÇëÏÈ·ÅÈë¾íÖá");
+			//	g_pGameApp->MsgBox("è¯·å…ˆæ”¾å…¥å·è½´");
 			//	return;
 			//}
 		}
@@ -1056,7 +1056,7 @@ namespace GUI
 	//-----------------------------------------------------------------------------
 	void CMakeEquipMgr::SetMakeEquipUI()
 	{
-		//memForgeItemState->SetCaption("ÕâÀïĞ´¾ßÌåµÄÄÚÈİ");
+		//memForgeItemState->SetCaption("è¿™é‡Œå†™å…·ä½“çš„å†…å®¹");
 		//memForgeItemState->ProcessCaption();
 		switch(m_iType) 
 		{
@@ -1115,22 +1115,22 @@ namespace GUI
 	void CMakeEquipMgr::SendMakeEquipProtocol()
 	{
 		stNetItemForgeAsk kNetItemForgeAsk;
-		kNetItemForgeAsk.chType = char(m_iType);	// ºÏ³É
+		kNetItemForgeAsk.chType = char(m_iType);	// synthesis
 
 		if (m_iType == MAKE_EQUIP_TYPE)
 		{
 			if (IsMakeGem())
 			{
-				// ¾íÖá0
+				// scroll 0
 				kNetItemForgeAsk.SGroup[0].sCellNum = 1;
 				kNetItemForgeAsk.SGroup[0].pCell = new SForgeCell::SCell[1];
 				kNetItemForgeAsk.SGroup[0].pCell[0].sNum = 1;
 				kNetItemForgeAsk.SGroup[0].pCell[0].sPosID = m_iRouleauPos;
 
-				// ±¦Ê¯1¡«2
+				// gem 1~2
 				for (int i(1); i<=STONE_ITEM_NUM; ++i)
 				{
-					kNetItemForgeAsk.SGroup[i].sCellNum = 1;		// ºÏ³ÉÊ¼ÖÕÊÇ1
+					kNetItemForgeAsk.SGroup[i].sCellNum = 1;		// synthesis is always 1
 					kNetItemForgeAsk.SGroup[i].pCell = new SForgeCell::SCell[1];
 					kNetItemForgeAsk.SGroup[i].pCell[0].sNum = equipItems[i-1][0]->iNum;
 					kNetItemForgeAsk.SGroup[i].pCell[0].sPosID = equipItems[i-1][0]->iPos;
@@ -1140,7 +1140,7 @@ namespace GUI
 			{
 				for (int i(0); i<ITEM_NUM; ++i)
 				{
-					kNetItemForgeAsk.SGroup[i].sCellNum = 1;		// ºÏ³ÉÊ¼ÖÕÊÇ1
+					kNetItemForgeAsk.SGroup[i].sCellNum = 1;		// synthesis is always 1
 					kNetItemForgeAsk.SGroup[i].pCell = new SForgeCell::SCell[1];
 					kNetItemForgeAsk.SGroup[i].pCell[1].sNum = 1;
 					//kNetItemForgeAsk.SGroup[i].pCell[1].sPosID = m_iForgeItemPos[i];
@@ -1149,8 +1149,8 @@ namespace GUI
 			}
 		}
 		else
-		{	// ÈÜºÏºÍÉı¼¶
-			// ¾íÖá0
+		{	// fusing and upgrading
+			// scroll 0
 			kNetItemForgeAsk.SGroup[0].sCellNum = 1;
 			kNetItemForgeAsk.SGroup[0].pCell = new SForgeCell::SCell[1];
 			kNetItemForgeAsk.SGroup[0].pCell[0].sNum = 1;
@@ -1179,7 +1179,7 @@ namespace GUI
 
 			for (int i(1); i<=iNum; ++i)
 			{
-				kNetItemForgeAsk.SGroup[i].sCellNum = 1;		// ºÏ³ÉÊ¼ÖÕÊÇ1
+				kNetItemForgeAsk.SGroup[i].sCellNum = 1;		// synthesis is always 1
 				kNetItemForgeAsk.SGroup[i].pCell = new SForgeCell::SCell[1];
 				kNetItemForgeAsk.SGroup[i].pCell[0].sNum = equipItems[i-1][0]->iNum;
 				kNetItemForgeAsk.SGroup[i].pCell[0].sPosID = equipItems[i-1][0]->iPos;
@@ -1209,13 +1209,13 @@ namespace GUI
 			return EQUIP_FUSION_MONEY * pItemCommand->GetItemInfo()->sNeedLv;
 			break;
 		case EQUIP_UPGRADE_TYPE:
-			// ×°±¸µÈ¼¶+1µÄÆ½·½*1W(²ß»®ÎÄµµ)
+			// (equipment level + 1) squared * 1W (design document)
 			pItemCommand = dynamic_cast<CItemCommand*>(cmdItem[0]->GetCommand());	
 			iLevelPlusOne = pItemCommand->GetData().GetItemLevel() + 1;
 			return EQUIP_UPGRADE_MONEY * iLevelPlusOne * iLevelPlusOne;
 			break;
 		case ELF_SHIFT_TYPE:
-			// ¾«Áé¶ş×ª£¨²ß»®ÎÄµµ£©
+			// elf second rebirth (design document)
 			pItemCommand = dynamic_cast<CItemCommand*>(cmdItem[0]->GetCommand());
 			nLevel1  = pItemCommand->GetData().GetItemLevel();
 			pItemCommand = dynamic_cast<CItemCommand*>(cmdItem[1]->GetCommand());
@@ -1227,7 +1227,7 @@ namespace GUI
 	}
 
 
-	// ÊÇ·ñÊÇ¾«Áé¶ş×ªËùĞèµÄ¶ñÄ§¹ûÊµ
+	// whether it is the demon fruit needed for the elf second rebirth
 	bool CMakeEquipMgr::IsElfShiftStone(CItemCommand& rItem)
 	{
 		CItemRecord* pItem = rItem.GetItemInfo();
@@ -1241,7 +1241,7 @@ namespace GUI
 	}
 
 
-	// ÊÇ·ñÊÇ¾«Áé
+	// whether it is an elf
 	bool CMakeEquipMgr::IsElfShiftItem(CItemCommand& rItem)
 	{
 		CItemRecord* pItemRecord = rItem.GetItemInfo();
@@ -1254,7 +1254,7 @@ namespace GUI
 	}
 
 
-	// ·ÅÈë¾«Áé
+	// puts in an elf
 	void CMakeEquipMgr::PushElfShiftItem(int iIndex, CItemCommand& rItem)
 	{
 		CItemCommand* pItemCommand = NULL;
@@ -1262,7 +1262,7 @@ namespace GUI
 		memset(&sItemHint, 0, sizeof(SItemHint));
 		sItemHint.Convert(rItem.GetData(), rItem.GetItemInfo());
 
-		// ¼ÆËã¾«ÁéµÈ¼¶
+		// computes the elf level
 		int nLevel = sItemHint.sInstAttr[ITEMATTR_VAL_STR] +
 					 sItemHint.sInstAttr[ITEMATTR_VAL_AGI] +
 					 sItemHint.sInstAttr[ITEMATTR_VAL_DEX] +
@@ -1279,7 +1279,7 @@ namespace GUI
 		{
 			pItemCommand = dynamic_cast<CItemCommand*>(cmdItem[1]->GetCommand());
 
-			// ÅĞ¶ÏÊÇ·ñÊÇ¾«Áé£¬²¢ÇÒ²»ÄÜÓëµÚ¶ş¸ñµÄ¾«ÁéIDÏàÍ¬
+			// decides whether it is an elf and its ID differs from the elf in the second cell
 			if (IsElfShiftItem(rItem) && 
 				(NULL == pItemCommand || (rItem.GetItemInfo()->lID != pItemCommand->GetItemInfo()->lID)))
 			{
@@ -1295,7 +1295,7 @@ namespace GUI
 		{
 			pItemCommand = dynamic_cast<CItemCommand*>(cmdItem[0]->GetCommand());
 
-			// ÅĞ¶ÏÊÇ·ñÊÇ¾«Áé£¬²¢ÇÒ²»ÄÜÓëµÚÒ»¸ñµÄ¾«ÁéIDÏàÍ¬
+			// decides whether it is an elf and its ID differs from the elf in the first cell
 			if (IsElfShiftItem(rItem) && 
 				(NULL == pItemCommand || (rItem.GetItemInfo()->lID != pItemCommand->GetItemInfo()->lID)))
 			{

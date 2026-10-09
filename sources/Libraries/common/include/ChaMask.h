@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "util.h"
 #define SHOWSIZE	80
 #define SHOWRANGE	80
@@ -44,26 +44,26 @@ public:
 		long lpos;
 		long llen;
 	};
-	//Ò»´Î°ÑËùÓĞµØÍ¼´óĞ¡·ÖÅäºÃ¡£
+	// size every map up front
 	void	AddMap(const char* pszName, int w,int h);
 
-	//´ÓÊı¾İ¿â¶ÁÈ¡µÄmaskÊı¾İ
+	// mask data read from the database
 	bool	InitMaskData(char* pszMapName, const char* szBase64Data, long llen = 0);
 
-	//µÃµ½Ä³¸öµØÍ¼µÄmaskÊı¾İ
+	// get the mask data of a given map
 	BYTE*	GetMapMask(const char* pszMapName, long& size);
 
-	// µÃµ½Ä³Ò»µØÍ¼µÄÌ½Ë÷¶È(°Ù·Ö±È)
+	// get the explored percentage of a given map
 	float	GetMapMaskOpenScale(const char* pszMapName);
 
-	//¸üĞÂÄ³µØÍ¼µÄmask, x,yÒÔÎªÎªµ¥Î»¡£w,hÎªµØÍ¼¿í¸ß£¬ÒÔÎªÎªµ¥Î»
+	// update a map's mask; x and y are tile coordinates, w and h the map size in tiles
 	bool	UpdateMapMask(char* pszMapName, int x, int y, int cha_range = SHOWRANGE);
 
 	//
 	//void	SetChaRange(int cha_range){ iChaRange = cha_range;}
 	//int 	GetChaRange(int cha_range){ iChaRange = cha_range;}
 
-	//µÃµ½½á¹ûÊı¾İ
+	// get the resulting data
 	//long	GetResultLength(){ return lResultSize;}
 	//const char*	GetResultMask(const char* pszMapName)
 	//{ 
@@ -83,7 +83,7 @@ public:
 		return (const char *)szBase64;
 	}
 protected:
-	//±£´æÊ±ÏÈÒª¼ÆËãÕû¸ö×Ö½ÚÊı
+	// the total byte count has to be worked out before saving
 	//void	ColResultMask();
 
 	//bool	GetMask(int x, int y)

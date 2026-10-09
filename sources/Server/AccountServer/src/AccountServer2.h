@@ -115,7 +115,7 @@ public:
     AuthThread(int nIndex);
     virtual ~AuthThread();
 
-    void	Reconnt();
+    bool	Reconnt(uLong ulTimeoutMs = 30000);
 
 	WPacket QueryAndAccountLogin(DataSocket* datasock, RPacket rpkt)
 	{

@@ -510,7 +510,7 @@ bool CSystemMgr::Init()
 	if (! cbxColor )	return Error( g_oLangRec.GetString(45), frmVideo->GetName(), "cbxColor" );
 	cbxColor->SetActiveIndex(m_sysProp.m_videoProp.bDepth32 ? 1 : 0);   //�������ļ���������ʾ�ڿؼ��� Michael Chen 2005-04-22
 
-	cboResolution = (CCombo*)frmVideo->Find("cboResolution"); //贴图精度
+	cboResolution = (CCombo*)frmVideo->Find("cboResolution"); //texture precision
 	if (!cboResolution)		return Error(g_oLangRec.GetString(45), frmVideo->GetName(), "cboResolution");
 	cboResolution->GetList()->GetItems()->Select(m_sysProp.m_videoProp.bResolution);
 

@@ -1,4 +1,4 @@
-
+ï»¿
 
 #pragma once
 
@@ -28,8 +28,8 @@ namespace GUI
 		void SetOwnFindTeamState(bool bState);
 		void FindTeamAsk(const char* szName);
 
-		static const int FINDTEAM_PAGE_SIZE = 10;	// Ñ°Çó×é¶ÓÒ»Ò³ÏÔÊ¾ÌõÊý
-		static const int FINDTEAM_INTERVAL  = 60;	// Á½´ÎÉêÇë¼ä¸ôÊ±¼ä£º60Ãë
+		static const int FINDTEAM_PAGE_SIZE = 10;	// number of rows a team seeking page shows
+		static const int FINDTEAM_INTERVAL  = 60;	// interval between two applications: 60 seconds
 
 	protected:
 		virtual bool Init();
@@ -38,27 +38,27 @@ namespace GUI
 	private:
 
 		//
-		// Ñ°ÕÒ×é¶Ó
+		// team finding
 		//
 		CForm*		frmFindTeam;
 
-		CLabelEx*		labName[FINDTEAM_PAGE_SIZE];	// ½ÇÉ«ÐÕÃû
-		CLabelEx*		labLevel[FINDTEAM_PAGE_SIZE];	// ½ÇÉ«µÈ¼¶
-		CLabelEx*		labJob[FINDTEAM_PAGE_SIZE];		// ½ÇÉ«Ö°Òµ
-		CLabelEx*		labPlace[FINDTEAM_PAGE_SIZE];	// ½ÇÉ«ËùÔÚµØ
-		CTextButton*	btnSubmit[FINDTEAM_PAGE_SIZE];	// Ìá½»°´Å¥
+		CLabelEx*		labName[FINDTEAM_PAGE_SIZE];	// character name
+		CLabelEx*		labLevel[FINDTEAM_PAGE_SIZE];	// character level
+		CLabelEx*		labJob[FINDTEAM_PAGE_SIZE];		// character class
+		CLabelEx*		labPlace[FINDTEAM_PAGE_SIZE];	// character location
+		CTextButton*	btnSubmit[FINDTEAM_PAGE_SIZE];	// submit button
 
 		CTextButton*	btnAddme;
 		CTextButton*	btnDelme;
-		CLabelEx*		labListPage;		// ÏÔÊ¾Ò³Êý
+		CLabelEx*		labListPage;		// number of displayed pages
 
-		int				m_nCurPage;			// µ±Ç°Ò³
-		int				m_nPageNum;			// ×ÜÒ³Êý
-		DWORD			m_dwLastTick;		// ÉÏÒ»´ÎÉêÇë×é¶ÓµÄÊ±¼ä
-		std::string		m_strTeamLeader;	// ÉêÇëµÄ¶Ó³¤
+		int				m_nCurPage;			// current page
+		int				m_nPageNum;			// total pages
+		DWORD			m_dwLastTick;		// the time of the last party application
+		std::string		m_strTeamLeader;	// the party leader applied to
 
-		static void _evtFindTeamMouseButton(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey);// Êó±êµã»÷°´Å¥ÊÂ¼þ
-		static void	_evtFindTeamCheckEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey); // ×é¶ÓÉêÇë
+		static void _evtFindTeamMouseButton(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey);// mouse button click event
+		static void	_evtFindTeamCheckEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey); // party application
 
 	};
 

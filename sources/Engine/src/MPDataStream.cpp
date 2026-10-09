@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "MPDataStream.h"
 
 #include "MPStringUtil.h"
@@ -16,7 +16,7 @@ String MPDataStream::getLine(bool trimAfter)
 {
 	MPStringUtil::StrStreamType str;
 	size_t c = MP_STREAM_TEMP_SIZE-1;
-	// Ò»Ö±Ñ­»·Ö±µ½Óöµ½·Ö¸ô·û
+	// keep going until the delimiter is found
 	while (c == MP_STREAM_TEMP_SIZE-1)
 	{
 		c = readLine(m_TmpArea, MP_STREAM_TEMP_SIZE-1);
@@ -34,7 +34,7 @@ String MPDataStream::getLine(bool trimAfter)
 //-----------------------------------------------------------------------------
 String MPDataStream::getAsString(void)
 {
-	// ¶ÁÈ¡Õû¸ö»º³å
+	// read the whole buffer
 	char* pBuf = new char[m_Size+1];
 	read(pBuf, m_Size);
 	pBuf[m_Size] = '\0';
@@ -68,7 +68,7 @@ MPMemoryDataStream::MPMemoryDataStream(const String& name, void* pMem, size_t si
 MPMemoryDataStream::MPMemoryDataStream(MPDataStream& sourceStream, bool freeOnClose)
 	: MPDataStream()
 {
-	// ´ÓÁíÒ»¸öÁ÷¿½±´Êı¾İ
+	// copy the data from another stream
 	m_Size = sourceStream.size();
 	m_Data = new uchar[m_Size];
 	sourceStream.read(m_Data, m_Size);
@@ -80,7 +80,7 @@ MPMemoryDataStream::MPMemoryDataStream(MPDataStream& sourceStream, bool freeOnCl
 MPMemoryDataStream::MPMemoryDataStream(MPDataStreamPtr& sourceStream, bool freeOnClose)
 	: MPDataStream()
 {
-	// ´ÓÁíÒ»¸öÁ÷¿½±´Êı¾İ
+	// copy the data from another stream
 	m_Size = sourceStream->size();
 	m_Data = new uchar[m_Size];
 	sourceStream->read(m_Data, m_Size);
@@ -92,7 +92,7 @@ MPMemoryDataStream::MPMemoryDataStream(MPDataStreamPtr& sourceStream, bool freeO
 MPMemoryDataStream::MPMemoryDataStream(const String& name, MPDataStream& sourceStream, bool freeOnClose)
 	: MPDataStream(name)
 {
-	// ´ÓÁíÒ»¸öÁ÷¿½±´Êı¾İ
+	// copy the data from another stream
 	m_Size = sourceStream.size();
 	m_Data = new uchar[m_Size];
 	sourceStream.read(m_Data, m_Size);
@@ -104,7 +104,7 @@ MPMemoryDataStream::MPMemoryDataStream(const String& name, MPDataStream& sourceS
 MPMemoryDataStream::MPMemoryDataStream(const String& name, const MPDataStreamPtr& sourceStream, bool freeOnClose)
 	: MPDataStream(name)
 {
-	// ´ÓÁíÒ»¸öÁ÷¿½±´Êı¾İ
+	// copy the data from another stream
 	m_Size = sourceStream->size();
 	m_Data = new uchar[m_Size];
 	sourceStream->read(m_Data, m_Size);
@@ -154,20 +154,20 @@ size_t MPMemoryDataStream::read(void* buf, size_t count)
 //-----------------------------------------------------------------------------
 size_t MPMemoryDataStream::readLine(char* buf, size_t maxCount, const String& delim)
 {
-	// ÕâÀï´¦ÀíUnixºÍWindowsµÄÎÄ¼ş£¨»ùÓÚ DOS/Windows µÄÎÄ±¾ÎÄ¼şÔÚÃ¿Ò»ĞĞÄ©
-	// Î²ÓĞÒ»¸ö CR£¨»Ø³µ£©ºÍ LF£¨»»ĞĞ£©£¬¶ø UNIX ÎÄ±¾Ö»ÓĞÒ»¸ö»»ĞĞ£©
+	// this handles both Unix and Windows files (DOS/Windows text files end every
+	// line with a CR (carriage return) and an LF (line feed), while a Unix text file has only the line feed)
 	bool trimCR = false;
 	if (delim.find_first_of('\n') != String::npos)
 	{
 		trimCR = true;
 	}
 
-	// ²éÕÒÏÂÒ»¸ö·Ö¸ô·û("\n")µÄÎ»ÖÃ
+	// æŸ¥æ‰¾ä¸‹ä¸€ä¸ªåˆ†éš”ç¬¦("\n")çš„ä½ç½®
 	size_t pos = strcspn((const char*)m_Pos, delim.c_str());
 	if (pos > maxCount)
 		pos = maxCount;
 
-	// È·±£pos²»»á³¬³öeof
+	// make sure pos does not run past eof
 	if(m_Pos + pos > m_End) pos = m_End - m_Pos; 
 
 	if (pos > 0)
@@ -175,16 +175,16 @@ size_t MPMemoryDataStream::readLine(char* buf, size_t maxCount, const String& de
 		memcpy(buf, (const void*)m_Pos, pos);
 	}
 
-	// ÖØĞÂÉèÖÃÄ¿Ç°µÄÖ¸ÕëÎ»ÖÃ
+	// reposition the current pointer
 	m_Pos += pos + 1;
 
-	// ÌŞ³ıCR£¨»Ø³µ£©ºÍ LF£¨»»ĞĞ£©
+	// strip the CR (carriage return) and the LF (line feed)
 	if (trimCR && buf[pos-1] == '\r')
 	{
-		// É¾³ı'\r'
+		// åˆ é™¤'\r'
 		--pos;
 	}
-	// ÖĞÖ¹·û
+	// terminator
 	buf[pos] = '\0';
 
 	return pos;
@@ -192,10 +192,10 @@ size_t MPMemoryDataStream::readLine(char* buf, size_t maxCount, const String& de
 //-----------------------------------------------------------------------------
 size_t MPMemoryDataStream::skipLine(const String& delim)
 {
-	// ²éÕÒÏÂÒ»¸ö·Ö¸ô·û("\n")µÄÎ»ÖÃ
+	// æŸ¥æ‰¾ä¸‹ä¸€ä¸ªåˆ†éš”ç¬¦("\n")çš„ä½ç½®
 	size_t pos = strcspn( (const char*)m_Pos, delim.c_str() );
 
-	// È·±£pos²»»á³¬³öeof
+	// make sure pos does not run past eof
 	if(m_Pos + pos > m_End) pos = m_End - m_Pos; 
 
 	m_Pos += pos + 1;
@@ -241,7 +241,7 @@ void MPMemoryDataStream::close(void)
 MPFileStreamDataStream::MPFileStreamDataStream(std::ifstream* s, bool freeOnClose)
 	: MPDataStream()
 {
-	// ¼ÆËã´óĞ¡
+	// compute the size
 	m_pStream->seekg(0, std::ios_base::end);
 	m_Size = m_pStream->tellg();
 	m_pStream->seekg(0, std::ios_base::beg);
@@ -250,7 +250,7 @@ MPFileStreamDataStream::MPFileStreamDataStream(std::ifstream* s, bool freeOnClos
 MPFileStreamDataStream::MPFileStreamDataStream(const String& name, std::ifstream* s, bool freeOnClose)
 	: MPDataStream(name)
 {
-	// ¼ÆËã´óĞ¡
+	// compute the size
 	m_pStream->seekg(0, std::ios_base::end);
 	m_Size = m_pStream->tellg();
 	m_pStream->seekg(0, std::ios_base::beg);
@@ -284,25 +284,25 @@ size_t MPFileStreamDataStream::readLine(char* buf, size_t maxCount, const String
 	{
 		LG("WARNING: FileStreamDataStream::readLine","using only first delimeter");
 	}
-	// ÕâÀï´¦ÀíUnixºÍWindowsµÄÎÄ¼ş
+	// this handles both Unix and Windows files
 	bool trimCR = false;
 	if (delim.at(0) == '\n') 
 	{
 		trimCR = true;
 	}
-	// ÒòÎª²»°üÀ¨ÖĞÖ¹·û£¬ËùÓĞÒªmaxCount + 1
+	// the terminator is not counted, hence maxCount + 1
 	m_pStream->getline(buf, maxCount+1, delim.at(0));
 	size_t ret = m_pStream->gcount();
-	// 3ÖÖÇé¿ö
-	// 1) Óöµ½ÁËeof
-	// 2) ³¬¹ı»º´æµÄ¿Õ¼ä
-	// 3) ¶ÁÈ¡ÁËÒ»ÕûĞĞ - ÕâÖÖÇé¿öÏÂ·Ö¸ô·ûÔÚÁ÷ÖĞ£¬µ«²¢²»Ğ´Èëµ½»º´æ£¬ËùÒÔ
-	//    ¶ÁÈ¡Êı¾İµÄ³¤¶ÈÎªret-1,½áÎ²ÔÚret-2´¦
-	// ËùÓĞÇé¿ö»º´æ¶¼ÒÔnull½áÎ²
+	// three cases
+	// 1) eof was reached
+	// 2) the buffer space was exceeded
+	// 3) a whole line was read - in this case the delimiter is in the stream but is not written to the buffer, so
+	//    the data length is ret-1 and the line ends at ret-2
+	// in every case the buffer is null terminated
 
 	if (m_pStream->eof()) 
 	{
-		// Ã»ÎÊÌâ
+		// no problem
 	}
 	else if (m_pStream->fail())
 	{
@@ -324,7 +324,7 @@ size_t MPFileStreamDataStream::readLine(char* buf, size_t maxCount, const String
 		--ret;
 	}
 
-	// ÌŞ³ıCR£¨»Ø³µ£©ºÍ LF£¨»»ĞĞ£©
+	// strip the CR (carriage return) and the LF (line feed)
 	if (trimCR && buf[ret-1] == '\r')
 	{
 		--ret;
@@ -347,19 +347,19 @@ size_t MPFileStreamDataStream::skipLine(const String& delim)
 //-----------------------------------------------------------------------------
 void MPFileStreamDataStream::skip(long count)
 {
-	m_pStream->clear(); //ÍòÒ»eofÒÑ¾­ÉèÖÃ£¬ÔòÇå³ı
+	m_pStream->clear(); // clear it in case eof was already set
 	m_pStream->seekg(static_cast<std::ifstream::pos_type>(count), std::ios::cur);
 }
 //-----------------------------------------------------------------------------
 void MPFileStreamDataStream::seek( size_t pos )
 {
-	m_pStream->clear(); //ÍòÒ»eofÒÑ¾­ÉèÖÃ£¬ÔòÇå³ı
+	m_pStream->clear(); // clear it in case eof was already set
 	m_pStream->seekg(static_cast<std::ifstream::pos_type>(pos), std::ios::beg);
 }
 //-----------------------------------------------------------------------------
 size_t MPFileStreamDataStream::tell(void) const
 {
-	m_pStream->clear(); //ÍòÒ»eofÒÑ¾­ÉèÖÃ£¬ÔòÇå³ı
+	m_pStream->clear(); // clear it in case eof was already set
 	return m_pStream->tellg();
 }
 //-----------------------------------------------------------------------------
@@ -386,7 +386,7 @@ void MPFileStreamDataStream::close(void)
 MPFileHandleDataStream::MPFileHandleDataStream(FILE* handle)
 	: MPDataStream(), m_FileHandle(handle)
 {
-	// ¼ÆËã´óĞ¡
+	// compute the size
 	fseek(m_FileHandle, 0, SEEK_END);
 	m_Size = ftell(m_FileHandle);
 	fseek(m_FileHandle, 0, SEEK_SET);
@@ -395,7 +395,7 @@ MPFileHandleDataStream::MPFileHandleDataStream(FILE* handle)
 MPFileHandleDataStream::MPFileHandleDataStream(const String& name, FILE* handle)
 	: MPDataStream(name), m_FileHandle(handle)
 {
-	// ¼ÆËã´óĞ¡
+	// compute the size
 	fseek(m_FileHandle, 0, SEEK_END);
 	m_Size = ftell(m_FileHandle);
 	fseek(m_FileHandle, 0, SEEK_SET);
@@ -413,7 +413,7 @@ size_t MPFileHandleDataStream::read(void* buf, size_t count)
 //-----------------------------------------------------------------------------
 size_t MPFileHandleDataStream::readLine(char* buf, size_t maxCount, const String& delim)
 {
-	// ÕâÀï´¦ÀíUnixºÍWindowsµÄÎÄ¼ş
+	// this handles both Unix and Windows files
 	bool trimCR = false;
 	if (delim.find_first_of('\n') != String::npos)
 	{
@@ -425,20 +425,20 @@ size_t MPFileHandleDataStream::readLine(char* buf, size_t maxCount, const String
 	size_t readCount; 
 	while (chunkSize && (readCount = fread(m_TmpArea, chunkSize, 1, m_FileHandle)))
 	{
-		// ÖĞÖ¹·û
+		// terminator
 		m_TmpArea[readCount] = '\0';
-		// ²éÕÒµÚÒ»¸ö·Ö¸ô·ûµÄÎ»ÖÃ
+		// find the position of the first delimiter
 		size_t pos = strcspn(m_TmpArea, delim.c_str());
 
 		if (pos < readCount)
 		{
-			// ÕÒµ½·Ö¸ô·û£¬ÏòºóÖØĞÂ¶¨Î»Î»ÖÃ
+			// delimiter found, reposition after it
 			fseek(m_FileHandle, pos - readCount + 1, SEEK_CUR);
 		}
 
 		if (pos > 0)
 		{
-			// Èç¹ûÕÒµ½CR£¬ÌáÇ°ÖĞÖ¹
+			// stop early if a CR was found
 			if (trimCR && m_TmpArea[pos-1] == '\r')
 			{
 				--pos;
@@ -456,7 +456,7 @@ size_t MPFileHandleDataStream::readLine(char* buf, size_t maxCount, const String
 		{
 			break;
 		}
-		// ÎªÏÂ´Î²éÕÒÖØĞÂµ÷Õû¿é´óĞ¡
+		// resize the block for the next lookup
 		chunkSize = min(maxCount-totalCount, (size_t)MP_STREAM_TEMP_SIZE-1);
 
 	}
@@ -465,7 +465,7 @@ size_t MPFileHandleDataStream::readLine(char* buf, size_t maxCount, const String
 //-----------------------------------------------------------------------------
 size_t MPFileHandleDataStream::skipLine(const String& delim)
 {
-	// ÖØÓÃreadLine(), µ«²»¿½±´Êı¾İ
+	// é‡ç”¨readLine(), ä½†ä¸æ‹·è´æ•°æ®
 	char* nullBuf = 0;
 	return readLine(nullBuf, 1024, delim);
 }

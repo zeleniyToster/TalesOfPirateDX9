@@ -1,4 +1,4 @@
-//=============================================================================
+ï»¿//=============================================================================
 // FileName: MapEntry.h
 // Creater: ZhangXuedong
 // Date: 2005.10.21
@@ -51,7 +51,7 @@ private:
 
 };
 
-// µØÍ¼¶¯Ì¬Èë¿Úµ¥Ôª
+// dynamic map entry cell
 class	CDynMapEntryCell
 {
 public:
@@ -117,7 +117,7 @@ private:
 	void*		m_pPos;
 };
 
-// ¶¯Ì¬µØÍ¼Èë¿ÚÁ´±í£¬¼ÍÂ¼±¾½ø³ÌµÄËùÓĞµ±Ç°´æÔÚµÄ¶¯Ì¬Èë¿Ú
+// dynamic map entry chain, recording every dynamic entry currently existing in this process
 class	CDynMapEntry
 {
 public:
@@ -138,10 +138,10 @@ private:
 
 extern CDynMapEntry g_CDMapEntry;
 
-// ¶ÓÎéÌôÕ½µØÍ¼Èë¿Ú
+// party challenge map entry
 extern void	g_SetTeamFightMapName(const char *cszMapName);
 
-extern char	g_szTFightMapName[MAX_MAPNAME_LENGTH];	// ¶ÓÎéÌôÕ½µØÍ¼Ãû
+extern char	g_szTFightMapName[MAX_MAPNAME_LENGTH];	// party challenge map name
 //
 
 #endif // MAPENTRY_H

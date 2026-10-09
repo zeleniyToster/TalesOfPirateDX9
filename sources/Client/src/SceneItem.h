@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "SceneNode.h"
 #include "MindPower.h"
@@ -37,7 +37,7 @@ public:
     HRESULT         LitResetTexture(DWORD item_id, DWORD lit_id);
     HRESULT         LitUnresetTexture();
 
-	void			SetForgeEffect( DWORD value, int nCharID=1 );		// ÉèÖÃ¾«Á¶Ð§¹û±íÏÖ,±¾º¯ÊýÔÚ´´½¨µÀ¾ß³É¹¦ºóµ÷ÓÃ
+	void			SetForgeEffect( DWORD value, int nCharID=1 );		// sets the refining effect presentation; this function is called after the item is created successfully
 
 public:
 	void			setIsSystem( bool v )			{ _IsSystem = v; 			}
@@ -59,7 +59,7 @@ public:
     bool            IsPick();
 
     bool            GetItemHeight(float* out_height);
-	//lemon add@2005.1.5 for ±¬ÁÏ
+	//lemon add@2005.1.5 for the preview
 	void			PlayArcAni(D3DXVECTOR3	vStart, D3DXVECTOR3 vEnd, float fVel = 0.01f, float fHei = 3.0f);
 protected:
 
@@ -80,7 +80,7 @@ protected:
     DWORD           _nCharacterID;
 
 protected:
-	bool			_IsSystem;					// µÀ¾ßÓÃÓÚÏµÍ³£¬²»¿É²Ù×÷
+	bool			_IsSystem;					// the item is used by the system and cannot be operated
 	bool			_IsShowName;
 	CItemRecord*	_pItemInfo;
     int             _nDrapID;

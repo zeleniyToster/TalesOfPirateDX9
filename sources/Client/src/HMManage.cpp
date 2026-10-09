@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "HMManage.h"
 #include "SkillRecord.h"
 #include "STStateObj.h"
@@ -188,12 +188,12 @@ void CServerHarm::SetIsOuter( bool v )
 		{
 			if( _pSkill->IsHarmRange() )
 			{
-				// ·¶Î§¼¼ÄÜ£¬ÏÂÒ»´ÎÄÜÖ´ĞĞÍê
+				// an area skill; the next execution will complete
 				return;
 			}
 			else if( _nReadyExec<(int)_harm.size() )
 			{
-				// µ¥¸ö¼¼ÄÜ½«¶àÓà²¿·ÖÖ´ĞĞµô
+				// a single skill executes the leftover part
 				ExecAll( (int)_harm.size() - _nReadyExec );
 				return;
 			}
@@ -201,7 +201,7 @@ void CServerHarm::SetIsOuter( bool v )
 
 		if( !_harm.empty() ) ExecAll();
 
-		// ÓĞÍâ²¿Ö´ĞĞÊ±,ÓÉÍâ²¿Ö´ĞĞ½áÊø
+		// when there is an external execution, it is ended by the external side
 		if( _nReadyExec<=0 )
 		{
 			LG( _pCha->getLogName(), "CServerHarm Over(Outer), FightID[%d]\n", GetFightID() );

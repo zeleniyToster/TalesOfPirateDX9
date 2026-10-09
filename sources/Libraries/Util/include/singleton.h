@@ -1,4 +1,4 @@
-/**
+ï»¿/**
  *  @file singleton.h
  *
  *  singleton.h, v 1.0 2004/9/21 13:14:05 shanghai China
@@ -149,8 +149,8 @@ protected:
 	inline static std::unique_ptr<T> _instance = nullptr;
     };
 
-// Õâ¸ö°æ±¾µÄsingletonÊµÏÖºÜ¿ì»á±»¶ªÆú£¬ÒòÎªËü²»ÄÜºÜÈİÒ×µØ±»À©³äÎª¶àÏß³Ì°²È«µÄ
-// ËùÒÔ²»ÍÆ¼öÊ¹ÓÃÕâ¸ösingleton template
+// this singleton implementation will be dropped soon, because it cannot easily be made thread safe
+// so this singleton template is not recommended
 #if 1
 template <class T>
 class CSingleton

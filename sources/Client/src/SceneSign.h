@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 class CGameScene;
 class CSceneItem;
 class CCharacter;
 class CShadeEff;
 
-// ³¡¾°µÄÓÃ»§±êÖ¾
+// the user flag of the scene
 class CSceneSign
 {
 public:
@@ -35,10 +35,10 @@ private:
 
 	CGameScene*		_pScene;
 
-	CSceneItem*		_pAttack;		// ¹¥»÷Ê±ÏÔÊ¾µÄ¹â»·
+	CSceneItem*		_pAttack;		// the halo shown while attacking
 	CShadeEff*		_pAttackShade;
-	CSceneItem*		_pMove;         // ÒÆ¶¯»òÊ°È¡Ê±ÏÔÊ¾µÄ¹â»·
-	CCharacter*		_pCha;			// ±»¹¥»÷µÄ½ÇÉ«
+	CSceneItem*		_pMove;         // the halo shown while moving or picking up
+	CCharacter*		_pCha;			// the character being attacked
 
 	int	_nX, nY, _nH;	
 

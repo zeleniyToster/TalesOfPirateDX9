@@ -1,6 +1,6 @@
-// D3D Render ·â×°D3DµÄÏà¹Ø²Ù×÷
-// ¼¸¸öÖ÷Òª¹¦ÄÜÎª :  View Type¹ÜÀí
-//                   WorldViewRegion¹ÜÀí
+ï»¿// D3D Render: wraps the relevant D3D operations
+// the main responsibilities are: view type management
+//                    world view region management
 // 					 BeginRender, EndRender()
 //                   Ray Tracing
 //                   Draw Basic Geometry 
@@ -30,12 +30,12 @@
 
 enum INFO_TYPE
 {
-// ÊäÈëĞÅÏ¢ÀàĞÍ¶¨Òå
-	 INFO_DEBUG  = 0,  // µ÷ÊÔ×¨ÓÃ
-	 INFO_PERF      ,  // ÏÔÊ¾Performance×¨ÓÃ
-	 INFO_CMD       ,  // ÏÔÊ¾ConsoleÎÄ×Ö×¨ÓÃ
-	 INFO_FPS       ,  // FPS×¨ÓÃ
-	 INFO_GAME         // ÓÎÏ·×¨ÓÃ
+// input message type definitions
+	 INFO_DEBUG  = 0,  // debugging only
+	 INFO_PERF      ,  // performance display only
+	 INFO_CMD       ,  // console text display only
+	 INFO_FPS       ,  // FPS only
+	 INFO_GAME         // in-game only
 };
 
 
@@ -48,8 +48,8 @@ struct MPLine
 
 struct MPCullInfo              
 {
-    D3DXVECTOR3 vecFrustum[8];    // Æ½½ØÍ·µÄ8¸ö¶¥µã
-    D3DXPLANE planeFrustum[6];    // Æ½½ØÍ·µÄ6¸öÃæ
+    D3DXVECTOR3 vecFrustum[8];    // the 8 vertices of a frustum
+    D3DXPLANE planeFrustum[6];    // the 6 faces of a frustum
 };  //added by billy 
 
 //class  CMPFont;
@@ -227,10 +227,10 @@ public:
     
     enum VIEW_TYPE
 	{
-		VIEW_SCREEN = 0, // ÒÔÕû¸öÆÁÄ»×öÎªView
-		VIEW_WORLD     , // ÒÔWorldViewµÄÇøÓò×÷ÎªView
-		VIEW_UI ,         // ½çÃæÍ¨³£ĞèÒªµÄÆ½ÃæäÖÈ¾View
-        VIEW_3DUI ,      // 3D½çÃæ
+		VIEW_SCREEN = 0, // the whole screen as the view
+		VIEW_WORLD     , // the world view region as the view
+		VIEW_UI ,         // the flat orthographic view the UI normally needs
+        VIEW_3DUI ,      // 3D user interface
 	};
 
 	void	AddLine(const VECTOR3& v1, const VECTOR3& v2, DWORD dwColor = 0xFFFFFFFF);
@@ -265,36 +265,36 @@ protected:
     // Direct 3D
     IDirect3DX*             _pD3D;
     HWND                    _hWnd;
-	//CD3DFont*				_pFont; // ÄÚ²¿±£ÁôÒ»¸öFont¶ÔÏó×öÒ»Ğ©Êä³ö²Ù×÷D3DXMATRIXA16			_matWorld;
+	//CD3DFont*				_pFont; // å†…éƒ¨ä¿ç•™ä¸€ä¸ªFontå¯¹è±¡åšä¸€äº›è¾“å‡ºæ“ä½œD3DXMATRIXA16			_matWorld;
 	//{lemon modify@2004.9.3
 	CMPFont*				_pFont;
 	//@}
 	IDirect3DDeviceX*		_pD3DDevice;
     D3DVIEWPORTX            _view;
-    int                     _nScrWidth;         // ÆÁÄ»¿í¶È
-    int                     _nScrHeight;        // ÆÁÄ»¸ß¶È
+    int                     _nScrWidth;         // screen width
+    int                     _nScrHeight;        // screen height
     int                     _nColorBit;
     BOOL                    _bFullScreen;
     D3DXMATRIXA16		    _matProjWorld;
-	D3DXMATRIXA16			_matViewWorld;		// µ±Ç°ÊÀ½çView	Matrix
-	D3DXMATRIXA16			_matUIView;			// µ±Ç°½çÃæÓÃView Matrix
-	D3DXMATRIXA16			_matUIProj;			// µ±Ç°½çÃæÓÃProj Matrix
-	D3DXMATRIXA16			_matViewProj;		// = Proj * View, ÎªÁËÌá¸ßGetRayµÄËÙ¶È¶øÁÙÊ±´æ·Å		
+	D3DXMATRIXA16			_matViewWorld;		// current world view matrix
+	D3DXMATRIXA16			_matUIView;			// view matrix used by the UI
+	D3DXMATRIXA16			_matUIProj;			// projection matrix used by the UI
+	D3DXMATRIXA16			_matViewProj;		// = Proj * View, cached to speed up GetRay
     D3DXMATRIXA16           _mat3DUIView;
     D3DXMATRIXA16           _mat3DUIProj;
 	
-	int                     _nWorldViewStartX;  // ÆÁÄ»ÉÏÏÔÊ¾ÓÎÏ·ÊÀ½çµÄÆğµãÎ»ÖÃ
+	int                     _nWorldViewStartX;  // origin of the game world as drawn on screen
     int                     _nWorldViewStartY;  
-    int                     _nWorldViewWidth;   // ÆÁÄ»ÉÏÏÔÊ¾ÓÎÏ·ÊÀ½çµÄ³ß´ç
+    int                     _nWorldViewWidth;   // size of the game world as drawn on screen
     int                     _nWorldViewHeight;
-    DWORD                   _dwBackgroundColor; // ÆÁÄ»±³¾°Çå³ıÑÕÉ«
+    DWORD                   _dwBackgroundColor; // screen background clear colour
     DWORD                   _dwClearFlag;
     BOOL                    _bClearTarget;
     BOOL                    _bClearStencil;
     BOOL                    _bClearZBuffer;
 	float                   _fWorldViewFOV;
 	 float					_fAspect;
-	int						_nCurViewType;      // ±ÜÃâSetCurrentViewÖĞÖØ¸´ÉèÖÃ
+	int						_nCurViewType;      // avoids redundant work in SetCurrentView
 	float					_fNearClip;
 	float					_fFarClip;
 	

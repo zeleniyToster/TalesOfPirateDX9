@@ -1,8 +1,8 @@
-#pragma once
+ï»¿#pragma once
 
 #include "Scene.h"
 
-// ÓÃÓÚÔÚ½ÇÉ«»òµÀ¾ßÀàµÄFrameMoveÀï¸üĞÂ¸ß¶È
+// used to update the height in the FrameMove of a character or item class
 class CSceneHeight
 {
 public:

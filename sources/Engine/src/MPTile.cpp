@@ -1,4 +1,4 @@
-#include "Stdafx.h"
+ï»¿#include "Stdafx.h"
 #include "MPTile.h"
 #include "MPMath.h"
 #include "lwTimer.h"
@@ -14,7 +14,7 @@ int MPTile::Offset[4][2] =
 
 
 //--------------------------- 
-// Ôö¼ÓÌùÍ¼²ã(¾­µä°¡, ¹»¼ò½à)
+// add a texture layer (classic, and simple enough)
 //---------------------------
 void MPTile::AddTexLayer(BYTE btTexNo, BYTE btAlphaNo)
 {
@@ -86,7 +86,7 @@ void MPTile::AddTexLayer(BYTE btTexNo, BYTE btAlphaNo)
 	TexLayer[0].btAlphaNo = 15;
 	if(btValid < 4)
 	{
-		TexLayer[btValid].btTexNo = 0; // ´Ë²ã¿ªÊ¼ÎÞÐ§
+		TexLayer[btValid].btTexNo = 0; // this layer starts out invalid
 	}
 }
 
@@ -95,7 +95,7 @@ MPTileVertex		MPTile::_TVertex[4];
 MPSeaTileVertex		MPTile::_SVertex[4];
 
 //-----------------------------
-// µ÷ÊÔäÖÈ¾, ·ÇVertexBuffer·½Ê½
+// debug rendering, not via the vertex buffer
 //-----------------------------
 
 
@@ -103,8 +103,8 @@ MPSeaTileVertex		MPTile::_SVertex[4];
 void MPTile::RenderTerrain(int nX, int nY, MPTile *TileList[4])
 {
     // begin by lsh
-    // ÕâÀïÓÐ¹ØµÃµ½render state ambient µÄÑÕÉ«Ó¦¸ÃÊ¹ÓÃÍ³Ò»µÄ»º´æ
-    // ²»ÊÇÃ¿´Îrender¶¼Í¨¹ýdeviceÀ´¶¯Ì¬µÃµ½
+    // the render state ambient colour obtained here should use a shared cache
+    // rather than asking the device for it on every render
     lwColorValue4b amb, vert_amb, c, t, x;
     g_Render.GetDevice()->GetRenderState(D3DRS_AMBIENT, &amb.color);
     // end by lsh

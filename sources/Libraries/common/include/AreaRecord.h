@@ -1,9 +1,9 @@
-#pragma once
+ï»¿#pragma once
 
 #include "TableData.h"
 
 
-// Êı¾İÏî ID µØÃû ±êÊ¶ÑÕÉ« 
+// data item: id, place name, marker colour
 class CAreaInfo : public CRawDataInfo
 {
 public:
@@ -18,7 +18,7 @@ public:
     DWORD dwEnvColor;
     DWORD dwLightColor;
     float fLightDir[3];
-	char  chType;			// 0-Ò°Íâ,1-³ÇÄÚ,ÓÃÓÚ¸ü»»ÏÔÊ¾ÎÄ×ÖµÄ±³¾°
+	char  chType;			// 0 = wilderness, 1 = inside a town; selects the background behind the label
 };
 
 
@@ -36,7 +36,7 @@ public:
 
 protected:
 
-	static CAreaSet* _Instance; // Ïàµ±ÓÚµ¥¼ü, °Ñ×Ô¼º¼Ç×¡
+	static CAreaSet* _Instance; // acts like a singleton: keeps a reference to itself
    
 	virtual CRawDataInfo* _CreateRawDataArray(int nCnt)
 	{

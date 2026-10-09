@@ -1,4 +1,4 @@
-//=============================================================================
+ï»¿//=============================================================================
 // FileName: Player.h
 // Creater: ZhangXuedong
 // Date: 2004.10.19
@@ -65,7 +65,7 @@ public:
 
 	bool		IsPlayer(void) {return bIsValid && (GetGate() ? true : false);}
 
-    virtual void OnLogoff() {} // Ìí¼ÓÕâ¸öplayerµÄÊı¾İ¿â´æÅÌ´úÂë
+    virtual void OnLogoff() {} // adds the database save code for this player
 
 	bool		IsValid(void) {return bIsValid;}
     void        SetActLoginID(DWORD id){m_dwLoginID = id;}
@@ -98,7 +98,7 @@ public:
 	void		SetCanReceiveRequests(bool x) { bReceiveRequests = x; }			//
 	int			GetTeamMemberCnt()			{	return _nTeamMemberCnt;			} 
 	DWORD		GetTeamMemberDBID(int nNo)	{	return _Team[nNo].m_dwDBChaId;  }
-	DWORD		getTeamLeaderID()			{	return _dwTeamLeaderID;			}// Ã»ÓĞ¶ÓÎéµÄ·µ»Ø0
+	DWORD		getTeamLeaderID()			{	return _dwTeamLeaderID;			}// returns 0 when there is no party
 	CCharacter* GetTeamMemberCha(int nNo); 
 	void		NoticeTeamMemberData();
 	void		NoticeTeamLeaderID(void);
@@ -164,7 +164,7 @@ public:
 	CCharacter* GetMakingBoat() { return m_pMakingBoat; }
 	void		SetMakingBoat( CCharacter* pBoat ) { m_pMakingBoat = pBoat; }
 
-	// ´¬Ö»½¨ÔìºÍ¸ÄÔìµÈº¯Êı½Ó¿Ú
+	// boat construction and conversion function interfaces
 	BYTE		GetNumBoat() { return m_byNumBoat; }
 	void		GetBerthBoat( USHORT sBerthID, BYTE& byNumBoat, BOAT_BERTH_DATA& Data );
 	void		GetAllBerthBoat( USHORT sBerthID, BYTE& byNumBoat, BOAT_BERTH_DATA& Data );
@@ -186,11 +186,11 @@ public:
 	BOOL		ClearBoat( DWORD dwBoatDBID );
 	void		RefreshBoatAttr(void);
 
-	// °ÚÌ¯ĞÅÏ¢½Ó¿Ú
+	// stall information interface
 	mission::CStallData* GetStallData() { return m_pStallData; }
 	void		SetStallData( mission::CStallData* pData ) { m_pStallData = pData; }
 
-	// ´óµØÍ¼
+	// big map
 	//void		SetMapMask(const char *pMask) {m_CMapMask.InitMaskData(pMask);}
 	//const char*	GetMapMask() {return m_CMapMask.GetResultMask();}
 	//BYTE*		GetOneMapMask(const char *szMapName, long &lLen) {return m_CMapMask.GetMapMask(szMapName, lLen);}
@@ -207,7 +207,7 @@ public:
 	void		ResetMapMaskChange(void) {m_chMapMaskChange = 0;}
 	float		GetMapMaskOpenScale(const char *szMapName) {return m_CMapMask.GetMapMaskOpenScale(szMapName);}
 
-	// ÒøĞĞ
+	// bank
 	char		GetCurBankNum(void) {return m_chBankNum;}
 	bool		AddBankDBID(long lDBID) {if (m_chBankNum >= MAX_BANK_NUM) return false; m_lBankDBID[m_chBankNum] = lDBID; m_chBankNum++; return true;}
 	CKitbag*	GetBank(char chBankNO = 0) {if (chBankNO < 0 || chBankNO >= m_chBankNum) return 0; return m_CBank + chBankNO;}
@@ -233,7 +233,7 @@ public:
 	void		CheckChaItemFinalData(void);
 	bool		String2BankData(char chBankNO, std::string &strData);
 
-	//Ä¦¶¹ºÍ´ú±ÒÏà¹Ø²Ù×÷
+	//MoDou and token related operations
 	long	GetMoBean() { return m_lMoBean; }
 	void	SetMoBean(long lMoBean) { m_lMoBean = lMoBean; }
 	long	GetRplMoney() { return m_lRplMoney; }
@@ -245,27 +245,27 @@ public:
 	void	SetGarnerWiner(short siswiner){m_sGarnerWiner = siswiner;}
 	uplayer     _Team[MAX_TEAM_MEMBER];
 
-	//Éú»î¼¼ÄÜ
+	// life skills
 	std::string & GetLifeSkillinfo(){return m_strLifeSkillinfo;}
-	dbc::Char	m_szGuildName[defGUILD_NAME_LEN];	//ËùÊô¹«»áÃû×Ö£¬¹«»áIDÊôĞÔÎª0Ê±±¾ÖµÎŞĞ§.
+	dbc::Char	m_szGuildName[defGUILD_NAME_LEN];	//name of the guild this character belongs to; this value is invalid when the guild ID attribute is 0.
 	dbc::Char	m_szGuildMotto[defGUILD_MOTTO_LEN];
 	dbc::Char	m_szStallName[ROLE_MAXNUM_STALL_NUM];
-	bool		m_bIsGuildLeader;	//0-·Ç»á³¤;1-»á³¤
+	bool		m_bIsGuildLeader;	//0-éä¼šé•¿;1-ä¼šé•¿
 	struct
 	{
-		BitMaskStatus m_GuildState;	//¿Í»§½»»¥ÆÚ¼ä¹«»áÏà¹Ø×´Ì¬Î»ÆÁ±ÎÂë×Ö¶Î,Öµ²ÎÕÕ¶¨Òå:enum EGuildState
+		BitMaskStatus m_GuildState;	//guild state mask field, masked while the client is interacting; see the definition of enum EGuildState
 
-		uLong m_GuildStatus;	//¹«»á×´Ì¬
-		uLong m_lGuildID;		//Íæ¼ÒÉêÇë¹«»á³ÉÔ±ÆÚ¼äÒªÇóÍæ¼ÒÈ·ÈÏÊÇ·ñ¸²¸ÇÏÈÇ°µÄÉêÇëÊ±ÏÈÇ°Ñ¡ÔñµÄ¹«»áID.
-		uLong m_lTempGuildID;	//Íæ¼ÒÉêÇë¹«»áÁÙÊ±¼ÇÂ¼ĞÅÏ¢
-		dbc::Char m_szTempGuildName[defGUILD_NAME_LEN];	//Íæ¼ÒÉêÇë¹«»á³ÉÔ±ÆÚ¼äÒªÇóÍæ¼ÒÈ·ÈÏÊÇ·ñ¸²¸ÇÏÈÇ°µÄÉêÇëÊ±ÏÈÇ°Ñ¡ÔñµÄ¹«»áÃû×Ö.
+		uLong m_GuildStatus;	//guild state
+		uLong m_lGuildID;		//while the player is applying to join a guild, the guild ID of the earlier choice, asked for when the player must confirm overriding the earlier application.
+		uLong m_lTempGuildID;	//temporary record of the player's guild application
+		dbc::Char m_szTempGuildName[defGUILD_NAME_LEN];	//while the player is applying to join a guild, the guild name of the earlier choice, asked for when the player must confirm overriding the earlier application.
 	};
 protected:
 	int         _nTeamMemberCnt;
 	DWORD		_dwTeamLeaderID;
 
 private:
-	struct // ¶ÔÓ¦ÊµÌåÊı×éµÄË÷Òı£¨ÓÉCEntityAllocÀàÀ´ÅäÖÃ£©
+	struct // index into the entity array (configured by the CEntityAlloc class)
 	{
 
 		dbc::Long	m_lID;
@@ -276,35 +276,35 @@ private:
 	bool	bIsValid;
 	char	m_szPassword[ROLE_MAXSIZE_PASSWORD2+1];
 
-	long	m_lMoBean;		//Ä¦¶¹ÊıÁ¿
-	long	m_lRplMoney;	//´ú±ÒÊıÁ¿
-	long	m_lVipID;		//VIPÀàĞÍ
+	long	m_lMoBean;		//MoDou count
+	long	m_lRplMoney;	//token count
+	long	m_lVipID;		//VIP type
 
     DWORD       m_dwLoginID;    //  Account DB ID
-	DWORD		m_dwDBActId;	// Êı¾İ¿âÕË»§ID
-	dbc::Char	m_chGMLev;		// GMµÈ¼¶
+	DWORD		m_dwDBActId;	// database account ID
+	dbc::Char	m_chGMLev;		// GM level
 	long		m_lMapMaskDBID;
-	dbc::Char	m_chActName[ACT_NAME_LEN];	// ÕËºÅÃû
+	dbc::Char	m_chActName[ACT_NAME_LEN];	// account name
 
-	CCharacter*	m_pCtrlCha;		// µ±Ç°¿ØÖÆ½ÇÉ«
+	CCharacter*	m_pCtrlCha;		// currently controlled character
 
-	CCharacter* m_pMainCha;		// Ö÷Ìå½ÇÉ«
-	DWORD		m_dwLaunchID;	// ½ÇÉ«³öº£´¬Ö»ID
-	BYTE		m_byNumBoat;	// ´¬Ö»µÄÊıÁ¿
+	CCharacter* m_pMainCha;		// master character
+	DWORD		m_dwLaunchID;	// ID of the boat the character takes to sea
+	BYTE		m_byNumBoat;	// number of boats
 	CCharacter* m_Boat[MAX_CHAR_BOAT];
 
-	dbc::uLong	m_ulLoginCha[2];	// µÇÂ½½ÇÉ«£¨ÀàĞÍ£¬Êı¾İ¿âID.0 Ô­Ê¼½ÇÉ«£¬1 ´¬£©
+	dbc::uLong	m_ulLoginCha[2];	// the character logged in (type, database ID. 0 original character, 1 boat)
 
-	// ÁÙÊ±Êı¾İ
+	// temporary data
 	struct
 	{
-		USHORT		m_sBerthID;	// ³öº£´¬Ö»³öº£Êı¾İ´æ´¢
+		USHORT		m_sBerthID;	// storage for the sea-going boat data
 		USHORT		m_sxPos;
 		USHORT		m_syPos;
 		USHORT		m_sDir;			
 	};
 
-	// ´óµØÍ¼
+	// big map
 	struct
 	{
 		long		m_lLightSize;
@@ -313,7 +313,7 @@ private:
 		char		m_chMapMaskChange;
 	};
 
-	// ÒøĞĞ
+	// bank
 	struct
 	{
 		CCharacter	*m_pCBankNpc;
@@ -323,21 +323,21 @@ private:
 		bool		m_bBankChange[MAX_BANK_NUM];
 	};
 
-	// ½¨ÔìµÄ´¬Ö»
+	// boat under construction
 	CCharacter*		m_pMakingBoat;
 
-	// °ÚÌ¯ĞÅÏ¢
+	// stall information
 	mission::CStallData* m_pStallData;
 
-	// ¶ÓÎéÌôÕ½
+	// party challenge
 	struct
 	{
-		dbc::Char	m_chChallengeType;		// ÌôÕ½ÀàĞÍ
-		dbc::Long	m_lChallengeParam[2 + MAX_TEAM_MEMBER * 2 * 2];	// ÌôÕ½µÄ¶ÔÏóĞÅÏ¢
-		CTimer		m_timerChallenge;		// ÌôÕ½ÑûÇë¼ÆÊ±Æ÷
+		dbc::Char	m_chChallengeType;		// challenge type
+		dbc::Long	m_lChallengeParam[2 + MAX_TEAM_MEMBER * 2 * 2];	// challenge target information
+		CTimer		m_timerChallenge;		// challenge invitation timer
 	};
 
-	// µÀ¾ßĞŞÀí
+	// item repair
 	struct
 	{
 		bool		m_bInRepair;
@@ -348,7 +348,7 @@ private:
 		CCharacter*	m_pCRepairman;
 	};
 
-	// µÀ¾ß¾«Á¶/ºÏ³É
+	// item refining/synthesis
 	struct
 	{
 		bool		m_bInForge;
@@ -357,12 +357,12 @@ private:
 		CCharacter*	m_pCForgeman;
 	};
 
-	//²ÊÆ±ÉèÖÃ
+	//lottery settings
 	struct
 	{
 		CCharacter*	m_pCLotteryman;
 	};
-	//¾º¼¼³¡ÉèÖÃAdd by sunny.sun20080716
+	//arena settings. Added by sunny.sun20080716
 	struct
 	{
 		CCharacter * m_pCAmphitheaterman;

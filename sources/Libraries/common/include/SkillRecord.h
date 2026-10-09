@@ -1,4 +1,4 @@
-//======================================================================================================================
+ï»¿//======================================================================================================================
 // FileName: SkillRecord.h
 // Creater: ZhangXuedong
 // Date: 2004.09.01
@@ -13,7 +13,7 @@
 #include "TableData.h"
 #include "SkillBag.h"
 
-const char cchSkillRecordKeyValue = (char)0xfe;				// Îª-1Ê±ÊÇ¶¼¿ÉÒÔÄÃ,Îª0Ê±ÊÇ¿ÕÊÖ,ËùÒÔ¸ÄÎª-2
+const char cchSkillRecordKeyValue = (char)0xfe;				// -1 means "either hand" and 0 means "bare handed", so it was changed to -2
 
 #define	defSKILL_NAME_LEN	17
 #define defSKILL_JOB_SELECT_NUM	9
@@ -39,90 +39,90 @@ enum ESkillItemNeed
 
 enum ESkillObjType
 {
-	// ¸Ã¼¼ÄÜµÄÊ©·ÅÄ¿±êÑ¡Ôñ1¡¢×Ô¼º£»2¡¢¶ÓÓÑ£»3¡¢³¡¾°£»4¡¢µĞÈË£»5¡¢È«Ìå
+	// target selection for this skill: 1 self, 2 party members, 3 scene, 4 enemies, 5 everyone
 
-	enumSKILL_TYPE_SELF		= 1,	// ×ÔÉí
-	enumSKILL_TYPE_TEAM		= 2,	// ¶ÓÓÑ
-	enumSKILL_TYPE_SCENE	= 3,	// ³¡¾°ÌØĞ§
-	enumSKILL_TYPE_ENEMY	= 4,	// µĞÈË
-	enumSKILL_TYPE_ALL		= 5,	// È«Ìå
-	enumSKILL_TYPE_PLAYER_DIE	= 6,	// Íæ¼ÒÊ¬Ìå
-	enumSKILL_TYPE_EXCEPT_SELF  = 7,    // ³ıÁË×Ô¼ºÒÔÍâµÄËùÓĞ½ÇÉ«ºÍ¹ÖÎï
+	enumSKILL_TYPE_SELF		= 1,	// self
+	enumSKILL_TYPE_TEAM		= 2,	// party members
+	enumSKILL_TYPE_SCENE	= 3,	// scene effect
+	enumSKILL_TYPE_ENEMY	= 4,	// enemies
+	enumSKILL_TYPE_ALL		= 5,	// everyone
+	enumSKILL_TYPE_PLAYER_DIE	= 6,	// player corpse
+	enumSKILL_TYPE_EXCEPT_SELF  = 7,    // every character and monster except self
 
-	// ÌØÊâ¼¼ÄÜÀàĞÍ
-	enumSKILL_TYPE_REPAIR	= 17,	// ĞŞ²¹
-	enumSKILL_TYPE_TREE		= 18,	// ¿³Ê÷
-	enumSKILL_TYPE_MINE		= 19,	// ¿ª¿ó
-	enumSKILL_TYPE_TRADE	= 22,	// °ÚÌ¯
-	enumSKILL_TYPE_FISH		= 28,	// ²¶Óã
-	enumSKILL_TYPE_SALVAGE	= 29,	// ´òÀÌ³Á´¬
+	// special skill type
+	enumSKILL_TYPE_REPAIR	= 17,	// repair
+	enumSKILL_TYPE_TREE		= 18,	// chop trees
+	enumSKILL_TYPE_MINE		= 19,	// mine ore
+	enumSKILL_TYPE_TRADE	= 22,	// run a stall
+	enumSKILL_TYPE_FISH		= 28,	// fish
+	enumSKILL_TYPE_SALVAGE	= 29,	// salvage wrecks
 
 };
 
-enum eSelectCha		// ½ö¿Í»§¶ËÓÃ
+enum eSelectCha		// client side only
 {
-	enumSC_NONE = 0,		// ²»ÄÜ¶ÔËùÓĞÈËÊ¹ÓÃ
-	enumSC_ALL,				// ¶ÔËùÓĞÈËÊ¹ÓÃ
-	enumSC_PLAYER,			// ÆäËüÍæ¼Ò,²»°üÀ¨×Ô¼º,ÓÃÓÚ²Ëµ¥
+	enumSC_NONE = 0,		// cannot be used on everyone
+	enumSC_ALL,				// usable on everyone
+	enumSC_PLAYER,			// other players, excluding self; used for menus
 
-	enumSC_ENEMY,			// µĞÈË:¿ÉPKÔò¹ÖÎï+·ÇÍ¬¶ÓÍæ¼Ò,·ñÔò½öÎª¹ÖÎï
-	enumSC_PLAYER_ASHES,	// Íæ¼ÒÊ¬Ìå(ÒÑËÀÍöµÄ)
+	enumSC_ENEMY,			// enemies: monsters plus players not on the same party when PK is allowed, otherwise only monsters
+	enumSC_PLAYER_ASHES,	// player corpse (already dead)
 
-	enumSC_MONS,			// ÆÕÍ¨¹ÖÎï
-	enumSC_MONS_REPAIRABLE, // ¿ÉĞŞ²¹¹ÖÎï
-	enumSC_MONS_TREE,       // Ê÷¹ÖÎï
-	enumSC_MONS_MINE,		// ¿óÊ¯¹ÖÎï
-	enumSC_MONS_FISH,		// Óã¹ÖÎï
-	enumSC_MONS_DBOAT,		// ³Á´¬¹ÖÎï
+	enumSC_MONS,			// ordinary monster
+	enumSC_MONS_REPAIRABLE, // repairable monster
+	enumSC_MONS_TREE,       // tree monster
+	enumSC_MONS_MINE,		// ore monster
+	enumSC_MONS_FISH,		// fish monster
+	enumSC_MONS_DBOAT,		// wreck monster
 
-	enumSC_SELF,			// Íæ¼Ò×Ô¼º
-	enumSC_TEAM,			// ¶ÓÔ±
+	enumSC_SELF,			// the player itself
+	enumSC_TEAM,			// party member
 };
 
 enum ESkillEffType
 {
-	enumSKILL_EFF_BANEFUL	= 0,	// ÓĞº¦µÄ
-	enumSKILL_EFF_HELPFUL	= 1,	// ÓĞÒæµÄ
+	enumSKILL_EFF_BANEFUL	= 0,	// harmful
+	enumSKILL_EFF_HELPFUL	= 1,	// beneficial
 };
 
 enum ESkillUpgrade
 {
-	enumSKILL_UPGRADE_NONE,			// ²»ÄÜÉı¼¶
-	enumSKILL_UPGRADE_CAN,			// ¿ÉÉı¼¶
-	enumSKILL_UPGRADE_MAX,			// ÒÑ¾­Éıµ½×î´óÖµ
+	enumSKILL_UPGRADE_NONE,			// cannot be upgraded
+	enumSKILL_UPGRADE_CAN,			// can be upgraded
+	enumSKILL_UPGRADE_MAX,			// already at maximum level
 };
 
 enum ESkillFightType
 {
-	enumSKILL_LAND_LIVE		= 0, // Â½µØÉú»î¼¼ÄÜ
-	enumSKILL_FIGHT			= 1, // Õ½¶·¼¼ÄÜ
-	enumSKILL_SAIL			= 2, // º½º£¼¼ÄÜ
-	enumSKILL_SEE_LIVE		= 3, // º£ÉÏÉú»î¼¼ÄÜ
+	enumSKILL_LAND_LIVE		= 0, // land life skill
+	enumSKILL_FIGHT			= 1, // combat skill
+	enumSKILL_SAIL			= 2, // sailing skill
+	enumSKILL_SEE_LIVE		= 3, // sea life skill
 };
 
 enum ESkillSrcType
 {
-	enumSKILL_SRC_HUMAN	= 1,	// ÈË
-	enumSKILL_SRC_BOAT	= 2,	// ´¬
+	enumSKILL_SRC_HUMAN	= 1,	// character
+	enumSKILL_SRC_BOAT	= 2,	// ship
 };
 
 enum ESkillTarHabitatType
 {
-	enumSKILL_TAR_LAND	= 1,	// Â½µØ
-	enumSKILL_TAR_SEA	= 2,	// º£Ñó
-	enumSKILL_TAR_LORS	= 3,	// Á½ÆÜ
+	enumSKILL_TAR_LAND	= 1,	// land
+	enumSKILL_TAR_SEA	= 2,	// sea
+	enumSKILL_TAR_LORS	= 3,	// amphibious
 };
 
 enum ESkillType
 {
-	enumSKILL_INBORN	= 0,	// ÌìÉúµÄ¼¼ÄÜ
-	enumSKILL_ACTIVE	= 1,	// Ö÷¶¯µÄ¼¼ÄÜ
-	enumSKILL_PASSIVE	= 2,	// ±»¶¯µÄ¼¼ÄÜ
+	enumSKILL_INBORN	= 0,	// innate skill
+	enumSKILL_ACTIVE	= 1,	// active skill
+	enumSKILL_PASSIVE	= 2,	// passive skill
 };
 
 enum ESkillPhaseType
 {
-	enumSKILL_NOT_MANUAL_ADD   = 6,	// Íæ¼Ò²»ÔÊĞíÊÖ¶¯Éı¼¶
+	enumSKILL_NOT_MANUAL_ADD   = 6,	// players may not upgrade this manually
 };
 
 
@@ -131,89 +131,89 @@ class CSkillRecord : public CRawDataInfo
 public:
 	CSkillRecord();
 
-	short	sID;												// ±àºÅ
-	_TCHAR	szName[defSKILL_NAME_LEN];							// Ãû³Æ
-	char    chFightType;										// ¼¼ÄÜÀàĞÍ£¬Éú»î¼¼ÄÜ£¬Õ½¶·¼¼ÄÜ
-	char	chJobSelect[defSKILL_JOB_SELECT_NUM][2];			// ¿ÉÒÔÑ§Ï°¸Ã¼¼ÄÜµÄÖ°Òµ£¬¼°¶ÔÓ¦¸ÃÖ°Òµ¿ÉÒÔÑ§µ½µÄ×î¸ßµÈ¼¶¡£
-																// 0¡¢¹ÖÎï 1¡¢½£Ê¿ 2¡¢¾Ñ»÷ÊÖ 3¡¢º£¿Í 4¡¢º½º£Ê¿ 5¡¢ÉÌÈË 6¡¢Ò½Éú 7¡¢¼¼Ê¦ 8¡¢ËùÓĞ
-	short	sItemNeed[3][defSKILL_ITEM_NEED_NUM][2];			// ×ó(0)ÓÒ(1)ÊÖ£¬ÉíÌå(2)±ØĞë×°±¸ÏàÓ¦µÄµÀ¾ß²Å¿ÉÊ¹ÓÃ¼¼ÄÜ¡£
-	short	sConchNeed[defSKILL_ITEM_NEED_NUM][3];				// ±´¿ÇĞèÇó£¨×°±¸²¿Î»£¬ÀàĞÍ£¬±àºÅ£»×°±¸²¿Î»£¬ÀàĞÍ£¬±àºÅ£»¡£¡£¡££©
-	char	chPhase;											// ¼¼ÄÜ½×¶Î£º1¡£¹ÌÓĞ¼¼ÄÜ£¬2¡£»ù´¡¼¼ÄÜ£¬3¡£½ø½×¼¼ÄÜ£¬4¡£ÖÕ¼«¼¼ÄÜ£¬5¡£º£ÂÑ¼¼ÄÜ£¬6¡£¼¼ÄÜµÈ¼¶ÄÜ·ñÊÖ¶¯Ìí¼Ó
-	char	chType;												// ¼¼ÄÜÀàĞÍ£º1¡£Ö÷¶¯¼¼ÄÜ£¨ÊÖ¶¯ÊÍ·Å£©£¬2¡£±»¶¯¼¼ÄÜ£¨×Ô¶¯ÊÍ·Å£©
-	short	sLevelDemand;										// Ñ§Ï°¸Ã¼¼ÄÜĞèÒªµÄµÈ¼¶
-	short	sPremissSkill[defSKILL_PRE_SKILL_NUM][2];			// ĞèÒªµÄ3¸öÇ°Ìá¼¼ÄÜ£¨¼¼ÄÜ±àºÅ£¬µÈ¼¶£©
-	char	chPointExpend;										// ÏûºÄµÄ¼¼ÄÜµã
-	char	chSrcType;											// Ê©·ÅÕßĞÎÌ¬£¨ÈË£¬´¬£©
-	char	chTarType;											// Ä¿±êÀàĞÍ£¨Â½µØÉúÎï£¬º£ÉÏÉúÎï£©
-	short	sApplyDistance;										// Ê¹ÓÃ¾àÀë¡£µ¥Î»£ºÃ×
-	char	chApplyTarget;										// Ê¹ÓÃµÄÄ¿±ê¡£
-	char	chApplyType;										// ×÷ÓÃÀàĞÍ£º1¡£µ¥Ìå£¬2¡£·¶Î§£¬3¡£½¦Éä
-	char	chHelpful;											// ¼¼ÄÜÓĞÒæ,»¹ÊÇÓĞº¦
-	short	sAngle;												// ½Ç¶È£¨0-360£©£¬ÓÃÓÚ¡°·¶Î§¡°¹¥»÷ÀàĞÍ¡£
-	short	sRadii;												// °ë¾¶£¬ÓÃÓÚ¡°·¶Î§¡°¹¥»÷ÀàĞÍ¡£
-	char	chRange;											// ¼¼ÄÜÇøÓòĞÎ×´±àºÅ
-	char	szPrepare[defSKILL_RANGE_SET_SCRIPT];				// ×¼±¸¼¼ÄÜ
-	char	szUseSP[defSKILL_EFFECT_SCRIPT_LEN];				// ÏûºÄSP¹«Ê½
-	char	szUseEndure[defSKILL_EFFECT_SCRIPT_LEN];			// ÏûºÄ¡°ÄÍ¾Ã¶È¡°¹«Ê½
-	char	szUseEnergy[defSKILL_EFFECT_SCRIPT_LEN];			// ÏûºÄ¡°ÄÜÁ¿¡°¹«Ê½
-	char	szSetRange[defSKILL_EFFECT_SCRIPT_LEN];				// ¼¼ÄÜÇøÓòÉè¶¨
-	char	szRangeState[defSKILL_EFFECT_SCRIPT_LEN];			// µØ±í×´Ì¬Éè¶¨
-	char	szUse[defSKILL_EFFECT_SCRIPT_LEN];					// Ê©·Å½×¶Î¹«Ê½
-	char	szEffect[defSKILL_EFFECT_SCRIPT_LEN];				// Ğ§¹û½×¶Î¹«Ê½
-	char	szActive[defSKILL_EFFECT_SCRIPT_LEN];				// ÕıĞ§¹û¹«Ê½
-	char	szInactive[defSKILL_EFFECT_SCRIPT_LEN];				// ·´Ğ§¹û¹«Ê½
-	int		nStateID;											// °ó¶¨µÄ¿ÉÊÖ¶¯ÒÆ³ı×´Ì¬±àºÅ
-	short	sSelfAttr[defEFFECT_SELF_ATTR_NUM];					// ×ÔÉíÊôĞÔÊıÖµµÄ±ä»¯£¬¹«Ê½±àºÅ¡£
-	short	sSelfEffect[defSELF_EFFECT_NUM];					// ×ÔÉíĞ§¹û
-	short	sItemExpend[defEXPEND_ITEM_NUM][2];					// ÏûºÄµÄÎïÆ·£¨ID£¬ÊıÁ¿£©
-	short	sBeingTime;											// ³ÖĞøÊ±¼ä
-	short	sTargetAttr[defEFFECT_TAR_ATTR_NUM];				// Ä¿±êÊôĞÔÊıÖµµÄ±ä»¯£¬¹«Ê½±àºÅ¡£
-	short	sSplashPara;										// ½¦Éä²ÎÊı
-	short	sTargetEffect;										// Ä¿±ê³ÖĞøĞ§¹û
-	short	sSplashEffect;										// ½¦Éä³ÖĞøĞ§¹û
-	short	sVariation;											// ±äÉí±àºÅ
-	short	sSummon;											// ÕÙ»½±àºÅ
-	short	sPreTime;											// ÊÍ·ÅÊ±¼ä
-	char	szFireSpeed[defSKILL_EFFECT_SCRIPT_LEN];			// ÔÙÊ©·ÅËÙ¶È¹«Ê½
-	char	chOperate[defSKILL_OPERATE_NUM];					// ÌØÊâ²Ù×÷£º0£¬ÎŞ¡£1£¬ÉÏ´¬¡£2£¬ÏÂ´¬
+	short	sID;												// id
+	_TCHAR	szName[defSKILL_NAME_LEN];							// name
+	char    chFightType;										// skill type: life skill, combat skill
+	char	chJobSelect[defSKILL_JOB_SELECT_NUM][2];			// jobs that may learn this skill, and the highest level each can reach
+																// 0 monster, 1 swordsman, 2 sniper, 3 sailor, 4 navigator, 5 merchant, 6 doctor, 7 technician, 8 all
+	short	sItemNeed[3][defSKILL_ITEM_NEED_NUM][2];			// left (0) / right (1) hand, body (2); the matching item must be equipped before the skill can be used
+	short	sConchNeed[defSKILL_ITEM_NEED_NUM][3];				// shell requirements (slot, type, id; slot, type, id; ...)
+	char	chPhase;											// skill stage: 1 innate, 2 basic, 3 advanced, 4 ultimate, 5 sea egg; 6 whether skill levels may be added manually
+	char	chType;												// skill type: 1 active (cast manually), 2 passive (fires automatically)
+	short	sLevelDemand;										// level required to learn this skill
+	short	sPremissSkill[defSKILL_PRE_SKILL_NUM][2];			// the three prerequisite skills (skill id, level)
+	char	chPointExpend;										// skill points consumed
+	char	chSrcType;											// caster form (character, ship)
+	char	chTarType;											// target type (land creature, sea creature)
+	short	sApplyDistance;										// use distance, in metres
+	char	chApplyTarget;										// the target used
+	char	chApplyType;										// effect type: 1 single target, 2 area, 3 splash
+	char	chHelpful;											// whether the skill is beneficial or harmful
+	short	sAngle;												// angle (0-360), used by the "area" attack type
+	short	sRadii;												// radius, used by the "area" attack type
+	char	chRange;											// skill area shape id
+	char	szPrepare[defSKILL_RANGE_SET_SCRIPT];				// prepare the skill
+	char	szUseSP[defSKILL_EFFECT_SCRIPT_LEN];				// SP cost formula
+	char	szUseEndure[defSKILL_EFFECT_SCRIPT_LEN];			// durability cost formula
+	char	szUseEnergy[defSKILL_EFFECT_SCRIPT_LEN];			// energy cost formula
+	char	szSetRange[defSKILL_EFFECT_SCRIPT_LEN];				// skill area settings
+	char	szRangeState[defSKILL_EFFECT_SCRIPT_LEN];			// terrain state settings
+	char	szUse[defSKILL_EFFECT_SCRIPT_LEN];					// cast stage formula
+	char	szEffect[defSKILL_EFFECT_SCRIPT_LEN];				// effect stage formula
+	char	szActive[defSKILL_EFFECT_SCRIPT_LEN];				// positive effect formula
+	char	szInactive[defSKILL_EFFECT_SCRIPT_LEN];				// negative effect formula
+	int		nStateID;											// ids of the bound states that can be removed manually
+	short	sSelfAttr[defEFFECT_SELF_ATTR_NUM];					// change to the caster's own attribute values; formula id
+	short	sSelfEffect[defSELF_EFFECT_NUM];					// effect on self
+	short	sItemExpend[defEXPEND_ITEM_NUM][2];					// items consumed (id, count)
+	short	sBeingTime;											// duration
+	short	sTargetAttr[defEFFECT_TAR_ATTR_NUM];				// change to the target's attribute values; formula id
+	short	sSplashPara;										// splash parameters
+	short	sTargetEffect;										// lasting effect on the target
+	short	sSplashEffect;										// lasting effect from the splash
+	short	sVariation;											// transformation id
+	short	sSummon;											// summon id
+	short	sPreTime;											// cast time
+	char	szFireSpeed[defSKILL_EFFECT_SCRIPT_LEN];			// recast speed formula
+	char	chOperate[defSKILL_OPERATE_NUM];					// special action: 0 none, 1 board ship, 2 disembark
 
-public:		// ¿Í»§¶Ë±íÏÖÓÃ
-	short	sActionHarm;										// ¶¯×÷ÌØĞ§²¥·ÅÉËº¦±íÏÖ·½Ê½
-	char	chActionPlayType;									// ¶¯×÷²¥·Å·½Ê½:0-Ë³Ğò²¥·Å,1-Ëæ»ú²¥·Å
-	short	sActionPose[defSKILL_POSE_NUM];						// ÊÍ·Å¸Ã¼¼ÄÜÖ÷½ÇµÄ¶¯×÷
-	short	sActionKeyFrme;										// ÈËÊÍ·Å¼¼ÄÜ¶¯×÷¹Ø¼üèå
-	short	sWhop;												// ¹¥»÷ÒôĞ§
-	short	sActionDummyLink[defSKILL_ACTION_EFFECT];			// ÊÍ·ÅÕßÈËÎïlinkµã
-	short	sActionEffect[defSKILL_ACTION_EFFECT];				// ÊÍ·Å¸Ã¼¼ÄÜÖ÷½ÇµÄÌØĞ§
-	short	sActionEffectType[defSKILL_ACTION_EFFECT];			// ÊÍ·Å¸Ã¼¼ÄÜµÄ·½Ê½:0-ÎŞ±ä»¯,1-ÄÜ×Ô¶¯Ëõ·Å
-	short	sItemDummyLink;										// ÊÍ·ÅÕßµÀ¾ßlinkµã
-	short	sItemEffect1[defSKILL_ITEM_EFFECT];					// ÊÍ·ÅÕßµÀ¾ßÌØĞ§,0Î»-µÀ¾ßÌØĞ§,1Î»-Ö´ĞĞÊ±¼äµã
+public:		// for client side presentation
+	short	sActionHarm;										// how damage is presented when the action effect plays
+	char	chActionPlayType;									// action playback: 0 sequential, 1 random
+	short	sActionPose[defSKILL_POSE_NUM];						// the caster's action for this skill
+	short	sActionKeyFrme;										// key frame of the character casting animation
+	short	sWhop;												// attack sound
+	short	sActionDummyLink[defSKILL_ACTION_EFFECT];			// link point on the caster character
+	short	sActionEffect[defSKILL_ACTION_EFFECT];				// the caster's effect for this skill
+	short	sActionEffectType[defSKILL_ACTION_EFFECT];			// how the skill is released: 0 no scaling, 1 scales automatically
+	short	sItemDummyLink;										// link point on the caster's item
+	short	sItemEffect1[defSKILL_ITEM_EFFECT];					// caster item effect; bit 0 = item effect, bit 1 = execution timing
 	short	sItemEffect2[defSKILL_ITEM_EFFECT];					// 
-	short	sSkyEffectActionKeyFrame;							// ·É³öÌØĞ§¶¯×÷¹Ø¼üèå
-	short   sSkyEffectActionDummyLink;							// ·ÉĞĞ³ö·¢µãÈËÎïdummy
-	short   sSkyEffectItemDummyLink;							// ·ÉĞĞ³ö·¢µãµÀ¾ßdummy;
-	short   sSkyEffect;											// ÊÍ·Å¸Ã¼¼ÄÜ·ÉĞĞµÄÌØĞ§
-	short	sSkySpd;											// ·ÉĞĞËÙ¶È
-	short	sWhoped;											// ÊÜ»÷ÒôĞ§
-	short   sTargetDummyLink;									// ÊÜ»÷Õßlinkµã
-	short	sTargetEffectID;									// ÊÜ»÷ÌØĞ§
-	char	chTargetEffectTime;									// ÊÜ»÷ÌØĞ§Ê±¼äµã ,0-¶¯×÷¿ªÊ¼£¬1£­¹Ø¼üÖ¡£¬2£­¶¯×÷½áÊø(·ÉĞĞÌØĞ§ÉËº¦ÎŞĞ§)
-    short   sAgroundEffectID;                                   // ¶ÔÓÚ·¶Î§¹¥»÷,µØÉÏµÄ³öÏÖµÄÌØĞ§£¨°üÀ¨Ë®£©
-	short	sWaterEffectID;										// ¶ÔÓÚ·¶Î§¹¥»÷,Ë®ÃæÉÏµÄ³öÏÖµÄÌØĞ§ 
-	char	szICON[defSKILL_ICON_NAME_LEN];						// ¸Ã¼¼ÄÜÔÚÓÎÏ·½çÃæ±íÏÖµÄÍ¼±ê
-	char	chPlayTime;											// ¼¼ÄÜ²¥·Å´ÎÊı
-	char	szDescribeHint[128];								// ÃèÊö,ÓÃÓÚhint
-	char	szEffectHint[128];									// Ğ§¹û,ÓÃÓÚhint
-	char	szExpendHint[128];									// ÏûºÄ,ÓÃÓÚhint
+	short	sSkyEffectActionKeyFrame;							// key frame of the outgoing effect animation
+	short   sSkyEffectActionDummyLink;							// dummy at the flight origin on the character
+	short   sSkyEffectItemDummyLink;							// é£è¡Œå‡ºå‘ç‚¹é“å…·dummy;
+	short   sSkyEffect;											// the flight effect for this skill
+	short	sSkySpd;											// flight speed
+	short	sWhoped;											// hit sound
+	short   sTargetDummyLink;									// link point on the target being hit
+	short	sTargetEffectID;									// hit effect
+	char	chTargetEffectTime;									// hit effect timing: 0 action start, 1 key frame, 2 action end (no effect for flying damage)
+    short   sAgroundEffectID;                                   // for area attacks, the effect that appears on the ground (including water)
+	short	sWaterEffectID;										// for area attacks, the effect that appears on the water surface
+	char	szICON[defSKILL_ICON_NAME_LEN];						// the icon this skill shows in the game UI
+	char	chPlayTime;											// number of times the animation plays
+	char	szDescribeHint[128];								// description, shown in the tooltip
+	char	szEffectHint[128];									// effect, shown in the tooltip
+	char	szExpendHint[128];									// cost, shown in the tooltip
 
 public:
-    bool    IsPlayCyc()         { return chPlayTime==1;     }   // ÊÇ·ñÑ­»·²¥·Å
-    bool    IsAttackArea()		{ return chApplyType==2;    }   // ÊÇ·ñ¹¥»÷µØÃæ
-	bool	IsHarmRange()		{ return chApplyType!=1;	}	// ÊÇ·ñ·¶Î§ÉËº¦
-    bool    IsActKeyHarm()      { return sActionHarm==1;    }   // ÊÇ·ñ¶¯×÷¹Ø¼üÖ¡ÉËº¦
-    bool    IsEffectHarm()      { return sActionHarm==2;    }   // ÊÇ·ñÌØĞ§ÉËº¦
-    bool    IsNoHarm()          { return sActionHarm==0;    }   // ÎŞÉËº¦¼¼ÄÜ
-	bool	IsShow()			{ return szICON[1]!='\0';	}	// ÊÇ·ñÏÔÊ¾³öÀ´
+    bool    IsPlayCyc()         { return chPlayTime==1;     }   // whether playback loops
+    bool    IsAttackArea()		{ return chApplyType==2;    }   // whether it attacks the ground
+	bool	IsHarmRange()		{ return chApplyType!=1;	}	// whether it deals area damage
+    bool    IsActKeyHarm()      { return sActionHarm==1;    }   // whether damage lands on the action key frame
+    bool    IsEffectHarm()      { return sActionHarm==2;    }   // whether damage comes from the effect
+    bool    IsNoHarm()          { return sActionHarm==0;    }   // skill deals no damage
+	bool	IsShow()			{ return szICON[1]!='\0';	}	// whether it is displayed
 	bool	IsPlayRand()		{ return chActionPlayType==1;	}
 	int		GetPoseNum()		{ return _nPoseNum;			}
 
@@ -221,20 +221,20 @@ public:
     void    SetSkillGrid( SSkillGridEx& v )   { _Skill = v;   }
     SSkillGridEx&     GetSkillGrid()  { return _Skill;        }
 
-	int     GetSPExpend()       { return _Skill.sUseSP;     }   // SPÏûºÄ
-    short   GetRange()          { return _Skill.sRange[1];  }   // ¹¥»÷·¶Î§
+	int     GetSPExpend()       { return _Skill.sUseSP;     }   // SP cost
+    short   GetRange()          { return _Skill.sRange[1];  }   // attack range
     short*  GetParam()          { return &_Skill.sRange[1]; }
-    int     GetShape()          { return _Skill.sRange[0];  }   // ¼¼ÄÜĞÎ×´
-    int     GetDistance()       { return sApplyDistance;    }   // Ê¹ÓÃ¾àÀë
+    int     GetShape()          { return _Skill.sRange[0];  }   // skill shape
+    int     GetDistance()       { return sApplyDistance;    }   // use distance
     int     GetLevel()          { return _Skill.chLv;       }
-    int     GetFireSpeed()      { return _Skill.lResumeTime;}   // ¹¥»÷ËÙ¶È
-    bool    GetIsValid()        { return _Skill.chState!=0; }   // ÊÇ·ñ¿ÉÓÃ
+    int     GetFireSpeed()      { return _Skill.lResumeTime;}   // attack speed
+    bool    GetIsValid()        { return _Skill.chState!=0; }   // whether it is usable
 
 	int     GetUpgrade()		{ return _nUpgrade;			}
 	bool    GetIsUpgrade()		{ return _nUpgrade==enumSKILL_UPGRADE_CAN;	}
 
 	bool	GetIsUse()			{ return chType!=2;			}
-	bool	GetIsHelpful()		{ return chHelpful==1;		}	// ¼¼ÄÜÊÇÓĞÒæµÄ£¬¿ÉÓÃÓÚ°²È«Çø
+	bool	GetIsHelpful()		{ return chHelpful==1;		}	// the skill is beneficial, so it may be used in a safe zone
 
 	void	Refresh( int nJob );
 
@@ -248,21 +248,21 @@ public:
 
 	bool	IsAutoAttack()		{ return !IsPlayCyc() && GetDistance()>0;	}
 
-	void	RefreshPrivateData();				// Ë¢ĞÂÄÚ²¿Êı¾İ
+	void	RefreshPrivateData();				// refresh the internal data
 	
 	bool	IsJobAllow( int nJob );
 	int		GetJobMax( int nJob );
 
 private:
     SSkillGridEx		_Skill;
-	int					_nUpgrade;				// 0-²»ÄÜÉı¼¶,1-¿ÉÉı¼¶,2-ÒÑ¾­Éı¼¶µ½×î´óÖµ
+	int					_nUpgrade;				// 0 cannot be upgraded, 1 can be upgraded, 2 already at maximum level
 
-	bool				_IsActive;				// ÓÃÓÚ¶¯»­±íÏÖ,ÕıÔÚ¼¤»îµÄ»­Ò»¸ö¶¯Ì¬±ß¿ò
-	DWORD				_dwAttackTime;			// ÏÂ´Î¿É¹¥»÷µÄÊ±¼ä
+	bool				_IsActive;				// for the animation: draw an animated border around the active skill
+	DWORD				_dwAttackTime;			// time of the next possible attack
 
-	eSelectCha			_eSelectCha;			// ÓÃÓÚ³¡¾°ÅĞ¶Ï¿ÉÒÔÑ¡ÔñÄÇĞ©Íæ¼Ò¹¥»÷
+	eSelectCha			_eSelectCha;			// used by scene logic to decide which players may be attacked
 
-	int					_nPoseNum;				// ×Ü¹²µÄpose¸öÊı
+	int					_nPoseNum;				// total number of poses
 
 	// added by clp
 public:
@@ -287,7 +287,7 @@ public:
 
 protected:
 
-	static CSkillRecordSet* _Instance; // Ïàµ±ÓÚµ¥¼ü, °Ñ×Ô¼º¼Ç×¡
+	static CSkillRecordSet* _Instance; // acts like a singleton: keeps a reference to itself
 
 	virtual CRawDataInfo* _CreateRawDataArray(int nCnt)
 	{

@@ -443,6 +443,7 @@ AuthQueue::~AuthQueue() {}
 void AuthQueue::ProcessData(DataSocket* datasock, RPacket& rpkt)
 {
     bool bRetry = true;
+    int  l_retry = 0;
     unsigned short usCmd = rpkt.ReadCmd();
 
     // µÃµ½µ±Ç°Ïß³Ì¶ÔÏó
@@ -493,9 +494,12 @@ void AuthQueue::ProcessData(DataSocket* datasock, RPacket& rpkt)
 		catch (CSQLException* se)
 		{
             LG("AuthProcessDataExcp", "SQL Exception: %s\n", se->m_strError.c_str());
+            delete se;
 
-			// ÖØÁ¬
-			pThis->Reconnt();
+            if (++l_retry > 3 || !pThis->Reconnt(30000))
+            {
+                bRetry = false;
+            }
         }
 		catch (...)
 		{
@@ -508,6 +512,7 @@ void AuthQueue::ProcessData(DataSocket* datasock, RPacket& rpkt)
 WPacket AuthQueue::ServeCall(DataSocket* datasock, RPacket& rpkt)
 {
     bool bRetry = true;
+    int  l_retry = 0;
     unsigned short usCmd = rpkt.ReadCmd();
 	WPacket wpkt = datasock->GetWPacket();
 
@@ -542,9 +547,16 @@ WPacket AuthQueue::ServeCall(DataSocket* datasock, RPacket& rpkt)
 		catch (CSQLException* se)
 		{
             LG("AuthServeCallExcp", "SQL Exception: %s\n", se->m_strError.c_str());
-            
-            // ÖØÁ¬
-            pThis->Reconnt();
+            delete se;
+
+            // Retrying the whole login in here used to loop forever: m_semWait was
+            // never released, so the GroupServer RPC waited out its whole timeout and
+            // every login came back as a contentless packet -> ERR_PT_NETEXCP (522),
+            // while this worker thread was lost to the auth queue for good.
+            if (++l_retry > 3 || !pThis->Reconnt(30000))
+            {
+                bRetry = false;
+            }
         }
 		catch (...)
 		{
@@ -646,7 +658,10 @@ void AuthThread::Init()
 
 	SetRunLabel(-1);
 
+    int l_attempt = 0;
     while (!Connect()) {
+		LG("AuthDBExcp", "AuthThread::Init(): database connect failed (attempt %d), "
+			"retrying in 5s\n", ++l_attempt);
 		if (GetExitFlag()) return;
         Sleep(5000);
     }
@@ -679,8 +694,8 @@ bool AuthThread::Connect()
     }
 
     // Á¬½Ódatabase
-    char conn_str[512] = {0};
-    char const* conn_fmt = "DRIVER={SQL Server};SERVER=%s;UID=%s;PWD=%s;DATABASE=%s";
+    char conn_str[1024] = {0};
+    char const* conn_fmt = "DRIVER={ODBC Driver 17 for SQL Server};SERVER=%s;UID=%s;PWD=%s;DATABASE=%s;Encrypt=no;TrustServerCertificate=yes";
     sprintf(conn_str, conn_fmt, m_strSrvip.c_str(), m_strUserId.c_str(),
             m_strUserPwd.c_str(), m_strSrvdb.c_str());
     ret = m_pAuth->Open(conn_str);
@@ -705,15 +720,26 @@ void AuthThread::Disconn()
         m_pAuth = NULL;
     }    
 }
-void AuthThread::Reconnt()
+bool AuthThread::Reconnt(uLong ulTimeoutMs)
 {
 	Disconn();
+	const uLong l_deadline = GetTickCount() + ulTimeoutMs;
 	while (!Connect()) {
 		LG("As2", RES_STRING(AS_ACCOUNTSERVER2_CPP_00002));
-		if (GetExitFlag()) return;
+		LG("AuthDBExcp", "AuthThread::Reconnt(): database still unreachable, retrying\n");
+		if (GetExitFlag())
+		{
+			return false;
+		}
+		if (static_cast<uLong>(GetTickCount() - l_deadline) >= ulTimeoutMs)
+		{
+			LG("AuthDBExcp", "AuthThread::Reconnt(): giving up after %u ms\n", ulTimeoutMs);
+			return false;
+		}
 
 		Sleep(5000);
 	}
+	return true;
 }
 void AuthThread::LoadConfig()
 {
@@ -796,7 +822,13 @@ void AuthThread::QueryAccount(RPacket rpkt)
 
 	// ²éÑ¯¶ÔÏó
 	SetRunLabel(12);
-	CSQLRecordset rs(*m_pAuth);
+    if (m_pAuth == NULL)
+    {
+		LG("AuthDBExcp", "AuthThread::QueryAccount(): no database connection\n");
+		m_AcctInfo.bExist = false;
+		return;
+    }
+    CSQLRecordset rs(*m_pAuth);
 
 	// ×éÖ¯SQL²éÑ¯Óï¾ä
 	sprintf(szSql, "select id, password, sid, login_status, login_group, ban, datediff(s, enable_login_time, getdate()) as protect_time from account_login where name='%s'",
@@ -1020,7 +1052,7 @@ WPacket AuthThread::AccountLogin(DataSocket* datasock)
 	}
 	else if (m_AcctInfo.nStatus == ACCOUNT_SAVING)
 	{
-		//帐号在锁定状态(保存角色)
+		// account is locked (character save in progress)
 		if (m_AcctInfo.nProtectTime >= 0 && m_AcctInfo.nProtectTime < SAVING_TIME)
 		{
 			wpkt.WriteShort(ERR_AP_SAVING);

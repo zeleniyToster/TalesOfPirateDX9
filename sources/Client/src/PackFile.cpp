@@ -1,10 +1,10 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "packfile.h"
 
 //---------------------------------------------------------------------------
 // class CPackFile
 //---------------------------------------------------------------------------
-CPackFile::CPackFile(void) // ÎÄ¼þ´ò°ü
+CPackFile::CPackFile(void) // file packing
 {
 	_pPackFile = NULL;
 }
@@ -84,7 +84,7 @@ bool	CPackFile::LoadPackFile(char* pszFile)
 	return true;
 }
 
-void	CPackFile::Clear() // ´ò°üÎÄ¼þÐÅÏ¢Çå³þ
+void	CPackFile::Clear() // the packed file information has been read
 {
 	if(_pPackFile)
 		fclose(_pPackFile);

@@ -1,4 +1,4 @@
-// TestLog.cpp : implementation file
+ï»¿// TestLog.cpp : implementation file
 //
 
 #include "stdafx.h"
@@ -35,7 +35,7 @@ void CTestLog::OnBnClickedOk()
     {
     // TODO: Add your control notification handler code here
 
-    // µÃµ½LOGµÄÀàĞÍ£¬µ¥ĞĞ
+    // get the LOG type, single line
     static char type[81] = {0};
     int cnt = 0;
     cnt = m_LogType.GetLine(0, type, sizeof type);
@@ -46,12 +46,12 @@ void CTestLog::OnBnClickedOk()
     else
         {
         type[min(cnt, 8)] = 0;
-        } // ×î¶à8¸ö×Ö·û
+        } // at most 8 characters
 
-    // µÃµ½LOGµÄÄÚÈİ£¨ÕâÀïÌØÊâ»¯ÁË£©
+    // get the LOG content (specialised here)
     static char ctx[81] = "this is log context";
 
-    // Êä³öµ÷ÊÔĞÅÏ¢
+    // emit debug information
     LG(type, ctx);
     //GPL(type, 20, 100, ctx);
 

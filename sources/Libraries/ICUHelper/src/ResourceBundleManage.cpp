@@ -1,4 +1,4 @@
-#include "resourcebundlemanage.h"
+ï»¿#include "resourcebundlemanage.h"
 
 #include "windows.h"
 #include <string>
@@ -73,7 +73,7 @@ CResourceBundleManage::CResourceBundleManage(const char* configFileName)
     {
         throw "GetModuleFileName failed \n"; 
     }
-	// È¡µÃÈë¿Ú³ÌÐòµÄÂ·¾¶
+	// gets the path of the entry program
 	const char* ret = strrchr(szPath, '\\');
 	long dirLength = (long)(ret - szPath);
 
@@ -148,13 +148,13 @@ CResourceBundleManage::~CResourceBundleManage(void)
 	Release();
 }
 
-// È¡µÃ×ÊÔ´¸öÊý
+// gets the number of resources
 int CResourceBundleManage::GetSize(void)
 {
 	return (int)mapRes.size();
 }
 
-// °ÑUnicode×Ö·û´®×ª»»Îª¶à×Ö½Ú±¾»ú±àÂë
+// converts a Unicode string to multibyte native encoding
 UErrorCode CResourceBundleManage::ToCodePageString(UConverter *conv, UChar* source, char* target, int destCapacity, int& len)
 {
   UErrorCode status = U_ZERO_ERROR;
@@ -167,7 +167,7 @@ UErrorCode CResourceBundleManage::ToCodePageString(UConverter *conv, UChar* sour
   return status;
 }
 
-// ³õÊ¼»¯×ÊÔ´¹ÜÀíÆ÷
+// initialises the resource manager
 bool CResourceBundleManage::Init()
 {
 	int len = 0;
@@ -212,7 +212,7 @@ bool CResourceBundleManage::Init()
 	return false;
 }
 
-// ÊÍ·Å×ÊÔ´
+// releases the resources
 void CResourceBundleManage::Release(void)
 {
 	m_ResDir.reset(nullptr);
@@ -234,7 +234,7 @@ void CResourceBundleManage::Release(void)
 	}
 }
 
-// ¸ù¾ÝIDÈ¡µÃ×Ö·û´®
+// gets the string by ID
 const char* CResourceBundleManage::LoadResString(const char* key)
 {
 	const char* ret ="";
@@ -268,7 +268,7 @@ UnicodeString CResourceBundleManage::LoadUResString(const char* key)
 	return m_pResourceBundle->getStringEx(key, status);
 }
 
-// ¸ñÊ½¸ù¾Ý²ÎÊý»¯Ò»¸ö×Ö·û´®
+// formats a string according to the parameters
 int CResourceBundleManage::Format(const char* key, CFormatParameter& parameter, char buffer[])
 {
     UErrorCode status = U_ZERO_ERROR;

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "SkillRecord.h"
 
 #define ACTION_BEGIN_HIT	-1
@@ -10,7 +10,7 @@ class CActor;
 class CSkillRecord;
 class CServerHarm;
 
-// Ò»´ÎÐÔµÄÊÜ»÷ÌØÐ§,ÈçµØÃæÌØÐ§,ÊÜ»÷ÒôÐ§,ÈËÎïÊÜ»÷ÌØÐ§µÈ
+// one shot hit effects, such as ground effects, hit sounds, character hit effects and the like
 class CHitRepresent 
 {
 public:
@@ -26,24 +26,24 @@ public:
 
 private:
 	CSkillRecord*	_pSkill;
-	CCharacter*		_pTarget;				// ¹¥»÷µ¥ÈËÊ±µÄÄ¿±ê
-	int				_nAttackX,  _nAttackY;	// ¹¥»÷Ê±¹¥»÷ÖÐÐÄµã
-	CCharacter*		_pAttack;				// ¹¥»÷·½, ÓÃÓÚÏÔÊ¾ÊÜ»÷µÄ·½Ïò,¿ÉÄÜÎª¿Õ
+	CCharacter*		_pTarget;				// the target when attacking a single character
+	int				_nAttackX,  _nAttackY;	// the centre point of the attack
+	CCharacter*		_pAttack;				// the attacker, used to show the direction of the hit; may be empty
 
 private:
 	void	Exec( CServerHarm* pHarm );
 
 };
 
-// ÓÃÓÚ·ÉÐÐÌØÐ§Ê§Ð§ºó²¥·ÅÑÓ³ÙµÄÊÜ»÷ÌØÐ§,ÑÓ³ÙÌØÐ§,ÍøÂçÉËº¦°üµÈ
+// used to play delayed hit effects after a flying effect has expired, delayed effects, network damage packets and the like
 class CEffDelay
 {
 public:
     enum ePlayStyle
     {
-        enumNone,       // Ê²Ã´ÊÂ¶¼²»×ö 
-        enumPos,        // ÔÚÄ³µØµã²¥·Å
-        enumHitEffect,  // ÊÜ»÷ÌØÐ§
+        enumNone,       // does nothing
+        enumPos,        // plays at a given location
+        enumHitEffect,  // hit effect
     };
 
 public:
@@ -70,7 +70,7 @@ private:
 
 };
 
-// ÄÚÁªº¯Êý
+// inline function
 inline void CHitRepresent::EffectExec( CServerHarm* pHarm )
 {
 	if( !_pSkill->IsEffectHarm() ) return;

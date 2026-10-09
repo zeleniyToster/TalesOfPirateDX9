@@ -1,4 +1,4 @@
-//=============================================================================
+ï»¿//=============================================================================
 // FileName: SkillStateRecord.cpp
 // Creater: ZhangXuedong
 // Date: 2005.02.04
@@ -41,56 +41,56 @@ BOOL CSkillStateRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<s
     string strList[80];
 	string strLine;
 
-	// ±àºÅ
+	// id
 	pInfo->chID = (char)pInfo->nID;
-	// Ãû³Æ
+	// name
 	strncpy(pInfo->szName, pInfo->szDataName, defSKILLSTATE_NAME_LEN);
 	pInfo->szName[defSKILLSTATE_NAME_LEN - 1] = '\0';
-	// ´¥·¢µÄÊ±¼ä¼ä¸ô£¨µ¥Î»£ºÃë£©
+	// interval between ticks, in seconds
 	pInfo->sFrequency = Str2Int(ParamList[m++]);
-	// ×´Ì¬µ½´«µÝÄ¿±êÉÏµÄ×÷ÓÃÊ±¼ä½Å±¾
+	// script applying the state to the target
 	strncpy(pInfo->szOnTransfer, ParamList[m++].c_str(), defSKILLSTATE_SCRIPT_NAME);
 	pInfo->szOnTransfer[defSKILLSTATE_SCRIPT_NAME - 1] = '\0';
-	// Ê¹ÓÃÐ§¹û½Å±¾
+	// script for the use effect
 	strncpy(pInfo->szAddState, ParamList[m++].c_str(), defSKILLSTATE_SCRIPT_NAME);
 	pInfo->szAddState[defSKILLSTATE_SCRIPT_NAME - 1] = '\0';
-	// ÒÆ³ýÐ§¹û½Å±¾
+	// script for the removal effect
 	strncpy(pInfo->szSubState, ParamList[m++].c_str(), defSKILLSTATE_SCRIPT_NAME);
 	pInfo->szSubState[defSKILLSTATE_SCRIPT_NAME - 1] = '\0';
-	// Ìæ»»²ßÂÔ
+	// replacement policy
 	pInfo->chAddType = Str2Int(ParamList[m++]);
-	// ÊÇ·ñ¿ÉÓÉÖÕ¶ËÈ¡Ïû
+	// whether the client may cancel it
 	pInfo->bCanCancel = Str2Int(ParamList[m++]) != 0 ? true : false;
-	// ÊÇ·ñÄÜ¹»ÒÆ¶¯
+	// whether the character can move
 	pInfo->bCanMove = Str2Int(ParamList[m++]) ? true : false;
-	// ÊÇ·ñÄÜ¹»Ê¹ÓÃÄ§·¨¼¼ÄÜ
+	// whether magic skills can be used
 	pInfo->bCanMSkill = Str2Int(ParamList[m++]) ? true : false;
-	// ÊÇ·ñÄÜ¹»Ê¹ÓÃÆÕÍ¨¼¼ÄÜ
+	// whether normal skills can be used
 	pInfo->bCanGSkill = Str2Int(ParamList[m++]) ? true : false;
-	// ÊÇ·ñÄÜ¹»½»Ò×
+	// whether trading is allowed
 	pInfo->bCanTrade = Str2Int(ParamList[m++]) ? true : false;
-	// ÊÇ·ñÄÜ¹»Ê¹ÓÃÎïÆ·
+	// whether items can be used
 	pInfo->bCanItem = Str2Int(ParamList[m++]) ? true : false;
-	// ÊÇ·ñÎÞµÐ
+	// whether the character is invulnerable
 	pInfo->bCanUnbeatable = Str2Int(ParamList[m++]) ? true : false;
-	// ÊÇ·ñÄÜ¹»±»Ê¹ÓÃÎïÆ·
+	// whether items can be used on the character
 	pInfo->bCanItemmed = Str2Int(ParamList[m++]) ? true : false;
-	// ÊÇ·ñÄÜ¹»±»Ê¹ÓÃ¼¼ÄÜ
+	// whether skills can be used on the character
 	pInfo->bCanSkilled = Str2Int(ParamList[m++]) ? true : false;
-	// ÊÇ·ñÒþÉí
+	// whether the character is invisible
 	pInfo->bNoHide = Str2Int(ParamList[m++]) ? true : false;
-	// ÊÇ·ñ±»Ç¿ÖÆÏÔÐÎ
+	// whether the character is force-revealed
 	pInfo->bNoShow = Str2Int(ParamList[m++]) ? true : false;
-	// ÊÇ·ñ¿É²Ù×÷µÀ¾ß
+	// whether items can be manipulated
 	pInfo->bOptItem = Str2Int(ParamList[m++]) ? true : false;
-	// ÊÇ·ñ¿É²Ù×÷µÀ¾ß
+	// whether items can be manipulated
 	pInfo->bTalkToNPC = Str2Int(ParamList[m++]) ? true : false;
-	// ½â³ýµÄÐ§¹û±àºÅ
+	// id of the effect that is removed
 	pInfo->bFreeStateID = Str2Int(ParamList[m++]);
 
-	// ÆÁÄ»Ð§¹û
+	// screen effect
 	pInfo->chScreen = Str2Int(ParamList[m++]);
-	// ³öÉú±íÏÖ
+	// spawn presentation
 	memset( pInfo->nActBehave, 0, sizeof(pInfo->nActBehave) );
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
@@ -100,24 +100,24 @@ BOOL CSkillStateRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<s
 		pInfo->nActBehave[i] = Str2Int(strList[i]);
 	}
 
-	//¿Í»§¶Ë±íÏÖ±êÊ¶
+	// client presentation flag
     pInfo->sChargeLink = Str2Int(ParamList[m++]);
 
-    // µØÃæ³ÖÐøÌØÐ§
+    // lasting ground effect
     pInfo->sAreaEffect = Str2Int(ParamList[m++]);
-	// µØÃæ×´Ì¬ÌØÐ§,ÊÇ·ñ½öÏÔÊ¾ÖÐÐÄµã
+	// ground state effect; whether only the centre point is drawn
     pInfo->IsShowCenter = Str2Int(ParamList[m++]) ? true : false;
-	// ¹ÒÐ§¹û·½POSE
+	// pose of the entity the effect is applied to
 	pInfo->IsDizzy = Str2Int(ParamList[m++]) ? true : false;
-	// ¹ÒÐ§¹û·½ÌØÐ§±íÏÖ
+	// effect presentation for the entity the effect is applied to
 	pInfo->sEffect = Str2Int(ParamList[m++]);
-	// ¹ÒÌØÐ§Íæ¼ÒµÄ²¥·Ådummyµã
+	// dummy point used to play the effect on the affected player
 	pInfo->sDummy1 = Str2Int(ParamList[m++]);
-	// ¸Ã×´Ì¬ÏÂÊÜ»÷ÌØÐ§±íÏÖ
+	// hit effect shown while in this state
 	pInfo->sBitEffect = Str2Int(ParamList[m++]);
-	// ÌØÐ§²¥·Ådummyµã
+	// dummy point used to play the effect
 	pInfo->sDummy2 = Str2Int(ParamList[m++]);
-	// ÖÐ¸ÃÐ§¹û¹ÒÔÚÉíÉÏµÄICON±íÏÖ
+	// icon shown for the effect while it is attached to the character
 	pInfo->sIcon = Str2Int(ParamList[m++]);
 
 	memset(pInfo->szIcon, 0, sizeof(pInfo->szIcon));
@@ -142,6 +142,6 @@ void CSkillStateRecordSet::_ProcessRawDataInfo(CRawDataInfo *pInfo)
 {
 	CSkillStateRecord *pState = (CSkillStateRecord*)pInfo;
 
-    // ¸üÐÂ¶¯Ì¬ÊôÐÔ
+    // refresh the dynamic attributes
 	pState->RefreshPrivateData();	
 }

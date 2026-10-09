@@ -1,9 +1,9 @@
-//--------------------------------------------------------------
-// Ãû³Æ:±íµ¥¹ÜÀíÀà
-// ×÷Õß:lh 2004-07-08
-// Éè¼ÆË¼Ïë:¹ÜÀíËùÓĞ±íµ¥
-// ÓÃÍ¾:ÏÔÊ¾,Òş²Ø,²éÕÒ±íµ¥,ÇĞ»»±íµ¥Ä£°å,Ìá¹©È«¾Ö¹³×Ó»Øµ÷½Ó¿Ú
-// ×îºóĞŞ¸ÄÈÕÆÚ:2004-10-09
+ï»¿//--------------------------------------------------------------
+// Name: form management class
+// Author: lh 2004-07-08
+// Design: manages every form
+// Purpose: show, hide, find forms, switch the form template, provide a global hook callback interface
+// Last modified date: 2004-10-09
 //--------------------------------------------------------------
 #pragma once
 #include "uicompent.h"
@@ -18,7 +18,7 @@ typedef bool (*KeyDownEvent) (int& key);
 typedef bool (*KeyCharEvent) (char& key);
 typedef bool (*MouseEvent) (int& x, int& y, DWORD& mouse);
 typedef bool (*MouseScrollEvent) (int& nScroll);
-typedef bool (*HotKeyEvent) ( char& key, int& control );	// ·µ»ØtrueÖĞ¶Ï
+typedef bool (*HotKeyEvent) ( char& key, int& control );	// returning true interrupts
 
 
 class CFormMgr
@@ -28,10 +28,10 @@ public:
 	CFormMgr();
 	~CFormMgr();
 
-	static void		SetDebugMode(bool v) { _IsDebugMode=v;}		//ÉèÖÃÊÇ·ñÆô¶¯µ÷ÊÔÄ£Ê½£¨ÓÉ¿ØÖÆÌ¨ÃüÁîµ÷ÓÃ£©-added by Arcol
-	void			ShowDebugInfo();							//ÏÔÊ¾µ÷ÊÔĞÅÏ¢ -added by Arcol
-	static void		SetDrawFrameInDebugMode(bool v)	{_IsDrawFrameInDebugMode=v;}	//ÉèÖÃÔÚµ÷ÊÔÄ£Ê½ÏÂÊÇ·ñÏÔÊ¾´°¿Ú±ß¿ò -added by Arcol
-	static void		SetDrawBackGroundInDebugMode(bool v) {_IsDrawBackgroundInDebugMode=v;}	//ÖÃÔÚµ÷ÊÔÄ£Ê½ÏÂÊÇ·ñÏÔÊ¾µ×É« -added by Arcol
+	static void		SetDebugMode(bool v) { _IsDebugMode=v;}		//sets whether to start debug mode (called by a console command) -added by Arcol
+	void			ShowDebugInfo();							//shows debug information -added by Arcol
+	static void		SetDrawFrameInDebugMode(bool v)	{_IsDrawFrameInDebugMode=v;}	//sets whether window borders are shown in debug mode -added by Arcol
+	static void		SetDrawBackGroundInDebugMode(bool v) {_IsDrawBackgroundInDebugMode=v;}	//sets whether the background colour is shown in debug mode -added by Arcol
 
 	bool			AddForm( CForm* form, int templete=0 );
 
@@ -39,7 +39,7 @@ public:
 	unsigned int	GetFormTempleteMax()			{ return (unsigned int)_showforms.size();	}
 	int				GetFormTempletetNum()			{ return _nTempleteNo;						}
 
-	bool			SwitchTemplete( int n );		// ÇĞ»»µ±Ç°Ä£°å,Èç¹ûÎª-1,ÔòÇĞ»»µ½Ä¬ÈÏÄ£°å
+	bool			SwitchTemplete( int n );		// switches the current template; if it is -1, switch to the default template
 
 public:
 	bool			Init(HWND hWnd);
@@ -61,15 +61,15 @@ public:
 
 	CForm*			GetHitForm( int x, int y );
 
-	CForm*			Find( const char * );			// ÔÚµ±Ç°Ä£°åÖĞ£¬²éÕÒForm
-	CForm*			Find( const char *str, int no );// ÔÚnoÄ£°åÖĞ£¬²éÕÒForm
-	CForm*			FindAll( const char* );			// ÔÚËùÓĞ±íµ¥ÖĞ£¬²éÕÒForm
+	CForm*			Find( const char * );			// looks up a Form in the current template
+	CForm*			Find( const char *str, int no );// looks up a Form in the 'no' template
+	CForm*			FindAll( const char* );			// looks up a Form among every form
 
-	CForm*			FindESCForm();					// ²éÕÒ¿ÉÓÃESC¹Ø±ÕµÄForm
+	CForm*			FindESCForm();					// looks up a Form that can be closed with ESC
 	int				ModalFormNum()					{ return (int)_modal.size();		}
 
 	typedef void (*FormFun)(CForm* pSender);
-	void			ForEach( FormFun pFun );		// ËùÓĞForm¶¼Ö´ĞĞÒ»´ÎpFunº¯Êı
+	void			ForEach( FormFun pFun );		// every Form runs pFun once
 
 public:
 	void			SetEnabled( bool v )			{ _bEnabled = v;	}
@@ -77,14 +77,14 @@ public:
     void            ResetAllForm();
     void            SetScreen();
 
-	void			SetEnableHotKey(int flag, bool v);		// Î÷ÃÅÎÄµµĞŞ¸Ä
-	bool			GetEnableHotKey()				{ return _nEnableHotKey == 0xFFFFFFFF; }// Î÷ÃÅÎÄµµĞŞ¸Ä
+	void			SetEnableHotKey(int flag, bool v);		// revised per the Ximen document
+	bool			GetEnableHotKey()				{ return _nEnableHotKey == 0xFFFFFFFF; }// revised per the Ximen document
 
 	static bool		IsMouseInGui()					{ return _eMouseAction==enumMA_Gui;	}
 	static eMouseAction	GetMouseAction()			{ return _eMouseAction;	}
 
-public:	// È«¾Ö¹³×Ó
-	bool			AddFormInit( FormMgrEvent pInitFun );	// ¶ÁÈë½Å±¾ºó,³õÊ¼»¯Ê±ÊÂ¼ş
+public:	// global hook
+	bool			AddFormInit( FormMgrEvent pInitFun );	// the event run during initialisation after the script is read
 
 	bool			AddKeyDownEvent( KeyDownEvent event );
 	bool			DelKeyDownEvent( KeyDownEvent event );
@@ -113,7 +113,7 @@ private:
 	void			_ShowModal( CForm* form );
     void            _ModalClose( CForm* form );
 
-	void			_SetNewActiveForm();		// µ±Ç°¼¤»îform¶ªÊ§ºó£¬ÒªÑ°ÕÒÒ»¸öĞÂµÄform¼¤»î
+	void			_SetNewActiveForm();		// when the currently active form is lost, a new form has to be found and activated
 
 	void			_InitFormID();
 
@@ -126,9 +126,9 @@ private:
 private:
 	typedef std::list<CForm*> vfrm;
 	vfrm			_allForms;
-	vfrm*			_forms;						// ·ÇÄ£Ì¬ÏÔÊ¾±íµ¥×ÊÔ´,µÚÒ»¸öÎªµ±Ç°¼¤»îµÄµÄ±íµ¥
-	vfrm			_modal;						// ÕıÔÚÏÔÊ¾µÄÄ£Ì¬¿ò
-    vfrm            _show;                      // ÕıÔÚÏÔÊ¾µÄ·ÇÄ£Ì¬¿ò
+	vfrm*			_forms;						// the resources for the modeless form display, the first being the currently active form
+	vfrm			_modal;						// the modal box being displayed
+    vfrm            _show;                      // the modeless box being displayed
 
 	typedef std::vector<vfrm*> frmtemplete;
 	frmtemplete		_showforms;
@@ -136,7 +136,7 @@ private:
 
 	bool			_bEnabled;		
 	bool			_bInit;
-	int				_nEnableHotKey;		// Î÷ÃÅÎÄµµĞŞ¸Ä
+	int				_nEnableHotKey;		// revised per the Ximen document
 
 	typedef std::vector<KeyDownEvent>	vkeydowns;
 	vkeydowns		_OnKeyDown;
@@ -156,16 +156,16 @@ private:
 	typedef std::vector<HotKeyEvent>		vhotkey;
 	vhotkey			_vhotkey;
 
-	int				_nTempleteNo;				// µ±Ç°µÄÄ£°åºÅ
+	int				_nTempleteNo;				// the current template number
 
-    int             _nMouseHover;               // Êó±êÔÚ²»×öÈÎºÎ²Ù×÷ÒÑ¾­¶àÉÙÊ±¼ä
+    int             _nMouseHover;               // how long the mouse has been idle
     
     CGuiData*       _pHintGui;
 
 	static eMouseAction		_eMouseAction;
-	static bool		_IsDebugMode;				// ÊÇ·ñÔÚµ÷ÊÔÄ£Ê½ -added by Arcol
-	static bool		_IsDrawFrameInDebugMode;	// ½öÓÃÓÚµ÷ÊÔÄ£Ê½ -added by Arcol
-	static bool		_IsDrawBackgroundInDebugMode;	// ½öÓÃÓÚµ÷ÊÔÄ£Ê½ -added by Arcol
+	static bool		_IsDebugMode;				// whether it is in debug mode -added by Arcol
+	static bool		_IsDrawFrameInDebugMode;	// debug mode only -added by Arcol
+	static bool		_IsDrawBackgroundInDebugMode;	// debug mode only -added by Arcol
 
 private:
 	void			_DelForm( vfrm& list, CForm* frm );

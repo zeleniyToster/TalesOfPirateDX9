@@ -1,4 +1,4 @@
-//=============================================================================
+ï»¿//=============================================================================
 // FileName: LevelRecord.h
 // Creater: ZhangXuedong
 // Date: 2004.12.10
@@ -19,9 +19,9 @@ class CLevelRecord : public CRawDataInfo
 public:
 	//CLevelRecord();
 
-	long	lID;			// ±àºÅ
-	short	sLevel;			// µÈ¼¶
-	unsigned int	ulExp;	// ¾­ÑéÖµ
+	long	lID;			// id
+	short	sLevel;			// level
+	unsigned int	ulExp;	// experience
 };
 
 class CLevelRecordSet : public CRawDataSet
@@ -39,7 +39,7 @@ public:
 
 protected:
 
-	static CLevelRecordSet* _Instance; // Ïàµ±ÓÚµ¥¼ü, °Ñ×Ô¼º¼Ç×¡
+	static CLevelRecordSet* _Instance; // acts like a singleton: keeps a reference to itself
 
 	virtual CRawDataInfo* _CreateRawDataArray(int nCnt)
 	{

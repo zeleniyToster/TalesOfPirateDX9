@@ -1,8 +1,8 @@
-//----------------------------------------------------------------------
-// Ãû³Æ:ÁÐ±í
-// ×÷Õß:lh 2004-07-21
-// Ë¼Ïë:ÁÐ±íÖÐ¼¯ºÏCListItems,CListItemsÖÐ¼¯ºÏCItemRow
-// ×îºóÐÞ¸ÄÈÕÆÚ:2004-10-09
+ï»¿//----------------------------------------------------------------------
+// Name: list
+// Author: lh 2004-07-21
+// Idea: the list holds CListItems, and CListItems holds CItemRow
+// Last modified date: 2004-10-09
 //----------------------------------------------------------------------
 #pragma once
 #include "uicompent.h"
@@ -15,7 +15,7 @@ namespace GUI
 
 class CList;
 
-// Ñ¡ÔñÌõ
+// selection bar
 class CSelectItem
 {
 public:
@@ -45,10 +45,10 @@ private:
 	void		_Copy( const CSelectItem& rhs );
 
 private:	
-	CItemRow*	_pItem;				// Ñ¡ÔñµÄItem
-	bool		_isEnabled;			// ÊÇ·ñÊ¹ÓÃ
+	CItemRow*	_pItem;				// the selected Item
+	bool		_isEnabled;			// whether it is used
 	bool		_isSelect;
-	int			_nIndex;			// Ñ¡ÔñµÄË÷Òý£¬Ã»ÓÐÑ¡ÔñÎª-1
+	int			_nIndex;			// the selected index; -1 when nothing is selected
 	CGuiPic*	_pImage;
 
 private:
@@ -76,7 +76,7 @@ public:
 	virtual unsigned int GetColumn() { return 1; }
 	virtual CItemRow*	Add( const char* str, DWORD c );
 
-	virtual void		SetRect( int x1, int y1, int x2, int y2, int rowheight ); // ÉèÖÃ¿ÉÒÔµã»÷µÄ·¶Î§
+	virtual void		SetRect( int x1, int y1, int x2, int y2, int rowheight ); // sets the clickable range
 	
 	int					GetColumnWidth( unsigned int nCol=0 )	{ return _GetColumnWidth(nCol); }
 	void				SetParent( CList* pList );
@@ -102,16 +102,16 @@ public:
 	void				SetItemMargin( int left, int top );
 	void				SetImageMargin( int left, int top );
 
-public:		// ¼üÅÌ´¦Àí	
-	void				SelectPrior();			// Ñ¡ÔñÉÏÒ»¸ö	
-	void				SelectNext();			// Ñ¡ÔñÏÂÒ»¸ö
-	void				SelectFirst();			// Ñ¡ÔñµÚÒ»¸ö
-	void				SelectLast();			// Ñ¡Ôñ×îºóÒ»¸ö
-	void				SelectAdd( int page );	// µ±Ç°Ñ¡ÔñÒÆ¶¯¼¸¸ñ
-	void				Select( int n );		// Ñ¡ÔñµÚ¼¸¸ö
+public:		// keyboard handling
+	void				SelectPrior();			// selects the previous
+	void				SelectNext();			// selects the next
+	void				SelectFirst();			// selects the first
+	void				SelectLast();			// selects the last
+	void				SelectAdd( int page );	// how many rows the current selection moves
+	void				Select( int n );		// selects the nth
 
 protected:
-	void				_CheckMaxRow();			// ¼ì²éÊÇ·ñ´ïµ½×î´óÐÐÊý,·ñÔò,É¾³ý×îÔçµÄÒ»ÐÐ
+	void				_CheckMaxRow();			// checks whether the maximum row count is reached; if not, the oldest row is deleted
 	void				_AddRow( CItemRow* p );
 
 private:
@@ -121,27 +121,27 @@ private:
 protected:
 	typedef		std::deque<CItemRow*>	vitems;
 	vitems				_items;
-	CSelectItem*		_pSelect;			// Ñ¡ÔñµÄItem
+	CSelectItem*		_pSelect;			// the selected Item
 
-	CGuiPic*			_pItemPic;			// Ö¸Ïò¸¸ÀàµÄÍ¼Æ¬£¬ÓÃÓÚÏÔÊ¾ÔÚÏîÄ¿Ìõ±³¾°ÖÐ
+	CGuiPic*			_pItemPic;			// the image pointing at the parent class, used to draw the item row background
 	CList*				_pList;
 
 	int					_nX1, _nX2, _nY1, _nY2;
 	int					_nHeight;
 	int					_nShowCount;
 
-	DWORD				_dwFirstShowRow;	// µÚÒ»ÐÐ¿ÉÒÔÏÔÊ¾µÄÐÐÊý
-	DWORD				_dwLastShowRow;		// ×îºóÒ»ÐÐµÄÏÔÊ¾
-	DWORD				_dwCount;			// ×Ü¹²µÄÐÐÊý
-	int					_nMaxRow;			// ÔÊÐíµÄ×î´óÐÐÊý
+	DWORD				_dwFirstShowRow;	// number of rows the first row can display
+	DWORD				_dwLastShowRow;		// display of the last row
+	DWORD				_dwCount;			// total number of rows
+	int					_nMaxRow;			// maximum number of rows allowed
 
-	// ÏîÄ¿Ìõ¾àÀë±ß¿òµÄ¾àÀë
+	// distance of the item row from the border
 	int					_nItemLeft, _nItemTop;
 	int					_nItemX;
 
 	int					_nPicLeft,  _nPicTop;
 	int					_nPicX;
-	bool				_IsMouseFollow;		// Êó±êÊÇ·ñ×Ô¶¯¸úËæ
+	bool				_IsMouseFollow;		// whether the mouse follows automatically
 
 protected:
 	static int			_nTmpY;
@@ -173,9 +173,9 @@ private:
 	void				_RefreshColX();
 
 protected:
-	unsigned int		_nCol;			// ÁÐÊý
-	unsigned int*		_nColWidth;		// Ã¿Ò»ÁÐµÄ¿í¶È
-	int*				_nColX;			// Ã¿Ò»ÁÐµÄÎ»ÖÃ
+	unsigned int		_nCol;			// number of columns
+	unsigned int*		_nColWidth;		// width of each column
+	int*				_nColX;			// position of each column
 
 }; 
 
@@ -198,12 +198,12 @@ public:
 	virtual bool		IsHandleMouse()				{ return true;	}
 	virtual void		SetAlpha( BYTE alpha );
 
-public:		// ¼üÅÌ´¦Àí
+public:		// keyboard handling
 	virtual void		OnActive();
 	virtual void		OnLost();
 	virtual bool		OnKeyDown( int key );
 
-	virtual bool		SetShowRow( int n );			// ÉèÖÃÏÔÊ¾Ê±µÄÐÐ¸ß,»á¸Ä±äList×Ü¸ß¶È
+	virtual bool		SetShowRow( int n );			// sets the row height while displaying, which changes the total height of the List
 
 public:
 	CItemRow*			GetSelectItem()						{ return  _pItems->GetSelect()->GetItem();	}
@@ -239,8 +239,8 @@ public:
 	bool				GetIsChangeColor()			{ return _IsChangeColor;	}
 	
 public:
-	GuiEvent			evtSelectChange;			// Ñ¡Ôñ·¢ÉúÁË±ä»¯
-	GuiMouseEvent		evtListMouseDown;			// Êó±êÔÚÁÐ±íµÄÎÄ×ÖÇø°´ÏÂ
+	GuiEvent			evtSelectChange;			// the selection changed
+	GuiMouseEvent		evtListMouseDown;			// the mouse is pressed in the text area of the list
 	GuiMouseEvent		evtListMouseDB;
 
 protected:
@@ -258,25 +258,25 @@ protected:
 protected:
 	CScroll*			_pScroll;	
 	CListItems*			_pItems;
-	CGuiPic*			_pImage;		// ±³¾°Í¼
+	CGuiPic*			_pImage;		// background image
 	CGuiPic*			_pItemImage;	
 
-	int					_nLeftMargin;	// ÓëÖÜÎ§±ß¿òµÄ¾àÀë
-	int					_nTopMargin;	// ÓëÖÜÎ§±ß¿òµÄ¾àÀë
-	int					_nRightMargin;	// ÓëÖÜÎ§±ß¿òµÄ¾àÀë
-	int					_nBottomMargin;	// ÓëÖÜÎ§±ß¿òµÄ¾àÀë
+	int					_nLeftMargin;	// distance to the surrounding border
+	int					_nTopMargin;	// distance to the surrounding border
+	int					_nRightMargin;	// distance to the surrounding border
+	int					_nBottomMargin;	// distance to the surrounding border
 
-	int					_nRowHeight;	// ÐÐ¸ß
-	int					_nSpaceBottom;	// ¾àµ×²¿¿ÕÏÐÐÐÊý
+	int					_nRowHeight;	// row height
+	int					_nSpaceBottom;	// idle rows from the bottom
 
 	DWORD				_dwFontColor;
 	DWORD				_dwSelectColor;
-	bool				_IsChangeColor;	// ²»¸Ä±äÑÕÉ«
+	bool				_IsChangeColor;	// does not change colour
 
 
 };
 
-// ÄÚÁªº¯Êý
+// inline function
 inline 	void CSelectItem::SetSelect( CItemRow* pItem, DWORD dwIndex ) 
 {
 	if( _pList->GetIsChangeColor() )

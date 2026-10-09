@@ -1,4 +1,4 @@
-// Logvwr.cpp : ¶¨ÒåÓ¦ÓÃ³ÌĞòµÄÀàĞĞÎª¡£
+ï»¿// Logvwr.cpp : defines the class behaviour for the application
 //
 
 #include "stdafx.h"
@@ -20,24 +20,24 @@ BEGIN_MESSAGE_MAP(CLogvwrApp, CWinApp)
 END_MESSAGE_MAP()
 
 
-// CLogvwrApp ¹¹Ôì
+// CLogvwrApp construction
 
 CLogvwrApp::CLogvwrApp()
     {
-    // TODO: ÔÚ´Ë´¦Ìí¼Ó¹¹Ôì´úÂë£¬
-    // ½«ËùÓĞÖØÒªµÄ³õÊ¼»¯·ÅÖÃÔÚ InitInstance ÖĞ
+    // TODO: add the construction code here,
+    // put all important initialisation in InitInstance
     }
 
 
-// Î¨Ò»µÄÒ»¸ö CLogvwrApp ¶ÔÏó
+// the one and only CLogvwrApp object
 
 CLogvwrApp theApp;
 
-// CLogvwrApp ³õÊ¼»¯
+// CLogvwrApp initialisation
 
 BOOL CLogvwrApp::InitInstance()
     {
-    // ±£Ö¤Ö»ÔËĞĞÒ»¸öÊµÀı
+    // make sure only one instance runs
     HANDLE hPrevMutex;
     HANDLE hMutex;
     LPCTSTR pszMutex = "mUtEx Of kOp";
@@ -52,12 +52,12 @@ BOOL CLogvwrApp::InitInstance()
         return FALSE;
         }
 
-    // ´´½¨»¥³âÁ¿
+    // create the mutex
     hMutex = ::CreateMutex(NULL, 0, pszMutex);
 
-    // Èç¹ûÒ»¸öÔËĞĞÔÚ Windows XP ÉÏµÄÓ¦ÓÃ³ÌĞòÇåµ¥Ö¸¶¨Òª
-    // Ê¹ÓÃ ComCtl32.dll °æ±¾ 6 »ò¸ü¸ß°æ±¾À´ÆôÓÃ¿ÉÊÓ»¯·½Ê½£¬
-    //ÔòĞèÒª InitCommonControls()¡£·ñÔò£¬½«ÎŞ·¨´´½¨´°¿Ú¡£
+    // if the application manifest on Windows XP declares that the app uses
+    // ComCtl32.dll version 6 or later to enable visual styles,
+    //åˆ™éœ€è¦ InitCommonControls()ã€‚å¦åˆ™ï¼Œå°†æ— æ³•åˆ›å»ºçª—å£ã€‚
     InitCommonControls();
 
     CWinApp::InitInstance();
@@ -82,14 +82,14 @@ BOOL CLogvwrApp::InitInstance()
 		printf(RES_STRING(VW_LOGVWR_CPP_00001));
 	}
 
-    // ±ê×¼³õÊ¼»¯
-    // Èç¹ûÎ´Ê¹ÓÃÕâĞ©¹¦ÄÜ²¢Ï£Íû¼õĞ¡
-    // ×îÖÕ¿ÉÖ´ĞĞÎÄ¼şµÄ´óĞ¡£¬ÔòÓ¦ÒÆ³ıÏÂÁĞ
-    // ²»ĞèÒªµÄÌØ¶¨³õÊ¼»¯Àı³Ì
-    // ¸ü¸ÄÓÃÓÚ´æ´¢ÉèÖÃµÄ×¢²á±íÏî
-    // TODO: Ó¦ÊÊµ±ĞŞ¸Ä¸Ã×Ö·û´®£¬
-    // ÀıÈçĞŞ¸ÄÎª¹«Ë¾»ò×éÖ¯Ãû
-    //SetRegistryKey(_T("Ó¦ÓÃ³ÌĞòÏòµ¼Éú³ÉµÄ±¾µØÓ¦ÓÃ³ÌĞò"));
+    // standard initialisation
+    // if these features are unused and you want to shrink the final executable,
+    // remove the following unneeded specific initialisation routines
+    //
+    // change the registry key used to store the settings
+    // TODO: this string should be changed appropriately,
+    // for example to your company or organisation name
+    //SetRegistryKey(_T("åº”ç”¨ç¨‹åºå‘å¯¼ç”Ÿæˆçš„æœ¬åœ°åº”ç”¨ç¨‹åº"));
     if (!::mus_mgr_init(true))
         {
         AfxMessageBox("mus_mgr_init failed!");
@@ -100,17 +100,17 @@ BOOL CLogvwrApp::InitInstance()
     INT_PTR nResponse = dlg.DoModal();
     if (nResponse == IDOK)
         {
-        // TODO: ÔÚ´Ë·ÅÖÃ´¦ÀíºÎÊ±ÓÃ¡°È·¶¨¡±À´¹Ø±Õ
-        //¶Ô»°¿òµÄ´úÂë
+        // TODO: put the code that handles closing the dialog with OK here
+        //
         }
     else if (nResponse == IDCANCEL)
         {
-        // TODO: ÔÚ´Ë·ÅÖÃ´¦ÀíºÎÊ±ÓÃ¡°È¡Ïû¡±À´¹Ø±Õ
-        //¶Ô»°¿òµÄ´úÂë
+        // TODO: put the code that handles closing the dialog with Cancel here
+        //
         }
 
-    // ÓÉÓÚ¶Ô»°¿òÒÑ¹Ø±Õ£¬ËùÒÔ½«·µ»Ø FALSE ÒÔ±ãÍË³öÓ¦ÓÃ³ÌĞò£¬
-    // ¶ø²»ÊÇÆô¶¯Ó¦ÓÃ³ÌĞòµÄÏûÏ¢±Ã¡£
+    // the dialog has been closed, so return FALSE to quit the application
+    // rather than starting the application's message pump.
     ::mus_mgr_exit();
     ::CloseHandle(hMutex);
     return FALSE;

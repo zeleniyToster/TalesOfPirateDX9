@@ -1,7 +1,7 @@
-//----------------------------------------------------------------------
-// Ãû³Æ:×Ô¶¯¹¥»÷
-// ×÷Õß:lh 2004-06-15
-// ÓÃÍ¾:ÓÃÓÚ´¬µ½´ï¹¥»÷Ê±¼ä×Ô¶¯¹¥»÷£¬²¢ÇÒ¾¡¿ÉÄÜ²»Ó°ÏìÍæ¼ÒµÄÒÆ¶¯
+ï»¿//----------------------------------------------------------------------
+// Name: auto attack
+// Author: lh 2004-06-15
+// Purpose: attacks automatically once a boat reaches its attack time, while disturbing the player's movement as little as possible
 //----------------------------------------------------------------------
 
 #pragma once
@@ -23,12 +23,12 @@ public:
 	void			SetIsStart( bool v )	{ _IsStart=v;		}
 	bool			GetIsStart()			{ return _IsStart;	}
 
-	// ×Ô¶¯¹¥»÷
+	//  auto attack
 	bool			AttackStart( CCharacter* pMain, CSkillRecord* pSkill, CCharacter* pCha );
 	bool			AttackStart( CCharacter* pMain, CSkillRecord* pSkill, int nScrX, int nScrY );
 	bool			AttackMoveTo( int nScrX, int nScrY );
 
-	// ×Ô¶¯¸úËæ
+	//  auto follow
 	bool			Follow( CCharacter* pMain, CCharacter* pTarget );
 
 private:

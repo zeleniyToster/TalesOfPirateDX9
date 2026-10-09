@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 
 #include "MPRender.h"
@@ -35,10 +35,10 @@ struct MPLineVertex
 	DWORD		dwColor;
 };
 
-struct MPTileTex  // µ¥Ò»ÌùÍ¼²ã  
+struct MPTileTex  // a single texture layer
 {
-	BYTE	btTexNo;	 // ÌùÍ¼±àºÅ
-	BYTE	btAlphaNo;	 // AlphaÍ¼±àºÅ
+	BYTE	btTexNo;	 // texture number
+	BYTE	btAlphaNo;	 // alpha map number
 	MPTileTex()
 		:btTexNo(0), btAlphaNo(0)	{}
 	
@@ -60,8 +60,8 @@ inline float _getObjHeight(BYTE btValue, int no)
 {
     BYTE btLevel = btValue & 63;
     float f = (float)btLevel;
-    f*=5.0f; // Ã¿¸ö¼¶±ð´ú±í5ÀåÃ×
-    if(btValue & 64) // ¸ºÊý
+    f*=5.0f; // each step represents 5 cm
+    if(btValue & 64) // negative
     {
         return f / 100.0f * -1.0f;
     }
@@ -83,7 +83,7 @@ inline BYTE _setObjHeight(BYTE btOldValue, float fHeight, int no)
          btOldValue&=191;
      }
      BYTE btLevel = (BYTE)(fHeight / 0.05f);
-     btOldValue&=192; // Çå³ý6Î»¸ß¶È
+     btOldValue&=192; // clear the 6-bit height
      btOldValue|=btLevel;
      return btOldValue;
 }
@@ -93,17 +93,17 @@ struct MINDPOWER_API MPTile
 {
 	static	int		Offset[4][2];
 
-    MPTileTex		TexLayer[4]; // ×î¶à4²ãÖØµþ
-	DWORD			dwColor;	 // ×óÉÏ½ÇµÚÒ»¸ö¶¥µãµÄÑÕÉ«
-    short           sRegion;     // ÇøÓòÊôÐÔ
-    BYTE            btIsland;    // µºÓìÊôÐÔ
-    BYTE            btBlock[4];  // 4¸ö·Ö¸ñµÄÕÏ°­¼ÇÂ¼
+    MPTileTex		TexLayer[4]; // at most 4 overlapping layers
+	DWORD			dwColor;	 // colour of the first vertex at the top left
+    short           sRegion;     // region attribute
+    BYTE            btIsland;    // island attribute
+    BYTE            btBlock[4];  // obstacle record for the 4 cells
     
-	float			fHeight;     // ×óÉÏ½ÇµÚÒ»¸ö¶¥µãµÄ¸ß¶È
+	float			fHeight;     // height of the first vertex at the top left
 	
     //lemon add@2004.10.18
-	DWORD			dwTColor;	 // ÁÙÊ±¶¥µãµÄÑÕÉ«
-    DWORD           dwXColor;    // »ìºÏºóµÄÑÕÉ«
+	DWORD			dwTColor;	 // temporary vertex colour
+    DWORD           dwXColor;    // blended colour
 
 public:
     
@@ -118,7 +118,7 @@ public:
 			TexLayer[i].btTexNo = TexLayer[i].btAlphaNo = 0;
 		    btBlock[i] = 0;
         }
-		sRegion  = 0; // Ä¬ÈÏÎªº£Ë®, ÇøÓòÊôÐÔ = 0
+		sRegion  = 0; // defaults to sea water, region attribute = 0
         btIsland = 0;
     }
 

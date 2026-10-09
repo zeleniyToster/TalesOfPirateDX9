@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "STAttack.h"
 #include "Actor.h"
 #include "NetProtocol.h"
@@ -83,7 +83,7 @@ void CWaitAttackState::SetSkill( CSkillRecord* p )
 
 void CWaitAttackState::CalcSkillSpeed()
 {
-	// ¼ÆËã¶¯×÷ËÙ¶È
+	// computes the action speed
 	if( !_pSkillInfo->IsPlayRand() )
 	{
 		static int nCount = 0;
@@ -113,7 +113,7 @@ void CWaitAttackState::CalcSkillSpeed()
 
 bool CWaitAttackState::_Start()
 {
-	// ×´Ì¬¿ªÊ¼Ö´ÐÐ
+	// the state starts executing
 	CalcSkillSpeed();
 	_StartActor();
 	return true;
@@ -216,10 +216,10 @@ void CWaitAttackState::_UseSkill()
 
 void CWaitAttackState::ActionFrame( DWORD pose_id, int key_frame )
 {	
-	// ¹Ø¼üÖ¡µ÷ÓÃ£¬ÆäÖÐkey_frameµÄÖµÒâÒåÈçÏÂ£º
-	// ACTION_BEGIN_HIT = -1 ¶¯×÷¿ªÊ¼
-	// ACTION_END_HIT = -2 ¶¯×÷½áÊø
-	// ´óÓÚÁã£¬¹Ø¼üÖ¡
+	// key frame callback, where key_frame means the following:
+	// ACTION_BEGIN_HIT = -1 the action begins
+	// ACTION_END_HIT = -2 the action ends
+	// greater than zero, a key frame
 
 	//if( !_IsPoseValid(pose_id) )
 	//{
@@ -228,13 +228,13 @@ void CWaitAttackState::ActionFrame( DWORD pose_id, int key_frame )
 	
 	if( key_frame>0 ) key_frame=0;
 
-	// ÌØ¶¨¼¼ÄÜµÄ¾µÍ·¶¶¶¯Ð§¹û
+	// the camera shake effect of a specific skill
 	if( _pSkillInfo->nID==83 && key_frame>=0 )
 	{
 		g_pGameApp->GetMainCam()->SetCameraDither( TRUE );
 	}
 
-	// ¶¯×÷¹Ø¼üÖ¡
+	// action key frame
 	if( _pSkillInfo->sActionKeyFrme==key_frame ) 
 	{
 		if( _pSkillInfo->sWhop!=-1 )	CGameScene::PlayEnvSound( _pSkillInfo->sWhop, _pSelf->GetCurX(), _pSelf->GetCurY() );
@@ -262,7 +262,7 @@ void CWaitAttackState::ActionFrame( DWORD pose_id, int key_frame )
 	if( _pSkillInfo->sItemEffect1[0]>0 && _pSkillInfo->sItemEffect1[1]==key_frame )	_pSelf->ItemEffect( _pSkillInfo->sItemEffect1[0], _pSkillInfo->sItemDummyLink, _pSelf->getYaw() );
 	if( _pSkillInfo->sItemEffect2[0]>0 && _pSkillInfo->sItemEffect2[1]==key_frame )	_pSelf->ItemEffect( _pSkillInfo->sItemEffect2[0], _pSkillInfo->sItemDummyLink, _pSelf->getYaw() );
 
-	// ²¥·ÅÌØÐ§
+	// plays the effect
 	if( _pSkillInfo->sSkyEffect!=0 && _pSkillInfo->sSkyEffectActionKeyFrame==key_frame ) 
 	{
 		int nTargetID = -1;
@@ -285,21 +285,21 @@ void CWaitAttackState::ActionFrame( DWORD pose_id, int key_frame )
 
 		if( CEffectObj* pEff = _pSelf->SkyEffect( _pSkillInfo->sSkyEffect, _pSkillInfo->sSkyEffectActionDummyLink, _pSkillInfo->sSkyEffectItemDummyLink, _pSkillInfo->sSkySpd, &pos, nTargetID, _pSkillInfo ) )
 		{
-			// ²¥·ÅÁËÒ»¸ö·ÉÐÐÌØÐ§,¾ÍÓÐÒ»¸ö¶ÔÓ¦µÄ×ÅµØµÄÌØÐ§Ð§¹û
-			// ÉèÖÃÌØÐ§²¥·ÅÍê±ÏÊ±ÒªÖ´ÐÐµÄÉËº¦°ü
+			// every flying effect that is played has a matching ground impact effect
+			// sets the damage packet to run once the effect has finished playing
 			pEff->GetEffDelay()->SetServerHarm( _cHit, _pHarm );
 		}
 		else
 		{
-			// ÌØÐ§´´½¨Ê§°Ü£¬Ö±½Ó²¥·ÅÌØÐ§ÉËº¦°ü
+			// the effect could not be created, play the effect damage packet directly
 			_cHit.EffectExec( _pHarm );
 		}
 	}
 
-	// Ö´ÐÐ¶¯×÷ÉËº¦°ü
+	// runs the action damage packet
 	_cHit.ActionExec( _pHarm, key_frame );
 
-	// Èç¹ûÊÇ¿³Ê÷
+	// if it is chopping a tree
 	if( _pTarget && key_frame>=0 && _pTarget->getChaCtrlType()==enumCHACTRL_MONS_TREE )
 	{
 		_pTarget->PlayPose( 7, PLAY_ONCE_SMOOTH );
@@ -313,7 +313,7 @@ void CWaitAttackState::ActionFrame( DWORD pose_id, int key_frame )
 
 void CWaitAttackState::ActionBegin( DWORD pose_id )
 {
-	// ¶¯×÷¿ªÊ¼
+	// the action begins
 
     //if( !_IsPoseValid(pose_id) )
     //{
@@ -341,7 +341,7 @@ void CWaitAttackState::_PopThis()
 
 void CWaitAttackState::ActionEnd( DWORD pose_id )
 {
-	// ¶¯×÷½áÊø
+	// the action ends
 
     //if( !_IsPoseValid(pose_id) )
 	//{
@@ -412,7 +412,7 @@ void CWaitAttackState::FrameMove()
 
 void CWaitAttackState::MoveEnd(int x, int y, int nState)
 {
-	// ±»¶¯¶Ë²»ÏìÓ¦MoveEnd
+	// the passive side does not respond to MoveEnd
 }
 
 void CWaitAttackState::ServerEnd(int nState)
@@ -480,7 +480,7 @@ bool CAttackState::_Start()
 	
 	if( _pSelf->IsMainCha() )
 	{
-		// ÉèÖÃ¼¼ÄÜcooldown£¬³õÊ¼»¯Ö÷½Ç×¼±¸¼¼ÄÜÎª¿Õ
+		// sets the skill cooldown, initialises the main character's prepared skill to empty
         _pSelf->ResetReadySkill();
 	}
 
@@ -496,7 +496,7 @@ bool CAttackState::_Start()
 			return false;
 		}
 
-		// °ÚÌ²¼¼ÄÜ
+		// stall skill
 		g_stUIBooth.ShowSetupBoothForm( _pSkillInfo->GetLevel() );
 		PopState();
 		return true;
@@ -526,7 +526,7 @@ bool CAttackState::_Start()
 		return false;
 	}
 
-	// ¼ÆËã¼¼ÄÜ¹¥»÷¾àÀë
+	// computes the skill attack distance
     if( _pSkillInfo->GetDistance()>0 )
     {
         _nTotalDis = _pSelf->GetDefaultChaInfo()->sRadii + _pSkillInfo->GetDistance();
@@ -537,7 +537,7 @@ bool CAttackState::_Start()
         _nTotalDis = 0;
     }
 
-	// ÉèÖÃ¼¼ÄÜ¶¯×÷ËÙ¶È
+	// sets the skill action speed
 	if( strcmp( _pSkillInfo->szFireSpeed, "0" )==0 )
 	{
 		SetSkillSpeed( _pSelf->getAttackSpeed() );
@@ -556,7 +556,7 @@ bool CAttackState::_Start()
 	param.lSkillID = _pSkillInfo->sID;
     bool isFindPath = false;
 
-	// ¹¥»÷¾àÀë,¾àÀëÎªÁã,Ö±½ÓÊÍ·Å
+	// attack distance; when the distance is zero, release immediately
 	if( _pSkillInfo->GetDistance()==0 )
 	{
         _nAttackX = _pSelf->GetServerX();
@@ -569,7 +569,7 @@ bool CAttackState::_Start()
 		{
 			if( _pSkillInfo->IsAttackArea() )
 			{
-				// Èç¹ûÊÇ¹¥»÷·¶Î§£¬È¡Ä¿±êÕßµÄÇ°·½
+				// if it is an area attack, take the position ahead of the target
 				int dis = GetDistance( _pTarget->GetCurX(), _pTarget->GetCurY(), _pTarget->GetServerX(), _pTarget->GetServerY() );
 				int PRE_ATTACK = 100;
 				if( dis <= PRE_ATTACK )
@@ -636,12 +636,12 @@ bool CAttackState::_Start()
 	CS_BeginAction( _pSelf, enumACTION_SKILL, (void*)&param, this );
 
 	LG( _pSelf->getLogName(), "FireSpeed:%d\n", _nSkillSpeed );
-	_pSkillInfo->SetAttackTime( CGameApp::GetCurTick() + _nSkillSpeed );	// ÉèÖÃµ±Ç°¼¼ÄÜÏÂÒ»´Î¿ÉÓÃµÄÊ±¼ä
+	_pSkillInfo->SetAttackTime( CGameApp::GetCurTick() + _nSkillSpeed );	// sets the time the current skill can be used again
 	CalcSkillSpeed();
 
 	_dwLastAttackTime = CGameApp::GetCurTick();
 
-	// ÅÐ¶ÏÊÇ¹¥»÷·¶Î§ÄÚ£¬×ª·¢Îª¹¥»÷×´Ì¬
+	// if it is inside the attack range, switch to the attack state
 	if( _pSkillInfo->IsAttackArea() )
 	{
 		if( GetDistance(_nAttackX, _nAttackY, _pSelf->GetServerX(), _pSelf->GetServerY())<=_nTotalDis )
@@ -657,7 +657,7 @@ bool CAttackState::_Start()
 		}
 	}
 
-	// Èç¹û²»ÔÚ¹¥»÷¾àÀëÄÚ£¬¿ªÊ¼ÒÆ¶¯
+	// if outside the attack distance, start moving
 	if( _eUseSkill==enumInit )
 	{
 		_pMove->ChaRun();
@@ -670,7 +670,7 @@ void CAttackState::FrameMove()
 {
 	if( !_pMove->GetIsExecEnd() )
 	{
-		// Íæ¼ÒÕýÔÚÒÆ¶¯
+		// the player is moving
 		_pMove->FrameMove();
 		if( _pMove->GetIsExecEnd() )
 		{
@@ -734,7 +734,7 @@ void CAttackState::FrameMove()
 
 void CAttackState::PushPoint( int x, int y )
 {
-	// Ö÷½ÇÒÆ¶¯
+	// the main character moves
 	if( _eUseSkill==enumInit )
 	{
 		_pMove->PushPoint( x, y );
@@ -787,7 +787,7 @@ void CAttackState::MoveEnd(int x, int y, int nState)
 {
     _pMove->MoveEnd(x, y, nState);
 
-    // µ±ÇÒ½öµ±·µ»ØenumMSTATE_INRANGEÊ±,²Å¿ªÊ¼×ªÈë¹¥»÷×´Ì¬,ÓÐÈÎºÎÆäËü×´Ì¬,Í£Ö¹µ±Ç°×´Ì¬ 
+    // only when enumMSTATE_INRANGE is returned does it switch to the attack state; on any other state the current state is stopped
     if( nState==enumMSTATE_INRANGE )
     {
 		_pSkillInfo->SetAttackTime( CGameApp::GetCurTick() + _nSkillSpeed );
@@ -880,7 +880,7 @@ void CTraceAttackState::StartFailed()
 
 void CTraceAttackState::_End()
 { 
-	// ¹¥»÷×´Ì¬½áÊøÊ±£¬¼ì²éÊÇ·ñÒªÉú³ÉÐÂµÄ¹¥»÷×´Ì¬£¬¼´×·»÷
+	// when the attack state ends, checks whether a new attack state is needed, that is, the pursuit
 	CAttackState::_End();
 	CheckTrace();
 }
@@ -889,7 +889,7 @@ void CTraceAttackState::CheckTrace()
 {
 	if( _pSelf->GetDefaultSkillInfo()==_pSkillInfo && _IsTrace && _pTarget && _pTarget->IsEnabled() && _pTarget->IsValid() )
 	{
-		// Èç¹ûÇøÓòÏÞÖÆ²»Í¬£¬ÇÒ²»¿É×ß£¬Ôò²»×·»÷
+		// if the area restriction differs and it is not walkable, do not pursue
 		if( _pSelf->GetDefaultChaInfo()->chTerritory != _pTarget->GetDefaultChaInfo()->chTerritory )
 		{	
 			if( !g_IsMoveAble( _pSelf->getChaCtrlType()

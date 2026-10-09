@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "Scene.h"
 #include "uiguidata.h"
@@ -21,8 +21,8 @@ namespace GUI
 /* extern char autoLoginChar[32] ;
 extern bool canAutoLoginChar; */
 /**
- * ÕªÒª£º±¾ÀàÖ÷Òª´¦ÀíµÇÂ½Á÷³ÌÖĞµÄÑ¡Ôñ½ÇÉ«³¡¾°,°üÀ¨³¡¾°¶¯»­ºÍGUI±íµ¥.
- * ¡¡¡¡¡¡±¾Àà¼Ì³Ğ×ÔCGameSceneÀà.
+ * æ‘˜è¦ï¼šæœ¬ç±»ä¸»è¦å¤„ç†ç™»é™†æµç¨‹ä¸­çš„é€‰æ‹©è§’è‰²åœºæ™¯,åŒ…æ‹¬åœºæ™¯åŠ¨ç”»å’ŒGUIè¡¨å•.
+ * ã€€ã€€ã€€æœ¬ç±»ç»§æ‰¿è‡ªCGameSceneç±».
  *
  * @author: Michael Chen
  * @date: 2005-04-26
@@ -33,27 +33,27 @@ public:
     CSelectChaScene(stSceneInitParam& param);
     ~CSelectChaScene();
 
-    virtual void        LoadingCall();          // ÔÚ×°ÔØloadingºó,Ë¢ĞÂ
+    virtual void        LoadingCall();          // refreshed after loading finishes
     virtual void		SetMainCha(int nChaID);
 
     static CSelectChaScene& GetCurrScene();
 
-    //É¾³ıµ±Ç°Ñ¡ÖĞµÄ½ÇÉ«
+    //deletes the currently selected character
     void                DelCurrentSelCha();
-    //ÏÔÊ¾ÏÖÓĞ½ÇÉ«
+    //shows the existing characters
 	bool                SelectCharacters(std::span<const NetChaBehave> characters);
-    //ĞÂÔö½ÇÉ«
+    //adds a character
     bool                CreateCha(const std::string& sName, int nChaIndex, stNetChangeChaPart* part);
 
     void                SelectChaError( int error_no, const char* error_info );
 
-    //Ïò·şÎñÆ÷·¢ËÍÉ¾³ı½ÇÉ«ÏûÏ¢
+    //sends the delete character message to the server
     void SendDelChaToServer(const char szPassword2[]);
 
-	// ¸üĞÂ°´Å¥×´Ì¬
+	// updates the button states
     void UpdateButton();
 
-	// »ñµÃ½ÇÉ«¸öÊı
+	// gets the number of characters
 	int GetChaCount();
 
 	void ShowWelcomeNotice(bool bShow = true);
@@ -61,7 +61,7 @@ public:
 	void UpdatePageLabel();
 	int GetMaxPage() const;
 protected:
-    //³¡¾°Ïà¹Øº¯Êı
+    //scene related functions
     virtual void		_FrameMove(DWORD dwTimeParam);
     virtual void		_Render();
 
@@ -74,7 +74,7 @@ protected:
     virtual bool		_Clear();
     virtual void        _RenderUI();
 
-    //UIÏà¹Øº¯Êı
+    //UI related functions
     bool                _InitUI();
 	static void			_OnClickUpdatePass(CGuiData *pSender, int x, int y, DWORD key);
     static void         _SelChaFrmMouseEvent(CCompent *pSender, int nMsgType, 
@@ -84,21 +84,21 @@ protected:
 //                                           int x, int y, DWORD dwKey);
 
     static void         _evtCreateDoublePwdEvent(CCompent *pSender, int nMsgType, 
-                                            int x, int y, DWORD dwKey);		// Ñ¯ÎÊÊÇ·ñÒª´´½¨¶ş´ÎÃÜÂë
+                                            int x, int y, DWORD dwKey);		// asks whether to create a secondary password
 
     static void         _evtWelcomeNoticeEvent(CCompent *pSender, int nMsgType, 
-                                            int x, int y, DWORD dwKey);		// »¶Ó­½çÃæ ÊÂ¼ş´¦Àí
+                                            int x, int y, DWORD dwKey);		// welcome screen event handling
 
     static void         _evtCreateOKNoticeEvent(CCompent *pSender, int nMsgType, 
-                                            int x, int y, DWORD dwKey);		// Ê×´Î´´½¨½ÇÉ«³É¹¦ÌáÊ¾½çÃæ ÊÂ¼ş´¦Àí
+                                            int x, int y, DWORD dwKey);		// first character creation success prompt screen event handling
 
     static void         _evtChaNameAlterMouseEvent(CCompent *pSender, int nMsgType, 
-                                            int x, int y, DWORD dwKey);		// Ê×´Î´´½¨½ÇÉ«³É¹¦ÌáÊ¾½çÃæ ÊÂ¼ş´¦Àí
+                                            int x, int y, DWORD dwKey);		// first character creation success prompt screen event handling
 
-	//~ Âß¼­º¯Êı: ============================================================
+	//~ logic functions: =================================================================
 
 
-    //Ïò·şÎñÆ÷·¢ËÍ¿ªÊ¼ÓÎÏ·ÏûÏ¢
+    //sends the start game message to the server
     void SendBeginPlayToServer();
 
     void SetChaDark(CCharacter* pCha);
@@ -126,14 +126,14 @@ private:
     std::vector<int>         m_ZPositions;
     std::vector<int>         m_Yaws;                 //The rotation of the characters in the scene
 	std::vector<uint8_t> m_FreePositions;        //The index of the empty position of the scene
-    BYTE                m_ChaColors[3][3];      //ÈËÎïµÄÑÕÉ«
-	int					m_nChaRotates[3];       //ÈËÎïµÄÆ«ÒÆ½Ç¶È(-180~+180)
+    BYTE                m_ChaColors[3][3];      //the colour of the character
+	int					m_nChaRotates[3];       //the offset angle of the character (-180~+180)
 
-    //³¡¾°äÖÈ¾ºÍ¶¯»­Ïà¹ØµÄ
-    BYTE            _loadtex_flag;          //±£´æ³¡¾°äÖÈ¾ºÍ¶¯»­µÄÉèÖÃ
-    BYTE            _loadmesh_flag;         //±£´æ³¡¾°äÖÈ¾ºÍ¶¯»­µÄÉèÖÃ
+    //scene rendering and animation related
+    BYTE            _loadtex_flag;          //stores the scene rendering and animation settings
+    BYTE            _loadmesh_flag;         //stores the scene rendering and animation settings
 
-    CSceneObj*	    pObj;                   //³¡¾°¶ÔÏó
+    CSceneObj*	    pObj;                   //scene object
     lwIPrimitive*   pAure[3];
 
 
@@ -151,7 +151,7 @@ private:
 
     CForm*          frmCheck;
 
-    //Âß¼­
+    //logic
 public:
 	uint8_t         m_nCurChaIndex{ static_cast<decltype(m_nCurChaIndex)>(-1) };
 	uint8_t             m_iCurPage;
@@ -162,7 +162,7 @@ private:
 
 	bool			m_isCreateCha;
 
-	CForm*			frmWelcomeNotice;	// ¶¨Òå»¶Ó­½çÃæ  ¸Ã½çÃæ½öÔÚµ±Ç°ÕÊºÅÄÚÎŞ½ÇÉ«Ê±³öÏÖ
-	CForm*			frmCreateOKNotice;	// ¶¨ÒåÊ×´Î´´½¨½ÇÉ«³É¹¦ÌáÊ¾½çÃæ  ¸Ã½çÃæ½öÔÚ¸ÃÕÊºÅ×ßÍêµÚÒ»¸ö½ÇÉ«µÄ´´½¨Á÷³ÌºóÏÔÊ¾
-	CForm*			frmChaNameAlter;	// ¶¨Òå¸ÄÃû½çÃæ  ¸Ã½çÃæ½ö¶ÔÌ¨Íå°æ±¾ÓĞĞ§£¬Çë×öºÃ±¸·İ¹¤×÷
+	CForm*			frmWelcomeNotice;	// defines the welcome screen; it appears only when the current account has no character
+	CForm*			frmCreateOKNotice;	// defines the first character creation success prompt screen; it is shown only once this account has gone through the creation flow for its first character
+	CForm*			frmChaNameAlter;	// defines the rename screen; it is only valid for the Taiwan version, please back up your work
 };

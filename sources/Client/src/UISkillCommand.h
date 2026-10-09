@@ -1,7 +1,7 @@
-//----------------------------------------------------------------------
-// Ãû³Æ:¼¼ÄÜ
-// ×÷Õß:lh 2004-11-07
-// ×îºóÐÞ¸ÄÈÕÆÚ:
+ï»¿//----------------------------------------------------------------------
+// Name: skill
+// Author: lh 2004-11-07
+// Last modified date:
 //----------------------------------------------------------------------
 #pragma once
 #include "UICommand.h"
@@ -37,8 +37,8 @@ public:
 
 	enum eSpecialType
 	{
-		enumHighLight  = 1,	// Ò»Ö±ÏÔÊ¾¸ßÁÁ
-		enumNotUpgrade = 2	// ²»ÔÊÐíÊÖ¶¯Éý¼¶
+		enumHighLight  = 1,	// always shown highlighted
+		enumNotUpgrade = 2	// manual levelling up is not allowed
 	};
 
 	bool			GetIsSpecial(eSpecialType SpecialType);
@@ -61,11 +61,11 @@ protected:
 	DWORD			_dwPlayTime;
     DWORD           _dwRecordTime;
 
-    static CGuiPic  _imgActive;		// ÏÔÊ¾¼¤»îµÄ±ß¿ò
+    static CGuiPic  _imgActive;		// shows the active border
 
 };
 
-// ÄÚÁªº¯Êý
+// inline function
 inline int CSkillCommand::_GetSkillTime()  
 { 
     return _pSkill->GetFireSpeed();

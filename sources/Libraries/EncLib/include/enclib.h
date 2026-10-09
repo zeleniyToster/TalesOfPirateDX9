@@ -1,7 +1,7 @@
-
+ï»¿
 ////////////////////////////////////////
 //
-//      ¼ÓÃÜ/½âÃÜ
+//      encryption/decryption
 //      by jampe
 //      2006/5/26
 //
@@ -14,26 +14,26 @@
 typedef unsigned char       __byte;
 
 
-//  ÉèÖÃÃÜÔ¿
-//  keyÎª 8Î»ÃÜÔ¿
+//  sets the key
+//  key is the 8 byte key
 extern int SetEncKey(const __byte* key);
 
 
-//  ¼ÓÃÜ
-//  buf Êä³ö»º´æ
-//  len Êä³ö»º´æ³¤¶È
-//  pwd ´ı¼ÓÃÜÃÜÂë
-//  plen ÃÜÂë³¤¶È
-//  ·µ»Ø¼ÓÃÜºóµÄ×Ö·û´®³¤¶È
+//  encrypts
+//  buf output buffer
+//  len output buffer length
+//  pwd the password to encrypt
+//  plen the password length
+//  returns the length of the encrypted string
 extern int Encrypt(__byte* buf, int len, const __byte* pwd, int plen);
 
 
-//  ½âÃÜ
-//  buf Êä³ö»º´æ
-//  len Êä³ö»º´æ³¤¶È
-//  enc ´ı½âÃÜÃÜÔ¿
-//  elen ÃÜÔ¿³¤¶È
-//  ·µ»Ø¼ÓÃÜºóµÄ×Ö·û´®³¤¶È
+//  decrypts
+//  buf output buffer
+//  len output buffer length
+//  enc the key to decrypt with
+//  elen the key length
+//  returns the length of the encrypted string
 extern int Decrypt(__byte* buf, int len, const __byte* enc, int elen);
 
 

@@ -1,4 +1,4 @@
-
+Ôªø
 #include <SDL.h>
 #include <SDL_mixer.h>
 
@@ -7,12 +7,12 @@
 
 
 //
-// 1.0 ∞Ê±æµƒ“Ù¿÷≤•∑≈∑Ω∞∏ by claude Fan at 2004-08-22
+// version 1.0 of the music playback scheme - by claude Fan, 2004-08-22
 //
 
 
 //
-// 2.0 ∞Ê±æµƒ“Ù¿÷≤•∑≈∑Ω∞∏ by claude Fan at 2004-10-20
+// version 2.0 of the music playback scheme - by claude Fan, 2004-10-20
 //
 
 const int ERROR_TIME = 10000;

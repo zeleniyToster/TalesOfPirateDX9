@@ -1,6 +1,15 @@
 #include "Packet.h"
 #include "Comm.h"
 
+#define DEBUG_WPACKET 1
+#if DEBUG_WPACKET
+#include <fstream>
+static std::ofstream wpacket_debug_log("wpacket_debug.log", std::ios::app);
+#define WPACKET_LOG wpacket_debug_log
+#else
+#define WPACKET_LOG if (false) std::cerr
+#endif
+
 inline uint64_t join_uint32_to_uint64(uint32_t high, uint32_t low) {
 	return ((uint64_t)high << 32) | ((uint64_t)low);
 }
@@ -11,8 +20,26 @@ inline std::pair<uint32_t, uint32_t> split_uint64_to_uint32(uint64_t value) {
 	return { high, low };
 }
 
-int count = 0;
+//=====WPE (anti packet editor) packet counter===========================================================
+// Every client -> server packet whose command falls into the (0,500] / [6000,6500] ranges
+// carries an extra 32 bit counter right behind the command word.
+// GateServer::ToClient::OnProcessData() validates it against a per socket counter
+// (DataSocket::m_pktn) and then physically memmove()s those 4 bytes out of the receive buffer.
+// Turning WpeProtection off on the server therefore shifts every single client payload by
+// 4 bytes - the three "protection" switches are part of the wire protocol, not optional
+// diagnostics.
+namespace
+{
+	int g_wpePacketCounter = 0;
+}
 _DBC_USING
+
+_DBC_BEGIN
+void ResetPacketCounter()
+{
+	g_wpePacketCounter = 0;
+}
+_DBC_END
 
 extern PreAllocHeap<rbuf>	__bufheap;
 
@@ -104,6 +131,9 @@ WPacket WPacket::Duplicate()const
 //--------------------------------------------------------------------
 void WPacket::WritePktLen()
 {
+	#if DEBUG_WPACKET
+	WPACKET_LOG << "[WPacket] WritePktLen: START, GetPktLen()=" << GetPktLen() << ", __len_offset=" << __tca->__len_offset << ", __len_size=" << __tca->__len_size << std::endl;
+	#endif
 	uLong		l_lenl;
 	uShort		l_lens;
 	uChar		l_lenc;
@@ -132,6 +162,9 @@ void WPacket::WritePktLen()
 			break;
 		}
 	}
+	#if DEBUG_WPACKET
+	WPACKET_LOG << "[WPacket] WritePktLen: END, GetPktLen()=" << GetPktLen() << std::endl;
+	#endif
 }
 //--------------------------------------------------------------------
 uLong WPacket::BackupSESS()const
@@ -158,8 +191,12 @@ bool WPacket::WriteCmd(uShort cmd)
 	bool bClient = false;
 	if (((cmd > 0) && (cmd <= 500)) || (cmd >= 6000 && cmd <= 6500)) {
 		bClient = true;
-		if (cmd == 438 || cmd == 355) {
-			count = 0;
+		// Both commands below are the first ones a freshly (re)connected client emits, so they
+		// restart the counter to match the per socket DataSocket::m_pktn the server expects.
+		// 355 == CMD_CM_SEND_PRIVATE_KEY, 438 == CMD_CM_REGISTER
+		// (sources/Libraries/common/include/NetCommand.h: CMD_CM_ROLEBASE+55 / CMD_CM_CHARBASE+8)
+		if (cmd == em_wpe_restart_register || cmd == em_wpe_restart_privatekey) {
+			g_wpePacketCounter = 0;
 		}
 	}
 	if(!bool(*this))					return false;
@@ -167,9 +204,13 @@ bool WPacket::WriteCmd(uShort cmd)
 	cmd	=htons(cmd);
 	MemCpy(GetDataAddr(), reinterpret_cast<char const*>(&cmd), sizeof(uShort));
 	if(bClient){
-	this->WriteLong(count);
-	count++;
+		this->WriteLong(g_wpePacketCounter);
+		g_wpePacketCounter++;
 	}
+	
+	#if DEBUG_WPACKET
+	WPACKET_LOG << "[WPacket] WriteCmd: cmd=" << cmd << ", Size=" << Size() << ", Head=" << Head() << std::endl;
+	#endif
 	
 	return true;
 }
@@ -197,6 +238,9 @@ bool WPacket::WriteChar(uChar ch)
 
 	MemCpy(GetDataAddr() +GetDataLen(),(cChar *)&ch,sizeof(uChar));
 	m_wpos +=sizeof(uChar);
+	#if DEBUG_WPACKET
+	WPACKET_LOG << "[WPacket] WriteChar: ch=" << (int)ch << ", Size=" << Size() << ", m_wpos=" << m_wpos << std::endl;
+	#endif
 	return true;
 }
 //--------------------------------------------------------------------
@@ -224,6 +268,9 @@ bool WPacket::WriteShort(uShort sh)
 	sh	=htons(sh);
 	MemCpy(GetDataAddr() + GetDataLen(), reinterpret_cast<char const*>(&sh), sizeof(uShort));
 	m_wpos +=sizeof(uShort);
+	#if DEBUG_WPACKET
+	WPACKET_LOG << "[WPacket] WriteShort: sh=" << sh << ", Size=" << Size() << ", m_wpos=" << m_wpos << std::endl;
+	#endif
 	return true;
 }
 //--------------------------------------------------------------------
@@ -251,6 +298,9 @@ bool WPacket::WriteLong(uLong lo)
 	lo	=htonl(lo);
 	MemCpy(GetDataAddr() + GetDataLen(), reinterpret_cast<char const*>(&lo), sizeof(uLong));
 	m_wpos +=sizeof(uLong);
+	#if DEBUG_WPACKET
+	WPACKET_LOG << "[WPacket] WriteLong: lo=" << lo << ", Size=" << Size() << ", m_wpos=" << m_wpos << std::endl;
+	#endif
 	return true;
 }
 //--------------------------------------------------------------------
@@ -287,6 +337,9 @@ bool WPacket::WriteSequence(cChar *seq,uShort len)
 
 	MemCpy(GetDataAddr() + GetDataLen(), seq, len);
 	m_wpos +=len;
+	#if DEBUG_WPACKET
+	WPACKET_LOG << "[WPacket] WriteSequence: len=" << len << ", Size=" << Size() << ", m_wpos=" << m_wpos << std::endl;
+	#endif
 	return true;
 }
 bool WPacket::WriteString(cChar *str)
@@ -322,6 +375,9 @@ bool WPacket::WriteFloat(float fVal)
 
 	MemCpy(GetDataAddr() + GetDataLen(), (cChar*)&fVal, sizeof(fVal));
 	m_wpos +=sizeof(float);
+	#if DEBUG_WPACKET
+	WPACKET_LOG << "[WPacket] WriteFloat: fVal=" << fVal << ", Size=" << Size() << ", m_wpos=" << m_wpos << std::endl;
+	#endif
 	return true;
 }
 
@@ -334,12 +390,16 @@ RPacket::RPacket(const WPacket &wpk)
 RPacket::RPacket(const TcpCommApp *tca)
 :__tca(tca),m_offset(0),m_rpos(0),m_revrpos(0),m_len(0),m_tickcount(GetTickCount())
 ,m_head(tca?tca->GetPktHead():0)
-{}
+{
+	if (__tca) {
+		*this = __bufheap.Get(__tca->__pkt_maxlen);
+	}
+}
 //--------------------------------------------------------------------
 RPacket &RPacket::operator=(rbuf *bptr)
 {
-	if(__tca){
-		rptr<rbuf>::operator =(bptr);
+	rptr<rbuf>::operator =(bptr);
+	if (__tca) {
 		m_offset	=0;
 		m_rpos		=0;
 		m_len		=0;

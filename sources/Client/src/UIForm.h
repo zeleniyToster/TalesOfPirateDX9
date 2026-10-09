@@ -1,9 +1,9 @@
-//--------------------------------------------------------------
-// Ãû³Æ:±íµ¥Àà
-// ×÷Õß:lh 2004-07-08
-// Éè¼ÆË¼Ïë:¿Ø¼şÈİÆ÷
-// ÓÃÍ¾:ÈÈ¼üÏÔÊ¾Òş²Ø,ÍÏ¶¯
-// ×îºóĞŞ¸ÄÈÕÆÚ:2004-10-09
+ï»¿//--------------------------------------------------------------
+// Name: form class
+// Author: lh 2004-07-08
+// Design: a container for controls
+// Purpose: hot key show and hide, dragging
+// Last modified date: 2004-10-09
 //--------------------------------------------------------------
 #pragma once
 #include "uiguidata.h"
@@ -15,8 +15,8 @@ typedef void (*GuiFormCloseEvent)( CForm* pForm, bool& IsClose );
 typedef void (*GuiFormBeforeShowEvent)( CForm* pForm, bool& IsShow );
 typedef void (*GuiFormEscCloseEvent)( CForm* pForm );
 
-// ÓÃÓÚÔÚ±íµ¥ÖĞµÄ°´Å¥¿Ø¼şÊÂ¼ş»Øµ÷,
-// pSenderÎª°´Å¥,nMsgTypeÎªeModalResult
+// callback for button control events inside the form;
+// pSender is the button, nMsgType is eModalResult
 typedef void (*FormMouseEvent) (CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey);
 
 
@@ -39,7 +39,7 @@ public:
 		mrCancel,
         mrEnd,
 	};
-	enum eFormStyle  //±íµ¥µÄ·ç¸ñ: ÆÕÍ¨,È«¾ÓÖĞ,×óÓÒ¾ÓÖĞ,ÉÏÏÂ¾ÓÖĞ,¾Ó×ó, ¾ÓÓÒ,¾ÓÉÏ,¾ÓÏÂ
+	enum eFormStyle  //form style: ordinary, fully centred, centred left and right, centred top and bottom, left, right, top, bottom
 	{
 		fsNone,
 		fsAllCenter,
@@ -74,7 +74,7 @@ public:
 	bool				MenuMouseRun( int x, int y, DWORD key );
 
 public:
-	void				ForEach( CompentFun pFun );		// FormÖĞËùÓĞCompent¶¼Ö´ĞĞÒ»´ÎpFunº¯Êı
+	void				ForEach( CompentFun pFun );		// every Compent in the Form runs pFun once
     void                FrameMove(int nCount);
 
 public:
@@ -105,11 +105,11 @@ public:
 	char				GetHotKey()			{ return _cHotKey;		}
 	void				SetHotKeyHandler(GuiHotKeyEvent handler)	{ evtHotkeyHandler=handler; }
 
-    bool                SetNextActiveCompent( bool isNext=true );       // ¼¤»î±íµ¥ÀïÏÂÒ»¸ö¿Ø¼ş,isNext=falseÎªÉÏÒ»¸ö¿Ø¼ş
+    bool                SetNextActiveCompent( bool isNext=true );       // activates the next control in the form; isNext=false gives the previous control
 
 	void				SetActiveCompent( CCompent* pActive );
 
-	// µÃµ½µ±Ç°²Ëµ¥
+	// gets the current menu
 	void				PopMenu( CMenu* pMenu, int x=0, int y=0 );
 	
     void                SetPointer( void* v )   { _pPointer = v;    }
@@ -124,25 +124,25 @@ public:
 
     CCompent*           FindActiveCompent();
 
-	int					ClearChild();	// ½â³ıËùÓĞÓë×Ó´°¿ÚµÄ¹ØÏµ,·µ»Ø½â³ı¸öÊı
+	int					ClearChild();	// breaks all relations with child windows; returns the number broken
 
-public:		// ÊÂ¼ş
-	GuiEvent			evtShow;		// ÏÔÊ¾Ê±
-	GuiEvent			evtHide;		// Òş²ØÊ±
-	GuiEvent			evtActive;		// µÃµ½½¹µãÊ±
-	GuiEvent			evtLost;		// Ê§È¥½¹µãÊ±
-	GuiMouseEvent		evtMouseDown;	// Êó±êÓĞ¼üÔÚ´°¿ÚÉÏ°´ÏÂÊ±
+public:		// events
+	GuiEvent			evtShow;		// on show
+	GuiEvent			evtHide;		// on hide
+	GuiEvent			evtActive;		// on gaining focus
+	GuiEvent			evtLost;		// on losing focus
+	GuiMouseEvent		evtMouseDown;	// when a mouse button is pressed over the window
 	GuiKeyDownEvent		evtKeyDown;
 	GuiKeyCharEvent		evtKeyChar;
     GuiEvent            evtOnSetScreen;
-	GuiMouseEvent		evtMouseDragEnd;			// ÍÏ¶¯½áÊø
-	GuiHotKeyEvent		evtHotkeyHandler;	//ÈÈ¼ü´¦Àí ·µ»Øtrue±íÊ¾ÒÑ¾­´¦Àí£¬false±íÊ¾Î´´¦Àí
+	GuiMouseEvent		evtMouseDragEnd;			// dragging ends
+	GuiHotKeyEvent		evtHotkeyHandler;	//hot key handling; returning true means it was handled, false means it was not
 
 	GuiFormEscCloseEvent	evtEscClose;
 	GuiFormBeforeShowEvent	evtBeforeShow;
-	GuiFormCloseEvent		evtClose;		// ¹Ø±ÕÊ±µ÷ÓÃ
+	GuiFormCloseEvent		evtClose;		// called when closing
 
-public:		// ÓÃÓÚ¿Ø¼şµÄ»Øµ÷ÊÂ¼ş
+public:		// used for control callback events
 	FormMouseEvent			evtEntrustMouseEvent;
 
 protected:
@@ -150,39 +150,39 @@ protected:
 	bool				_AddCompent(CCompent* c, bool isCheck);
 	bool				_AddFrameMove(CCompent* c, bool isCheck);
 
-	void				_TempleteInit();	// ½øÈëÄ£°åÇ°µÄ³õÊ¼»¯
-	void				_TempleteClear();	// Ä£°åÍË³öºóµÄÇå³ı
+	void				_TempleteInit();	// initialisation before entering the template
+	void				_TempleteClear();	// cleanup after leaving the template
 
 protected:
     void*               _pPointer;
 
 	typedef std::vector<CCompent*> vcs;	
-	vcs					_compents;			// ±íµ¥ÄÚ²¿µÄ¿Ø¼ş,Ò²ÊÇÏÔÊ¾¿Ø¼şÊ±µÄË³Ğò
-	vcs					_mouse;				// ´¦Àí¿Ø¼şµÄÊó±ê
-	vcs					_actives;			// ¿É¼¤»îµÄÁĞ±í
-	vcs					_allCompents;		// ËùÓĞ¿Ø¼ş
+	vcs					_compents;			// the controls inside the form, also the order they are displayed in
+	vcs					_mouse;				// handles the control's mouse
+	vcs					_actives;			// the activatable list
+	vcs					_allCompents;		// every control
 	vcs					_frames;
 
 	typedef std::list<CForm*> vfrm;
-	vfrm				_childs;			// ×Ó´°Ìå
+	vfrm				_childs;			// child forms
 
-	int					_nActiveCompentID;	// µ±Ç°¼¤»îµÄCompentË÷Òı
+	int					_nActiveCompentID;	// index of the currently active Compent
 
-	bool			    _isModal;			// ÏÔÊ¾Ê±ÊÇ·ñ°´Ä£Ì¬ÏÔÊ¾
+	bool			    _isModal;			// whether it is shown modally
 	
 	static	CForm*		_pActive;
 
-    eModalResult		_modalResult;		// ´°¿ÚÄ£Ì¬
+    eModalResult		_modalResult;		// window modal
 	eFormStyle          _formStyle;
 
-	bool				_IsEscClose;		// Îªtrue,Ôò°´escÊ±¹Ø±Õ±íµ¥
+	bool				_IsEscClose;		// if true, pressing esc closes the form
 
-	CFramePic*			_pImage;			// ±³¾°Í¼,¹²¶şÖ¡£¬Ò»Ö¡ÎªÆÕÍ¨×´Ì¬£¬Ò»Ö¡Îª¼¤»î×´Ì¬
+	CFramePic*			_pImage;			// background image, two frames, one normal and one active
 	CTextButton*		_pEnterButton;
 
 protected:
-	char				_cHotKey;			// ¼¤»îµÄÈÈ¼ü
-	CMenu*				_pPopMenu;			// µ¯³ö²Ëµ¥
+	char				_cHotKey;			// the active hot key
+	CMenu*				_pPopMenu;			// pops up the menu
 
 private:
 	void				_Copy( const CForm* rhs );

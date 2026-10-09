@@ -1,4 +1,4 @@
-
+Ôªø
 #include "stdafx.h"
 #include "gameapp.h"
 #include "UIMailForm.h"
@@ -111,7 +111,7 @@ namespace GUI
 	{
 		if(strlen(edtQuestionTitle->GetCaption()) < 16)
 		{
-			g_pGameApp->MsgBox(g_oLangRec.GetString(914));	// ” º˛ƒ⁄»›≤ªµ√…Ÿ”⁄8∏ˆ∫∫◊÷£®16∏ˆ”¢Œƒ◊÷£©£°
+			g_pGameApp->MsgBox(g_oLangRec.GetString(914));	// the mail body must be at least 8 Chinese characters (16 English characters)!
 			return;
 		}
 
@@ -126,7 +126,7 @@ namespace GUI
 	void CMailMgr::_evtQuestionFormEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey)
 	{
 		string strName = pSender->GetName();
-		if(strName == "btnSubmit")	// Ã·ΩªŒ Ã‚
+		if(strName == "btnSubmit")	// submit the question
 		{
 			g_stUIMail.SubmitQuestion();
 		}

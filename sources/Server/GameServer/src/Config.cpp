@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "Config.h"
 #include <fstream>
 #include "Util.h"
@@ -52,10 +52,10 @@ void CGameConfig::SetDefault()
 	strcpy(m_szInfoPwd, "");
 	m_nSection = 0;
 
-	m_bLogAI		= FALSE;	// ÊÇ·ñ´ò¿ªAIµÄlog
-	m_bLogCha		= FALSE;	// ÊÇ·ñ´ò¿ª½ÇÉ«µÄlog
-	m_bLogCal		= FALSE;	// ÊÇ·ñ´ò¿ªÊýÖµ¼ÆËãµÄlog
-	m_bLogMission	= FALSE;	// ÊÇ·ñ´ò¿ªMissionµÄlog
+	m_bLogAI		= FALSE;	// whether AI logging is on
+	m_bLogCha		= FALSE;	// whether character logging is on
+	m_bLogCal		= FALSE;	// whether value calculation logging is on
+	m_bLogMission	= FALSE;	// whether Mission logging is on
 
 	m_bSuperCmd     = FALSE;
 
@@ -132,7 +132,7 @@ bool CGameConfig::Load(char *pszFileName)
 					m_nGateCnt++;
             }
         }
-        else if(strKey=="info") // ½âÎöInfoServer IPºÍport
+        else if(strKey=="info") // parses the InfoServer IP and port
         {
             string strList[4];
             int nCnt = Util_ResolveTextLine(strValue.c_str(), strList, 4, ',');
@@ -169,9 +169,9 @@ bool CGameConfig::Load(char *pszFileName)
 		else if (strKey == "BaseID")
 		{
 			size_t stPos = 0;
-			if ((stPos = strValue.find("0x")) != std::string::npos || (stPos = strValue.find("0X")) != std::string::npos) // Ê®Áù½øÖÆÖµ
+			if ((stPos = strValue.find("0x")) != std::string::npos || (stPos = strValue.find("0X")) != std::string::npos) // hexadecimal value
 				sscanf(strValue.c_str(), "%x", &m_ulBaseID);
-			else // Ê®½øÖÆÖµ
+			else // decimal value
 				sscanf(strValue.c_str(), "%d", &m_ulBaseID);
 		}
 		else if(strKey=="max_ply")

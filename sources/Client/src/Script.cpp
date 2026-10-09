@@ -1,4 +1,4 @@
-#include "stdafx.h"
+Ôªø#include "stdafx.h"
 #include "script.h"
 #include <iostream>
 #include "caLua.h"
@@ -75,7 +75,7 @@ CScript::CScript()
 		return;
 	}
 
-	// —∞’“µ±«∞∂”¡– «∑Ò”–ø’Œª,»Áπ˚√ª”–ø’Œª,‘ˆº”µΩƒ©Œ≤	
+	// looks for a free slot in the current queue; if there is none, it is appended at the end
 	for( DWORD i=_dwLastFree+1; i<_dwCount; ++i )
 	{
 		if( !_AllObj[i] )
@@ -242,12 +242,12 @@ bool CScriptMgr::DoString( const char* szFunc, const char* szFormat, ... )
 		LG( "float", g_oLangRec.GetString(380), szFunc, szFormat );
 	}
 
-	int narg, nres;		// ≤Œ ˝º∞∑µªÿ÷µ∏ˆ ˝
+	int narg, nres;		// number of arguments and return values
 
 	va_list vl;
 	va_start( vl, szFormat );
 	lua_getglobal( _pLuaState, szFunc );
-	if (!lua_isfunction(_pLuaState, -1)) // ≤ª «∫Ø ˝√˚
+	if (!lua_isfunction(_pLuaState, -1)) // not a function name
 	{
 		lua_settop(_pLuaState, 0);
 		LG( "luaerror", "Func is Error, Func:%s, Fromat:%s\n", szFunc, szFormat );
@@ -360,7 +360,7 @@ string	CScriptMgr::GetStoneHint( const char* szHintFun, int Lv )
 	}
 
 	lua_getglobal(_pLuaState, szHintFun);
-	if (!lua_isfunction(_pLuaState, -1)) // ≤ª «∫Ø ˝√˚
+	if (!lua_isfunction(_pLuaState, -1)) // not a function name
 	{
 		lua_pop(_pLuaState, 1);
 		return g_oLangRec.GetString(382);

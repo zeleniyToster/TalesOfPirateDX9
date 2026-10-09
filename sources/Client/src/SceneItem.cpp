@@ -1,4 +1,4 @@
-#include "stdafx.h"
+Ôªø#include "stdafx.h"
 #include "SceneItem.h"
 #include "SceneItemSet.h"
 #include "Scene.h"
@@ -300,7 +300,7 @@ void CSceneItem::FrameMove(DWORD dwTimeParam)
 	{
 		if( _nCharacterID == -1 )
 		{			
-			// ∏¸–¬∏ﬂ∂»
+			// updates the height
 			if( _pSceneHeight->FrameMove(dwTimeParam) )
 			{
                 _UpdatePos();			
@@ -330,7 +330,7 @@ void CSceneItem::FrameMove(DWORD dwTimeParam)
 	//	_pCurScene->HandleSceneMsg(SCENEMSG_SCENEOBJ_DESTROY,_nEffID,getID());
 
     // by lsh
-    // ◊¢“‚£¨’‚¿ÔµƒFrameMove±ÿ–Ë∑≈‘⁄◊Ó∫Ûµ˜”√£¨∑Ò‘Úª·”–Œª÷√ŒÛ≤Ó
+    // note: the FrameMove here must be called last, otherwise there will be a position error
 	MPSceneItem::FrameMove();	
 }
 
@@ -432,7 +432,7 @@ void CSceneItem::SetForgeEffect( DWORD value, int nCharID )
 	{
 		LitUnresetTexture();
 
-		// –∂œ¬				
+		// takes off
 		int nCount = GetEffectNum();
 		CEffectObj* pEffect = NULL;
 		for( int i=0; i<nCount; i++ )
@@ -453,11 +453,11 @@ void CSceneItem::SetForgeEffect( DWORD value, int nCharID )
 
 	CSceneItem* pItem = this;
 	if( pInfo->nLightID!=0 )
-		pItem->LitResetTexture( pInfo->nLightID, Level );		// º”‘ÿ¡˜π‚
+		pItem->LitResetTexture( pInfo->nLightID, Level );		// loads the light effect
 	else
 		pItem->LitUnresetTexture();
 
-	// œ»»°œ˚÷Æ«∞µƒÃÿ–ß
+	// cancel the previous effect first
 	int nCount = pItem->GetEffectNum();
 	CEffectObj	*pEffect = NULL;
 	for( int i=0; i<nCount; i++ )
@@ -481,7 +481,7 @@ void CSceneItem::SetForgeEffect( DWORD value, int nCharID )
 			continue;
 		}
 
-		//  π”√µ¿æﬂ±Ì¿Ôµƒdummy
+		// uses the dummy from the item table
 		if( !pEffect->Create( nEffectID ) )
 		{
 			LG("ERROR","msgSceneItem SetForgeEffect effect fail,ID %d", nEffectID );

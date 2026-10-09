@@ -11,7 +11,7 @@ _DBC_BEGIN
 class Timekeeper
 {
 public:
-	Timekeeper(bool mode =false):m_mode(mode),m_ulTimeCount(0)	//mode=falseʹ��GetTickCount()��λʱ�䣬mode=trueʹ��QueryPerformance[X]������λʱ�䡣
+	Timekeeper(bool mode =false):m_mode(mode),m_ulTimeCount(0)	// mode = false uses GetTickCount() for the system tick, mode = true uses QueryPerformance[X] for the higher resolution counter  [rewritten: original text lost]
 	{
 		if(m_mode)
 		{

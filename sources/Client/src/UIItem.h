@@ -1,7 +1,7 @@
-//----------------------------------------------------------------------
-// Ãû³Æ:¾²Ì¬ÎÄ×Ö
-// ×÷Õß:lh 2004-07-19
-// ×îºóÐÞ¸ÄÈÕÆÚ:2004-10-09
+ï»¿//----------------------------------------------------------------------
+// Name: static text
+// Author: lh 2004-07-19
+// Last modified date: 2004-10-09
 //----------------------------------------------------------------------
 #pragma once
 #include "uiguidata.h"
@@ -16,7 +16,7 @@
 	
 namespace GUI
 {
-// ¹Ì¶¨ÁÐÊýµÄItemObj
+// ItemObj with a fixed number of columns
 class CItemRow
 {
 public:
@@ -53,7 +53,7 @@ private:
 
 };
 
-// ÎÄ×Ö
+// text
 class CItem : public CItemObj
 {
 public:
@@ -107,14 +107,14 @@ private:
 		std::string strData;
 	};
 
-	// ·Ö¶ÎÏÔÊ¾²»Í¨ÑÕÉ«µÄÎÄ×ÖÐÅÏ¢
+	// displays text information in segments of different colours
 	typedef std::vector<ITEM_TEXT_DATA> ITEM_TEXT_ARRAY;
 		ITEM_TEXT_ARRAY m_TextArray;
 
 	void ParseScript( const char szScript[], USHORT sStartCom, DWORD dwDefColor );
 };
 
-// ´ø½ø¶ÈÌõµÄÎÄ×Ö
+// text with a progress bar
 class CItemBar : public CItem
 {
 public:
@@ -131,7 +131,7 @@ protected:
 
 };
 
-// ¿É»»ÐÐÎÄ×Ö
+// text that can wrap
 class CItemEx : public CItemObj
 {
 public:
@@ -173,7 +173,7 @@ public:
 	void		SetItemName(const char* name)	{ _strItemName=name;		}
 	const char*	GetItemName()					{ return _strItemName.c_str();		}
 
-	void		ProcessString( int length );	// ²ÎÊý£º½ÇÉ«Ãû³ÆµÄ³¤¶È
+	void		ProcessString( int length );	// argument: the length of the character name
 
 	
 
@@ -192,28 +192,28 @@ public:
 protected:
 	std::string		_str;
 	std::string		_strItemName;
-	bool		_bParseText;					// ÊÇ·ñÐèÒª½âÎöÍ¼Ôª
-	bool        _bMultiLine;                    //ÊÇ·ñ¶àÐÐÏÔÊ¾
-	std::string      _strLine[3];					//×î¶à3ÐÐ 
+	bool		_bParseText;					// whether graphic elements need to be parsed
+	bool        _bMultiLine;                    //whether it is shown on multiple lines
+	std::string      _strLine[3];					//at most 3 lines
 	DWORD		_HeadLen;
 	DWORD		_HeadColor;
 
 	DWORD		_dwColor;
 	int			_nWidth;
 	int			_nHeight;
-	int         _nLineNum;						//ÏÔÊ¾ÔÚÍ·ÏñÉÏµÄÐÐÊý
-	int         _nMaxWidth;                     //¶àÐÐÖÐ×î´óµÄ¿í¶È
+	int         _nLineNum;						// number of lines shown on the portrait
+	int         _nMaxWidth;                     // the greatest width among the lines
 	ALLIGN		m_Allign;
 
 };
 
-// ÄÚÁªº¯Êý
+// inline function
 inline void CItemRow::SetIndex( unsigned int v, CItemObj* p )		
 { 
 	if( _items[v]!=_GetNullItem() && _items[v]!=p ) 
 	{
 		//delete _items[v]; 
-		SAFE_DELETE(_items[v]); // UIµ±»ú´¦Àí
+		SAFE_DELETE(_items[v]); // UI freeze handling
 	}
 	_items[v]=p; 
 }

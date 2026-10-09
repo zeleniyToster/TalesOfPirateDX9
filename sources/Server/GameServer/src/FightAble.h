@@ -1,4 +1,4 @@
-//=============================================================================
+ï»¿//=============================================================================
 // FileName: FightAble.h
 // Creater: ZhangXuedong
 // Date: 2004.09.15
@@ -19,25 +19,25 @@
 #include "Timer.h"
 #include "SkillTemp.h"
 
-enum EItemInstance // ´Ë´¦ĞèÒª¸ú½Å±¾Í³Ò»
+enum EItemInstance // this must stay in sync with the scripts
 {
-	enumITEM_INST_BUY	= 0,		// ÉÌµêÂòÂô
-	enumITEM_INST_MONS	= 1,		// ¹ÖÎïµôÂä
-	enumITEM_INST_COMP	= 2,		// ºÏ³É
-	enumITEM_INST_TASK	= 3,		// ÈÎÎñ»ñµÃ
+	enumITEM_INST_BUY	= 0,		// shop trade
+	enumITEM_INST_MONS	= 1,		// monster loot
+	enumITEM_INST_COMP	= 2,		// synthesis
+	enumITEM_INST_TASK	= 3,		// obtained from a mission
 };
 
 enum EFightChaType
 {
-	enumFIGHT_CHA_SRC		= 0,	// ¹¥»÷Õß
-	enumFIGHT_CHA_TAR		= 1,	// ÊÜ»÷Õß
-	enumFIGHT_CHA_SPLASH	= 2,	// ½¦ÉäÕß
+	enumFIGHT_CHA_SRC		= 0,	// attacker
+	enumFIGHT_CHA_TAR		= 1,	// the one being hit
+	enumFIGHT_CHA_SPLASH	= 2,	// the one splashed
 };
 
 struct SFireUnit
 {
 #ifdef defPROTOCOL_HAVE_PACKETID
-	dbc::uLong	ulPacketID;	// °üµÄID
+	dbc::uLong	ulPacketID;	// packet ID
 #endif
 	dbc::uChar	uchFightID;
 
@@ -47,7 +47,7 @@ struct SFireUnit
 	dbc::Long	lTarInfo1;
 	dbc::Long	lTarInfo2;
 
-	dbc::Short		sExecTime;	// Ö´ĞĞ´ÎÊı
+	dbc::Short		sExecTime;	// execution count
 	CSkillRecord	*pCSkillRecord;
 	CSkillTempData	*pCSkillTData;
 };
@@ -57,19 +57,19 @@ struct SFightInit
 	CSkillRecord	*pCSkillRecord;
 	SSkillGrid		*pSSkillGrid;
 	CSkillTempData	*pCSkillTData;
-	// lInfo1,lInfo2 ÈôÄ¿±êÊÇÊµÌå,Ôò·Ö±ğÊÇWorldID,Handle ·ñÔò·Ö±ğÊÇ×ø±êµÄx,y
+	// lInfo1,lInfo2 are WorldID and Handle respectively if the target is an entity, otherwise they are the x and y of the coordinates
 	struct
 	{
-		dbc::Char		chTarType;	// 0£¬ÎŞÄ¿±ê¡£1£¬Ä¿±êÊÇÊµÌå¡£2£¬Ä¿±êÊÇ×ø±ê
+		dbc::Char		chTarType;	// 0, no target. 1, the target is an entity. 2, the target is coordinates
 		dbc::Long		lTarInfo1;
 		dbc::Long		lTarInfo2;
 	};
 
-	dbc::Short		sStopState;		// ¼¼ÄÜÍ£Ö¹ºóµÄ×´Ì¬£¨enumEXISTS_WAITING, enumEXISTS_SLEEPING£©
+	dbc::Short		sStopState;		// state after the skill stops (enumEXISTS_WAITING, enumEXISTS_SLEEPING)
 };
 
 /*
-*	¿ÉÕ½¶·ÊµÌå
+*	å¯æˆ˜æ–—å®ä½“
 *	lark.li
 */
 class	CFightAble : public CAttachable
@@ -87,10 +87,10 @@ public:
 		dbc::Short	sState;
 		Request	sRequestState;
 
-		bool		bCrt;			// ±¬»÷
+		bool		bCrt;			// critical hit
 		bool		bMiss;			// Miss
 
-		long		lERangeBParam[defSKILL_RANGE_BASEP_NUM];	// ÇøÓò»ù±¾²ÎÊı£¨ÖĞĞÄ×ø±ê£¬·½Ïò£©
+		long		lERangeBParam[defSKILL_RANGE_BASEP_NUM];	// base area parameters (centre coordinates, direction)
 	};
 
 	dbc::Short	GetFightState(void) {return m_SFightProc.sState;}
@@ -115,7 +115,7 @@ public:
 	void	SynSkillStateToEyeshot(void);
 	void	SynSkillStateToUnit(CFightAble *pCObj);
 	void	SynLookEnergy(void);
-	// Êı¾İ±¨×éÖ¯
+	// packet organisation
 	void	WriteSkillState(WPACKET &pk);
 	void	WriteAttr(WPACKET &pk, dbc::Short sSynType);
 	void	WriteMonsAttr(WPACKET &pk, dbc::Short sSynType);
@@ -139,13 +139,13 @@ public:
 	void	CountSailLevel(void);
 	void	CountLifeLevel(void);
 
-	// ÈÎÎñÊÂ¼ş´¦Àí½Ó¿Ú
+	// mission event handling interface
 	virtual void AfterObjDie(CCharacter *pCAtk, CCharacter *pCDead) {}
 	virtual void OnLevelUp( USHORT sLevel ) {};
 	virtual void OnSailLvUp( USHORT sLevel ) {};
 	virtual void OnLifeLvUp( USHORT sLevel ) {};
 
-	// ²É¼¯×ÊÔ´£¬±©ÎïÆ·	
+	// gather a resource, drop an item
 	void	SpawnResource( CCharacter *pCAtk, dbc::Long lSkillLv );
 	void	ItemCount(CCharacter *pAtk);
 	void	ItemInstance(dbc::Char chType, SItemGrid *pGridContent, BOOL isTradable = 1, LONG expiration = 0);
@@ -179,14 +179,14 @@ public:
 	void			SetDie(CCharacter *pCSkillSrcCha);
 	virtual void	Die(){};
 
-	CCharacter* SkillPopBoat(dbc::Long lPosX, dbc::Long lPosY, dbc::Short sDir = -1);	// ·Å´¬
-	bool SkillPopBoat(CCharacter *pCBoat, dbc::Long lPosX, dbc::Long lPosY, dbc::Short sDir = -1);	// ·Å´¬
-	bool SkillInBoat(CCharacter* pCBoat);	// ÉÏ´¬
-	bool SkillOutBoat(dbc::Long lPosX, dbc::Long lPosY, dbc::Short sDir = -1);	// ÏÂ´¬
-	bool SkillPushBoat(CCharacter* pCBoat, bool bFree = true);	// ÊÕ´¬
+	CCharacter* SkillPopBoat(dbc::Long lPosX, dbc::Long lPosY, dbc::Short sDir = -1);	// launch a boat
+	bool SkillPopBoat(CCharacter *pCBoat, dbc::Long lPosX, dbc::Long lPosY, dbc::Short sDir = -1);	// launch a boat
+	bool SkillInBoat(CCharacter* pCBoat);	// board a boat
+	bool SkillOutBoat(dbc::Long lPosX, dbc::Long lPosY, dbc::Short sDir = -1);	// disembark from a boat
+	bool SkillPushBoat(CCharacter* pCBoat, bool bFree = true);	// recall a boat
 
-	dbc::uLong	m_ulPacketID;		// °üµÄID
-	dbc::uChar	m_uchFightID;		// ¹¥»÷µÄ±àºÅ£¬Ö»ÊÇÎªÁË¿Í»§¶ËÆ¥ÅäµÄÓÃÍ¾
+	dbc::uLong	m_ulPacketID;		// packet ID
+	dbc::uChar	m_uchFightID;		// the attack number, used only so the client can match it up
 
 	SFightInit	m_SFightInit;
 	SFightProc	m_SFightProc;
@@ -206,8 +206,8 @@ protected:
 	void	Finally();
 
 	CFightAble	*	IsFightAble(){return this;}
-	void	WritePK(WPACKET& wpk);			//Ğ´ÈëÍæ¼Ò±¾Éí¼°ÆäËùÓĞ¸½¼Ó½á¹¹(ÈçÕÙ»½ÊŞµÈ)µÄËùÓĞÊı¾İ
-	void	ReadPK(RPACKET& rpk);			//ÖØ¹¹Íæ¼Ò±¾Éí¼°ÆäËùÓĞ¸½¼Ó½á¹¹(ÈçÕÙ»½ÊŞµÈ)
+	void	WritePK(WPACKET& wpk);			// writes the player itself and all attached structures (summons and the like)
+	void	ReadPK(RPACKET& rpk);			// rebuilds the player itself and all attached structures (summons and the like)
 
 	bool	GetFightTargetShape(Square *pSTarShape);
 
@@ -227,14 +227,14 @@ private:
 	virtual void BreakAction(RPACKET pk = NULL) {};
 	virtual void EndAction(RPACKET pk = NULL) {}
 
-	bool SkillGeneral(dbc::Long lDistance, dbc::Short sExecTime = 1); // ÆÕÍ¨¼¼ÄÜ
+	bool SkillGeneral(dbc::Long lDistance, dbc::Short sExecTime = 1); // ordinary skill
 
-	dbc::uShort	m_usTickInterval;	// Õ½¶·Ö´ĞĞµÄĞÄÌø£¨ÆµÂÊ£©£¬µ¥Î»£¨ºÁÃë£©
-	dbc::uLong	m_ulLastTick;		// µ¥Î»£¨ºÁÃë£©
+	dbc::uShort	m_usTickInterval;	// combat execution heartbeat (frequency), in milliseconds
+	dbc::uLong	m_ulLastTick;		// in milliseconds
 	bool		m_bOnFight;
 
-	bool		m_bLookAttrChange;	// Íâ¹ÛÊôĞÔ¸Ä±ä
-	CFightAble*	m_pCItemHostObj;	// µôÁÏµÄÊôÖ÷
+	bool		m_bLookAttrChange;	// appearance attribute changed
+	CFightAble*	m_pCItemHostObj;	// owner of the dropped loot
 
 };
 
@@ -244,10 +244,10 @@ public:
 	struct SMgrUnit
 	{
 		SFireUnit	SFireSrc;
-		dbc::uLong	ulLeftTick;	// Ê£ÓàÊ±¼ä
+		dbc::uLong	ulLeftTick;	// remaining time
 		SubMap		*pCMap;
-		Point		STargetPos;	// Ä¿±êÎ»ÖÃ
-		long		lERangeBParam[defSKILL_RANGE_BASEP_NUM];	// ÇøÓò»ù±¾²ÎÊı£¨ÖĞĞÄ×ø±ê£¬·½Ïò£©
+		Point		STargetPos;	// target position
+		long		lERangeBParam[defSKILL_RANGE_BASEP_NUM];	// base area parameters (centre coordinates, direction)
 		SMgrUnit	*pSNext;
 	};
 
@@ -260,10 +260,10 @@ public:
 
 private:
 	unsigned long	m_ulTick;
-	unsigned short	m_usFreq;	// Ö´ĞĞĞÄÌø£¨ÆµÂÊ£©
+	unsigned short	m_usFreq;	// execution heartbeat (frequency)
 
-	SMgrUnit	*m_pSExecQueue;	// Ö´ĞĞ¶ÓÁĞ
-	SMgrUnit	*m_pSFreeQueue;	// ¿ÕÏĞ¶ÓÁĞ
+	SMgrUnit	*m_pSExecQueue;	// running queue
+	SMgrUnit	*m_pSFreeQueue;	// idle queue
 
 };
 

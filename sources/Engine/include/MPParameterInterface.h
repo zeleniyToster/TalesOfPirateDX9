@@ -1,9 +1,9 @@
-#ifndef MPParameterInterface_H
+ï»¿#ifndef MPParameterInterface_H
 #define MPParameterInterface_H
 
 #include "MPEffPrerequisites.h"
 
-/// ¿ÉÓÃµÄ²ÎÊıÁĞ±í
+/// list of the available parameters
 enum MPParameterType
 {
 	PT_BOOL,
@@ -22,7 +22,7 @@ enum MPParameterType
 	PT_COLOURVALUE
 };
 
-/// ²ÎÊı¶¨Òå,ÓÃÓÚÖ§³ÖMPParameterIntefaceµÄ·´Éä»úÖÆ
+/// parameter definition, used by the reflection mechanism of MPParameterInterface
 class MINDPOWER_API MPParameterDef
 {
 public:
@@ -34,7 +34,7 @@ public:
 };
 typedef std::vector<MPParameterDef> MPParameterList;
 
-/** ²ÎÊı¶ÔÏóµÃµ½/ÉèÖÃ²ÎÊıµÄ³éÏóÀà.*/
+/** Abstract class through which a parameter object gets and sets its parameters.*/
 class MINDPOWER_API MPParamCommand
 {
 public:
@@ -49,13 +49,13 @@ class MINDPOWER_API MPParamDictionary
 {
 	friend class MPParameterInterface;
 protected:
-	/// ²ÎÊı¶¨Òå
+	/// parameter definition
 	MPParameterList m_ParamDefs;
 
-	/// ÓÃÓÚget/setµÄ²ÎÊı¶ÔÏó
+	/// parameter object used for get/set
 	ParamCommandMap m_ParamCommands;
 
-	/** ·µ»ØÓĞÃû²ÎÊıµÄ²ÎÊı¶ÔÏó. */
+	/** Returns a parameter object holding a named parameter. */
 	MPParamCommand* getParamCommand(const String& name)
 	{
 		ParamCommandMap::iterator i = m_ParamCommands.find(name);
@@ -84,10 +84,10 @@ protected:
 public:
 	MPParamDictionary()  {}
 
-	/** Ôö¼ÓÕâ¸öÀàµÄ²ÎÊı¶¨Òå. 
-	@param paramDef ²ÎÊıµÄMPParameterDef¶ÔÏó
-	@param paramCmd ²ÎÊıÃüÁîÅÉÉúÀà¶ÔÏóµÄÖ¸ÕëÓÃÓÚ´¦Àígetting/setting.
-	NB: Õâ¸öÀà²»Îö¹¹Õâ¸öÖ¸Õë
+	/** Adds a parameter definition for this class. 
+	@param paramDef the MPParameterDef of the parameter
+	@param paramCmd pointer to a derived parameter command object used to handle getting/setting.
+	NB: this class does not destroy that pointer
 
 	*/
 	void addParameter(const MPParameterDef& paramDef, MPParamCommand* paramCmd)
@@ -104,12 +104,11 @@ public:
 
 typedef std::map<String, MPParamDictionary> MPParamDictionaryMap;
 
-/** ¶¨ÒåÊ¹ÓÃ·´Éä·ç¸ñ£¬ÉèÖÃ×Ô¶¨Òå²ÎÊıµÄ¹«¹²½Ó¿Ú.
+/** Defines the common interface for setting custom parameters in a reflection-like style.
 @remarks
-	Õâ¸öÀà±£´æÁË¹©×ÓÀàÊ¹ÓÃµÄÀà¾²Ì¬Ãû×Ö-²ÎÊımap×Öµä¡£¸ü¶àÏ¸½ÚÇë²é¿´MPParamDictionary. 
+	This class holds the class static name-to-parameter map dictionary used by subclasses. See MPParamDictionary for details. 
 @remarks
-	ÒªÊ¹ÓÃÕâ¸öÀà£¬Ã¿¸ö×ÓÀà±ØĞëÔÚ¹¹Ôìº¯ÊıÖĞµ÷ÓÃcreateParamDictionary£¬À´´´
-	½¨ÄÇ¸öÀàµÄ²ÎÊı×Öµä.
+	To use this class every subclass must call createParamDictionary in its constructor to build that class parameter dictionary.
 */
 class MINDPOWER_API MPParameterInterface
 {
@@ -151,12 +150,12 @@ public:
 
 	virtual String getParameter(const String& name) const
 	{
-		// µÃµ½×Öµä
+		// obtain the dictionary
 		const MPParamDictionary* dict = getParamDictionary();
 
 		if (dict)
 		{
-			// ²éÕÒ²ÎÊı¶ÔÏó
+			// look up a parameter object
 			const MPParamCommand* cmd = dict->getParamCommand(name);
 
 			if (cmd)
@@ -165,18 +164,18 @@ public:
 			}
 		}
 
-		// Ê§°Ü
+		// failure
 		return "";
 	}
 
 	virtual void copyParametersTo(MPParameterInterface* dest) const
 	{
-		// µÃµ½×Öµä
+		// obtain the dictionary
 		const MPParamDictionary* dict = getParamDictionary();
 
 		if (dict)
 		{
-			// ±éÀú×Ô¼ºµÄ²ÎÊı
+			// iterate over our own parameters
 			ParameterList::const_iterator i;
 
 			for (i = dict->mParamDefs.begin(); 
@@ -192,14 +191,13 @@ public:
 	static void cleanupDictionary () ;
 
 protected:
-	/** ÄÚ²¿·½·¨ÓÃÓÚ´´½¨ÀàµÄ²ÎÊı×Öµä.
+	/** Inner method that creates the parameter dictionary for this class.
 	@remarks
-		Õâ¸ö·½·¨½«»á¼ì²éÕâ¸öÀàµÄ²ÎÊı×Öµä,Èç¹û²»´æÔÚÔò´´½¨Ò»¸ö.NB:±ØĞëÌá
-	¹©ÀàµÄÃû×Ö(RTTIÃ»ÓĞÊ¹ÓÃ)
+		This method checks whether the parameter dictionary for this class exists and creates it if not. NB: the class name must be supplied (RTTI is not used)
 	@param
-	className ÀàÃû(×ÖµäÓÃ)
+	className the class name (used by the dictionary)
 	@returns
-		true Èç¹û×Öµä±»´´½¨, false Èç¹û×ÖµäÒÑ¾­´æÔÚ
+		true if the dictionary was created, false if it already existed
 	*/
 	bool createParamDictionary(const String& className)
 	{
@@ -215,9 +213,9 @@ protected:
 
 protected:
 
-	/// ²ÎÊı×Öµä
+	/// parameter dictionary
 	static MPParamDictionaryMap m_sDictionary;
-	/// ÓÃÓÚ²éÕÒµÄÀàÃû (±ØĞëÓÉ×ÓÀà³õÊ¼»¯)
+	/// class name used for the lookup (must be initialised by the subclass)
 	String m_ParamDictName;
 
 };

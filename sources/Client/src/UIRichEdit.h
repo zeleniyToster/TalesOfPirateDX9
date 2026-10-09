@@ -1,6 +1,6 @@
-//----------------------------------------------------------------------
-// √˚≥∆:RichEdit
-// ◊˜’ﬂ:lh 2005-07-11
+Ôªø//----------------------------------------------------------------------
+// Name: RichEdit
+// Author: lh 2005-07-11
 //----------------------------------------------------------------------
 #pragma once
 #include "uicompent.h"
@@ -33,11 +33,11 @@ private:
 	void	_Copy( const CRichEdit& rhs );
 	
 private:
-	char		_szEnter[16];	// ”√”⁄º∆À„ ‰»Îµƒbuf
+	char		_szEnter[16];	// the buf used to compute the input
 	int			_nEnterPos;
 
 	CEditArticle	_cArticle;
-	bool			_IsReadyOnly;			//  «∑Ò÷ª∂¡
+	bool			_IsReadyOnly;			// whether it is read only
 	CEditKey*		_pEditKey;
 
 };

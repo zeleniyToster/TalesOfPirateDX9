@@ -1,4 +1,4 @@
-//=============================================================================
+ï»¿//=============================================================================
 // FileName: MapRes.h
 // Creater: ZhangXuedong
 // Date: 2005.09.05
@@ -46,10 +46,10 @@ public:
 protected:
 
 private:
-	dbc::Short	m_sUnitCountX;	// ºáÏòÕÏ°­¿éÊýÄ¿
-	dbc::Short	m_sUnitCountY;	// ×ÝÏòÕÏ°­¿éÊýÄ¿
-	dbc::Short	m_sUnitWidth;	// ÊôÐÔ¿é¿í£¨ÀåÃ×£©
-	dbc::Short	m_sUnitHeight;	// ÊôÐÔ¿é¸ß£¨ÀåÃ×£©
+	dbc::Short	m_sUnitCountX;	// number of horizontal obstacle blocks
+	dbc::Short	m_sUnitCountY;	// number of vertical obstacle blocks
+	dbc::Short	m_sUnitWidth;	// attribute block width (cm)
+	dbc::Short	m_sUnitHeight;	// attribute block height (cm)
 
 	int			m_nID;
 
@@ -61,56 +61,56 @@ private:
 
 enum EMapEntryStep
 {
-	enumMAPENTRY_CREATE,	// ´´½¨µØÍ¼Èë¿Ú
-	enumMAPENTRY_DESTROY,	// Ïú»ÙÈë¿Ú
-	enumMAPENTRY_SUBPLAYER,	// ÊÍ·ÅÍæ¼Ò
-	enumMAPENTRY_SUBCOPY,	// ÊÍ·Å¸±±¾
-	enumMAPENTRY_RETURN,	// ²Ù×÷·µ»Ø
-	enumMAPENTRY_COPYPARAM,	// ¸±±¾²ÎÊý£¨Èç·Ö±ßÐÅÏ¢£©
-	enumMAPENTRY_COPYRUN,	// ¸±±¾ÔËÐÐ
+	enumMAPENTRY_CREATE,	// creates the map entry
+	enumMAPENTRY_DESTROY,	// destroys the entry
+	enumMAPENTRY_SUBPLAYER,	// releases the player
+	enumMAPENTRY_SUBCOPY,	// releases the instance copy
+	enumMAPENTRY_RETURN,	// operation return value
+	enumMAPENTRY_COPYPARAM,	// instance copy parameters (such as the split-side information)
+	enumMAPENTRY_COPYRUN,	// instance copy running
 };
 
 enum EMapEntryOptRet
 {
-	enumMAPENTRYO_CREATE_SUC,		// ´´½¨³É¹¦
-	enumMAPENTRYO_DESTROY_SUC,		// Ïú»Ù³É¹¦
-	enumMAPENTRYO_COPY_CLOSE_SUC,	// ¸±±¾¹Ø±Õ³É¹¦
+	enumMAPENTRYO_CREATE_SUC,		// created successfully
+	enumMAPENTRYO_DESTROY_SUC,		// destroyed successfully
+	enumMAPENTRYO_COPY_CLOSE_SUC,	// instance copy closed successfully
 };
 
 enum EMapState
 {
-	enumMAP_STATE_OPEN,			// ´ò¿ª
-	enumMAP_STATE_CLOSE,		// ¹Ø±Õ
-	enumMAP_STATE_ASK_CLOSE,	// ÇëÇó¹Ø±Õ
+	enumMAP_STATE_OPEN,			// open
+	enumMAP_STATE_CLOSE,		// closed
+	enumMAP_STATE_ASK_CLOSE,	// close requested
 };
 
 enum EMapEntryState
 {
-	enumMAPENTRY_STATE_ASK_OPEN,	// ÇëÇó¿ªÆô
-	enumMAPENTRY_STATE_OPEN,		// ¿ªÆô
-	enumMAPENTRY_STATE_CLOSE,		// ¹Ø±Õ£¨´ÓÎ´¿ª·Å¹ý£©
-	enumMAPENTRY_STATE_ASK_CLOSE,	// ÇëÇó¹Ø±Õ
-	enumMAPENTRY_STATE_CLOSE_SUC,	// ¹Ø±Õ£¨ÒÑ¾­¿ª·Å¹ý£©
+	enumMAPENTRY_STATE_ASK_OPEN,	// open requested
+	enumMAPENTRY_STATE_OPEN,		// opening
+	enumMAPENTRY_STATE_CLOSE,		// closed (never opened before)
+	enumMAPENTRY_STATE_ASK_CLOSE,	// close requested
+	enumMAPENTRY_STATE_CLOSE_SUC,	// closed (has been opened before)
 };
 
-enum EMapType // ´ËÖµÒ²ÓÃÓÚ½Å±¾£¬²»ÄÜ¸ü¸Ä
+enum EMapType // this value is also used by the scripts and must not be changed
 {
-	enumMAPTYPE_NORMAL			= 1, // ÆÕÍ¨µØÍ¼
-	enumMAPTYPE_GUILD_FIGHT		= 2, // ¹«»áÕ½µØÍ¼
-	enumMAPTYPE_TEAM_FIGHT		= 3, // ¶ÓÎéÕ½µØÍ¼
+	enumMAPTYPE_NORMAL			= 1, // ordinary map
+	enumMAPTYPE_GUILD_FIGHT		= 2, // guild war map
+	enumMAPTYPE_TEAM_FIGHT		= 3, // party battle map
 };
 
-enum EMapCopyStartType // ´ËÖµÒ²ÓÃÓÚ½Å±¾£¬²»ÄÜ¸ü¸Ä
+enum EMapCopyStartType // this value is also used by the scripts and must not be changed
 {
-	enumMAPCOPY_START_NOW		= 1, // Á¢¼´¿ªÊ¼
-	enumMAPCOPY_START_PLAYER	= 2, // ÓÐÍæ¼ÒÊ±¿ªÊ¼
-	enumMAPCOPY_START_CONDITION	= 3, // Ìõ¼þ¿ªÊ¼
+	enumMAPCOPY_START_NOW		= 1, // start immediately
+	enumMAPCOPY_START_PLAYER	= 2, // start when a player is present
+	enumMAPCOPY_START_CONDITION	= 3, // start on condition
 };
 
-enum EMapCopyStartCdtType // ¸±±¾¿ªÊ¼Ìõ¼þÀàÐÍ
+enum EMapCopyStartCdtType // instance copy start condition type
 {
-	enumMAPCOPY_START_CDT_UNKN,		// Î´ÖªµÄÌõ¼þ
-	enumMAPCOPY_START_CDT_PLYNUM,	// Íæ¼ÒÈËÊý
+	enumMAPCOPY_START_CDT_UNKN,		// unknown condition
+	enumMAPCOPY_START_CDT_PLYNUM,	// number of players
 };
 
 class CMapRes
@@ -152,12 +152,12 @@ public:
 	void		SetCanPK(bool bCan = true) {m_bCanPK = bCan;}
 	bool		CanPK(void) {return m_bCanPK;}
 	void		SetCanTeam(bool bCan = true) {m_bCanTeam = bCan;}
-	void		SetCanStall(bool bCan = true){m_bCanStall = bCan;}//ÉèÖÃÄÜ·ñ°ÚÌ¯
+	void		SetCanStall(bool bCan = true){m_bCanStall = bCan;}//sets whether a stall may be opened
 	void		SetCanGuild(bool bCan = true) { m_bCanGuild = bCan; }
 	void		SetGuildWar(bool bGuildWar) { m_bGuildWar = bGuildWar; }
 	bool		CanGuildWar() { return m_bGuildWar; }
 	bool		CanTeam(void) {return m_bCanTeam;}
-	bool		CanStall(void) {return m_bCanStall;}//ÄÜ·ñ°ÚÌ¯
+	bool		CanStall(void) {return m_bCanStall;}//whether a stall may be opened
 	bool		CanGuild(void) { return m_bCanGuild; }
 	void		SetType(dbc::Char chType = enumMAPTYPE_NORMAL) {m_chType = chType;}
 	dbc::Char	GetType(void) {return m_chType;}
@@ -181,7 +181,7 @@ public:
 
 	mission::CNpc*		FindNpc( const char szName[] );
 
-	// ÊÓÒ°µ¥Ôª
+	// visibility cell
 	struct
 	{
 		dbc::cShort		m_csEyeshotCellWidth;
@@ -189,7 +189,7 @@ public:
 		dbc::Short		m_sEyeshotCellLin;
 		dbc::Short		m_sEyeshotCellCol;
 	};
-	// ×´Ì¬µ¥Ôª
+	// state cell
 	struct
 	{
 		dbc::cShort		m_csStateCellWidth;
@@ -217,19 +217,19 @@ public:
 	CMapSwitchEntitySpawn	*m_pCMapSwitchEntitySpawn;
 	CNpcSpawn*				m_pNpcSpawn;
 
-	// Èë¿ÚÐÅÏ¢
+	// entry information
 	struct
 	{
 		dbc::Char	m_szEntryMapName[MAX_MAPNAME_LENGTH];
 		Point		m_SEntryPos;
-		dbc::Char	m_chEntryState;		// Èë¿Ú×´Ì¬£ºEMapEntryState
+		dbc::Char	m_chEntryState;		// entry state: EMapEntryState
 
-		time_t		m_tEntryFirstTm;	// Èë¿ÚµÚÒ»´ÎÖ´ÐÐµÄÊ±¼ä
-		time_t		m_tEntryTmDis;		// Èë¿ÚµÚÒ»´ÎÖ´ÐÐºó£¬ÒÔºó¸÷´ÎÖ´ÐÐµÄÊ±¼ä¼ä¸ô
-		time_t		m_tEntryOutTmDis;	// Èë¿ÚÃ¿´ÎÖ´ÐÐºó£¬µ½ÏûÊ§µÄÊ±¼ä¼ä¸ô
-		time_t		m_tMapClsTmDis;		// Èë¿ÚÃ¿´ÎÖ´ÐÐºó£¬µ½µØÍ¼¹Ø±ÕµÄÊ±¼ä¼ä¸ô
+		time_t		m_tEntryFirstTm;	// time of the first execution of the entry
+		time_t		m_tEntryTmDis;		// interval between subsequent executions after the first one
+		time_t		m_tEntryOutTmDis;	// interval from each execution to the entry disappearing
+		time_t		m_tMapClsTmDis;		// interval from each execution to the map closing
 
-		FILE		*m_pfEntryFile;			// Èë¿ÚÎÄ¼þ
+		FILE		*m_pfEntryFile;			// entry file
 	};
 
 	struct{
@@ -246,17 +246,17 @@ public:
 protected:
 
 private:
-	bool		m_bValid;	// ±êÊ¾±¾µØÍ¼ÊÇ·ñÓÐÐ§
-	dbc::Char	m_chState;	// µØÍ¼×´Ì¬£ºEMapState
+	bool		m_bValid;	// marks whether this map is valid
+	dbc::Char	m_chState;	// map state: EMapState
 
-	BYTE	m_byMapID; // µØÍ¼ID
+	BYTE	m_byMapID; // map ID
 
 	struct
 	{
-		bool	m_bCanSavePos;	// ½ÇÉ«ÔÚ¸ÃµØÍ¼ÉÏÊÇ·ñ¿ÉÒÔ±£´æÎ»ÖÃ
-		bool	m_bCanPK;		// ½ÇÉ«ÔÚ¸ÃµØÍ¼ÉÏÊÇ·ñ¿ÉÒÔPK
-		bool	m_bCanTeam;		// ½ÇÉ«ÔÚ¸ÃµØÍ¼ÉÏÊÇ·ñ¿ÉÒÔ²Ù×÷¶ÓÎé
-		bool	m_bCanStall;	// ½ÇÉ«ÔÚ¸ÃµØÍ¼ÊÇ·ñ¿ÉÒÔ°ÚÌ¯
+		bool	m_bCanSavePos;	// whether characters on this map may save their position
+		bool	m_bCanPK;		// whether characters on this map may PK
+		bool	m_bCanTeam;		// whether characters on this map may operate parties
+		bool	m_bCanStall;	// whether characters on this map may open a stall
 		bool	m_bCanGuild;
 	};
 
@@ -270,12 +270,12 @@ private:
 
 	struct
 	{
-		dbc::Char	m_chCopyStartType;		// ¸±±¾¿ªÊ¼ÀàÐÍ EMapCopyStartType
-		dbc::Char	m_chCopyStartCdtType;	// ¸±±¾¿ªÊ¼Ìõ¼þÀàÐÍ
-		dbc::Long	m_lCopyStartCdtVal;	// ¸±±¾¿ªÊ¼Ìõ¼þÖµ
+		dbc::Char	m_chCopyStartType;		// instance copy start type EMapCopyStartType
+		dbc::Char	m_chCopyStartCdtType;	// instance copy start condition type
+		dbc::Long	m_lCopyStartCdtVal;	// instance copy start condition value
 	};
 
-	bool	m_bRepatriateDie;	// ÊÇ·ñÒªÇ²·µËÀÍö½ÇÉ«
+	bool	m_bRepatriateDie;	// whether dead characters are to be sent back
 
 	dbc::Short	m_sUsedCopySearch;
 
@@ -283,7 +283,7 @@ private:
 
 };
 
-// µØÍ¼ID²úÉúÆ÷£¬¸ù¾ÝµØÍ¼ÃûÎ¨Ò»ÐÔ±£Ö¤IDÎ¨Ò»,·½±ãµØÍ¼²Ù×÷
+// map ID generator; guarantees ID uniqueness from the map name uniqueness, which makes map operations convenient
 class CMapID
 {
 public:

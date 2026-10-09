@@ -1,4 +1,4 @@
-//=============================================================================
+Ôªø//=============================================================================
 // FileName: ChaAttr.cpp
 // Creater: ZhangXuedong
 // Date: 2004.09.01
@@ -45,7 +45,7 @@ void CChaAttr::Init(long lID, bool bFromFile)
 		m_lAttribute[i] = 0;
 
 	// Add by lark.li 20080723 begin
-	// ≤ªƒ‹≥ı ºªØ£¨’‚–© Ù–‘–Ë“™±£¥ÊµΩ ˝æ›ø‚¿Ô
+	// cannot be initialised; these attributes are persisted in the database
 	//for (i = ATTR_EXTEND0; i <= ATTR_EXTEND9; i++)
 	//	m_lAttribute[i] = 0;
 	// End

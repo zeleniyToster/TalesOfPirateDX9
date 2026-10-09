@@ -1,4 +1,4 @@
-
+ï»¿
 #include "stdafx.h"
 #include "UIBreakForm.h"
 #include "uiformmgr.h"
@@ -81,18 +81,18 @@ namespace GUI
                     {
                         switch(pItemCommand->GetItemInfo()->sType)
                         {
-                        case 1:     //  ½£
-                        case 2:     //  ¾Ş½£
-                        case 3:     //  ¹­
-                        case 4:     //  »ğÇ¹
-                        case 7:     //  Ø°Ê×
-                        case 9:     //  ·¨ÕÈ
-                        case 11:     //  ¶ÜÅÆ
-                        case 20:     //  Ã±×Ó
-                        case 22:     //  ÒÂ·ş
-                        case 23:     //  ÊÖÌ×
-                        case 24:     //  Ğ¬×Ó
-                        case 27:     //  ÎÆÉí
+                        case 1:     //  sword
+                        case 2:     //  greatsword
+                        case 3:     //  bow
+                        case 4:     //  musket
+                        case 7:     //  dagger
+                        case 9:     //  staff
+                        case 11:     //  shield
+                        case 20:     //  hat
+                        case 22:     //  clothing
+                        case 23:     //  gloves
+                        case 24:     //  boots
+                        case 27:     //  tattoo
                             {
                                 PushItem(i, *pItemCommand, true);
                             }  break;
@@ -246,26 +246,26 @@ namespace GUI
 
     void CBreakMgr::PopItem(int iIndex, bool bRetry/* = false*/)
     {
-        //  ÊÇ·ñËø¶¨
+        //  whether it is locked
         if(bLock)
         {
             return;
         }
-        // É¾³ıCmdÖĞµÄItem£¬¸ÃItem»áÔÚPushItem()ÖĞÓÉnewÉú³É
+        // åˆ é™¤Cmdä¸­çš„Itemï¼Œè¯¥Itemä¼šåœ¨PushItem()ä¸­ç”±newç”Ÿæˆ
 		CItemCommand* pItemCommand =  dynamic_cast<CItemCommand*>(cmdBreak[iIndex]->GetCommand());
 		if (! pItemCommand)
             return;
 
-		cmdBreak[iIndex]->DelCommand();	// ¸Ãº¯Êı½«É¾³ıdelete Item
+		cmdBreak[iIndex]->DelCommand();	// this function deletes the Item
 
-		// ½«ItemÏàÓ¦µÄÎïÆ·À¸»Ö¸´³É¿ÉÓÃ
+		// puts the item slot of the Item back to usable
 		CCommandObj* pItem = g_stUIEquip.GetGoodsGrid()->GetItem(iBreakPos[iIndex]);
 		if (pItem)
 		{
 			pItem->SetIsValid(true);
 		}
 
-		// ¼ÇÂ¼ItemÔÚÎïÆ·À¸ÖĞµÄÎ»ÖÃ
+		// records the position of the Item in the item slot
         if(!bRetry)
         {
             iBreakPos[iIndex] = NO_USE;
@@ -274,34 +274,34 @@ namespace GUI
 
     void CBreakMgr::PushItem(int iIndex, CItemCommand& rItem, bool bRetry/* = false*/)
     {
-        //  ÊÇ·ñËø¶¨
+        //  whether it is locked
         if(bLock)
         {
             return;
         }
-        // ÅĞ¶ÏµÀ¾ßÊÇ·ñ¿ÉÒÔÍÏ
+        // decides whether the item can be dragged
 		if(! rItem.GetIsValid())
 		{
 			return;
 		}
 
-		// ²é¿´Ô­À´µÄCmdÖĞÊÇ·ñÒÑ¾­ÓĞItemÁË£¬Èç¹ûÓĞÔòÒÆ³ö
+		// checks whether the original Cmd already has an Item and removes it if so
 		CItemCommand* pItemCommand =  dynamic_cast<CItemCommand*>(cmdBreak[iIndex]->GetCommand());
 		if (pItemCommand)
 		{
 			PopItem(iIndex);
 		}
 
-		// ¼ÇÂ¼ItemÔÚÎïÆ·À¸ÖĞµÄÎ»ÖÃ
+		// records the position of the Item in the item slot
         if(!bRetry)
         {
             iBreakPos[iIndex] = g_stUIEquip.GetGoodsGrid()->GetDragIndex();
         }
 
-		// ½«ItemÏàÓ¦µÄÎïÆ·À¸»Òµ÷
+		// greys out the item slot of the Item
 		rItem.SetIsValid(false);
 
-		// ½«´´½¨µÄItem·ÅÈëCmdÖĞ£¬ÕâÀïÓÃnew½«»áÔÚPopItem()ÖĞÉ¾³ı
+		// å°†åˆ›å»ºçš„Itemæ”¾å…¥Cmdä¸­ï¼Œè¿™é‡Œç”¨newå°†ä¼šåœ¨PopItem()ä¸­åˆ é™¤
 		CItemCommand* pItemCmd = new CItemCommand(rItem);
 		pItemCmd->SetIsValid(true);
 		cmdBreak[iIndex]->AddCommand(pItemCmd);
@@ -413,18 +413,18 @@ namespace GUI
             return;
         switch(pItemCommand->GetItemInfo()->sType)
         {
-        case 1:     //  ½£
-        case 2:     //  ¾Ş½£
-        case 3:     //  ¹­
-        case 4:     //  »ğÇ¹
-        case 7:     //  Ø°Ê×
-        case 9:     //  ·¨ÕÈ
-        case 11:     //  ¶ÜÅÆ
-        case 20:     //  Ã±×Ó
-        case 22:     //  ÒÂ·ş
-        case 23:     //  ÊÖÌ×
-        case 24:     //  Ğ¬×Ó
-        case 27:     //  ÎÆÉí
+        case 1:     //  sword
+        case 2:     //  greatsword
+        case 3:     //  bow
+        case 4:     //  musket
+        case 7:     //  dagger
+        case 9:     //  staff
+        case 11:     //  shield
+        case 20:     //  hat
+        case 22:     //  clothing
+        case 23:     //  gloves
+        case 24:     //  boots
+        case 27:     //  tattoo
             {}  break;
         default:
             {

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "UIGlobalVar.h"
 
 #include "NetProtocol.h"
@@ -6,7 +6,7 @@
 namespace GUI
 {
 
-	// µÀ¾ß¾«Á¶
+	// item refining
 	class CGuildChallengeMgr : public CUIInterface
 	{
 	public:
@@ -45,11 +45,11 @@ namespace GUI
 		const static int FIRST_CHARGE_MONEY[NUM];
 
 		CForm		*frmGuildPK;
-		CLabel		*labChallenger[NUM];	//ÌôÕ½Õß
-		CLabel		*labMoney[NUM];			//¾º¼Û
-		CLabel		*labGuildName[NUM];		//ÀÞÖ÷¹¤»áÃû
-		CTextButton	*btnCharge[NUM];		//¾º¼Û°´Å¥
-		CList		*lstGuildPK;			//ÆäËûÐÅÏ¢
+		CLabel		*labChallenger[NUM];	// the challenger
+		CLabel		*labMoney[NUM];			// bidding
+		CLabel		*labGuildName[NUM];		// name of the guild holding the title
+		CTextButton	*btnCharge[NUM];		// the bid button
+		CList		*lstGuildPK;			// other information
 
 		int			m_iSelIndex;
 		int			m_iChangeMoney;

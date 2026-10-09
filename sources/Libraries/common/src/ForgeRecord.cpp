@@ -1,4 +1,4 @@
-// ForgeRecord.cpp Created by knight-gongjian 2005.1.24.
+ï»¿// ForgeRecord.cpp Created by knight-gongjian 2005.1.24.
 //---------------------------------------------------------
 
 #include "ForgeRecord.h"
@@ -16,18 +16,18 @@ BOOL CForgeRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string
 	int m = 0;
 	string strList[8];
 
-	// ¾«Á·µÈ¼¶
+	// refine level
 	pInfo->byLevel = pInfo->nID;
 	
-	// Ê§°ÜºóÎïÆ·ÍË»ØµÈ¼¶
+	// level the item falls back to on failure
 	pInfo->byFailure = Str2Int(pInfo->szDataName);
 	
-	// ¾«Á·³É¹¦¼¸ÂÊ
+	// chance of a successful refine
 	pInfo->byRate = Str2Int(ParamList[m++]);
 	if( pInfo->byRate > 100 )
 		pInfo->byRate = 100;
 
-	// ¾«Á·ÐèÇóÎïÆ·Êý¾ÝÐÅÏ¢
+	// refine material requirements
 	for( int i = 0; i < FORGE_MAXNUM_ITEM; i++ )
 	{
 		Util_ResolveTextLine( ParamList[m++].c_str(), strList, 8, ',' ); 
@@ -35,7 +35,7 @@ BOOL CForgeRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string
 		pInfo->ForgeItem[i].byNum = Str2Int(strList[1]);
 	}
 
-	// ¾«Á·ÐèÇó½ðÇ®
+	// money a refine costs
 	pInfo->dwMoney = Str2Int(ParamList[m++]);
 
 	return TRUE;

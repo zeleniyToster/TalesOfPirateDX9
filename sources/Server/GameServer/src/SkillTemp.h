@@ -1,4 +1,4 @@
-//=============================================================================
+ï»¿//=============================================================================
 // FileName: SkillTemp.h
 // Creater: ZhangXuedong
 // Date: 2005.03.03
@@ -10,9 +10,9 @@
 
 #include "PreAlloc.h"
 
-#define defSKILL_RANGE_BASEP_NUM	3	// ÇøÓò»ù±¾²ÎÊı¸öÊı£¨·¶Î§ÖĞĞÄ×ø±ê£¬·½Ïò£©
-#define defSKILL_RANGE_EXTEP_NUM	4	// ÇøÓòÀ©Õ¹²ÎÊı¸öÊı£¨·¶Î§ÀàĞÍ£¬ÀàĞÍ²ÎÊı£©
-#define defSKILL_STATE_PARAM_NUM	3	// ÇøÓò×´Ì¬²ÎÊı¸öÊı£¨±àºÅ£¬µÈ¼¶£¬³ÖĞøÊ±¼ä£©
+#define defSKILL_RANGE_BASEP_NUM	3	// number of base area parameters (range centre coordinates, direction)
+#define defSKILL_RANGE_EXTEP_NUM	4	// number of area extension parameters (range type, type parameters)
+#define defSKILL_STATE_PARAM_NUM	3	// number of area state parameters (number, level, duration)
 
 class CSkillTempData : public dbc::PreAllocStru
 {
@@ -23,13 +23,13 @@ public:
 		sStateParam[0] = SSTATE_NONE;
 	}
 
-	short	sUseEndure{};	// ¶Ô¡°ÄÍ¾Ã¶È¡°µÄÏûºÄ
-	short	sUseEnergy{};	// ¶Ô¡°ÄÜÁ¿¡°µÄÏûºÄ
-	short	sUseSP{};		// ¶Ô¡°SP¡°µÄÏûºÄ
+	short	sUseEndure{};	// cost of 'durability'
+	short	sUseEnergy{};	// cost of 'energy'
+	short	sUseSP{};		// cost of 'SP'
 
-	long	lResumeTime{};// ÔÙÊÍ·ÅĞèÒªµÄÊ±¼ä£¨ºÁÃë£©
-	short	sRange[defSKILL_RANGE_EXTEP_NUM];	// ÇøÓòÃèÊö£¨ÀàĞÍ+²ÎÊı£©
-	short	sStateParam[defSKILL_STATE_PARAM_NUM];	// ×´Ì¬±àºÅ£¬µÈ¼¶£¬³ÖĞøÊ±¼ä
+	long	lResumeTime{};// time before it can be used again (milliseconds)
+	short	sRange[defSKILL_RANGE_EXTEP_NUM];	// area description (type + parameters)
+	short	sStateParam[defSKILL_STATE_PARAM_NUM];	// state number, level, duration
 
 protected:
 

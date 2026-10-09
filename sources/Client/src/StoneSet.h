@@ -1,8 +1,8 @@
-#pragma once
+ï»¿#pragma once
 
 #include "TableData.h"
 
-#define STONE_EQUIP_MAX		3		// ×î¶àÈý¸ö±¦Ê¯Î»ÖÃ
+#define STONE_EQUIP_MAX		3		// at most three gem slots
 
 class CStoneInfo : public CRawDataInfo
 {
@@ -16,11 +16,11 @@ public:
 
     int		nItemID;
 	int		nEquipPos[STONE_EQUIP_MAX];
-	int		nType;						// ±¦Ê¯ÀàÐÍ
-	char	szHintFunc[64];				// Ð§¹ûÏÔÊ¾½Å±¾
+	int		nType;						// gem type
+	char	szHintFunc[64];				// effect display script
 	DWORD	nItemRgb;
 
-	bool	IsEquip( int pos ){			// µ±Ç°Î»ÖÃÊÇ·ñ¿ÉÒÔ×°±¸±¦Ê¯,´«Èë:1,2,3
+	bool	IsEquip( int pos ){			// whether a gem can be equipped here; passed in: 1, 2, 3
 		if( pos<=1 || pos>=3 ) return false;
 
 		for( int i=0; i<STONE_EQUIP_MAX; i++ )
@@ -46,7 +46,7 @@ public:
 
 protected:
 
-	static CStoneSet* _Instance; // Ïàµ±ÓÚµ¥¼ü, °Ñ×Ô¼º¼Ç×¡
+	static CStoneSet* _Instance; // like a single key, remembers itself
    
 	virtual CRawDataInfo* _CreateRawDataArray(int nCnt)
 	{

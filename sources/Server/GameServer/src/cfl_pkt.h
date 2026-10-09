@@ -1,4 +1,4 @@
-
+ï»¿
 #ifndef _CFL_PKT_H_
 #define _CFL_PKT_H_
 
@@ -17,20 +17,20 @@ protected:
 
 public:
 
-    // ±ØÐëÒªÊµÏÖµÄ½Ó¿Ú
+    // interface that must be implemented
 
-    static short hdr_sz() {return T::hdr_sz();} // °üÍ·µÄ³ß´ç
-    static short pkt_len(void* dat) {return T::pkt_len(dat);} // °üµÄ×Ü³¤¶È
-    static short pkt_maxlen() {return T::pkt_maxlen();} // ºÏ·¨°üµÄ×î´ó³¤¶È
+    static short hdr_sz() {return T::hdr_sz();} // header size of the packet
+    static short pkt_len(void* dat) {return T::pkt_len(dat);} // total length of the packet
+    static short pkt_maxlen() {return T::pkt_maxlen();} // maximum length of a valid packet
 
-    void* pkt_buf() {return _pkt.pkt_buf();} // °üÊ×µØÖ·
-    short pkt_len() {return _pkt.pkt_len();} // °ü×Ü³¤¶È
+    void* pkt_buf() {return _pkt.pkt_buf();} // packet head address
+    short pkt_len() {return _pkt.pkt_len();} // total length of the packet
 
     void clone_from(cfl_pktc<T>* pkt) {_pkt.clone(pkt->_pkt);} // deep-copy
 
 public:
 
-    // ¶ÁÐ´½Ó¿Ú
+    // read and write interface
 
     void WriteCmd(unsigned short command) {_pkt.wcmd(command);}
     void WriteChar(char const c) {_pkt.wc(c);}
@@ -62,8 +62,8 @@ protected:
     void on_get() {_pkt.reset();}
     void on_ret() {_pkt.reset();}
 
-    void pkt_enc() {}; // °ü¼ÓÃÜ
-    void pkt_dec() {}; // °ü½âÃÜ
+    void pkt_enc() {}; // packet encryption
+    void pkt_dec() {}; // packet decryption
 
     // the core packet
     T _pkt;};
@@ -81,21 +81,21 @@ struct cfl_pkt
         int ssid;};
 
 
-    // °ü½á¹¹ begin
+    // packet structure begin
     HDR hdr;
     unsigned short cmd;
     char buf[MYPKT_DATMAXLEN];
     unsigned short offset;
     unsigned short offset_r;
-    // °ü½á¹¹ end
+    // packet structure end
 
 
 
-    // ³ÉÔ±º¯Êý
+    // member functions
     cfl_pkt() {reset();}
     void reset();
 
-    // ¸¨Öúº¯Êý
+    // helper functions
     static short hdr_sz();
     static short pkt_len(void* dat);
     static short pkt_maxlen();
@@ -104,16 +104,16 @@ struct cfl_pkt
     bool has_data(short len) const;
     void clone(cfl_pkt const& pkt);
 
-    // ¸Ä±ä°ü³¤¶È
+    // changes the packet length
     short get_len() const;
     void set_len(short len);
     void add_len(short len);
 
-    // µÃµ½»º³åÇøºÍ³¤¶È
+    // gets the buffer and the length
     void* pkt_buf() const {return (void *)&hdr;}
     short pkt_len() const {return get_len();}
 
-    // Ð´
+    // write
     void wcmd(unsigned short);
     void wc(char c);
     void ws(short s);
@@ -123,7 +123,7 @@ struct cfl_pkt
     void wb(char const* p, short len);
     void wstr(char const* str);
 
-    // ¶Á
+    // read
     unsigned short rcmd() const;
     char rc();
     short rs();

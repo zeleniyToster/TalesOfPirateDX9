@@ -1,4 +1,4 @@
-//=============================================================================
+ï»¿//=============================================================================
 // FileName: GameApp.h
 // Creater: ZhangXuedong
 // Date: 2004.11.04
@@ -9,7 +9,7 @@
 #define GAMEAPP_H
 
 
-//#define DISABLE_GM_CMD				//	¹Ø±ÕgmÃüÁî
+//#define DISABLE_GM_CMD				//	å…³é—­gmå‘½ä»¤
 
 
 #include "GameAppNet.h"
@@ -65,13 +65,13 @@ class GateServer;
 
 struct SDBLogData
 {
-	int		nLoc;			// ÔÚpoolÖÐµÄÎ»ÖÃ
-	char	szLog[8192];	// ×Ö·û´®ÄÚÈÝ
+	int		nLoc;			// position in the pool
+	char	szLog[8192];	// string content
 	SDBLogData():nLoc(0) {}
 };
 
 
-class CDBLogMgr // ¹ÜÀí¼´½«Ð´ÈëdbµÄlog
+class CDBLogMgr // manages the logs about to be written to the DB
 {
 
 public:
@@ -87,7 +87,7 @@ public:
 	
 	
 	
-	// ¿ÉÒÔLog 5¸ö×Ö·û´®×Ö¶Î, ×îºóÒ»¸ö³¤¶ÈÎª8000×Ö·ûÒÔÄÚ
+	// can log 5 string fields, the last one up to 8000 characters
 	void Log(const char *type, const char *c1, const char *c2, const char *c3, const char *c4, const char *p, BOOL bAddToList = TRUE);
 
 	// Add by lark.li 20080324 begin
@@ -95,28 +95,28 @@ public:
 	// End
 
 	void HandleLogList();
-	void FlushLogList();  // GameServer¹Ø±ÕµÄÊ±ºò, ±£Ö¤Ê£ÏÂµÄlog¶¼Ð´ÈëDB
+	void FlushLogList();  // when GameServer shuts down, makes sure the remaining logs are written to the DB
 	
-	int	GetLogLeft()				{ return _nLogLeft;		} // »¹Ê£ÏÂµÄÃ»ÓÐ´¦ÀíµÄlogÊýÁ¿, ¿ÉÒÔÊä³öµ½¼à¿Ø½çÃæ
-	int	SetPerLogCnt(int nCnt)		{ _nPerLogCnt = nCnt;	} // ÉèÖÃÃ¿´ÎÐ´ÈëµÄÊýÁ¿, ¿ÉÒÔ¶¯Ì¬µ÷Õû
-	int GetPerLogCnt()				{ return _nPerLogCnt;   } // ÓÃÀ´¼à¿ØÊä³ö
+	int	GetLogLeft()				{ return _nLogLeft;		} // number of unprocessed logs left; can be reported to a monitoring screen
+	int	SetPerLogCnt(int nCnt)		{ _nPerLogCnt = nCnt;	} // sets how many are written each time; can be adjusted dynamically
+	int GetPerLogCnt()				{ return _nPerLogCnt;   } // used for monitoring output
 
 protected:
 	
 	std::list<SDBLogData*>	_LogList;
-	int					_nPerLogCnt;				// Ã¿´ÎÐ´ÈëµÄ×î´ólogÊýÁ¿
-	int					_nLogLeft;					// »¹Ê£ÏÂµÄlogÊýÁ¿
-	SDBLogData			_LogPool[MAX_DBLOG_POOL];	// ´æ·ÅÒª±»logµÄÊý¾Ý, ¸Ãpool±»Ñ­»·Ê¹ÓÃ
-	int					_nPoolUseLoc;				// µ±Ç°Õý±»Ê¹ÓÃµÄpoolµÄÎ»ÖÃ
+	int					_nPerLogCnt;				// maximum number of logs written per batch
+	int					_nLogLeft;					// number of logs remaining
+	SDBLogData			_LogPool[MAX_DBLOG_POOL];	// holds the data to be logged; this pool is reused in rotation
+	int					_nPoolUseLoc;				// position of the pool currently in use
 };
 
 struct SVolunteer
 {
-	char szName[defENTITY_NAME_LEN];	// ÐÕÃû
+	char szName[defENTITY_NAME_LEN];	// name
 	unsigned long ulID;					// ID
-	long lLevel;						// µÈ¼¶
-	long lJob;							// Ö°Òµ
-	char szMapName[256];				// µØÍ¼
+	long lLevel;						// level
+	long lJob;							// class
+	char szMapName[256];				// map
 };
 
 class	CGameApp : public CDBLogMgr
@@ -130,7 +130,7 @@ public:
 	BOOL    InitMap();
     void	Run(DWORD dwCurTime);
 
-	// ÓëÍøÂçÏûÏ¢ÓÐ¹ØµÄ4¸ö´¦Àí½Ó¿Úº¯Êý
+	// the four handler functions related to network messages
 	void	ProcessNetMsg(int nMsgType, GateServer *pGate, RPACKET pkt);
 	void    OnGateConnected(GateServer *pGate, RPACKET pkt);
 	void	OnGateDisconnect(GateServer *pGate, RPACKET pkt);
@@ -142,8 +142,8 @@ public:
 	void	ProcessDynMapEntry(GateServer *pGate, RPACKET pkt);
 	void	ProcessInterGameMsg(unsigned short usCmd, GateServer *pGate, RPACKET pkt);
 	void	ProcessGroupBroadcast(unsigned short usCmd, GateServer *pGate, RPACKET pkt);
-	void	ProcessGarner2Update(RPACKET pkt);//ÂÒ¶·°×Òø³Ç
-    // ´¦ÀíInfoServerÏûÏ¢
+	void	ProcessGarner2Update(RPACKET pkt);// melee Silver City
+    // handles InfoServer messages
     void    ProcessInfoMsg(pNetMessage msg, short sType, InfoServer *pInfo);
     void    ProcessMsg(pNetMessage msg, InfoServer *pInfo);
     void    OnInfoConnected(InfoServer *pInfo);
@@ -184,14 +184,14 @@ public:
 	void		SetGlobalRates(float droprate, float exprate) { m_fGlobalDropRate = droprate; m_fGlobalExpRate = exprate; }
 	float		GetGlobalDropRate() { return m_fGlobalDropRate; }
 	float		GetGlobalExpRate() { return m_fGlobalExpRate; }
-	// ÖØÔØËùÓÐnpc½Å±¾ÐÅÏ¢
+	// reloads all NPC script information
 	BOOL		ReloadNpcInfo( CCharacter& character );
 	mission::CNpc* FindNpc( const char szName[] );
 
-	// ÕÙ»½NPC³öÏÖÒ»¶ÎÊ±¼ä
+	// a summoned NPC appears for a while
 	BOOL		SummonNpc( BYTE byMapID, USHORT sAreaID, const char szNpc[], USHORT sTime );
 
-	// ´´½¨ÊµÌå
+	// creates the entity
 	mission::CEventEntity* CreateEntity( BYTE byType ) { return m_pCEntSpace->GetEventEntity( byType ); }
 	
 	void		NotiGameReset(unsigned long ulLeftSec);
@@ -204,7 +204,7 @@ public:
 	void		InitSStateTraOnTime();
 	long		GetSStateTraOnTime(unsigned char uchStateID, unsigned char uchStateLv);
 
-	void		DataStatistic(void); // ÐÅÏ¢Í³¼Æ
+	void		DataStatistic(void); // information statistics
 	CCharacter*	FindPlayerChaByName(const char* cszChaName);
 	CCharacter*	FindPlayerChaByNameLua(const char* cszChaName);
 	int FindPlayerChaByActNameLua(const char* cszChaName,CCharacter* chas[3]);
@@ -215,12 +215,12 @@ public:
 	CCharacter*	FindChaByName(const char* cszChaName);
 	CPlayer*	FindPlayerByDBChaID(unsigned long ulDBChaID);
 
-	void		WorldNotice(const char *szString); // Í¨Öª±¾×éËùÓÐGameServerÉÏµÄÍæ¼Ò
+	void		WorldNotice(const char *szString); // notifies the players on every GameServer of this group
 	void		GuildNotice(unsigned long guildID, const char *szString);
 	void		ScrollNotice(const char * szString,int SetNum, DWORD color = 0xFFFFFF00);//Add by sunny.sun20080804
 	void		GMNotice(const char * szString);//add by sunny.sun 20080821
-	void		LocalNotice(const char *szString); // Í¨Öª±¾GameServerÉÏµÄÍæ¼Ò
-	void		ChaNotice(const char *szNotiString, const char *szChaName = ""); // Í¨ÖªÖ¸¶¨Íæ¼Ò
+	void		LocalNotice(const char *szString); // notifies the players on this GameServer
+	void		ChaNotice(const char *szNotiString, const char *szChaName = ""); // notifies the given player
 
 	bool		IsChaAttrMaxValInit(void) {return m_bChaAttrMaxValInit;}
 	void		ChaAttrMaxValInit(bool bSet) {m_bChaAttrMaxValInit = bSet;}
@@ -246,7 +246,7 @@ public:
 	DWORD	m_dwChaCnt;
 	DWORD	m_dwPlayerCnt;
 	DWORD	m_dwActiveMgrUnit;
-	dbc::InterLockedLong   m_dwRunStep;	// ÐÔÄÜ¼à¿Ø
+	dbc::InterLockedLong   m_dwRunStep;	// performance monitoring
 	
 	BOOL	m_bExecLuaCmd;
 	std::string	m_strMapNameList;
@@ -259,7 +259,7 @@ public:
 	dbc::PreAllocHeap<CChaListNode>			m_ChaListHeap;
 	dbc::PreAllocHeap<CStateCellNode>		m_StateCellNodeHeap;
 
-	// ÓÃÓÚÐÅÏ¢Í³¼Æ
+	// used for information statistics
 	dbc::Long	m_lCabinHeapNum;
 	dbc::Long	m_lTradeDataHeapNum;
 	dbc::Long	m_lSkillTDataHeapNum;
@@ -271,7 +271,7 @@ public:
 	Identity			m_Ident;
 	Identity			m_ItemIdent;
 
-	struct // GameServer½áÊø
+	struct // GameServer shutdown
 	{
 		unsigned long	m_ulLeftSec;
 	    CTimer			m_CTimerReset;
@@ -286,7 +286,7 @@ protected:
 	void	MapMgrRun(DWORD dwCurTime);
 
 protected:
-	CMapRes* m_MapList[MAX_MAP];		// Î¬»¤Ò»¸öÖ¸ÏòËùÓÐ×ÓµØÍ¼µÄÁÐ±í
+	CMapRes* m_MapList[MAX_MAP];		// maintains a list of all sub-maps
 	short	 m_mapnum;
 	
 	CChaRecordSet 	   *m_CChaRecordSet;
@@ -300,14 +300,14 @@ protected:
 	CLifeLvRecordSet   *m_CLifeLvRecord;
 	CHairRecordSet	   *m_CHairRecord;
 
-	std::map<DWORD, CPlayer*>  _PlayerIdx;  // ´ÓDB IDÓ³Éäµ½PlayerÖ¸Õë
+	std::map<DWORD, CPlayer*>  _PlayerIdx;  // maps from DB ID to the Player pointer
 
-	std::vector<SVolunteer>	m_vecVolunteerList;	// Ö¾Ô¸ÕßÁÐ±í
+	std::vector<SVolunteer>	m_vecVolunteerList;	// volunteer list
 
 	struct
 	{
-		CPlayer		*pCPlayerL;	  // ¼ÇÂ¼Óë¶ÔÓ¦socketÁ¬½ÓµÄÍæ¼Ò
-		CPlayer		*pCCurPlayer; // ÓÃÓÚËÑË÷Íæ¼ÒÁ´±í
+		CPlayer		*pCPlayerL;	  // records the player connected to the matching socket
+		CPlayer		*pCCurPlayer; // used to search the player chain
 	} m_GatePlayer[MAX_GATE];                                                                
 
 public:
@@ -322,7 +322,7 @@ private:
     DWORD   _dwTempRunCnt;
 	float   m_fGlobalDropRate;
 	float   m_fGlobalExpRate;
-	// ¼ÍÂ¼²»Í¬µÈ¼¶²»Í¬¼¼ÄÜµÄÏà¹ØÊýÖµ
+	// records the values related to skills of each level
 	struct
 	{
 		CSkillTempData	*m_pCSkillTData[defMAX_SKILL_NO + 1][defMAX_SKILL_LV + 1];
@@ -330,7 +330,7 @@ private:
 		char			m_chSkillSetLv;
 	};
 
-	long	m_lSStateTraOnTime[AREA_STATE_MAXID + 1][SKILL_STATE_LEVEL + 1];	// ´ÓµØ±í×ªÒÆµ½½ÇÉ«ÉíÉÏµÄ×´Ì¬µÄ³ÖÐøÊ±¼ä
+	long	m_lSStateTraOnTime[AREA_STATE_MAXID + 1][SKILL_STATE_LEVEL + 1];	// duration of the state transferred from the terrain onto the character
 
     CTimer	m_CTimerItem;
 
@@ -345,12 +345,12 @@ T_E}
 inline void CGameApp::AddPlayerIdx(DWORD dwDBID, CPlayer* pPlayer)
 {T_B
 	_PlayerIdx[dwDBID] = pPlayer;
-	//LG("player_idx", "Ìí¼ÓDB ID = %d¶ÔÓ¦µÄPlayer\n", dwDBID);
+	//LG("player_idx", "æ·»åŠ DB ID = %då¯¹åº”çš„Player\n", dwDBID);
 T_E}
 
 inline void	CGameApp::DelPlayerIdx(DWORD dwDBID)
 {T_B
-	//LG("player_idx", "Çå³ýDB ID = %d¶ÔÓ¦µÄPlayer\n", dwDBID);
+	//LG("player_idx", "æ¸…é™¤DB ID = %då¯¹åº”çš„Player\n", dwDBID);
 	std::map<DWORD, CPlayer*>::iterator it = _PlayerIdx.find(dwDBID);
 	if(it!=_PlayerIdx.end())
 	{
@@ -358,7 +358,7 @@ inline void	CGameApp::DelPlayerIdx(DWORD dwDBID)
 	}
 	else
 	{
-		//LG("player_idx", "Çå³ýPlayerIdxµÄÊ±ºò³öÏÖ´íÎó, DB ID = %d Ã»ÓÐ·¢ÏÖË÷Òý\n", dwDBID); 
+		//LG("player_idx", "æ¸…é™¤PlayerIdxçš„æ—¶å€™å‡ºçŽ°é”™è¯¯, DB ID = %d æ²¡æœ‰å‘çŽ°ç´¢å¼•\n", dwDBID); 
 		LG("player_idx", "when delete PlayerIdx it appear error, DB ID = %d no find index\n", dwDBID); 
 	}
 	//LG("player_idx", "Idx Size = %d\n\n", _PlayerIdx.size());
@@ -393,7 +393,7 @@ inline	CPlayer*	CGameApp::GetPlayerByMainChaName(	const	char*	sMainChaName	)
 	return	NULL;
 T_E};
 
-// È¡¶ÔÓ¦µÈ¼¶¼¼ÄÜµÄÏà¹ØÊý¾Ý£¬Èç¹û¸ÃÊý¾Ý»¹Ã»ÓÐ³õÊ¼»¯£¬ÔòÖ´ÐÐ³õÊ¼»¯¶¯×÷¡£
+// takes the data for the skill of the given level; if it is not initialised yet, initialises it
 inline CSkillTempData* CGameApp::GetSkillTData(short sSkillNo, char chSkillLv)
 {
 	if (!m_pCSkillTData[sSkillNo][chSkillLv])
@@ -408,7 +408,7 @@ inline CSkillTempData* CGameApp::GetSkillTData(short sSkillNo, char chSkillLv)
 
 		m_sSkillSetNo = sSkillNo;
 		m_chSkillSetLv = chSkillLv;
-		// SPÏûºÄ
+		// SP cost
 		if (strcmp(pCSkillRec->szUseSP, "0"))
 		{
 			if (g_CParser.DoString(pCSkillRec->szUseSP, enumSCRIPT_RETURN_NUMBER, 1, enumSCRIPT_PARAM_NUMBER, 1, chSkillLv, DOSTRING_PARAM_END))
@@ -416,7 +416,7 @@ inline CSkillTempData* CGameApp::GetSkillTData(short sSkillNo, char chSkillLv)
 		}
 		else
 			m_pCSkillTData[sSkillNo][chSkillLv]->sUseSP = 0;
-		// ¡°ÄÍ¾Ã¶È¡°ÏûºÄ
+		// 'durability' cost
 		if (strcmp(pCSkillRec->szUseEndure, "0"))
 		{
 			if (g_CParser.DoString(pCSkillRec->szUseEndure, enumSCRIPT_RETURN_NUMBER, 1, enumSCRIPT_PARAM_NUMBER, 1, chSkillLv, DOSTRING_PARAM_END))
@@ -424,7 +424,7 @@ inline CSkillTempData* CGameApp::GetSkillTData(short sSkillNo, char chSkillLv)
 		}
 		else
 			m_pCSkillTData[sSkillNo][chSkillLv]->sUseEndure = 0;
-		// ¡°ÄÜÁ¿¡°ÏûºÄ
+		// 'energy' cost
 		if (strcmp(pCSkillRec->szUseEnergy, "0"))
 		{
 			if (g_CParser.DoString(pCSkillRec->szUseEnergy, enumSCRIPT_RETURN_NUMBER, 1, enumSCRIPT_PARAM_NUMBER, 1, chSkillLv, DOSTRING_PARAM_END))
@@ -432,15 +432,15 @@ inline CSkillTempData* CGameApp::GetSkillTData(short sSkillNo, char chSkillLv)
 		}
 		else
 			m_pCSkillTData[sSkillNo][chSkillLv]->sUseEnergy = 0;
-		// ¼¼ÄÜÇøÓò
+		// skill area
 		m_pCSkillTData[sSkillNo][chSkillLv]->sRange[0] = enumRANGE_TYPE_NONE;
 		if (strcmp(pCSkillRec->szSetRange, "0"))
 			g_CParser.DoString(pCSkillRec->szSetRange, enumSCRIPT_RETURN_NONE, 0, enumSCRIPT_PARAM_NUMBER, 1, chSkillLv, DOSTRING_PARAM_END);
-		// ¼¼ÄÜ×´Ì¬
+		// skill state
 		m_pCSkillTData[sSkillNo][chSkillLv]->sStateParam[0] = SSTATE_NONE;
 		if (strcmp(pCSkillRec->szRangeState, "0"))
 			g_CParser.DoString(pCSkillRec->szRangeState, enumSCRIPT_RETURN_NONE, 0, enumSCRIPT_PARAM_NUMBER, 1, chSkillLv, DOSTRING_PARAM_END);
-		// ÔÙÊ©ÓÃ¼ä¸ô
+		// reuse interval
 		if (strcmp(pCSkillRec->szFireSpeed, "0"))
 		{
 			if (g_CParser.DoString(pCSkillRec->szFireSpeed, enumSCRIPT_RETURN_NUMBER, 1, enumSCRIPT_PARAM_NUMBER, 1, chSkillLv, DOSTRING_PARAM_END))
@@ -473,7 +473,7 @@ inline void CGameApp::SetSkillTDataState(short *psState)
 	memcpy(m_pCSkillTData[m_sSkillSetNo][m_chSkillSetLv]->sStateParam, psState, sizeof(short) * defSKILL_STATE_PARAM_NUM);
 }
 
-// ³õÊ¼»¯µØ±í×´Ì¬×ªÒÆµ½½ÇÉ«ÉíÉÏËù³ÖÐøµÄÊ±¼ä
+// initialises the duration of the state transferred from the terrain onto the character
 inline void CGameApp::InitSStateTraOnTime()
 {
 	memset(m_lSStateTraOnTime, 0, sizeof(m_lSStateTraOnTime));
@@ -498,7 +498,7 @@ inline long CGameApp::GetSStateTraOnTime(unsigned char uchStateID, unsigned char
 	return m_lSStateTraOnTime[uchStateID][uchStateLv];
 }
 
-// ¸ù¾ÝÃû³ÆËÑË÷±¾½ø³ÌµÄËùÓÐ½ÇÉ«
+// searches every character in this process by name
 inline CCharacter* CGameApp::FindPlayerChaByName(const char* cszChaName)
 {
 	BEGINGETGATE();
@@ -514,14 +514,14 @@ inline CCharacter* CGameApp::FindPlayerChaByName(const char* cszChaName)
 		{
 			if (++nCount > GETPLAYERCOUNT(pGateServer))
 			{
-				//LG("Íæ¼ÒÁ´±í´íÎó", "Íæ¼ÒÊýÄ¿:%u, %s\n", GETPLAYERCOUNT(pGateServer), "FindPlayerChaByName");
+				//LG("çŽ©å®¶é“¾è¡¨é”™è¯¯", "çŽ©å®¶æ•°ç›®:%u, %s\n", GETPLAYERCOUNT(pGateServer), "FindPlayerChaByName");
 				LG("player chain list error", "player number:%u, %s\n", GETPLAYERCOUNT(pGateServer), "FindPlayerChaByName");
 				break;
 			}
 			pCha = pCPlayer->GetCtrlCha();
 			if (!pCha)
 				continue;
-			if (!strcmp(pCha->GetName(), cszChaName)) // ÕÒµ½½ÇÉ«
+			if (!strcmp(pCha->GetName(), cszChaName)) // finds the character
 				return pCha;
 		}
 	}
@@ -544,7 +544,7 @@ inline CCharacter* CGameApp::FindPlayerChaByNameLua(const char* cszChaName)
 		{
 			if (++nCount > GETPLAYERCOUNT(pGateServer))
 			{
-				//LG("Íæ¼ÒÁ´±í´íÎó", "Íæ¼ÒÊýÄ¿:%u, %s\n", GETPLAYERCOUNT(pGateServer), "FindPlayerChaByName");
+				//LG("çŽ©å®¶é“¾è¡¨é”™è¯¯", "çŽ©å®¶æ•°ç›®:%u, %s\n", GETPLAYERCOUNT(pGateServer), "FindPlayerChaByName");
 				LG("player chain list error", "player number:%u, %s\n", GETPLAYERCOUNT(pGateServer), "FindPlayerChaByName");
 				break;
 			}
@@ -552,7 +552,7 @@ inline CCharacter* CGameApp::FindPlayerChaByNameLua(const char* cszChaName)
 
 			if (!pCha)
 				continue;
-			if (!strcmp(pCha->GetPlayer()->GetMainCha()->GetName(), cszChaName)) // ÕÒµ½½ÇÉ«
+			if (!strcmp(pCha->GetPlayer()->GetMainCha()->GetName(), cszChaName)) // finds the character
 				return pCha;
 		}
 	}
@@ -579,7 +579,7 @@ inline int CGameApp::FindPlayerChaByActNameLua(const char* cszChaName, CCharacte
 		{
 			if (++nCount > GETPLAYERCOUNT(pGateServer))
 			{
-				//LG("Íæ¼ÒÁ´±í´íÎó", "Íæ¼ÒÊýÄ¿:%u, %s\n", GETPLAYERCOUNT(pGateServer), "FindPlayerChaByName");
+				//LG("çŽ©å®¶é“¾è¡¨é”™è¯¯", "çŽ©å®¶æ•°ç›®:%u, %s\n", GETPLAYERCOUNT(pGateServer), "FindPlayerChaByName");
 				LG("player chain list error", "player number:%u, %s\n", GETPLAYERCOUNT(pGateServer), "FindPlayerChaByName");
 				break;
 			}
@@ -587,7 +587,7 @@ inline int CGameApp::FindPlayerChaByActNameLua(const char* cszChaName, CCharacte
 
 			if (!pCha)
 				continue;
-			if (!strcmp(pCha->GetPlayer()->GetActName(), cszChaName)) // ÕÒµ½½ÇÉ«
+			if (!strcmp(pCha->GetPlayer()->GetActName(), cszChaName)) // finds the character
 				chas[count++] = pCha;
 		}
 	}
@@ -628,7 +628,7 @@ inline bool CGameApp::DealAllInGuild(int guildID, const char* luaFunc, const cha
 	return true;
 }
 
-// ¸ù¾ÝWorldIDËÑË÷±¾½ø³ÌµÄËùÓÐ½ÇÉ«
+// searches every character in this process by WorldID
 inline CCharacter* CGameApp::FindPlayerChaByID(unsigned long ulChaID)
 {
 	BEGINGETGATE();
@@ -644,14 +644,14 @@ inline CCharacter* CGameApp::FindPlayerChaByID(unsigned long ulChaID)
 		{
 			if (++nCount > GETPLAYERCOUNT(pGateServer))
 			{
-				//LG("Íæ¼ÒÁ´±í´íÎó", "Íæ¼ÒÊýÄ¿:%u, %s\n", GETPLAYERCOUNT(pGateServer), "FindPlayerChaByID");
+				//LG("çŽ©å®¶é“¾è¡¨é”™è¯¯", "çŽ©å®¶æ•°ç›®:%u, %s\n", GETPLAYERCOUNT(pGateServer), "FindPlayerChaByID");
 				LG("player chain error", "player number:%u, %s\n", GETPLAYERCOUNT(pGateServer), "FindPlayerChaByID");
 				break;
 			}
 			pCha = pCPlayer->GetCtrlCha();
 			if (!pCha)
 				continue;
-			if (pCha->GetID() == ulChaID) // ÕÒµ½½ÇÉ«
+			if (pCha->GetID() == ulChaID) // finds the character
 				return pCha;
 		}
 	}
@@ -659,7 +659,7 @@ inline CCharacter* CGameApp::FindPlayerChaByID(unsigned long ulChaID)
 	return 0;
 }
 
-// ¸ù¾ÝÊý¾ÝIDËÑË÷±¾½ø³ÌµÄËùÓÐÍæ¼Ò
+// searches every player by data ID
 inline CPlayer* CGameApp::FindPlayerByDBChaID(unsigned long ulDBChaID)
 {
 	BEGINGETGATE();
@@ -674,11 +674,11 @@ inline CPlayer* CGameApp::FindPlayerByDBChaID(unsigned long ulDBChaID)
 		{
 			if (++nCount > GETPLAYERCOUNT(pGateServer))
 			{
-				//LG("Íæ¼ÒÁ´±í´íÎó", "Íæ¼ÒÊýÄ¿:%u, %s\n", GETPLAYERCOUNT(pGateServer), "FindPlayerChaByID");
+				//LG("çŽ©å®¶é“¾è¡¨é”™è¯¯", "çŽ©å®¶æ•°ç›®:%u, %s\n", GETPLAYERCOUNT(pGateServer), "FindPlayerChaByID");
 				LG("player chain error", "player number:%u, %s\n", GETPLAYERCOUNT(pGateServer), "FindPlayerChaByID");
 				break;
 			}
-			if (pCPlayer->GetDBChaId() == ulDBChaID) // ÕÒµ½½ÇÉ«
+			if (pCPlayer->GetDBChaId() == ulDBChaID) // finds the character
 				return pCPlayer;
 		}
 	}
@@ -686,7 +686,7 @@ inline CPlayer* CGameApp::FindPlayerByDBChaID(unsigned long ulDBChaID)
 	return 0;
 }
 
-// ¸ù¾ÝWorldIDËÑË÷±¾½ø³ÌµÄËùÓÐÖ÷½ÇÉ«
+// searches every master character by WorldID
 inline CCharacter* CGameApp::FindMainPlayerChaByID(unsigned long ulChaID)
 {
 	BEGINGETGATE();
@@ -702,14 +702,14 @@ inline CCharacter* CGameApp::FindMainPlayerChaByID(unsigned long ulChaID)
 		{
 			if (++nCount > GETPLAYERCOUNT(pGateServer))
 			{
-				//LG("Íæ¼ÒÁ´±í´íÎó", "Íæ¼ÒÊýÄ¿:%u, %s\n", GETPLAYERCOUNT(pGateServer), "FindPlayerChaByID");
+				//LG("çŽ©å®¶é“¾è¡¨é”™è¯¯", "çŽ©å®¶æ•°ç›®:%u, %s\n", GETPLAYERCOUNT(pGateServer), "FindPlayerChaByID");
 				LG("player chain error", "player number:%u, %s\n", GETPLAYERCOUNT(pGateServer), "FindPlayerChaByID");
 				break;
 			}
 			pCha = pCPlayer->GetMainCha();
 			if (!pCha)
 				continue;
-			if (pCha->GetID() == ulChaID) // ÕÒµ½½ÇÉ«
+			if (pCha->GetID() == ulChaID) // finds the character
 				return pCha;
 		}
 	}
@@ -717,7 +717,7 @@ inline CCharacter* CGameApp::FindMainPlayerChaByID(unsigned long ulChaID)
 	return 0;
 }
 
-// ¸ù¾ÝWorldIDËÑË÷±¾½ø³ÌµÄËùÓÐ½ÇÉ«
+// searches every character by WorldID
 inline CCharacter* CGameApp::FindChaByID(unsigned long ulChaID)
 {
 	CCharacter	*pCCha;
@@ -750,7 +750,7 @@ enum EChaTimerAction
 };
 
 
-struct SSwitchMapInfo // µØÍ¼ÇÐ»»ÐÅÏ¢
+struct SSwitchMapInfo // map switch information
 {
 	SubMap		*pSrcMap;
 	char		szSrcMapName[256];
@@ -763,10 +763,10 @@ extern bool             g_bLogEntity;
 
 extern CGameApp*        g_pGameApp;
 extern CItemRecordAttr* g_pCItemAttr;
-extern CCharacter*		g_pCSystemCha;		// ÏµÍ³½ÇÉ«
-extern SubMap *			g_pScriptMap;		// ½Å±¾ÓÃ³õÊ¼»¯µØÍ¼ÐÅÏ¢È«¾Ö±äÁ¿
-extern long				g_lDeftMMaskLight;	// ´óµØÍ¼Ä¬ÈÏÕÕÁÁ·¶Î§
-extern std::string			g_strChaState[2];	// 0£¬´æ·ÅÖ÷½ÇÉ«µÄ¼¼ÄÜ×´Ì¬¡£1£¬´æ·Å´¬µÄ¼¼ÄÜ×´Ì¬
+extern CCharacter*		g_pCSystemCha;		// system characters
+extern SubMap *			g_pScriptMap;		// script globals holding the map initialisation information
+extern long				g_lDeftMMaskLight;	// default lit range of the big map
+extern std::string			g_strChaState[2];	// 0, holds the skill state of the master character. 1, holds the skill state of the boat
 extern uLong			g_ulCurID;
 extern Long				g_lCurHandle;
 extern HANDLE			hConsole;

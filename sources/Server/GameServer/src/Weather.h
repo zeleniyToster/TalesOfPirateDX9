@@ -1,10 +1,10 @@
-// ÌìÆø±¾ÖÊÉÏÊÇÖ¸ÏµÍ³²úÉúµÄµØÃæ×´Ì¬, ±ÈÈç·ç,  À×,  Îí
-// ´¦ÓÚ¸ÃµØÃæ×´Ì¬ÏÂµÄ¿Í»§¶Ë±íÏÖÎª²¥·Å·¶Î§ÌØĞ§
+ï»¿// weather is essentially the ground state the system produces, such as wind, thunder or fog
+// on a client under that ground state it plays a range effect
 
 
-// Ä¿Ç°ÌìÆøÏµÍ³ÓĞ2¸ö×÷ÓÃ
-// Ò». Îªº½º£Ê¿µÄ±´¿Ç³äÖµ
-// ¶ş. Ó°ÏìÍæ¼ÒµÄÒÆ¶¯ËÙ¶È, ÉúÃüÖµµÈ, ·á¸»ÓÎÏ·±íÏÖ
+// the weather system currently has two purposes
+// one, recharging the navigator's shell
+// two, affecting player movement speed, life and the like, to enrich how the game looks
 
 #pragma once
 
@@ -14,22 +14,22 @@ class CWeather
 {
 public:
 
-	CWeather(BYTE btType) // ¹¹ÔìÊ±±ØĞë´«ÈëÌìÆøÀàĞÍ
+	CWeather(BYTE btType) // the weather type must be passed in when constructing
 	:_dwLastLocationTick(0), _dwFrequence(2)
 	{
 		_btType = btType;
-		_dwStateLastTime = 20; // Ä¬ÈÏÎª20Ãë
+		_dwStateLastTime = 20; // 20 seconds by default
 	}
 	
-	void	SetRange(int sx, int sy, int w, int h);	// Ö¸¶¨Ò»¸ö´óµÄ×ø±ê·¶Î§
-	void	RandLocation(SubMap *pMap);				// ÔÚÖ¸¶¨µÄ·¶Î§ÄÚ, Ëæ»úÑ¡ÔñµØµã³öÏÖ
-	void	SetFrequence(DWORD dwFre);				// Éè¶¨³öÏÖÆµÂÊ, µ¥Î»ÊÇÃë
-	void	SetStateLastTime(DWORD dwTime);			// ÉèÖÃ×´Ì¬³ÖĞøÊ±¼ä, µ¥Î»ÊÇÃë
+	void	SetRange(int sx, int sy, int w, int h);	// specifies a large coordinate range
+	void	RandLocation(SubMap *pMap);				// picks a random location within the given range to appear
+	void	SetFrequence(DWORD dwFre);				// sets the appearance frequency, in seconds
+	void	SetStateLastTime(DWORD dwTime);			// sets the state duration, in seconds
 
 protected:
 
-	BYTE	_btType;  // ÌìÆøÀàĞÍ 0·ç  1À×  2Îí
-	int		_sx;	  // ¼ÇÂ¼×ø±ê·¶Î§
+	BYTE	_btType;  // weather type: 0 wind, 1 thunder, 2 fog
+	int		_sx;	  // records the coordinate range
 	int		_sy;
 	int		_w;
 	int		_h;
@@ -57,7 +57,7 @@ inline void CWeather::SetStateLastTime(DWORD dwTime)
 }
 
 
-// ÌìÆø¹ÜÀíÀà, ¿ÉÒÔÌí¼Ó, É¾³ı, ±éÀúËùÓĞÌìÆø£¬ĞèÎªÃ¿¸öµØÍ¼¶ÔÏóÊµÀı»¯Ò»¸ö
+// weather management class; it can add, remove and iterate over every weather, and one instance is needed per map object
 class CWeatherMgr 
 {
 public:
@@ -65,7 +65,7 @@ public:
 	~CWeatherMgr();
 	void	AddWeatherRange(CWeather *pWeather);
 	void	RemoveWeather(CWeather *pWeather);
-	void	Run(SubMap *pMap);	// ±»¶¨Ê±Æ÷µ÷ÓÃ, ÄÚ²¿»áµ÷ÓÃÃ¿Ò»¸öWeatherµÄRandLocation
+	void	Run(SubMap *pMap);	// called by the timer; internally it calls RandLocation on each Weather
 	void	ClearAll();
 
 protected:

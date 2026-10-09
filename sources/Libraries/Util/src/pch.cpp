@@ -1,5 +1,5 @@
-
+ï»¿
 #include "pch.h"
 
-// »á×Ô¶¯²úÉúÔ¤±àÒëÍ·ÎÄ¼şlogutil.pch
+// the pre-compiled header logutil.pch is generated automatically
 //

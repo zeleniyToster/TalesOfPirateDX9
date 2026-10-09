@@ -1,4 +1,4 @@
-// CharTrade.h Created by knight-gongjian 2004.12.7.
+Ôªø// CharTrade.h Created by knight-gongjian 2004.12.7.
 //---------------------------------------------------------
 #pragma once
 
@@ -22,8 +22,8 @@ namespace mission
 			USHORT sItemID;			
 		};
 		TRADE_ITEM_DATA ItemArray[ROLE_MAXNUM_TRADEDATA];
-		BYTE  byItemCount;						// ŒÔ∆∑º∆ ˝
-		DWORD dwMoney;							// Ωª“◊«Æ ˝
+		BYTE  byItemCount;						// item count
+		DWORD dwMoney;							// money involved in the trade
 		DWORD dwIMP;
 
 	} TRADE_DATA, *PTRADE_DATA;
@@ -49,20 +49,20 @@ namespace mission
 		{
 			struct
 			{
-				BYTE  bTradeStart : 1;		// Ωª“◊ «∑Òø™ º
-				BYTE  bReqTrade : 1;		// «Î«Û∑ΩΩª“◊ ˝æ›»∑»œ
-				BYTE  bAcpTrade : 1;		// Ω” ‹∑ΩΩª“◊ ˝æ›»∑»œ
-				BYTE  bReqOk : 1;			// «Î«Û∑ΩΩª“◊≤Ÿ◊˜»∑»œ
-				BYTE  bAcpOk : 1;			// Ω” ‹∑ΩΩª“◊≤Ÿ◊˜»∑»œ
-				BYTE  byParam : 3;			// ±£¡Ù
+				BYTE  bTradeStart : 1;		// whether the trade has started
+				BYTE  bReqTrade : 1;		// the requesting side has confirmed the trade data
+				BYTE  bAcpTrade : 1;		// the accepting side has confirmed the trade data
+				BYTE  bReqOk : 1;			// the requesting side has confirmed the trade operation
+				BYTE  bAcpOk : 1;			// the accepting side has confirmed the trade operation
+				BYTE  byParam : 3;			// reserved
 			};
 			BYTE byValue;
 		};
-		//USHORT sxPos, syPos;		// Ωª“◊µÿµ„–≈œ¢
-		TRADE_DATA ReqTradeData;	// «Î«Û∑ΩΩª“◊ ˝æ›–≈œ¢
-		TRADE_DATA AcpTradeData;	// Ω” ‹∑ΩΩª“◊ ˝æ›–≈œ¢
+		//USHORT sxPos, syPos;		// ‰∫§ÊòìÂú∞ÁÇπ‰ø°ÊÅØ
+		TRADE_DATA ReqTradeData;	// the requesting side's trade data
+		TRADE_DATA AcpTradeData;	// the accepting side's trade data
 		
-		DWORD dwTradeTime;			// Ωª“◊ ±º‰º∆ ±(Ωª“◊≥¨π˝πÊ∂®≤Ÿ◊˜ ±º‰£¨œµÕ≥»°œ˚Ωª“◊≤Ÿ◊˜£¨ªÿ ’ª∫≥Â«¯)
+		DWORD dwTradeTime;			// trade timer: if the trade runs past the allotted time, the system cancels the trade and recycles the buffer
 	};
 
 	class CTradeSystem
@@ -71,19 +71,19 @@ namespace mission
 		CTradeSystem();
 		~CTradeSystem();
 
-		// Ωª“◊≤Ÿ◊˜
+		// trade operation
 		BOOL Request( BYTE byType, CCharacter& character, DWORD dwAcceptID );
 		BOOL Accept( BYTE byType, CCharacter& character,  DWORD dwRequestID );
 		BOOL Cancel( BYTE byType, CCharacter& character,  DWORD dwCharID );
 		
-		// Ω«…´¿Îœﬂ«Â≥˝Ωª“◊–≈œ¢
+		// clears the trade information when the character goes offline
 		BOOL Clear( BYTE byType, CCharacter& character );
 
-		// »∑»œΩª“◊–≈œ¢∫Õ≤Ÿ◊˜
+		// confirms the trade information and operation
 		BOOL ValidateItemData( BYTE byType, CCharacter& character, DWORD dwCharID );
 		BOOL ValidateTrade( BYTE byType, CCharacter& character, DWORD dwCharID );
 
-		// ∑≈÷√ªÚ’ﬂ»°◊ﬂŒÔ∆∑µΩΩª“◊¿∏
+		// places or takes an item into or out of the trade slot
 		BOOL AddItem( BYTE byType, CCharacter& character, DWORD dwCharID, BYTE byOpType, BYTE byIndex, BYTE byItemIndex, BYTE byCount );
 		BOOL AddMoney( BYTE byType, CCharacter& charactar, DWORD dwCharID, BYTE byOpType, DWORD dwMoney );
 		BOOL AddIMP(BYTE byType, CCharacter& charactar, DWORD dwCharID, BYTE byOpType, DWORD dwMoney);
@@ -96,19 +96,19 @@ namespace mission
 #pragma pack( push, before_InfoNet )
 #pragma pack( 8 )
 
-    //…Ã≥«∂©µ•–≈œ¢
+    // shop order information
     struct SOrderData
     {        
-        long long	lOrderID;  //∂©µ•∫≈
-        long		lComID;    //…Ã∆∑ID
-		long		lNum;	   // ˝¡ø
-        long		ChaID;	   //Ω«…´ ˝æ›ø‚ID
+        long long	lOrderID;  // order number
+        long		lComID;    // goods ID
+		long		lNum;	   // quantity
+        long		ChaID;	   // character database ID
 		long		lRecDBID;
 		char		ChaName[defENTITY_NAME_LEN];
 		DWORD		dwTickCount;
     };
 
-	//…Ã∆∑–≈œ¢
+	// goods information
 	struct SItemData
 	{
 		SItemData():pItemArray(NULL)
@@ -155,18 +155,18 @@ namespace mission
 			return *this;
 		}
 
-		StoreInfo   store_head;       //  …Ã∆∑–≈œ¢Õ∑
-		ItemInfo	*pItemArray;      //  µ¿æﬂ–≈œ¢ÃÂ
+		StoreInfo   store_head;       //  goods information header
+		ItemInfo	*pItemArray;      //  item information body
 	};
 
-    //…Ã≥«œµÕ≥
+    // shop system
     class CStoreSystem
     {
     public:
         CStoreSystem();
         ~CStoreSystem();
 
-        //”√ªßπ∫¬Úµ¿æﬂ
+        // user buys an item
         BOOL Request( CCharacter *pCha, long lComID );
 		BOOL Accept( long long lOrderID, RoleInfo *ChaInfo );
 		BOOL Accept( CCharacter *pCha, long lComID );
@@ -176,20 +176,20 @@ namespace mission
 		BOOL AcceptVIP(long long lOrderID, RoleInfo *ChaInfo, DWORD dwVipParam);
 		BOOL CancelVIP(long long lOrderID);
 
-		//”√ªßªÒ»°…Ã∆∑¡–±Ì
+		// user fetches the goods list
 		BOOL RequestItemList(CCharacter *pCha, long lClsID, short sPage, short sNum);
 
-		//”√ªß«Î«Û∂“ªª¥˙±“
+		// user asks to exchange currency
 		BOOL RequestChange(CCharacter *pCha, long lNum);
 		BOOL AcceptChange(long long lOrderID, RoleInfo *ChaInfo);
 		BOOL CancelChange(long long lOrderID);
 
-		//≤È—ØΩ«…´–≈œ¢
+		// looks up character information
 		BOOL RequestRoleInfo(CCharacter *pCha);
 		BOOL AcceptRoleInfo(long long lOrderID, RoleInfo *ChaInfo);
 		BOOL CancelRoleInfo(long long lOrderID);
 
-		//≤È—ØΩª“◊º«¬º
+		// looks up trade records
 		BOOL RequestRecord(CCharacter *pCha, long lNum);
 		BOOL AcceptRecord(long long lOrderID, HistoryInfo *pRecord);
 		BOOL CancelRecord(long long lOrderID);
@@ -202,10 +202,10 @@ namespace mission
 		BOOL AcceptGMRecv(long long lOrderID, MailInfo *pMi);
 		BOOL CancelGMRecv(long long lOrderID);
 
-		//”√ªßø™∆Ù…Ã≥«
+		// user opens the shop
 		BOOL Open(CCharacter *pCha, long vip);
 
-		//…Ã≥«¡–±Ì
+		// shop list
 		BOOL GetItemList();
 		BOOL GetAfficheList();
 
@@ -222,26 +222,26 @@ namespace mission
 		void SetValid() { m_bValid = true; }
 		BOOL IsValid() { return m_bValid; }
 
-        void Run( DWORD dwCurTime, DWORD dwIntervalTime, DWORD dwOrderTime );    //¥¶¿Ì∂©µ•¡–±Ì
+        void Run( DWORD dwCurTime, DWORD dwIntervalTime, DWORD dwOrderTime );    // handles the order list
         
     private:
-		//≤È—Ø…Ã∆∑
+		// looks up goods
 		long		GetClassId(long lComID);
 		cChar		*GetClassName(long lClsID);
 		SItemData	*GetItemData(long lComID);
 		BOOL		DelItemData(long lComID);
 
-		//∂©µ•≤Ÿ◊˜
+		// order operation
 		BOOL		PushOrder(CCharacter *pCha, long long lOrderID, long lComID, long lNum);
 		SOrderData	PopOrder(long long lOrderID);
 		BOOL		HasOrder(long long lOrderID);
 
-		//map<long long, SOrderData>		m_OrderList;		//∂©µ•¡–±Ì
+		//map<long long, SOrderData>		m_OrderList;		//ËÆ¢ÂçïÂàóË°®
 		std::vector<SOrderData>				m_OrderList;
-		std::map<long, long>					m_ItemSearchList;	//…Ã∆∑ID∫Õ∑÷¿‡µƒ”≥…‰πÿœµ
-		std::map< long, std::vector<SItemData> >	m_ItemList;			//…Ã∆∑¡–±Ì
-		std::vector<ClassInfo>				m_ItemClass;		//…Ã∆∑∑÷¿‡
-		std::vector<AfficheInfo>				m_AfficheList;		//π´∏Ê¡–±Ì
+		std::map<long, long>					m_ItemSearchList;	// mapping between goods ID and category
+		std::map< long, std::vector<SItemData> >	m_ItemList;			// goods list
+		std::vector<ClassInfo>				m_ItemClass;		// goods categories
+		std::vector<AfficheInfo>				m_AfficheList;		// announcement list
 		BOOL							m_bValid;
         
     };

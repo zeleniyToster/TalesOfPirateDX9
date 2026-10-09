@@ -1,4 +1,4 @@
-//=============================================================================
+ï»¿//=============================================================================
 // FileName: EventRecord.h
 // Creater: ZhangXuedong
 // Date: 2004.11.24
@@ -13,16 +13,16 @@
 #include "TableData.h"
 #include "point.h"
 
-// ÊÂ¼þ´¥·¢ÀàÐÍ
+// event trigger type
 enum EEventTouchType
 {
-	enumEVENTT_RANGE	= 1,		// °´°ë¾¶´¥·¢
+	enumEVENTT_RANGE	= 1,		// triggered by radius
 };
 
 enum EEventExecType
 {
-	enumEVENTE_SMAP_ENTRY	= 1,	// µØÍ¼¾²Ì¬ÇÐ»»µã
-	enumEVENTE_DMAP_ENTRY	= 2,	// µØÍ¼¶¯Ì¬ÇÐ»»µã
+	enumEVENTE_SMAP_ENTRY	= 1,	// static map switch point
+	enumEVENTE_DMAP_ENTRY	= 2,	// dynamic map switch point
 };
 
 enum EEventType
@@ -31,11 +31,11 @@ enum EEventType
 	enumEVENT_TYPE_ENTITY,
 };
 
-// ´¥·¢ÀàÐÍ,¾ö¶¨¿Í»§¶ËÔõÑù´¥·¢
+// trigger type; decides how the client fires it
 enum EEventArouseType
 {
-	enumEVENT_AROUSE_DISTANCE,		// °´°ë¾¶´¥·¢
-	enumEVENT_AROUSE_CLICK,			// µã»÷´¥·¢
+	enumEVENT_AROUSE_DISTANCE,		// triggered by radius
+	enumEVENT_AROUSE_CLICK,			// triggered by click
 };
 
 const char cchEventRecordKeyValue = (char)0xff;
@@ -47,16 +47,16 @@ class CEventRecord : public CRawDataInfo
 public:
 	//CEventRecord();
 
-	long	lID;						// ±àºÅ
-	char	szName[defEVENT_NAME_LEN];	// Ãû³Æ
-    short   sEventType;                 // ÊÂ¼þÀàÐÍ,ÓÃÓÚÇø·Ö·¢ËÍÐ­Òé·½Ê½,²Î¿´EEventType
-	short	sArouseType;				// ´¥·¢ÀàÐÍ
-	short	sArouseRadius;				// ´¥·¢°ë¾¶
-	short	sEffect;					// ´¥·¢ÌØÐ§
-	short	sMusic;						// ´¥·¢ÒôÐ§
-	short   sBornEffect;				// ³öÉúÊ±µÄÌØÐ§
-	short	sCursor;					// ÊÂ¼þÏÔÊ¾µÄ¹â±ê
-	char	chMainChaType;				// ÊÂ¼þµã»÷Ê±Ê²Ã´Çé¿öÓÐÐ§(0-¶¼ÓÐÐ§,1-ÈË£¬2-´¬)
+	long	lID;						// id
+	char	szName[defEVENT_NAME_LEN];	// name
+    short   sEventType;                 // event type; selects how the protocol message is sent, see EEventType
+	short	sArouseType;				// trigger type
+	short	sArouseRadius;				// trigger radius
+	short	sEffect;					// effect played on trigger
+	short	sMusic;						// sound played on trigger
+	short   sBornEffect;				// effect played on spawn
+	short	sCursor;					// cursor shown for the event
+	char	chMainChaType;				// what the event click applies to (0 = both, 1 = character, 2 = ship)
 
 	bool	IsValid( int MainChaType )	{ return chMainChaType==0 || MainChaType==chMainChaType;	}
 };
@@ -76,7 +76,7 @@ public:
 
 protected:
 
-	static CEventRecordSet* _Instance; // Ïàµ±ÓÚµ¥¼ü, °Ñ×Ô¼º¼Ç×¡
+	static CEventRecordSet* _Instance; // acts like a singleton: keeps a reference to itself
 
 	virtual CRawDataInfo* _CreateRawDataArray(int nCnt)
 	{

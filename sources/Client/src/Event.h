@@ -1,8 +1,8 @@
-//----------------------------------------------------------------------
-// Ãû³Æ:ÓÎÏ·ÊÂ¼ş
-// ×÷Õß:lh 2004-05-26
-// ÓÃÍ¾:ÓÃÓÚÏìÓ¦ÊÂ¼ş
-// ÊµÏÖ:ÊÂ¼ş±ØĞëÒÀ¸½ÓÚ½ÇÉ«»òµÀ¾ß´æÔÚ
+ï»¿//----------------------------------------------------------------------
+// Name: game event
+// Author: lh 2004-05-26
+// Purpose: used to respond to events
+// Implementation: an event must exist attached to a character or an item
 //----------------------------------------------------------------------
 #pragma once
 
@@ -42,17 +42,17 @@ public:
 
 private:
 	CGameScene*		_pScene;
-	std::string			_strName;			// ÊÂ¼şÏÔÊ¾µÄÃû³Æ
+	std::string			_strName;			// the name shown for the event
 
 	bool			_IsValid;
 	bool			_IsEnabled;			
 
 	CEventRecord*   _pEvent;
-    CSceneNode*     _pNode;              // ÊÂ¼şËùÊôNode
+    CSceneNode*     _pNode;              // the Node the event belongs to
 
 private: // run time
-    bool            _IsActive;           // ÊÇ·ñÒÑ¾­¼¤»î
-	DWORD			_dwLastTime;		 // ÉÏ´Î¼¤»îÊ±¼ä
+    bool            _IsActive;           // whether it is already active
+	DWORD			_dwLastTime;		 // time of the last activation
 
 };
 

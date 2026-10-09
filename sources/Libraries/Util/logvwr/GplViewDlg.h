@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "atltypes.h"
 
 // CGplViewDlg dialog
@@ -38,13 +38,13 @@ public:
 	afx_msg BOOL OnCommand(WPARAM wParam, LPARAM lParam);
 	afx_msg void OnRButtonDown(UINT nFlags, CPoint point);
 private:
-	// Ö÷²Ëµ¥
+	// main menu
 	CLogvwrDlg* m_pParent;
 
 	CRect m_RC;
 	CBrush m_Brush;
 	
-	// Êý¾ÝÔ´
+	// data source
 	PGPLDATALIST m_pGPLData;
 	PLGDATALIST m_pLGData;
 

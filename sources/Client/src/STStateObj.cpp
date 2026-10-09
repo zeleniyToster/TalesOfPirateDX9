@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "STStateObj.h"
 #include "GameApp.h"
 #include "PacketCmd.h"
@@ -48,7 +48,7 @@ void CActionState::FrameMove()
 void CActionState::End()
 {
 	if( _IsInit )
-		_End();				// Ö´ÐÐÊÕÎ²¹¤×÷,ÈçÔÙ´Î²úÉúÒ»¸ö¹¥»÷µÈ
+		_End();				// runs the wrap-up work, such as producing another attack
 
 #ifdef _STATE_DEBUG
 	if( GetActor()->GetCha()->IsMainCha() )	

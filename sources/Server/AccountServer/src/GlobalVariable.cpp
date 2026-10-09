@@ -1,4 +1,4 @@
-#define _CRTDBG_MAP_ALLOC
+ï»¿#define _CRTDBG_MAP_ALLOC
 #include "stdafx.h"
 #include <stdlib.h>
 #include <crtdbg.h>
@@ -10,7 +10,7 @@
 
 
 
-//±ØĞëÓÅÏÈ¶¨ÒåÅäÖÃÎÄ¼ş×Ö·û´®
+// the config file string has to be defined first
 std::string g_strCfgFile="AccountServer.cfg";
 
 CBillService	g_BillService;

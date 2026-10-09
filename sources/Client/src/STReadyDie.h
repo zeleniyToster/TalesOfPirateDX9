@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 #include "STStateObj.h"
 #include "Actor.h"
 
 class CCharacter;
 class CArcTrack;
 class CMonsterItem;
-class CReadyDieState : public CActionState		// ¼ñµÀ¾ß
+class CReadyDieState : public CActionState		// picking up an item
 {
 public:
 	CReadyDieState(CActor* p);
@@ -38,13 +38,13 @@ private:
 
     eDieState       _eDieState;
 	eActorState		_state;	
-	bool			_IsActionEnd;			// µ±Ç°¶¯×÷ÒÑ¾­²¥·ÅÍê±Ï£¬ÓÃÓÚÒ»´ÎÐÔ¶¯×÷
+	bool			_IsActionEnd;			// the current action has finished playing; used for one-shot actions
     CCharacter*     _pCha;
-    CCharacter*     _pAttack;               // ¹¥»÷·½
+    CCharacter*     _pAttack;               // the attacker
     bool            _isFlyOff;
 
     int             _nFallDownTime;    
-    bool            _IsAlreadyEffect;       // ÒÑ¾­²¥·ÅÌØÐ§
+    bool            _IsAlreadyEffect;       // the effect has already been played
     int             _nDelayTime;
 
     CArcTrack*		_pArcTrack;

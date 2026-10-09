@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "caLua.h"
 #include "script.h"
 #include "scene.h"
@@ -79,10 +79,10 @@ int CHA_SetClientAttr(int nScriptID, int nAngle, float fDis, float fHei)
 /************************************************************************/
 /*                                                                      */
 /************************************************************************/
-//C_NORMAL    = 0  --Õı³£Ä£Ê½   
-//C_NEAR      = 1  --Æ«½üÄ£Ê½  ¾àÀë±ÈÕı³£Ä£Ê½Æ«½ü
-//C_HIGHSPEED = 2  --¸ßËÙÄ£Ê½  ¹Ì¶¨¾µÍ·, ²»¿ÉĞı×ª
-//C_SHIP      = 3  --º£ÉÏÄ£Ê½  ÔÚ´¬ÉÏ, ¾àÀëºÜÔ¶
+//C_NORMAL    = 0  --æ­£å¸¸æ¨¡å¼   
+//C_NEAR      = 1  --åè¿‘æ¨¡å¼  è·ç¦»æ¯”æ­£å¸¸æ¨¡å¼åè¿‘
+//C_HIGHSPEED = 2  --é«˜é€Ÿæ¨¡å¼  å›ºå®šé•œå¤´, ä¸å¯æ—‹è½¬
+//C_SHIP      = 3  --æµ·ä¸Šæ¨¡å¼  åœ¨èˆ¹ä¸Š, è·ç¦»å¾ˆè¿œ
 //
 //CameraRangeXY(C_NORMAL, 40, 45)
 //CameraRangeZ(C_NORMAL, 25, 35)
@@ -109,7 +109,7 @@ int CHA_SetClientAttr(int nScriptID, int nAngle, float fDis, float fHei)
 //CameraShowSize(45, 45)
 
 //scripts/cameraconf.clu
-//¶ÔÓ¦cµÄÈ«¾Ö±äÁ¿ CameraMode[].xxxx
+//corresponds to the c global variable CameraMode[].xxxx
 
 int CameraRangeXY(int nMode, float fMin, float fMax)
 {

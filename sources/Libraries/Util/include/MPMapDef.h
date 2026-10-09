@@ -1,19 +1,19 @@
-#pragma once
+ï»¿#pragma once
 
 
-// °æ±¾ËµÃ÷
-// µ±Ç°°æ±¾×ª»»Îª map 780625°æ -> 780626°æ
-//                obj 600°æ    -> 700°æ
-// Ä¿µÄÔÚÓÚ½øÒ»²½¼õÉÙmapÎÄ¼şºÍobjÎÄ¼şµÄ³ß´ç
-// ´Ë°æ±¾Ê¹ÓÃshortÀ´±íÊ¾µØ±í¶¥µãÑÕÉ«, byteÀ´±íÊ¾µØ±í¶¥µã¸ß¶È
-// Í¨¹ı½µµÍ¾«¶ÈÀ´¼õĞ¡ÎÄ¼ş³ß´ç, ĞÂ°æ±¾µÄÎÄ¼ş½«¼õĞ¡1/3µÄ³ß´ç
+// version notes
+// å½“å‰ç‰ˆæœ¬è½¬æ¢ä¸º map 780625ç‰ˆ -> 780626ç‰ˆ
+//                obj 600ç‰ˆ    -> 700ç‰ˆ
+// the goal is to further shrink the .map and .obj files
+// this version uses short for terrain vertex colour and byte for terrain vertex height
+// lowering the precision shrinks the file; the new format is one third smaller
 
 
-#define MP_MAP_FLAG		 780624   // MapÎÄ¼ş°æ±¾ºÅÆğÊ¼
-#define LAST_VERSION_NO  780626	  // ÉÏÒ»´Î°æ±¾ĞèÒªÖ§³Ö×ª»¯	
-#define CUR_VERSION_NO   780627	  // µ±Ç°Ê¹ÓÃµÄ°æ±¾ºÅ
+#define MP_MAP_FLAG		 780624   // first map file version number
+#define LAST_VERSION_NO  780626	  // the previous version still has to be convertible
+#define CUR_VERSION_NO   780627	  // version currently in use
 
-// µØÍ¼ÎÄ¼şÎÄ¼şÍ·¶¨Òå
+// map file header layout
 struct MPMapFileHeader
 {
 	int		nMapFlag;
@@ -27,12 +27,12 @@ struct MPMapFileHeader
 #pragma pack(push)
 #pragma pack(1)
 
-struct SNewFileTile // ×Ü¼Æ15¸ö×Ö½Ú
+struct SNewFileTile // 15 bytes in total
 {
-	DWORD	dwTileInfo;	// ±£´æ3¸ölayerµÄtex noºÍalpha no
-	BYTE	btTileInfo; // ×îÏÂ²ãµÄtex no
-	short	sColor;		// 32bitµÄÑÕÉ«±£´æÎª565
-	char	cHeight;	// Ã¿10cmÎªÒ»¼¶À´±£´æ¸ß¶È
+	DWORD	dwTileInfo;	// texture and alpha numbers of the 3 layers
+	BYTE	btTileInfo; // texture number of the bottom layer
+	short	sColor;		// a 32-bit colour is stored as 565
+	char	cHeight;	// height is stored in 10 cm steps
 	short	sRegion;	
 	BYTE	btIsland;
 	BYTE	btBlock[4];
@@ -49,11 +49,11 @@ struct SNewFileTile // ×Ü¼Æ15¸ö×Ö½Ú
 struct SFileTile
 {
     BYTE  t[8];
-    short sHeight;    // ÒÔÀåÃ×Îªµ¥Î»µÄµØ±í¶¥µã¸ß¶È
+    short sHeight;    // terrain vertex height, in centimetres
     DWORD dwColor;
     short sRegion;
     BYTE  btIsland;
-    BYTE  btBlock[4]; // 4 x 1µÄÕÏ°­ºÍ¸ß¶È¼ÇÂ¼
+    BYTE  btBlock[4]; // 4 x 1 block of obstacle and height records
 
     SFileTile(): sRegion(0), btIsland(0)
     {
@@ -68,9 +68,9 @@ struct SFileTile
 
 
 
-// Ô­ÓĞµÄ8¸ö×Ö½ÚµÄTileĞÅÏ¢, ×ª»¯Îª5¸ö×Ö½Ú±íÊ¾
-// Ã¿¸öÌùÍ¼±àºÅÕ¼6Î», ´Ó 1 ~ 63, ×î¶à±íÊ¾63ÖÖ, 0³ıÍâ
-// Ã¿¸öAlpha±àºÅÕ¼4Î», 0 ~ 15, ×î¶à±íÊ¾16¸öÑùÊ½
+// the original 8-byte tile record is now expressed in 5 bytes
+// each texture number takes 6 bits, 1..63, so at most 63 entries (0 is reserved)
+// each alpha number takes 4 bits, 0..15, so at most 16 variants
 inline void TileInfo_8To5(BYTE *pbtTile, DWORD &dwNew, BYTE &btNew)
 {
 	DWORD dwTex1   = *(pbtTile + 2);
@@ -84,7 +84,7 @@ inline void TileInfo_8To5(BYTE *pbtTile, DWORD &dwNew, BYTE &btNew)
 	btNew = *(pbtTile + 0);
 }
 
-// 5¸ö×Ö½Úµ½8¸ö×Ö½ÚµÄ·´Ïò×ª»»
+// reverse conversion from 5 bytes back to 8
 inline void TileInfo_5To8(DWORD dwNew, BYTE btNew, BYTE *pbtTile)
 {
 	*(pbtTile + 0) = btNew;
@@ -97,5 +97,5 @@ inline void TileInfo_5To8(DWORD dwNew, BYTE btNew, BYTE *pbtTile)
 	*(pbtTile + 7) = (BYTE)(dwNew>>2)  & 0x000f;
 }
 
-#define NEW_VERSION  // MindPowerµØÍ¼¶ÁÈëÊÇ·ñÊ¹ÓÃĞÂ°æ±¾
+#define NEW_VERSION  // whether the MindPower map reader uses the new version
 

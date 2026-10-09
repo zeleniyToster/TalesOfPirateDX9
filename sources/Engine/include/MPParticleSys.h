@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "i_effect.h"
 class   MPRender;
@@ -87,7 +87,7 @@ inline void	 GetDirRotation(D3DXVECTOR2* pOut, D3DXVECTOR3* pDir)
 		const auto v = D3DXVECTOR3(0.0f, 0.0f, 1.0f);
 		pOut->x = asinf(D3DXVec3Dot(pDir, &v) / fDist);
 	}
-	//ÇóÔÚXÖá·½ÏòĞı×ªµÄ½Ç¶È
+	// compute the angle rotated about the X axis
 	if(pDir->x == 0 && pDir->y == 0)
 	{
 		pOut->y = 0;
@@ -216,11 +216,11 @@ struct SkillCtrl
 		fRange[0] = fRange[0] = fRange[0] = -1;
 		fSize = -1;	
 	}
-	float		fDelayTime;//ÑÓ³Ù²¥·ÅµÄÊ±¼ä
-	float		fPlayTime;	//²¥·ÅÊ±¼ä³¤¶È
-	int			iParNum;	//ÊıÁ¿ 
-	float		fRange[3];	//!ÔÚÕâ¸ö·¶Î§Ö®ÄÚ²úÉú
-	float		fSize;		//Á£×Ó´óĞ¡
+	float		fDelayTime;// delay before playback starts
+	float		fPlayTime;	// playback duration
+	int			iParNum;	// count
+	float		fRange[3];	//! generated within this range
+	float		fSize;		// particle size
 };
 
 
@@ -259,7 +259,7 @@ void			_FrameMoveWind(CMPPartSys* pPart,DWORD	dwDailTime);
 bool			_CreateFire(CMPPartSys* pPart,CMPParticle* pCtrl);
 void			_FrameMoveFire(CMPPartSys* pPart,DWORD	dwDailTime);
 
-//´´½¨Ò»¸ö´ø·½ÏòµÄÌØĞ§£¬ÕâÖ»ÊÇÏÔÊ¾Ò»¸öÔ­µØ²»¶¯µÄÎï¼ş£¬¿ØÖÆ·½ÏòºÍÔËĞĞÓ¦¸ÃÓÉ¿Í»§¶ËÀ´×ö
+// create a directional effect; this only shows a stationary object, the client is responsible for steering and animating it
 bool			_CreateArraw(CMPPartSys* pPart,CMPParticle* pCtrl);
 void			_FrameMoveArraw(CMPPartSys* pPart,DWORD	dwDailTime);
 
@@ -333,7 +333,7 @@ public:
 	int					GetSysNum(){return _iParNum;}
 	void				SetSysNum(int  iParNum)
 	{
-		// Á£×ÓÊıÏŞ¶¨ÔÚ[1, 100]
+		// the particle count is clamped to [1, 100]
 		if(iParNum> 100)
 			_iParNum = 100;
 		else if(_iParNum <= 0)
@@ -540,9 +540,9 @@ public:
 	void	SetMediayEff(bool bMediay);
 	bool	IsMediay()	{ return _bMediay; }
 public:
-	//!±£´æÁ£×Óµ½ÎÄ¼ş	
+	//! save the particles to a file
 	bool		 SaveToFile(FILE* t_pFile);
-	//!×°ÈëÁ£×Ó´ÓÎÄ¼ş
+	//! load the particles from a file
 	bool		 LoadFromFile(FILE* t_pFile, DWORD dwVersion);
 
 	bool		 LoadFromMemory(CMemoryBuf*	pbuf, DWORD dwVersion);
@@ -575,7 +575,7 @@ protected:
 	friend bool			_CreateFire(CMPPartSys* pPart,CMPParticle* pCtrl);
 	friend void			_FrameMoveFire(CMPPartSys* pPart,DWORD	dwDailTime);
 
-	//´´½¨Ò»¸ö´ø·½ÏòµÄÌØĞ§£¬
+	// create a directional effect;
 	friend bool			_CreateArraw(CMPPartSys* pPart,CMPParticle* pCtrl);
 	friend void			_FrameMoveArraw(CMPPartSys* pPart,DWORD	dwDailTime);
 
@@ -621,13 +621,13 @@ protected:
 	D3DXVECTOR3							_vDir;
 	float								_fVecl;
 	D3DXVECTOR3							_vAccel;
-	//float								_fInfXY;//ÔÚXYÖá·½ÏòÊÜµ½µÄÓ°Ïì
+	//float								_fInfXY;//åœ¨XYè½´æ–¹å‘å—åˆ°çš„å½±å“
 
-	float								_fStep;//Ã¿¸ô¶àÉÙÊ±¼ä´´½¨Ò»¸öÁ£×Ó
+	float								_fStep;// interval between creating particles
 	float								_fCurTime;
 
-	float								_fDelayTime;//ÑÓ³Ù²¥·ÅµÄÊ±¼ä
-	float								_fPlayTime;//²¥·ÅÊ±¼ä³¤¶È
+	float								_fDelayTime;// delay before playback starts
+	float								_fPlayTime;// playback duration
 	float								_fCurPlayTime;
 
 	D3DXVECTOR3							_vScale;
@@ -660,7 +660,7 @@ protected:
 
 	s_string								_strModelName;
 	CEffectModel*							_pCModel;
-	CMPModelEff*							_CPPart;//ÒÔCMPModelEff×öÎªÁ£×Ó
+	CMPModelEff*							_CPPart;// use CMPModelEff as the particle
 
 	bool									_bMediay;
 
@@ -674,19 +674,19 @@ protected:
 	D3DXVECTOR3								_vOffset;
 
 
-	bool									_bModelRange;//Ê¹ÓÃÄ£ĞÍ·¶Î§À´²úÉúÁ£×Ó
-	s_string								_strVirualModel;//ÓÃÀ´²éÕÒµÄĞéÄâÄ£ĞÍµÄÃû³Æ
-	std::vector<D3DXVECTOR3>				_vecPointRange;//ÓÃÀ´²úÉúÁ£×ÓµÄµã
-	WORD									_wVecNum;//¶¥µãÊıÁ¿
+	bool									_bModelRange;// use the model bounds to generate particles
+	s_string								_strVirualModel;// name of the dummy model used for the lookup
+	std::vector<D3DXVECTOR3>				_vecPointRange;// the point particles are emitted from
+	WORD									_wVecNum;// vertex count
 
-	float									_fRange[3];	//!Á£×ÓÔÚÕâ¸ö·¶Î§Ö®ÄÚ²úÉú
+	float									_fRange[3];	//! particles are generated within this range
 
 	WORD									_wFrameCount;
 	S_BVECTOR<float>						_vecFrameSize;
 	S_BVECTOR<D3DXVECTOR3>					_vecFrameAngle;
 	S_BVECTOR<D3DXCOLOR>					_vecFrameColor;
 
-	S_BVECTOR<D3DXVECTOR3>					_vecBone;//´´½¨µÄ¹Ç÷À½Úµã£¬Á£×ÓÔÚÕâ¸ö½ÚµãÉÏÅÅĞò
+	S_BVECTOR<D3DXVECTOR3>					_vecBone;// the skeletal node that was created; particles are sorted on it
 
 	DWORD*									_pdwVShader;
 	float*									_pfDailTime;
@@ -704,7 +704,7 @@ protected:
 	D3DTEXTUREFILTERTYPE					_eMinFilter;
 	D3DTEXTUREFILTERTYPE					_eMagFilter;
 
-	//ÔË¶¯Â·¾¶
+	// motion path
 	CEffPath*								_pcPath;
 	D3DXVECTOR3								_vSavePos;
 
@@ -755,7 +755,7 @@ inline void		RotatingXZ(D3DXMATRIX* pmat,float fAngleX, float fAngleZ)
 //public:
 //	bool				Create(int iType, s_string	strPartName,int iNumPart,s_string strModelName,
 //									D3DXVECTOR2 vRange, WORD wFrameCount, CMPResManger	*pCResMagr);
-//	//ÔÚÃ»ÓĞ´ÓÎÄ¼şÖĞ¶ÁÈ¡Ê±ÓÃÕâ¸öº¯Êı³õÊ¼»¯±äÁ¿
+//	// use this function to initialise the variables when they were not loaded from a file
 //	void				InitParam(D3DXVECTOR3 vDir,D3DXVECTOR3	vVecl,
 //									D3DXVECTOR3 vAccel, int iLife, int iInfXY  =0);
 //
@@ -791,7 +791,7 @@ inline void		RotatingXZ(D3DXMATRIX* pmat,float fAngleX, float fAngleZ)
 //	void				setFrameSizeSmall(float	fsize);
 //
 //public:
-//	//Ö¸ÏòËã·¨µÄº¯ÊıÖ¸Õë
+//	// function pointer to the algorithm
 //	void				(*FrameUpdate)(CMPMagrPart* pPart,DWORD	dwDailTime);
 //
 //
@@ -830,7 +830,7 @@ inline void		RotatingXZ(D3DXMATRIX* pmat,float fAngleX, float fAngleZ)
 //	D3DXVECTOR3							_vPos;
 //	D3DXVECTOR3							_vOldPos;
 //
-//	D3DXVECTOR2							_vRange;	//!Á£×ÓÔÚÕâ¸ö·¶Î§Ö®ÄÚ²úÉú
+//	D3DXVECTOR2							_vRange;	//!ç²’å­åœ¨è¿™ä¸ªèŒƒå›´ä¹‹å†…äº§ç”Ÿ
 //
 //
 //	float*								_pfDailTime;
@@ -839,15 +839,15 @@ inline void		RotatingXZ(D3DXMATRIX* pmat,float fAngleX, float fAngleZ)
 //	D3DXVECTOR3							_vDir;
 //	D3DXVECTOR3							_vVecl;
 //	D3DXVECTOR3							_vAccel;
-//	int									_iInfXY;//ÔÚXYÖá·½ÏòÊÜµ½µÄÓ°Ïì
+//	int									_iInfXY;//åœ¨XYè½´æ–¹å‘å—åˆ°çš„å½±å“
 //
-//	WORD								_wDeath;//ÓĞ¶àÉÙÁ£×ÓÒÑ¾­ËÀÍö¡£
+//	WORD								_wDeath;//æœ‰å¤šå°‘ç²’å­å·²ç»æ­»äº¡ã€‚
 //
-//	D3DXVECTOR3							_vTarget;//Ä¿±ê
-//	float								_fDirXZ[2];//ÔÚXZ·½ÏòÉÏµÄ½Ç¶È
+//	D3DXVECTOR3							_vTarget;//ç›®æ ‡
+//	float								_fDirXZ[2];//åœ¨XZæ–¹å‘ä¸Šçš„è§’åº¦
 //};
 //
-//////////////////////¿ØÖÆÁ£×ÓµÄËã·¨ÁĞ±í
+////////////////////// list of algorithms that drive the particles
 //bool	_CreateRain(CMPMagrPart* pPart,CMPParticle* pCtrl);
 //void	_FrameMoveRain(CMPMagrPart* pPart,DWORD	dwDailTime);
 //

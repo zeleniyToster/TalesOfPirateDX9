@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "FindPath.h"
 #include "EffectObj.h"
 #include "Character.h"
@@ -13,7 +13,7 @@
 #include "UIBoxForm.h"
 #include "STMove.h"
 
-struct NODE_SHARED   //Ñ°Â·Ê±¹«ÓÃµÄÂ·¾¶ÐÅÏ¢
+struct NODE_SHARED   //path information shared while path finding
 {
 	BYTE* buf_ptr;
 	BYTE			dire;
@@ -90,7 +90,7 @@ PATH_LINK* SearchPath(BYTE* block_buf, short width, short height, short sx, shor
 	BOOL  found_flag = FALSE;
 
 	UINT32 lMaxStep = (height -1) * (height -1);
-	if((long)lMaxStep>STEP_LIMIT) lMaxStep = STEP_LIMIT; //ÏÞÖÆ×î´ó²½Êý
+	if((long)lMaxStep>STEP_LIMIT) lMaxStep = STEP_LIMIT; //limits the maximum number of steps
 
 	BYTE const* end_block = &block_buf[STEP_LIMIT - 1];
 
@@ -463,7 +463,7 @@ BYTE* CFindPath::GetTempTerrain(CGameScene* pScene, CCharacter* pCha,int iCurX, 
 
                 *pValue = pTer->GetBlock()->IsGridBlock( tm, tn ); //jze
 
-                //¼ÓÈëÇøÓòÊôÐÔ
+                //adds the area attribute
 			    if(*pValue==0)
 			    {
 				    if( !g_IsMoveAble( pCha->getChaCtrlType(), Territory, (EAreaMask)pTer->GetBlock()->GetTileRegionAttr(tm  * 50/100, tn   *50/100) ) ) 
@@ -504,7 +504,7 @@ bool	PointPointRange(int px1, int py1,int px2, int py2, int range)
 	return ((abs(px1 - px2) < range) &&
 		(abs(py1 - py2) < range));
 }
-// nCurX,nCurY,nTargetX,nTargetY µÄµ¥Î»¶¼ÊÇÀåÃ×
+// the units of nCurX, nCurY, nTargetX and nTargetY are all centimetres
 BOOL CFindPath::FindPath(CGameScene* pScene, CCharacter* pCha, int nSelfX, int nSelfY, int nTargetX, int nTargetY, bool &IsWalkLine)
 { 
     LG( "path_find", "Self[%u, %u], Target[%u, %u], ChaPos[%u, %u]\n", nSelfX, nSelfY, nTargetX, nTargetY, pCha->GetCurX(), pCha->GetCurY() );
@@ -645,7 +645,7 @@ BOOL CFindPath::FindPath(CGameScene* pScene, CCharacter* pCha, int nSelfX, int n
 		if(n>=MAX_PATH_STEP)
 		{
 			LG("debug", "Path Searth Step = %d Overmax \n", n);
-			n = 0; // Â·¾¶Çå0
+			n = 0; // clears the path to 0
 			break;
 		}
 	}

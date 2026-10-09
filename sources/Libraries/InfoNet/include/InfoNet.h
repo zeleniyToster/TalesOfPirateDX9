@@ -1,7 +1,7 @@
-
+ï»¿
 /* * * * * * * * * * * * * * * * * * * *
 *
-*      ĞÅÏ¢·şÎñÍøÂçÏûÏ¢½âÎö
+*      ä¿¡æ¯æœåŠ¡ç½‘ç»œæ¶ˆæ¯è§£æ
 *                  by Jampe
 *
 * * * * * * * * * * * * * * * * * * * */
@@ -14,241 +14,241 @@
 #include <time.h>
 
 
-#define     INFO_DEFAULT                0       //  ĞÅÏ¢·µ»ØÄ¬ÈÏ
-#define     INFO_SUCCESS                1       //  ĞÅÏ¢·µ»Ø³É¹¦
-#define     INFO_FAILED                 2       //  ĞÅÏ¢·µ»ØÊ§°Ü
+#define     INFO_DEFAULT                0       //  information return default
+#define     INFO_SUCCESS                1       //  information return success
+#define     INFO_FAILED                 2       //  information return failure
 
-#define     INFO_LOGIN                  1000    //  µÇÂ½ÇëÇó
-#define     INFO_REQUEST_ACCOUNT        1010    //  »ñÈ¡ÕÊºÅĞÅÏ¢
-#define     INFO_EXCEPTION_SERVICE      1900    //  ¾Ü¾ø·şÎñ
-#define     INFO_REQUEST_STORE          2001    //  »ñÈ¡ÉÌ³ÇÁĞ±í
-#define     INFO_REQUEST_AFFICHE        2002    //  »ñÈ¡¹«¸æÁĞ±í
-#define     INFO_STORE_BUY              2011    //  ¹ºÂòµÀ¾ß
-#define     INFO_EXCHANGE_MONEY         2012    //  ¶Ò»»´ú±Ò
-#define     INFO_REGISTER_VIP           2013    //  ¹ºÂòVIP
-#define     INFO_REQUEST_HISTORY        2021    //  »ñÈ¡½»Ò×¼ÇÂ¼
-#define     INFO_SND_GM_MAIL            4500    //  ·¢ËÍGMÓÊ¼ş
-#define     INFO_RCV_GM_MAIL            4501    //  ÊÕÈ¡GM»Ø¸´
-
-
-#define     INFO_MAN_DEFAULT            INFO_DEFAULT    //  ¹ÜÀíÄ¬ÈÏÖµ
-#define     INFO_MAN_SUCCESS            10              //  ¹ÜÀíÏûÏ¢·µ»Ø³É¹¦
-#define     INFO_MAN_FAILED             11              //  ¹ÜÀíÏûÏ¢·µ»ØÊ§°Ü
-
-#define     INFO_MAN_ADD                0               //  ¹ÜÀíÌí¼Ó
-#define     INFO_MAN_MODIFY             1               //  ¹ÜÀíĞŞ¸Ä
-#define     INFO_MAN_DEL                2               //  ¹ÜÀíÉ¾³ı
-
-#define     INFO_MAN_ITEM               6000            //  ÉÌÆ·¹ÜÀí
-#define     INFO_MAN_CLASS              6001            //  ·ÖÀà¹ÜÀí
-#define     INFO_MAN_AFFICHE            6002            //  ¹«¸æ¹ÜÀí
-#define     INFO_MAN_ALL_ITEM           6003            //  ¹ÜÀíËùÓĞÎ´ÉÏ¼ÜµÄÉÌÆ·
-#define     INFO_GET_GM_MAIL            6500            //  ÊÕÈ¡GMÓÊ¼ş
-#define     INFO_RPY_GM_MAIL            6501            //  »Ø¸´GMÓÊ¼ş
-#define     INFO_MAIL_QUEUE             6502            //  ÓÊ¼şÁĞ±íÊı
-
-#define     INFO_MAN_VIP                7000            //  VIP¹ÜÀí
-#define     INFO_MAN_RATE               7001            //  ĞŞ¸Ä»ãÂÊ
+#define     INFO_LOGIN                  1000    //  login request
+#define     INFO_REQUEST_ACCOUNT        1010    //  fetch account information
+#define     INFO_EXCEPTION_SERVICE      1900    //  service refused
+#define     INFO_REQUEST_STORE          2001    //  fetch the shop list
+#define     INFO_REQUEST_AFFICHE        2002    //  fetch the announcement list
+#define     INFO_STORE_BUY              2011    //  buy an item
+#define     INFO_EXCHANGE_MONEY         2012    //  exchange currency
+#define     INFO_REGISTER_VIP           2013    //  buy a VIP
+#define     INFO_REQUEST_HISTORY        2021    //  fetch the trade records
+#define     INFO_SND_GM_MAIL            4500    //  send a GM mail
+#define     INFO_RCV_GM_MAIL            4501    //  collect the GM reply
 
 
+#define     INFO_MAN_DEFAULT            INFO_DEFAULT    //  management default value
+#define     INFO_MAN_SUCCESS            10              //  management message returned successfully
+#define     INFO_MAN_FAILED             11              //  management message returned failure
 
-#define     INFO_TYPE_HISTORY           0               //  ½»Ò×¼ÇÂ¼
-#define     INFO_TYPE_EXCHANGE          1               //  ¶Ò»»¼ÇÂ¼
-#define     INFO_TYPE_VIP               2               //  VIP¹ºÂò¼ÇÂ¼
+#define     INFO_MAN_ADD                0               //  management add
+#define     INFO_MAN_MODIFY             1               //  management modify
+#define     INFO_MAN_DEL                2               //  management delete
 
-#define     INFO_CHECK_LIVE             0               //  ¼ì²âÔÚÏß
+#define     INFO_MAN_ITEM               6000            //  goods management
+#define     INFO_MAN_CLASS              6001            //  category management
+#define     INFO_MAN_AFFICHE            6002            //  announcement management
+#define     INFO_MAN_ALL_ITEM           6003            //  manage every good that is not yet listed
+#define     INFO_GET_GM_MAIL            6500            //  collect GM mail
+#define     INFO_RPY_GM_MAIL            6501            //  reply to GM mail
+#define     INFO_MAIL_QUEUE             6502            //  number of mails
+
+#define     INFO_MAN_VIP                7000            //  VIP management
+#define     INFO_MAN_RATE               7001            //  modify the exchange rate
+
+
+
+#define     INFO_TYPE_HISTORY           0               //  trade records
+#define     INFO_TYPE_EXCHANGE          1               //  exchange records
+#define     INFO_TYPE_VIP               2               //  VIP purchase records
+
+#define     INFO_CHECK_LIVE             0               //  check online
 
 typedef unsigned char       _byte;
 
 
-//  ÕÊ»§ĞÅÏ¢
+//  account information
 typedef struct _RoleInfo_
 {
-    long        actID;          //	ÕÊºÅ±àºÅ
-    char        actName[21];    //	ÕÊºÅÃû³Æ
-    long        chaID;          //	½ÇÉ«±àºÅ
-    char        chaName[17];    //	½ÇÉ«Ãû³Æ
-    long        moBean;         //	Ä¦¶¹ÊıÁ¿
-    long        rplMoney;       //	´ú±ÒÊıÁ¿
-    long        vip;            //  VIPÖÖÀà(20-50)£¬0Îª·Çvip
+    long        actID;          //	account number
+    char        actName[21];    //	account name
+    long        chaID;          //	character number
+    char        chaName[17];    //	character name
+    long        moBean;         //	MoDou count
+    long        rplMoney;       //	token count
+    long        vip;            //  VIP kind (20-50); 0 means not a VIP
 }RoleInfo, *pRoleInfo;
 
 
 
-//  ½»Ò×¼ÇÂ¼
+//  trade record
 typedef struct _HistoryInfo_
 {
-    time_t      tradeTime;      //	½»Ò×Ê±¼ä
-    long        comID;          //	ÉÌÆ·±àºÅ
-    char        comName[21];    //	ÉÌÆ·Ãû³Æ
-    int         tradeResult;    //  ½á¹û        0 ³É¹¦£¬1 ´íÎóµÄÉÌÆ·¼Û¸ñ, 2 Óà¶î²»×ã, 3 ¿Û·ÑÊ§°Ü
-    long        tradeMoney;     //	½»Ò×½ğ¶î
+    time_t      tradeTime;      //	trade time
+    long        comID;          //	goods number
+    char        comName[21];    //	goods name
+    int         tradeResult;    //  result        0 success, 1 wrong goods price, 2 insufficient balance, 3 charge failed
+    long        tradeMoney;     //	trade amount
 }HistoryInfo, *pHistoryInfo;
 
 
 
-//  ¹«¸æĞÅÏ¢
+//  announcement information
 typedef struct _AfficheInfo_
 {
-    long        affiID;         //	¹«¸æ±àºÅ
-    char        affiTitle[64];  //	¹«¸æ±êÌâ
-    char        comID[33];      //	Á¬½ÓÉÌÆ·±àºÅ
-    time_t      affiTime;       //  ·¢²¼Ê±¼ä
+    long        affiID;         //	announcement number
+    char        affiTitle[64];  //	announcement title
+    char        comID[33];      //	linked goods number
+    time_t      affiTime;       //  publish time
 }AfficheInfo, *pAfficheInfo;
 
 
 
-//  ·ÖÀàĞÅÏ¢
+//  category information
 typedef struct _ClassInfo_
 {
-    short        clsID;        //	·ÖÀà±àºÅ
-    char         clsName[17];   //	·ÖÀàÃû³Æ
-    short        parentID;      //	¸¸·ÖÀà±àºÅ
+    short        clsID;        //	category number
+    char         clsName[17];   //	category name
+    short        parentID;      //	parent category number
 }ClassInfo, *pClassInfo;
 
 
 
-//  µÀ¾ßĞÅÏ¢
+//  item information
 typedef struct _ItemInfo_
 {
-    short       itemID;         //	µÀ¾ß±àºÅ
-    _byte       itemNum;        //	µÀ¾ß¸öÊı
-    _byte       itemFlute;      //	°¼²ÛÊı
-    short       itemAttrID[5];  //	Îå¸öÊôĞÔ±àºÅ
-    short       itemAttrVal[5]; //	Îå¸öÊôĞÔÖµ
+    short       itemID;         //	item number
+    _byte       itemNum;        //	item count
+    _byte       itemFlute;      //	slot count
+    short       itemAttrID[5];  //	five attribute numbers
+    short       itemAttrVal[5]; //	five attribute values
 }ItemInfo, *pItemInfo;
 
 
 
-//  ÉÌÆ·ĞÅÏ¢
+//  goods information
 typedef struct _StoreInfo_
 {
-    long        comID;          //	ÉÌÆ·±àºÅ
-    char        comName[21];    //	ÉÌÆ·Ãû³Æ
-    long        comClass;       //	ÉÌÆ··ÖÀà
-    time_t      comTime;        //	ÉÌÆ·ÉÏ¼ÜÊ±¼ä
-    long        comPrice;       //	¼Û¸ñ
-    char        comRemark[129]; //	ÉÌÆ·±¸×¢
-    int         comNumber;      //  ÉÌÆ·Ê£Óà¸öÊı¡£-1²»ÏŞÖÆ£¬0ÏÂ¼Ü
-    time_t      comExpire;      //  ÉÌÆ·µ½ÆÚÊ±¼ä¡£
-    _byte       itemNum;        //  µÀ¾ß¸öÊı
-    _byte       isHot;          //  ÊÇ·ñÈÈÂô
-    time_t      beginTime;      //  ÉÏ¼ÜÊ±¼ä
+    long        comID;          //	goods number
+    char        comName[21];    //	goods name
+    long        comClass;       //	goods category
+    time_t      comTime;        //	goods listing time
+    long        comPrice;       //	price
+    char        comRemark[129]; //	goods remark
+    int         comNumber;      //  remaining number of the goods. -1 unlimited, 0 delisted
+    time_t      comExpire;      //  goods expiry time.
+    _byte       itemNum;        //  item count
+    _byte       isHot;          //  whether it is on hot sale
+    time_t      beginTime;      //  listing time
 }StoreInfo, *pStoreInfo;
 
 
 
-//  ÉÌÆ·½á¹¹
+//  goods structure
 typedef struct _StoreStruct_
 {
-    StoreInfo   store_head;     //  ÉÌÆ·ĞÅÏ¢Í·
-    pItemInfo   item_body;      //  µÀ¾ßĞÅÏ¢Ìå
+    StoreInfo   store_head;     //  goods information header
+    pItemInfo   item_body;      //  item information body
 }StoreStruct, *pStoreStruct;
 
 
 
-//  µÇÂ½ĞÅÏ¢
+//  login information
 typedef struct _LoginInfo_
 {
-    _byte       id;             //  ·şÎñÆ÷±àºÅ
-    char        ip[16];         //  µÇÂ½IP
-    char        pwd[33];        //  ÑéÖ¤Âë
-    _byte       ban;            //  ÊÇ·ñºÚÃûµ¥
+    _byte       id;             //  server number
+    char        ip[16];         //  login IP
+    char        pwd[33];        //  verification code
+    _byte       ban;            //  whether blacklisted
 }LoginInfo, *pLoginInfo;
 
 
-//  VIPĞÅÏ¢
+//  VIP information
 typedef struct _VIPInfo_
 {
-    int         vipID;          //  VIP±àºÅ(ÀàĞÍ£¬·¶Î§ÔÚ20-50Ö®¼ä)
-    int         vipPrice;       //  VIP¼Û¸ñ
+    int         vipID;          //  VIP number (the type, ranging between 20 and 50)
+    int         vipPrice;       //  VIP price
 }VIPInfo, *pVIPInfo;
 
 
-//  MailĞÅÏ¢
+//  Mail information
 typedef struct _MailInfo_
 {
-    long id;                    //  ÓÊ¼ş±àºÅ
-    char title[33];				//	ÓÊ¼ş±êÌâ
-    char description[513];		//	ÓÊ¼şÕıÎÄ
-    long actID;				    //	·¢ËÍÕßÕÊºÅID
-    char actName[64];			//	·¢ËÍÕßÕÊºÅÃû³Æ
-    long chaID;				    //	·¢ËÍÕß½ÇÉ«ID
-    char chaName[64];			//	·¢ËÍÕß½ÇÉ«Ãû³Æ
-    time_t sendTime;			//	·¢ËÍÊ±¼ä
+    long id;                    //  mail number
+    char title[33];				//	mail title
+    char description[513];		//	mail body
+    long actID;				    //	sender account ID
+    char actName[64];			//	sender account name
+    long chaID;				    //	sender character ID
+    char chaName[64];			//	sender character name
+    time_t sendTime;			//	send time
 }MailInfo, *pMailInfo;
 
 
-//  ÏûÏ¢Í·
+// message header
 typedef struct _NetMessageHead_
 {
-    unsigned char msgChk[4];    //  ÓĞĞ§ÍøÂçÏûÏ¢±êÊ¶ÂëÎª 0x4A, 0x4D, 0x50, 0x53
-    long msgID;                 //  ÏûÏ¢±àºÅ
-    long subID;                 //  ÏûÏ¢×Ó±àºÅ
-    long long msgOrder;         //  ÏûÏ¢ÎÕÊÖ
-    long msgSection;            //  Ğ¡Çø±àºÅ
-    long msgExtend;             //  À©Õ¹×Ö¶Î
-    long msgSize;               //  ÏûÏ¢Ìå³¤¶È
-    long msgEncSize;            //  ¼ÓÃÜºó³¤¶È
+    unsigned char msgChk[4];    //  the valid network message identifiers are 0x4A, 0x4D, 0x50, 0x53
+    long msgID;                 // message number
+    long subID;                 // message sub-number
+    long long msgOrder;         //  message handshake
+    long msgSection;            //  shard number
+    long msgExtend;             //  extension field
+    long msgSize;               //  message body length
+    long msgEncSize;            //  length after encryption
 }NetMessageHead, *pNetMessageHead;
 
 
 
-//  ÍøÂçÏûÏ¢
+//  network message
 typedef struct _NetMessage_
 {
-    NetMessageHead      msgHead;    //  ÏûÏ¢Í·
-    void*               msgBody;    //  ÏûÏ¢Ìå
+    NetMessageHead      msgHead;    // message header
+    void*               msgBody;    // message body
 }NetMessage, *pNetMessage;
 
 
-#define PNM_SUCCESS             0           //  ½âÊÍ³É¹¦
-#define PNM_FAILED              1           //  ´íÎóµÄĞ­Òé
-#define PNM_UNKNOWN             2           //  Î´ÖªĞ­Òé
-#define PNM_EXCEPTION           3           //  Òì³£
+#define PNM_SUCCESS             0           //  decoded successfully
+#define PNM_FAILED              1           //  wrong protocol
+#define PNM_UNKNOWN             2           //  unknown protocol
+#define PNM_EXCEPTION           3           //  exception
 
 
-//  »ñÈ¡ÏûÏ¢Í·
+//  gets the message header
 extern int GetMessageHead(pNetMessageHead mh, unsigned char* msg, int size);
 
-//  ½âÎöÏûÏ¢
+//  parses the message
 extern int PeekNetMessage(pNetMessage* nm, unsigned char** buf, long& bufsize, void** tmpbuf, long& tmpsize);
 
-//  ÊÍ·ÅÏûÏ¢
+//  frees the message
 extern void FreeNetMessage(pNetMessage msg);
 
-//  Éú³ÉÏûÏ¢
+//  builds the message
 extern bool BuildNetMessage(pNetMessage nm, long msgID, long subID, long extend, long section, unsigned char* body, long size);
 
-//  »ñÈ¡ÃÜÔ¿
+//  gets the key
 extern _byte* GetInfoKey();
 
-//  »ñÈ¡ÃÜÂë(¾¡ÏŞGameServerÊ¹ÓÃ)
+//  gets the password (for GameServer use only)
 extern _byte* GetPassword();
 
 class InfoThread;
-//  ¿Í»§¶Ë½Ó¿Ú
+//  client interface
 class InfoNetBase
 {
 public:
     InfoNetBase();
     virtual ~InfoNetBase();
-    virtual bool RunInfoService(const char* ip, short port);  //  ÔËĞĞ¿Í»§¶Ë·şÎñ
-    virtual bool StopInfoService(); //  Í£Ö¹¿Í»§¶Ë·şÎñ
-    virtual bool PostInfoSend(long msgID, long subID, long extend, long section, unsigned char* body, long size, bool resnd = false);   //  ·¢ËÍÏûÏ¢
-    virtual bool PostInfoSend(pNetMessage msg, bool resnd = false);     //  ·¢ËÍÏûÏ¢
+    virtual bool RunInfoService(const char* ip, short port);  //  runs the client service
+    virtual bool StopInfoService(); //  stops the client service
+    virtual bool PostInfoSend(long msgID, long subID, long extend, long section, unsigned char* body, long size, bool resnd = false);   //  sends a message
+    virtual bool PostInfoSend(pNetMessage msg, bool resnd = false);     //  sends a message
     virtual bool IsConnect();
 
 public:
-    virtual void OnConnect(bool result) = 0;            //  Á¬½ÓÊ±ÏìÓ¦
-    virtual void OnNetMessage(pNetMessage msg) = 0;     //  ÓÃ»§½Ó¿ÚĞ­Òé£¬msgÓÉÓÃ»§ÊÖ¹¤ÊÍ·Å¡£
-    virtual void OnResend(pNetMessage msg) = 0;         //  ÖØ·¢Íê³Éºó£¬×Ô¶¯ÊÍ·Åmsg¡£
-    virtual void OnDisconnect() = 0;        //  ¶Ï¿ªÊ±ÏìÓ¦
+    virtual void OnConnect(bool result) = 0;            //  responds on connect
+    virtual void OnNetMessage(pNetMessage msg) = 0;     //  user interface protocol; msg is freed by the user manually.
+    virtual void OnResend(pNetMessage msg) = 0;         //  after the resend completes, msg is freed automatically.
+    virtual void OnDisconnect() = 0;        //  responds on disconnect
 
 protected:
     virtual bool Connect();
-    virtual bool Disconnect();      //  ¶Ï¿ª
-    virtual bool PostInfoRecv();    //  Í¶µİ½ÓÊÕ
+    virtual bool Disconnect();      //  disconnect
+    virtual bool PostInfoRecv();    //  posts a receive
     friend class InfoThread;
 
 protected:

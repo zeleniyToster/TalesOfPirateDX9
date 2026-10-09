@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "lwHeader.h"
 #include "lwStdInc.h"
@@ -360,11 +360,11 @@ public:
 };
 
 // remarks by lsh
-// ÓĞ¹ØlwMeshºÍlwMeshInfoÖ®¼äµÄ¹ØÏµ
-// 1¡£lwMeshInfo×÷Îª´¿´âµÄCÀàĞÍ½á¹¹Ìå£¬ÔÙ¹ØÁªÒ»×éconstructºÍdestructµÈµÄ¸¨Öúº¯Êı¡£
-//    lwMesh¾ÛºÏ¸Ã½á¹¹Ìå
-// 2¡£lwMeshInfoÊÇÒ»¸öclass£¬Í¬Ê±ÓµÓĞlwIMeshInfoµÄ½Ó¿Ú·½Ê½
-//    lwMesh¼Ì³Ğ£¨»òÒıÓÃ½Ó¿ÚÖ¸Õë£©¸ÃÀà£¬ÔÚĞ§ÂÊÉÏ²»ÄÜ½ÓÊÜ
+// the relationship between lwMesh and lwMeshInfo
+// 1. lwMeshInfo is a plain C structure plus a set of construct and destruct style helpers
+//    lwMesh aggregates that structure
+// 2. lwMeshInfo is also a class with the lwIMeshInfo interface
+//    lwMesh inheriting from (or referring to) it is not acceptable for efficiency
 // 
 class lwMesh : public lwIMesh
 {
@@ -715,8 +715,8 @@ public:
     LW_RESULT GetTex( lwITex** ret_obj, DWORD id );
     LW_RESULT GetAnimCtrl( lwIAnimCtrl** ret_obj, DWORD id );
 
-    // Ö±½Ó×¢²á£¬²»Í¨¹ıÎÄ¼ş·½Ê½²éÕÒ£¬ÔÚÕâÖÖÇé¿öÏÂÒ»µ©ÄÚ´æÊı¾İ±»É¾³ı£¬ÏÔ´æÊı¾İ½«´´½¨Ê§°Ü
-    // ÊÊÓÃÓÚÒ»Ğ©°ïÖúĞÔµÄÎïÌå£¬ÈçBoundingBoxµÈ
+    // registered directly instead of being looked up through a file; in this case, once the memory data is released, creating the video memory data will fail
+    // suitable for helper objects such as the bounding box
     LW_RESULT RegisterMesh( lwIMesh* obj );
     LW_RESULT RegisterTex( lwITex* obj );
     LW_RESULT RegisterAnimCtrl( lwIAnimCtrl* obj );
@@ -738,7 +738,7 @@ public:
 
     LW_RESULT QueryMesh( DWORD* ret_id, const lwResFileMesh* rfm );
     LW_RESULT QueryTex( DWORD* ret_id, const char* file_name );
-    // Ä¿Ç°Ö»ÓĞRegisterAnimDataÊ±ºòÊ¹ÓÃRES_FILE_TYPE_GENERIC»òRES_FILE_TYPE_GEOMETRYÎÄ¼şÀàĞÍµÄ×ÊÔ´²ÅÓĞĞ§
+    // currently only valid for resources registered by RegisterAnimData with the RES_FILE_TYPE_GENERIC or RES_FILE_TYPE_GEOMETRY file type
     LW_RESULT QueryAnimCtrl( DWORD* ret_id, const lwResFileAnimData* info );
 
     LW_VOID ReleaseObject();

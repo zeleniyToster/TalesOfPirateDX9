@@ -1,4 +1,4 @@
-#include "udpmanage.h"
+Ôªø#include "udpmanage.h"
 #include <windows.h>
 
 CUdpManage::CUdpManage() {}
@@ -25,7 +25,7 @@ void CUdpManage::Run()
 {
 	_Socket.Init( _nPort );
 
-	// …Ë÷√ª∫Ω” ’≥Â«¯¥Û–°
+	// sets the receive buffer size
 	int n = 1024;
 	setsockopt( _Socket.GetSocket(), SOL_SOCKET, SO_RCVBUF, (char*)&n, sizeof(n) );
 

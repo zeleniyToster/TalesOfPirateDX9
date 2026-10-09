@@ -1,4 +1,4 @@
-// LogvwrDlg.h : Í·ÎÄ¼ş
+ï»¿// LogvwrDlg.h : header file
 //
 
 #pragma once
@@ -6,39 +6,39 @@
 #include "afxcmn.h"
 
 
-// CLogvwrDlg ¶Ô»°¿ò
+// the CLogvwrDlg dialog
 class CLogPacket;
 class CLogTypeData;
 class CGplTypeData;
 class CGplViewDlg;
 class CLogvwrDlg : public CDialog
     {
-    // ¹¹Ôì
+    // construction
 public:
-    CLogvwrDlg(CWnd* pParent = NULL);   // ±ê×¼¹¹Ôìº¯Êı
+    CLogvwrDlg(CWnd* pParent = NULL);   // standard constructor
 	~CLogvwrDlg();
 
-    // ¶Ô»°¿òÊı¾İ
+    // dialog data
     enum {IDD = IDD_LOGVWR_DIALOG};
 
-	// Ö÷²Ëµ¥¶ÔÏóÖ¸Õë
+	// pointer to the main menu object
 	CMenu* m_pMainMenu;
 
 protected:
-    virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV Ö§³Ö
+    virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 
 
-    // ÊµÏÖ
+    // implementation
 protected:
     HICON m_hIcon;
 
-    // Éú³ÉµÄÏûÏ¢Ó³Éäº¯Êı
+    // generated message map functions
     virtual BOOL OnInitDialog();
     afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
     afx_msg void OnPaint();
     afx_msg HCURSOR OnQueryDragIcon();
 
-    // ×ÔÌí¼ÓÏûÏ¢Ó³Éäº¯Êı
+    // hand added message map functions
     afx_msg void OnSize(UINT nType, int cx, int cy);
     afx_msg BOOL OnCopyData(CWnd* pWnd, COPYDATASTRUCT* pCopyDataStruct);
 	afx_msg BOOL OnCommand(WPARAM wParam, LPARAM lParam);
@@ -46,38 +46,38 @@ protected:
     DECLARE_MESSAGE_MAP()
 
 private:
-	// ÓÒ¼üµ¯³ö²Ëµ¥¶ÔÏó
+	// context menu object
 	CMenu m_PopMenu;
 
-    // ·ÅÖÃËùÓĞÏÔÊ¾ÔªËØµÄÈİÆ÷
+    // container for all display elements
     CStatic m_Container;
 
-	// µ±Ç°¼¤»îµÄ´°¿Ú
+	// currently active window
 	CWnd* m_pActiveWnd;
 
-    // ÏÔÊ¾ËùÓĞLOGµÄÁĞ±í
+    // list showing all LOG entries
     CListCtrl m_LogList;
 
-	// ´æ·Å¸÷ÖÖÀà±ğLOGµÄListCtrl¶ÔÏó¼°Àà±ğ±êÊ¶´®
+	// ListCtrl objects per log category, plus the category identifier strings
 	std::vector<CLogTypeData*> m_LGData;
 
-	// ÏÔÊ¾ËùÓĞGPLµÄ¶Ô»°¿ò
+	// dialog showing all GPL entries
 	CGplViewDlg* m_pGplDlg;
 
-	// ´æ·Å¸÷ÖÖÀà±ğGPLµÄÀà±ğ¶ÔÏó
+	// per category objects for the GPL entries
 	std::vector<CGplTypeData*> m_GPLData;
 
-	// ²âÊÔ¡¢Çå³ı°´Å¥
+	// test and clear buttons
     CButton m_btnTestLog;
     CButton m_btnClearLog;
 
-    // ÏÔÊ¾ÓëÇå³ı¼°·ÀÖ¹ÖØÈëµÄÍ¬²½¶ÔÏó
+    // synchronisation object guarding display, clearing and re-entrancy
     CCriticalSection m_CS;
 
-    // LOG°ü¶ÔÏó
+    // LOG packet object
     CLogPacket* m_pLogPacket;
 
-    // ½ÓÊÕËùÓĞ°ü¼ÆÊı
+    // count of all packets received
     DWORD m_dwPacketCnt;
 
 public:

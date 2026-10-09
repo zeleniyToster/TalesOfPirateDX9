@@ -1,4 +1,4 @@
-//=============================================================================
+ï»¿//=============================================================================
 // FileName: MapEntry.cpp
 // Creater: ZhangXuedong
 // Date: 2005.10.21
@@ -13,7 +13,7 @@ using namespace std;
 
 CDynMapEntry	g_CDMapEntry;
 
-char	g_szTFightMapName[MAX_MAPNAME_LENGTH] = "";	// ¶ÓÎéÌôÕ½µØÍ¼Ãû
+char	g_szTFightMapName[MAX_MAPNAME_LENGTH] = "";	// party challenge map name
 
 //=============================================================================
 void CMapEntryCopyCell::WriteParamPacket(WPACKET &pk)
@@ -27,7 +27,7 @@ void CDynMapEntryCell::SetCopyNum(dbc::Short sCopyNum)
 {T_B
 	if (sCopyNum > defMAX_MAP_COPY_NUM)
 	{
-		//LG("¸±±¾ÊýÄ¿´íÎó", "msgÉè¶¨µÄ¸±±¾ÊýÄ¿ %d ³¬¹ý×î´óÖµ %d!\n", sCopyNum, defMAX_MAP_COPY_NUM);
+		//LG("å‰¯æœ¬æ•°ç›®é”™è¯¯", "msgè®¾å®šçš„å‰¯æœ¬æ•°ç›® %d è¶…è¿‡æœ€å¤§å€¼ %d!\n", sCopyNum, defMAX_MAP_COPY_NUM);
 		LG("copy number error", RES_STRING(GM_GAMEAPP_CPP_00008), sCopyNum, defMAX_MAP_COPY_NUM);
 		return;
 	}

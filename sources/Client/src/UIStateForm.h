@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "UIGlobalVar.h"
 
 
@@ -18,7 +18,7 @@
 
 namespace GUI
 {
-// Íæ¼ÒÊôĞÔ
+// player attributes
 class CStateMgr : public CUIInterface
 {
 public:
@@ -36,17 +36,17 @@ private:
 	static void MainMouseDown(CGuiData *pSender, int x, int y, DWORD key);
 
 private:
-	//frmState½çÃæµÄ¿Ø¼ş
+	//the controls of the frmState screen
 	CForm*			frmState;
-	CLabelEx*		labName;                    //´´½¨½ÇÉ«Ãû³Æ
-	CLabelEx*		labGuildName;               //´´½¨¹«»áÃû³Æ
-	CLabelEx*		labStateLevel;              //´´½¨µÈ¼¶
-	CLabelEx*		labStatePoint;              //´´½¨ÊôĞÔµãÊı 
-	CLabelEx*  		labSkillPoint;              //´´½¨¼¼ÄÜµãÊı
-	CLabelEx*		labJobShow;					//Ö°Òµ
-	CLabelEx *      labFameShow;				//´´½¨ÃûÉù
+	CLabelEx*		labName;                    //create character name
+	CLabelEx*		labGuildName;               //create guild name
+	CLabelEx*		labStateLevel;              //create level
+	CLabelEx*		labStatePoint;              //create attribute points
+	CLabelEx*  		labSkillPoint;              //create skill points
+	CLabelEx*		labJobShow;					//class
+	CLabelEx *      labFameShow;				//create reputation
 
-	//6¸ö»ù±¾ÊôĞÔ
+	//6 basic attributes
 	CLabelEx*		labStrshow;
 	CLabelEx*		labDexshow;
 	CLabelEx*		labAgishow;
@@ -56,7 +56,7 @@ private:
 	CLabelEx*		labSailLevel;
 	CLabelEx*		labSailEXP;
 
-	//8¸ö¸½¼ÓÊôĞÔ
+	//8 additional attributes
 	CLabelEx*		labMinAtackShow;
 	CLabelEx*		labMaxAtackShow;
 	CLabelEx*		labFleeShow;
@@ -68,19 +68,19 @@ private:
 	//CLabelEx*		labMfShow;
 	CLabelEx*		labPhysDefineShow;
 
-	//6 ¸ö»ù±¾ÊôĞÔ°´Å¥
-	CTextButton*   btnStr;						//´´½¨Á¦Á¿À¸
-	CTextButton*   btnAgi;						//´´½¨Ãô½İÀ¸
-	CTextButton*   btnCon;						//´´½¨ÌåÖÊÀ¸
-	CTextButton*   btnSta;						//´´½¨¾«ÉñÀ¸
-	//CTextButton*   btnLuk;						//´´½¨ĞÒÔËÀ¸
-	CTextButton*   btnDex;						//´´½¨×¨×¢À¸     
+	//6 basic attribute buttons
+	CTextButton*   btnStr;						//create strength bar
+	CTextButton*   btnAgi;						//create agility bar
+	CTextButton*   btnCon;						//create constitution bar
+	CTextButton*   btnSta;						//create spirit bar
+	//CTextButton*   btnLuk;						//åˆ›å»ºå¹¸è¿æ 
+	CTextButton*   btnDex;						//create focus bar
 
 	CLabelEx*		labStateEXP;
 	CLabelEx*		labStateHP;
 	CLabelEx*		labStateSP;
 
-	CLabelEx*		labFameSho;              //´´½¨ÃûÉù
+	CLabelEx*		labFameSho;              //create reputation
 	CLabelEx*		labStateName;
 	CLabelEx*		labStateJob;
 

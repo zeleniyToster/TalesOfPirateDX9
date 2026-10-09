@@ -1,37 +1,37 @@
-#pragma once
+ï»¿#pragma once
 
 #include <windows.h>
 // ------------------------ IMG_HEADER ---------------------------------//
 struct IMG_HEADER 
 {
-	DWORD	m_dwMarks;		// ±êÖ¾Î» 'RYO'
-	WORD	m_LibType;		// ±»´ò°üµÄÍ¼ÏñÀàÐÍ
-	WORD	m_wPackedDirectory;	// Í¼Ïñ°üÖÐ±»´ò°üµÄÄ¿Â¼Êý,¡¡×î´óÔÊÐíÊýÁ¿ 65535
+	DWORD	m_dwMarks;		// æ ‡å¿—ä½ 'RYO'
+	WORD	m_LibType;		// type of the packed image
+	WORD	m_wPackedDirectory;	// number of directories packed into the image pack, at most 65535
 
-	WORD	m_wGridX;		// ¸ÃÍ¼°üÄÚËùÓÐÍ¼ÏñµÄµÄÖØÐÄÎ»ÖÃ
-	WORD	m_wGridY;		// ¸ÃÍ¼°üÄÚËùÓÐÍ¼ÏñµÄµÄÖØÐÄÎ»ÖÃ
-	WORD	m_wVer;			//	°æ±¾ºÅ
+	WORD	m_wGridX;		// centre of gravity of all the images in this pack
+	WORD	m_wGridY;		// centre of gravity of all the images in this pack
+	WORD	m_wVer;			//	version number
 
-	BYTE	m_bAlphaInfo;	//	Alpha ÐÅÏ¢
-	BYTE	m_bShadowInfo;	//	Shadow ÐÅÏ¢
+	BYTE	m_bAlphaInfo;	//	Alpha information
+	BYTE	m_bShadowInfo;	//	Shadow information
 };
 
 // ----------------------- IMG_BLOCK ------------------------------------//
-struct IMG_BLOCK					//	Í¼Ïñ¿éÐÅÏ¢
+struct IMG_BLOCK					//	image block information
 {	
-	BYTE	m_byPixelDepth;			// ÏñËØÎ»Éî
-	BYTE	m_byUseRle;				// ÊÇ·ñÊ¹ÓÃRLE
-	BYTE	m_byUseAlpha;			// ÊÇ·ñÓÐAlphaÍ¨µÀ
+	BYTE	m_byPixelDepth;			// pixel bit depth
+	BYTE	m_byUseRle;				// whether RLE is used
+	BYTE	m_byUseAlpha;			// whether there is an alpha channel
 	BYTE	m_byNone1;
 
-	WORD	m_wPalCount;			// ¿éÖÐÊ¹ÓÃµ½µÄÉ«ÅÌÊýÁ¿»ùÊý
-	WORD	m_wWidth;				// Í¼Ïñ¿í¶È
-	WORD	m_wHeight;				// Í¼Ïñ¸ß¶È
+	WORD	m_wPalCount;			// base count of the palette entries used by the block
+	WORD	m_wWidth;				// image width
+	WORD	m_wHeight;				// image height
 
-	WORD	m_wTotalWidthBlock;		// ¿íµÄÊý¾Ý¿éÊýÁ¿
-	WORD	m_wTotalHeightBlock;	// ¸ßµÄÊý¾Ý¿éÊýÁ¿	
-	WORD	m_wTailBlockWidth;		// Ä©Î²µÄ¿é¿í
-	WORD	m_wTailBlockHeight;		// Ä©Î²µÄ¿é¸ß
+	WORD	m_wTotalWidthBlock;		// number of wide blocks
+	WORD	m_wTotalHeightBlock;	// number of tall blocks
+	WORD	m_wTailBlockWidth;		// width of the trailing blocks
+	WORD	m_wTailBlockHeight;		// height of the trailing blocks
 	BYTE	m_byNone2;
 	BYTE	m_byNone3;
 
@@ -50,7 +50,7 @@ struct _RGB
 	bool operator == (_RGB& v) {return ( (0x00ffffff & this->operator DWORD() ) == (0x00ffffff & v.operator DWORD() ) );}
 	_RGB& operator = (DWORD dwRGB){ (*this) = (*(_RGB*)&dwRGB); return *this;}
 
-	//·µ»ØÁ½ÑÕÉ«µÄ²îÖµ
+	// returns the difference between two colours
 	unsigned int Difference(_RGB& v){ 
 		int dr,dg,db;
 		dr=(int)r-(int)v.r;

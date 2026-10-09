@@ -1,4 +1,4 @@
-#include "Stdafx.h"
+ï»¿#include "Stdafx.h"
 #include "GameApp.h"
 #include "Character.h"
 #include "Scene.h"
@@ -79,8 +79,20 @@ void CGameApp::_HandleMsg(DWORD dwTypeID, DWORD dwParam1, DWORD dwParam2)
 
 				if( dwParam1==1000 )
 				{
+					// dwParam1 == 1000 is the client side login timeout sentinel raised by
+					// CLoginScene::_FrameMove. It is NOT a socket error code. WSAGetLastError()
+					// used to be printed here, but it samples the last Win32 error of the
+					// render thread, which has nothing to do with the connection and yields
+					// bogus values (0x0, or 0x5 = ERROR_ACCESS_DENIED from some unrelated
+					// Win32 call). Report the real timeout instead and log the state.
+					const int l_status			= g_NetIF ? g_NetIF->GetConnStat() : -1;
+					const int l_tcp_established	= ( g_NetIF && g_NetIF->m_connect.GetDatasock() ) ? 1 : 0;
+
+					LG( "connect", "login timeout: no handshake within %u ms, conn stat=%d, tcp established=%d\n",
+						g_Config.m_nConnectTimeOut, l_status, l_tcp_established );
+
 					char szBuf[128] = { 0 };
-					sprintf( szBuf, g_oLangRec.GetString(135), WSAGetLastError() );
+					sprintf( szBuf, g_oLangRec.GetString(135), g_Config.m_nConnectTimeOut / 1000 );
 					g_stUIBox.ShowMsgBox( _Disconnect, szBuf );
 					return;
 				}
@@ -90,18 +102,18 @@ void CGameApp::_HandleMsg(DWORD dwTypeID, DWORD dwParam1, DWORD dwParam2)
 					{
 						if( !g_ChaExitOnTime.TimeArrived() )
 						{
-							//·ÇµÇÂ½³¡¾°¶Ï¿ªÁ¬½Ó
+							//disconnect in a scene other than the login scene
 							char szBuf[256] = { 0 };
 							if( g_NetIF )
 							{
-								// modify by Philip.Wu  2006-06-09  ·ÇÊÕ·ÑÏµÍ³²»ÌáÊ¾ÓÃ»§³äÖµ
+								// modify by Philip.Wu  2006-06-09  a free system does not prompt the user to top up
 								if(g_Config.m_IsBill)
 								{
 									sprintf( szBuf, g_oLangRec.GetString(136), g_oLangRec.GetString(137), dwParam1 );
 								}
 								else
 								{
-									//sprintf( szBuf, "ÄúÏÖÔÚÒÑÓë·þÎñÆ÷¶Ï¿ªÁ¬½Ó,È·¶¨ºó½«·µ»ØµÇÂ¼½çÃæ\nÔ­Òò:%s[%d]", "ÄúÒÑÔÚÆäËûµØ·½µÇÂ½£¡", dwParam1 );
+									//sprintf( szBuf, "æ‚¨çŽ°åœ¨å·²ä¸ŽæœåŠ¡å™¨æ–­å¼€è¿žæŽ¥,ç¡®å®šåŽå°†è¿”å›žç™»å½•ç•Œé¢\nåŽŸå› :%s[%d]", "æ‚¨å·²åœ¨å…¶ä»–åœ°æ–¹ç™»é™†ï¼", dwParam1 );
 
 									const auto reason = g_NetIF->GetDisconnectErrText(dwParam1);
 									sprintf(szBuf, reason.c_str());
@@ -122,8 +134,8 @@ void CGameApp::_HandleMsg(DWORD dwTypeID, DWORD dwParam1, DWORD dwParam2)
 						}
 					}
 					else
-					{	//µÇÂ½³¡¾°ÄÚ¶Ï¿ªÁ¬½Ó
-						//ÅÐ¶ÏÃÜÂëÊÇ·ñ´íÎó
+					{	//disconnect inside the login scene
+						//checks whether the password is wrong
 						CLoginScene *pkLogin = dynamic_cast<CLoginScene*>(scene);
 						if (pkLogin && pkLogin->IsPasswordError())
 						{

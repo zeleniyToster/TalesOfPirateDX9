@@ -1,10 +1,10 @@
-#pragma once
+ï»¿#pragma once
 
 class CSynchroManage;
 class CServerHarm;
 class CCharacter;
 
-// ÓÃÓÚ¿Í»§¶ËÍ¬²½Óë·şÎñÆ÷µÄÏÔÊ¾
+// used to keep the client synchronised with what the server displays
 class CStateSynchro
 {
     friend class CSynchroManage;
@@ -12,7 +12,7 @@ public:
     CStateSynchro();
     virtual ~CStateSynchro();
 
-    // ½«µ±Ç°°ü°´²ÎÊı±ÈÀı·Ö¸ô³ö(´´½¨)ÁíÒ»¸ö°ü
+    // splits the current packet off into another packet (create) by the given proportion
     virtual CStateSynchro*   Gouge( float fRate )    { return NULL;  }
 
     void    Exec();
@@ -36,13 +36,13 @@ protected:
 	CServerHarm*	_pServerHarm;
 
 private:
-    int				_nID;				// CSynchroManageµÄË÷Òı
-	DWORD			_dwExecTime;		// Ö´ĞĞÊ±¼ä
+    int				_nID;				// index into CSynchroManage
+	DWORD			_dwExecTime;		// execution time
 	DWORD			_dwCreateTime;
 
 };
 
-// ÓÃÓÚ¹ÜÀíÍ¬²½°ü£¬Ê¹Æä°´Ò»¶¨Ë³ĞòÖ´ĞĞ
+// used to manage synchronised packets so they run in a fixed order
 class CSynchroManage
 {
     friend class CStateSynchro;
@@ -57,7 +57,7 @@ public:
     static CSynchroManage* I() { return _pInstance;     }
 
 private:
-    void    _CollectEmpty();        // ÓÉÓÚÍ·Î²ÒÑ¾­Ïà½Ó£¬µ«Êµ¼ÊÈÔÓĞ¿Õ¼ä£¬ÊÕ¼¯Ê£Óà¿Õ¼ä
+    void    _CollectEmpty();        // the head and tail are already joined, but there is still room, so collect the remaining room
 
 private:
     int     _AddState( CStateSynchro* pState );
@@ -71,15 +71,15 @@ private:
     };
 
     CStateSynchro*  _All[MAX_SIZE];
-    DWORD           _dwHead, _dwTail;       // Í·Î²ÓĞĞ§Çø
-    DWORD           _nSynchroNum;           // ÓĞĞ§×´Ì¬¸öÊı
+    DWORD           _dwHead, _dwTail;       // valid region at the head and tail
+    DWORD           _nSynchroNum;           // number of valid states
 
 private:
     static CSynchroManage* _pInstance;
 
 };
 
-// ÄÚÁªº¯Êı
+// inline function
 inline void CStateSynchro::Exec()
 { 
     _isExec = true; 

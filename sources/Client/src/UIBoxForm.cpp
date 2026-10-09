@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "uiboxform.h"
 #include "uiform.h"
 #include "uiedit.h"
@@ -27,7 +27,7 @@ CForm* CBoxMgr::_cfrmError = NULL;
 //---------------------------------------------------------------------------
 bool CBoxMgr::Init()
 {
-	// ½»Ò×¶Ô»°¿ò
+	// trade dialog box
     CForm* frmTrade  = _FindForm("frmTrade");   
 	if ( !frmTrade ) return false;
 
@@ -43,7 +43,7 @@ bool CBoxMgr::Init()
 
 	_cTrade.Init( frmTrade );
 
-	// Ñ¡Ôñ¶Ô»°¿ò
+	// selection dialog box
     CForm* frmSelect  = _FindForm("frmSelect");   
 	if ( !frmSelect ) return false;
 	//frmSelect->SetPos( g_Render.GetScrWidth(), g_Render.GetScrHeight() - 151 );
@@ -53,7 +53,7 @@ bool CBoxMgr::Init()
 
 	_cSelect.Init( frmSelect );
 
-	// ÊäÈëÊýÁ¿¶Ô»°¿ò
+	// quantity input dialog
     CForm* frmNumber = _FindForm("frmNumber");
     if( !frmNumber ) return false;
 
@@ -67,7 +67,7 @@ bool CBoxMgr::Init()
 	_cNumber.Init( frmNumber );
 
 
-	// ÊäÈëÃÜÂë¶Ô»°¿ò
+	// password input dialog
 	CForm* frmPassword = _FindForm("frmPass");
 	if( !frmPassword ) return false;
 
@@ -80,7 +80,7 @@ bool CBoxMgr::Init()
 	_cPassword.Init( frmPassword );
 
 
-	// Ò»¸öÐÅÏ¢¶Ô»°¿ò
+	// an information dialog box
     CForm* frmError  = _FindForm("frmError");   
 	if ( !frmError ) return false;
 
@@ -120,7 +120,7 @@ void CBoxMgr::_ClearBox( CHideForm& list )
 
 		if(frm->GetPointer())
 		{
-			delete frm->GetPointer(); // UIµ±»ú´¦Àí
+			delete frm->GetPointer(); // UI freeze handling
 			frm->SetPointer( NULL );
 		}
 	}
@@ -171,7 +171,7 @@ stTradeBox* CBoxMgr::ShowTradeBox( FormMouseEvent evtForm, float fUnitMoney, int
 		t->edtNumber->SetCaption( "" );
 	}
 	t->nTotalNum = nTotalNum;
-	t->fUnitMoney = (float)(int)fUnitMoney;				// ÓÎÏ·½öÏÔÊ¾È¡ÕûºóµÄÊý×Ö call ÂÞÍþ
+	t->fUnitMoney = (float)(int)fUnitMoney;				// the game only shows the truncated number, call Luo Wei
 	return t;
 }
 

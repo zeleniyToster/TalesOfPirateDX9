@@ -1,4 +1,4 @@
-#ifdef _LUA_GAME
+ï»¿#ifdef _LUA_GAME
 
 extern "C"
 {
@@ -8,11 +8,11 @@ extern "C"
     #include <lualib.h>
 }
 
-// luaº¯Êý·µ»ØÖµ¶¨Òå
-#define LUA_FALSE			0 // ·µ»Ø´íÎó
-#define LUA_TRUE			1 // ·µ»ØÕýÈ·
+// lua function return value definitions
+#define LUA_FALSE			0 // returns error
+#define LUA_TRUE			1 // returns correct
 
-// ³ö´íµ÷ÊÔÊä³ö
+// debug output on error
 #define PARAM_ERROR        { LG("lua", g_oLangRec.GetString(183),__FUNCTION__ ); }
 #define SCENE_NULL_ERROR   { LG("lua", g_oLangRec.GetString(184), __FUNCTION__);         }
 

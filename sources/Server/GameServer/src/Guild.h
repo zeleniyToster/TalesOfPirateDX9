@@ -1,4 +1,4 @@
-//Created By Andor.Zhang 2005.4.19
+ï»¿//Created By Andor.Zhang 2005.4.19
 #ifndef GUILD_H
 #define GUILD_H
 //#include "stdafx.h"
@@ -8,12 +8,12 @@
 class Guild
 {
 public:
-	static BOOL lua_CreateGuild(CCharacter* pCha);	//´´½¨¹«»á,0-º£¾ü,1-º£µÁ
-	static BOOL lua_ListAllGuild(CCharacter* pCha);	//¿ªÊ¼¸ø¿Í»§¶Ë´«µİÁĞ±í£¬Ïò¿Í»§¶Ë·¢ÉúÒ»¸ö¿ªÊ¼ÁĞ±íÃüÁî£¬ÓÉNPC¶Ô»°´¥·¢Ò»´Î
+	static BOOL lua_CreateGuild(CCharacter* pCha);	//creates the guild, 0 navy, 1 pirate
+	static BOOL lua_ListAllGuild(CCharacter* pCha);	//start passing the list to the client; the client is sent a begin-list command, triggered once by the NPC dialog
 
 	static void cmd_CreateGuild(CCharacter* pCha, bool confirm, cChar *guildname, cChar *passwd);
-	static void cmd_ListAllGuild(CCharacter* pCha);	//µ÷ÓÃÒ»´Î·µ»Ø20ĞĞ£¬ÓÉ¿Í»§¶ËÃüÁî·Ö´Îµ÷ÓÃ£¬Ö±µ½·µ»ØËùÓĞĞĞ
-	static void cmd_GuildTryFor(CCharacter* pCha, uLong guildid);	//ÉêÇë¼ÓÈë¹«»á£¬ÓÉNPC¶Ô»°´¥·¢
+	static void cmd_ListAllGuild(CCharacter* pCha);	//each call returns 20 rows; the client command calls it in batches until all rows are returned
+	static void cmd_GuildTryFor(CCharacter* pCha, uLong guildid);	//applies to join the guild, triggered by the NPC dialog
 	static void cmd_GuildTryForComfirm(CCharacter* pCha, char IsReplace);
 	static void cmd_GuildListTryPlayer(CCharacter* pCha);
 	static void cmd_GuildApprove(CCharacter* pCha,uLong chaid);
@@ -36,7 +36,7 @@ public:
 				return false;
 			}else if(l_ishan)
 			{
-				if(l_name[i-1] ==0xA1 && l_name[i] ==0xA1)	//¹ıÂËÈ«½Ç¿Õ¸ñ
+				if(l_name[i-1] ==0xA1 && l_name[i] ==0xA1)	//filters out full-width spaces
 				{
 					return false;
 				}

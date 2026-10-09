@@ -1,4 +1,4 @@
-#include	"Stdafx.h"
+ï»¿#include	"Stdafx.h"
 #include	"SceneArea.h"
 #include	"GameConfig.h"
 
@@ -123,7 +123,7 @@ long CSceneArea::CreateFileFromMap(_TCHAR *ptcsMapFile, _TCHAR *ptcsAreaFile)
 	return lRet;
 }
 
-// lUnitNO ´ÓÁã¿ªÊ¼
+// lUnitNO starts at zero
 long CSceneArea::ReadAreaInfo(long lUnitNO, SAreaUnit *pUnitData, long *lpUnitNum)
 {
 	if (!m_bInitSuccess)

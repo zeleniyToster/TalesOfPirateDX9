@@ -1,4 +1,4 @@
-#include "Stdafx.h"
+Ôªø#include "Stdafx.h"
 #include "Scene.h"
 #include "GameApp.h"
 #include "CharacterPoseSet.h"
@@ -14,7 +14,7 @@
 #include "NetProtocol.h"
 
 //-----------------------
-// SceneNode ¥¥Ω®
+// SceneNode creation
 // Add Character to scene
 //----------------------- 
 CCharacter* CGameScene::AddBoat( stNetChangeChaPart& part )
@@ -23,7 +23,7 @@ CCharacter* CGameScene::AddBoat( stNetChangeChaPart& part )
     CChaRecord* pInfo = GetChaRecordInfo( nScriptID );
 	if( !pInfo ) return NULL;
 
-    CCharacter *pCha = _GetFirstInvalidCha(); // ¥À¥¶–Ë“™”≈ªØŒ™÷ÿ”√…œ“ª¥ŒÕ¨¿‡–ÕCha	
+    CCharacter *pCha = _GetFirstInvalidCha(); // this should be optimised to reuse the previous Cha of the same type
 	if( !pCha ) 
 	{
         LG("error", g_oLangRec.GetString(341));
@@ -205,7 +205,7 @@ __ret:
 }
 
 //-----------------------
-// SceneNode ¥¥Ω®
+// SceneNode creation
 // Add SceneObj to scene
 //----------------------- 
 CSceneObj* CGameScene::AddSceneObj(int nScriptID)
@@ -280,7 +280,7 @@ CSceneObj* CGameScene::AddSceneObj(int nScriptID)
         const DWORD no_transp_num = 1;
         DWORD no_transp[no_transp_num] =
         {
-            449, //  “ƒ⁄æ∆∞…
+            449, // indoor bar
         };
 
         for(DWORD i = 0; i < no_transp_num; i++)
@@ -319,7 +319,7 @@ CSceneObj* CGameScene::AddSceneObj(int nScriptID)
 
 
 //-----------------------
-// SceneNode ¥¥Ω®
+// SceneNode creation
 // Add EffectObj to scene
 //----------------------- 
 CEffectObj* CGameScene::AddSceneEffect(int nEffectTypeID)
@@ -344,7 +344,7 @@ CEffectObj* CGameScene::AddSceneEffect(int nEffectTypeID)
 }
 
 //-----------------------
-// SceneNode ¥¥Ω®
+// SceneNode creation
 // Add SceneItem to scene
 //----------------------- 
 CSceneItem* CGameScene::AddSceneItem(int nScriptID, int nType)

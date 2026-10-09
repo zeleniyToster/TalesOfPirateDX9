@@ -1,4 +1,4 @@
-// npc.h Created by knight-gongjian 2004.11.19.
+Ôªø// npc.h Created by knight-gongjian 2004.11.19.
 //---------------------------------------------------------
 #pragma once
 
@@ -16,9 +16,9 @@ namespace mission
 {
 	using namespace dbc;
 
-	#define EN_OK						 0		// ’˝»∑
-	#define EN_FAILER					-1		// ¥ÌŒÛ
-	#define INVALID_SCRIPT_NPCHANDLE	USHORT(-1)		// Œﬁ–ßµƒNPCΩ≈±æID
+	#define EN_OK						 0		// correct
+	#define EN_FAILER					-1		// error
+	#define INVALID_SCRIPT_NPCHANDLE	USHORT(-1)		// invalid NPC script ID
 
 	//	
 	class CNpc : public CCharacter
@@ -29,38 +29,38 @@ namespace mission
 		CNpc();
 		virtual ~CNpc();
 
-		// ¿‡µƒ¿‡–Õ–≈œ¢
+		// class type information
 		virtual CNpc* IsNpc() { return this; }
 		virtual void SetType() { m_byType = NPC; }
 		BYTE GetType() { return m_byType; }
 		BYTE GetShowType() { return m_byShowType; }
 		
-		// ◊∞‘ÿnpc≈‰÷√–≈œ¢
+		// loads the NPC configuration information
 		virtual BOOL Load( const CNpcRecord& recNpc, const CChaRecord& recChar );
 
-		// Õ¯¬Áœ˚œ¢¥¶¿Ì∫Ø ˝
+		// network message handler
 		virtual HRESULT MsgProc( CCharacter& character, RPACKET& packet );
 
-		// »ŒŒÒ◊¥Ã¨¥¶¿Ì∫Ø ˝
+		// mission state handler
 		virtual BOOL MissionProc( CCharacter& character, BYTE& byState );
 
-		// ≈–∂®npcµƒµÿÕº Ù–‘
+		// determines the map attribute of the NPC
 		virtual BOOL IsMapNpc( const char szMap[], USHORT sID );
 
-		// ÃÌº”¥•∑¢∆˜–≈œ¢
+		// adds trigger information
 		virtual BOOL AddNpcTrigger( WORD wID, mission::TRIGGER_EVENT e, WORD wParam1, WORD wParam2, WORD wParam3, WORD wParam4 );
 
-		// ¥•∑¢∆˜ ¬º˛¥¶¿Ì
+		// trigger event handling
 		virtual BOOL EventProc( TRIGGER_EVENT e, WPARAM wParam, LPARAM lParam );
 
-		//…Ë÷√npcΩ≈±æ∂‘ª∞∫ÕΩª“◊–≈œ¢◊ ‘¥ID
+		//sets the resource IDs for the NPC script dialog and trade information
 		virtual void	SetScriptID( USHORT sID ) { m_sScriptID = sID; }
 		virtual USHORT	GetScriptID() { return m_sScriptID; }
 		virtual void	SetNpcHasMission( BOOL bHasMission ) { m_bHasMission = bHasMission; }
 		virtual BOOL	GetNpcHasMission() { return m_bHasMission; }
 		virtual const char* GetInitFunc() { return m_szMsgProc; }
 
-		// NPC±ª’ŸªΩ
+		// the NPC has been summoned
 		virtual void	Summoned( USHORT sTime ) {};
 		
 		const char* GetNpcName() { return m_szName; }
@@ -69,22 +69,22 @@ namespace mission
 		//
 		virtual void Clear();
 
-		// npc¿‡–Õ–≈œ¢
+		// NPC type information
 		BYTE	m_byType;
 
-		// npcøÕªß∂Àœ‘ æ≤ªÕ¨¿‡–Õ
+		// different types shown on the client
 		BYTE	m_byShowType;
 
-		// npc≈‰÷√±Ì±‡∫≈
+		// NPC configuration table number
 		USHORT	m_sNpcID;
 
-		// npc–≈œ¢Ω·ππ
+		// NPC information structure
 		char	m_szMsgProc[ROLE_MAXSIZE_MSGPROC];
 
-		// npcΩ≈±æ–≈œ¢ID
+		// NPC script information ID
 		USHORT	m_sScriptID;
 
-		// npc «∑Ò–Ø¥¯»ŒŒÒ–≈œ¢
+		// whether the NPC carries mission information
 		BOOL	m_bHasMission;
 
 		char m_szName[128];
@@ -97,13 +97,13 @@ namespace mission
 		CTalkNpc();
 		virtual ~CTalkNpc();
 
-		// ¿‡µƒ¿‡–Õ–≈œ¢
+		// class type information
 		virtual void SetType() { m_byType = TALK; }
 
-		// ◊∞‘ÿnpc≈‰÷√–≈œ¢
+		// loads the NPC configuration information
 		virtual BOOL Load( const CNpcRecord& recNpc, const CChaRecord& recChar );
 		
-		// ◊∞‘ÿΩ≈±æ–≈œ¢
+		// loads the script information
 		virtual BOOL InitScript( const char szFunc[], const char szName[] );
 
 		//
@@ -112,38 +112,38 @@ namespace mission
 		//
 		virtual BOOL MissionProc( CCharacter& character, BYTE& byState );
 
-		// ≈–∂®npcµƒµÿÕº Ù–‘
+		// determines the map attribute of the NPC
 		virtual BOOL IsMapNpc( const char szMap[], USHORT sID );
 
-		// ÃÌº”¥•∑¢∆˜–≈œ¢
+		// adds trigger information
 		virtual BOOL AddNpcTrigger( WORD wID, mission::TRIGGER_EVENT e, WORD wParam1, WORD wParam2, WORD wParam3, WORD wParam4 );
 
-		// ¥•∑¢∆˜ ¬º˛¥¶¿Ì
+		// trigger event handling
 		virtual BOOL EventProc( TRIGGER_EVENT e, WPARAM wParam, LPARAM lParam );
 
-		// NPC±ª’ŸªΩ
+		// the NPC has been summoned
 		virtual void Summoned( USHORT sTime );
 
 	protected:
-		// ◊∞‘ÿnpcΩ≈±æ≥ı ºªØnpc–≈œ¢
+		// loads the NPC script and initialises the NPC information
 		virtual BOOL Load( const char szNpcScript[] );
 		
 		// 
 		virtual void Clear();
 
-		// «Â≥˝¥•∑¢∆˜–≈œ¢
+		// clears the trigger information
 		void	ClearTrigger( WORD wIndex );
 
-		// »ŒŒÒ ¬º˛¥¶¿Ì∫Ø ˝
+		// mission event handler
 		void	TimeOut( USHORT sTime );
 
-		// npc–Ø¥¯µƒ¥•∑¢∆˜–≈œ¢
+		// trigger information carried by the NPC
 		BYTE				m_byNumTrigger;
 		NPC_TRIGGER_DATA	m_Trigger[ROLE_MAXNUM_NPCTRIGGER];
 
-		// µ±ø¥µΩ”––Ø¥¯ƒ≥∏ˆ»ŒŒÒµƒΩ«…´ ±≥ˆœ÷
-		USHORT m_sTime;		//  £”‡œ‘ æ ±º‰
-		BOOL   m_bSummoned; //  «∑Ò «’ŸªΩµƒNPC
+		// appears when a character carrying that mission is seen
+		USHORT m_sTime;		// remaining display time
+		BOOL   m_bSummoned; // whether this is a summoned NPC
 	};
 	
 	class CTradeNpc : public CTalkNpc
@@ -155,7 +155,7 @@ namespace mission
 
 		virtual void SetType() { m_byType = TRADE; }
 
-		// Ωª“◊∫Ø ˝Ω”ø⁄
+		// trade function interface
 		virtual BOOL Sale( CCharacter& character, RPACKET& packet );
 		virtual BOOL Buy( CCharacter& character, RPACKET& packet );
 
@@ -181,7 +181,7 @@ namespace mission
 			DWORD  dwOwnerID;
 		};
 
-		// ŒÔ∆∑◊∞±∏–≈œ¢
+		// item equipment information
 		AGENCY_ITEM	m_sItemList[ROLE_MAXNUM_CAPACITY];
 		USHORT		m_sNumItem;
 	};
@@ -195,12 +195,12 @@ namespace mission
 		virtual void SetType() { m_byType = ROLE; }
 		
 	private:
-		// »ŒŒÒ–≈œ¢
+		// mission information
 		USHORT	m_sRoleList[ROLE_MAXNUM_CAPACITY];
 		USHORT	m_sNumRole;
 	};
 
-	extern CTalkNpc* g_TalkNpc;	// ≥ı ºªØnpcΩ≈±æ ±∫Ú…Ë÷√»´æ÷npc¿‡÷∏’Î
+	extern CTalkNpc* g_TalkNpc;	// set the global NPC class pointer while initialising the NPC script
 }
 
 //---------------------------------------------------------

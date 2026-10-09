@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "UIScroll.h"
 
 using namespace GUI;
@@ -81,7 +81,7 @@ CScroll& CScroll::operator=( const CScroll& rhs )
 CScroll::~CScroll(void)
 {
 	//delete _pImage;
-	SAFE_DELETE(_pImage); // UIµ±»ú´¦Àí
+	SAFE_DELETE(_pImage); // UI freeze handling
 }
 
 void CScroll::Render()
@@ -151,7 +151,7 @@ bool CScroll::MouseRun( int x, int y, DWORD key )
 		if( _down->MouseRun(x,y,key) ) return true;
 		if( _pScroll->MouseRun(x,y,key) ) return true;
 
-		// ´¦Àí·­Ò³
+		// handles paging
 		if( key & Mouse_LDown )
 		{
 	        switch( _eStyle )
@@ -210,7 +210,7 @@ void CScroll::FrameMove( DWORD dwTime )
     {
         if( _dwStartTime==0 )
         {
-            _dwStartTime = dwTime + 800;        // µÚÒ»´ÎÒª¶àµÈ´ýÒ»¶ÎÊ±¼ä
+            _dwStartTime = dwTime + 800;        // the first time has to wait longer
             return;
         }
         if( dwTime - _dwStartTime > 30 )

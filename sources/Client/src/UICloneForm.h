@@ -1,7 +1,7 @@
-//----------------------------------------------------------------------
-// Ãû³Æ:ÓÃÓÚ¹ÜÀíÏàÍ¬µÄ±íµ¥ÄÚ´æ
-// ×÷Õß:lh 2005-03-15
-// ×îºóĞŞ¸ÄÈÕÆÚ:
+ï»¿//----------------------------------------------------------------------
+// Name: manages the memory of identical forms
+// Author: lh 2005-03-15
+// Last modified date:
 //----------------------------------------------------------------------
 #pragma once
 
@@ -9,7 +9,7 @@ namespace GUI
 {
 class CForm;
 
-// ¹ÜÀíÍ¬Ò»Àà¿ËÂ¡µÄ±íµ¥,ÔÚÉ¾³ıÊ±²¢²»ÕæÕıµÄÉ¾³ı,»º´æÆğÀ´,ÏÂ´Î¿ËÂ¡Ê±¿ÉÖ±½ÓÊ¹ÓÃ 
+// manages the forms cloned from the same source; on deletion they are not really deleted but cached, so the next clone can use them directly
 class CCloneForm
 {
 public:
@@ -22,23 +22,23 @@ public:
 	bool	Release( CForm* p );
 
 private:
-	CForm*	_pSample;		// Ñù±¾±íµ¥
+	CForm*	_pSample;		// sample form
 
 	typedef std::vector<CForm*>	vfrm;
 	vfrm	_vfrm;
 
-    int     _nCount;		// ÓĞĞ§µÄ±íµ¥¸öÊı
+    int     _nCount;		// number of valid forms
 
 };
 
-// ÔÚÍ¬Ò»Àà±íµ¥ÖĞ,×Ô¶¯µÃµ½Òş²ØµÄ±íµ¥,Èç¹ûÃ»ÓĞÒş²ØµÄ±íµ¥,Ôò×Ô¶¯¿ËÂ¡Ò»¸ö
+// gets a hidden form among the forms of the same class automatically; if there is no hidden form, one is cloned
 class CHideForm
 {
 public:
 	void	Init( CForm* frm )		{ _vfrm.push_back( frm );	}
 
 	CForm*	GetHide();
-	void	CloseAll();		// ¹Ø±ÕËùÓĞ±íµ¥
+	void	CloseAll();		// closes all forms
 
 	CForm*  GetForm( int n )		{ return _vfrm[n];			}
 	int		GetCount()				{ return (int)_vfrm.size();	}

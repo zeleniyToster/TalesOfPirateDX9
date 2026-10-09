@@ -1,22 +1,22 @@
-#pragma once
+ï»¿#pragma once
 
 #include "Util.h"
 
-// MapData Êı¾İ¹ÜÀíÀà
+// MapData storage management class
 
-// Ö§³ÖÊı¾İ¶¯Ì¬¶ÁÈë, ²»ÏŞÖÆÊı¾İÀàĞÍ
+// supports loading data on demand, with no restriction on the data type
 
-// ±ÈÈçµØ±í, Îï¼ş´æÅÌÎÄ¼ş¶¼¿ÉÒÔÊ¹ÓÃ´ËÀà
+// e.g. both terrain and object save files can use this class
 
-// Ö§³ÖÊı¾İ¿éÖ®¼äµÄ¸´ÖÆ, ¿ÉÒÔ·½±ãµØÍ¼ÇĞ¸î, ×éºÏ
+// supports copying between data blocks, which makes cutting and stitching maps easy
 
 
 struct SDataSection
 {
-    void*		pData;				// Ö¸ÏòÊµ¼ÊµÄÊı¾İ
-    DWORD		dwDataOffset;		// ÎÄ¼şÊı¾İÖ¸ÕëÎ»ÖÃ = 0, ±íÊ¾Ã»ÓĞÊı¾İ
-	DWORD		dwActiveTime;		// ×îºóÒ»´ÎÊ¹ÓÃµÄÊ±¼ä
-    DWORD       dwParam;            // ²ÎÊı
+    void*		pData;				// points at the real data
+    DWORD		dwDataOffset;		// a file data pointer position of 0 means there is no data
+	DWORD		dwActiveTime;		// time of last use
+    DWORD       dwParam;            // parameters
 	
 	SDataSection()
     :pData(NULL),dwActiveTime(0),dwDataOffset(0),dwParam(0)
@@ -35,35 +35,35 @@ public:
 
     ~CSectionDataMgr();
     
-    // ´ÓÎÄ¼ş¶ÁÈë, ²¢¾ö¶¨ÊÇ·ñĞèÒª±à¼­²Ù×÷
+    // read from the file, and decide whether editing is allowed
     BOOL    CreateFromFile(const char *pszMapName, BOOL bEdit = FALSE);
     
-    // ´´½¨, »áÉú³ÉÎÄ¼ş
+    // create; this generates the file
     BOOL    Create(int nSectionCntX, int nSectionCntY, const char *pszMapName);
 	
-    // ¶ÁÅÌ, ¿ÉÒÔÒ»´ÎĞÔ¶ÁÈë, Ò²¿ÉÒÔ¶¯Ì¬¶ÁÈë
+    // read from disk, either all at once or on demand
     void	Load(BOOL bFull, DWORD dwTimeParam = 0);
     
-    // ¶ÁÈ¡SectionÊı¾İµÄ»Øµ÷º¯Êı
+    // callback invoked when section data is read
     void	SetLoadSectionCallback(MAP_LOADING_PROC pfn)	{	_pfnProc = pfn;				        }
     
-    // ¸´ÖÆSectionÊı¾İ
+    // copy the section data
     void    CopySectionData(SDataSection* pDest, SDataSection *pSrc);
     
-    // ±£´æSectionÊı¾İµ½ÎÄ¼ş
+    // write the section data to the file
     void    SaveSectionData(int nSectionX, int nSectionY);
 
-    // Çå³ıÖ¸¶¨SectionµÄÊı¾İ, ÄÚ²¿»áÇå³ıÎÄ¼şË÷Òı
+    // drop the data of the given section; this also clears the file index
     void    ClearSectionData(int nSectionX, int nSectionY);
 
-    // »ñÈ¡SectionÊı¾İ, Èç¹û²»ÔÚÄÚ´æÀïÔò·µ»Ø¿Õ
+    // fetch the section data; returns empty when it is not resident
     SDataSection* GetSectionData(int nSectionX, int nSectionY);
     
-    // ¶ÁÈ¡Ö¸¶¨SectionµÄÊı¾İ
+    // read the data of the given section
     SDataSection* LoadSectionData(int nSectionX, int nSectionY);
 
 	
-	// »ñÈ¡mapÏà¹ØÃèÊöĞÅÏ¢
+	// fetch the map descriptor
 	int		GetSectionCntX()						        { return _nSectionCntX;			        }
 	int		GetSectionCntY()						        { return _nSectionCntY;			        }
     int     GetSectionCnt()                                 { return _nSectionCntX * _nSectionCntY; }
@@ -71,10 +71,10 @@ public:
     char*   GetDataName()                                   { return _szDataName;                    }
     void    SetDataName(const char *pszName)                { strcpy(_szDataName, pszName);          }   
 
-    // ¼ÆËãÓĞĞ§Êı¾İ
+    // work out the valid data
     // int     CalValidSectionCnt();
     
-    // ÉèÖÃ¶¯Ì¬¶ÁÈëµÄÖĞĞÄÎ»ÖÃºÍ·¶Î§
+    // set the centre and radius used for on-demand loading
     void	SetLoadSize(int nWidth, int nHeight)	{ _nLoadWidth  = nWidth;_nLoadHeight = nHeight; }
 	int		GetLoadWidth()							{ return _nLoadWidth;					        }
 	int		GetLoadHeight()							{ return _nLoadHeight;					        }
@@ -102,22 +102,22 @@ protected:
         return *(_SectionArray + dwSectionNo);
     }
 
-	char                _szFileName[255];   // °üº¬ÍêÕûÂ·¾¶µÄÃû³Æ
-    char                _szDataName[32];     // µØÍ¼Ãû³Æ
-	int					_nSectionCntX;		// µØÍ¼Ë®Æ½·½ÏòÉÏSectionµÄ¿éÊı
-	int					_nSectionCntY;		// µØÍ¼´¹Ö±·½ÏòÉÏSectionµÄ¿éÊı
-	int					_nLoadCenterX;		// ¶¯Ì¬¶ÁÈëµÄÖĞĞÄÎ»ÖÃ
+	char                _szFileName[255];   // name including the full path
+    char                _szDataName[32];     // map name
+	int					_nSectionCntX;		// number of section blocks horizontally
+	int					_nSectionCntY;		// number of section blocks vertically
+	int					_nLoadCenterX;		// centre of on-demand loading
 	int 				_nLoadCenterY;
-	int					_nLoadWidth;		// ¿ÉÊÓ·¶Î§
+	int					_nLoadWidth;		// visible range
 	int					_nLoadHeight;
 	
     int					_nSectionStartX;
 	int					_nSectionStartY;
     
-	MAP_LOADING_PROC	_pfnProc;			// µØÍ¼¶¯Ì¬¶ÁÈë»Øµ÷Í¨Öªº¯Êı
+	MAP_LOADING_PROC	_pfnProc;			// notification callback for on-demand map loading
 	
-	FILE*				_fp;				// µØÍ¼ÎÄ¼ş¾ä±ú
-	BOOL				_bEdit;				// ÊÇ·ñ¿É±à¼­
+	FILE*				_fp;				// map file handle
+	BOOL				_bEdit;				// whether editing is allowed
     BOOL                _bDebug;
 	
     std::list<SDataSection*>	_SectionList;

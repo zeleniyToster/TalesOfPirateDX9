@@ -1,4 +1,4 @@
-
+ï»¿
 #include "LanguageRecord.h"
 #include <io.h>
 
@@ -23,23 +23,23 @@ CLanguageRecord::~CLanguageRecord(void)
 }
 
 
-// »ñµÃ×Ö·û´®
+// fetch a string
 const char* CLanguageRecord::GetString(int nID)
 {
 	std::map<int, std::string>::iterator it = m_mapString.find(nID);
 
 	if(it != m_mapString.end())
 	{
-		// ÕÒµ½¶ÔÓ¦×Ö·û´®
+		// found the matching string
 		return it->second.c_str();
 	}
 
-	// Î´ÕÒµ½¶ÔÓ¦×Ö·û´®
+	// no matching string found
 	return "";
 }
 
 
-// ´Ó BIN ÎÄ¼þÖÐ¶ÁÈ¡£¨BIN -> TXT£©
+// ä»Ž BIN æ–‡ä»¶ä¸­è¯»å–ï¼ˆBIN -> TXTï¼‰
 bool CLanguageRecord::LoadFromBinFile(const char* szBinFile)
 {
 	m_mapString.clear();
@@ -57,7 +57,7 @@ bool CLanguageRecord::LoadFromBinFile(const char* szBinFile)
 
 	while(fs.getline(szBuffer, sizeof(szBuffer) / sizeof(szBuffer[0])))
 	{
-		// ÏÈ½âÃÜ
+		// decrypt first
 		Decrypt((__byte*)szNewBuf, 1024, (__byte*)szBuffer, strlen(szBuffer));
 
 		Add(szNewBuf);
@@ -67,9 +67,9 @@ bool CLanguageRecord::LoadFromBinFile(const char* szBinFile)
 }
 
 
-// ´Ó TXT ÎÄ¼þÖÐ¶ÁÈ¡
+// read from the TXT file
 //
-//	[0] <TAB> "×Ö·û´®"
+//	[0] <TAB> "å­—ç¬¦ä¸²"
 //
 bool CLanguageRecord::LoadFromTxtFile(const char* szTxtFile)
 {
@@ -91,10 +91,10 @@ bool CLanguageRecord::LoadFromTxtFile(const char* szTxtFile)
 }
 
 
-// ¼ÓÃÜ²¢Éú³É¶þ½øÖÆ£¨TXT -> BIN£©
+// åŠ å¯†å¹¶ç”ŸæˆäºŒè¿›åˆ¶ï¼ˆTXT -> BINï¼‰
 bool CLanguageRecord::MadeBinFile(const char* szBinFile, const char* szTxtFile)
 {
-	if(-1 != access(szBinFile, 0))	// BIN ÎÄ¼þÒÑ´æÔÚ
+	if(-1 != access(szBinFile, 0))	// the BIN file already exists
 		return false;
 
 	std::ifstream ifs;
@@ -122,17 +122,17 @@ bool CLanguageRecord::MadeBinFile(const char* szBinFile, const char* szTxtFile)
 }
 
 
-// »ñµÃ×Ö·û´®¸öÊý
+// number of strings held
 int CLanguageRecord::GetRecordCount(void)
 {
 	return (int)(m_mapString.size());
 }
 
 
-// Ìí¼ÓÒ»ÐÐ
+// append a line
 void CLanguageRecord::Add(char* szLine)
 {
-	// Ìæ»»×ÊÔ´ÎÄ¼þÀïµÄ×ªÒå·û
+	// substitute the escape sequences in the resource file
 	ReplaceString(szLine, "\\n", "\n");
 	ReplaceString(szLine, "\\t", "\t");
 
@@ -159,7 +159,7 @@ void CLanguageRecord::Add(char* szLine)
 }
 
 
-// Ìæ»»
+// replace
 int CLanguageRecord::ReplaceString(char* _str, const char* _old, const char* _new)
 {
     int __pos = 0;
@@ -192,7 +192,7 @@ int CLanguageRecord::ReplaceString(char* _str, const char* _old, const char* _ne
 }
 
 
-// Ìæ»»
+// replace
 int CLanguageRecord::Find(const char* _str, const char* _find)
 {
     char* __ptr = 0;

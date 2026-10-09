@@ -1,4 +1,4 @@
-//
+ï»¿//
 #pragma once
 
 #include "lwHeader.h"
@@ -28,11 +28,11 @@ const DWORD EXP_OBJ_VERSION_1_0_0_0 = 0x1000;
 const DWORD EXP_OBJ_VERSION_1_0_0_1 = 0x1001;
 const DWORD EXP_OBJ_VERSION_1_0_0_2 = 0x1002;
 
-// µ÷Õûµ¼³öboneÊ¹ÓÃquaternion·½Ê½±£´æÐÅÏ¢Ê±£¬±£´æÃ¿Ò»Ö¡µÄposÐÅÏ¢¶ø²»ÊÇµÚÒ»Ö¡
+// when exporting bones with quaternions, the pos information is saved for every frame instead of only the first
 const DWORD EXP_OBJ_VERSION_1_0_0_3 = 0x1003;
-// µ÷ÕûlwMeshInfo½á¹¹£¬Ôö¼Óbone_infl_factorºÍvertex_decl_seq±äÁ¿
+// lwMeshInfo was extended with the bone_infl_factor and vertex_decl_seq members
 const DWORD EXP_OBJ_VERSION_1_0_0_4 = 0x1004;
-// Ôö¼ÓÐÂµÄ¶¯»­ÀàÐÍlwAnimDataMtlOpacty
+// added the new animation type lwAnimDataMtlOpacty
 const DWORD EXP_OBJ_VERSION_1_0_0_5 = 0x1005;
 
 const DWORD EXP_OBJ_VERSION = EXP_OBJ_VERSION_1_0_0_5;
@@ -528,9 +528,9 @@ public:
 
     DWORD GetDataSize() const;
 
-    // start_frame,end_frame ÓÃÀ´±êÃ÷frameÈ¡²åÖµ¼ÆËãÊ±ºòµÄ±ß½ç
-    // Èç¹ûstart_frame == LW_INVALID_INDEXºÍend_frame == LW_INVALID_INDEX
-    // Ôò²»×÷Ö¡±ß½ç²Ã¼õ
+    // start_frame and end_frame mark the bounds used when interpolating frames
+    // if start_frame == LW_INVALID_INDEX and end_frame == LW_INVALID_INDEX
+    // no frame bound clipping is applied
     LW_RESULT GetValue(lwMatrix44* mat, DWORD bone_id, float frame, DWORD start_frame, DWORD end_frame);
 
     inline void SetBoneNum(DWORD num) { _bone_num = num; }

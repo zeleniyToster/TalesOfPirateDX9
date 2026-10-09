@@ -1,8 +1,8 @@
-//----------------------------------------------------------------------
-// Ãû³Æ:·­Ò³±í¸ñ
-// ×÷Õß:lh 2004-07-29
-// ÓÃÍ¾:ÄÚ²¿ÏÔÊ¾Í¼ÔªÎªCGraph,°´·­Ò³Êı×Ö¿É·­Ò³,¿É¸Ä±ä±í¸ñ´óĞ¡
-// ×îºóĞŞ¸ÄÈÕÆÚ:2004-10-09
+ï»¿//----------------------------------------------------------------------
+// Name: paged grid
+// Author: lh 2004-07-29
+// Purpose: the internal display element is CGraph, it can turn pages with the page number and its size can be changed
+// Last modified date: 2004-10-09
 //----------------------------------------------------------------------
 #pragma once
 #include "uicompent.h"
@@ -59,7 +59,7 @@ public:
     int             GetSelectIndex(){ return _nSelectIndex; }
 
 public:
-	GuiEvent		evtSelectChange;				// Ñ¡Ôñ·¢ÉúÁË±ä»¯
+	GuiEvent		evtSelectChange;				// the selection changed
 
 protected:
 	void			_SetSelf();
@@ -93,30 +93,30 @@ protected:
 
 protected:
 	CGuiPic*		_pImage;
-	CImage*			_pSelectImage;		// ÓÃÓÚ»­Ñ¡Ôñ¿ò
+	CImage*			_pSelectImage;		// used to draw the selection box
 
 	CDragTitle*		_pSizeImg;
 
-	CTextButton*	_pNextPage;			// ·­µ½ÏÂÒ»Ò³
-	CTextButton*	_pPriorPage;		// ·­µ½ÉÏÒ»Ò³	
+	CTextButton*	_pNextPage;			// turns to the next page
+	CTextButton*	_pPriorPage;		// turns to the previous page
 
-	char			_strPage[10];		// ÓÃÓÚÏÔÊ¾µ±Ç°¶àÉÙÒ³£¬×Ü¹²¶àÉÙÒ³
+	char			_strPage[10];		// used to show the current page and the total number of pages
 	int				_nStrX, _nStrY;
 	int				_nStrWidth;
 
-	int				_nUnitHeight, _nUnitWidth;  // µ¥Ôª¿í¸ß
-    int             _nSpaceX, _nSpaceY; // ĞĞ¼ä¾à
+	int				_nUnitHeight, _nUnitWidth;  // cell width and height
+    int             _nSpaceX, _nSpaceY; // row spacing
 
 	typedef std::vector<CGraph*>		memory;
 	memory		_memory;
 	int			_nSize;			
-	int			_nFirst, _nLast;		// ÔÚÏÔÊ¾ÇøµÄµÚÒ»¸öIDºÍ×îºóÒ»¸öID
-	int			_nPage, _nMaxPage;		// µ±Ç°Ò³Êı£¬×î´óÒ³Êı
-	int			_nColNum;				// Ò»ĞĞ¿ÉÒÔÏÔÊ¾¶àÉÙÁĞ
-	int			_nRowNum;				// Ò»Ò³¿ÉÒÔÏÔÊ¾¶àÉÙĞĞ
-	int			_nPageNum;				// Ò»Ò³¿ÉÒÔÏÔÊ¾¶àÉÙ¸ö
+	int			_nFirst, _nLast;		// the first and last ID in the display area
+	int			_nPage, _nMaxPage;		// the current page and the maximum page
+	int			_nColNum;				// how many columns fit in a row
+	int			_nRowNum;				// how many rows fit on a page
+	int			_nPageNum;				// how many fit on a page
 
-	int			_nMargin;				// ÓëÖÜÎ§±ß¿òµÄ¾àÀë
+	int			_nMargin;				// distance to the surrounding border
 	int			_nStartX, _nStartY;
 
 private:
@@ -130,7 +130,7 @@ private:
 	
 };
 
-// ÄÚÁªº¯Êı
+// inline function
 inline void CGrid::SetUnitSize(int w, int h) 
 { 
 	if( w>0 ) _nUnitWidth=w; 

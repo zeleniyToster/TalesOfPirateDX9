@@ -1,4 +1,4 @@
-// WorldEudemon.h Created by knight-gongjian 2005.3.9.
+ï»¿// WorldEudemon.h Created by knight-gongjian 2005.3.9.
 //---------------------------------------------------------
 #pragma once
 
@@ -18,26 +18,26 @@ namespace mission
 
 		virtual void SetType() { m_byType = EUDEMON; }
 
-		// ÍøÂçÏûÏ¢´¦Àíº¯Êı
+		// network message handler
 		virtual HRESULT MsgProc( CCharacter& character, RPACKET& packet );
 		
-		// ×°ÔØÊÀ½çÊØ»¤ÉñÅäÖÃĞÅÏ¢
+		// loads the world guardian configuration information
 		virtual BOOL Load( const char szMsgProc[], const char szName[], dbc::uLong ulID );
 
 	private:
-		// ×°ÔØ½Å±¾ĞÅÏ¢
+		// loads the script information
 		virtual BOOL InitScript( const char szFunc[], const char szName[] );
 		
 	};
 
-	// ÔİÊ±Î´ÓÃ
+	// not used at the moment
 	class CEudemonManager
 	{
 	public:
 		CEudemonManager();
 		~CEudemonManager();
 
-		// ×°ÔØÊÀ½çÊØ»¤ÉñÁĞ±í£¬Éú³ÉÊÀ½çÊØ»¤Éñ
+		// loads the world guardian list and generates the world guardians
 		BOOL	Load( const char szTable[] );
 
 	private:

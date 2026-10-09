@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 namespace GUI
 {
@@ -7,30 +7,30 @@ class CCursor
 public:
 	enum eState
 	{
-		stNormal	= 0,	// Õý³£×´Ì¬
-		stActive	= 1,	// ´ø¶¯×÷×´Ì¬
-		stDrag		= 2,	// ÍÏ¶¯Ê±
-		stSize		= 3,	// ¸Ä±ä´óÐ¡
-		stVertical	= 4,	// ´¹Ö±
-		stLevel		= 5,	// Ë®Æ½
-		stWait		= 6,	// µÈ´ý	
-		stAttack	= 7,	// ÓÃÓÚÊó±êÒÆ¶¯Ê±ÏÔÊ¾µÄ¹¥»÷Êó±ê
-		stSkillAttack = 8,	// µ¥¼¼ÄÜ¹¥»÷
-		stUpBank	= 9,	// ÉÏ°¶
-		stUpBoat	= 10,	// ÉÏ´¬
-		stStop		= 11,	// ²»¿É²Ù×÷
-		stHover		= 12,	// ÐüÍ£ÎïÆ·
-		stPick		= 13,	// Ê°È¡ÎïÆ·
-        stCamera	= 14,   // ¾µÍ·Ðý×ª
-        stChat		= 15,   // ¶Ô»°
-        stMouse		= 16,   // Ò»¸öÊó±ê
-        stButtonClick = 17, // °´Å¥°´ÏÂ
-        stHide		= 18,   // ²»ÏÔÊ¾Êó±ê
-		stSearch	= 19,	// ²éÑ¯
-		stBlock		= 20,	// ²»¿É×ß
-		stRepair	= 21,	// ÐÞÀí
-		stFeed		= 22,	// Î¹Ê³
-		stEnd,				// ½áÊø·û£¬ÓÃÓÚÅÐ¶ÏÊý×é×î´óÖµ
+		stNormal	= 0,	// normal state
+		stActive	= 1,	// state with an action
+		stDrag		= 2,	// while dragging
+		stSize		= 3,	// resizing
+		stVertical	= 4,	// vertical
+		stLevel		= 5,	// horizontal
+		stWait		= 6,	// waiting
+		stAttack	= 7,	// the attack cursor shown while the mouse moves
+		stSkillAttack = 8,	// single skill attack
+		stUpBank	= 9,	// going ashore
+		stUpBoat	= 10,	// boarding a boat
+		stStop		= 11,	// not operable
+		stHover		= 12,	// hovering an item
+		stPick		= 13,	// picking up an item
+        stCamera	= 14,   // rotating the camera
+        stChat		= 15,   // dialog
+        stMouse		= 16,   // a mouse
+        stButtonClick = 17, // button pressed
+        stHide		= 18,   // cursor not shown
+		stSearch	= 19,	// query
+		stBlock		= 20,	// not walkable
+		stRepair	= 21,	// repair
+		stFeed		= 22,	// feeding
+		stEnd,				// terminator, used to find the maximum value of the array
 	};
 
 public:
@@ -38,10 +38,10 @@ public:
 	~CCursor();
 
 	void	Init();
-	void	SetCursor( eState v );			// ÉèÖÃ¹â±ê×´Ì¬£­×´Ì¬º¯Êý
+	void	SetCursor( eState v );			// sets the cursor state - state function
 	eState  GetCursor()			{ return _eActive;				}
 
-	bool	SetFrame( eState v );			// ÉèÖÃ¹â±ê×´Ì¬£­Ã¿Ö¡µÄµ÷ÓÃº¯Êý
+	bool	SetFrame( eState v );			// sets the cursor state - per frame call function
     void    Restore()           { _IsShowFrame=false;           }
 
 	int		GetMax()			{ return stEnd;					}
@@ -61,10 +61,10 @@ private:
 	bool		_IsInit;
     bool        _IsShowFrame;
 
-	eState		_eFrame;					// Ö¡º¯ÊýµÄ¹â±ê×´Ì¬
-	eState		_eState;					// ×´Ì¬º¯ÊýµÄ¹â±ê×´Ì¬
+	eState		_eFrame;					// the cursor state of the frame function
+	eState		_eState;					// the cursor state of the state function
 
-	eState		_eActive;					// µ±Ç°ÕýÔÚÊ¹ÓÃµÄ×´Ì¬
+	eState		_eActive;					// the state currently in use
 	HCURSOR		_hCursor[stEnd];
 
 };
@@ -77,7 +77,7 @@ public:
 	~CWaitCursor()					{ CCursor::I()->SetCursor( CCursor::stNormal );	}
 };
 
-// ÄÚÁªº¯Êý
+// inline function
 inline void CCursor::SetCursor( eState v )
 {
     if( v>=stNormal && v<stEnd )

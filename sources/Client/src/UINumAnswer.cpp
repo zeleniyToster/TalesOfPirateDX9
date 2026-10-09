@@ -1,4 +1,4 @@
-
+ï»¿
 #include "stdafx.h"
 
 #include "uiNumAnswer.h"
@@ -25,7 +25,7 @@ bool CImageBMP::Load(BYTE* pData, int nSize)
 
 	_nDataSize = nSize;
 
-	// Êı¾İ¿ªÊ¼Î»ÖÃ£¬¸ß¶È£¬¿í¶È
+	// data start position, height, width
 	memcpy(&_nBmpData, _pData + 10, sizeof(int));
 	memcpy(&_nWidth,   _pData + 18, sizeof(int));
 	memcpy(&_nHeight,  _pData + 22, sizeof(int));
@@ -79,7 +79,7 @@ DWORD CImageBMP::GetColor(int x, int y)
 
 	if(_pData)
 	{
-		//  Î»ÖÃ = Êı¾İÆğÊ¼  + ( ×ª»»¶ÔÓ¦BMPµÄĞĞ  *    Ã¿Ò»ĞĞµÄÕ¼ÓÃµÄ×Ö½ÚÊı   ) + ÁĞÆ«ÒÆ×Ö½Ú
+		//  position = data start  + ( row of the matching BMP  *    bytes occupied per row   ) + column offset in bytes
 		int nPos = _nBmpData + (_nHeight - y - 1) * (((_nWidth >> 5) + 1) << 2) + (x >> 3);
 
 		return (!(_pData[nPos] & BitMask[x & 7]));
@@ -205,7 +205,7 @@ namespace GUI
 	}
 
 
-	// ½«Êı¾İË¢ĞÂÖÁÎÆÀí
+	// refreshes the data into the texture
 	void CNumAnswerMgr::Refresh()
 	{
 		if(_pNumTexture)

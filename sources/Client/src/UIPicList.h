@@ -1,7 +1,7 @@
-//----------------------------------------------------------------------
-// Ãû³Æ:¹Ì¶¨µÄÍ¼ÏóÊ½ÁÐ±í
-// ×÷Õß:lh 2004-10-09
-// ×îºóÐÞ¸ÄÈÕÆÚ:2004-10-09
+ï»¿//----------------------------------------------------------------------
+// Name: fixed image style list
+// Author: lh 2004-10-09
+// Last modified date: 2004-10-09
 //----------------------------------------------------------------------
 #pragma once
 #include "uicompent.h"
@@ -10,7 +10,7 @@
 namespace GUI
 {
 
-// ¹Ì¶¨´óÐ¡µÄList,Êµ¼ÊÉÏ½öÊÇÒ»¸ö±³¾°+Ñ¡Ôñ¿ò,Ñ¡ÔñÊ±ÒÆ¶¯Ñ¡Ôñ¿òÉÏÏÂÎ»ÖÃ
+// a List of fixed size; in fact it is only a background plus a selection box, and selecting moves the selection box up and down
 class CFixList : public CCompent
 {
 public:
@@ -38,36 +38,36 @@ public:
 	void				SetRowHeight( int v )		{ if( v>0 ) _nRowHeight = v;	}
 	void				SetRowSpace( int v )		{ if( v>=0 ) _nRowSpace = v;	}
 
-public:	// ÊÂ¼þ
-	GuiEvent			evtSelectChange;				// Ñ¡Ôñ·¢ÉúÁË±ä»¯
-	GuiMouseEvent		evtListMouseDown;			// Êó±êÔÚÁÐ±íµÄÎÄ×ÖÇø°´ÏÂ
+public:	// events
+	GuiEvent			evtSelectChange;				// the selection changed
+	GuiMouseEvent		evtListMouseDown;			// the mouse is pressed in the text area of the list
 
 private:
 	void				_SetSelf( const CFixList& rhs );
 	void				_RefreshSelY();
 
 protected:
-	int					_nLeftMargin;	// ÓëÖÜÎ§±ß¿òµÄ¾àÀë
+	int					_nLeftMargin;	// distance to the surrounding border
 	int					_nTopMargin;
 	int					_nRightMargin;
 	int					_nBottomMargin;
 
-	int					_nRowHeight;	// ÐÐ¸ß
-	int					_nRowSpace;		// ÐÐ¾à
+	int					_nRowHeight;	// row height
+	int					_nRowSpace;		// row spacing
 
 	typedef std::vector<std::string> vstring;
 	vstring				_vstString;
 
-	CGuiPic*			_pImage;		// ±³¾°Í¼
-	CGuiPic*			_pSelect;		// Ñ¡Ôñ¿ò
+	CGuiPic*			_pImage;		// background image
+	CGuiPic*			_pSelect;		// selection box
 	int					_nSelX, _nSelY;
-	CLimit<int>			_lmtSel;		// µ±Ç°Ñ¡Ôñ
+	CLimit<int>			_lmtSel;		// the current selection
 
 	int					_nHitX1, _nHitY1, _nHitX2, _nHitY2;
 
 };
 
-// ÓÃÍ¾:ÔÚÃ¿Ò»À¸ÉÏ¿É±êÊ¶ÊÇ·ñÒÑ¾­Ñ¡Ôñ
+// Purpose: marks on each column whether it is already selected
 class CCheckFixList : public CFixList
 {
 public:
@@ -98,14 +98,14 @@ protected:
 	typedef std::vector<bool>	vbool;
 	vbool					_checks;
 
-	int						_nCheckLeftMargin, _nCheckTopMargin;	// ÏÔÊ¾CheckµÄ×ó±ß¾àºÍ¾à¶¥²¿±ß¾à
+	int						_nCheckLeftMargin, _nCheckTopMargin;	// left and top margins of the displayed Check
 
-	CGuiPic*				_pImgCheck;			// Ñ¡Ôñ
-	CGuiPic*				_pImgUnCheck;		// Î´Ñ¡Ôñ
+	CGuiPic*				_pImgCheck;			// selected
+	CGuiPic*				_pImgUnCheck;		// not selected
 
 };
 
-// ÄÚÁªº¯Êý
+// inline function
 inline 	void CFixList::SetMargin( int left, int top, int right, int bottom ) 
 { 
 	_nLeftMargin = left;

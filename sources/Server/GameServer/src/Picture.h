@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <string>
 #include "DBCCommon.h"
@@ -29,7 +29,7 @@ public:
 private:
 	void SetSize(uInt size) { m_size = size; }
 
-	std::string m_strName; //ÎÄ¼þÃû
+	std::string m_strName; //file name
 	char m_nID;
 	char *_img;
 	uInt m_size;

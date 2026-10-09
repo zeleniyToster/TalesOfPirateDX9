@@ -1,4 +1,4 @@
-#ifndef TAG_UTIL
+ï»¿#ifndef TAG_UTIL
 #define TAG_UTIL
 
 #ifdef WIN32
@@ -162,7 +162,7 @@ inline void Util_ClearStrEndline(std::string &str)
     {
         p = str.find('\n');
     }
-    if(p!=std::string::npos) // ½áÊø×Ö·û´®
+    if(p!=std::string::npos) // end of string
     {
        str[p] = '\0';
     }
@@ -267,7 +267,7 @@ protected:
 
 
 
-class CBlockData // °Ñ°´Î»±£´æµÄÊý¾Ý±äÎª×Ö½Ú, Ìá¸ß´æÈ¡ËÙ¶È
+class CBlockData // turn bit-packed data into bytes, which speeds up access
 {
 public:
 

@@ -1,7 +1,7 @@
-#ifndef MPSingleton_H
+ï»¿#ifndef MPSingleton_H
 #define MPSingleton_H
 
-/** Ä£°åÀàÓÃÓÚ´´½¨µ¥ÀıÊµÌå
+/** Template class for creating a singleton entity
 */
 template <typename T> class MPSingleton
 {

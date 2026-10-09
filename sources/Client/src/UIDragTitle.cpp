@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "uidragtitle.h"
 
 using namespace GUI;
@@ -36,7 +36,7 @@ void CDragTitle::_SetSelf( const CDragTitle& rhs )
 CDragTitle::~CDragTitle(void)
 {
     //delete _pImage;
-	SAFE_DELETE(_pImage); // UIµ±»ú´¦Àí
+	SAFE_DELETE(_pImage); // UI freeze handling
 }
 
 void CDragTitle::DragRender()
@@ -46,7 +46,7 @@ void CDragTitle::DragRender()
 
     if( CDrag::IsDraging(this) )
     {
-    	// ÏÔÊ¾ÍÏ¶¯×´Ì¬ 
+    	// shows the dragging state
 		_pImage->Render( GetX() + CDrag::GetDrag()->GetDragX(), GetY() + CDrag::GetDrag()->GetDragY(), DROP_ALPHA );
     }
     else

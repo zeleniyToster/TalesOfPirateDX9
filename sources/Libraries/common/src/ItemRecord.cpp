@@ -1,4 +1,4 @@
-//=============================================================================
+ï»¿//=============================================================================
 // FileName: ItemRecord.h
 // Creater: ZhangXuedong
 // Date: 2004.09.01
@@ -223,52 +223,52 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
     string strList[80];
 	string strLine;
 
-	// ±àºÅ
+	// id
 	pInfo->lID = pInfo->nID;
-	// Ãû³Æ
+	// name
 	_tcsncpy(pInfo->szName, pInfo->szDataName, defITEM_NAME_LEN);
 	pInfo->szName[defITEM_NAME_LEN - 1] = _TEXT('\0');
 	// ICON
 	_tcsncpy(pInfo->szICON, ParamList[m++].c_str(), defITEM_ICON_NAME_LEN);
 	pInfo->szICON[defITEM_ICON_NAME_LEN - 1] = _TEXT('\0');
-	// Ä£ÐÍ
+	// model
 	for (int i = 0; i < defITEM_MODULE_NUM; i++)
 	{
 		_tcsncpy(pInfo->chModule[i], ParamList[m++].c_str(), defITEM_MODULE_LEN);
 		pInfo->chModule[i][defITEM_MODULE_LEN - 1] = _TEXT(0);
 	}
-	// ´¬±êÖ¾
+	// ship flag
 	pInfo->sShipFlag = Str2Int(ParamList[m++]);
-	// ´¬ÌåÐÍºÅ
+	// hull model
 	pInfo->sShipType = Str2Int(ParamList[m++]);
-	// ÀàÐÍ
+	// type
 	pInfo->sType = Str2Int(ParamList[m++]);
 
-	// »ñµÃÇ°×º¼¸ÂÊ
+	// chance of a prefix when acquired
 	strLine = Str2Int(ParamList[m++]);
-	// Ì××°±àºÅ
+	// set id
 	strLine = Str2Int(ParamList[m++]);
-	// ¾«Á¶µÈ¼¶
+	// refine level
 	pInfo->chForgeLv = Str2Int(ParamList[m++]);
-	// °²¶¨Öµ
+	// stability value
 	pInfo->chForgeSteady = Str2Int(ParamList[m++]);
-	// Î¨Ò»ID
+	// unique id
 	pInfo->chExclusiveID = Str2Int(ParamList[m++]);
-	// ½»Ò×
+	// trade
 	pInfo->chIsTrade = Str2Int(ParamList[m++]);
-	// Ê°È¡
+	// pick up
 	pInfo->chIsPick = Str2Int(ParamList[m++]);
-	// ¶ªÆú
+	// drop
 	pInfo->chIsThrow = Str2Int(ParamList[m++]);
-	// Ïú»Ù
+	// destroy
 	pInfo->chIsDel = Str2Int(ParamList[m++]);
-	// ÔÚµÀ¾ßÀ¸Ò»¸ñÖÐ¿ÉÒÔ·ÅÖÃµÄ×î¶à¸öÊý
+	// largest number that fit in one inventory slot
 	pInfo->nPileMax = Str2Int(ParamList[m++]);
-	// ÊÇ·ñÊµÀý»¯
+	// whether it is instantiated
 	pInfo->chInstance = Str2Int(ParamList[m++]);
-	// ¼Û¸ñ
+	// price
 	pInfo->lPrice = Str2Int(ParamList[m++]);
-	// ÌåÐÎ
+	// body size
 	memset(pInfo->chBody, cchItemRecordKeyValue, sizeof(pInfo->chBody));
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
@@ -277,9 +277,9 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
 	{
 		pInfo->chBody[i] = Str2Int(strList[i]);
 	}
-	// ½ÇÉ«µÈ¼¶
+	// character level
 	pInfo->sNeedLv = Str2Int(ParamList[m++]);    
-	// Ö°Òµ
+	// job
 	memset(pInfo->szWork, cchItemRecordKeyValue, sizeof(char) * MAX_JOB_TYPE);
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
@@ -288,11 +288,11 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
 	{
 		pInfo->szWork[i] = Str2Int(strList[i]);
 	}
-	// ½ÇÉ«³ÆºÅ
+	// character title
 	strLine = Str2Int(ParamList[m++]);
-	// ½ÇÉ«ÃûÉù
+	// character reputation
 	strLine = Str2Int(ParamList[m++]);
-	// µÀ¾ß¿É×°±¸Î»ÖÃ
+	// slot the item can be equipped in
 	memset(pInfo->szAbleLink, cchItemRecordKeyValue, sizeof(char) * enumEQUIP_NUM);
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
@@ -301,7 +301,7 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
 	{
 		pInfo->szAbleLink[i] = Str2Int(strList[i]);
 	}
-	// µÀ¾ß×°±¸Ëù±ØÐèµÄËùÓÐÎ»ÖÃ
+	// every slot the item needs in order to be equipped
 	memset(pInfo->szNeedLink, cchItemRecordKeyValue, sizeof(char) * enumEQUIP_NUM);
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
@@ -311,53 +311,53 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
 		pInfo->szNeedLink[i] = Str2Int(strList[i]);
 	}
 
-	// Ê°È¡½øÈëÎ»ÖÃ
+	// where it goes when picked up
 	pInfo->chPickTo = Str2Int(ParamList[m++]);
 
-	// Á¦Á¿ÏµÊý¼Ó³É
+	// strength coefficient bonus
 	pInfo->sStrCoef = Str2Int(ParamList[m++]);
-	// Ãô½ÝÏµÊý¼Ó³É
+	// agility coefficient bonus
 	pInfo->sAgiCoef = Str2Int(ParamList[m++]);
-	// ×¨×¢ÏµÊý¼Ó³É
+	// focus coefficient bonus
 	pInfo->sDexCoef = Str2Int(ParamList[m++]);
-	// ÌåÖÊÏµÊý¼Ó³É
+	// constitution coefficient bonus
 	pInfo->sConCoef = Str2Int(ParamList[m++]);
-	// ¾«Á¦ÏµÊý¼Ó³É
+	// vitality coefficient bonus
 	pInfo->sStaCoef = Str2Int(ParamList[m++]);
-	// ÐÒÔËÏµÊý¼Ó³É
+	// luck coefficient bonus
 	pInfo->sLukCoef = Str2Int(ParamList[m++]);
-	// ¹¥»÷ÆµÂÊÏµÊý¼Ó³É
+	// attack interval coefficient bonus
 	pInfo->sASpdCoef = Str2Int(ParamList[m++]);
-	// ¹¥»÷¾àÀëÏµÊý¼Ó³É
+	// attack range coefficient bonus
 	pInfo->sADisCoef = Str2Int(ParamList[m++]);
-	// ×îÐ¡¹¥»÷Á¦ÏµÊý¼Ó³É
+	// minimum attack coefficient bonus
 	pInfo->sMnAtkCoef = Str2Int(ParamList[m++]);
-	// ×î´ó¹¥»÷Á¦ÏµÊý¼Ó³É
+	// maximum attack coefficient bonus
 	pInfo->sMxAtkCoef = Str2Int(ParamList[m++]);
-	// ·ÀÓùÏµÊý¼Ó³É
+	// defence coefficient bonus
 	pInfo->sDefCoef = Str2Int(ParamList[m++]);
-	// ×î´óHpÏµÊý¼Ó³É
+	// maximum HP coefficient bonus
 	pInfo->sMxHpCoef = Str2Int(ParamList[m++]);
-	// ×î´óSpÏµÊý¼Ó³É
+	// maximum SP coefficient bonus
 	pInfo->sMxSpCoef = Str2Int(ParamList[m++]);
-	// ÉÁ±ÜÂÊÏµÊý¼Ó³É
+	// evasion rate coefficient bonus
 	pInfo->sFleeCoef = Str2Int(ParamList[m++]);
-	// ÃüÖÐÂÊÏµÊý¼Ó³É
+	// hit rate coefficient bonus
 	pInfo->sHitCoef = Str2Int(ParamList[m++]);
-	// ±¬»÷ÂÊÏµÊý¼Ó³É
+	// critical rate coefficient bonus
 	pInfo->sCrtCoef = Str2Int(ParamList[m++]);
-	// Ñ°±¦ÂÊÏµÊý¼Ó³É
+	// treasure find rate coefficient bonus
 	pInfo->sMfCoef = Str2Int(ParamList[m++]);
-	// hp»Ö¸´ËÙ¶ÈÏµÊý¼Ó³É
+	// HP regeneration rate coefficient bonus
 	pInfo->sHRecCoef = Str2Int(ParamList[m++]);
-	// sp»Ö¸´ËÙ¶ÈÏµÊý¼Ó³É
+	// SP regeneration rate coefficient bonus
 	pInfo->sSRecCoef = Str2Int(ParamList[m++]);
-	// ÒÆ¶¯ËÙ¶ÈÏµÊý¼Ó³É
+	// movement speed coefficient bonus
 	pInfo->sMSpdCoef = Str2Int(ParamList[m++]);
-	// ×ÊÔ´²É¼¯ËÙ¶ÈÏµÊý¼Ó³É
+	// resource gathering speed coefficient bonus
 	pInfo->sColCoef = Str2Int(ParamList[m++]);
 
-	// Á¦Á¿³£Êý¼Ó³É
+	// strength constant bonus
 	memset(pInfo->sStrValu, 0, sizeof(pInfo->sStrValu));
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
@@ -366,7 +366,7 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
 	{
 		pInfo->sStrValu[i] = Str2Int(strList[i]);
 	}
-	// Ãô½Ý³£Êý¼Ó³É
+	// agility constant bonus
 	memset(pInfo->sAgiValu, 0, sizeof(pInfo->sAgiValu));
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
@@ -375,7 +375,7 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
 	{
 		pInfo->sAgiValu[i] = Str2Int(strList[i]);
 	}
-	// ×¨×¢³£Êý¼Ó³É
+	// focus constant bonus
 	memset(pInfo->sDexValu, 0, sizeof(pInfo->sDexValu));
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
@@ -384,7 +384,7 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
 	{
 		pInfo->sDexValu[i] = Str2Int(strList[i]);
 	}
-	// ÌåÖÊ³£Êý¼Ó³É
+	// constitution constant bonus
 	memset(pInfo->sConValu, 0, sizeof(pInfo->sConValu));
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
@@ -393,7 +393,7 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
 	{
 		pInfo->sConValu[i] = Str2Int(strList[i]);
 	}
-	// ¾«Á¦³£Êý¼Ó³É
+	// vitality constant bonus
 	memset(pInfo->sStaValu, 0, sizeof(pInfo->sStaValu));
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
@@ -402,7 +402,7 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
 	{
 		pInfo->sStaValu[i] = Str2Int(strList[i]);
 	}
-	// ÐÒÔË³£Êý¼Ó³É
+	// luck constant bonus
 	memset(pInfo->sLukValu, 0, sizeof(pInfo->sLukValu));
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
@@ -411,7 +411,7 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
 	{
 		pInfo->sLukValu[i] = Str2Int(strList[i]);
 	}
-	// ¹¥»÷ÆµÂÊ³£Êý¼Ó³É
+	// attack interval constant bonus
 	memset(pInfo->sASpdValu, 0, sizeof(pInfo->sASpdValu));
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
@@ -420,7 +420,7 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
 	{
 		pInfo->sASpdValu[i] = Str2Int(strList[i]);
 	}
-	// ¹¥»÷¾àÀë³£Êý¼Ó³É
+	// attack range constant bonus
 	memset(pInfo->sADisValu, 0, sizeof(pInfo->sADisValu));
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
@@ -429,7 +429,7 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
 	{
 		pInfo->sADisValu[i] = Str2Int(strList[i]);
 	}
-	// ×îÐ¡¹¥»÷Á¦³£Êý¼Ó³É
+	// minimum attack constant bonus
 	memset(pInfo->sMnAtkValu, 0, sizeof(pInfo->sMnAtkValu));
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
@@ -438,7 +438,7 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
 	{
 		pInfo->sMnAtkValu[i] = Str2Int(strList[i]);
 	}
-	// ×î´ó¹¥»÷Á¦³£Êý¼Ó³É
+	// maximum attack constant bonus
 	memset(pInfo->sMxAtkValu, 0, sizeof(pInfo->sMxAtkValu));
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
@@ -447,7 +447,7 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
 	{
 		pInfo->sMxAtkValu[i] = Str2Int(strList[i]);
 	}
-	// ·ÀÓù³£Êý¼Ó³É
+	// defence constant bonus
 	memset(pInfo->sDefValu, 0, sizeof(pInfo->sDefValu));
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
@@ -456,7 +456,7 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
 	{
 		pInfo->sDefValu[i] = Str2Int(strList[i]);
 	}
-	// ×î´óHp³£Êý¼Ó³É
+	// maximum HP constant bonus
 	memset(pInfo->sMxHpValu, 0, sizeof(pInfo->sMxHpValu));
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
@@ -465,7 +465,7 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
 	{
 		pInfo->sMxHpValu[i] = Str2Int(strList[i]);
 	}
-	// ×î´óSp³£Êý¼Ó³É
+	// maximum SP constant bonus
 	memset(pInfo->sMxSpValu, 0, sizeof(pInfo->sMxSpValu));
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
@@ -474,7 +474,7 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
 	{
 		pInfo->sMxSpValu[i] = Str2Int(strList[i]);
 	}
-	// ÉÁ±ÜÂÊ³£Êý¼Ó³É
+	// evasion rate constant bonus
 	memset(pInfo->sFleeValu, 0, sizeof(pInfo->sFleeValu));
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
@@ -483,7 +483,7 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
 	{
 		pInfo->sFleeValu[i] = Str2Int(strList[i]);
 	}
-	// ÃüÖÐÂÊ³£Êý¼Ó³É
+	// hit rate constant bonus
 	memset(pInfo->sHitValu, 0, sizeof(pInfo->sHitValu));
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
@@ -492,7 +492,7 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
 	{
 		pInfo->sHitValu[i] = Str2Int(strList[i]);
 	}
-	// ±¬»÷ÂÊ³£Êý¼Ó³É
+	// critical rate constant bonus
 	memset(pInfo->sCrtValu, 0, sizeof(pInfo->sCrtValu));
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
@@ -501,7 +501,7 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
 	{
 		pInfo->sCrtValu[i] = Str2Int(strList[i]);
 	}
-	// Ñ°±¦ÂÊ³£Êý¼Ó³É
+	// treasure find rate constant bonus
 	memset(pInfo->sMfValu, 0, sizeof(pInfo->sMfValu));
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
@@ -510,7 +510,7 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
 	{
 		pInfo->sMfValu[i] = Str2Int(strList[i]);
 	}
-	// hp»Ö¸´ËÙ¶È³£Êý¼Ó³É
+	// HP regeneration rate constant bonus
 	memset(pInfo->sHRecValu, 0, sizeof(pInfo->sHRecValu));
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
@@ -519,7 +519,7 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
 	{
 		pInfo->sHRecValu[i] = Str2Int(strList[i]);
 	}
-	// sp»Ö¸´ËÙ¶È³£Êý¼Ó³É
+	// SP regeneration rate constant bonus
 	memset(pInfo->sSRecValu, 0, sizeof(pInfo->sSRecValu));
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
@@ -528,7 +528,7 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
 	{
 		pInfo->sSRecValu[i] = Str2Int(strList[i]);
 	}
-	// ÒÆ¶¯ËÙ¶È³£Êý¼Ó³É
+	// movement speed constant bonus
 	memset(pInfo->sMSpdValu, 0, sizeof(pInfo->sMSpdValu));
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
@@ -537,7 +537,7 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
 	{
 		pInfo->sMSpdValu[i] = Str2Int(strList[i]);
 	}
-	// ×ÊÔ´²É¼¯ËÙ¶È³£Êý¼Ó³É
+	// resource gathering speed constant bonus
 	memset(pInfo->sColValu, 0, sizeof(pInfo->sColValu));
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
@@ -547,7 +547,7 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
 		pInfo->sColValu[i] = Str2Int(strList[i]);
 	}
 
-	// ÎïÀíµÖ¿¹
+	// physical resistance
 	memset(pInfo->sPDef, 0, sizeof(pInfo->sPDef));
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
@@ -556,9 +556,9 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
 	{
 		pInfo->sPDef[i] = Str2Int(strList[i]);
 	}
-	// µÀ¾ß×óÊÖ·¢»Ó
+	// the item works in the left hand
 	pInfo->sLHandValu = Str2Int(ParamList[m++]);
-	// ÄÜÁ¿
+	// energy
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
 	for (int i = 0; i < 2; i++)
@@ -568,7 +568,7 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
 		else
 			pInfo->sEnergy[i] = 0;
 	}
-	// ÄÍ¾Ã¶È
+	// durability
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
 	for (int i = 0; i < 2; i++)
@@ -578,31 +578,31 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
 		else
 			pInfo->sEndure[i] = 0;
 	}
-	// ¶´Êý
+	// number of holes
 	pInfo->sHole = Str2Int(ParamList[m++]);
-	// ´¬ÄÍ¾Ã»Ö¸´
+	// ship durability regeneration
 	strLine = Str2Int(ParamList[m++]);
-	// ¿É×°ÅÚÊýÁ¿
+	// number of cannons that fit
 	strLine = Str2Int(ParamList[m++]);
-	// ´¬Ô±ÈËÊý
+	// number of crew
 	strLine = Str2Int(ParamList[m++]);
-	// ÈËÔ±±êÅä
+	// standard crew
 	strLine = Str2Int(ParamList[m++]);
-	// »õ²ÕÈÝÁ¿
+	// cargo hold capacity
 	strLine = Str2Int(ParamList[m++]);
-	// ²¹¸øÏûºÄ
+	// supply consumption
 	strLine = Str2Int(ParamList[m++]);
-	// ÅÚµ¯·ÉÐÐËÙ¶È
+	// shell speed
 	strLine = Str2Int(ParamList[m++]);
-	// ´¬ÒÆ¶¯ËÙ¶È
+	// ship movement speed
 	strLine = Str2Int(ParamList[m++]);
-	// Ê¹ÓÃÐ§¹û
+	// use effect
 	strncpy(pInfo->szAttrEffect, ParamList[m++].c_str(), defITEM_ATTREFFECT_NAME_LEN);
 	pInfo->szAttrEffect[defITEM_ATTREFFECT_NAME_LEN - 1] = _TEXT('\0');
 
 	//drap
 	pInfo->sDrap = Str2Int(ParamList[m++]);
-	// ÎäÆ÷À¦°óÌØÐ§
+	// weapon attach effect
 	memset(pInfo->sEffect,0 ,sizeof(pInfo->sEffect));
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
@@ -620,7 +620,7 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
         pInfo->sEffNum = n;
     }
 
-	// À¦°ó¶¨ÌØÐ§µÄdummy
+	// dummy used by the attached effect
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
 	if( n>defITEM_BIND_EFFECT_NUM ) n=defITEM_BIND_EFFECT_NUM;
@@ -629,7 +629,7 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
 		pInfo->sEffect[e][1] = Str2Int(strList[e]);
 	}
 
-	// µÀ¾ßÍâ¹ÛÌØÐ§
+	// item appearance effect
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
 	int ItemNum = sizeof(pInfo->sItemEffect) / sizeof( pInfo->sItemEffect[0] );
@@ -640,7 +640,7 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
 		pInfo->sItemEffect[e] = Str2Int(strList[e]);
 	}
 
-	// ·ÅÔÚµØÉÏÊ±µÄÌØÐ§
+	// effect shown while it lies on the ground
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
 	int AreaNum = sizeof(pInfo->sAreaEffect) / sizeof( pInfo->sAreaEffect[0] );
@@ -651,7 +651,7 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
 		pInfo->sAreaEffect[e] = Str2Int(strList[e]);
 	}
 
-	// Ê¹ÓÃÊ±µÄÌØÐ§
+	// effect shown while it is used
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
 	int nNum = sizeof(pInfo->sUseItemEffect) / sizeof( pInfo->sUseItemEffect[0] );
@@ -662,7 +662,7 @@ BOOL CItemRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string>
 		pInfo->sUseItemEffect[e] = Str2Int(strList[e]);
 	}
 
-	//ÃèÊö
+	// description
     strLine = ParamList[m++];
 
     if( strLine=="0" )

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <vector>
 
 enum eScriptReturn
@@ -24,7 +24,7 @@ public:
 	static bool		Clear();
 
 private:
-	DWORD		_dwScriptID;			// ×¢²áµÄID-¼´Ë÷Òý£¬ÓÃÓÚ½Å±¾ÒýÓÃ
+	DWORD		_dwScriptID;			// the registered ID, that is the index, used by scripts to refer to it
 
 private:
 	static CScript**		_AllObj;

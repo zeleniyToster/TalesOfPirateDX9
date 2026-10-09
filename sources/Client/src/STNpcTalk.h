@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "STStateObj.h"
 
 class CCharacter;
@@ -37,7 +37,7 @@ protected:
 };
 
 class CSceneItem;
-class CPickState : public CActionState		// ¼ñµÀ¾ß
+class CPickState : public CActionState		// picking up an item
 {
 public:
 	CPickState(CActor* p);
@@ -74,7 +74,7 @@ private:
 
 };
 
-// ĞŞÕı×´Ì¬,·şÎñÆ÷·µ»ØÊ±²úÉú,¿ªÊ¼Ê±¸Ä±äÊó±ê×´Ì¬,µãÓÒ¼üÊ±È¡Ïû±¾×´Ì¬
+// correction state; produced when the server replies, changes the mouse state at the start and is cancelled when the right button is clicked
 class CRepairState : public CActionState
 {
 public:
@@ -91,7 +91,7 @@ protected:
 
 };
 
-// ¸ø³èÎïÎ¹Ê³
+// feeding a pet
 class CFeedState : public CActionState
 {
 public:
@@ -113,7 +113,7 @@ protected:
 };
 
 
-// ¼Àìë×´Ì¬    add by Philip.Wu  2006-06-20  ¼Àìë×´Ì¬
+// sacrifice state    add by Philip.Wu  2006-06-20  sacrifice state
 class CFeteState : public CActionState
 {
 public:

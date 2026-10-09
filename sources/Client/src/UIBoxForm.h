@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "UIGlobalVar.h"
 #include "uicloneform.h"
 #include "uiform.h"
@@ -16,7 +16,7 @@ struct stTradeBox
 	CEdit*	edtNumber;
 	CLabel* labName;
 
-	// ÓÃ»§Êý¾Ý
+	// user data
 	float	fUnitMoney;
 	int		nTotalNum;
 
@@ -29,7 +29,7 @@ struct stSelectBox
 	CForm*  frmDialog;
 	CLabel* labInfo;
 
-	// ÓÃ»§Êý¾Ý
+	// user data
 	DWORD	dwTag;
 	DWORD	dwParam;
 	void*	pointer;
@@ -46,7 +46,7 @@ struct stNumBox
 	CEdit*	edtNumber;
 	CLabel* labInfo;
 
-	// ÓÃ»§Êý¾Ý
+	// user data
 	int		nTotalNum;
 	void*	pointer;
 };
@@ -64,7 +64,7 @@ struct stMsgBox
 	CForm*  frmDialog;
 	CLabel* labInfo;
 	
-	// ÓÃ»§Êý¾Ý
+	// user data
 };
 
 struct stMsgTimeBox
@@ -72,27 +72,27 @@ struct stMsgTimeBox
 	CForm*  frmDialog;
 	CLabel* labInfo;
 
-	// ÓÃ»§Êý¾Ý
+	// user data
 	short teamID;
 };
 
-// Ò»Ð©Í¨ÓÃ¶Ô»°¿ò
+// some common dialog boxes
 class CBoxMgr : public CUIInterface
 {
 public:
-	// ½»Ò×ÓÃµÄ¶Ô»°¿ò
+	// the dialog box used for trading
 	static stTradeBox*		ShowTradeBox( FormMouseEvent evtForm=NULL, float fUnitMoney=0, int nTotalNum=-1, const char* szName=NULL );
 
-	// Ñ¡ÔñÈ·¶¨»òÈ¡ÏûµÄ¶Ô»°¿ò
+	// a dialog box choosing confirm or cancel
 	static stSelectBox*		ShowSelectBox( FormMouseEvent evtForm=NULL, const char* szTitle=NULL, bool bModal=false );
 
-	// ÊäÈëÊýÁ¿¶Ô»°¿ò
+	// quantity input dialog
 	static stNumBox*		ShowNumberBox( FormMouseEvent evtForm=NULL, int nTotalNum=-1, const char* szTitle=NULL, bool IsMax=true, bool bModal=true );
 
-	// ÊäÈëÃÜÂë¶Ô»°¿ò
+	// password input dialog
 	static stPasswordBox*	ShowPasswordBox( FormMouseEvent evtForm=NULL, const char* szTitle=NULL, const char* szPassword=NULL, bool bModal=true );
 
-	// ÏÔÊ¾Ò»¸ö¶Ô»°¿ò
+	// shows a dialog
 	static stMsgBox*		ShowMsgBox( FormMouseEvent evtForm=NULL, const char* szTitle=NULL, bool bModal=true );
 
 	static stMsgTimeBox*	ShowMsgTime(  FormMouseEvent evtForm=NULL, const char* szTitle=NULL, int iSeconds = 60 );
@@ -110,22 +110,22 @@ private:
 	CForm*		_FindForm(const char * frmName);
 
 private:
-	// ½»Ò×ÊýÁ¿¶Ô»°¿ò:ÊýÁ¿,×Ü¼Û
+	// trade quantity dialog: quantity, total price
 	static CHideForm	_cTrade;	
 
-	// Ñ¡ÔñÊÇ,»òÕßÈ¡Ïû
+	// choose yes, or cancel
 	static CHideForm	_cSelect;	
 
-	// ÊäÈëÊýÁ¿¶Ô»°¿ò
+	// quantity input dialog
 	static CHideForm	_cNumber;
 
-	// ÊäÈëÃÜÂë¶Ô»°¿ò
+	// password input dialog
 	static CHideForm	_cPassword;
 
-	// ÏÔÊ¾Ò»¸ö¶Ô»°¿ò
+	// shows a dialog
 	static CHideForm	_cMsg;
 
-	// ¼ÆÊ±ÓÃTick
+	// tick used for timing
 	static CForm*	_cfrmError;
 	static DWORD    _cTick;
 	static int		_cSeconds;

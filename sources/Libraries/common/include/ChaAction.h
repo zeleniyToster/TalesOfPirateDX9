@@ -1,4 +1,4 @@
-//=============================================================================
+Ôªø//=============================================================================
 // FileName: ChaAction.h
 // Creater: ZhangXuedong
 // Date: 2005.09.15
@@ -8,19 +8,19 @@
 #ifndef CHAACTION_H
 #define CHAACTION_H
 
-const long	ACTCONTROL_MOVE         = 0; // “∆∂ØŒª
-const long	ACTCONTROL_USE_GSKILL   = 1; //  π”√∆’Õ®ººƒ‹Œª
-const long	ACTCONTROL_USE_MSKILL   = 2; //  π”√ƒß∑®ººƒ‹Œª
-const long	ACTCONTROL_BEUSE_SKILL  = 3; // ±ª π”√ººƒ‹Œª
-const long	ACTCONTROL_TRADE        = 4; // Ωª“◊Œª
-const long	ACTCONTROL_USE_ITEM     = 5; //  π”√ŒÔ∆∑Œª
-const long	ACTCONTROL_BEUSE_ITEM   = 6; // ±ª π”√ŒÔ∆∑Œª
-const long	ACTCONTROL_INVINCIBLE   = 7; // Œﬁµ–Œª
-const long	ACTCONTROL_EYESHOT      = 8; //  ”“∞Œª£®ø…“‘ø¥µΩ ”“∞ƒ⁄ø…º˚µƒ µÃÂ£©
-const long	ACTCONTROL_NOHIDE       = 9; // ≤ª“˛–Œ£®ø…“‘±ªø¥º˚£©
-const long	ACTCONTROL_NOSHOW       = 10; // ≤ª±ª«ø÷∆œ÷–Œ£®»Áπ˚”–«ø÷∆œ÷–Œ£¨‘Ú“˛–Œ±ª∆¡±Œ£©
-const long	ACTCONTROL_ITEM_OPT     = 11; // µ¿æﬂ≤Ÿ◊˜Œª
-const long	ACTCONTROL_TALKTO_NPC   = 12; // ∫ÕNPC∂‘ª∞Œª
+const long	ACTCONTROL_MOVE         = 0; // movement bit
+const long	ACTCONTROL_USE_GSKILL   = 1; // normal skill use bit
+const long	ACTCONTROL_USE_MSKILL   = 2; // magic skill use bit
+const long	ACTCONTROL_BEUSE_SKILL  = 3; // being targeted by a skill bit
+const long	ACTCONTROL_TRADE        = 4; // trade bit
+const long	ACTCONTROL_USE_ITEM     = 5; // item use bit
+const long	ACTCONTROL_BEUSE_ITEM   = 6; // being targeted by an item bit
+const long	ACTCONTROL_INVINCIBLE   = 7; // invulnerable bit
+const long	ACTCONTROL_EYESHOT      = 8; // vision bit (sees whatever is visible in range)
+const long	ACTCONTROL_NOHIDE       = 9; // not invisible, i.e. can be seen
+const long	ACTCONTROL_NOSHOW       = 10; // not force-revealed (force reveal suppresses invisibility)
+const long	ACTCONTROL_ITEM_OPT     = 11; // item interaction bit
+const long	ACTCONTROL_TALKTO_NPC   = 12; // talk to NPC bit
 
 const long	ACTCONTROL_MAX          = 13;
 

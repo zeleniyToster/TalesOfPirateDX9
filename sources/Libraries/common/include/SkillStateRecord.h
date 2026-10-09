@@ -1,4 +1,4 @@
-//=============================================================================
+ï»¿//=============================================================================
 // FileName: SkillStateRecord.h
 // Creater: ZhangXuedong
 // Date: 2005.02.04
@@ -24,40 +24,40 @@ class CSkillStateRecord : public CRawDataInfo
 public:
 	// CSkillStateRecord();
 
-	char	chID;									// ±àºÅ
-	char	szName[defSKILLSTATE_NAME_LEN];			// Ãû³Æ
-	short	sFrequency;								// ´¥·¢µÄÊ±¼ä¼ä¸ô£¨µ¥Î»£ºÃë£©
-	char	szOnTransfer[defSKILLSTATE_SCRIPT_NAME];// ×´Ì¬µ½´«µİÄ¿±êÉÏµÄ×÷ÓÃÊ±¼ä½Å±¾
-	char	szAddState[defSKILLSTATE_SCRIPT_NAME];	// Ê¹ÓÃĞ§¹û½Å±¾
-	char	szSubState[defSKILLSTATE_SCRIPT_NAME];	// ÒÆ³ıĞ§¹û½Å±¾
-	char	chAddType;								// Ìæ»»²ßÂÔ
-	bool	bCanCancel;								// ÊÇ·ñ¿ÉÓÉÖÕ¶ËÈ¡Ïû
-	bool	bCanMove;								// ÊÇ·ñÄÜ¹»ÒÆ¶¯
-	bool	bCanMSkill;								// ÊÇ·ñÄÜ¹»Ê¹ÓÃÄ§·¨¼¼ÄÜ
-	bool	bCanGSkill;								// ÊÇ·ñÄÜ¹»Ê¹ÓÃÆÕÍ¨¼¼ÄÜ
-	bool	bCanTrade;								// ÊÇ·ñÄÜ¹»½»Ò×
-	bool	bCanItem;								// ÊÇ·ñÄÜ¹»Ê¹ÓÃÎïÆ·
-	bool	bCanUnbeatable;							// ÊÇ·ñÎŞµĞ
-	bool	bCanItemmed;							// ÊÇ·ñÄÜ¹»±»Ê¹ÓÃÎïÆ·
-	bool	bCanSkilled;							// ÊÇ·ñÄÜ¹»±»Ê¹ÓÃ¼¼ÄÜ
-	bool	bNoHide;								// ÊÇ·ñ²»ÒşÉí
-	bool	bNoShow;								// ÊÇ·ñ²»ÏÔĞÎ
-	bool	bOptItem;								// ÊÇ·ñ¿É²Ù×÷µÀ¾ß
-	bool	bTalkToNPC;								// ÊÇ·ñ¿ÉºÍNPC¶Ô»°
-	char	bFreeStateID;							// ½â³ıµÄĞ§¹û±àºÅ
+	char	chID;									// id
+	char	szName[defSKILLSTATE_NAME_LEN];			// name
+	short	sFrequency;								// interval between ticks, in seconds
+	char	szOnTransfer[defSKILLSTATE_SCRIPT_NAME];// script applying the state to the target
+	char	szAddState[defSKILLSTATE_SCRIPT_NAME];	// script for the use effect
+	char	szSubState[defSKILLSTATE_SCRIPT_NAME];	// script for the removal effect
+	char	chAddType;								// replacement policy
+	bool	bCanCancel;								// whether the client may cancel it
+	bool	bCanMove;								// whether the character can move
+	bool	bCanMSkill;								// whether magic skills can be used
+	bool	bCanGSkill;								// whether normal skills can be used
+	bool	bCanTrade;								// whether trading is allowed
+	bool	bCanItem;								// whether items can be used
+	bool	bCanUnbeatable;							// whether the character is invulnerable
+	bool	bCanItemmed;							// whether items can be used on the character
+	bool	bCanSkilled;							// whether skills can be used on the character
+	bool	bNoHide;								// whether the character is not invisible
+	bool	bNoShow;								// whether the character is not force-revealed
+	bool	bOptItem;								// whether items can be manipulated
+	bool	bTalkToNPC;								// whether the character can talk to NPCs
+	char	bFreeStateID;							// id of the effect that is removed
 
-	// ¿Í»§¶Ë±íÏÖ
-	char	chScreen;								// ÆÁÄ»Ğ§¹û
-	char    nActBehave[defSKILLSTATE_ACT_NUM];		// ¶¯×÷±íÏÖ
-	short	sChargeLink;							// ¿Í»§¶Ë±íÏÖ±êÊ¶,ÓÃÓÚ±íÏÖ³äµç±´¿Ç
-    short   sAreaEffect;                            // µØÃæ³ÖĞøÌØĞ§
-	bool	IsShowCenter;							// µØÃæ×´Ì¬ÌØĞ§,ÊÇ·ñ½öÏÔÊ¾ÖĞĞÄµã
-	bool	IsDizzy;								// ÊÇ·ñÏÔÊ¾Ñ£ÔÎĞ§¹û
-	short	sEffect;								// ¹ÒĞ§¹û·½ÌØĞ§±íÏÖ
-	short	sDummy1;								// ¹ÒÌØĞ§Íæ¼ÒµÄ²¥·Ådummyµã
-	short	sBitEffect;								// ¸Ã×´Ì¬ÏÂÊÜ»÷ÌØĞ§±íÏÖ
-	short	sDummy2;								// ÌØĞ§²¥·Ådummyµã
-	short	sIcon;									// ÖĞ¸ÃĞ§¹û¹ÒÔÚÉíÉÏµÄICON±íÏÖ
+	// client side presentation
+	char	chScreen;								// screen effect
+	char    nActBehave[defSKILLSTATE_ACT_NUM];		// action presentation
+	short	sChargeLink;							// client presentation flag, used to show the shell charging effect
+    short   sAreaEffect;                            // lasting ground effect
+	bool	IsShowCenter;							// ground state effect; whether only the centre point is drawn
+	bool	IsDizzy;								// whether the stun effect is shown
+	short	sEffect;								// effect presentation for the entity the effect is applied to
+	short	sDummy1;								// dummy point used to play the effect on the affected player
+	short	sBitEffect;								// hit effect shown while in this state
+	short	sDummy2;								// dummy point used to play the effect
+	short	sIcon;									// icon shown for the effect while it is attached to the character
 	char	szIcon[defSKILLSTATE_NAME_LEN][10];		// icons for pots per level 
 	char	szDesc[defSKILLSTATE_DESC_NAME_LEN];
 	int		lColour;
@@ -67,7 +67,7 @@ public:
 	int		GetActNum()			{ return _nActNum;		}
 
 public:
-	int		_nActNum;								// ¶¯×÷±íÏÖ¸öÊı
+	int		_nActNum;								// number of action presentations
 
 };
 
@@ -86,7 +86,7 @@ public:
 
 protected:
 
-	static CSkillStateRecordSet* _Instance; // Ïàµ±ÓÚµ¥¼ü, °Ñ×Ô¼º¼Ç×¡
+	static CSkillStateRecordSet* _Instance; // acts like a singleton: keeps a reference to itself
 
 	virtual CRawDataInfo* _CreateRawDataArray(int nCnt)
 	{

@@ -60,7 +60,7 @@ BOOL ZRBlock::Load(const char* pszMapName, BOOL bEdit)
 
 	m_bEdit = bEdit;
 
-	// 读取全部索引
+	// read all indices
 	m_pOffsetIdx = std::make_unique<DWORD[]>(m_nSectionCnt);
 	fs.read(reinterpret_cast<char*>(m_pOffsetIdx.get()), sizeof(DWORD) * m_nSectionCnt);
 

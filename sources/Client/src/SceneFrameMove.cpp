@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "Scene.h"
 
 #include "Character.h"
@@ -60,7 +60,7 @@ void CGameScene::_FrameMove(DWORD dwTimeParam)
 		_nMouseX = (int)(_vMousePos.x * 100.0f);
 		_nMouseY = (int)(_vMousePos.y * 100.0f);
 
-		// ¾µÍ··Ç¸úËæÄ£Ê½ÏÂ, ÒÔÆÁÄ»ÖÐ¼äÓ³Éäµ½µØ±íÉÏµÄÎ»ÖÃÎª¾µÍ·½¹µã
+		// in camera non-follow mode, the position mapped from the centre of the screen onto the ground is the camera focus
 		if( g_Config.m_bEditor && !g_pGameApp->IsCameraFollow() )
 		{
 			static D3DXVECTOR3 vecPos; 

@@ -1,4 +1,4 @@
-//================================================================
+ï»¿//================================================================
 // It must be permitted by Dabo.Zhang that this program is used for
 // any purpose in any situation.
 // Copyright (C) Dabo.Zhang 2000-2004
@@ -8,7 +8,7 @@
 //=================================================================
 #pragma once
 
-#include "dstring.h"		//±ÜÃâ³åÍ»£¬Packet.hÍ·ÎÄ¼þ±¾Éí²¢²»Ê¹ÓÃ¡£
+#include "dstring.h"		// avoids a name clash; Packet.h itself does not use it
 #include "BaseBuf.h"
 
 _DBC_BEGIN
@@ -19,6 +19,22 @@ class TcpCommApp;
 class RPacket;
 
 enum{em_cmdsize	=sizeof(uShort)};
+
+// WPE (anti packet editor) packet counter.
+// Commands below restart the counter. 355 == CMD_CM_SEND_PRIVATE_KEY,
+// 438 == CMD_CM_REGISTER (CMD_CM_ROLEBASE+55 / CMD_CM_CHARBASE+8 in
+// sources/Libraries/common/include/NetCommand.h).
+enum : uShort
+{
+	em_wpe_restart_privatekey	= 355,
+	em_wpe_restart_register		= 438,
+};
+
+// Restarts the counter that WPacket::WriteCmd() writes behind the command word.
+// Must be called whenever a new DataSocket is established: the server keeps a
+// per socket counter (DataSocket::m_pktn) restarting from 0, so a client side
+// counter that keeps growing makes GateServer drop the client as a WPE.
+void	ResetPacketCounter();
 //==============================================================================================
 class WPacket:private rptr<rbuf>
 {
@@ -52,7 +68,7 @@ public:
 	bool		WriteFloat(float fVal);
 
 	operator bool()const			{return rptr<rbuf>::operator bool();}
-	uLong		HasData()const		{return (*this)?m_wpos:0;}//·µ»ØÖµ£º·Ç0£¬·µ»ØÒÑÐ´Êý¾ÝµÄ×Ö½ÚÊý£»0£¬ÎÞÊý¾ÝÒÑÐ´¡£
+	uLong		HasData()const		{return (*this)?m_wpos:0;}// return value: non-zero = number of bytes already written; 0 = nothing written yet
 	uLong		Size()const			{return	(*this)?(*this)->Size():0;}
 	uLong		Head()const			{return m_head;}
 private:
@@ -123,11 +139,11 @@ public:
 	uLong		ReverseReadLong();
 	LONG64 ReverseReadLongLong();
 	uint64_t	ReverseReadAddress();
-	bool		DiscardLast(uLong len);//·µ»ØÖµ£ºtrue-³É¹¦£»false-¶ªÆúÊ§°Ü(¶ªÆúµÄ³¤¶È´óÓÚ°üËùÓµÓÐµÄÊý¾Ý³¤¶È£¬²»×÷ÈÎºÎ¸Ä±ä)
+	bool		DiscardLast(uLong len);// return value: true = success; false = nothing discarded because the requested length exceeds the data the packet holds
 
 	operator bool()const				{return rptr<rbuf>::operator bool();}
 	uLong		HasData()const			{return (bool(*this)&&(m_len>(m_head +em_cmdsize)))?(m_len -m_head -em_cmdsize):0;}
-	//RemainData()·µ»ØÖµ£º·Ç0£¬·µ»Ø¿É¶ÁÊý¾ÝµÄ×Ö½ÚÊý£»0£¬ÎÞÊý¾Ý¿É¶Á¡£
+	// RemainData() return value: non-zero = number of readable bytes; 0 = nothing to read
 	uLong		RemainData()const		{return (bool(*this)&&(m_len>(m_head +em_cmdsize +m_rpos)))?(m_len -m_head -em_cmdsize -m_rpos):0;}
 	uLong		Size()const				{return	(*this)?(*this)->Size():0;}
 	uLong		GetDataLen()const;

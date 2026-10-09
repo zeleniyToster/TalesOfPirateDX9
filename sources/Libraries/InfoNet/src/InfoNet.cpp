@@ -1,4 +1,4 @@
-
+ï»¿
 
 #include <winsock2.h>
 #include "InfoNet.h"
@@ -17,7 +17,7 @@ using std::deque;
 #define INFO_STOPPED        3
 
 
-#define MAX_NET_SIZE        1048576     //  ·â°ü´óÓÚÕâ¸öÊýÔòÎÞÐ§
+#define MAX_NET_SIZE        1048576     //  a packet larger than this is invalid
 
 
 template <class T>
@@ -83,7 +83,7 @@ public:
 };
 
 
-//  ¿Í»§¶ËÐÅÏ¢
+//  client information
 typedef struct _InfoClient_
 {
     SOCKET              sock;
@@ -97,7 +97,7 @@ typedef struct _InfoClient_
 typedef _AnyQueue<pNetMessage>  NetSndList;
 
 
-//  »ñÈ¡ÏûÏ¢Í·
+//  gets the message header
 int GetMessageHead(pNetMessageHead mh, unsigned char* msg, int size)
 {
 __BEGIN_TRY
@@ -106,10 +106,10 @@ __BEGIN_TRY
         return PNM_FAILED;
     }
 
-    //  ¶ÁÈ¡ÏûÏ¢Í·
+    //  reads the message header
     memcpy(mh, msg, sizeof(NetMessageHead));
 
-    //  ÑéÖ¤Ð­Òé±¨Í·
+    //  validates the protocol header
     if((0x4A != mh->msgChk[0]) || (0x4D != mh->msgChk[1]) || (0x50 != mh->msgChk[2]) || (0x53 != mh->msgChk[3]))
     {
         return PNM_UNKNOWN;
@@ -130,34 +130,34 @@ __BEGIN_TRY
 
     int     bdSize;
 
-    if(tmpsize)  //  ²ð°ü´¦Àí
+    if(tmpsize)  //  packet splitting handling
     {
         (*nm) = ((pNetMessage)(*tmpbuf));
-        if(tmpsize < (int)sizeof(NetMessageHead))        //  ÏûÏ¢Í·±»½Ø¶Ï
+        if(tmpsize < (int)sizeof(NetMessageHead))        //  the message header was truncated
         {
-            memcpy((((unsigned char*)(*tmpbuf)) + tmpsize), (*buf), ((int)sizeof(NetMessageHead) - tmpsize));   //  ¶ÁÈ¡Î´¶ÁÈ¡µÄÏûÏ¢Í·
-            (*buf) += (sizeof(NetMessageHead) - tmpsize);     //  Ö¸ÕëºóÒÆ
-            bufsize -= (sizeof(NetMessageHead) - tmpsize);    //  ³¤¶È¼õÈ¥ÒÆ¶¯³¤¶È
-            bdSize = ((*nm)->msgHead.msgSize > (*nm)->msgHead.msgEncSize) ? ((*nm)->msgHead.msgSize) : ((*nm)->msgHead.msgEncSize);   //  ¼ÆËã»º´æ³¤¶È
+            memcpy((((unsigned char*)(*tmpbuf)) + tmpsize), (*buf), ((int)sizeof(NetMessageHead) - tmpsize));   //  reads the part of the message header not yet read
+            (*buf) += (sizeof(NetMessageHead) - tmpsize);     //  advances the pointer
+            bufsize -= (sizeof(NetMessageHead) - tmpsize);    //  subtracts the advanced length
+            bdSize = ((*nm)->msgHead.msgSize > (*nm)->msgHead.msgEncSize) ? ((*nm)->msgHead.msgSize) : ((*nm)->msgHead.msgEncSize);   //  computes the buffer length
             if(bdSize)
             {
-                if(bdSize > MAX_NET_SIZE)    //  ´óÓÚ1mÔòÈÏÎªÊÇ´íÎóµÄ·â°ü
+                if(bdSize > MAX_NET_SIZE)    //  larger than 1m is taken to be a faulty packet
                 {
                     return PNM_EXCEPTION;
                 }
-                (*nm)->msgBody = new unsigned char[bdSize];    //  ·ÖÅä¿Õ¼ä
+                (*nm)->msgBody = new unsigned char[bdSize];    //  allocates the space
                 memset((*nm)->msgBody, 0, bdSize);
-                memcpy((*nm)->msgBody, (*buf), (*nm)->msgHead.msgEncSize);    //  ¶ÁÈ¡ÏûÏ¢Ìå
-                (*buf) += (*nm)->msgHead.msgEncSize;   //  Ö¸ÕëºóÒÆ
-                bufsize -= (*nm)->msgHead.msgEncSize;  //  ³¤¶È¼õÈ¥ÒÆ¶¯³¤¶È
+                memcpy((*nm)->msgBody, (*buf), (*nm)->msgHead.msgEncSize);    //  reads the message body
+                (*buf) += (*nm)->msgHead.msgEncSize;   //  advances the pointer
+                bufsize -= (*nm)->msgHead.msgEncSize;  //  subtracts the advanced length
             }
         }
-        else        //  ÏûÏ¢Ìå±»½Ø¶Ï
+        else        //  the message body was truncated
         {
             unsigned char* tmpPtr = (unsigned char*)(*nm)->msgBody;
             int bodySize = tmpsize - sizeof(NetMessageHead);
-            tmpPtr += bodySize;   //  Ö¸ÕëÌø¹ýÒÑ¶ÁÈ¡²¿·Ö
-            if(((*nm)->msgHead.msgEncSize - bodySize) > bufsize)    //  ÏûÏ¢ÌåÈç¹ûÓÖ±»½Ø¶Ï
+            tmpPtr += bodySize;   //  the pointer skips the part already read
+            if(((*nm)->msgHead.msgEncSize - bodySize) > bufsize)    //  in case the message body is truncated again
             {
                 memcpy(tmpPtr, (*buf), bufsize);
                 tmpsize += bufsize;
@@ -165,7 +165,7 @@ __BEGIN_TRY
             }
             memcpy(tmpPtr, (*buf), ((*nm)->msgHead.msgEncSize - bodySize));
             //
-            //  ÕâÀï±àÐ´½âÃÜ´úÂë
+            //  the decryption code goes here
             //
             (*buf) += (*nm)->msgHead.msgEncSize - bodySize;
             bufsize -= (*nm)->msgHead.msgEncSize - bodySize;
@@ -177,7 +177,7 @@ __BEGIN_TRY
 
     int ret;
 
-    for(;;) //  Êý¾Ý°ü½âÎö
+    for(;;) //  data packet parsing
     {
         if(bufsize <= 0)
         {
@@ -194,7 +194,7 @@ __BEGIN_TRY
             return PNM_UNKNOWN;
         }
 
-        if(PNM_FAILED == ret)   //  ÏûÏ¢Í·±»½Ø¶Ï
+        if(PNM_FAILED == ret)   //  the message header was truncated
         {
             (*tmpbuf) = (*nm);
             tmpsize = bufsize;
@@ -205,17 +205,17 @@ __BEGIN_TRY
         (*buf) += sizeof(NetMessageHead);
         bufsize -= sizeof(NetMessageHead);
 
-        bdSize = ((*nm)->msgHead.msgSize > (*nm)->msgHead.msgEncSize) ? ((*nm)->msgHead.msgSize) : ((*nm)->msgHead.msgEncSize);   //  ¼ÆËã»º´æ³¤¶È
+        bdSize = ((*nm)->msgHead.msgSize > (*nm)->msgHead.msgEncSize) ? ((*nm)->msgHead.msgSize) : ((*nm)->msgHead.msgEncSize);   //  computes the buffer length
 
         if(bdSize)
         {
-            if(bdSize > MAX_NET_SIZE)    //  ´óÓÚ1mÔòÈÏÎªÊÇ´íÎóµÄ·â°ü
+            if(bdSize > MAX_NET_SIZE)    //  larger than 1m is taken to be a faulty packet
             {
                 return PNM_EXCEPTION;
             }
             (*nm)->msgBody = new unsigned char[bdSize];
             memset((*nm)->msgBody, 0, bdSize);
-            if(bdSize > bufsize)    //  Õ³°ü´¦Àí
+            if(bdSize > bufsize)    //  packet joining handling
             {
                 memcpy((*nm)->msgBody, (*buf), bufsize);
                 (*tmpbuf) = (*nm);
@@ -224,14 +224,14 @@ __BEGIN_TRY
             }
             memcpy((*nm)->msgBody, (*buf), (*nm)->msgHead.msgEncSize);
             //
-            //  ÕâÀï±àÐ´½âÃÜ´úÂë
+            //  the decryption code goes here
             //
-            (*buf) += (*nm)->msgHead.msgEncSize;   //  Ö¸ÕëºóÒÆ
-            bufsize -= (*nm)->msgHead.msgEncSize;  //  ³¤¶È¼õÈ¥ÒÆ¶¯³¤¶È
+            (*buf) += (*nm)->msgHead.msgEncSize;   //  advances the pointer
+            bufsize -= (*nm)->msgHead.msgEncSize;  //  subtracts the advanced length
         }
         else
         {
-            (*nm)->msgBody = 0;    //  ÏûÏ¢ÖÃ¿Õ
+            (*nm)->msgBody = 0;    //  clears the message
         }
         return PNM_SUCCESS;
     }
@@ -241,7 +241,7 @@ __END_TRY
 }
 
 
-//  ÊÍ·ÅÏûÏ¢
+//  frees the message
 void FreeNetMessage(pNetMessage msg)
 {
 __BEGIN_TRY
@@ -258,7 +258,7 @@ __END_TRY
 
 
 int g_count = 0;
-//  Éú³ÉÏûÏ¢
+//  builds the message
 bool BuildNetMessage(pNetMessage nm, long msgID, long subID, long extend, long section, unsigned char* body, long size)
 {
 __BEGIN_TRY
@@ -267,7 +267,7 @@ __BEGIN_TRY
         return false;
     }
 
-    //  ÏûÏ¢±êÊ¶Âë
+    //  message identifier
     nm->msgHead.msgChk[0] = 0x4A;
     nm->msgHead.msgChk[1] = 0x4D;
     nm->msgHead.msgChk[2] = 0x50;
@@ -283,7 +283,7 @@ __BEGIN_TRY
     if(size)
     {
         //
-        //  ÕâÀï±àÐ´¼ÓÃÜ´úÂë
+        //  the encryption code goes here
         //
         nm->msgBody = new unsigned char[size];
         memset(nm->msgBody, 0, size);
@@ -341,7 +341,7 @@ unsigned InfoThread::Run()
     pNetMessage pNM = 0;
     int ret = 0;
     fd_set fdread;
-    timeval tv = {0, 0};        //  Á¢¼´·µ»Ø(²»×èÈûselect)£¬ÓÃÏÐÖÃÏµÍ³×ÊÔ´½øÐÐ·¢ËÍ¶ÓÁÐÖØ·¢
+    timeval tv = {0, 0};        //  returns immediately (without blocking in select), using idle system resources to resend from the send queue
     clock_t sndTime = 0;
     clock_t chkTime = clock();
 
@@ -352,16 +352,16 @@ __BEGIN_TRY
         if(!inb->IsConnect())
         {
             inb->Connect();
-            Sleep(10000);   //  ±ÜÃâÖØÁ¬Õ¼ÓÃÌ«¶àcpu×ÊÔ´¡£10ÃëÖØÁ¬Ò»´Î
+            Sleep(10000);   //  avoids reconnecting too aggressively and taking up too much CPU. Reconnect once every 10 seconds
             continue;
         }
 
-        //  SelectÂÖÑ¯¿ªÊ¼
+        //  Select polling begins
         FD_ZERO(&fdread);
         FD_SET(cli->sock, &fdread);
 
         ret = select(0, &fdread, 0, 0, &tv);
-        //ret = select(0, &fdread, 0, 0, 0);    //  ×èÈûselect
+        //ret = select(0, &fdread, 0, 0, 0);    //  é˜»å¡žselect
 
         if(SOCKET_ERROR == ret)
         {
@@ -385,10 +385,10 @@ __BEGIN_TRY
                 }
             }
         }
-        //  SelectÂÖÑ¯½áÊø
+        //  Select polling ends
 
-        //  ¼ì²â·þÎñÆ÷ÊÇ·ñ´æ»î(ÊÇ·ñÒì³£¶ÏÏß¼ì²â)
-        if((clock() - chkTime) > 300000)    //  5·ÖÖÓ¼ì²âÒ»´Î
+        //  checks whether the server is alive (abnormal disconnect detection)
+        if((clock() - chkTime) > 300000)    //  checked once every 5 minutes
         {
             chkTime = clock();
             LG("InfoNet", "Ping: Timestamp: %li...\n", time(0));
@@ -401,7 +401,7 @@ __BEGIN_TRY
             }
         }
 
-        //  ¿ªÊ¼ÖØ·¢
+        //  begins the resend
         sndTime = clock();
         for(;;)
         {
@@ -424,7 +424,7 @@ __BEGIN_TRY
                 inb->OnResend(pNM);
                 FreeNetMessage(pNM);
             }
-            if((clock() - sndTime) > 50)    //  ÖØ·¢Õ¼ÓÃ50ºÁÃëÒÔÉÏÊ±£¬ÊÍ·Å×ÊÔ´
+            if((clock() - sndTime) > 50)    //  when the resend occupies more than 50 milliseconds, frees the resources
             {
                 Sleep(1);
                 break;
@@ -438,7 +438,7 @@ __END_TRY
 
 
 
-//  ¿Í»§¶Ë½Ó¿Ú
+//  client interface
 InfoNetBase::InfoNetBase()
 :   m_state(INFO_INIT), m_client(0), m_list(0)
 {
@@ -519,7 +519,7 @@ bool InfoNetBase::StopInfoService()
 bool InfoNetBase::PostInfoSend(long msgID, long subID, long extend, long section, unsigned char* body, long size, bool resnd /* = false */)
 {
 __BEGIN_TRY
-    pNetMessage pNM = new NetMessage;   //  ÐÂÏûÏ¢
+    pNetMessage pNM = new NetMessage;   //  new message
     BuildNetMessage(pNM, msgID, subID, extend, section, body, size);
     bool ret = PostInfoSend(pNM, resnd);
     FreeNetMessage(pNM);
@@ -559,7 +559,7 @@ __BEGIN_TRY
         if(resnd)
         {
             LG("InfoNet", "Ready For Resend...\n");
-            pNetMessage newNM = new NetMessage;     //  ÐÂ½¨Ò»·Ýcopy·ÅÈë·¢ËÍ¶ÓÁÐ£¬µÈ´ýÖØ·¢
+            pNetMessage newNM = new NetMessage;     //  makes a new copy and puts it in the send queue, waiting to be resent
             memcpy(&newNM->msgHead, &msg->msgHead, sizeof(NetMessageHead));
             if(msg->msgHead.msgEncSize)
             {
@@ -689,15 +689,15 @@ __BEGIN_TRY
     {
         ret = PeekNetMessage(&nm, &bufPtr, bufSize, &__cli->tmpbuf, __cli->tmpsize);
 
-        if(PNM_SUCCESS == ret)             //  ³É¹¦
+        if(PNM_SUCCESS == ret)             //  success
         {
             OnNetMessage(nm);
         }
-        else if(PNM_FAILED == ret)         //  ±»²ð°ü
+        else if(PNM_FAILED == ret)         //  was split into packets
         {
             break;
         }
-        else if(PNM_UNKNOWN == ret)        //  ½âÎöÏûÏ¢Í·Ê§°Ü
+        else if(PNM_UNKNOWN == ret)        //  parsing the message header failed
         {
             LG("InfoNet", "Bad Packet Head...\n");
             if(__cli->tmpbuf)
@@ -707,7 +707,7 @@ __BEGIN_TRY
             }
             break;
         }
-        else if(PNM_EXCEPTION ==ret)      //  Òì³££¨¶àÊýÇé¿öÊÇÒò¿ÕÖ¸ÕëÒýÆð£©
+        else if(PNM_EXCEPTION ==ret)      //  exception (in most cases caused by a null pointer)
         {
             LG("InfoNet", "Bad Packet...\n");
             if(__cli->tmpbuf)
@@ -717,7 +717,7 @@ __BEGIN_TRY
             }
             break;
         }
-        else    //  Î´ÖªÇé¿ö
+        else    //  unknown case
         {
             LG("InfoNet", "Unknown Packet...\n");
             if(__cli->tmpbuf)

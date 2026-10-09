@@ -1,4 +1,4 @@
-// LuaFunc.cpp Created by knight-gongjian 2006.9.20.
+Ôªø// LuaFunc.cpp Created by knight-gongjian 2006.9.20.
 //---------------------------------------------------------
 #include "stdafx.h"
 #include "luafunc.h"
@@ -13,7 +13,7 @@ extern void lua_callalert(lua_State* L, int status);
 
 BOOL GetOnlineCount( DWORD& dwLoginNum, DWORD& dwPlayerNum )
 {
-	// ≥ı ºªØNPCΩ≈±æ»´æ÷±‰¡ø–≈œ¢
+	// initialise the global variables used by the NPC scripts
 	lua_getglobal( g_pLuaState, "GetOnlineCount" );
 	if( !lua_isfunction( g_pLuaState, -1 ) )
 	{
@@ -38,7 +38,7 @@ BOOL GetOnlineCount( DWORD& dwLoginNum, DWORD& dwPlayerNum )
 	int nStatus = lua_pcall( g_pLuaState, 8, 3, 0 );
 	if( nStatus )
 	{
-		//printf( "∫Ø ˝[GetOnlineCount]µ˜”√ ß∞‹£°\n" );
+		//printf( "ÂáΩÊï∞[GetOnlineCount]Ë∞ÉÁî®Â§±Ë¥•ÔºÅ\n" );
 		printf( "call [GetOnlineCount] failed!\n" );
 		lua_callalert( g_pLuaState, nStatus );
 		lua_settop(g_pLuaState, 0);
@@ -224,7 +224,7 @@ inline int lua_EXLG(lua_State *L)
 			break;
 		default:
 			{
-				//str << "[Œﬁ–ß±Í ∂(" << *(pszPos + 1) << ")]";
+				//str << "[Êó†ÊïàÊ†áËØÜ(" << *(pszPos + 1) << ")]";
 				str << "[invilid identifier(" << *(pszPos + 1) << ")]";
 			}
 			break;

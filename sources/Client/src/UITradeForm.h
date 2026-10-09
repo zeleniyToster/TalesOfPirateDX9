@@ -1,41 +1,41 @@
-#pragma once
+ï»¿#pragma once
 #include "UIGlobalVar.h"
 #include "gamecommon.h"
 
 struct NET_CHARTRADE_BOATDATA;
 namespace GUI
 {
-// ÓëÍæ¼Ò½»Ò×
+// trading with a player
 class CTradeMgr : public CUIInterface
 {
 public:
-	void	ShowCharTradeRequest( BYTE byType, DWORD dwRequestID );				// ÏÔÊ¾Ò»¸öÑûÇë¿ò
-	void	ShowCharTrade( BYTE byType, DWORD dwAcceptID,DWORD dwRequestID );	// ÏÔÊ¾½»Ò×½çÃæ
-	void	CancelCharTrade(  DWORD dwCharID );						// È¡Ïû½»Ò×
-	void	ShowCharTradeMoney(DWORD dwCharID, DWORD dwMoney);   // ÏÔÊ¾½»Ò×µÄ½ð¶î
-	void	ShowCharTradeIMP(DWORD dwCharID, DWORD dwMoney);   // ÏÔÊ¾½»Ò×µÄ½ð¶î
+	void	ShowCharTradeRequest( BYTE byType, DWORD dwRequestID );				// shows an invitation box
+	void	ShowCharTrade( BYTE byType, DWORD dwAcceptID,DWORD dwRequestID );	// shows the trade screen
+	void	CancelCharTrade(  DWORD dwCharID );						// cancels the trade
+	void	ShowCharTradeMoney(DWORD dwCharID, DWORD dwMoney);   // shows the trade amount
+	void	ShowCharTradeIMP(DWORD dwCharID, DWORD dwMoney);   // shows the trade amount
 
 	void	ValidateTradeData( DWORD dwCharID );
 	void	ValidateTrade(  DWORD dwCharID );
-	void	ShowTradeSuccess(); // ÏÔÊ¾½»Ò×³É¹¦
-	void	ShowTradeFailed();  // ÏÔÊ¾½»Ò×Ê§°Ü
+	void	ShowTradeSuccess(); // shows the trade succeeded
+	void	ShowTradeFailed();  // shows the trade failed
 
-	void    CloseAllForm();		// ¹Ø±Õ´°Ìå
+	void    CloseAllForm();		// close window event
 
-	// ÍÏ¶¯µ½½»Ò×Ãæ°åÖÐ
+	// dragged into the trade panel
 	void	DragTradeToItem(DWORD dwCharID,BYTE byIndex,BYTE byItemIndex );
 
-	//sItem: ½»Ò×µÄµÀ¾ßÔÚµÀ¾ß±íÖÐµÄÐòÁÐ£¬ byIndex : ÔÚ½»Ò×±íµ¥ÖÐµÄË÷Òý byCount£º½»Ò×µÄÊýÁ¿
-	//byItemIndex: £º¸øµÀ¾ßÔÚµÀ¾ßÀ¸µÄË÷Òý
+	//sItem: the index of the traded item in the item table, byIndex : the index in the trade form, byCount: the number traded
+	//byItemIndex: the index of the item in the item slot
 	void	DragItemToTrade(DWORD dwCharID,USHORT sItemID,BYTE byIndex,BYTE byCount,BYTE byItemIndex, SItemGrid* pGrid, const NET_CHARTRADE_BOATDATA* const pBoat );
 
 	CGoodsGrid*     GetPlayertradeSaleGrid()    { return  grdSale;		} 
 	CGoodsGrid*		GetRequestGrid()			{ return  grdRequest;	} //
 
-	void			LocalSaleItem( CGoodsGrid* pSaleGrid, CGoodsGrid* pSelfGrid, int nGridID, CCommandObj* pItem );  // ½»Ò×µÄµÀ¾ß
-	void			LocalCancelItem( CGoodsGrid* pSaleGrid, CGoodsGrid* pSelfGrid, int nGridID, CCommandObj* pItem );// È¡Ïû½»Ò×µÄµÀ¾ß
+	void			LocalSaleItem( CGoodsGrid* pSaleGrid, CGoodsGrid* pSelfGrid, int nGridID, CCommandObj* pItem );  // the traded item
+	void			LocalCancelItem( CGoodsGrid* pSaleGrid, CGoodsGrid* pSelfGrid, int nGridID, CCommandObj* pItem );// the cancelled item
 
-	// ÊÇ·ñÕýÔÚ½»Ò×ÖÐ
+	// whether a trade is in progress
 	bool			IsTrading();
 
 	CForm*			GetForm()	{ return frmPlayertrade; } //
@@ -49,13 +49,13 @@ protected:
 
 protected:
 	static void _evtSelectYesNoEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey);
-    static void _evtThrowItemEvent(CGuiData *pSender,int id,bool& isThrow);     // ´ÓµÀ¾ßÀ¸ÖÐÈÓ³öµÀ¾ß
+    static void _evtThrowItemEvent(CGuiData *pSender,int id,bool& isThrow);     // throws an item out of the item slot
 
 	static void _evtIMPFormEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey);
 	static void _evtGoldFormEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey);
 	static void _MainMousePlayerTradeEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey);
-	static void _evtSelfRMouseGridEvent(CGuiData *pSender,CCommandObj* pItem,int nGridID);		// ½»Ò×½çÃæµã²é¿´×Ô¼ºµÄÎïÆ·µÀ¾ß
-	static void _evtOtherRMouseGridEvent(CGuiData *pSender,CCommandObj* pItem,int nGridID);		// ½»Ò×½çÃæµã²é¿´¶Ô·½µÄÎïÆ·µÀ¾ß
+	static void _evtSelfRMouseGridEvent(CGuiData *pSender,CCommandObj* pItem,int nGridID);		// clicking to view your own items on the trade screen
+	static void _evtOtherRMouseGridEvent(CGuiData *pSender,CCommandObj* pItem,int nGridID);		// clicking to view the other side's items on the trade screen
 
 private:
 	CGoodsGrid* GetPlayertradeBuyGrid()     { return  grdBuy;	}
@@ -63,7 +63,7 @@ private:
 
 private:
 	CForm*		frmPlayertrade;
-	CForm*		frmRequest;				//½»Ò××ó±ßµÄµÀ¾ß±íµ¥(»ò´¬²Õ)
+	CForm*		frmRequest;				//the item form on the left of the trade (or the cargo hold)
 	CGoodsGrid* grdRequest;
 	CGoodsGrid*	grdBuy;
 	CGoodsGrid*	grdSale;
@@ -81,9 +81,9 @@ private:
 	CCheckBox*		chkTrade;
 	CCheckBox*		chkYes;
 
-	DWORD			m_dwAcceptID;         // ½»Ò×½ÓÊÜ·½
-	DWORD			m_dwRequestID;        // ½»Ò×ÉêÇë·½
-	BYTE			m_bTradeType;		  // ½»Ò×ÀàÐÍ,²Î¿´RoleCommand.h TRADE_CHAR_TYPE
+	DWORD			m_dwAcceptID;         // the accepting side of the trade
+	DWORD			m_dwRequestID;        // the requesting side of the trade
+	BYTE			m_bTradeType;		  // the trade type; see TRADE_CHAR_TYPE in RoleCommand.h
 
 	DWORD			m_dwMainID;
 

@@ -1,4 +1,4 @@
-
+ï»¿
 #ifndef GMSVR_H_
 #define GMSVR_H_
 
@@ -59,9 +59,9 @@ public:
     std::string ipaddr;
     unsigned short port;
     
-    // Player Ë«Á´±í
+    // Player doubly linked list
     GatePlayer* m_playerlist;
-	GatePlayer* m_listcurplayer;	// ÓÃÓÚ±éÀúÁ´±í
+	GatePlayer* m_listcurplayer;	// used to walk the chain
     std::string m_gtname;
     
     };

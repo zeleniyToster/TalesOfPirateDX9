@@ -1,4 +1,4 @@
-
+ï»¿
 #ifndef	SCENEOBJFILE_H
 #define	SCENEOBJFILE_H
 
@@ -14,12 +14,12 @@ struct ReallyBigObjectInfo;
 
 struct SSceneObjInfo
 {
-    short	sTypeID;	// ¸ß2Î»ÊÇtype(0: ³¡¾°Îï¼þ, 1: ÌØÐ§Îï¼þ), ÆäÓàÊÇID
-	int     nX;			// Ïà¶Ô×ø±ê
+    short	sTypeID;	// the top 2 bits are the type (0: scene object, 1: effect object), the rest is the ID
+	int     nX;			// relative coordinates
 	int  	nY;
 	short	sHeightOff;
 	short	sYawAngle;
-    short	sScale;		// ±£ÁôÎ´Ê¹ÓÃ
+    short	sScale;		// reserved, unused
 
 	short GetType()
 	{
@@ -40,11 +40,11 @@ class	CSceneObjFile
 		int		lVersion;
 		long	lFileSize;
 
-		int		iSectionCntX;	// µØÍ¼µÄºáÏòÇøÓòÊý
-		int		iSectionCntY;	// µØÍ¼µÄ×ÝÏòÇøÓòÊý
-		int		iSectionWidth;	// ÇøÓòµÄ¿í¶È£¨µ¥Î»£ºTile£©
-		int		iSectionHeight; // ÇøÓòµÄ¸ß¶È£¨µ¥Î»£ºTile£©
-		int		iSectionObjNum;	// ÇøÓòÔÊÐíµÄ×î´óÎï¼þÊý
+		int		iSectionCntX;	// number of horizontal regions of the map
+		int		iSectionCntY;	// number of vertical regions of the map
+		int		iSectionWidth;	// width of a region (unit: Tile)
+		int		iSectionHeight; // height of a region (unit: Tile)
+		int		iSectionObjNum;	// maximum number of objects allowed in a region
 	};
 
 	struct SSectionIndex
@@ -62,7 +62,7 @@ public:
 	void	Free(void);
 	long	CreateFile(const char*ptcsFileName, int iSectionCntX = 512, int iSectionCntY = 512,
 			int iSectionWidth = 8, int iSectionHeight = 8, int iSectionObjNum = MAX_MAP_SECTION_OBJ);
-	long	ConvertObjFileVer(const char* ptcsFile, bool bBackUp = true); // ´Ó°æ±¾300×ª»»µ½400
+	long	ConvertObjFileVer(const char* ptcsFile, bool bBackUp = true); // converts from version 300 to 400
 	long	ReadSectionObjInfo(int nSectionNO, SSceneObjInfo* SSceneObj, long* lSectionObjNum);
 	long	WriteSectionObjInfo(int nSectionNO, SSceneObjInfo* SSceneObj, long lSectionObjNum);
 	long	TrimFile(const char* ptcsFileName, bool bBackUp);

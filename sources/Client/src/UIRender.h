@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "MPRender.h"
 
 #define UI_FVF (D3DFVF_XYZRHW|D3DFVF_DIFFUSE|D3DFVF_TEX1)
@@ -51,11 +51,11 @@ public:
 
 	void RenderTextureRect(int nX, int nY, MPTexRect *pRect, DWORD dwColor);
 
-	void LineFrame(int left, int top, int right, int bottom, DWORD color=0x90000000 );	// »­Ò»¸ö±ß¿ò
-	void SelectChaLineFrame(int left, int top, int right, int bottom, DWORD color=0x90000000 );	// »­Ò»¸ö±ß¿ò
+	void LineFrame(int left, int top, int right, int bottom, DWORD color=0x90000000 );	// draws a border
+	void SelectChaLineFrame(int left, int top, int right, int bottom, DWORD color=0x90000000 );	// draws a border
 	
-	void LineThinFrame(int left, int top, int right, int bottom, DWORD color=0x90000000 );	// »­Ò»¸öÏ¸¿ò
-	void FillFrame(int left, int top, int right, int bottom, DWORD color=0x90000000 );	// Ìî³ä±ß¿ò
+	void LineThinFrame(int left, int top, int right, int bottom, DWORD color=0x90000000 );	// draws a thin frame
+	void FillFrame(int left, int top, int right, int bottom, DWORD color=0x90000000 );	// fills the border
 	void SetIsConvert( bool v );
 	void SetIsChangeResolution(bool v )  {      _bChangeResolution = v ;    }
 	bool GetIsChangeResolution()         {      return _bChangeResolution;  }  
@@ -63,10 +63,10 @@ public:
 	void SetClipRect( int x, int y, int w, int h );
 	void Reset();
 
-public:	// Èı²ã×ø±ê£ºÆÁÄ»×ø±ê£¬»­Í¼×ø±ê£¬GUI×ø±ê
-	void SetScreen( int w, int h, bool isFull );			// ÉèÖÃÓÎÏ·×ÀÃæÏÔÊ¾µÄ¿í¸ß£¬µ±³õÊ¼»¯»ò¸Ä±äÆÁÄ»·Ö±æÂÊÊ±µ÷ÓÃ
+public:	// three layers of coordinates: screen, draw and GUI
+	void SetScreen( int w, int h, bool isFull );			// sets the width and height of the game desktop display; called on initialisation or when the screen resolution changes
 
-	// ½«ÆÁÄ»×ø±ê×ª»»ÎªGUI×ø±ê
+	// converts screen coordinates to GUI coordinates
 	void ScreenConvert( int &x, int &y ) {
 		x = (int)((float)(x) / _fScreenScaleX);
 		y = (int)((float)(y) / _fScreenScaleY);
@@ -78,7 +78,7 @@ public:	// Èı²ã×ø±ê£ºÆÁÄ»×ø±ê£¬»­Í¼×ø±ê£¬GUI×ø±ê
         return (float)y / _fScreenScaleY; 
     }
 
-	// ½«»­Í¼×ø±ê×ª»»ÎªGUI×ø±ê
+	// converts draw coordinates to GUI coordinates
 	void DrawConvert( int &x, int &y ) {
 		x = (int)((float)(x) * _fDrawScaleX);
 		y = (int)((float)(y) * _fDrawScaleY);
@@ -123,14 +123,14 @@ private:
 	float			_fOldScreenScaleX, _fOldScreenScaleY;
 	float			_fOldDrawScaleX, _fOldDrawScaleY;
 
-	int				_nGuiWidth, _nGuiHeight;		// GUIÏµÍ³¿í¸ß,¼´ÆÁÄ»´óĞ¡
+	int				_nGuiWidth, _nGuiHeight;		// GUI system width and height, that is the screen size
 	bool			_IsFullScreen;
 
 private:
-	//LPTEXTURE		_pTex;				// ÎÆÀí
-    int             _nTex;				// ÎÆÀí
-	int             _nOutLine ;         // Ë½ÈË¿ò
-	RECT			_rtFrame;			// ÎÆÀí´óĞ¡
+	//LPTEXTURE		_pTex;				// çº¹ç†
+    int             _nTex;				// texture
+	int             _nOutLine ;         // private frame
+	RECT			_rtFrame;			// texture size
 	VECTOR2			_vesLevel;
 	VECTOR2			_vesVertical;
 
@@ -145,6 +145,6 @@ private:
 
 inline UIRender& GetRender() { return UIRender::s_Render;   }
 
-extern bool UIGetChooseColor( DWORD &c );					// ÑÕÉ«¶Ô»°¿ò,cÎªÄ¬ÈÏÑÕÉ«,Í¬Ê±Ò²×÷ÎªÖ´ĞĞ³É¹¦Ê±µÄ·µ»ØÖµ
-extern char* UIGetOpenFileName( char* strInitDir=NULL );	// ´ò¿ªÎÄ¼ş¶Ô»°¿ò,³É¹¦·µ»ØÎÄ¼şÃû³Æ,·ñÔò·µ»ØNULL
+extern bool UIGetChooseColor( DWORD &c );					// colour dialog; c is the default colour and also the return value when the operation succeeds
+extern char* UIGetOpenFileName( char* strInitDir=NULL );	// open file dialog; returns the file name on success, otherwise NULL
 

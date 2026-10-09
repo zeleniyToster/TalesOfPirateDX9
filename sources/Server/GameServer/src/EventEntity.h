@@ -1,4 +1,4 @@
-// EventEntity.h Created by knight-gongjian 2004.11.23.
+ï»¿// EventEntity.h Created by knight-gongjian 2004.11.23.
 //---------------------------------------------------------
 #pragma once
 
@@ -24,18 +24,18 @@ namespace mission
 
 		virtual void Clear();
 
-		// ÉèÖÃÊµÌåÄ£ĞÍÏÔÊ¾ĞÅÏ¢
+		// sets the entity model display information
 		virtual BOOL Create( SubMap& Submap, const char szName[], USHORT sID, USHORT sInfoID, DWORD dwxPos, DWORD dwyPos, USHORT sDir );
 
-		// ÊÂ¼şÊµÌåÏûÏ¢´¦Àí
+		// event entity message handling
 		virtual HRESULT MsgProc( CCharacter& character, dbc::RPacket& packet );
 
-		// »ñÈ¡ÊµÌå×´Ì¬ĞÅÏ¢
+		// gets the entity state information
 		virtual void GetState( CCharacter& character, BYTE& byState ) { byState = ENTITY_DISABLE; }
 
 	protected:	
-		BYTE	m_byType;	// ÊµÌåÀàĞÍ
-		USHORT  m_sInfoID;  // ÊµÌåÊÂ¼ş¿Í»§¶Ë±íÏÖĞÅÏ¢ID
+		BYTE	m_byType;	// entity type
+		USHORT  m_sInfoID;  // entity event client presentation information ID
 	};
 
 	class CResourceEntity : public CEventEntity
@@ -47,19 +47,19 @@ namespace mission
 		virtual void Clear();
 		virtual void SetType() { m_byType = RESOURCE_ENTITY; }
 
-		// ÉèÖÃ×ÊÔ´ÊµÌåÊı¾İĞÅÏ¢
+		// sets the resource entity data information
 		BOOL SetData( USHORT sItemID, USHORT sNum, USHORT sTime );
 
-		// ´«ËÍÊµÌåÏûÏ¢´¦Àí
+		// teleport entity message handling
 		virtual HRESULT MsgProc( CCharacter& character, dbc::RPacket& packet );
 
-		// »ñÈ¡ÊµÌå×´Ì¬ĞÅÏ¢
+		// gets the entity state information
 		virtual void GetState( CCharacter& character, BYTE& byState );
 
 	private:
-		USHORT	m_sID;		// ×ÊÔ´ĞÅÏ¢ID
-		USHORT	m_sNum;		// ×ÊÔ´ÊıÁ¿ĞÅÏ¢
-		USHORT	m_sTime;	// ×ÊÔ´²É¼¯Ê±¼ä
+		USHORT	m_sID;		// resource information ID
+		USHORT	m_sNum;		// resource quantity information
+		USHORT	m_sTime;	// resource gathering time
 	};
 
 	class CTransitEntity : public CEventEntity
@@ -71,17 +71,17 @@ namespace mission
 		virtual void Clear();
 		virtual void SetType() { m_byType = TRANSIT_ENTITY; }
 
-		// ÉèÖÃ´«ËÍÊµÌåÊı¾İĞÅÏ¢
+		// sets the teleport entity data information
 		BOOL SetData( const char szMap[], USHORT sxPos, USHORT syPos );
 
-		// ´«ËÍÊµÌåÏûÏ¢´¦Àí
+		// teleport entity message handling
 		virtual HRESULT MsgProc( CCharacter& character, dbc::RPacket& packet );
 
-		// »ñÈ¡ÊµÌå×´Ì¬ĞÅÏ¢
+		// gets the entity state information
 		virtual void GetState( CCharacter& character, BYTE& byState );
 
 	private:
-		// ±»´«ËÍµ½µÄµØÍ¼ºÍÎ»ÖÃĞÅÏ¢
+		// map and position information the character is teleported to
 		char	m_szMapName[MAX_MAPNAME_LENGTH];
 		USHORT  m_sxPos;
 		USHORT  m_syPos;
@@ -96,13 +96,13 @@ namespace mission
 		virtual void Clear();
 		virtual void SetType() { m_byType = BERTH_ENTITY; }
 
-		// ÉèÖÃÍ£²´´¬Ö»ÊµÌåÊı¾İĞÅÏ¢
+		// sets the docked boat entity data information
 		BOOL SetData( USHORT sBerthID, USHORT sxPos, USHORT syPos, USHORT sDir );
 
-		// ´«ËÍÊµÌåÏûÏ¢´¦Àí
+		// teleport entity message handling
 		virtual HRESULT MsgProc( CCharacter& character, dbc::RPacket& packet );
 
-		// »ñÈ¡ÊµÌå×´Ì¬ĞÅÏ¢
+		// gets the entity state information
 		virtual void GetState( CCharacter& character, BYTE& byState );
 
 	private:

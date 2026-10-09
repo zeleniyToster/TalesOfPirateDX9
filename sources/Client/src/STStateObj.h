@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #define  _STATE_DEBUG
 
@@ -9,18 +9,18 @@ class CMoveList;
 class CActor;
 class CCharacter;
 
-// ¶¯×÷»ùÀà
+// action base class
 class CActionState
 {
 	friend class CActor;
 public:
     CActionState(CActor* p);
 
-    void Start();								// ¿ªÊ¼Ö´ĞĞ
+    void Start();								// starts executing
 
-	virtual void PushPoint( int x, int y ){}					// ÓÃÓÚ¿ÉÄÜÓĞÒÆ¶¯µãµÄÅÉÉúÀà
-	virtual void ServerEnd(int nState)      { _IsOver = true;	}	// ÉèÖÃ·şÎñÆ÷Í¨¸æÖ´ĞĞÍê±Ï
-	virtual void MoveEnd(int x, int y, int nState)	{ _IsOver = true;	}	// ¶ÔÓÚÓĞÒÆ¶¯µÄAction£¬½ö½áÊøÒÆ¶¯
+	virtual void PushPoint( int x, int y ){}					// for derived classes that may have movement points
+	virtual void ServerEnd(int nState)      { _IsOver = true;	}	// sets the server notification that execution has finished
+	virtual void MoveEnd(int x, int y, int nState)	{ _IsOver = true;	}	// for an Action with movement, ends only the movement
     virtual void SetServerID( int n );
     virtual void Cancel();
 	virtual void MouseRightDown(){}
@@ -33,12 +33,12 @@ public:
 
 	CActor* GetActor() 			{ return _pActor;	}
 
-	bool	GetIsOver()			{ return _IsOver;	}			// Ö´ĞĞÍêÊ£Óà¶¯×÷,¶¯×÷¾ÍÍê±ÏÁË
-	bool	GetIsExecEnd()		{ return _isExecEnd;}			// ¶¯×÷ÒÑ¾­È«²¿Ö´ĞĞÍê±Ï,(·şÎñÆ÷ÒÑÍ¨¸æÖ´ĞĞÍê±Ï)
-	bool	GetIsCancel()		{ return _IsCancel;	}			// Õâ¸ö¶¯×÷ÒÑ¾­±»Íæ¼ÒÈ¡Ïûµô		
+	bool	GetIsOver()			{ return _IsOver;	}			// once the remaining actions are done the action is complete
+	bool	GetIsExecEnd()		{ return _isExecEnd;}			// every action has finished executing (the server has notified that it is finished)
+	bool	GetIsCancel()		{ return _IsCancel;	}			// this action has been cancelled by the player
 	bool	GetIsWait()			{ return _isWait;	}
 
-	// Õâ¸ö¶¯×÷ÎªÆäËü¶¯×÷µÄ×ÓÀà,×¢:ÔÚCActorÖĞ²»ÖªµÀÕâ¸ö¶¯×÷
+	// this action is a subclass of another action; note that CActor does not know about this action
     void			SetParent( CActionState* p ){ _pParent=p;		}	
 	CActionState*	GetParent()				{ return _pParent;		}
 
@@ -57,19 +57,19 @@ protected:
     virtual void ActionFrame( DWORD pose_id, int key_frame ) {}	
     virtual void ActionEnd( DWORD pose_id )	{}
     virtual void BeforeNewState(){}
-    virtual bool IsKeepPose()       { return false;     }       // ¶¯×÷Ö´ĞĞÍê³Éºó,ÊÇ·ñ»Ø¸´µ½¿ÕÏĞ×´Ì¬
+    virtual bool IsKeepPose()       { return false;     }       // whether to return to the idle state once the action has finished
     virtual bool IsAllowUse()       { return true;      }
 	virtual void StartFailed()		{}
 
 	virtual bool	_Start()		{ return true;		}
-	virtual void	_End()			{}          // Ö´ĞĞ½áÊø
-    virtual bool    _IsAllowCancel();			// ÊÇ·ñ¿ÉÒÔ±»Cancelµô±¾×´Ì¬
+	virtual void	_End()			{}          // execution finished
+    virtual bool    _IsAllowCancel();			// whether this state can be cancelled
 
 	bool			_AllowCancel()		{ return !_isWait && !_IsCancel && !_IsOver;	}
 
 private:
 	void			SetIsWait( bool v )		    { _isWait=v;		}
-    void			_StartFailed();		// ¿ªÊ¼Ê±Ê§°ÜÊ±µ÷ÓÃ
+    void			_StartFailed();		// called when starting fails
 
 protected:
 	bool	_IsCancel;		
@@ -81,13 +81,13 @@ private:
 	CActor			*_pActor;
 	CActionState	*_pParent;
 
-	bool	_isWait;			// Îªtrue,·ÅÔÚActorµÄ¶ÓÁĞÖĞ,²»Á¢¼´Ö´ĞĞ,¼´IsAllowStart()·µ»Øfalse
+	bool	_isWait;			// ä¸ºtrue,æ”¾åœ¨Actorçš„é˜Ÿåˆ—ä¸­,ä¸ç«‹å³æ‰§è¡Œ,å³IsAllowStart()è¿”å›false
 	bool	_isExecEnd;
 	bool	_IsInit;
 
 };
 
-// ActorÒªÒÆ¶¯µÄÁĞ±í
+// the list of points the Actor has to move to
 class CMoveList
 {
 public:
@@ -110,7 +110,7 @@ private:
 
 };
 
-// ÄÚÁªº¯Êı
+// inline function
 inline void CActionState::SetServerID( int n )
 {
     if( _nServerID==INT_MAX )

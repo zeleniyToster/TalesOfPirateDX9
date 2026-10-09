@@ -1,4 +1,4 @@
-//================================================================
+ï»¿//================================================================
 // It must be permitted by Dabo.Zhang that this program is used for
 // any purpose in any situation.
 // Copyright (C) Dabo.Zhang 2000-2003
@@ -16,8 +16,8 @@
 #define _WIN32_WINDOWS _WIN32_WINNT_WIN7 
 #endif
 
-#ifndef USING_TAO							//Ê¹ÓÃWin32»ù±¾Platform SDK
-#include <winsock2.h>						//È·±£µ÷ÓÃĞÂµÄWinSock2.2°æ±¾
+#ifndef USING_TAO							// use the base Win32 Platform SDK
+#include <winsock2.h>						// pulls in WinSock 2.2 (the 2.2 revision)
 #include <windows.h>
 #else
 #include "TAOSpecial.h"
@@ -38,26 +38,26 @@ _DBC_BEGIN
 //=================================================================
 #define	nil 0
 //typedef type define
-typedef char Char;							//´ø·ûºÅ8¸ö¶ş½øÖÆÎ»(=1¸ö×Ö½Ú)ÕûĞÍ/×Ö·ûÊı¾İ
+typedef char Char;							// signed 8-bit (= 1 byte) integer / character data
 typedef wchar_t wChar;
-typedef short Short;						//´ø·ûºÅ2×Ö½ÚÕûĞÍÊı¾İ
-typedef long Long;							//´ø·ûºÅ4×Ö½ÚÕûĞÍÊı¾İ
-typedef int Int;							//´ø·ûºÅÏµÍ³ÒÀÀµÕûÊıÊı¾İ(32Î»»úÊµÏÖÎªuLong)
+typedef short Short;						// signed 2-byte integer data
+typedef long Long;							// signed 4-byte integer data
+typedef int Int;							// signed integer, system dependent width (uLong on a 32-bit build)
 typedef const char cChar;
 typedef const wchar_t cwChar;
 typedef const short cShort;
 typedef const long cLong;
 typedef const int cInt;
-typedef unsigned char uChar;				//ÎŞ·ûºÅ8¸ö¶ş½øÖÆÎ»(=1¸ö×Ö½Ú)ÕûĞÍ/×Ö·ûÊı¾İ
-typedef unsigned short uShort;				//ÎŞ·ûºÅ2×Ö½ÚÕûĞÍÊı¾İ
-typedef unsigned long uLong;				//ÎŞ·ûºÅ4×Ö½ÚÕûĞÍÊı¾İ
-typedef unsigned int uInt;					//ÎŞ·ûºÅÏµÍ³ÒÀÀµÕûÊıÊı¾İ(32Î»»úÊµÏÖÎªuLong)
+typedef unsigned char uChar;				// unsigned 8-bit (= 1 byte) integer / character data
+typedef unsigned short uShort;				// unsigned 2-byte integer data
+typedef unsigned long uLong;				// unsigned 4-byte integer data
+typedef unsigned int uInt;					// unsigned integer, system dependent width (uLong on a 32-bit build)
 typedef const unsigned char cuChar;
 typedef const unsigned short cuShort;
 typedef const unsigned long cuLong;
 typedef const unsigned int cuInt;
-typedef wchar_t	WChar;						//2×Ö½Ú×Ö·ûÊı¾İ
-typedef __int64	LLong;						//´ø·ûºÅ8×Ö½ÚÕûĞÍÊı¾İ
+typedef wchar_t	WChar;						// 2-byte character data
+typedef __int64	LLong;						// signed 8-byte integer data
 #define SIGN32	uLong(0x80000000)
 #define SIGN16	uShort(0x8000)
 #define SIGN8	uChar(0x80)
@@ -80,12 +80,12 @@ public:
 	LONG operator-=(LONG val)			{LONG lret =Add(-val);return lret -val;}
 	LONG operator+=(InterLockedLong	&val){LONG lret =Add(LONG(val));return lret +val;}
 	LONG operator-=(InterLockedLong	&val){LONG lret =Add(-LONG(val));return lret -val;}
-	LONG SetZero()						{return Assign(0);}//·µ»ØÔ­Ê¼Öµ
+	LONG SetZero()						{return Assign(0);}// returns the previous value
 	LONG Increment();								//The return value is the resulting incremented value
 	LONG Decrement();								//The return value is the resulting decremented value
 	LONG Add(LONG Value);							//The return value is the initial value
 	LONG Assign(LONG newval);						//The return value is the initial value
-	LONG CompareAssign(LONG Comperand,LONG newval);	//ÏàµÈÊ±ºò²Å¸³Öµ,The return value is the initial value
+	LONG CompareAssign(LONG Comperand,LONG newval);	// assigns only when equal; returns the previous value
 private:
 	LONG volatile	m_plVal;
 };
@@ -172,7 +172,7 @@ public:
 private:
 	HANDLE				m_handle;			//LockSemaphore
 	InterLockedLong		m_ilCount;
-	LONG				m_lMaximumCount;	//Ö»ÊÇÒ»¸ö±êÖ¾£¬Ã»ÓĞ¿ØÖÆ×î´ó¼ÆÊıµÄ¹¦ÄÜ
+	LONG				m_lMaximumCount;	// just a flag, it does not enforce the maximum count
 };
 
 class ScopedSema

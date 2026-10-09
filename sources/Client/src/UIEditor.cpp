@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "uiEditor.h"
 #include "UIForm.h"
 #include "UICheckBox.h"
@@ -252,13 +252,13 @@ void CEditor::_TreeEvent(CTreeView* tree, bool press )
             if( press )
             {
                 lblSetIslandIndex->SetIsShow(true);
-                edtSetIslandIndex->SetCaption(""); // Çå¿Õ
-                edtSetIslandIndex->SetIsShow(true); // ÏÔÊ¾³öÀ´
-				CCompent::SetActive(edtSetIslandIndex); // Ä¬ÈÏÓµÓÐÊäÈë½¹µã
+                edtSetIslandIndex->SetCaption(""); // clears it
+                edtSetIslandIndex->SetIsShow(true); // shows it
+				CCompent::SetActive(edtSetIslandIndex); // has the input focus by default
             }
             else
             {
-                edtSetIslandIndex->SetIsShow(false); // Òþ²Ø
+                edtSetIslandIndex->SetIsShow(false); // hides it
                 lblSetIslandIndex->SetIsShow(false);
                 g_Editor.cancelIsland();
             }

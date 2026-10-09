@@ -1,4 +1,4 @@
-#include "Stdafx.h"
+ï»¿#include "Stdafx.h"
 #include "MPCamera.h"
 
 
@@ -101,7 +101,7 @@ VOID MPCameraNOLEECH::Move(DWORD dwMoveType)
 				m_RefPos.x , m_RefPos.y , m_RefPos.z); 
 }
 
-// Ç°ºóÒÆ¶¯¾µÍ·, Hang±íÊ¾ÊÇ·ñÐü¸¡ÒÆ¶¯
+// move the camera forward and back; Hang means it flies rather than walks
 void MPCameraNOLEECH::MoveForward(float fStep, BOOL bHang)
 {
 	D3DXVECTOR3 Move(0 , 0 , 0);
@@ -120,7 +120,7 @@ void MPCameraNOLEECH::MoveForward(float fStep, BOOL bHang)
 	m_EyePos+=Move;
 }
 
-// ×óÓÒÒÆ¶¯¾µÍ·, Hang±íÊ¾ÊÇ·ñÐü¸¡ÒÆ¶¯
+// move the camera left and right; Hang means it flies rather than walks
 void MPCameraNOLEECH::MoveRight(float fStep, BOOL bHang)
 {
 	D3DXVECTOR3 Move(0 , 0 , 0);
@@ -261,7 +261,7 @@ void		MPCameraNOLEECH::FrameMove(DWORD	dwTailTime)
 //
 //
 //
-////×óÓÒÐý×ª
+////rotate left and right
 //void MPCamera::RotationCameraLR(float Angle)
 //{
 //	//m_fRotaVel = 0.000001f;
@@ -295,7 +295,7 @@ void		MPCameraNOLEECH::FrameMove(DWORD	dwTailTime)
 //
 //	//vDistFrom = tv - m_RefPos;
 //}
-////ÉÏÏÂÐý×ª
+////rotate up and down
 //void MPCamera::RotationCameraUD(float Angle)
 //{
 //	//m_cameractrl.ScrollUD(Angle);

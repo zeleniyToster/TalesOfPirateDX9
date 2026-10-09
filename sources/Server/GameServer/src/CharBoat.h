@@ -1,4 +1,4 @@
-// CharBoat.h created by knight 2005.4.18
+Ôªø// CharBoat.h created by knight 2005.4.18
 //---------------------------------------------------------
 
 #include "Character.h"
@@ -12,7 +12,7 @@ namespace mission
 {
 	struct BOAT_SYNC_ATTR
 	{
-		char szName[BOAT_MAXSIZE_NAME];	// ¥¨÷ª√˚≥∆
+		char szName[BOAT_MAXSIZE_NAME];	// boat name
 		USHORT	sBoatID;
 		BYTE	byHeader;
 		BYTE	byEngine;
@@ -30,11 +30,11 @@ namespace mission
 		CCharBoat();
 		~CCharBoat();
 		
-		// ◊∞‘ÿ¥¨÷ªΩ®‘Ï ˝æ›±Ì–≈œ¢
+		// loads the boat construction table information
 		BOOL	Load( const char szBoat[], const char szPart[] );
 		CCharacter* SummonBoat( USHORT sBoatID );
 
-		// Ω®‘Ï¥¨÷ª
+		// builds the boat
 		BOOL	LoadBoat( CCharacter& owner, char chType );
 		BOOL	CreateBoat( CCharacter& owner, DWORD dwBoatID, char chType );
 		BOOL	Create( CCharacter& owner, USHORT sBoatID, USHORT sBerthID );
@@ -63,5 +63,5 @@ namespace mission
 
 }
 
-// ‘Ï¥¨≥ß»´æ÷¿‡
+// shipyard global class
 extern mission::CCharBoat g_CharBoat;

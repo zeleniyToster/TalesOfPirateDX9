@@ -1,8 +1,8 @@
-//----------------------------------------------------------------------
-// Ãû³Æ:²½Ôö
-// ×÷Õß:lh 2004-07-19
-// ÓÃÍ¾:ÓÃÓÚ¹ö¶¯Ìõ»ò½ø¶ÈÌõ
-// ×îºóÐÞ¸ÄÈÕÆÚ:2004-10-26
+ï»¿//----------------------------------------------------------------------
+// Name: step increment
+// Author: lh 2004-07-19
+// Purpose: used for scroll bars or progress bars
+// Last modified date: 2004-10-26
 //----------------------------------------------------------------------
 #pragma once
 
@@ -31,8 +31,8 @@ public:
 	int			GetShowPosition()		{ return (int)(_fPosition / (_fMax-_fMin) * fLen); }
 	bool		SetShowPosition( float fPos );
 
-	float		fStep;			// µÝÔö²½³¤
-	float		fLen;			// ×Ü¹ö¶¯³¤¶È
+	float		fStep;			// increment step
+	float		fLen;			// total scroll length
 
 private:
 	float		_fMax;
@@ -41,7 +41,7 @@ private:
 
 };
 
-// ÄÚÁªº¯Êý
+// inline function
 inline bool CStep::Add()
 { 
 	if( _fPosition < _fMax ) 

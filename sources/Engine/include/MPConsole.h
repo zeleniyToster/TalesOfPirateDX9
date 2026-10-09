@@ -1,5 +1,5 @@
-// MP Console Ò»¸ö·ÂQuakeµÄ¿ØÖÆÌ¨Àà
-// ×÷ÎªÒıÇæÌá¹©µÄÄÚ²¿µ÷ÊÔÖ¸ÁîÊäÈëºÍĞÅÏ¢·´À¡Ê¹ÓÃ
+ï»¿// MP Console: a Quake-like console class
+// used by the engine for internal debug command input and feedback
 
 // Created By Ryan Wang
 

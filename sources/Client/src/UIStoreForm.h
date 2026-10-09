@@ -1,4 +1,4 @@
-
+Ôªø
 #pragma once
 
 #include "uiglobalvar.h"
@@ -19,53 +19,53 @@
 namespace GUI
 {
 
-	// µ•∏ˆ…Ã∆∑¿Ôµ•∏ˆµ¿æﬂ–≈œ¢
+	// information about a single item inside a single good
 	struct stItemInfo
 	{
-		short       itemID;         //	µ¿æﬂ±‡∫≈
-		int         itemNum;        //	µ¿æﬂ∏ˆ ˝
-		int         itemFlute;      //	∞º≤€ ˝
-		short       itemAttrID[5];  //	ŒÂ∏ˆ Ù–‘±‡∫≈
-		short       itemAttrVal[5]; //	ŒÂ∏ˆ Ù–‘÷µ
+		short       itemID;         //	item number
+		int         itemNum;        //	item count
+		int         itemFlute;      //	slot count
+		short       itemAttrID[5];  //	five attribute numbers
+		short       itemAttrVal[5]; //	five attribute values
 
 		void Clear() { memset(this, 0, sizeof(stItemInfo)); }
 	};
 
-	// µ•∏ˆ…Ã∆∑–≈œ¢
+	// information about a single good
 	struct stStoreInfo
 	{
-		long        comID;          //	…Ã∆∑±‡∫≈
-		char        comName[21];    //	…Ã∆∑√˚≥∆
-		long        comClass;       //	…Ã∆∑∑÷¿‡
-		long        comTime;        //	…Ã∆∑…œº‹ ±º‰
-		long        comPrice;       //	º€∏Ò
-		char        comRemark[129]; //	…Ã∆∑±∏◊¢
-		int         comNumber;      //  …Ã∆∑ £”‡∏ˆ ˝°£-1≤ªœﬁ÷∆£¨0œ¬º‹
-		time_t      comExpire;      //  …Ã∆∑µΩ∆⁄ ±º‰°£
-		int         itemNum;        //  µ¿æﬂ∏ˆ ˝
-		int         isHot;          //   «∑Ò»»¬Ù
-		stItemInfo  comItemInfo[6]; //  ◊Ó∂‡¡˘∏ˆµ¿æﬂ
+		long        comID;          //	goods number
+		char        comName[21];    //	goods name
+		long        comClass;       //	goods category
+		long        comTime;        //	goods listing time
+		long        comPrice;       //	price
+		char        comRemark[129]; //	goods remark
+		int         comNumber;      //  remaining number of the goods. -1 unlimited, 0 delisted
+		time_t      comExpire;      //  goods expiry time.
+		int         itemNum;        //  item count
+		int         isHot;          //  whether it is on hot sale
+		stItemInfo  comItemInfo[6]; //  at most six items
 
 		stStoreInfo() { memset(this, 0, sizeof(stStoreInfo)); }
 		void Clear()  { memset(this, 0, sizeof(stStoreInfo)); }
 	};
 
-	//  µ•∏ˆ…Ã∆∑GUI
+	//  the GUI for a single good
 	struct stStoreGui
 	{
-		CLabelEx*		labName;			// …Ã∆∑√˚
-		CLabelEx*		labPrice;			// …Ã∆∑º€∏Ò
-		CLabelEx*		labLeftTime;		// …Ã∆∑ £”‡ ±º‰
-		CLabelEx*		labLeftNum;			// …Ã∆∑ £”‡∏ˆ ˝
-		CLabelEx*		labRemark;			// …Ã∆∑√Ë ˆ
-		CLabelEx*		labRightClickView;	// ”“º¸≤Èø¥œÈœ∏
-		CImage*			imgCutLine;			// ∑÷∏Óœﬂ
-		CImage*			imgHot;				// »»¬ÙÕº
-		CImage*			imgNew;				// –¬∆∑Õº
-		CImage*			imgBlue;			// —°÷–…Ã∆∑∏ﬂ¡¡
-		CImage*			imgSquare;			// µ¿æﬂ∏Ò◊”
-		COneCommand*	cmdStore;			// …Ã∆∑±Ì∏Ò
-		CTextButton*	btnBlue;			// ∏ﬂ¡¡∞¥≈•
+		CLabelEx*		labName;			// goods name
+		CLabelEx*		labPrice;			// goods price
+		CLabelEx*		labLeftTime;		// goods remaining time
+		CLabelEx*		labLeftNum;			// goods remaining count
+		CLabelEx*		labRemark;			// goods description
+		CLabelEx*		labRightClickView;	// right click to view the details
+		CImage*			imgCutLine;			// divider line
+		CImage*			imgHot;				// hot sale icon
+		CImage*			imgNew;				// new arrival icon
+		CImage*			imgBlue;			// highlight of the selected good
+		CImage*			imgSquare;			// item cell
+		COneCommand*	cmdStore;			// goods grid
+		CTextButton*	btnBlue;			// highlight button
 		
 		CImage*			imgWhite;
 
@@ -107,58 +107,58 @@ namespace GUI
 		CForm*		GetStoreForm()			{  return frmStore;		}
 		static int	GetPageSize()			{  return STORE_PAGE_SIZE;  }
 
-		// ≥°æ∞±‰∫⁄
+		// the scene turns black
 		void DarkScene(bool bDark);
 
-		// ¥”¡Ÿ ±±≥∞¸»°≥ˆ
+		// takes it out of the temporary bag
 		bool PopFromTempKitbag(CGoodsGrid& rkDrag, CGoodsGrid& rkSelf, int nGridID, CCommandObj& rkItem);
 		
-		// ¥Úø™…Ã≥«—ØŒ 
+		// the query for opening the shop
 		void OpenStoreAsk();
 
-		// ÃÌº”…Ã≥« ˜Ω·µ„£®∏∏Ω·µ„Œ™¡„±Ì æ∏˘Ω·µ„£©
+		// adds a shop tree node (a parent node of zero means the root node)
 		void AddStoreTreeNode(long nParentID, long nID, const char* szCaption);
 
-		// ÃÌº”…Ã≥«…Ã∆∑–≈œ¢
+		// adds shop goods information
 		void AddStoreItemInfo(long nSeq, long nID, const char* szName, long nPrice, const char* szRemark, bool isHot, long nTime, long nRemainNum, long nRemainTime);
 
-		// ÃÌº”…Ã≥«…Ã∆∑œ∏Ω⁄–≈œ¢
+		// adds shop goods detail information
 		void AddStoreItemDetail(long nSeq, long nSubSeq, short sItemID, short sItemNum, short sFlute, short pItemAttrID[], short pItemAttrVal[]);
 
-		// ÃÌº””√ªß…Ë÷√Ω·µ„
+		// adds a user settings node
 		void AddStoreUserTreeNode(void);
 
-		// …Ë÷√…Ã≥«¡–±Ì“≥
+		// sets the page of the shop list
 		void SetStoreItemPage(long nCurPage, long nMaxPage);
 
-		// …Ë÷√ƒß∂π ˝¡ø
+		// sets the MoDou count
 		void SetStoreMoney(long nMoBean, long nRplMoney);
 
-		// …Ë÷√VIP÷µ
+		// sets the VIP value
 		void SetStoreVip(long nVip);
 
-		// ÃÌº”…Ã≥«π´∏Ê
+		// adds a shop announcement
 		//void AddStoreCommunique(long nID, const char* szTitle, 
 
-		// À¢–¬…Ã≥« ˜
+		// refreshes the shop tree
 		void StoreTreeRefresh();
 
-		// «Â≥˝»´≤øµƒ…Ã≥« ˜Ω·µ„
+		// clears every shop tree node
 		void ClearStoreTreeNode();
 
-		// «Â≥˝»´≤ø…Ã≥«ŒÔ∆∑¡–±Ì
+		// clears every shop item list
 		void ClearStoreItemList();
 
-		// …Ë÷√…Ã≥«∞¥≈• «∑Òø…”√
+		// sets whether the shop buttons are usable
 		void SetStoreBuyButtonEnable(bool b);
 
-		// ªÒµ√µ±«∞—°÷–ID
+		// gets the currently selected ID
 		int GetCurSelItemID();
 
-		// ÷ÿ÷√◊Ó∫Û≤Ÿ◊˜ ±º‰£¨10 √Îº‰∏Ù¥¶¿Ì
+		// resets the time of the last operation; handled at 10 second intervals
 		bool ResetLastOperate(bool bSilent = false);
 
-		// ”√ªß–≈œ¢Ω·µ„
+		// user information node
 		static const long USER_NODEID = 0x7FFFFFFE;
 		static const long HELP_NODEID = 0x7FFFFFFF;
 
@@ -170,58 +170,58 @@ namespace GUI
 
 	private:
 
-		// ¡Ÿ ±±≥∞¸
-		CForm*			frmTempBag;			// ¡Ÿ ±±≥∞¸ΩÁ√Ê
-		CGoodsGrid*		grdTempBag;			// ¡Ÿ ±±≥∞¸±Ì∏Ò
+		// temporary bag
+		CForm*			frmTempBag;			// temporary bag screen
+		CGoodsGrid*		grdTempBag;			// temporary bag grid
 		
 		
-		stNumBox*		m_pkNumberBox;		// —ØŒ ∏ˆ ˝
-		stNetTempKitbag m_NetTempKitbag;	// ¡Ÿ ±±≥∞¸Õ¯¬Á–≠“È ˝æ›
+		stNumBox*		m_pkNumberBox;		// asks for a count
+		stNetTempKitbag m_NetTempKitbag;	// temporary bag network protocol data
 
 		static void _evtDragItemsEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey);
 		static void _MoveItemsEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey);
 
 	private:
-		// …Ã≥«
-		CForm*			frmStore;			// …Ã≥«ΩÁ√Ê
-		CTreeView*		trvStore;			//  ˜¡–±Ì
-		CLabelEx*		labMoneyLeft;		// Ω«Æ £”‡
-		CLabelEx*		labBeanLeft;		// ¥˙±“ £”‡
-		CLabelEx*		labMemberStyle;		// ª·‘±¿‡–Õ
+		// shop
+		CForm*			frmStore;			// shop screen
+		CTreeView*		trvStore;			// tree list
+		CLabelEx*		labMoneyLeft;		// money remaining
+		CLabelEx*		labBeanLeft;		// tokens remaining
+		CLabelEx*		labMemberStyle;		// membership type
 
 		CLabelEx*		labNameTitle;
 		CLabelEx*		labPriceTitle;
 		CLabelEx*		labLeftTimeTitle;
 		CLabelEx*		labLeftNumTitle;
 
-		CLabelEx*		labListPage;		// “≥±Í«©
-		CTextButton*	btnLeftPage;		// ◊Û∞¥≈•
-		CTextButton*	btnRightPage;		// ”“∞¥≈•
-		CTextButton*	btnTrade;			// Ωª“◊∞¥≈•
-		CTextButton*	btnTryon;			//  ‘¥©∞¥≈•
-		CTextButton*	btnViewAll;			// ≤Èø¥»´≤ø…Ã∆∑∞¥≈•
-		CLabelEx*		labTrade;			// Ωª“◊∞¥≈•◊÷
-		CLabelEx*		labTryon;			//  ‘¥©∞¥≈•◊÷
-		CLabelEx*		labViewAll;			// ≤Èø¥»´≤ø…Ã∆∑∞¥≈•◊÷
-		CMemo*			memStoreHelp;		// ∏ˆ»À–≈œ¢∞Ô÷˙
-		CImage*			imgBackGround10;	// ∞◊…´µ≤∞Â£®…Ã∆∑π∫¬Ú ±œ‘ æ£¨◊‘∂®“Â–≈œ¢ ±≤ªœ‘ æ£©
-		stNumBox*		m_pkExchangeNum;	// ∂“ªª¥˙±“ ˝ ‰»ÎøÚ
+		CLabelEx*		labListPage;		// page tab
+		CTextButton*	btnLeftPage;		// left button
+		CTextButton*	btnRightPage;		// right button
+		CTextButton*	btnTrade;			// trade button
+		CTextButton*	btnTryon;			// try on button
+		CTextButton*	btnViewAll;			// view all goods button
+		CLabelEx*		labTrade;			// trade button text
+		CLabelEx*		labTryon;			// try on button text
+		CLabelEx*		labViewAll;			// view all goods button text
+		CMemo*			memStoreHelp;		// personal information help
+		CImage*			imgBackGround10;	// white panel (shown while buying goods, hidden when custom information is shown)
+		stNumBox*		m_pkExchangeNum;	// token exchange count input box
 
-		static const int STORE_PAGE_SIZE = 9;		  // …Ã∆∑¡–±Ì“ª“≥◊Ó∂‡ 9 Ãı
+		static const int STORE_PAGE_SIZE = 9;		  // a goods list page holds at most 9 entries
 		stStoreGui		m_stStoreGui [STORE_PAGE_SIZE];
 		stStoreInfo		m_stStoreInfo[STORE_PAGE_SIZE];
 
-		long			m_nCurClass;		// µ±«∞¿‡–Õ
-		long			m_nCurSel;			// µ±«∞—°‘Ò
-		long			m_nCurPage;			// µ±«∞“≥
-		long			m_nMaxPage;			// ◊Ó¥Û“≥
-		long			m_nExchangeNum;		// ∂“ªª ˝
-		long			m_nVip;				//  «∑Ò «VIP
+		long			m_nCurClass;		// current type
+		long			m_nCurSel;			// current selection
+		long			m_nCurPage;			// current page
+		long			m_nMaxPage;			// maximum page
+		long			m_nExchangeNum;		// exchange count
+		long			m_nVip;				// whether it is a VIP
 
 
 		typedef std::map<long, std::string> MapNode;
 		typedef std::map<long, std::string>::iterator MapNodeIter;
-		MapNode			m_mapNode;		//  ˜Ω·µ„
+		MapNode			m_mapNode;		// tree node
 
 		void _SetIsShowUserInfo(bool bShow);
 		void _SetIsShowHelpInfo(bool bShow);
@@ -246,19 +246,19 @@ namespace GUI
 
 	private:
 
-		// …Ã≥«∂¡»°ΩÁ√Ê
+		// shop reading screen
 		CForm*			frmStoreLoad;
 		CProgressBar*	proStoreLoad;
 		static void _evtStoreLoadFormClose(CForm* pForm, bool& IsClose);
 		static void _evtProTimeArriveEvt(CGuiData *pSender);
 		DWORD			_dwDarkScene;
 
-		static const int STORE_OPEN_TIMEOUT = 15;	// …Ã≥«¥Úø™≥¨ ±£®µ•Œª£∫√Î£©
+		static const int STORE_OPEN_TIMEOUT = 15;	// shop open timeout (unit: seconds)
 
 	private:
 
-		// ≤Èø¥œÈœ∏
-		static const int STORE_ITEM_COUNT = 6;	// …Ã∆∑◊Ó∂‡¡˘∏ˆµ¿æﬂ
+		// view the details
+		static const int STORE_ITEM_COUNT = 6;	// a good holds at most six items
 		CForm*			frmViewAll;
 		CMemo*			memViewAll;
 		CImage*			imgSquareViewAll[STORE_ITEM_COUNT];
@@ -269,11 +269,11 @@ namespace GUI
 
 	private:
 
-		//  ‘¥©(Avata)
-		CForm*			frmTryon;		//  ‘¥©ΩÁ√Ê
-		C3DCompent*		ui3dplayer;		// 3D ‘¥©
+		// try on (Avata)
+		CForm*			frmTryon;		// try on screen
+		C3DCompent*		ui3dplayer;		// 3D try on
 
-		int				m_nChaRotate;	// Ω«…´–˝◊™
+		int				m_nChaRotate;	// character rotation
 		CCharacter*		m_pCurrMainCha;
 		bool			m_isFight;
 		stNetLookInfo	m_sLookInfo;
@@ -282,7 +282,7 @@ namespace GUI
 		void			ChaEquipClearAll();
 		void			ChaLeftRotate();
 		void			ChaRightRotate();
-		void			RenderChaTryon(int x, int y);	// ªÊ÷∆ 3D Ω«…´
+		void			RenderChaTryon(int x, int y);	// draws the 3D character
 
 		static void	_evtChaTryonRenderEvent(C3DCompent *pSender, int x, int y);
 		static void _evtChaEquipClearAll(CGuiData *sender, int x, int y, DWORD key);

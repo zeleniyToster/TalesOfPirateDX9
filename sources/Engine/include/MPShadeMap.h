@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 //#include "i_effect.h"
 
 class   MPRender;
@@ -9,8 +9,8 @@ class   CMPResManger;
 #define		SHADE_SINGLE		1
 #define		SHADE_ANI			2
 
-#define  MAXRADIUS	9.0f;//!Ó°×Ó×î´óµÄ°ë¾¶,ÔÚ7Ö®ÄÚ¿ÉÒÔÓÃvs,7ÒÔÉÏÖ»ÄÜÓÃsoft
-#define	 MAXTILE	5 //!Ó°×Ó×î´óËùÄÜÕ¼ÓÃµÄ¸ñ×ÓµÄÊıÁ¿
+#define  MAXRADIUS	9.0f;//! maximum shadow radius: up to 7 can be done in the vertex shader, above 7 only with soft shadows
+#define	 MAXTILE	5 //! maximum number of cells a shadow may cover
 
 class MINDPOWER_API  CMPShadeMap// : public CEffectBase
 {
@@ -22,7 +22,7 @@ public:
 	void				setTextureName(s_string& strName);
 	s_string			getTextureName(){return _strTexName;}
 	void				BoundingRes(CMPResManger	*m_CResMagr);
-	//!´´½¨µÄÓ°×Ó°ë¾¶´óĞ¡Èç¹û´óÓÚ4Ôò²»ÄÜ´´½¨¡£
+	//! a shadow cannot be created when its radius is greater than 4.
 	bool				CreateShadeMap(float fRadius = 0.8f);
 
 	bool				SetGridNum(int iNum);
@@ -31,7 +31,7 @@ public:
 	virtual void		Render();
 
 	virtual void		RenderVS();
-	//!Èç¹ûÓ²¼ş²»Ö§³ÖVSÔòÊ¹ÓÃ
+	//! used when the hardware does not support the vertex shader
 	void				RenderSoft();
 	virtual void		MoveTo(D3DXVECTOR3 SVerPos, MPMap* pMap, float	fAngle = 0);
 

@@ -1,12 +1,12 @@
-#include "netprotocol.h"
+ï»¿#include "netprotocol.h"
 #include "EffectObj.h"
 
 //-----------------------------
-// Îª³¡¾°Ìí¼ÓÎïÌå, ²ÎÊıÎª±í¸ñID
+// adds an object to the scene; the parameter is a table ID
 //-----------------------------
 inline int lua_sceAddObj(lua_State * L)
 {
-    // ²ÎÊıºÏ·¨ĞÔÅĞ±ğ
+    // argument validity check
     BOOL bValid = (lua_gettop (L)==3 && lua_islightuserdata(L, 1) && lua_isnumber (L, 2) &&  lua_isnumber (L, 3));
     if(!bValid) 
     {
@@ -54,11 +54,11 @@ inline int lua_sceAddObj(lua_State * L)
 }
 
 //-------------------
-// ¸ù¾İIDÈ¡µÃÎïÌåÖ¸Õë
+// gets the object pointer by ID
 //-------------------
 inline int lua_sceGetObj(lua_State *L)
 {
-    // ²ÎÊıºÏ·¨ĞÔÅĞ±ğ
+    // argument validity check
     BOOL bValid = (lua_gettop (L)==3 && lua_islightuserdata(L, 1) && lua_isnumber(L,2) && lua_isnumber(L, 3));
     if(!bValid) 
     {
@@ -87,11 +87,11 @@ inline int lua_sceGetObj(lua_State *L)
 }
 
 //---------
-// É¾³ıÎïÌå
+// deletes the object
 //---------
 inline int lua_sceRemoveObj(lua_State *L)
 {
-    // ²ÎÊıºÏ·¨ĞÔÅĞ±ğ
+    // argument validity check
     BOOL bValid = (lua_gettop (L)==1 && lua_islightuserdata(L, 1)); 
     if(!bValid) 
     {
@@ -106,11 +106,11 @@ inline int lua_sceRemoveObj(lua_State *L)
 
 
 //-----------------
-// ÉèÖÃµ±Ç°¿ØÖÆ½ÇÉ«
+// sets the currently controlled character
 //-----------------
 inline int lua_sceSetMainCha(lua_State *L)
 {
-    // ²ÎÊıºÏ·¨ĞÔÅĞ±ğ
+    // argument validity check
     BOOL bValid = (lua_gettop (L)==2 && lua_islightuserdata(L, 1) && lua_islightuserdata(L, 2)); 
     if(!bValid) 
     {
@@ -134,11 +134,11 @@ inline int lua_sceSetMainCha(lua_State *L)
 }
 
 //-----------------
-// »ñÈ¡µ±Ç°¿ØÖÆ½ÇÉ«
+// gets the currently controlled character
 //-----------------
 inline int lua_sceGetMainCha(lua_State *L)
 {
-    // ²ÎÊıºÏ·¨ĞÔÅĞ±ğ
+    // argument validity check
     BOOL bValid = (lua_gettop (L)==1 && lua_islightuserdata(L, 1)); 
     if(!bValid) 
     {
@@ -160,7 +160,7 @@ inline int lua_sceGetMainCha(lua_State *L)
 
 inline int lua_sceGetHoverCha(lua_State *L)
 {
-    // ²ÎÊıºÏ·¨ĞÔÅĞ±ğ
+    // argument validity check
     BOOL bValid = (lua_gettop (L)==1 && lua_islightuserdata(L, 1)); 
     if(!bValid) 
     {
@@ -182,7 +182,7 @@ inline int lua_sceGetHoverCha(lua_State *L)
 
 inline int lua_sceEnableDefaultMouse(lua_State *L)
 {
-    // ²ÎÊıºÏ·¨ĞÔÅĞ±ğ
+    // argument validity check
     BOOL bValid = (lua_gettop (L)==2 && lua_islightuserdata(L, 1) && lua_isnumber(L,2)); 
     if(!bValid) 
     {

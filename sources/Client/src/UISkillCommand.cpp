@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+Ôªø#include "StdAfx.h"
 #include "uiskillcommand.h"
 #include "Scene.h"
 #include "GameApp.h"
@@ -68,16 +68,16 @@ CSkillCommand& CSkillCommand::operator=( const CSkillCommand& rhs )
 CSkillCommand::~CSkillCommand()
 {
     //delete _pImage;
-	SAFE_DELETE(_pImage); // UIµ±ª˙¥¶¿Ì
+	SAFE_DELETE(_pImage); // UI freeze handling
 }
 
 void CSkillCommand::Render( int x, int y )
 {
 	if( _pSkill->GetSkillGrid().chState )
 		_pImage->Render( x, y );
-	//else if(338 <= _pSkill->sID && _pSkill->sID <= 341)	// …˙ªÓººƒ‹Ãÿ ‚¥¶¿Ì
+	//else if(338 <= _pSkill->sID && _pSkill->sID <= 341)	// ÁîüÊ¥ªÊäÄËÉΩÁâπÊÆäÂ§ÑÁêÜ
 	//	_pImage->Render( x, y );
-	//else if(_pSkill->sID == 459)	// ◊™…˙ººƒ‹
+	//else if(_pSkill->sID == 459)	// ËΩ¨ÁîüÊäÄËÉΩ
 	//	_pImage->Render( x, y );
 	else if( GetIsSpecial(enumHighLight) )
 		_pImage->Render( x, y );
@@ -105,7 +105,7 @@ bool CSkillCommand::UseCommand(bool value)
 	CCharacter* pCha = CGameScene::GetMainCha();
 	if( !pCha ) return false;
 
-	// ±ª∂Øººƒ‹£¨≤ª÷¥––
+	// a passive skill, not executed
 	if( !_pSkill->GetIsUse() )
 		return false;
 
@@ -163,7 +163,7 @@ bool CSkillCommand::IsAllowUse()
 	CCharacter* pCha = g_stUIBoat.GetHuman();
 	if( !pCha ) return false;
 
-	if(g_stUIBank.GetBankGoodsGrid()->GetForm()->GetIsShow())	// Œ˜√≈Œƒµµ–ﬁ∏ƒ£¨¥Úø™“¯–– ±≤ª‘ –Ì∑≈ººƒ‹
+	if(g_stUIBank.GetBankGoodsGrid()->GetForm()->GetIsShow())	// revised per the Ximen document; skills may not be placed while the bank is open
 	{
 		g_pGameApp->SysInfo( g_oLangRec.GetString(748) );
 		return false;
@@ -181,7 +181,7 @@ bool CSkillCommand::IsAllowUse()
 		return false;
 	}
 
-    // ‘ –Ì π”√µƒ¡Ω÷÷«Èøˆ:1.√ª”–‘Ÿ ©∑≈ ±º‰,2.“—µΩ¥Ô‘Ÿ ©∑≈ ±º‰
+    // the two permitted cases: 1. there is no reuse time yet, 2. the reuse time has been reached
     if( _GetSkillTime()<=0 ) 
 	{
 		return true;
@@ -343,14 +343,14 @@ bool CSkillCommand::GetIsSpecial(eSpecialType SpecialType)
 	{
 	case enumHighLight:
 		{
-			if(338 <= nID && nID <= 341) return true;	// …˙ªÓººƒ‹Ãÿ ‚¥¶¿Ì
-			if(459 == nID) return true;					// ◊™…˙ººƒ‹
+			if(338 <= nID && nID <= 341) return true;	// special handling for life skills
+			if(459 == nID) return true;					// rebirth skill
 		}
 		break;
 
 	case enumNotUpgrade:
 		{
-			if(453 <= nID && nID <= 459) return true;	// ◊™…˙ººƒ‹
+			if(453 <= nID && nID <= 459) return true;	// rebirth skill
 		}
 		break;
 

@@ -1,12 +1,12 @@
-//--------------------------------------------------------------
-// Ãû³Æ:GUI½Ó¿Ú
-// ×÷Õß:lh 2004-07-15
-// Éè¼ÆË¼Ïë:CGuiDat¹ÜÀíÄÚ´æ£¬Ìá¹©¿Ø¼ş½Ó¿Ú
-//		     CFormÏÔÊ¾£¬´¦ÀíÊÂ¼ş£¬ÇĞ»»¿Ø¼ş½¹µã£¬×°ÔØ´æ´¢×ÊÔ´ÎÄ¼ş
-// ×¢:ËùÓĞÊµÀıÖ»ÄÜÔÚÔÚ¶ÑÖĞÉú³É£¬ÓÉ³ÌĞò¿ªÊ¼Ê±¾²Ì¬·ÖÅä
-//    ÍË³öÊ±ÊÍ·Å×ÊÔ´
-// ĞŞ¸ÄÈÕÆÚ:2004-10-26 by lh
-// ĞŞ¸ÄÄÚÈİ:½«CItemObjµÄ½Å±¾¹¦ÄÜ·ÖÀëÎªCUIScript,CItemRowÖ§³Ö¶àÌ¬
+ï»¿//--------------------------------------------------------------
+// Name: GUI interface
+// Author: lh 2004-07-15
+// Design: CGuiDat manages memory and provides the control interface
+//		     CForm displays, handles events, switches control focus, and loads and stores resource files
+// note: every instance may only be created on the heap, statically allocated when the program starts
+//    releases the resources on exit
+// Modified: 2004-10-26 by lh
+// Change: the script functionality of CItemObj was split out into CUIScript; CItemRow supports polymorphism
 //--------------------------------------------------------------
 
 #pragma once
@@ -20,7 +20,7 @@
 #include "UIFont.h"
 #include "UIPicture.h"
 
-// ÒÔÏÂºêÓÃÓÚÖ§³ÖGui¿ËÂ¡
+// the following macros are used to support GUI cloning
 #define GUI_CLONE(TName)	\
 public:							\
 	virtual CGuiData* Clone() { return new (##TName)(*this); }	\
@@ -33,13 +33,13 @@ public:							\
 
 namespace GUI
 {
-// ÓÃÓÚº¯ÊıMouseRunµÄ²ÎÊıkeyÖĞ,Êó±êĞĞÎªµÄ¼¯ºÏ
+// the set of mouse behaviours, used in the key parameter of the MouseRun function
 enum eMouseState
 {
 	Mouse_LDown		= 0x0001,
 	Mouse_MDown		= 0x0002,
 	Mouse_RDown		= 0x0004,
-	Mouse_Down		= 0x0008,	// ÓĞ¼ü°´ÏÂ
+	Mouse_Down		= 0x0008,	// a button is pressed
 	Mouse_LUp		= 0x0010,
 	Mouse_MUp		= 0x0020,
 	Mouse_RUp		= 0x0040,
@@ -47,27 +47,27 @@ enum eMouseState
 	Mouse_LDB		= 0x0100,
 	Mouse_MDB		= 0x0200,
 	Mouse_RDB		= 0x0400,
-	Mouse_LClick	= 0x0800,	// Êó±ê×ó¼üµã»÷
+	Mouse_LClick	= 0x0800,	// left mouse click
 	Mouse_MClick	= 0x1000,	
 	Mouse_RClick	= 0x2000,	
 };
 
 enum eCompentAlign
 {
-	caNone,				// ²»¸Ä±äÎ»ÖÃ
-	caLeft,				// ³äÂú×ó±ß
-	caLeftUp,			// ·ÅÖÃÔÚ×î×óÉÏ½Ç
+	caNone,				// does not change position
+	caLeft,				// fills the left side
+	caLeftUp,			// placed at the top left corner
 	caUp,
 	caRightUp,
 	caRight,
 	caRightBottom,
 	caBottom,
 	caLeftBottom,	
-	caClient,			// ³äÂúÈ«²¿
-    caCenter,           // ÍêÈ«¾ÓÖĞ
-    caWidthCenter,      // Ë®Æ½¾ÓÖĞ
-    caHeightCenter,     // ÉÏÏÂ¾ÓÖĞ
-	caEnd,				// ½áÊø·û£¬ÎŞÒâÒå
+	caClient,			// fills everything
+    caCenter,           // completely centred
+    caWidthCenter,      // horizontally centred
+    caHeightCenter,     // vertically centred
+	caEnd,				// terminator, meaningless
 };
 
 const BYTE DROP_ALPHA = 0xA0;
@@ -85,7 +85,7 @@ typedef void (*CompentFun)(CCompent* pSender, unsigned int index );
 typedef bool (*GuiHotKeyEvent)(CForm *pSender, char key );
 typedef void (*GuiItemClickEvent)(std::string strItem);
 
-// GUI¶ÔÏóÍÏ¶¯
+// GUI object dragging
 class CDrag
 {
 public:
@@ -103,7 +103,7 @@ public:
 	void			SetYare( unsigned int n )	{ if(n<30) _nYareLen = n; }
 
 	bool			MouseRun( int x, int y, DWORD key );
-	int				BeginMouseRun( CGuiData* gui, bool InRect, int x, int y, DWORD key );	// È·¶¨Êó±ê×´Ì¬,·µ»Ø0ÎŞ¶¯×÷
+	int				BeginMouseRun( CGuiData* gui, bool InRect, int x, int y, DWORD key );	// decides the mouse state; returns 0 for no action
 
 	static CDrag*		GetDrag()		{ return _pDrag;	}
 	static CGuiData*	GetParent()		{ return _pParent;	}
@@ -139,13 +139,13 @@ public:
 	CCursor::eState	GetDragCursor()							{ return _crDrag;	}
 
 public:
-	GuiMouseEvent	evtMouseDragBegin;			// ¿ªÊ¼ÍÏ¶¯
-	GuiMouseEvent	evtMouseDragMove;			// ÕıÔÚÍÏ¶¯ÊÂ¼ş
-	GuiMouseEvent	evtMouseDragEnd;			// ÍÏ¶¯½áÊø
+	GuiMouseEvent	evtMouseDragBegin;			// dragging starts
+	GuiMouseEvent	evtMouseDragMove;			// dragging event
+	GuiMouseEvent	evtMouseDragEnd;			// dragging ends
 
 private:
-	static CDrag*		_pDrag;					// ÕıÔÚÍÏ¶¯ÖĞµÄ¶ÔÏó
-	static CGuiData*	_pParent;				// ÕıÔÚÍÏ¶¯ÖĞµÄgui
+	static CDrag*		_pDrag;					// the object currently being dragged
+	static CGuiData*	_pParent;				// the gui currently being dragged
 
 	static int			_nDragX, _nDragY;
 	static int			_nStartX, _nStartY;
@@ -153,19 +153,19 @@ private:
 	int				_nYareLen;
 	eState			_eState;
 
-	bool			_IsMove;					// µ±ÒÆ¶¯½áÊøºó,Ö±½Ó½«¿Ø¼şÒÆ¶¯
-	bool			_IsUseGrid;					// ÊÇ·ñÊ¹ÓÃ¶ÔÆë±í¸ñ
+	bool			_IsMove;					// once the movement ends, the control is moved directly
+	bool			_IsUseGrid;					// whether the alignment grid is used
 
-	CCursor::eState	_crDragIn;					// ½øÈëÍÏ¶¯ÇøÓòÄÚµÄ¹â±ê
-	CCursor::eState	_crDrag;					// ÍÏ¶¯Ê±µÄ¹â±ê
-    static 	CCursor::eState	_crNormal;			// Õı³£Çé¿öÏÂµÄ¹â±ê
+	CCursor::eState	_crDragIn;					// the cursor inside the drag area
+	CCursor::eState	_crDrag;					// the cursor while dragging
+    static 	CCursor::eState	_crNormal;			// the cursor in normal situations
 
-	static DWORD    _dwGridWidth, _dwGridHeight;// ¶ÔÆë±í¸ñµÄ¿í¸ß
-	static DWORD	_dwMouseUpTime;				// ÓÃÓÚ¿ªÊ¼ÍÏ¶¯ºó,ÒÑ¾­Ã»ÓĞMouseUPÏûÏ¢,µ«Êó±êÈ´ÒÑËÉ¿ª´ïµ½Ò»¶¨Ê±¼äºóÈ¡ÏûÍÏ¶¯
+	static DWORD    _dwGridWidth, _dwGridHeight;// the width and height of the alignment grid
+	static DWORD	_dwMouseUpTime;				// after dragging has started, if there is no more MouseUP message but the mouse has been released for a while, the drag is cancelled
 
 };
 
-// ÒÔÏÂºêÓÃÓÚÖ§³ÖGui¿ËÂ¡
+// the following macros are used to support GUI cloning
 #define ITEM_CLONE(TName)	\
 public:							\
 	virtual TName* Clone() { return new (##TName)(*this); }	\
@@ -177,7 +177,7 @@ public:							\
 	}
 
 
-// ÏÔÊ¾ÔÚGUI¶ÔÏóÖĞµÄĞ¡¶ÔÏó
+// a small object displayed inside a GUI object
 class CItemObj		
 {
 public:
@@ -205,7 +205,7 @@ public:
 
 };
 
-// GUI×æÏÈÀà
+// GUI ancestor class
 class CForm;
 class CGuiData
 {
@@ -217,12 +217,12 @@ public:
 	virtual ~CGuiData();
 	GUI_CLONE(CGuiData)
 
-	virtual void		Init() {}			// ÓÃÓÚÍâ²¿³õÊ¼»¯£¬Èç×°ÔØÍ¼Æ¬µÈ
+	virtual void		Init() {}			// used for external initialisation, such as loading images
 
-	virtual void		Render(){}			// ÏÔÊ¾
-	virtual void		Refresh();			// ÓÃÓÚË¢ĞÂÏÔÊ¾ÓÃµÄ¾ø¶Ô×ø±ê
+	virtual void		Render(){}			// display
+	virtual void		Refresh();			// absolute coordinates used to refresh the display
 
-	// ¼üÅÌÊó±ê´¦Àí¹ı³Ì£¬ÒÑ´¦Àí£¬·µ»Øtrue
+	// keyboard and mouse handling; returns true when already handled
 	virtual bool		MouseRun( int x, int y, DWORD key );
 	virtual bool		MouseScroll( int nScroll )		{ return _IsMouseIn;}
 
@@ -235,7 +235,7 @@ public:
 	virtual CGuiPic*	GetImage()						{ return NULL;		}
 
 	virtual CForm*		GetForm()						{ return NULL;		}
-	virtual void		SetCaption( const char * str) {}	// ÉèÖÃÏÔÊ¾µÄÎÄ±¾
+	virtual void		SetCaption( const char * str) {}	// sets the displayed text
 	virtual void		SetTextColor( DWORD color ) {}
 	virtual void		SetIsDrag( bool v );
 
@@ -246,13 +246,13 @@ public:
 
     virtual void        RenderHint( int x, int y );
 
-    virtual bool        IsAllowActive();            // ÅĞ¶ÏÊÇ·ñ¿ÉÒÔ¼¤»î
+    virtual bool        IsAllowActive();            // decides whether it can be activated
 
-	virtual void		Reset()					{};	// ÓÃÓÚÍâ²¿µ÷ÓÃ,ÈÃ¹ö¶¯ÌõÇåÁãµÈ¹¤×÷
+	virtual void		Reset()					{};	// used by external calls, for things like zeroing the scroll bar
 
 public:
-	static HWND		GetHWND();						// µÃµ½windows handle
-	static CGuiData* GetGui( DWORD dwID ) {			// ¸ù¾İË÷ÒıµÃµ½¿Ø¼ş¶ÔÏó
+	static HWND		GetHWND();						// gets the windows handle
+	static CGuiData* GetGui( DWORD dwID ) {			// gets the control object by index
         if( dwID==0 )
         {
             LG( "gui", "NULL GUI\n" );
@@ -265,8 +265,8 @@ public:
         }
 		return _AllGui[dwID-1]; 
 	}
-	static void		ClearAllGui();					// Çå³ıËùÓĞ¿Ø¼ş
-	static void		InitMemory();					// ÔÚÉú³ÉËùÓĞ¿Ø¼şºóµ÷ÓÃ
+	static void		ClearAllGui();					// clears every control
+	static void		InitMemory();					// called after every control has been created
 
     static bool         SetHintItem( CItemObj* pObj );
     static CItemObj*    GetHintItem()                   { return _pHintItem;    }
@@ -309,54 +309,54 @@ public:
 	void		SetPointer( void* v )		{ _pVoid = v;					}
 	void*		GetPointer()				{ return _pVoid;				}
 
-	void		ScriptSetShow( bool v )		{ _bShow = v;					}	// Íâ²¿½Å±¾ÓÃ
+	void		ScriptSetShow( bool v )		{ _bShow = v;					}	// used by external scripts
 
 	int			nTag;
 
 public:
 	
 	bool		InRect(int x, int y)		{ return _IsMouseIn = ( x >= _nX1 && x<= _nX2 && y >=_nY1 && y <=_nY2 );	}
-	bool        IsNoDrag(int x, int y, DWORD key);		// Èç¹ûÃ»ÓĞ¿ªÊ¼ÍÏ¶¯,²¢ÇÒµãÔÚÇøÓòÄÚ,·µ»Øtrue
+	bool        IsNoDrag(int x, int y, DWORD key);		// if dragging has not started and the click is inside the area, returns true
 
 	static void SetScreen( float dx, float dy, float sx, float sy ) {
 		_fDrawX = dx, _fDrawY = dy,  _fScreenX = sx,  _fScreenY = sy;
 	}
-	void		LineFrame();					// »­Ò»¸ö±ß¿ò
-	void        SelectChaLineFrame() ;          //»­Ò»¸öËÀÈË¿ò
+	void		LineFrame();					// draws a border
+	void        SelectChaLineFrame() ;          //draws a dead frame
 
-	void		LineThinFrame();				// »­Ò»¸öÏ¸¿ò
-	void		FillFrame();					// Ìî³ä
+	void		LineThinFrame();				// draws a thin frame
+	void		FillFrame();					// fill
 
 	static void	SetMousePos( int x, int y )	{ _nMouseX=x; _nMouseY=y;		}
 	static int  GetMouseX()					{ return _nMouseX;				}
 	static int  GetMouseY()					{ return _nMouseY;				}
 	
-	static void SetCursor( CCursor::eState v )	{ _eCursor = v;				}		// ½öÓÃÓÚMouseRunÖĞ
+	static void SetCursor( CCursor::eState v )	{ _eCursor = v;				}		// used only inside MouseRun
 	static CCursor::eState GetCursor()		{ return _eCursor;				}
 
 protected:
-	virtual void _AddForm() {}			// ½«×Ô¼º¼ÓÈëµ½ËùÊôµÄFormÖĞ
+	virtual void _AddForm() {}			// adds itself to the Form it belongs to
 
 protected:
 	typedef std::vector<CGuiData*> vcs;
-	static vcs	_AllGui;		// ´æ·ÅËùÓĞµÄ¿Ø¼ş×ÊÔ´
+	static vcs	_AllGui;		// holds every control resource
 
-	DWORD		_dwID;			// ×¢²á¿Ø¼şµÄID-¼´Ë÷Òı£¬Íâ²¿²»¿É¸Ä±ä
+	DWORD		_dwID;			// the registered control ID, that is the index; not to be changed from outside
 
 	CGuiData*	_pParent;
 
-	std::string		_strName;				// ±êÊ¶
-	int			_nWidth, _nHeight;		// ¿í¸ß
-	int			_nLeft, _nTop;			// Ïà¶Ô×ø±ê
+	std::string		_strName;				// identifier
+	int			_nWidth, _nHeight;		// width and height
+	int			_nLeft, _nTop;			// relative coordinates
 
-	int			_nX1,_nX2, _nY1, _nY2;	// ÏÔÊ¾ÓÃµÄ¾ø¶Ô×ø±ê
+	int			_nX1,_nX2, _nY1, _nY2;	// absolute coordinates used for display
 
-	bool		_bShow;			// ÊÇ·ñÏÔÊ¾
-	bool		_bEnabled;		// ÊÇ·ñ¿ÉÓÃ
+	bool		_bShow;			// whether it is shown
+	bool		_bEnabled;		// whether it is available
 	CDrag*		_pDrag;
 
-	bool		_IsMouseIn;		// Êó±êÊÇ·ñÔÚÇøÓòÄÚ
-    std::string		_strHint;		// ¿Ø¼şÌáÊ¾
+	bool		_IsMouseIn;		// whether the mouse is inside the area
+    std::string		_strHint;		// control tooltip
 
 	void*		_pVoid;
 
@@ -367,11 +367,11 @@ protected:
 
 private:
 	static		float		_fDrawX, _fDrawY,  _fScreenX,  _fScreenY;
-	static		CGuiPic		_imgLevel,	_imgVertical;	// ÓÃÓÚ»­±ß¿òµÄË®Æ½ÏßºÍ´¹Ö±Ïß
+	static		CGuiPic		_imgLevel,	_imgVertical;	// the horizontal and vertical lines used to draw the border
     static      CItemObj*   _pHintItem;
 
-	static		int			_nMouseX,	_nMouseY;		// Ä¿Ç°Êó±êËùÔÚµÄÎ»ÖÃ
-	static		CCursor::eState		_eCursor;			// ÏÔÊ¾ÔÚguiÉÏµÄ¹â±ê
+	static		int			_nMouseX,	_nMouseY;		// the current mouse position
+	static		CCursor::eState		_eCursor;			// the cursor shown on the gui
 };
 
 class CGuiTime;
@@ -382,7 +382,7 @@ class CGuiTime
 	friend class CFormMgr;
 public:
 	static  CGuiTime*	Create( DWORD dwInterval=0, GuiTimerEvent evt=NULL );
-	bool	Release();					// Íâ²¿É¾³ı¶ÔÏó
+	bool	Release();					// external object deletion
 
 	static void			FrameMove(DWORD dwTime);
 	static  CGuiTime*	Find( DWORD id ); 
@@ -398,7 +398,7 @@ public:
 	void	SetUserPoint( PVOID v )	{ _lpData = v;			}
 	PVOID	GetUserPoint()			{ return _lpData;		}
 	
-	bool	IsTime()				{	// ÊÇ·ñµ½´ïÊ±¼äµã,²»ÄÜ×èÈû
+	bool	IsTime()				{	// whether the time point is reached; must not block
 		if( _IsTime ) {
 			_IsTime = false;
 			return true;
@@ -409,13 +409,13 @@ public: // event
 	GuiTimerEvent	evtTime;
 
 private:
-	DWORD	_dwIndex;			// Î¨Ò»ID
-	DWORD 	_dwInterval;		// µÈÓÚÁã,²»¼¤»î;
+	DWORD	_dwIndex;			// unique ID
+	DWORD 	_dwInterval;		// ç­‰äºé›¶,ä¸æ¿€æ´»;
 
 	bool	_IsTime;
 	DWORD	_dwLastTime;
 
-	// ÓÃ»§Êı¾İ
+	// user data
 	DWORD	_nEventID;
 	PVOID	_lpData;
 
@@ -431,7 +431,7 @@ private:
 
 };
 
-// ÄÚÁªº¯Êı
+// inline function
 inline bool	CGuiData::IsNoDrag(int x, int y, DWORD key)
 { 
 	InRect( x, y );

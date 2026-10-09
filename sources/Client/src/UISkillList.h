@@ -1,15 +1,15 @@
-//----------------------------------------------------------------------
-// Ãû³Æ:¼¼ÄÜ¿ò
-// ×÷Õß:lh 2004-12-13
-// ÓÃÍ¾:Ë«»÷¿ÉÒÔÊ¹ÓÃ¼¼ÄÜ,Éı¼¶Ê±ÏÔÊ¾Ò»¸öÉı¼¶°´Å¥,ÓĞµ±Ç°¼¶±ğ,Ä§·¨Öµ
-//      ¿ÉÍÏ¶¯µ½¿ì½İÀ¸,¿ÉË«»÷Ö´ĞĞ,ÒòĞ©ÓĞCommandÏµÁĞ
-//      ÓĞ¶¯Ì¬¿ÉÏÔÊ¾°´Å¥ÓÃÓÚÉı¼¶,Òò´ËÒªÏìÓ¦Êó±ê
-//      ÓĞ¾²Ì¬ÎÄ×Ö,±íÊ¾¼¼ÄÜÃû³Æ
-//      ÓĞ¶¯Ì¬ÎÄ×Ö,±íÊ¾µ±Ç°¼¶±ğ,ÏûºÄÄ§·¨Öµ
-//      ÓĞÉÏÏÂ»»ĞĞ,»»Ò³,µ½Í·Î²µÈ,ÒªÏìÓ¦¼üÅÌ
-//   ×¢:±¾À´Õâ¸öÀà¿ÉÒÔÖ±½ÓÊ¹ÓÃCList,Ö»ÒªÅÉÉúCListItems¼´¿É,µ«¿¼ÂÇµ½¹¦ÄÜ½ÏCList¸ü¶à¸ü¸´ÔÓ,
-//      ºóÆÚ¿ÉÄÜÓĞ¸Ä¶¯,ËùÒÔĞÂ¿ªÒ»¸öÀà,±ÜÃâCListÏµÁĞ¿ÉÄÜÌ«¹ı¸´ÔÓ
-// ×îºóĞŞ¸ÄÈÕÆÚ:
+ï»¿//----------------------------------------------------------------------
+// Name: skill box
+// Author: lh 2004-12-13
+// Purpose: a double click uses the skill; when levelling up a level up button is shown, with the current level and the mana cost
+//      it can be dragged onto the shortcut bar and executed with a double click, so there is a Command family
+//      it has a dynamic button for levelling up, so it has to respond to the mouse
+//      it has static text showing the skill name
+//      it has dynamic text showing the current level and the mana cost
+//      it has up and down line changes, paging and jumping to the ends, so it has to respond to the keyboard
+//   note: this class could use CList directly, deriving CListItems would be enough, but it has more and more complex functionality,
+//      and may change later, so a new class is opened to keep the CList family from becoming too complicated
+// Last modified date:
 //----------------------------------------------------------------------
 #pragma once
 #include <vector>
@@ -90,42 +90,42 @@ private:
     void			_DragEnd( int x, int y, DWORD key );
 
 protected:
-    CGuiPic*		_pImage;		// ±³¾°Í¼
-    CGuiPic*		_pSelect;	    // Ñ¡ÔñÌõ
-    CGuiPic*        _pButton;       // Éı¼¶°´Å¥
+    CGuiPic*		_pImage;		// background image
+    CGuiPic*		_pSelect;	    // selection bar
+    CGuiPic*        _pButton;       // level up button
     CScroll*		_pScroll;	    
 
     typedef std::vector<CSkillCommand*> skills;
     skills          _skills;
 
-    // ÓëÖÜÎ§±ß¿òµÄ¾àÀë
+    // distance to the surrounding border
     int				_nLeftMargin;	
     int				_nTopMargin;	
     int				_nRightMargin;	
     int				_nBottomMargin;	
 
-    int				_nRowHeight;    // ĞĞ¸ß
-    int             _nFontStart;    // ×ÖÌå¿ªÊ¼Î»ÖÃ
+    int				_nRowHeight;    // row height
+    int             _nFontStart;    // where the text starts
     DWORD           _dwFontColor;
 
-    int             _nUnitHeight, _nUnitWidth;   // µ¥ÔªÍ¼Æ¬¿í¸ß
+    int             _nUnitHeight, _nUnitWidth;   // cell image width and height
 
-    int             _nSelectIndex;  // Ñ¡ÔñµÄĞĞÊı
+    int             _nSelectIndex;  // the selected row number
     bool            _IsShowUpgrade;
 
 private:
-    int             _nShowFirst;    // ÏÔÊ¾µÄµÚÒ»ĞĞ
-    int             _nShowLast;     // ÏÔÊ¾µÄ×îºóÒ»ĞĞ
-    int				_nShowCount;    // ×Ü¹²¿ÉÒÔÏÔÊ¾¶àÉÙĞĞ    
+    int             _nShowFirst;    // the first row displayed
+    int             _nShowLast;     // the last row displayed
+    int				_nShowCount;    // how many rows can be displayed in total
 
-    // ÓÃÓÚÏÔÊ¾¼¼ÄÜµÄ·¶Î§
+    // the range used to display skills
     int             _nSX1, _nSY1, _nSX2, _nSY2;   
 
-    int             _nButtonX1;     // °´Å¥ÏÔÊ¾µÄXÎ»ÖÃ
-    int             _nButtonOffY;   // °´Å¥ÏÔÊ¾µÄYÖáÆ«ÒÆ
+    int             _nButtonX1;     // X position where the button is displayed
+    int             _nButtonOffY;   // Y offset where the button is displayed
 
-    int             _nRowSpace;     // ĞĞ¾à
-    int             _nFontYOff;     // ×ÖÏÔÊ¾ÔÚÒ»ĞĞµÄÖĞ²¿¸ß¶È
+    int             _nRowSpace;     // row spacing
+    int             _nFontYOff;     // the height of the text in the middle of a row
 
 private:
     int             _nDragIndex;
@@ -135,7 +135,7 @@ private:
 };
 
 
-// ÄÚÁªº¯Êı 
+// inline function
 inline 	void CSkillList::_ResetPageNum() 
 { 
     _pScroll->SetPageNum( ( GetHeight() - _nTopMargin - _nBottomMargin ) / _nRowHeight - 1 );
@@ -154,7 +154,7 @@ inline int CSkillList::_GetHitSkill( int x, int y )
         int h = ( _nShowCount * _nRowHeight + _nSY1 );
         if( y >= h ) return false;
 
-        // µÃµ½ĞĞÊı
+        // gets the number of rows
         int row = ( y - _nSY1 ) / _nRowHeight + _nShowFirst;
         if( row>=0 && row<(int)_skills.size() ) 
 			return row;

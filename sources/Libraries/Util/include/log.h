@@ -1,4 +1,4 @@
-
+ï»¿
 #ifndef LOG_H_
 #define LOG_H_
 
@@ -10,25 +10,25 @@ void   fLG(const char *pszName, const char *pszFormat, ...);
 
 #define GPL_CONSTANT 2000
 
-// ÉèÖÃLGÊä³öÄ¿Â¼
+// set the LG output directory
 extern "C" void SetLGDir(char const* dir);
 
-// µÃµ½LGÊä³öÄ¿Â¼
+// fetch the LG output directory
 void GetLGDir(std::string& dir);
 
-// Ê¹ÄÜLGÖĞµ¯³öMessageBox
+// let LG pop up a MessageBox
 extern "C" void EnableMsgBox(bool enable = true);
 
-// Ê¹ÄÜËùÓĞµÄLGÊä³ö
+// enable all LG output
 extern "C" void EnableAllLG(bool enable = true);
 
-// Ê¹ÄÜÌØ¶¨µÄLGÊä³ö
+// enable a specific LG output
 extern "C" void EnableLG(char const* type, bool enable = true);
 
-// ÌØµã£ºÒª¼ÇÂ¼ÏÂÃ¿Ò»¸öÊ±¼äµãÉÏµÄLOG
+// characteristic: keeps a LOG entry for every point in time
 //void LG(char const* type, char const* format, ...);
 
-// ÌØµã£ºÖ»¼ÇÂ¼ÏÂµ±Ç°Ê±¼äµãÉÏµÄLOG£¨¸üĞÂ£©
+// characteristic: keeps only the LOG for the current point in time (overwritten)
 extern "C" void GPL(char const* type, int x, int y, char const* format, ...);
 
 extern "C" int myprintf(char const* fmt, ...);

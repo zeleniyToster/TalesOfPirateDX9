@@ -1,4 +1,4 @@
-#ifndef MPColorValue_H
+ï»¿#ifndef MPColorValue_H
 #define MPColorValue_H
 
 #include "MindPowerAPI.h"
@@ -8,9 +8,9 @@ typedef unsigned int RGBA;
 typedef unsigned int ARGB;
 typedef unsigned int ABGR;
 
-/** ±íÊ¾ÑÕÉ«µÄÀà.
+/** Class that represents a colour.
 @remarks
-	ÑÕÉ«ÓÉ4¸ö³ÉÔ±×é³É£¬Ã¿Ò»¸ö³ÉÔ±¶¼ÊÇÓÉ0.0µ½1.0µÄ¸¡µãÊı×é³É
+	It consists of four members, each a float between 0.0 and 1.0
 */
 class MINDPOWER_API MPColorValue
 {
@@ -36,30 +36,30 @@ public:
 		float val[4];
 	};
 
-	/** ÒÔRGBAĞÎÊ½·µ»ØÑÕÉ«.
+	/** Returns the colour in RGBA form.
 	*/
 	RGBA getAsRGBA(void) const;
 
-	/** ÒÔARGBĞÎÊ½·µ»ØÑÕÉ«.
+	/** Returns the colour in ARGB form.
 	*/
 	ARGB getAsARGB(void) const;
 
-	/** ÒÔABGRĞÎÊ½·µ»ØÑÕÉ« */
+	/** Sets the colour in ABGR form */
 	ABGR getAsABGR(void) const;
 
-	/** ÒÔRGBAĞÎÊ½ÉèÖÃÑÕÉ«.
+	/** Sets the colour in RGBA form.
 	*/
 	void setAsRGBA(const RGBA val);
 
-	/** ÒÔARGBĞÎÊ½ÉèÖÃÑÕÉ«.
+	/** Sets the colour in ARGB form.
 	*/
 	void setAsARGB(const ARGB val);
 
-	/** ÒÔABGRĞÎÊ½ÉèÖÃÑÕÉ«.
+	/** Sets the colour in ABGR form.
 	*/
 	void setAsABGR(const ABGR val);
 
-	// Ò»ÔªÊıÑ§²Ù×÷
+	// unary math operations
 	inline MPColorValue& operator += ( const MPColorValue& rkVector )
 	{
 		r += rkVector.r;
@@ -115,7 +115,7 @@ public:
 };
 
 //=============================================================================
-// ¶şÔªÊıÑ§²Ù×÷
+// binary math operations
 //=============================================================================
 inline const MPColorValue operator +(const MPColorValue& lhs, const MPColorValue& rhs)
 {

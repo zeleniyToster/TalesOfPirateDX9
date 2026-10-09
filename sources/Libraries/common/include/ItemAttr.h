@@ -1,4 +1,4 @@
-//=============================================================================
+Ôªø//=============================================================================
 // FileName: ItemAttr.h
 // Creater: ZhangXuedong
 // Date: 2004.12.28
@@ -38,7 +38,7 @@ inline short CItemAttr::GetAttr(short sAttrType)
 	return m_sAttr[sAttrType];
 }
 
-// ∑µªÿ÷µ£∫0£¨ ß∞‹°£1£¨≥…π¶…Ë÷√°£
+// return value: 0 = failed, 1 = set
 inline short CItemAttr::SetAttr(short sAttrType, short sVal)
 {
 	if (sAttrType < 1 || sAttrType >= ITEMATTR_MAX_NUM)
@@ -48,7 +48,7 @@ inline short CItemAttr::SetAttr(short sAttrType, short sVal)
 	return 1;
 }
 
-// ∑µªÿ÷µ£∫0£¨ ß∞‹°£1£¨≥…π¶…Ë÷√°£
+// return value: 0 = failed, 1 = set
 inline short CItemAttr::AddAttr(short sAttrType, short sVal)
 {
 	if (sAttrType < 1 || sAttrType >= ITEMATTR_MAX_NUM)

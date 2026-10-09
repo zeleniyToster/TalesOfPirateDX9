@@ -1,38 +1,38 @@
-
+ï»¿
 #pragma once
 
 #include <unordered_set>
 #include <string>
 
 
-// ÓÎÏ·Íâ¹ÒÀà  add by Philip.Wu  2006-07-06
+// game cheat class  add by Philip.Wu  2006-07-06
 class CGameWG
 {
 public:
 	CGameWG(void);
 	~CGameWG(void);
 
-	// Ë¢ĞÂµ±Ç°½ø³ÌÀïµÄÄ£¿é
+	// refreshes the modules in the current process
 	bool RefreshModule(void);
 
-	// ÊÇ·ñÊ¹ÓÃÁË¡°º£µÁÌìÊ¹¡±Íâ¹Ò
+	// the 'Pirate Angel' cheat was used
 	bool IsUseHdts(void);
 
-	// Æô¶¯Ïß³Ì
+	// starts the thread
 	void BeginThread(void);
 
-	// °²È«ÖÕÖ¹Ïß³Ì
+	// terminates the thread safely
 	void SafeTerminateThread();
 
 private:
 
-	// ´æ·ÅÄ£¿éÁĞ±í
+	// holds the module list
 	std::unordered_set<std::string> m_lstModule;
 
-	// Ïß³Ì¾ä±ú
+	// thread handle
 	HANDLE m_hThread;
 
-	// Ïß³Ì»Øµ÷
+	// thread callback
 	static UINT CALLBACK Run(void* param);
 
 };

@@ -1,4 +1,4 @@
-
+ï»¿
 #include "StdAfx.h"
 #include "UIDoublePwdForm.h"
 #include "UIStoreForm.h"
@@ -18,12 +18,12 @@ namespace GUI
 	}
 
 
-	// ³õÊ¼»¯¶ş´ÎÃÜÂëËùÓĞµÄ½çÃæ
+	// initialises every screen of the secondary password
 	bool CDoublePwdMgr::Init()
 	{
 		CFormMgr& mgr = CFormMgr::s_Mgr;
 
-		// ¶ş´ÎÃÜÂë´´½¨±íµ¥
+		// secondary password creation form
 		frmDoublePwdCreate = mgr.Find("frmDoublePwdCreate");
 		if(! frmDoublePwdCreate) return false;
 
@@ -42,7 +42,7 @@ namespace GUI
 		edtDoublePwdCreateRetry->SetIsPassWord(true);
 
 
-		// ¶ş´ÎÃÜÂëĞŞ¸Ä±íµ¥
+		// secondary password modification form
 		frmDoublePwdAlter = mgr.Find("frmDoublePwdAlter");
 		if(! frmDoublePwdAlter) return false;
 
@@ -66,7 +66,7 @@ namespace GUI
 		edtDoublePwdAlterNewRetry->SetIsPassWord(true);
 
 
-		// ¶ş´ÎÃÜÂëÊäÈë±íµ¥
+		// secondary password input form
 		frmDoublePwd = mgr.Find("frmDoublePwd");
 		if(! frmDoublePwd) return false;
 
@@ -79,7 +79,7 @@ namespace GUI
 		edtDoublePwd->SetIsPassWord(true);
 
 
-		// ¶ş´ÎÃÜÂëÊäÈëÈí¼üÅÌ
+		// secondary password input soft keyboard
 		frmDoublePwdInput = mgr.Find("frmDoublePwdInput");
 		if(! frmDoublePwdInput) return false;
 
@@ -87,7 +87,7 @@ namespace GUI
 		frmDoublePwdInput->evtClose             = _evtFormClose;
 
 
-		// ´´½¨¶ş´ÎÃÜÂëµÄÌáÊ¾
+		// the prompt shown when creating a secondary password
 		frmDoublePwdInfo = mgr.Find("frmDoublePwdInfo");
 		if(! frmDoublePwdInfo) return false;
 
@@ -95,14 +95,14 @@ namespace GUI
 	}
 
 
-	// ¹Ø±Õ¶ş´ÎÃÜÂë
+	// closes the secondary password
 	void CDoublePwdMgr::CloseForm()
 	{
 		CloseAllForm();
 	}
 
 
-	// ¶ş´ÎÃÜÂëÊÇ·ñºÏ·¨
+	// whether the secondary password is valid
 	bool CDoublePwdMgr::IsPwdValid(const char* szStr)
 	{
 		if(! szStr)
@@ -118,7 +118,7 @@ namespace GUI
 	}
 
 
-	// ÏÔÊ¾´´½¨±íµ¥
+	// shows the creation form
 	void CDoublePwdMgr::ShowCreateForm()
 	{
 		CloseAllForm();
@@ -145,7 +145,7 @@ namespace GUI
 	}
 
 
-	// ÏÔÊ¾ĞŞ¸Ä±íµ¥
+	// shows the modification form
 	void CDoublePwdMgr::ShowAlterForm()
 	{
 		CloseAllForm();
@@ -165,7 +165,7 @@ namespace GUI
 	}
 
 
-	// ÏÔÊ¾ÊäÈë±íµ¥
+	// shows the input form
 	void CDoublePwdMgr::ShowDoublePwdForm()
 	{
 		CloseAllForm();
@@ -184,34 +184,34 @@ namespace GUI
 	}
 
 
-	// ¹Ø±ÕÈ«²¿±íµ¥
+	// closes every form
 	void CDoublePwdMgr::CloseAllForm()
 	{
-		// ¹Ø±Õ´´½¨±íµ¥
+		// closes the creation form
 		if(frmDoublePwdCreate && frmDoublePwdCreate->GetIsShow())
 		{
 			frmDoublePwdCreate->Close();
 		}
 
-		// ¹Ø±ÕĞŞ¸Ä±íµ¥
+		// closes the modification form
 		if(frmDoublePwdAlter && frmDoublePwdAlter->GetIsShow())
 		{
 			frmDoublePwdAlter->Close();
 		}
 
-		// ¹Ø±Õ¶ş´ÎÃÜÂëÊäÈë±íµ¥
+		// closes the secondary password input form
 		if(frmDoublePwd && frmDoublePwd->GetIsShow())
 		{
 			frmDoublePwd->Close();
 		}
 
-		// ¹Ø±Õ¶ş´ÎÃÜÂëÈí¼üÅÌ±íµ¥
+		// closes the secondary password soft keyboard form
 		if(frmDoublePwdInput && frmDoublePwdInput->GetIsShow())
 		{
 			frmDoublePwdInput->Close();
 		}
 
-		// ¹Ø±Õ´´½¨¶ş´ÎÃÜÂëÌáÊ¾
+		// closes the create secondary password prompt
 		if(frmDoublePwdInfo && frmDoublePwdInfo->GetIsShow())
 		{
 			frmDoublePwdInfo->Close();
@@ -219,7 +219,7 @@ namespace GUI
 	}
 
 
-	// ÏÔÊ¾¶ş´ÎÃÜÂëÈí¼üÅÌ
+	// shows the secondary password soft keyboard
 	void CDoublePwdMgr::ShowDoublePwdKeyboardForm()
 	{
 		if(! frmDoublePwdInput)
@@ -231,7 +231,7 @@ namespace GUI
 	}
 
 
-	// ·¢ËÍÉ¾³ı½ÇÉ«ÏûÏ¢
+	// sends the delete character message
 	void CDoublePwdMgr::SendDeleteCharactor()
 	{
 		CSelectChaScene* pScene = dynamic_cast<CSelectChaScene*>(g_pGameApp->GetCurScene());
@@ -240,14 +240,14 @@ namespace GUI
 	}
 
 
-	// ·¢ËÍ±³°ü½âËøÏûÏ¢
+	// sends the bag unlock message
 	void CDoublePwdMgr::SendPackageUnlock()
 	{
 		CS_UnlockKitbag(g_stUIDoublePwd.edtDoublePwd->GetCaption());
 	}
 
-	 // ·¢ËÍµÀ¾ß½âËøÏûÏ¢ add by ning.yan 2008-11-11 begin
-	void CDoublePwdMgr::SendItemUnlock()// ±»ËøµÀ¾ßµÄÎ»ÖÃºÍid
+	 // sends the item unlock message add by ning.yan 2008-11-11 begin
+	void CDoublePwdMgr::SendItemUnlock()// the position and ID of the locked item
 	{
 		CS_UnlockItem(g_stUIDoublePwd.edtDoublePwd->GetCaption(), lockGridID);
 		g_stUIDoublePwd.CloseAllForm();
@@ -286,7 +286,7 @@ namespace GUI
 	}
 	// end
 
-	// ·¢ËÍÉÌ³Ç´ò¿ªÏûÏ¢
+	// sends the shop open message
 	void CDoublePwdMgr::SendPackageStoreOpen()
 	{
 		if(! g_stUIStore.ResetLastOperate())
@@ -300,7 +300,7 @@ namespace GUI
 		CloseAllForm();
 	}
 
-	void CDoublePwdMgr::SendGameRequest()// ±»ËøµÀ¾ßµÄÎ»ÖÃºÍid
+	void CDoublePwdMgr::SendGameRequest()// the position and ID of the locked item
 	{
 		CS_SendGameRequest(g_stUIDoublePwd.edtDoublePwd->GetCaption());
 		
@@ -308,7 +308,7 @@ namespace GUI
 	} 
 
 
-	// ¶ÔÈí¼üÅÌ°´Å¥½øĞĞËæ»úÅÅÁĞ
+	// shuffles the soft keyboard buttons randomly
 	void CDoublePwdMgr::RandomInputButton()
 	{
 		CTextButton* btnNum[10] = {0};
@@ -350,7 +350,7 @@ namespace GUI
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-	// ´´½¨¶ş´ÎÃÜÂë±íµ¥°´Å¥ÊÂ¼ş
+	// creation secondary password form button event
 	void CDoublePwdMgr::_evtCreateFromMouseEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey)
 	{
 		string strName = pSender->GetName();
@@ -361,8 +361,8 @@ namespace GUI
 
 			if(! IsPwdValid(g_stUIDoublePwd.edtDoublePwdCreate->GetCaption()))
 			{
-				// ÃÜÂëÖ»ÄÜÊÇÊı×Ö
-				g_pGameApp->MsgBox(g_oLangRec.GetString(797));//"¶ş´ÎÃÜÂëÖ»ÄÜÓĞ 0 ~ 9 Êı×Ö×é³É£¬ÇëÖØĞÂÊäÈë"
+				// the password may only contain digits
+				g_pGameApp->MsgBox(g_oLangRec.GetString(797));//"äºŒæ¬¡å¯†ç åªèƒ½æœ‰ 0 ~ 9 æ•°å­—ç»„æˆï¼Œè¯·é‡æ–°è¾“å…¥"
 
 				g_stUIDoublePwd.edtDoublePwdCreate->SetCaption("");
 				g_stUIDoublePwd.edtDoublePwdCreateRetry->SetCaption("");
@@ -371,8 +371,8 @@ namespace GUI
 
 			if(6 > nPwdLen || 12 < nPwdLen)
 			{
-				// ÃÜÂë³¤¶È²»ÔÚ 6 ~ 12 Ö®¼ä
-				g_pGameApp->MsgBox(g_oLangRec.GetString(798));//"¶ş´ÎÃÜÂë³¤¶È²»ÔÚ 6 ~ 12£¬ÇëÖØĞÂÊäÈë"
+				// the password length is not between 6 and 12
+				g_pGameApp->MsgBox(g_oLangRec.GetString(798));//"äºŒæ¬¡å¯†ç é•¿åº¦ä¸åœ¨ 6 ~ 12ï¼Œè¯·é‡æ–°è¾“å…¥"
 
 				g_stUIDoublePwd.edtDoublePwdCreate->SetCaption("");
 				g_stUIDoublePwd.edtDoublePwdCreateRetry->SetCaption("");
@@ -382,21 +382,21 @@ namespace GUI
 			if(0 != strcmp(g_stUIDoublePwd.edtDoublePwdCreate->GetCaption(), 
 						   g_stUIDoublePwd.edtDoublePwdCreateRetry->GetCaption()))
 			{
-				// Á½´ÎÃÜÂë²»Í¬
-				g_pGameApp->MsgBox(g_oLangRec.GetString(799));//"Á½´ÎÊäÈëµÄÃÜÂë²»Í¬£¬ÇëÖØĞÂÊäÈë"
+				// the two passwords differ
+				g_pGameApp->MsgBox(g_oLangRec.GetString(799));//"ä¸¤æ¬¡è¾“å…¥çš„å¯†ç ä¸åŒï¼Œè¯·é‡æ–°è¾“å…¥"
 
 				g_stUIDoublePwd.edtDoublePwdCreate->SetCaption("");
 				g_stUIDoublePwd.edtDoublePwdCreateRetry->SetCaption("");
 				return;
 			}
 
-			// Á½´ÎÃÜÂëÏàÍ¬£¬Ïò·şÎñÆ÷·¢ËÍ´´½¨¶ş´ÎÃÜÂëÏûÏ¢
+			// the two passwords match; sends the create secondary password message to the server
 			CS_CreatePassword2(g_stUIDoublePwd.edtDoublePwdCreate->GetCaption());
 			CCursor::I()->SetCursor(CCursor::stWait);
 		}
 		else
 		{
-			// ÓÃ»§È¡Ïû
+			// the user cancelled
 			extern TOM_SERVER g_TomServer;
 			if( g_TomServer.bEnable )
 			{
@@ -404,7 +404,7 @@ namespace GUI
 				return;
 			}
 
-			// ÍË³öÑ¡ÈË³¡¾°
+			// leaves the character selection scene
 			CS_Logout();
 			CS_Disconnect(DS_DISCONN);
 			g_pGameApp->LoadScriptScene( enumLoginScene );
@@ -412,7 +412,7 @@ namespace GUI
 	}
 
 
-	// ĞŞ¸Ä¶ş´ÎÃÜÂë±íµ¥°´Å¥ÊÂ¼ş
+	// modification secondary password form button event
 	void CDoublePwdMgr::_evtAlterFromMouseEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey)
 	{
 		string strName = pSender->GetName();
@@ -422,8 +422,8 @@ namespace GUI
 		{
 			if(! IsPwdValid(g_stUIDoublePwd.edtDoublePwdAlterNew->GetCaption()))
 			{
-				// ÃÜÂëÖ»ÄÜÊÇÊı×Ö
-				g_pGameApp->MsgBox(g_oLangRec.GetString(797));//"¶ş´ÎÃÜÂëÖ»ÄÜÓĞ 0 ~ 9 Êı×Ö×é³É£¬ÇëÖØĞÂÊäÈë"
+				// the password may only contain digits
+				g_pGameApp->MsgBox(g_oLangRec.GetString(797));//"äºŒæ¬¡å¯†ç åªèƒ½æœ‰ 0 ~ 9 æ•°å­—ç»„æˆï¼Œè¯·é‡æ–°è¾“å…¥"
 
 				g_stUIDoublePwd.edtDoublePwdAlterOld->SetCaption("");
 				g_stUIDoublePwd.edtDoublePwdAlterNew->SetCaption("");
@@ -434,8 +434,8 @@ namespace GUI
 			int nPwdLen = (int) strlen(g_stUIDoublePwd.edtDoublePwdAlterNew->GetCaption());
 			if(6 > nPwdLen || 12 < nPwdLen)
 			{
-				// ÃÜÂë³¤¶È²»ÔÚ 6 ~ 12 Ö®¼ä
-				g_pGameApp->MsgBox(g_oLangRec.GetString(798));//"¶ş´ÎÃÜÂë³¤¶È²»ÔÚ 6 ~ 12£¬ÇëÖØĞÂÊäÈë"
+				// the password length is not between 6 and 12
+				g_pGameApp->MsgBox(g_oLangRec.GetString(798));//"äºŒæ¬¡å¯†ç é•¿åº¦ä¸åœ¨ 6 ~ 12ï¼Œè¯·é‡æ–°è¾“å…¥"
 
 				g_stUIDoublePwd.edtDoublePwdAlterOld->SetCaption("");
 				g_stUIDoublePwd.edtDoublePwdAlterNew->SetCaption("");
@@ -446,8 +446,8 @@ namespace GUI
 			if(0 != strcmp(g_stUIDoublePwd.edtDoublePwdAlterNew->GetCaption(), 
 						   g_stUIDoublePwd.edtDoublePwdAlterNewRetry->GetCaption()))
 			{
-				// Á½´ÎÃÜÂë²»Í¬
-				g_pGameApp->MsgBox(g_oLangRec.GetString(799));//"Á½´ÎÊäÈëµÄÃÜÂë²»Í¬£¬ÇëÖØĞÂÊäÈë"
+				// the two passwords differ
+				g_pGameApp->MsgBox(g_oLangRec.GetString(799));//"ä¸¤æ¬¡è¾“å…¥çš„å¯†ç ä¸åŒï¼Œè¯·é‡æ–°è¾“å…¥"
 
 				g_stUIDoublePwd.edtDoublePwdAlterOld->SetCaption("");
 				g_stUIDoublePwd.edtDoublePwdAlterNew->SetCaption("");
@@ -455,7 +455,7 @@ namespace GUI
 				return;
 			}
 
-			// Á½´ÎÃÜÂëÏàÍ¬£¬Ïò·şÎñÆ÷·¢ËÍĞŞ¸Ä¶ş´ÎÃÜÂëÏûÏ¢
+			// the two passwords match; sends the modify secondary password message to the server
 			CS_UpdatePassword2(g_stUIDoublePwd.edtDoublePwdAlterOld->GetCaption(), g_stUIDoublePwd.edtDoublePwdAlterNew->GetCaption());
 		}
 		else
@@ -465,7 +465,7 @@ namespace GUI
 	}
 
 
-	// ÊäÈë¶ş´ÎÃÜÂë±íµ¥°´Å¥ÊÂ¼ş
+	// input secondary password form button event
 	void CDoublePwdMgr::_evtDoublePwdFromMouseEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey)
 	{
 		string strName = pSender->GetName();
@@ -487,7 +487,7 @@ namespace GUI
 				g_stUIDoublePwd.SendPackageStoreOpen();
 				break;
 
-			// add by ning.yan 2008-11-11 µÀ¾ß½âËø begin
+			// add by ning.yan 2008-11-11 item unlock begin
 			case ITEM_UNLOCK:
 				g_stUIDoublePwd.SendItemUnlock();
 				break;// end
@@ -508,7 +508,7 @@ namespace GUI
 	}
 
 
-	// ¶ş´ÎÃÜÂëÊäÈëÈí¼üÅÌ±íµ¥°´Å¥ÊÂ¼ş
+	// secondary password input soft keyboard form button event
 	void CDoublePwdMgr::_evtInputFromMouseEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey)
 	{
 		if(! g_stUIDoublePwd.edtFocusEditBox)
@@ -522,19 +522,19 @@ namespace GUI
 
 		if(strName == "btnClear")
 		{
-			// Çå¿Õ°´Å¥
+			// clear button
 			g_stUIDoublePwd.edtFocusEditBox->SetCaption("");
 		}
 		else if('0' <= cNumber && cNumber <= '9' && strPwd.size() < 12)
 		{ 
-			// Êı×Ö¼ü
+			// digit key
 			strPwd += cNumber;
 			g_stUIDoublePwd.edtFocusEditBox->SetCaption(strPwd.c_str());
 		}
 	}
 
 
-	// ±à¼­¿ò¼¤»îÊÂ¼ş£¨±£´æÏÂ¼¤»îµÄ±à¼­¿ò£©
+	// edit box activation event (saves the activated edit box)
 	void CDoublePwdMgr::_evtEditFocus(CGuiData* pSender)
 	{
 		CEdit* edtTemp = dynamic_cast<CEdit*>(pSender);
@@ -545,7 +545,7 @@ namespace GUI
 	}
 
 
-	// ¹Ø±Õ´°ÌåÊÂ¼ş
+	// close window event
 	void CDoublePwdMgr::_evtFormClose(CForm* pForm, bool& IsClose)
 	{
 		//g_stUIDoublePwd.CloseAllForm();

@@ -1,4 +1,4 @@
-//=============================================================================
+ï»¿//=============================================================================
 // FileName: SwitchMapRecord.cpp
 // Creater: ZhangXuedong
 // Date: 2004.11.23
@@ -21,24 +21,24 @@ BOOL CSwitchMapRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<st
     string strList[80];
 	string strLine;
 
-	// ±àºÅ
+	// id
 	pInfo->lID = pInfo->nID;
-	// ±»°ó¶¨µÄÊµÌåID
+	// id of the bound entity
 	pInfo->lEntityID = Str2Int(pInfo->szDataName);
-	// ÊÂ¼þ±àºÅ
+	// event id
 	pInfo->lEventID = Str2Int(ParamList[m++]);
-	// ÊµÌåµÄÎ»ÖÃ
+	// entity position
 	memset(&pInfo->SEntityPos, 0, sizeof(Point));
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');
 	pInfo->SEntityPos.x = Str2Int(strList[0]);
 	pInfo->SEntityPos.y = Str2Int(strList[1]);
-	// ÊµÌåµÄ·½Ïò
+	// entity direction
 	pInfo->sAngle = Str2Int(ParamList[m++]);
-	// Ä¿±êµØÍ¼Ãû
+	// target map name
 	_tcsncpy(pInfo->szTarMapName, ParamList[m++].c_str(), defMAP_NAME_LEN);
 	pInfo->szTarMapName[defMAP_NAME_LEN - 1] = _TEXT('\0');
-	// Ä¿±êµØÍ¼µÄÎ»ÖÃ
+	// position on the target map
 	memset(&pInfo->STarPos, 0, sizeof(Point));
 	strLine = ParamList[m++];
 	n = Util_ResolveTextLine(strLine.c_str(), strList, 80, ',');

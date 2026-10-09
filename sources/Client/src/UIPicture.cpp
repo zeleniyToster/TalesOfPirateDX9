@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "uipicture.h"
 #include "UIGuiData.h"
 
@@ -42,7 +42,7 @@ void CGuiPic::SetMax( int v )
 
 	_max = v;
 	//delete [] _pImage;
-	SAFE_DELETE_ARRAY(_pImage); // UIµ±»ú´¦Àí
+	SAFE_DELETE_ARRAY(_pImage); // UI freeze handling
 
 	_pImage = new MPTexRect[v];
 	_frame = 0;

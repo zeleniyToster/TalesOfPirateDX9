@@ -1,14 +1,14 @@
-#ifndef XSTRING_H
+ï»¿#ifndef XSTRING_H
 #define XSTRING_H
 
 #include "TChar.h"
 
-// ´Ó¸ø¶¨×Ö·û´Ü(_TCHAR *in)µÄ¸ø¶¨Î»ÖÃ(long *in_from)»ñÈ¡×Ö·û´Ü£¬
-// Ö±µ½Óöµ½×Ö·û´ÜÁÐ±í(_TCHAR *end_list)ÖÐµÄÈÎÒ»×Ö·ûÊ±½áÊø
+// gets a string from the given position (long *in_from) of the given string (_TCHAR *in),
+// ending when any character of the string list (_TCHAR *end_list) is met
 long StringGet(_TCHAR *out, long out_max, _TCHAR *in, long *in_from, _TCHAR *end_list, long end_len);
 
 
-// ´Ó¸ø¶¨×Ö·û´Ü(_TCHAR *in)µÄ¸ø¶¨Î»ÖÃ(long *in_from)ÌÞ³ý×Ö·û´ÜÁÐ±í(_TCHAR *end_list)ÖÐµÄÈÎÒ»×Ö·û
+// removes any character of the string list (_TCHAR *end_list) from the given position (long *in_from) of the given string (_TCHAR *in)
 void StringSkipCompartment(_TCHAR *in, long *in_from, _TCHAR *skip_list, long skip_len);
 
 

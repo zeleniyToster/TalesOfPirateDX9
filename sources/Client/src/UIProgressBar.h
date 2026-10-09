@@ -1,9 +1,9 @@
-//----------------------------------------------------------------------
-// Ãû³Æ:½ø¶ÈÌõ
-// ×÷Õß:lh 2004-07-19
-// ÓÃÍ¾:ºáÊúÁ½ÖÖ½ø¶ÈÌõ
-//	 ×¢:²»Ö§³Ö¶àÏß³Ì
-// ×îºóĞŞ¸ÄÈÕÆÚ:2004-10-09
+ï»¿//----------------------------------------------------------------------
+// Name: progress bar
+// Author: lh 2004-07-19
+// Purpose: horizontal and vertical progress bars
+//	 note: multithreading is not supported
+// Last modified date: 2004-10-09
 //----------------------------------------------------------------------
 #pragma once
 #include "uicompent.h"
@@ -17,17 +17,17 @@ class CProgressBar : public CCompent
 public:
 	enum eStyle
 	{
-		btHorizontal=0, // Ë®Æ½µÄ,´Ó×ó×ÔÓÒµÄ
-		btVertical,     // ´¹Ö±µÄ£¬´ÓÏÂÖ±ÉÏµÄ
+		btHorizontal=0, // horizontal, left to right
+		btVertical,     // vertical, straight up
 		btEnd,
 	};
-	enum ePic           // Á½ÕÅ±³¾°Í¼
+	enum ePic           // two background images
 	{
 		pcBackground=0,
 		pcProgressbar,
 		pcEnd,
 	};
-    enum eHintStyle     // hintÏÔÊ¾·½Ê½:ÏÔÊ¾Êı×Ö±È,ÏÔÊ¾°Ù·Ö±È
+    enum eHintStyle     // hint display mode: show a number, or show a percentage
     {
         hsHintNum,
         hsHintPercent,
@@ -49,7 +49,7 @@ public:
 
 	void				Start( DWORD time );
 
-	// ´æ´¢¸ñÊ½£º±³¾°£¬½ø¶ÈÌõ
+	// storage format: background, progress bar
 	bool				LoadImage( const char* file, int w=32, int h=32, bool isHorizontal=true );
 	virtual void		SetAlpha( BYTE alpha )		{ _pImage->SetAlpha(alpha);		}
 
@@ -60,7 +60,7 @@ public:
 	void                SetFlashNum(int v)          {  _nFlash = v ;                }   
 	void                SetActiveMouse(bool v)      { _bActiveMouse = v ;   }       
 	 
-public:	// ÊÂ¼ş
+public:	// events
 	GuiMouseEvent		evtMouseDown;
 	GuiEvent			evtTimeArrive;
 
@@ -85,9 +85,9 @@ private:
 
 	eStyle				_style;
 
-	CGuiPic*			_pImage;					// ±³¾°Í¼+½ø¶ÈÌõ
-	int                 _nFlash;                    //ĞòÁĞèåµÄ¸öÊı
-	bool                _bActiveMouse;                 //ÊÇ·ñÏìÓ¦Êó±ê(Õë¶ÔÒôÆµµ÷½Ú·½Ãæ) 
+	CGuiPic*			_pImage;					// background image plus progress bar
+	int                 _nFlash;                    // number of frames in the sequence
+	bool                _bActiveMouse;                 //whether it responds to the mouse (regarding audio adjustment)
     eHintStyle          _eHintStyle;
 
 	int					_nStart;

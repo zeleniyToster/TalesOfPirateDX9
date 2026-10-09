@@ -1,4 +1,4 @@
-
+ï»¿
 #include "stdafx.h"
 #include "UIPurifyForm.h"
 #include "GameApp.h"
@@ -48,7 +48,7 @@ namespace GUI
 			return false;
 		}
 
-		// CommandÏÂÃæÌáÊ¾
+		// the hint under the Command
 		char szName[32] = {0};
 		for(int i = 0; i < TYPE_COUNT; ++i)
 		{
@@ -103,7 +103,7 @@ namespace GUI
 
 	void CPurifyMgr::CloseForm()
 	{
-		// ²»×÷ÈÎºÎ´¦Àí
+		// does nothing
 	}
 
 
@@ -115,7 +115,7 @@ namespace GUI
 
 			if(PURIFY_TYPE <= nType && nType < PURIFY_TYPE + TYPE_COUNT)
 			{
-				m_nType = nType;  // ±£´æÀàĞÍ
+				m_nType = nType;  // saves the type
 
 				for(int i = 0; i < TYPE_COUNT; ++i)
 				{
@@ -189,7 +189,7 @@ namespace GUI
 	}
 
 
-	// ÊÇ·ñÊÇ¿ÉÒÔ×°±¸µÄÎïÆ·
+	// whether it is an item that can be equipped
 	bool CPurifyMgr::IsEquipItem(CItemCommand& rItem)
 	{
 		CItemRecord* pItemRecord = rItem.GetItemInfo();
@@ -199,20 +199,20 @@ namespace GUI
 
 			switch(sType)
 			{
-			case 1:		//½£
-			case 2:		//¾Ş½£
-			case 3:		//¹­
-			case 4:		//»ğÇ¹
-			case 7:		//Ø°Ê×
-			case 9:		//·¨ÕÈ
-			case 11:	//¶ÜÅÆ
-			case 20:	//Ã±×Ó
-			case 22:	//ÒÂ·ş
-			case 23:	//ÊÖÌ×
-			case 24:	//Ğ¬×Ó
+			case 1:		//sword
+			case 2:		//greatsword
+			case 3:		//bow
+			case 4:		//musket
+			case 7:		//dagger
+			case 9:		//staff
+			case 11:	//shield
+			case 20:	//hat
+			case 22:	//clothing
+			case 23:	//gloves
+			case 24:	//boots
 			case 25:	//rings
 			case 26:	//necks
-			case 27:	//ÎÆÉí
+			case 27:	//tattoo
 			case 81:	//brac
 			case 82:	//brac
 			case 83:	//brac
@@ -236,10 +236,10 @@ namespace GUI
 
 			switch(nType)
 			{
-			case 1067://	Ë®¾§¹ø	
-			case 1068://	ºÚ¶´Ë®¾§	
-			case 1069://	·´ÎïÖÊË®¾§	
-			case 1070://	Á£×ÓÁ÷Ë®¾§
+			case 1067://	crystal pot
+			case 1068://	black hole crystal
+			case 1069://	antimatter crystal
+			case 1070://	particle flow crystal
 				return true;
 
 			default:
@@ -260,7 +260,7 @@ namespace GUI
 
 			switch(nType)
 			{
-			case 2236://	ĞŞ²¹¹¤¾ß
+			case 2236://	repair tool
 				return true;
 
 			default:
@@ -274,13 +274,13 @@ namespace GUI
 
 	void CPurifyMgr::PushItem(int iIndex, CItemCommand& rItem)
 	{
-		// ÅĞ¶ÏµÀ¾ßÊÇ·ñ¿ÉÒÔÍÏ
+		// decides whether the item can be dragged
 		if(! rItem.GetIsValid())
 		{
 			return;
 		}
 
-		// ²é¿´Ô­À´µÄCmdÖĞÊÇ·ñÒÑ¾­ÓĞItemÁË£¬Èç¹ûÓĞÔòÒÆ³ö
+		// checks whether the original Cmd already has an Item and removes it if so
 		CItemCommand* pItemCommand =  
 			dynamic_cast<CItemCommand*>(cmdEquipPurify[iIndex]->GetCommand());
 		if (pItemCommand)
@@ -288,12 +288,12 @@ namespace GUI
 			PopItem(iIndex);
 		}
 
-		// ¼ÇÂ¼ItemÔÚÎïÆ·À¸ÖĞµÄÎ»ÖÃ
+		// records the position of the Item in the item slot
 		m_iPurifyItemPos[iIndex] = g_stUIEquip.GetGoodsGrid()->GetDragIndex();
-		// ½«ItemÏàÓ¦µÄÎïÆ·À¸»Òµ÷
+		// greys out the item slot of the Item
 		rItem.SetIsValid(false);
 
-		// ½«´´½¨µÄItem·ÅÈëCmdÖĞ£¬ÕâÀïÓÃnew½«»áÔÚPopItem()ÖĞÉ¾³ı
+		// å°†åˆ›å»ºçš„Itemæ”¾å…¥Cmdä¸­ï¼Œè¿™é‡Œç”¨newå°†ä¼šåœ¨PopItem()ä¸­åˆ é™¤
 		CItemCommand* pItemCmd = new CItemCommand(rItem);
 		pItemCmd->SetIsValid(true);
 		cmdEquipPurify[iIndex]->AddCommand(pItemCmd);
@@ -304,14 +304,14 @@ namespace GUI
 
 	void CPurifyMgr::PopItem(int iIndex)
 	{
-		// É¾³ıCmdÖĞµÄItem£¬¸ÃItem»áÔÚPushItem()ÖĞÓÉnewÉú³É
+		// åˆ é™¤Cmdä¸­çš„Itemï¼Œè¯¥Itemä¼šåœ¨PushItem()ä¸­ç”±newç”Ÿæˆ
 		CItemCommand* pItemCommand =  
 			dynamic_cast<CItemCommand*>(cmdEquipPurify[iIndex]->GetCommand());
 		if (! pItemCommand) return;
 
-		cmdEquipPurify[iIndex]->DelCommand();	// ¸Ãº¯Êı½«É¾³ıdelete Item
+		cmdEquipPurify[iIndex]->DelCommand();	// this function deletes the Item
 
-		// ½«ItemÏàÓ¦µÄÎïÆ·À¸»Ö¸´³É¿ÉÓÃ
+		// puts the item slot of the Item back to usable
 		CCommandObj* pItem = 
 					g_stUIEquip.GetGoodsGrid()->GetItem(m_iPurifyItemPos[iIndex]);
 		if (pItem)
@@ -319,12 +319,12 @@ namespace GUI
 			pItem->SetIsValid(true);
 		}
 
-		// ¼ÇÂ¼ItemÔÚÎïÆ·À¸ÖĞµÄÎ»ÖÃ
+		// records the position of the Item in the item slot
 		m_iPurifyItemPos[iIndex] = NO_USE;
 	}
 
 
-	// ÉèÖÃ½çÃæ£¬²¢¼ÆËã¼Û¸ñ
+	// sets up the screen and computes the price
 	void CPurifyMgr::SetPurifyUI()
 	{
 		CItemCommand* pItem1 = dynamic_cast<CItemCommand*>(cmdEquipPurify[PURIFY_ONE]->GetCommand());
@@ -347,12 +347,12 @@ namespace GUI
 			return;
 		}
 
-		// ¶ş¸öÀ¸Î»¶¼ÒÑ¾­·ÅÈë£¬ÔÊĞíµã»÷¡°È·¶¨¡±°´Å¥
+		// both slots are filled, so the 'confirm' button may be clicked
 		btnForgeYes->SetIsEnabled(true);
 
 		int nMoney = 0;
 
-		// µÀ¾ßÌá´¿
+		// item purifying
 		if(GetType() == CPurifyMgr::PURIFY_TYPE)
 		{
 			//int nMainLevel = pItem1->GetItemInfo()->sNeedLv;
@@ -360,7 +360,7 @@ namespace GUI
 
 			nMoney = 1000000;
 		}
-		// ±´¿Ç
+		// shell
 		else if(GetType() == CPurifyMgr::ENERGY_TYPE)
 		{
 			int nBatteryID = pItem2->GetItemInfo()->lID;
@@ -373,7 +373,7 @@ namespace GUI
 				nMoney = 1000;
 			}
 		}
-		// ±¦Ê¯
+		// gem
 		else if(GetType() == CPurifyMgr::GETSTONE_TYPE)
 		{
 			int nStoneLevel = pItem1->GetForgeInfo().nStoneLevel[0] + 
@@ -381,7 +381,7 @@ namespace GUI
 							  pItem1->GetForgeInfo().nStoneLevel[2];
 			nMoney = nStoneLevel * 10000;
 		}
-		// ĞŞÀíÆÆ¹ø
+		// repairing the broken pot
 		else if(g_stUIPurify.GetType() == CPurifyMgr::REPAIR_OVEN_TYPE)
 		{
 			//int nOvenLevel = 0;
@@ -405,7 +405,7 @@ namespace GUI
 	}
 
 
-	// ·¢ËÍÌá´¿Ğ­Òé
+	// sends the purify protocol
 	void CPurifyMgr::SendNetProtocol()
 	{
 		CS_ItemForgeAsk(true, GetType(), m_iPurifyItemPos, PURIFY_CELL_COUNT);
@@ -414,10 +414,10 @@ namespace GUI
 
 ///////////////////////////////////////////////////////////////////////////
 //
-//	½çÃæÏûÏ¢´¦Àí
+//	screen message handling
 //
 
-	// ÍÏÈëÖ÷ÒªÎïÆ·
+	// the main item is dragged in
 	void CPurifyMgr::_evtDragPurifyOne(CGuiData *pSender,CCommandObj* pItem,bool& isAccept)
 	{
 		CItemCommand* pItemCommand =  dynamic_cast<CItemCommand*>(pItem);
@@ -426,43 +426,43 @@ namespace GUI
 		CGoodsGrid* pGood = dynamic_cast<CGoodsGrid*>(CDrag::GetParent());
 		if( pGood != g_stUIEquip.GetGoodsGrid() ) return;
 
-		// µÀ¾ßÌá´¿
+		// item purifying
 		if(g_stUIPurify.GetType() == CPurifyMgr::PURIFY_TYPE)
 		{
 			//if(! g_stUIPurify.IsEquipItem(*pItemCommand))
 			//{
-			//	g_pGameApp->MsgBox(g_oLangRec.GetString(831)); // Ö÷Òª×°±¸²»ºÏ·¨£¬ÇëÖØĞÂÑ¡Ôñ
+			//	g_pGameApp->MsgBox(g_oLangRec.GetString(831)); // ä¸»è¦è£…å¤‡ä¸åˆæ³•ï¼Œè¯·é‡æ–°é€‰æ‹©
 			//	return;
 			//}
 		}
-		// ±´¿Ç
+		// shell
 		else if(g_stUIPurify.GetType() == CPurifyMgr::ENERGY_TYPE)
 		{
 			if(pItemCommand->GetItemInfo()->sType != 29)
 			{
-				g_pGameApp->MsgBox(g_oLangRec.GetString(852)); // Äú·ÅÈëµÄ²»ÊÇ±´¿Ç£¬ÇëÖØĞÂÑ¡Ôñ
+				g_pGameApp->MsgBox(g_oLangRec.GetString(852)); // what you put in is not a shell; please choose again
 				return;
 			}
 		}
-		// ±¦Ê¯
+		// gem
 		else if(g_stUIPurify.GetType() == CPurifyMgr::GETSTONE_TYPE)
 		{
 			if(! g_stUIPurify.IsEquipItem(*pItemCommand))
 			{
-				g_pGameApp->MsgBox(g_oLangRec.GetString(831)); // Ö÷Òª×°±¸²»ºÏ·¨£¬ÇëÖØĞÂÑ¡Ôñ
+				g_pGameApp->MsgBox(g_oLangRec.GetString(831)); // the main equipment is not valid; please choose again
 				return;
 			}
 		}
-		// ĞŞÀíÆÆ¹ø
+		// repairing the broken pot
 		else if(g_stUIPurify.GetType() == CPurifyMgr::REPAIR_OVEN_TYPE)
 		{
 			if(! g_stUIPurify.IsMainLifeItem(*pItemCommand))
 			{
-				g_pGameApp->MsgBox(g_oLangRec.GetString(891)); // Äú·ÅÈëµÄ²»ÊÇÉú»î¼¼ÄÜ¹¤¾ß£¬ÇëÖØĞÂÑ¡Ôñ
+				g_pGameApp->MsgBox(g_oLangRec.GetString(891)); // what you put in is not a life skill tool; please choose again
 				return;
 			}
 		}
-		else	// ÀàĞÍ²»ºÏ·¨
+		else	// the type is not valid
 		{
 			return;
 		}
@@ -471,7 +471,7 @@ namespace GUI
 	}
 
 
-	// ÍÏÈëÌá´¿ÎïÆ·
+	// the item to purify is dragged in
 	void CPurifyMgr::_evtDragPurifyTwo(CGuiData *pSender,CCommandObj* pItem,bool& isAccept)
 	{
 		CItemCommand* pItemCommand =  dynamic_cast<CItemCommand*>(pItem);
@@ -482,61 +482,61 @@ namespace GUI
 
 		CItemCommand* pMainItem = dynamic_cast<CItemCommand*>(g_stUIPurify.cmdEquipPurify[PURIFY_ONE]->GetCommand());
 
-		// µÀ¾ßÌá´¿
+		// item purifying
 		if(g_stUIPurify.GetType() == CPurifyMgr::PURIFY_TYPE)
 		{
 			if(NULL == pMainItem)
 			{
-				g_pGameApp->MsgBox(g_oLangRec.GetString(828)); // ÇëÏÈ·ÅÈëÖ÷Òª×°±¸
+				g_pGameApp->MsgBox(g_oLangRec.GetString(828)); // please put in the main equipment first
 				return;
 			}
 
 			//if(pMainItem->GetItemInfo()->sType != pItemCommand->GetItemInfo()->sType)
 			//{
-			//	g_pGameApp->MsgBox(g_oLangRec.GetString(829)); // Ìá´¿×°±¸ºÍÖ÷Òª×°±¸²»ÊÇÍ¬Ò»ÀàĞÍ£¬ÇëÖØĞÂÑ¡Ôñ
+			//	g_pGameApp->MsgBox(g_oLangRec.GetString(829)); // æçº¯è£…å¤‡å’Œä¸»è¦è£…å¤‡ä¸æ˜¯åŒä¸€ç±»å‹ï¼Œè¯·é‡æ–°é€‰æ‹©
 			//	return;
 			//}
 
 			//if(pMainItem->GetData().GetItemLevel() > pItemCommand->GetData().GetItemLevel() + 5)
 			//{
-			//	g_pGameApp->MsgBox(g_oLangRec.GetString(830)); // Ìá´¿×°±¸µÈ¼¶²»ÄÜĞ¡ÓÚÖ÷Òª×°±¸ 5 ¼¶£¬ÇëÖØĞÂÑ¡Ôñ
+			//	g_pGameApp->MsgBox(g_oLangRec.GetString(830)); // æçº¯è£…å¤‡ç­‰çº§ä¸èƒ½å°äºä¸»è¦è£…å¤‡ 5 çº§ï¼Œè¯·é‡æ–°é€‰æ‹©
 			//	return;
 			//}
 		}
-		// ±´¿Ç
+		// shell
 		else if(g_stUIPurify.GetType() == CPurifyMgr::ENERGY_TYPE)
 		{
 			if(NULL == pMainItem)
 			{
-				g_pGameApp->MsgBox(g_oLangRec.GetString(853)); // ÇëÏÈ·ÅÈë±´¿Ç
+				g_pGameApp->MsgBox(g_oLangRec.GetString(853)); // please put in the shell first
 				return;
 			}
 		}
-		// ±¦Ê¯
+		// gem
 		else if(g_stUIPurify.GetType() == CPurifyMgr::GETSTONE_TYPE)
 		{
 			if(NULL == pMainItem)
 			{
-				g_pGameApp->MsgBox(g_oLangRec.GetString(828)); // ÇëÏÈ·ÅÈëÖ÷Òª×°±¸
+				g_pGameApp->MsgBox(g_oLangRec.GetString(828)); // please put in the main equipment first
 				return;
 			}
 		}
-		// ĞŞÀíÆÆ¹ø
+		// repairing the broken pot
 		else if(g_stUIPurify.GetType() == CPurifyMgr::REPAIR_OVEN_TYPE)
 		{
 			if(NULL == pMainItem)
 			{
-				g_pGameApp->MsgBox(g_oLangRec.GetString(892)); // ÇëÏÈÈë·ÅÈëÉú»î¼¼ÄÜ¹¤¾ß
+				g_pGameApp->MsgBox(g_oLangRec.GetString(892)); // please put in the life skill tool first
 				return;
 			}
 
 			if(! g_stUIPurify.IsRepairLifeItem(*pItemCommand))
 			{
-				g_pGameApp->MsgBox(g_oLangRec.GetString(893)); // Äú·ÅÈëµÄ²»ÊÇĞŞ²¹¹¤¾ß£¬ÇëÖØĞÂÑ¡Ôñ
+				g_pGameApp->MsgBox(g_oLangRec.GetString(893)); // what you put in is not a repair tool; please choose again
 				return;
 			}
 		}
-		// ÀàĞÍ²»ºÏ·¨
+		// the type is not valid
 		else
 		{
 			return;
@@ -546,7 +546,7 @@ namespace GUI
 	}
 
 
-	// Êó±êµã»÷°´Å¥ÊÂ¼ş
+	// mouse button click event
 	void CPurifyMgr::_evtMainMouseButton(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey)
 	{
 		string strName = pSender->GetName();
@@ -559,7 +559,7 @@ namespace GUI
 	}
 
 
-	// ¹Ø±Õ´°ÌåÊÂ¼ş
+	// close window event
 	void CPurifyMgr::_evtClosePurifyForm(CForm* pForm, bool& IsClose)
 	{
 		g_stUIPurify.ClearAllCommand();

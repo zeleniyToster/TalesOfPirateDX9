@@ -1,4 +1,4 @@
-// DXEffectFile.h: interface for the CMPEffectFile class.
+﻿// DXEffectFile.h: interface for the CMPEffectFile class.
 //
 //////////////////////////////////////////////////////////////////////
 
@@ -84,7 +84,7 @@ inline BOOL CMPEffectFile::SetTechnique(int iIdx)
 
 //inline  BOOL CMPEffectFile::CreateVertexShader()
 //{
-//	LPD3DXBUFFER pCode;   //!ָ���
+//	LPD3DXBUFFER pCode;   //!指令缓冲
 //	DWORD dwEffVerDecl[] =
 //    {
 //        D3DVSD_STREAM( 0 ),

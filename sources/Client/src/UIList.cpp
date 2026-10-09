@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "uilist.h"
 
 using namespace GUI;
@@ -133,7 +133,7 @@ void CListItems::Clear()
 	for( vitems::iterator it=_items.begin(); it!=_items.end(); it++ )
 	{
 		//delete *it;
-		SAFE_DELETE(*it); // UIµ±»ú´¦Àí
+		SAFE_DELETE(*it); // UI freeze handling
 	}
 
 	_items.clear();
@@ -197,7 +197,7 @@ void CListItems::SetMaxRowNum( int n )
 			for( int i=n; i<end; i++ )
 			{
 				//delete _items[i];
-				SAFE_DELETE(_items[i]); // UIµ±»ú´¦Àí
+				SAFE_DELETE(_items[i]); // UI freeze handling
 			}
 			_items.erase( _items.begin() + n, _items.end() );		
 			_dwCount = (DWORD)_items.size();
@@ -224,7 +224,7 @@ bool CListItems::Del( CItemRow* item )
 		if( _pSelect->GetItem() == *it ) _pSelect->SetNoSelect();
 
         //delete (*it);
-		SAFE_DELETE(*it);	// UIµ±»ú´¦Àí
+		SAFE_DELETE(*it);	// UI freeze handling
 
         _items.erase( it );
 		_dwCount = (DWORD)_items.size();
@@ -242,7 +242,7 @@ bool CListItems::MouseRun( int x, int y, DWORD key )
 			int h = ( (_dwLastShowRow - _dwFirstShowRow) * _nHeight + _nY1 );
 			if( y >= h ) return false;
 
-			// µÃµ½ÐÐÊý
+			// gets the number of rows
 			int row = ( y - _nY1 ) / _nHeight + _dwFirstShowRow;
 
 			if( _pSelect->GetIndex()!=row )
@@ -370,12 +370,12 @@ CListItemsEx& CListItemsEx::operator=( const CListItemsEx& rhs )
 	if( _nCol != rhs._nCol )
 	{
 		//delete [] _nColWidth;
-		SAFE_DELETE_ARRAY(_nColWidth); // UIµ±»ú´¦Àí
+		SAFE_DELETE_ARRAY(_nColWidth); // UI freeze handling
 		_nCol = rhs._nCol;
 		_nColWidth = new unsigned int[_nCol];
 
 		//delete [] _nColX;
-		SAFE_DELETE_ARRAY(_nColX); // UIµ±»ú´¦Àí
+		SAFE_DELETE_ARRAY(_nColX); // UI freeze handling
 		_nColX = new int[_nCol];
 	}
 
@@ -411,8 +411,8 @@ CListItemsEx::~CListItemsEx()
 	//delete [] _nColX;
 	//delete [] _nColWidth;
 
-	SAFE_DELETE_ARRAY(_nColX);     // UIµ±»ú´¦Àí
-	SAFE_DELETE_ARRAY(_nColWidth); // UIµ±»ú´¦Àí
+	SAFE_DELETE_ARRAY(_nColX);     // UI freeze handling
+	SAFE_DELETE_ARRAY(_nColWidth); // UI freeze handling
 }
 
 void CListItemsEx::Clear()
@@ -575,9 +575,9 @@ CList::~CList(void)
 	//delete _pImage;
 	//delete _pItemImage;
 
-	SAFE_DELETE(_pItems);     // UIµ±»ú´¦Àí
-	SAFE_DELETE(_pImage);     // UIµ±»ú´¦Àí
-	SAFE_DELETE(_pItemImage); // UIµ±»ú´¦Àí
+	SAFE_DELETE(_pItems);     // UI freeze handling
+	SAFE_DELETE(_pImage);     // UI freeze handling
+	SAFE_DELETE(_pItemImage); // UI freeze handling
 }
 
 void CList::Init()

@@ -1,4 +1,4 @@
-//================================================================
+ï»¿//================================================================
 // It must be permitted by Dabo.Zhang that this program is used for
 // any purpose in any situation.
 // Copyright (C) Dabo.Zhang 2000-2003
@@ -23,9 +23,9 @@ private:
 
 	friend class	RWMutex;
 	RWMutex		*	m_rwsync;
-	volatile int	m_RDCount;				//¶Á¼ÆÊý
-	volatile int	m_WRCount;				//Ð´¼ÆÊý
-	AccThread	*	nextthread;				//Á´Ê½½á¹¹µÄÏÂÒ»¸öÏîÄ¿
+	volatile int	m_RDCount;				// reader count
+	volatile int	m_WRCount;				// writer count
+	AccThread	*	nextthread;				// next entry of the chain
 };
 typedef AccThread * PAccThread;
 static TLSIndex st_tls;
@@ -49,14 +49,14 @@ void RWMutex::BeginRead()
 
 	m_mtxRWCount.lock();
 	try{
-		while(m_WRCount&&(!l_AccThread->m_WRCount)){	//ÓÐÐ´Ïß³Ì²¢ÇÒ²»ÊÇµ±Ç°Ïß³ÌÔÚÐ´,¾Í×èÈûÔÚ¶ÁËøÉÏ
+		while(m_WRCount&&(!l_AccThread->m_WRCount)){	// a writer exists and it is not us, so block on the read lock
 			m_mtxRWCount.unlock();
 			try{
-				m_semRead.lock();	//×èÈû¶ÁÏß³Ì
+				m_semRead.lock();	// block the reader
 			}catch(...){}
 			m_mtxRWCount.lock();
 		}
-		m_semRead.unlock();//ÊÍ·ÅÈÃÆäËû¶ÁÏß³Ì²¢·¢²Ù×÷
+		m_semRead.unlock();// release, so other readers can run concurrently
 
 		l_AccThread->m_RDCount++;
 		m_RDCount++;
@@ -81,11 +81,11 @@ void RWMutex::BeginWrite(){
 
 	m_mtxRWCount.lock();
 	try{
-		while((m_WRCount &&(!l_AccThread->m_WRCount))||				//ÓÐÐ´Ïß³Ì²¢ÇÒ²»ÊÇµ±Ç°Ïß³ÌÔÚÐ´»òÕß
-				(m_RDCount &&(m_RDCount !=l_AccThread->m_RDCount))){	//ÓÐ¶ÁÏß³Ì²¢ÇÒ²»Ö»µ±Ç°Ïß³ÌÔÚ¶Á,¾Í×èÈûÔÚÐ´ËøÉÏ
+		while((m_WRCount &&(!l_AccThread->m_WRCount))||				// a writer exists and it is not us, or
+				(m_RDCount &&(m_RDCount !=l_AccThread->m_RDCount))){	// readers exist and we are not the only one, so block on the write lock
 			m_mtxRWCount.unlock();
 			try{
-				m_semWrite.lock();										//×èÈûÐ´Ïß³Ì
+				m_semWrite.lock();										// block the writer
 			}catch(...){}
 			m_mtxRWCount.lock();
 		}
@@ -111,9 +111,9 @@ void RWMutex::EndRead()
 	try{
 		m_RDCount --;
 		l_AccThread->m_RDCount --;
-		m_semWrite.unlock();		//¶ÁÏß³Ì,ÊÍ·ÅÐ´Ëø,ÈÃÐ´Ëø¼ì²é
+		m_semWrite.unlock();		// reader path: drop the write lock so the write lock can re-check
 
-		if(!l_AccThread->m_RDCount && !l_AccThread->m_WRCount){ //×îºóÒ»´Î²Ù×÷
+		if(!l_AccThread->m_RDCount && !l_AccThread->m_WRCount){ // final operation
 			m_mtxRWCount.unlock();
 
 			if(l_bakAccThread){
@@ -144,9 +144,9 @@ void RWMutex::EndWrite(){
 	try{
 		m_WRCount --;
 		l_AccThread->m_WRCount --;
-		m_semWrite.unlock();//ÊÍ·ÅÐ´Ëø
-		m_semRead.unlock();//ÊÍ·Å¶ÁËø
-		if(!l_AccThread->m_WRCount && !l_AccThread->m_RDCount){ //×îºóÒ»´Î²Ù×÷
+		m_semWrite.unlock();// release the write lock
+		m_semRead.unlock();// release the read lock
+		if(!l_AccThread->m_WRCount && !l_AccThread->m_RDCount){ // final operation
 			m_mtxRWCount.unlock();
 			if(l_bakAccThread){
 				l_bakAccThread->nextthread =l_AccThread->nextthread;

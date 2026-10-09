@@ -1,10 +1,10 @@
-#pragma once
+ï»¿#pragma once
 
 #include "atltime.h"
 
 class CSQLDatabase;
 
-//´ËÀàÖ»ÔÊĞíÖ÷Ïß³Ìµ÷ÓÃ
+// this class may only be called from the main thread
 class CDataBaseCtrl
 {
 public:

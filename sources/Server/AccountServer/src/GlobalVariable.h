@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #ifndef _GLOBALVARIABLE_H_
 #define _GLOBALVARIABLE_H_
@@ -17,7 +17,7 @@
 #include "pi_Memory.h"
 // End
 
-//#define _RELOGIN_MODE_					//ÐÂµÄµ¹¼ÆÊ±ÖØ¸´µÇÂ½Ä£Ê½
+// new countdown re-login mode
 
 extern std::string g_strCfgFile;
 

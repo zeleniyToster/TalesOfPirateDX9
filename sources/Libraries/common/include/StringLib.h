@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #define WIN32_LEAN_AND_MEAN		// Exclude rarely-used stuff from Windows headers
 // Windows Header Files:
@@ -17,7 +17,7 @@ int StringNewLineChs( char* pOutBuf, unsigned int nWidth, const char* pInBuf, un
 int StringNewLineEng( char* pOutBuf, unsigned int nWidth, const char* pInBuf, unsigned int nInLen );
 
 
-// StringSplitNumº¯Êý¹¦ÄÜÎª½«Ò»¸öÊý×ÖµÄ×Ö·û´®szBuf£¬°´nCount²åÈë·Ö¸ô·ûcSplit
+// StringSplitNum inserts the separator cSplit every nCount characters into the numeric string szBuf
 const char* StringSplitNum( long nNumber, int nCount=3, char cSplit=',' );
 const char* StringSplitNum( const char* bigIntBuf, int nCount=3, char cSplit=',' );
 

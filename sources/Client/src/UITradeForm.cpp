@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "uitradeform.h"
 #include "gameapp.h"
 #include "scene.h"
@@ -26,8 +26,8 @@ using namespace std;
 bool CTradeMgr::Init()
 {
 	m_bTradeType = 0;
-	m_dwAcceptID = 0;         // ½»Ò×½ÓÊÜ·½
-	m_dwRequestID = 0;        // ½»Ò×ÉêÇë·½
+	m_dwAcceptID = 0;         // the accepting side of the trade
+	m_dwRequestID = 0;        // the requesting side of the trade
 	m_dwMainID = 0;
 
 	frmRequest = NULL;				
@@ -35,7 +35,7 @@ bool CTradeMgr::Init()
 
 	CFormMgr &mgr = CFormMgr::s_Mgr;
 
-    //½ÇÉ«½»Ò×½çÃæºÍ¿Ø¼þ
+    //the character trade screen and controls
 	frmPlayertrade =  mgr.Find("frmPlayertrade");
 	if ( !frmPlayertrade)
 	{
@@ -44,7 +44,7 @@ bool CTradeMgr::Init()
 	}
 	frmPlayertrade->evtEntrustMouseEvent = _MainMousePlayerTradeEvent ;
 
-	// µÀ¾ßÒÔ¼°×°±¸À¸
+	// the item and equipment slots
 	grdSale = dynamic_cast<CGoodsGrid*>(frmPlayertrade->Find("grdSale"));
 	if( !grdSale )		return Error( g_oLangRec.GetString(45), frmPlayertrade->GetName(), "grdSale" );
 	GetPlayertradeSaleGrid()->evtBeforeAccept = _evtDragToGoodsEvent;
@@ -55,7 +55,7 @@ bool CTradeMgr::Init()
     GetPlayertradeBuyGrid()->evtBeforeAccept = _evtDragToGoodsEvent;
 	GetPlayertradeBuyGrid()->evtRMouseEvent = _evtOtherRMouseGridEvent;
 
-	//½ÇÉ«½»Ò×µÄ½ð¶î
+	//the amount involved in the character trade
 	labOtherGold =  dynamic_cast<CLabelEx*>(frmPlayertrade->Find("labOtherGold") ); 
 	if ( !labOtherGold)		return Error( g_oLangRec.GetString(45), frmPlayertrade->GetName(), "labOtherGold" );
 	
@@ -113,7 +113,7 @@ void CTradeMgr::ShowCharTradeRequest( BYTE byType, DWORD dwRequestID )
 	CGameScene *pScene = CGameApp::GetCurScene();
 	if(!pScene) return;
 
-	CCharacter * pCha = pScene->SearchByID( dwRequestID );  //ÉêÇë·½
+	CCharacter * pCha = pScene->SearchByID( dwRequestID );  //the requesting side
 	if( !pCha)	
 	{
 		if( !pCha ) return;
@@ -126,8 +126,8 @@ void CTradeMgr::ShowCharTradeRequest( BYTE byType, DWORD dwRequestID )
 		sprintf( szBuf, g_oLangRec.GetString(780), pCha->getHumanName() );
 
 
-	// add by Philip.Wu  2006-06-11  ·ÀÖ¹Òòµ¯³ö¹ý¶àµÄÑ¡Ôñ¿òµ¼ÖÂµ±»ú
-	//                               ÐÞ¸ÄÎªÒ»µ©ÓÐ½»Ò×ÑûÇë£¬¾Í¹Ø±ÕÖ®Ç°µÄÈ·¶¨¿ò
+	// add by Philip.Wu  2006-06-11  prevents the freeze caused by too many selection boxes popping up
+	//                               changed so that as soon as a trade invitation arrives the previous confirm box is closed
 	g_stUIBox.CloseAllBox();
 
 	stSelectBox* pBox = g_stUIBox.ShowSelectBox( _evtSelectYesNoEvent, szBuf );
@@ -153,7 +153,7 @@ void CTradeMgr::_evtSelectYesNoEvent(CCompent *pSender, int nMsgType, int x, int
 void CTradeMgr::_MainMousePlayerTradeEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey)
 {
 	string name = pSender->GetName();
-	if( name=="btnNo"  || name == "btnClose" )  //Èç¹ûÊÇÍË³ö°´Å¥,Ôò¹Ø±Õ¸Ã±íµ¥
+	if( name=="btnNo"  || name == "btnClose" )  // if it is the exit button, this form is closed
 	{	
 		if ( g_stUITrade.m_dwMainID==g_stUITrade.m_dwAcceptID )
 			::CS_CancelTrade( g_stUITrade.m_bTradeType, g_stUITrade.m_dwRequestID );
@@ -232,7 +232,7 @@ void CTradeMgr::_evtGoldFormEvent(CCompent *pSender, int nMsgType, int x, int y,
 
 void CTradeMgr::ShowCharTrade( BYTE byType, DWORD dwAcceptID, DWORD dwRequestID )
 {
-	if( !frmPlayertrade ) return;			//½»Ò×½çÃæ
+	if( !frmPlayertrade ) return;			//the trade screen
 
 	CGameScene *pScene = g_pGameApp->GetCurScene();
 	if(!pScene) return;
@@ -243,15 +243,15 @@ void CTradeMgr::ShowCharTrade( BYTE byType, DWORD dwAcceptID, DWORD dwRequestID 
 	CCharacter* pRequestCha(NULL);
 	CCharacter* pAcceptCha(NULL);
 
-	if (mission::TRADE_CHAR == byType)		//Íæ¼ÒÈËÎïÖ®¼äµÄ½»Ò×
+	if (mission::TRADE_CHAR == byType)		//a trade between two players
 	{
 		frmRequest = g_stUIEquip.GetItemForm();
-		grdRequest = g_stUIEquip.GetGoodsGrid();  //µÀ¾ßÀ¸µÄGrid¿Ø¼þ
+		grdRequest = g_stUIEquip.GetGoodsGrid();  //the Grid control of the item slot
 
 		pRequestCha = pScene->SearchByHumanID( dwRequestID );
 		pAcceptCha =  pScene->SearchByHumanID( dwAcceptID );
 	} 
-	else if (mission::TRADE_BOAT == byType)	//Íæ¼Ò´¬Ö»Ö®¼äµÄ½»Ò×,ÕâÊ±Á½ÈË¶¼ÊÇ´¬,ËùÓÐÓÃIDËÑË÷
+	else if (mission::TRADE_BOAT == byType)	//a trade between two player boats; here both are boats, so everything is looked up by ID
 	{		
 		CCharacter* pMain = CGameScene::GetMainCha();
 		if( !pMain ) return;
@@ -274,7 +274,7 @@ void CTradeMgr::ShowCharTrade( BYTE byType, DWORD dwAcceptID, DWORD dwRequestID 
 		{
 			return;			
 		}
-		// ÅÐ¶Ï´¬Ö»ÊôÐÔÒ³ÃæÊÇ·ñ´ò¿ª,Èç¹û´ò¿ª,¹Ø±ÕËü
+		// checks whether the boat attribute page is open and closes it if so
 		CForm* pBoatRoom = pBoat->GetForm();
 		if (!pBoatRoom) return;
 		CForm* pForm = dynamic_cast<CForm*>(pBoatRoom->GetParent());
@@ -303,7 +303,7 @@ void CTradeMgr::ShowCharTrade( BYTE byType, DWORD dwAcceptID, DWORD dwRequestID 
 	else
 		m_dwMainID = dwAcceptID;
 
-	//ÉèÖÃ±íµ¥µÄÎ»ÖÃ²¢ÏÔÊ¾,ÒÔ¼°½»Ò×±íµ¥¿Ø¼þ³õÊ¼»¯
+	//sets the position of the form, shows it and initialises the controls of the trade form
 	frmRequest->SetParent( NULL );
 	frmRequest->SetPos( 0, 100 );
 	frmRequest->Refresh();	
@@ -328,12 +328,12 @@ void CTradeMgr::ShowCharTrade( BYTE byType, DWORD dwAcceptID, DWORD dwRequestID 
 	btnIMP->SetIsEnabled( m_bTradeType==mission::TRADE_CHAR );
 	btnTrade->SetIsEnabled( false );	
 
-	string strPlayTradeLabName("");			//labPlayertradeName¿Ø¼þCaption
+	string strPlayTradeLabName("");			//the Caption of the labPlayertradeName control
 	strPlayTradeLabName = pRequestCha->getHumanName();
 	strPlayTradeLabName +=  "/";
 	strPlayTradeLabName += pAcceptCha->getHumanName();
 
-	// ¸Õ¿ªÊ¼¿´¼û¶Ô·½ÊäÈëµÄ½ð¶îÒÔÎïÆ·£¬Ö»ÓÐ¶Ô·½È·¶¨ÒÔºó²ÅÄÜ¿´¼û
+	// at first the amount typed by the other side is seen as items; it is only visible after they confirm
 	labOtherGold->SetIsShow( false );
 	GetPlayertradeBuyGrid()->SetIsShow( false );
 
@@ -372,7 +372,7 @@ void  CTradeMgr::DragItemToTrade(DWORD dwCharID,USHORT sItemID,BYTE byIndex,BYTE
 	{
 		tradeGrd = g_stUITrade.GetPlayertradeSaleGrid();
 
-		//µÀ¾ßÀ¸ÖÐ¸ÃµÀ¾ß±ä»Ò
+		//the item in the item slot is greyed out
 		CCommandObj* pSelf = grdRequest->GetItem( byItemIndex );
 		if (pSelf)
 		{
@@ -573,13 +573,13 @@ void CTradeMgr::Clear()
 		}
 	}
 
-	//¹Ø±Õ×ó±ß±íµ¥
+	//closes the left form
 	if ( frmRequest ) frmRequest->Close();
 
-	//¹Ø±ÕÓÒ±ß±íµ¥
+	//closes the right form
 	if ( frmPlayertrade) frmPlayertrade->Close();
 
-	//ÆäËû
+	//the other side
 	frmRequest = NULL;
 	grdRequest = NULL;
 
@@ -592,7 +592,7 @@ void CTradeMgr::Clear()
 		CDrag::GetDrag()->Reset();
 	}
 
-    // ½»Ò×ºó¹Ø±Õ³öº£
+    // closes the sea voyage after the trade
 	CWorldScene* pWorldScene = dynamic_cast<CWorldScene*>(g_pGameApp->GetCurScene());
 	if(pWorldScene && pWorldScene->GetShipMgr())
 	{
@@ -645,16 +645,16 @@ void CTradeMgr::_evtOtherRMouseGridEvent(CGuiData *pSender,CCommandObj* pItem,in
 }
 
 
-// add by Philip.Wu  2006-07-04  Í£Ö¹½»Ò×²¢¹Ø±Õ½»Ò×¿ò
+// add by Philip.Wu  2006-07-04  stops the trade and closes the trade box
 void CTradeMgr::CloseAllForm()
 {
-	// ÏÈÍ£Ö¹½»Ò×
+	// stops the trade first
 	if(IsTrading())
 	{
 		::CS_CancelTrade( g_stUITrade.m_bTradeType, g_stUITrade.m_dwRequestID );
 	}
 
-	// ¹Ø±Õ´°Ìå
+	// closes the window
 	if(frmPlayertrade && frmPlayertrade->GetIsShow())
 	{
 		frmPlayertrade->SetIsShow(false);

@@ -1,4 +1,4 @@
-//=============================================================================
+ï»¿//=============================================================================
 // FileName: SailLvRecord.h
 // Creater: ZhangXuedong
 // Date: 2005.05.28
@@ -19,9 +19,9 @@ class CSailLvRecord : public CRawDataInfo
 public:
 	//CSailLvRecord();
 
-	long	lID;			// ±àºÅ
-	short	sLevel;			// µÈ¼¶
-	unsigned long	ulExp;	// ¾­ÑéÖµ
+	long	lID;			// id
+	short	sLevel;			// level
+	unsigned long	ulExp;	// experience
 };
 
 class CSailLvRecordSet : public CRawDataSet
@@ -39,7 +39,7 @@ public:
 
 protected:
 
-	static CSailLvRecordSet* _Instance; // Ïàµ±ÓÚµ¥¼ü, °Ñ×Ô¼º¼Ç×¡
+	static CSailLvRecordSet* _Instance; // acts like a singleton: keeps a reference to itself
 
 	virtual CRawDataInfo* _CreateRawDataArray(int nCnt)
 	{

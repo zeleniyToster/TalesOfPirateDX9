@@ -1,17 +1,17 @@
-// Logvwr.h : PROJECT_NAME Ó¦ÓÃ³ÌĞòµÄÖ÷Í·ÎÄ¼ş
+ï»¿// Logvwr.h : main header file for the PROJECT_NAME application
 //
 
 #pragma once
 
 #ifndef __AFXWIN_H__
-#error ÔÚ°üº¬ÓÃÓÚ PCH µÄ´ËÎÄ¼şÖ®Ç°°üº¬¡°stdafx.h¡±
+#error åœ¨åŒ…å«ç”¨äº PCH çš„æ­¤æ–‡ä»¶ä¹‹å‰åŒ…å«â€œstdafx.hâ€
 #endif
 
-#include "resource.h"       // Ö÷·ûºÅ
+#include "resource.h"       // primary symbols
 
 
 // CLogvwrApp:
-// ÓĞ¹Ø´ËÀàµÄÊµÏÖ£¬Çë²ÎÔÄ Logvwr.cpp
+// see Logvwr.cpp for the implementation of this class
 //
 
 class CLogvwrApp : public CWinApp
@@ -19,11 +19,11 @@ class CLogvwrApp : public CWinApp
 public:
     CLogvwrApp();
 
-    // ÖØĞ´
+    // overrides
 public:
     virtual BOOL InitInstance();
 
-    // ÊµÏÖ
+    // implementation
 
     DECLARE_MESSAGE_MAP()
     };

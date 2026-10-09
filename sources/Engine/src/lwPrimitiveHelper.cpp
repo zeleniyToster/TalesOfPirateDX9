@@ -1,4 +1,4 @@
-//
+ï»¿//
 #include "stdafx.h"
 
 
@@ -712,7 +712,7 @@ LW_RESULT lwHelperMesh::CreateInstance()
 LW_RESULT lwHelperMesh::HitTest( lwPickInfo* info, const lwVector3* org, const lwVector3* ray, const lwMatrix44* mat_parent, const char* type_name )
 {
 //#define USE_INVERSE_MAT
-// Ê¹ÓÃUSE_INVERSE_MATµÄ´úÂëÊÇÓÐÎÊÌâµÄ£¬Ä³Ð©µãµÄhit test»á·µ»ØÊ§°Ü
+// the code that uses USE_INVERSE_MAT is faulty: the hit test fails for some points
 #ifdef USE_INVERSE_MAT
     //static int xx = 1;
     //float time_u, time_v;

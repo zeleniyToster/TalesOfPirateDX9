@@ -1,4 +1,4 @@
-/**
+ï»¿/**
 *  @file playsound.h
 *
 *  playsound.h, v 2.0 2004/8/22 13:14:05 shanghai China
@@ -11,29 +11,29 @@
 #ifndef _PLAYSOUND_H_
 #define _PLAYSOUND_H_
 
-// ÒôÀÖÏµÍ³³õÊ¼»¯£¬ÔÚÓ¦ÓÃ³ÌĞòÈë¿Úµãµ÷ÓÃ
+// initialise the music system; call at the application entry point
 bool mus_mgr_init(bool enable, DWORD_PTR dwValue = 0);
-// ÒôÀÖÏµÍ³Reset£¬ÔÚÇĞ»»³¡¾°Ê±µ÷ÓÃ
-void mus_mgr_reset(int op = 0); // opÎª-1Çå³ıËùÓĞÒôÀÖ, 0Çå³ı³ı±³¾°ÒôÀÖÍâµÄËùÓĞÒôÀÖ
-// ÒôÀÖÏµÍ³ÍË³ö£¬ÔÚÓ¦ÓÃ³ÌĞòÍË³öµãµ÷ÓÃ
+// reset the music system; call when switching scenes
+void mus_mgr_reset(int op = 0); // an op of -1 clears all music, 0 clears everything except the background music
+// shut the music system down; call at the application exit point
 void mus_mgr_exit();
 
 
-// ²¥·Å»·¾³ÒôĞ§
-bool env_snd_is_full(); // »·¾³ÒôĞ§Í¨µÀÊıÊÇ·ñÒÑ¾­È«±»Õ¼ÓÃ
-int env_snd_add(char const* fname); // ·µ»Ø-1±íÊ¾»·¾³ÒôĞ§Í¨µÀÒÑÂú
-bool env_snd_vol(int id, int vol); // vol >= 0£¬¸ºÊı·µ»Øfalse£¬³¬¹ı128°´128¼ÆËã
+// play an ambient sound
+bool env_snd_is_full(); // whether every ambient sound channel is already taken
+int env_snd_add(char const* fname); // returns -1 when no ambient sound channel is free
+bool env_snd_vol(int id, int vol); // vol >= 0; a negative value returns false, values above 128 count as 128
 bool env_snd_play(int id);
 inline bool env_snd_del(int id) {return env_snd_vol(id, 0);}
 
-// ²¥·ÅÆÕÍ¨ÒôĞ§
-void cmn_snd_set_cache(int n = 20); // nÊÇ»º³åWAVEÎÄ¼şµÄ×î´ó¸öÊı
-bool cmn_snd_play(char const* fname, int vol = 128); // vol >= 0£¬¸ºÊı·µ»Øfalse£¬³¬¹ı128°´128¼ÆËã
+// play an ordinary sound
+void cmn_snd_set_cache(int n = 20); // n is the maximum number of buffered WAVE files
+bool cmn_snd_play(char const* fname, int vol = 128); // vol >= 0; a negative value returns false, values above 128 count as 128
 
-// Ê¹ÄÜÒôĞ§
+// enable sound
 void snd_enable(bool enable = true);
 
-// ²¥·Å±³¾°ÒôÀÖ
+// play the background music
 void bkg_snd_set_notify(HWND hwnd, UINT msg_id);
 bool bkg_snd_play(char const* fname, bool loop = false);
 void bkg_snd_vol(int vol);
@@ -42,18 +42,18 @@ void bkg_snd_stop();
 
 //////////////////////////////////////////////////////////////////////////
 //
-// ÒÔÏÂµÄÀÏ½Ó¿ÚÈ«²¿ÓÃĞÂ½Ó¿ÚÊµÏÖ£¬ÕâĞ©½Ó¿Ú»áÖğ²½·ÏÆú by claude Fan at 2004-10-20
+// all the legacy interfaces below are implemented on top of the new ones and will be phased out - by claude Fan, 2004-10-20
 //
 //////////////////////////////////////////////////////////////////////////
 
-// ²Ù×÷±³¾°ÒôÀÖ
+// manipulate the background music
 inline void SetBkMusicNotify(HWND hWnd, UINT uMsgId)
     {bkg_snd_set_notify(hWnd, uMsgId);}
 inline int PlayBkMusic(char const* filename, bool loop = false)
     {return int(bkg_snd_play(filename, loop));}
 inline int StopBkMusic() {bkg_snd_stop(); return 0;}
 
-// ²¥·ÅÒôĞ§
+// play a sound
 inline void SetWaveQueueLen(int n = 20) {cmn_snd_set_cache(n);}
 inline int PlayMusic(char const* filename, int reserved = 0)
     {return int(cmn_snd_play(filename));}

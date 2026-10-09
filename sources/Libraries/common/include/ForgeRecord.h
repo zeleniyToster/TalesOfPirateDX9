@@ -1,4 +1,4 @@
-// ForgeRecord.h Created by knight-gongjian 2005.1.24.
+ï»¿// ForgeRecord.h Created by knight-gongjian 2005.1.24.
 //---------------------------------------------------------
 #pragma once
 
@@ -10,23 +10,23 @@
 #include "TableData.h"
 
 //---------------------------------------------------------
-#define FORGE_MAXNUM_ITEM				6 // ¾«Á·ĞèÇó×î´óÎïÆ·Êı
+#define FORGE_MAXNUM_ITEM				6 // maximum number of materials a refine may require
 
 class CForgeRecord : public CRawDataInfo
 {
 public:
-	BYTE byLevel;	// ¾«Á·µÈ¼¶
-	BYTE byFailure; // Ê§°ÜºóÎïÆ·ÍË»ØµÈ¼¶
-	BYTE byRate;	// ¾«Á·ÎäÆ÷µÄ³É¹¦ÂÊ	
-	BYTE byParam;	// ±£Áô²ÎÊı
-	DWORD dwMoney;  // ¾«Á·ĞèÇó½ğÇ®
+	BYTE byLevel;	// refine level
+	BYTE byFailure; // level the item falls back to on failure
+	BYTE byRate;	// success chance when refining a weapon
+	BYTE byParam;	// reserved parameter
+	DWORD dwMoney;  // money a refine costs
 
-	// ¾«Á·ÎïÆ·ĞèÇóÊı¾İ
+	// refine material requirements
 	struct FORGE_ITEM
 	{
-		USHORT sItem;	// ĞèÇóÎïÆ·ID
-		BYTE   byNum;	// ĞèÇóÎïÆ·µÄÊıÁ¿
-		BYTE   byParam; // ±£Áô²ÎÊı
+		USHORT sItem;	// required item id
+		BYTE   byNum;	// required item count
+		BYTE   byParam; // reserved parameter
 	};	
 	FORGE_ITEM ForgeItem[FORGE_MAXNUM_ITEM];
 };
@@ -45,7 +45,7 @@ public:
 	}
 
 protected:
-	static CForgeRecordSet* _Instance; // Ïàµ±ÓÚµ¥¼ü, °Ñ×Ô¼º¼Ç×¡
+	static CForgeRecordSet* _Instance; // acts like a singleton: keeps a reference to itself
 
 	virtual CRawDataInfo* _CreateRawDataArray(int nCnt)
 	{

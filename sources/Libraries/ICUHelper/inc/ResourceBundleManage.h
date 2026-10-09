@@ -1,8 +1,8 @@
-#pragma once
-#include "unicode/resbund.h"		//×ÊÔ´¹ÜÀíĞÅÏ¢
-#include "unicode/ucnv.h"			//×Ö·û±àÂë×ª»»
-#include "unicode/uclean.h"			//×Ö·û±àÂë×ª»»
-#include "unicode/msgfmt.h"			//¸ñÊ½»¯×Ö·û´®
+ï»¿#pragma once
+#include "unicode/resbund.h"		//resource management information
+#include "unicode/ucnv.h"			//character encoding conversion
+#include "unicode/uclean.h"			//character encoding conversion
+#include "unicode/msgfmt.h"			//format strings
 	
 //#include "pi_Alloc.h"
 
@@ -76,7 +76,7 @@ private:
 	bool Init();
 
 public:
-	int GetSize(void);			// È¡µÃ×ÊÔ´¸öÊı
+	int GetSize(void);			// gets the number of resources
 	
 	void Release(void);
 

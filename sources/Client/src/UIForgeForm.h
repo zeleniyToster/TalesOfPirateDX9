@@ -1,10 +1,10 @@
-#pragma once
+ï»¿#pragma once
 #include "UIGlobalVar.h"
 
 namespace GUI
 {
 
-// µÀ¾ß¾«Á¶
+// item refining
 class CForgeMgr : public CUIInterface
 {
 public:
@@ -57,13 +57,13 @@ private:
 
 private:
 	enum {
-		EQUIP = 0,			// ×°±¸Ë÷Òý
-		GEN_STONE = 1,		// Í¨ÓÃ±¦Ê¯Ë÷Òý
-		FORGE_STONE = 2,	// ¾«Á·±¦Ê¯Ë÷Òý
+		EQUIP = 0,			// equipment index
+		GEN_STONE = 1,		// common gem index
+		FORGE_STONE = 2,	// refining gem index
 		ITEM_NUM = 3,
 	};
 
-	CForm       *frmNPCforge ;//µÀ¾ß¾«Á·½çÃæ
+	CForm       *frmNPCforge ;//item refining screen
 	COneCommand *cmdForgeItem[ITEM_NUM];
 	CLabelEx    *labForgeGold;
 	CProgressBar *proNPCforge;
@@ -81,7 +81,7 @@ private:
 	static const long FORGE_PER_LEVEL_MONEY = 100000;
 	//static const long FORGE_PER_LEVEL_MONEY = 10000;	//	modify by alfred.shi 20080804
 	static const long MILLING_PER_LEVEL_MONEY = 50000;
-	static const int FORGE_PRO_TIME = 10000;	//10Ãë
+	static const int FORGE_PRO_TIME = 10000;	//10 seconds
 	static const int FORGE_SUCCESS_EFF_ID = 345;
 	static const int FORGE_FAILED_EFF_ID = 346;
 

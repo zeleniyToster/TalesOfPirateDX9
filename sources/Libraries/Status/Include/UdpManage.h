@@ -1,8 +1,8 @@
-#pragma once
+ï»¿#pragma once
 
 #include "udpsocket.h"
 
-// ·şÎñÆ÷¼àÌıÓÃ
+// used by the server for listening
 
 class CUdpManage;
 typedef void (*ReceiveManageEvent) ( CUdpManage* pManage, CUdpServer* pUdpServer, const char* szClientIP, unsigned int nClientPort, const char* pData, int len );

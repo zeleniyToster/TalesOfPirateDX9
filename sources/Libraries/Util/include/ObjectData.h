@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "SectionData.h"
 
@@ -6,12 +6,12 @@
 
 struct SSceneObjInfo
 {
-    short	sTypeID;	// ¸ß2Î»ÊÇtype(0: ³¡¾°Îï¼ş, 1: ÌØĞ§Îï¼ş), ÆäÓàÊÇID
+    short	sTypeID;	// the top 2 bits are the type (0: scene object, 1: effect object), the rest is the id
 	unsigned long nX;
 	unsigned long nY;
 	short	sHeightOff;
 	short	sYawAngle;
-    short	sScale;		// ±£ÁôÎ´Ê¹ÓÃ
+    short	sScale;		// reserved, unused
 
 	short GetType()
 	{
@@ -37,11 +37,11 @@ class CSceneObjData : public CSectionDataMgr
 		int		lVersion;
 		long	lFileSize;
 
-		int		iSectionCntX;	// µØÍ¼µÄºáÏòÇøÓòÊı
-		int		iSectionCntY;	// µØÍ¼µÄ×İÏòÇøÓòÊı
-		int		iSectionWidth;	// ÇøÓòµÄ¿í¶È£¨µ¥Î»£ºTile£©
-		int		iSectionHeight; // ÇøÓòµÄ¸ß¶È£¨µ¥Î»£ºTile£©
-		int		iSectionObjNum;	// ÇøÓòÔÊĞíµÄ×î´óÎï¼şÊı
+		int		iSectionCntX;	// number of regions across the map
+		int		iSectionCntY;	// number of regions down the map
+		int		iSectionWidth;	// region width, in tiles
+		int		iSectionHeight; // region height, in tiles
+		int		iSectionObjNum;	// maximum number of objects a region may hold
 
         SFileHead()
         {
@@ -69,7 +69,7 @@ public:
         if(_fp) _WriteFileHeader();
         if(_bDebug)
         {
-            //LG(GetDataName(), "Êı¾İÎÄ¼ş²Ù×÷½áÊø!\n");
+            //LG(GetDataName(), "æ•°æ®æ–‡ä»¶æ“ä½œç»“æŸ!\n");
 			LG(GetDataName(), "data file operate over!\n");
         }
     }
@@ -89,15 +89,15 @@ protected:
 };
 
 //-------------------------
-// ÎÄ¼şÍ·µÄ¶ÁÈ¡
-// ×ÓÀà¿ÉÒÔ×öÒ»Ğ©ºÏ·¨ĞÔÅĞ¶Ï
+// read the file header
+// derived classes can do their own validation here
 //-------------------------
 inline BOOL CSceneObjData::_ReadFileHeader()
 {
     fread(&_header, sizeof(_header), 1, _fp);
     if(_header.lVersion!=600)
 	{
-		//LG(GetDataName(), "msg²»ÊÇºÏ·¨µÄobjÎÄ¼ş!\n");
+		//LG(GetDataName(), "msgä¸æ˜¯åˆæ³•çš„objæ–‡ä»¶!\n");
 		LG(GetDataName(), "msg not legitimacy obj file!\n");
         return FALSE;
 	}
@@ -109,7 +109,7 @@ inline BOOL CSceneObjData::_ReadFileHeader()
 }
 
 //-----------------------------------
-// ÎÄ¼şÍ·µÄĞ´Èë, ÓÃÓÚĞÂ´´½¨ÎÄ¼şµÈ³¡ºÏ
+// write the file header, used when creating a file
 //-----------------------------------
 inline void CSceneObjData::_WriteFileHeader()
 {
@@ -125,7 +125,7 @@ inline void CSceneObjData::_WriteFileHeader()
 
     if(_bDebug)
     {
-        //LG(GetDataName(), "Ğ´ÈëÎÄ¼şÍ·ĞÅÏ¢, lFileSize = %d\n", _header.lFileSize);
+        //LG(GetDataName(), "å†™å…¥æ–‡ä»¶å¤´ä¿¡æ¯, lFileSize = %d\n", _header.lFileSize);
 		LG(GetDataName(), "write file head info, lFileSize = %d\n", _header.lFileSize);
     }
 }
@@ -164,7 +164,7 @@ inline void CSceneObjData::_WriteSectionIdx(DWORD dwSectionNo, DWORD dwOffset)
 		idx.iObjNum = pSection->dwParam;
 		if(idx.iObjNum > MAX_SECTION_OBJ) idx.iObjNum = MAX_SECTION_OBJ;
 	}
-	if(dwOffset==0) idx.iObjNum = 0; // ±»Çå³ı¼ÇÂ¼
+	if(dwOffset==0) idx.iObjNum = 0; // records that were cleared
     fseek(_fp, sizeof(SFileHead) + sizeof(idx) * dwSectionNo, SEEK_SET);
     fwrite(&idx, sizeof(idx), 1, _fp);
     if(_bDebug)
@@ -186,7 +186,7 @@ inline void CSceneObjData::_AfterReadSectionData(SDataSection *pSection, int nSe
 			short sID = (pObjInfo + i)->GetID();
 			if(sID==1398 || sID==0)
 			{
-				//LG("maptoolerr", "·¢ÏÖ²»Õı³£ID %d\n", sID);
+				//LG("maptoolerr", "å‘ç°ä¸æ­£å¸¸ID %d\n", sID);
 				LG("maptoolerr", "find unnormal ID %d\n", sID);
 			}
 		}
@@ -200,7 +200,7 @@ inline void CSceneObjData::TrimFile(const char *pszTarget)
 	
 	fwrite(&_header, sizeof(_header), 1, fp);
 	
-	// Ğ´ÈëÄÚÈİ
+	// write out the content
 	SSectionIndex *pIdx = new SSectionIndex[_nSectionCntX * _nSectionCntY];
 	memset(pIdx, 0, sizeof(SSectionIndex) * _nSectionCntX * _nSectionCntY);
 	SSectionIndex *pCurIdx = pIdx;
@@ -238,7 +238,7 @@ inline void CSceneObjData::TrimFile(const char *pszTarget)
 	fwrite(&_header, sizeof(_header), 1, fp);
 	_header.lFileSize = nLastSize;
 	
-	// Ğ´ÈëË÷ÒıÇø
+	// write the index area
 	fseek(fp, sizeof(_header), SEEK_SET);
 	fwrite(pIdx, sizeof(SSectionIndex), _nSectionCntX * _nSectionCntY, fp);
 

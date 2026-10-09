@@ -1,18 +1,18 @@
-#pragma once
+ï»¿#pragma once
 #include "HMSynchroObj.h"
 #include "Tools.h"
 #include "NetProtocol.h"
 
-enum eAttackEffectType   // ÌØĞ§ÏÔÊ¾·½Ê½
+enum eAttackEffectType   // how the effect is displayed
 {    
-	enumAddLife=0,		// "¼ÓÑª.tga";
-	enumSubLife,		// "¼õÑª.tga";
-	enumAddSp,			// "¼Ósp.tga";
-	enumSubSp,			// "¼õsp.tga";
-	enumAddLifeMonster,	// "¼ÓÑª¹ÖÊŞ.tga";
-	enumSubLifeMonster, // "¼õÑª¹ÖÊŞ.tga";
-	enumDoubleAttack,	// "±©.tga";
-	enumMiss,			// "¼õÑªMiss.tga";
+	enumAddLife=0,		// "åŠ è¡€.tga";
+	enumSubLife,		// "å‡è¡€.tga";
+	enumAddSp,			// "åŠ sp.tga";
+	enumSubSp,			// "å‡sp.tga";
+	enumAddLifeMonster,	// "åŠ è¡€æ€ªå…½.tga";
+	enumSubLifeMonster, // "å‡è¡€æ€ªå…½.tga";
+	enumDoubleAttack,	// "æš´.tga";
+	enumMiss,			// "å‡è¡€Miss.tga";
 };
 
 struct stEffect;
@@ -73,17 +73,17 @@ protected:
 protected:
 
 protected:
-	CAttackRepSynchro*	_pRepSynchro;	// ÓÃÓÚÖ´ĞĞÊ±Í¨Öª±íÏÖ°ü
-	CCharacter*     _pTarget;	// ±»¹¥»÷·½
-	CCharacter*     _pAttack;	// ¹¥»÷·½
+	CAttackRepSynchro*	_pRepSynchro;	// used to notify the presentation packet when it is executed
+	CCharacter*     _pTarget;	// the one being attacked
+	CCharacter*     _pAttack;	// the attacker
     CSkillRecord*   _pSkill;
     
-    // ÉËº¦°ü
+    // damage packet
 	bool	_isDoubleAttack;
     bool    _IsMiss;
     bool	_isTargetDied;
-    bool    _isBeatBack;        // ÊÇ·ñ±»»÷ÍË
-    int     _nBeatX, _nBeatY;   // ±»»÷ÍËµ½µÄÎ»ÖÃ
+    bool    _isBeatBack;        // whether it is knocked back
+    int     _nBeatX, _nBeatY;   // the position it is knocked back to
     CSizeArray<stEffect>		_HarmValue;
     CSizeArray<stSkillState>	_HarmState;
 
@@ -110,12 +110,12 @@ protected:
 	virtual void _Exec();
 
 private:
-	CAttackEffect*	_pAttackEffect;		// ÓÃÓÚÉ¾³ıÊ±Í¨ÖªÊÜ»÷°ü
-	CCharacter*     _pTarget;			// ±»¹¥»÷·½
-	CCharacter*     _pAttack;			// ¹¥»÷·½
+	CAttackEffect*	_pAttackEffect;		// used to notify the hit packet when it is deleted
+	CCharacter*     _pTarget;			// the one being attacked
+	CCharacter*     _pAttack;			// the attacker
     CSkillRecord*   _pSkill;
 
-    // ±íÏÖ°ü
+    // presentation packet
     bool    _IsAttackDied;
     CSizeArray<stSkillState>	_RepState;
     CSizeArray<stEffect>		_RepValue;
@@ -172,7 +172,7 @@ private:
 
 };
 
-// ÄÚÁªº¯Êı
+// inline function
 inline void CAttackRepSynchro::SetAttackEffect( CAttackEffect* p )					
 { 
 	_pAttackEffect = p;

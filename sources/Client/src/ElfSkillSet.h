@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "TableData.h"
 
@@ -12,8 +12,8 @@ public:
 		nIndex = 0;
     }
 
-	int		nIndex;		// ÄÜÁ¦±àºÅ
-	int		nTypeID;	// ÄÜÁ¦ÀàĞÍ
+	int		nIndex;		// ability number
+	int		nTypeID;	// ability type
 };
 
 
@@ -30,7 +30,7 @@ public:
 	}
 
 protected:
-	static CElfSkillSet* _Instance; // Ïàµ±ÓÚµ¥¼ü, °Ñ×Ô¼º¼Ç×¡
+	static CElfSkillSet* _Instance; // like a single key, remembers itself
    
 	virtual CRawDataInfo* _CreateRawDataArray(int nCnt)
 	{

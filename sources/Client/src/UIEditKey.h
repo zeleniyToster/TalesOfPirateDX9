@@ -1,7 +1,7 @@
-//----------------------------------------------------------------------
-// √˚≥∆:π‹¿ÌEditµƒ ‰»Î£¨œ‘ æπ‚±Í£¨œ‘ æ—°÷–◊¥Ã¨µ»
-// ◊˜’ﬂ:lh 2005-05-23
-// ◊Ó∫Û–ﬁ∏ƒ»’∆⁄:
+Ôªø//----------------------------------------------------------------------
+// Name: manages the input to Edit, cursor display, selection display and the like
+// Author: lh 2005-05-23
+// Last modified date:
 //----------------------------------------------------------------------
 #pragma once
 
@@ -20,7 +20,7 @@ public:
 	bool	SetFont( DWORD dwFont );
 	void	SetColor( DWORD dwColor )		{ _dwFontColor=dwColor;		}
 
-public:		// Õ‚≤øΩ”ø⁄
+public:		// external interface
 	bool	OnChar( char c );
 	bool	OnKeyDown( int key );
 
@@ -32,20 +32,20 @@ private:
 private:
 	CEditParse*		_pParse;
 
-	char			_szEnter[16];				// ”√”⁄º∆À„ ‰»Îµƒbuf
+	char			_szEnter[16];				// the buf used to compute the input
 	int				_nEnterPos;
 
-	bool			_IsReadyOnly;				//  «∑Ò÷ª∂¡
+	bool			_IsReadyOnly;				// whether it is read only
 
-	DWORD			_dwFontColor;				// µ±«∞◊÷ÃÂ—’…´
-	int				_dwFontIndex;				// µ±«∞◊÷ÃÂ
+	DWORD			_dwFontColor;				// current font colour
+	int				_dwFontIndex;				// current font
 
 private:
-	DWORD			_dwCurosrIndex;				// µ±«∞π‚±ÍŒª÷√
+	DWORD			_dwCurosrIndex;				// current cursor position
 
-	DWORD			_dwCursorHeight;			// π‚±Í∏ﬂ∂»
-	DWORD			_dwCursorColor;				// π‚±Í—’…´ 
-	int				_nCursorX, _nCursorY;		// π‚±Í‰÷»æŒª÷√
+	DWORD			_dwCursorHeight;			// cursor height
+	DWORD			_dwCursorColor;				// cursor colour
+	int				_nCursorX, _nCursorY;		// cursor rendering position
 	bool			_IsShowCursor;
 	DWORD			_dwCursorTime;
 	DWORD			_dwCursorSpace;

@@ -1,7 +1,7 @@
-//----------------------------------------------------------------------
-// ÃèÊö:EditµÄÊı¾İ½á¹¹½âÎöËã·¨
-// ×÷Õß:lh 2004-07-12
-// ×îºóĞŞ¸ÄÈÕÆÚ:
+ï»¿//----------------------------------------------------------------------
+// Description: the parsing algorithm of the Edit data structure
+// Author: lh 2004-07-12
+// Last modified date:
 //----------------------------------------------------------------------
 #pragma once
 
@@ -14,7 +14,7 @@ class CEditRow;
 class CEditSentence;
 class CEditObj;
 
-// Ò»ĞĞ,½öÎªÒ»¸öÈİÆ÷
+// a line, merely a container
 class CEditRow
 {
 public:
@@ -34,9 +34,9 @@ public:
 
 private:
 	typedef std::vector<CEditObj*> units;
-	units			_units;				// ¸ñÊ½ºóµÄÊı¾İ
+	units			_units;				// the formatted data
 	DWORD			_dwWordCount;
-	units			_atoms;				// Ô­Ê¼Êı¾İÖ¸Õë£¬²»¹ÜÀíÄÚ´æ£¬ÓÃÓÚ¼ÆËã¹â±ê
+	units			_atoms;				// the original data pointer; it does not manage memory and is used to compute the cursor
 
 	DWORD			_dwHeight;
 	DWORD			_dwWidth;
@@ -52,39 +52,39 @@ class CEditParse
 public:
 	CEditParse()	{	_items.push_back( new CEditRow );	}
 
-	// ÔÚÎ»ÖÃ´¦²åÈë¶ÔÏó,³É¹¦·µ»Ø²åÈëºóµÄË÷Òı£¬Ê§°Ü·µ»Ø-1
+	// inserts an object at the position; on success returns the index after the insertion, on failure -1
 	int		Insert( DWORD nIndex, CEditObj* pObj )			{ return -1;			}
 
-	// É¾³ıÆğÊ¼µ½ÖÕÖ¹µÄ¿é
+	// deletes the block from start to end
 	bool	Del( DWORD nStart, DWORD nEnd );
 
-	// µÃµ½ĞĞÁĞ´¦µÄ¹â±êĞÅÏ¢,ÄÚ²¿ÊÇ·µ»Ø×îºóÒ»¸öÎÄ±¾µÄ×ÖÌåÒÔ¼°ÑÕÉ«
+	// gets the cursor information at the given row and column; internally it returns the font and colour of the last text
 	bool	GetPos( DWORD nIndex, int& x, int& y, DWORD& dwFont, DWORD& dwColor );
 
-	// µÃµ½Ñ¡ÔñºóµÄÇøÓò
+	// gets the region after the selection
 	bool	GetSelectRect( DWORD dwStart, DWORD dwEnd, std::vector<POINT>& pt );
 
 public:	
-	// ²åÈëµ¥Ôª
+	// inserts a unit
 	bool	InsertText( CEditTextObj* pText );
 	bool	InsertControl( CEditControl* pControl );
 	bool	InsertObj( CEditObj* pObj );
 
-	// ¼ÆËã¹â±ê
+	// computes the cursor
 	int		CursorText( CEditTextObj* pText );
 	int		CursorControl( CEditControl* pControl );
 	int		CursorObj( CEditControl* pControl );
 
 private:
 	typedef std::vector<CEditRow*> items;
-	items		_items;					// Âß¼­ÄÚ´æ£¬ÓÃÓÚÏÔÊ¾£¬¼ÆËãÂß¼­µÈ
+	items		_items;					// logical memory, used for display and for computing logic
 
-	DWORD		_dwRowLimit;			// ĞĞÊıÏŞÖÆ
-	DWORD		_dwMaxWordLimit;		// ×î´ó×ÖÊıÏŞÖÆ
+	DWORD		_dwRowLimit;			// line count limit
+	DWORD		_dwMaxWordLimit;		// maximum character count limit
 
 };
 
-// Ëã·¨£¬ÓÃÓÚ¸ú¾İÔ­Ê¼ÄÚ´æÉú´æ¿ÉÏÔÊ¾µÄÎÄÕÂ
+// the algorithm that builds a displayable article from the original memory
 class CEditStrategy
 {
 public:
@@ -97,7 +97,7 @@ public:
 	void	Render();
 	void	RefreshPos( int x, int y );
 
-public:		// vistorÄ£Ê½£¬ÓÃÓÚÎÄ±¾£¬¿ØÖÆ£¬Í¼ÔªÈıÖÖÀàĞÍµÄ½âÎö
+public:		// visitor pattern, for parsing the three kinds of element: text, control and graphic
 	void	ParseText( CEditTextObj* pText );
 	void	ParseControl( CEditControl* pControl );
 	void	ParseObj( CEditObj* pObj );
@@ -109,13 +109,13 @@ private:
 	CEditArticle*	_pActicle;	
 
 	typedef std::vector<CEditRow*> items;
-	items			_items;			// Âß¼­ÄÚ´æ£¬ÓÃÓÚÏÔÊ¾£¬¼ÆËãÂß¼­µÈ
+	items			_items;			// logical memory, used for display and for computing logic
 
 };
 
 inline void CEditStrategy::ParseObj( CEditObj* pObj )
 {
-	// ²»¿ÉºÏ²¢µÄÍ¼Ôª
+	// a graphic element that cannot be merged
 	CEditRow* pRow = _AppendToBackRow( pObj );
 	pRow->PushUnit( pObj, pObj );
 }

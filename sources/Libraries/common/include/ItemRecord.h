@@ -1,4 +1,4 @@
-//=============================================================================
+ï»¿//=============================================================================
 // FileName: ItemRecord.h
 // Creater: ZhangXuedong
 // Date: 2004.09.01
@@ -14,7 +14,7 @@
 #include "CompCommand.h"
 #include "JobType.h"
 
-const char cchItemRecordKeyValue = (char)0xfe;	// µÀ¾ß¶ÔÖ°ÒµµÄĞèÇóÖĞÕ¼ÓÃÁË-1
+const char cchItemRecordKeyValue = (char)0xfe;	// -1 is taken by "no job requirement" in the job requirement field
 
 #define defITEM_NAME_LEN	80
 #define defITEM_MODULE_NUM	5
@@ -31,54 +31,54 @@ const char cchItemRecordKeyValue = (char)0xfe;	// µÀ¾ß¶ÔÖ°ÒµµÄĞèÇóÖĞÕ¼ÓÃÁË-1
 
 enum EItemType
 {
-	enumItemTypeSword		= 1,	// ½£
-	enumItemTypeGlave		= 2,	// ¾Ş½£
-	enumItemTypeBow			= 3,	// ¹­
-	enumItemTypeHarquebus	= 4,	// »ğÉşÇ¹
-	enumItemTypeFalchion	= 5,	// µ¶
-	enumItemTypeMitten		= 6,	// È­Ì×
-	enumItemTypeStylet		= 7,	// Ø°Ê×
-	enumItemTypeMoneybag	= 8,	// Ç®´ü
-	enumItemTypeCosh		= 9,	// ¶Ì°ô
-	enumItemTypeSinker		= 10,	// ´¸×Ó
-	enumItemTypeShield		= 11,	// ¶Ü
-	enumItemTypeArrow		= 12,	// ¼ı
-	enumItemTypeAmmo		= 13,	// µ¯Ò©
-	enumItemTypeHeadpiece	= 19,	// Í·¿ø
-	enumItemTypeHair		= 20,	// Í··¢
-	enumItemTypeFace		= 21,	// Á³ĞÍ
-	enumItemTypeClothing	= 22,	// ÒÂ·ş
-	enumItemTypeGlove		= 23,	// ÊÖÌ×
-	enumItemTypeBoot		= 24,	// Ñ¥×Ó
+	enumItemTypeSword		= 1,	// sword
+	enumItemTypeGlave		= 2,	// greatsword
+	enumItemTypeBow			= 3,	// bow
+	enumItemTypeHarquebus	= 4,	// flintlock
+	enumItemTypeFalchion	= 5,	// knife
+	enumItemTypeMitten		= 6,	// knuckle
+	enumItemTypeStylet		= 7,	// dagger
+	enumItemTypeMoneybag	= 8,	// money bag
+	enumItemTypeCosh		= 9,	// baton
+	enumItemTypeSinker		= 10,	// hammer
+	enumItemTypeShield		= 11,	// shield
+	enumItemTypeArrow		= 12,	// arrow
+	enumItemTypeAmmo		= 13,	// ammunition
+	enumItemTypeHeadpiece	= 19,	// helmet
+	enumItemTypeHair		= 20,	// hair
+	enumItemTypeFace		= 21,	// face
+	enumItemTypeClothing	= 22,	// clothes
+	enumItemTypeGlove		= 23,	// gloves
+	enumItemTypeBoot		= 24,	// boots
 	enumItemTypeNecklace	= 25,
 	enumItemTypeRing		= 26,
 	enumItemTypeTattoo		= 27,
-	enumItemTypeConch		= 29,	// ±´¿Ç
-	enumItemTypeMedicine	= 31,	// Ò©Æ·
-	enumItemTypeOvum		= 32,	// º£ÂÑ
+	enumItemTypeConch		= 29,	// shell
+	enumItemTypeMedicine	= 31,	// medicine
+	enumItemTypeOvum		= 32,	// sea egg
 	enumItemTypeUnknownConsumable = 33, // TODO: Proper naming
-	enumItemTypeScroll		= 36,	// »Ø³Ç¾íÖá
-	enumItemTypeGeneral		= 41,	// Ò»°ãÎïÆ·
-    enumItemTypeMission     = 42,   // ÈÎÎñµÀ¾ß
-	enumItemTypeBoat		= 43,	// ´¬³¤Ö¤Ã÷
-	enumItemTypeWing		= 44,	// ³á°ò£¬¿Í»§¶ËÓÃÓÚÏÔÊ¾ÌØĞ§ÓÃ
-	enumItemTypeTrade		= 45,	// Ã³Ò×Ö¤Ã÷
-	enumItemTypeBravery		= 46,	// ÓÂÕßÖ®Ö¤
-	enumItemTypeHull		= 51,	// ´¬Éí
-	enumItemTypeEmbolon		= 52,	// ×²½Ç
-	enumItemTypeEngine		= 53,	// ·¢¶¯»ú
-	enumItemTypeArtillery	= 54,	// »ğÅÚ
-	enumItemTypeAirscrew	= 55,	// ÂİĞı½¬
-	enumItemTypeBoatSign	= 56,	// ´¬±êÖ¾
-	enumItemTypePetFodder	= 57,	// ³èÎïËÇÁÏ
-	enumItemTypePetSock		= 58,	// ÄÜÁ¿ÁãÊ³
-	enumItemTypePet			= 59,	// ÊØ»¤¾«Áé
+	enumItemTypeScroll		= 36,	// return scroll
+	enumItemTypeGeneral		= 41,	// ordinary item
+    enumItemTypeMission     = 42,   // quest item
+	enumItemTypeBoat		= 43,	// captain's certificate
+	enumItemTypeWing		= 44,	// wings; the client uses them to show an effect
+	enumItemTypeTrade		= 45,	// trade certificate
+	enumItemTypeBravery		= 46,	// hero's certificate
+	enumItemTypeHull		= 51,	// hull
+	enumItemTypeEmbolon		= 52,	// ram
+	enumItemTypeEngine		= 53,	// engine
+	enumItemTypeArtillery	= 54,	// cannon
+	enumItemTypeAirscrew	= 55,	// propeller
+	enumItemTypeBoatSign	= 56,	// ship flag
+	enumItemTypePetFodder	= 57,	// pet food
+	enumItemTypePetSock		= 58,	// energy snack
+	enumItemTypePet			= 59,	// guardian spirit
 
 	enumItemCloak			= 88,
 	enumItemMount			= 90,
 
 	// Add by lark.li 20080514 begin
-	enumItemTypeNo			= 99,	// ²ÊÆ±Ğ¡Çò
+	enumItemTypeNo			= 99,	// lottery ball
 	// End
 };
 
@@ -93,116 +93,116 @@ class CItemRecord : public CRawDataInfo
 public:
 	enum EItemExtendInfo
 	{
-		enumItemNormalStart		= 0,		// ÆÕÍ¨µÀ¾ß
+		enumItemNormalStart		= 0,		// ordinary item
 		enumItemNormalEnd		= 4999,
-		enumItemFusionEndure   = 23000,      // ÈÚºÏµÀ¾ßËùÒªÇóµÄ×î´óÄÍ¾Ã¶È//Modify by ning.yan 20080821 £¨´óÅìÒªÇóÈÚºÏµÀ¾ßµÄÌõ¼şÓÉµÀ¾ßÆğÊ¼¡¢½áÊøÀ¸¸ÄÎª×î´óÄÍ¾Ã¶È£©
-		enumItemFusionStart		= 5000,		// ÈÛºÏµÀ¾ßÆğÊ¼À¸Î»
-		enumItemFusionEnd		= 9800,		// ÈÛºÏµÀ¾ß½áÊøÀ¸Î»
+		enumItemFusionEndure   = 23000,      // maximum durability a fusion item may require; modified by ning.yan 20080821 (Da Peng asked for the fusion requirement to change from the source/target slot to a maximum durability)
+		enumItemFusionStart		= 5000,		// source slot of the fusion
+		enumItemFusionEnd		= 9800,		// target slot of the fusion
 		// Modify by lark.li 20080703
-		enumItemMax				= 32768,		// µÀ¾ß±í×î´ó¼ÇÂ¼ÊıÁ¿
+		enumItemMax				= 32768,		// maximum number of records in the item table
 		// End
 
 	};
 
 	CItemRecord();
 
-	long	lID;							// ±àºÅ
-	_TCHAR	szName[defITEM_NAME_LEN];		// Ãû³Æ
+	long	lID;							// id
+	_TCHAR	szName[defITEM_NAME_LEN];		// name
 	char    szICON[defITEM_ICON_NAME_LEN];	// ICON
-	_TCHAR	chModule[defITEM_MODULE_NUM][defITEM_MODULE_LEN];	// Ä£ĞÍ
-	short	sShipFlag;						// ´¬±êÖ¾
-	short	sShipType;						// ´¬ÌåĞÍºÅ
-	short	sType;							// ÀàĞÍ
+	_TCHAR	chModule[defITEM_MODULE_NUM][defITEM_MODULE_LEN];	// model
+	short	sShipFlag;						// ship flag
+	short	sShipType;						// hull model
+	short	sType;							// type
 
-	char	chForgeLv;						// ¾«Á¶µÈ¼¶
-	char	chForgeSteady;					// °²¶¨Öµ£¨¾«Á¶ÎïÆ·µÄÎÈ¶¨Öµ£¬³¬¹ıÕâ¸öÖµ£¬Ã¿¾«Á¶Ò»´Î¾Íµİ¼õÒ»¶¨³É¹¦ÂÊ£©
-	char	chExclusiveID;					// ÊÇ·ñÓµÓĞÎ¨Ò»ID
-    char    chIsTrade;                      // ¿É½»Ò×
-    char    chIsPick;                       // ¿ÉÊ°È¡
-    char    chIsThrow;                      // ¿É¶ªÆú
-	char	chIsDel;						// ¿ÉÏú»Ù
-    long    lPrice;                         // ½»Ò×¼Û¸ñ
-	char	chBody[defITEM_BODY];			// ÌåĞÎÏŞÖÆ
-	short	sNeedLv;						// ÒªÇóµÄµÈ¼¶
-    char    szWork[MAX_JOB_TYPE];           // Ö°Òµ
+	char	chForgeLv;						// refine level
+	char	chForgeSteady;					// stability value (the stability of a refineable item; past this value every refine lowers the success chance by a fixed amount)
+	char	chExclusiveID;					// whether it has a unique id
+    char    chIsTrade;                      // tradable
+    char    chIsPick;                       // can be picked up
+    char    chIsThrow;                      // can be dropped
+	char	chIsDel;						// can be destroyed
+    long    lPrice;                         // trade price
+	char	chBody[defITEM_BODY];			// body size restriction
+	short	sNeedLv;						// required level
+    char    szWork[MAX_JOB_TYPE];           // job
 
-	int		nPileMax;						// ÔÚµÀ¾ßÀ¸Ò»¸ñÖĞ¿ÉÒÔ·ÅÖÃµÄ×î¶à¸öÊı
-	char	chInstance;						// ÊÇ·ñÊµÀı»¯
-	char	szAbleLink[enumEQUIP_NUM];		// ¿É×°±¸µÄÎ»ÖÃ
-	char	szNeedLink[enumEQUIP_NUM];		// ĞèÒªµÄÎ»ÖÃ
-	char	chPickTo;						// 0 Ê°È¡Ê±½øÈë±³°ü£¬1 ½øÈë´¬²Õ
+	int		nPileMax;						// largest number that fit in one inventory slot
+	char	chInstance;						// whether it is instantiated
+	char	szAbleLink[enumEQUIP_NUM];		// slot it can be equipped in
+	char	szNeedLink[enumEQUIP_NUM];		// slot it requires
+	char	chPickTo;						// 0 goes into the backpack when picked up, 1 goes into the cargo hold
 
-	short	sStrCoef;						// Á¦Á¿ÏµÊı¼Ó³É
-	short	sAgiCoef;						// Ãô½İÏµÊı¼Ó³É
-	short	sDexCoef;						// ×¨×¢ÏµÊı¼Ó³É
-	short	sConCoef;						// ÌåÖÊÏµÊı¼Ó³É
-	short	sStaCoef;						// ¾«Á¦ÏµÊı¼Ó³É
-	short	sLukCoef;						// ĞÒÔËÏµÊı¼Ó³É	
-	short	sASpdCoef;						// ¹¥»÷ÆµÂÊÏµÊı¼Ó³É
-	short	sADisCoef;						// ¹¥»÷¾àÀëÏµÊı¼Ó³É
-	short	sMnAtkCoef;						// ×îĞ¡¹¥»÷Á¦ÏµÊı¼Ó³É
-	short	sMxAtkCoef;						// ×î´ó¹¥»÷Á¦ÏµÊı¼Ó³É
-	short	sDefCoef;						// ·ÀÓùÏµÊı¼Ó³É
-	short	sMxHpCoef;						// ×î´óHpÏµÊı¼Ó³É
-	short	sMxSpCoef;						// ×î´óSpÏµÊı¼Ó³É
-	short	sFleeCoef;						// ÉÁ±ÜÂÊÏµÊı¼Ó³É
-	short	sHitCoef;						// ÃüÖĞÂÊÏµÊı¼Ó³É
-	short	sCrtCoef;						// ±¬»÷ÂÊÏµÊı¼Ó³É
-	short	sMfCoef;						// Ñ°±¦ÂÊÏµÊı¼Ó³É
-	short	sHRecCoef;						// hp»Ö¸´ËÙ¶ÈÏµÊı¼Ó³É
-	short	sSRecCoef;						// sp»Ö¸´ËÙ¶ÈÏµÊı¼Ó³É
-	short	sMSpdCoef;						// ÒÆ¶¯ËÙ¶ÈÏµÊı¼Ó³É
-	short	sColCoef;						// ×ÊÔ´²É¼¯ËÙ¶ÈÏµÊı¼Ó³É
+	short	sStrCoef;						// strength coefficient bonus
+	short	sAgiCoef;						// agility coefficient bonus
+	short	sDexCoef;						// focus coefficient bonus
+	short	sConCoef;						// constitution coefficient bonus
+	short	sStaCoef;						// vitality coefficient bonus
+	short	sLukCoef;						// luck coefficient bonus
+	short	sASpdCoef;						// attack interval coefficient bonus
+	short	sADisCoef;						// attack range coefficient bonus
+	short	sMnAtkCoef;						// minimum attack coefficient bonus
+	short	sMxAtkCoef;						// maximum attack coefficient bonus
+	short	sDefCoef;						// defence coefficient bonus
+	short	sMxHpCoef;						// maximum HP coefficient bonus
+	short	sMxSpCoef;						// maximum SP coefficient bonus
+	short	sFleeCoef;						// evasion rate coefficient bonus
+	short	sHitCoef;						// hit rate coefficient bonus
+	short	sCrtCoef;						// critical rate coefficient bonus
+	short	sMfCoef;						// treasure find rate coefficient bonus
+	short	sHRecCoef;						// HP regeneration rate coefficient bonus
+	short	sSRecCoef;						// SP regeneration rate coefficient bonus
+	short	sMSpdCoef;						// movement speed coefficient bonus
+	short	sColCoef;						// resource gathering speed coefficient bonus
 
-	short	sStrValu[2];					// Á¦Á¿³£Êı¼Ó³É£¨×îĞ¡Öµ£¬×î´óÖµ£©
-	short	sAgiValu[2];					// Ãô½İ³£Êı¼Ó³É
-	short	sDexValu[2];					// ×¨×¢³£Êı¼Ó³É
-	short	sConValu[2];					// ÌåÖÊ³£Êı¼Ó³É
-	short	sStaValu[2];					// ¾«Á¦³£Êı¼Ó³É
-	short	sLukValu[2];					// ĞÒÔË³£Êı¼Ó³É
-	short	sASpdValu[2];					// ¹¥»÷ÆµÂÊ³£Êı¼Ó³É
-	short	sADisValu[2];					// ¹¥»÷¾àÀë³£Êı¼Ó³É
-	short	sMnAtkValu[2];					// ×îĞ¡¹¥»÷Á¦³£Êı¼Ó³É
-	short	sMxAtkValu[2];					// ×î´ó¹¥»÷Á¦³£Êı¼Ó³É
-	short	sDefValu[2];					// ·ÀÓù³£Êı¼Ó³É
-	short	sMxHpValu[2];					// ×î´óHp³£Êı¼Ó³É
-	short	sMxSpValu[2];					// ×î´óSp³£Êı¼Ó³É
-	short	sFleeValu[2];					// ÉÁ±ÜÂÊ³£Êı¼Ó³É
-	short	sHitValu[2];					// ÃüÖĞÂÊ³£Êı¼Ó³É
-	short	sCrtValu[2];					// ±¬»÷ÂÊ³£Êı¼Ó³É
-	short	sMfValu[2];						// Ñ°±¦ÂÊ³£Êı¼Ó³É
-	short	sHRecValu[2];					// hp»Ö¸´ËÙ¶È³£Êı¼Ó³É
-	short	sSRecValu[2];					// sp»Ö¸´ËÙ¶È³£Êı¼Ó³É
-	short	sMSpdValu[2];					// ÒÆ¶¯ËÙ¶È³£Êı¼Ó³É
-	short	sColValu[2];					// ×ÊÔ´²É¼¯ËÙ¶È³£Êı¼Ó³É
+	short	sStrValu[2];					// strength constant bonus (minimum, maximum)
+	short	sAgiValu[2];					// agility constant bonus
+	short	sDexValu[2];					// focus constant bonus
+	short	sConValu[2];					// constitution constant bonus
+	short	sStaValu[2];					// vitality constant bonus
+	short	sLukValu[2];					// luck constant bonus
+	short	sASpdValu[2];					// attack interval constant bonus
+	short	sADisValu[2];					// attack range constant bonus
+	short	sMnAtkValu[2];					// minimum attack constant bonus
+	short	sMxAtkValu[2];					// maximum attack constant bonus
+	short	sDefValu[2];					// defence constant bonus
+	short	sMxHpValu[2];					// maximum HP constant bonus
+	short	sMxSpValu[2];					// maximum SP constant bonus
+	short	sFleeValu[2];					// evasion rate constant bonus
+	short	sHitValu[2];					// hit rate constant bonus
+	short	sCrtValu[2];					// critical rate constant bonus
+	short	sMfValu[2];						// treasure find rate constant bonus
+	short	sHRecValu[2];					// HP regeneration rate constant bonus
+	short	sSRecValu[2];					// SP regeneration rate constant bonus
+	short	sMSpdValu[2];					// movement speed constant bonus
+	short	sColValu[2];					// resource gathering speed constant bonus
 
-	short	sPDef[2];						// ÎïÀíµÖ¿¹
-	short	sLHandValu;						// µÀ¾ß×óÊÖ·¢»Ó
-	short	sEndure[2];						// ÄÍ¾Ã¶È
-	short	sEnergy[2];						// ÄÜÁ¿
-	short	sHole;							// ¶´Êı
-	char	szAttrEffect[defITEM_ATTREFFECT_NAME_LEN];	// Ê¹ÓÃĞ§¹û
+	short	sPDef[2];						// physical resistance
+	short	sLHandValu;						// the item works in the left hand
+	short	sEndure[2];						// durability
+	short	sEnergy[2];						// energy
+	short	sHole;							// number of holes
+	char	szAttrEffect[defITEM_ATTREFFECT_NAME_LEN];	// use effect
 	short	sDrap;							// drap
-	short	sEffect[defITEM_BIND_EFFECT_NUM][2];		// ÎäÆ÷À¦°óÌØĞ§ÒÔ¼°¶ÔÓ¦dummy
-	short	sItemEffect[2];					// µÀ¾ßÍâ¹ÛÌØĞ§
-	short	sAreaEffect[2];					// ·ÅÔÚµØÉÏÊ±µÄÌØĞ§
-	short	sUseItemEffect[2];				// Ê¹ÓÃÊ±µÄÌØĞ§
-    _TCHAR  szDescriptor[defITEM_DESCRIPTOR_NAME_LEN];   // ÃèÊö
+	short	sEffect[defITEM_BIND_EFFECT_NUM][2];		// weapon attach effect and the matching dummy
+	short	sItemEffect[2];					// item appearance effect
+	short	sAreaEffect[2];					// effect shown while it lies on the ground
+	short	sUseItemEffect[2];				// effect shown while it is used
+    _TCHAR  szDescriptor[defITEM_DESCRIPTOR_NAME_LEN];   // description
 
 	float		nCooldown;
 	//short	sSeteffect[enumEQUIP_NUM][2];
 	//_TCHAR  szDescriptor[5][defITEM_DESCRIPTOR_SET_LEN];
 
 public:
-    const char* GetIconFile();              // µÃµ½ÍêÕûµÄiconÎÄ¼şÃû³Æ
+    const char* GetIconFile();              // obtain the full icon file name
 	static bool	IsVaildFusionID(CItemRecord* pItem); // add by ning.yan  2008-08-21
 	
 	bool		GetIsPile()							{ return nPileMax>1;	}
 
-	// ¼ì²é½ÇÉ«ÌåĞÍÊÇ·ñ¿ÉÒÔ×°±¸
+	// check whether the character's body size allows equipping it
 	bool		IsAllowEquip( unsigned int nChaID );
 
-	// ¼ì²éÊÇ·ñÃ»ÓĞÌåĞÍÏŞÖÆ
+	// check whether there is no body size restriction
 	bool		IsAllEquip()						{ return chBody[0]==-1;	}
 
 	void		RefreshData();
@@ -225,7 +225,7 @@ public:
 	bool IsLockable() const;
 
 public:
-	short		sEffNum;					// ÎäÆ÷À¦°óÌØĞ§ÊıÁ¿
+	short		sEffNum;					// number of weapon attach effects
 
 private:
 	bool		_IsBody[5];
@@ -247,7 +247,7 @@ public:
 
 protected:
 
-	static CItemRecordSet* _Instance; // Ïàµ±ÓÚµ¥¼ü, °Ñ×Ô¼º¼Ç×¡
+	static CItemRecordSet* _Instance; // acts like a singleton: keeps a reference to itself
 
 	virtual CRawDataInfo* _CreateRawDataArray(int nCnt)
 	{

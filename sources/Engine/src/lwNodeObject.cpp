@@ -1,4 +1,4 @@
-//
+ï»¿//
 #include "stdafx.h"
 
 #if 1
@@ -304,11 +304,11 @@ LW_RESULT lwNodePrimitive::Load(lwIGeomObjInfo* geom_info, const char* tex_path,
     LoadRenderCtrl(&info->rcci);
 
     // base info
-    // warning:×¢Òâ£¬ÕâÀïµÄ_typeÓÃÀ´±íÊ¾MODELNODE_µÄÀàÐÍ
-    // ²»ÄÜÓÃµ¼³öµÄÐÅÏ¢typeÀ´¸²¸Ç£¡£¡£¡
+    // warning: _type here denotes the MODELNODE_ type
+    // it must not be overwritten with the exported type!!!
     //_type = info->type;
 
-    // »ù±¾ÐÅÏ¢_id, _link_id, _link_parent_idµÈÒÑ¾­ÔÚlwLoadModelInfoÖÐÉèÖÃ
+    // the basic fields _id, _link_id, _link_parent_id etc. are already set in lwLoadModelInfo
     //_id = info->id;
     _mat_local = info->mat_local;
     //_state_ctrl = info->state_ctrl;
@@ -1008,13 +1008,13 @@ void lwNodePrimitive::SetOpacity(float opacity)
     //_state_ctrl.SetState(STATE_TRANSPARENT, opacity == 1.0f ? 0 : 1);
 }
 
-// SetParent¶ÔÓÚparentÊÇVertexBlendCtrlÊ±µÄÎÊÌâ
-// 1.µ÷ÕûlwAnimCtrlAgentÖÐANIM_CTRL_TYPE_BONEµÄ¶ÔÏó
-// 2.ÖØÉè_ref_ctrl_obj_bone
-// 3.ÖØÉèlwRenderCtrlAgentÖÐvs_typeºÍvs_ctrl£¬ÒòÎªvs_type¾ßÓÐ×Ô¶¨ÒåÐÔÖÊ
-//   ËùÒÔÎÞ·¨Í¨¹ýfvf»òÕßÆäËû·½Ê½½øÐÐÄÚ²¿Æ¥Åä£¬ÕâÀï½¨Òévs_typeºÍvs_ctrl
-//   ×öÍâ²¿ÏÔÊ¾ÖØÉè
-//   ¿ÉÒÔ²»ÐèÒªÖØÉèvs_type£¨ÖØÉèÐ§ÂÊÂÔ¸ß£©,ÐèÒªÖØÉèvs_ctrl
+// problems with SetParent when parent is a VertexBlendCtrl
+// 1. adjust the ANIM_CTRL_TYPE_BONE objects in lwAnimCtrlAgent
+// 2. reset _ref_ctrl_obj_bone
+// 3. reset vs_type and vs_ctrl in lwRenderCtrlAgent; vs_type is custom,
+//    so it cannot be matched internally by fvf or any other means. Resetting them externally is
+//    recommended. vs_type need not be reset (resetting it is slightly more efficient), but vs_ctrl does
+//    need to be reset
 LW_RESULT lwNodePrimitive::SetParent(lwINode* parent)
 {
     LW_RESULT ret = LW_RET_FAILED;
@@ -2272,7 +2272,7 @@ LW_RESULT lwNodePrimitive_PlayPoseAll(lwINodePrimitive* obj, const lwPlayPoseInf
         {
             ctrl_obj = anim_agent->GetAnimCtrlObj(i);
 
-            // lwAnimCtrlObjBoneÔÚlwPrimitiveÖÐ×îÎªÈÝÆ÷¶ø·Ç¶¯»­¿ØÖÆÆ÷
+            // in an lwPrimitive, lwAnimCtrlObjBone acts as a container rather than as an animation controller
             ctrl_obj->GetTypeInfo(&type_info);
             if (type_info.type == ANIM_CTRL_TYPE_BONE)
                 continue;

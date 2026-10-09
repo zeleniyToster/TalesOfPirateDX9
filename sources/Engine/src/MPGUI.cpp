@@ -1,4 +1,4 @@
-#include "Stdafx.h"
+ï»¿#include "Stdafx.h"
 #include "MPGUI.h"
 #include <algorithm>
 
@@ -84,7 +84,7 @@ int CGuiMgr::HandleMsg(unsigned long dwMsgType, DWORD dwParam1, DWORD dwParam2)
         {
 			int nMouseX = dwParam1;
 			int nMouseY = dwParam2;
-			if(_bEditor && _pFocusObj) // && ×ó¼ü°´ÏÂ
+			if(_bEditor && _pFocusObj) // && left button down
             {
 				_pFocusObj->SetPos(_pFocusObj->GetX() + nMouseX - _nLastMouseX, _pFocusObj->GetY() + nMouseY - _nLastMouseY);
             }
@@ -357,7 +357,7 @@ BOOL CGuiMgr::LoadFromResource(const char *pszFile)
 
 void CGuiMgr::SendMessage(int nMsgType, int nGuiObjID, DWORD dwParam1, DWORD dwParam2)
 {
-	// ÄÚ²¿ÐÐÎª´¦Àí
+	// internal behaviour handling
 	if(nMsgType==MSG_GUI_BUTTON_CHECK && dwParam1==1) 
 	{
 		CGuiButton *pButton = (CGuiButton*)GetGuiObj(nGuiObjID);
@@ -476,7 +476,7 @@ void CGuiObj::Show(BOOL bShow)
 }
 
 //--------------
-//  ÉèÖÃÕÚµ²²ã´Î
+//  set the occlusion levels
 //--------------
 void CGuiObj::SetLayer(int nLayer)
 {
@@ -517,7 +517,7 @@ CGuiObj::~CGuiObj()
         for(unsigned int i = 0; i < ObjList.size(); i++)
         {
             CGuiObj *pObj = ObjList[i];
-            delete pObj; // ÀïÃæ»á´¥·¢'½â³ýParent¹ØÏµ'
+            delete pObj; // é‡Œé¢ä¼šè§¦å‘'è§£é™¤Parentå…³ç³»'
         }
         ObjList.clear();
         _ChildList.clear();

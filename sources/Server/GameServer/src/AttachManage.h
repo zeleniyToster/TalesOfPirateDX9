@@ -1,4 +1,4 @@
-//=============================================================================
+ï»¿//=============================================================================
 // FileName: AttachManage.h
 // Creater: ZhangXuedong
 // Date: 2004.10.19
@@ -31,7 +31,7 @@ public:
 protected:
 
 private:
-	CAttachable* m_pCLstHead{}; // Á´Ê×¶ÔÏóÒ²ÊÇÖ÷¿Ø¶ÔÏó
+	CAttachable* m_pCLstHead{}; // the head of the chain is also the master object
 	CAttachable* m_pCLstTail{};
 
 	CAttachable* m_pCur{};
@@ -61,11 +61,11 @@ private:
 	void	Initially();
 	void	Finally();
 
-	CAttachable* m_pCLstHead{}; // Á´Ê×¶ÔÏóÒ²ÊÇÖ÷¿Ø¶ÔÏó
+	CAttachable* m_pCLstHead{}; // the head of the chain is also the master object
 	CAttachable* m_pCLstTail{};
 
 	long		m_lNum{};
-	CAttachable* m_pCCurPess{}; // ÓÃÓÚ±éÀúÁ´±í
+	CAttachable* m_pCCurPess{}; // used to walk the chain
 };
 
 inline void CPassengerMgr::BeginGet(void)

@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "blk.h"
 #include <stdio.h>
 
@@ -75,12 +75,12 @@ BOOL CBlk::Compress_BLK_RLE(const char* filename, DWORD* pARGB, int width, int h
 	if(UseRect.top >= UseRect.bottom)
 	{
 		memset(&UseRect,0,sizeof(UseRect));
-		//((CmakegtfDlg*)AfxGetMainWnd())->OutMsg("\n£¡£¡£¡>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ³ö´íÁË£¡       ÕâÕÅÍ¼ÖÐÃ»ÓÐÈÎºÎ¶«¶« <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n\n");
+		//((CmakegtfDlg*)AfxGetMainWnd())->OutMsg("\nï¼ï¼ï¼>>>>>>>>>>>>>>>>>>>>>>>>>>>>> å‡ºé”™äº†ï¼       è¿™å¼ å›¾ä¸­æ²¡æœ‰ä»»ä½•ä¸œä¸œ <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n\n");
 	}
 	else if(UseRect.left >= UseRect.right)
 	{
 		memset(&UseRect,0,sizeof(UseRect));
-		//((CmakegtfDlg*)AfxGetMainWnd())->OutMsg("\n£¡£¡£¡>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ³ö´íÁË£¡       ÕâÕÅÍ¼ÖÐÃ»ÓÐÈÎºÎ¶«¶« <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n\n");
+		//((CmakegtfDlg*)AfxGetMainWnd())->OutMsg("\nï¼ï¼ï¼>>>>>>>>>>>>>>>>>>>>>>>>>>>>> å‡ºé”™äº†ï¼       è¿™å¼ å›¾ä¸­æ²¡æœ‰ä»»ä½•ä¸œä¸œ <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n\n");
 	}
 
 	int w,h;
@@ -275,12 +275,12 @@ BOOL CBlk::Compress_BLK(const char* filename, DWORD* pARGB, int width, int heigh
 	if(UseRect.top >= UseRect.bottom)
 	{
 		memset(&UseRect,0,sizeof(UseRect));
-		//((CmakegtfDlg*)AfxGetMainWnd())->OutMsg("\n£¡£¡£¡>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ³ö´íÁË£¡       ÕâÕÅÍ¼ÖÐÃ»ÓÐÈÎºÎ¶«¶« <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n\n");
+		//((CmakegtfDlg*)AfxGetMainWnd())->OutMsg("\nï¼ï¼ï¼>>>>>>>>>>>>>>>>>>>>>>>>>>>>> å‡ºé”™äº†ï¼       è¿™å¼ å›¾ä¸­æ²¡æœ‰ä»»ä½•ä¸œä¸œ <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n\n");
 	}
 	else if(UseRect.left >= UseRect.right)
 	{
 		memset(&UseRect,0,sizeof(UseRect));
-		//((CmakegtfDlg*)AfxGetMainWnd())->OutMsg("\n£¡£¡£¡>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ³ö´íÁË£¡       ÕâÕÅÍ¼ÖÐÃ»ÓÐÈÎºÎ¶«¶« <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n\n");
+		//((CmakegtfDlg*)AfxGetMainWnd())->OutMsg("\nï¼ï¼ï¼>>>>>>>>>>>>>>>>>>>>>>>>>>>>> å‡ºé”™äº†ï¼       è¿™å¼ å›¾ä¸­æ²¡æœ‰ä»»ä½•ä¸œä¸œ <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n\n");
 	}
 
 	int w,h;
@@ -451,7 +451,7 @@ BOOL CBlk::Compress_BLK(const char* filename, DWORD* pARGB, int width, int heigh
 
 BOOL CBlk::CompressPal(const DWORD* pARGB, int width, int height, _RGB* pPal, int & nCount)
 {
-	//Á¢ÑÕÉ«Ë÷Òý±í
+	// build the colour index table
 
 	_RGB* pPalTmp=new _RGB[width * height];
 	int	* pColorCount= new int [width * height];
@@ -474,7 +474,7 @@ BOOL CBlk::CompressPal(const DWORD* pARGB, int width, int height, _RGB* pPal, in
 			int index;
 			if((index = SearchPal(pPalTmp,nPalTmpCount,crTmp)) == -1)
 			{
-				//Èç¹ûÕÒ²»µ½
+				// if it is not found
 				pPalTmp[nPalTmpCount]=crTmp;
 				pColorCount[nPalTmpCount]=1;
 				nPalTmpCount++;
@@ -489,7 +489,7 @@ BOOL CBlk::CompressPal(const DWORD* pARGB, int width, int height, _RGB* pPal, in
 
 	if(nPalTmpCount > 256)
 	{
-		//Èç¹ûÑÕÉ«Êý´óÓÚ 256 ,ÔòÈ¡Ê¹ÓÃ×î¶àµÄ 256 ÖÖ
+		// if there are more than 256 colours, keep the 256 most used ones
 		for(i=1; i<nPalTmpCount; i++)
 		{
 			crTmp=pPalTmp[i];
@@ -544,7 +544,7 @@ int CBlk::SearchPal(_RGB* pPal, int nCount,_RGB color)
 
 int CBlk::GetColorIndex(_RGB* pPal, int nCount, _RGB color)
 {
-	//ÔÚÑÕÉ«Ë÷Òý±íÖÐ¶¨Î»Ö¸¶¨ÑÕÉ«µÄË÷Òý
+	// locate the index of the given colour in the colour index table
 	unsigned int min_diff=100000;
 	int min_index=-1;
 	unsigned int diff;

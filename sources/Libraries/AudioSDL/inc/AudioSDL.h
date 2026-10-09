@@ -1,7 +1,7 @@
-
+ï»¿
 //---------------------------
 //
-//  ÒôÆµ²¥·Å
+//  audio playback
 //  by Jampe
 //  2007/03/28
 //
@@ -22,52 +22,52 @@ class AudioSDL : public _singleton<AudioSDL>
 public:
     ~AudioSDL();
 
-    //  ³õÊ¼»¯ÉùÒôÏµÍ³
+    //  initialises the sound system
     bool init();
 
-    //  ÊÍ·ÅÉùÒôÏµÍ³
+    //  releases the sound system
     void release();
 
-    //  ÉùÒôÏµÍ³ÊÇ·ñÓĞĞ§
+    //  whether the sound system is valid
     bool is_valid();
 
-    //  »ñÈ¡ÒôÀÖ×ÊÔ´Ë÷Òı
+    //  gets the music resource index
     ulong get_resID(const char* resource, int type);
 
-    //  ²¥·Å
+    //  play
     bool play(ulong id, bool loop = false);
 
-    //  ½¥Èë
+    //  fade in
     bool fadeIn(ulong id, int ms, bool loop = false);
 
-    //  ½¥ÍË
+    //  fade out
     bool fadeOut(ulong id, int ms);
 
-    //  Í£Ö¹²¥·Å
+    //  stop playing
     bool stop(ulong id);
 
-    //  ÔİÍ£
+    //  pause
     bool pause(ulong id);
 
-    //  »Ö¸´
+    //  resume
     bool resume(ulong id);
 
-    //  ÖØÖÃ(½öÒôÀÖÓĞĞ§.ÈçMP3,OGGµÈ)
+    //  reset (valid for music only, such as MP3 or OGG)
     bool rewind(ulong id);
 
-    //  ÊÇ·ñÕıÔÚ²¥·Å
+    //  whether it is playing
     bool is_playing(ulong id);
 
-    //  ÊÇ·ñÔİÍ£
+    //  whether it is paused
     bool is_paused(ulong id);
 
-    //  ÊÇ·ñÍ£Ö¹
+    //  whether it is stopped
     bool is_stopped(ulong id);
 
-    //  µ÷ÕûÒôÁ¿
+    //  adjusts the volume
     bool volume(ulong id, int vol);
 
-    //  ¼ì²â×ÊÔ´ÓĞĞ§ĞÔ(Çå³ş³¬Ê±Î´ÒıÓÃ×ÊÔ´)(Ãë)
+    //  checks whether a resource is valid (clears timed out unreferenced resources) (seconds)
     void checkRes(ulong timeout = 300);
 
 protected:

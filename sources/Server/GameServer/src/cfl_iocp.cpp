@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include <iostream>
 #include "cfl_iocp.h"
 #include "cfl_lock.h"
@@ -12,7 +12,7 @@ using namespace std;
 void cfl_printf(char const* fmt, ...)
     {
     char buf[2048];
-    int len; // len Òª·ÅÔÚ buf ºóÃæ¶¨Òå
+    int len; // len must be defined after buf
 
     va_list args;
     va_start(args, fmt);

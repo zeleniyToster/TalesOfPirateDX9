@@ -1,4 +1,4 @@
-
+ï»¿
 #pragma once
 
 
@@ -20,7 +20,7 @@
 
 
 
-// ¶ÁÈ¡ÄÚ´æBMPÍ¼Æ¬£¬ÔÝÊ±Ö»Ö§³ÖºÚ°×Í¼Æ¬
+// reads an in-memory BMP image; only black and white images are supported for now
 class CImageBMP
 {
 public:
@@ -72,7 +72,7 @@ namespace GUI
 	private:
 
 		CForm*			frmNumAnswer;
-		CForm*			frmFast;	// ½ö×÷Îª×ø±ê²ÎÕÕ£¬²»×÷ÈÎºÎ´¦Àí
+		CForm*			frmFast;	// used only as a coordinate reference, nothing is done with it
 		CEdit*			edtUserInput;
 		CLabelEx*		labTimeLeft;
 		C3DCompent*		ui3dCheckCode;

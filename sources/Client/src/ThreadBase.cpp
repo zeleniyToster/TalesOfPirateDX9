@@ -1,4 +1,4 @@
-
+ï»¿
 
 #include "stdafx.h"
 #include "ThreadBase.h"
@@ -24,14 +24,14 @@ CThreadBase::~CThreadBase()
 
 bool CThreadBase::Begin(int flag)
 {
-    // ´´½¨µÄÊ±ºòÏÈ¹ÒÆğ
+    // suspended when it is created
     m_thread = (HANDLE)_beginthreadex(NULL, 0, ThreadFunc, this, CREATE_SUSPENDED, &m_threadid);
 
 	LG( "threadid", "%d:%s\n", m_threadid, "CThreadBase" );
 
     if(m_thread)
     {
-        // Ö¸¶¨ CPU ÔËĞĞºóÔÙ¿ªÊ¼ÔËĞĞ
+        // starts running only after the CPU is specified
         SetThreadAffinityMask(m_thread, 1);
         ResumeThread(m_thread);
     }

@@ -1,4 +1,4 @@
-//=============================================================================
+ï»¿//=============================================================================
 // FileName: MoveAble.h
 // Creater: ZhangXuedong
 // Date: 2004.11.03
@@ -24,40 +24,40 @@ public:
 
 	struct STarget
 	{
-		// ´Ë½á¹¹¼°º¬ÒåÍ¬SFightInitµÄ¶ÔÓ¦½á¹¹
+		// this structure and its meaning match the corresponding one in SFightInit
 		struct
 		{
-			dbc::Char		chType;	// 0£¬ÎŞÄ¿±ê¡£1£¬Ä¿±êÊÇÊµÌå¡£2£¬Ä¿±êÊÇ×ø±ê
+			dbc::Char		chType;	// 0, no target. 1, the target is an entity. 2, the target is coordinates
 			dbc::Long		lInfo1;
 			dbc::Long		lInfo2;
 		};
 		//
-		dbc::uLong	ulDist;		// ¶ÔÄ¿±êµÄ¾àÀë£¨ÀåÃ×£©
+		dbc::uLong	ulDist;		// distance to the target (cm)
 	};
 
 	struct SMoveInit
 	{
-		//dbc::uLong	ulSpeed;		// ÒÆ¶¯ËÙ¶È£¨ÀåÃ×/Ãë£©
-		dbc::uShort	usPing;			// Ò»¸öÍøÂçÀ´»ØµÄÊ±¼ä
+		//dbc::uLong	ulSpeed;		// ç§»åŠ¨é€Ÿåº¦ï¼ˆå˜ç±³/ç§’ï¼‰
+		dbc::uShort	usPing;			// time for one network round trip
 
-		SPointList	SInflexionInfo;	// ĞèÒªÖ´ĞĞÒÆ¶¯µÄµãĞòÁĞ
-		STarget		STargetInfo;	// ÒÆ¶¯µÄÄ¿±êĞÅÏ¢
+		SPointList	SInflexionInfo;	// sequence of points to move through
+		STarget		STargetInfo;	// movement target information
 
-		dbc::Short	sStopState;		// ÒÆ¶¯Í£Ö¹ºóµÄ×´Ì¬£¨enumEXISTS_WAITING, enumEXISTS_SLEEPING£©
+		dbc::Short	sStopState;		// state after the movement stops (enumEXISTS_WAITING, enumEXISTS_SLEEPING)
 	};
 
 	struct SMoveProc
 	{
-		dbc::Short	sCurInflexion;	// µ±Ç°×ªÍäµã
+		dbc::Short	sCurInflexion;	// current turning point
 
-		dbc::uLong	ulElapse;		// Ô¤ÒÆ¶¯ºÄÊ±£¨ºÁÃë£©
+		dbc::uLong	ulElapse;		// predicted movement time (milliseconds)
 		dbc::uLong	ulCacheTick;
 
-		dbc::Short	sState;		// ²Î¼ûCompCommand.hÖĞµÄEMoveStateÃ¶¾ÙÀàĞÍ
-		dbc::Char	chRequestState;	// ÇëÇóµÄÒÆ¶¯×´Ì¬£º0£¬ÎŞÇëÇó¡£1£¬ÇëÇóÍ£Ö¹ÒÆ¶¯¡£2£¬ÇëÇó¿ªÊ¼ÒÆ¶¯
-		dbc::Char	chLagMove;		// 0£¬²»»º´æÒÆ¶¯ÇëÇó¡£1£¬»º´æ
+		dbc::Short	sState;		// see the EMoveState enumeration in CompCommand.h
+		dbc::Char	chRequestState;	// the requested movement state: 0, no request. 1, request to stop. 2, request to start
+		dbc::Char	chLagMove;		// 0, do not buffer movement requests. 1, buffer
 
-		SPointList	SNoticePoint;	// Í¨¸æ¸øÖÕ¶ËµÄµãĞòÁĞ
+		SPointList	SNoticePoint;	// sequence of points notified to the terminals
 	};
 
 	struct SMoveRedundance
@@ -103,7 +103,7 @@ protected:
 	bool		SetMoveOnInfo(SMoveInit* pSMoveI);
 
 private:
-	virtual void AfterStepMove(void){}; // ´¦ÀíµØÍ¼ÇĞ»»£¬¸Ãº¯ÊıÃ»ÓĞ·ÅÔÚAttemptMoveÀı³ÌÖĞ£¬ÊÇÒòÎªAfterStepMove¿ÉÄÜ½øĞĞµØÍ¼ÇĞ»»¶øµ¼ÖÂµ±Ç°µØÍ¼Îª¿Õ£¬¶øAttemptMoveÖ®ºó¿ÉÄÜ½øĞĞÊÓÒ°Í¨¸æ£¬µØÍ¼²»ÄÜÎª¿Õ
+	virtual void AfterStepMove(void){}; // handles the map switch. This function is not placed inside the AttemptMove routine because AfterStepMove may switch maps and leave the current map empty, while the visibility notification after AttemptMove needs a non-empty map
 	virtual void SubsequenceMove(){};
 
 	void BeginMove(dbc::uLong ulElapse = 0);
@@ -116,8 +116,8 @@ private:
 	Point NearlyPointFromPointToLine(const Point *pPort1, const Point *pPort2, const Point *pCenter);
 	bool SegmentEnterCircle(Point *pSPort1, Point *pSPort2, Circle *pSCircle, Point *pResult);
 
-	dbc::uShort	m_usHeartbeatFreq;	// ÒÆ¶¯Ö´ĞĞµÄĞÄÌø£¨ÆµÂÊ£©£¬µ¥Î»£¨ºÁÃë£©
-	dbc::uLong	m_ulHeartbeatTick;	// µ¥Î»£¨ºÁÃë£©
+	dbc::uShort	m_usHeartbeatFreq;	// movement execution heartbeat (frequency), in milliseconds
+	dbc::uLong	m_ulHeartbeatTick;	// in milliseconds
 	bool		m_bOnMove;
 
 	CTimer		m_timeRun;

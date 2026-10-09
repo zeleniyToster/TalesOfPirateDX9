@@ -1,7 +1,7 @@
-//----------------------------------------------------------------------
-// Ãû³Æ:ÓÃÓÚÊµÏÖÁÄÌì½çÃæ
-// ×÷Õß:lh 2005-02-26
-// ×îºóÐÞ¸ÄÈÕÆÚ:2004-10-20
+ï»¿//----------------------------------------------------------------------
+// Name: implements the chat screen
+// Author: lh 2005-02-26
+// Last modified date: 2004-10-20
 //----------------------------------------------------------------------
 #pragma once
 #include "UIGlobalVar.h"
@@ -20,13 +20,13 @@ class CItemObj;
 
 enum eSendTeamMsg
 {
-	enumSTM_ADD_GROUP,  // ÐÂÔö×é,²ÎÊý1:CTeam*
-	enumSTM_DEL_GROUP,  // É¾³ý×é,²ÎÊý1:CTeam*
-	enumSTM_ADD_MEMBER, // ÐÂÔö×é³ÉÔ±,²ÎÊý:CMember*
-	enumSTM_DEL_MEMBER, // É¾³ý×é³ÉÔ±,²ÎÊý:CMember*
+	enumSTM_ADD_GROUP,  // group added, parameter 1: CTeam*
+	enumSTM_DEL_GROUP,  // group removed, parameter 1: CTeam*
+	enumSTM_ADD_MEMBER, // group member added, parameter: CMember*
+	enumSTM_DEL_MEMBER, // group member removed, parameter: CMember*
 	enumSTM_AFTER_DEL_MEMBER,
-	enumSTM_NODE_CHANGE,// µ±Ç°½Úµã·¢Éú±ä»¯,²ÎÊý:CMember*
-	enumSTM_NODE_DATA_CHANGE,   // ½ÚµãÀ©Õ¹ÄÚÈÝ·¢Éú±ä»¯,ÓÃÓÚ×é¶ÓµÄÑª,Ä§·¨,¼¶±ðµÈ·¢Éú±ä»¯Ê±Í¨Öª,²ÎÊý:CMember*
+	enumSTM_NODE_CHANGE,// the current node changed, parameter: CMember*
+	enumSTM_NODE_DATA_CHANGE,   // the expanded content of the node changed; used to notify changes to the party health, mana, level and the like, parameter: CMember*
 };
 
 class CGuiTime;
@@ -37,7 +37,7 @@ class CChat : public CUIInterface
 public:
     enum 
     {
-        MAX_MEMBER = 4,         // ×î¶à³ÉÔ±Êý
+        MAX_MEMBER = 4,         // maximum number of members
     };
 
     CChat();
@@ -45,12 +45,12 @@ public:
     bool Init();
     void End();
 
-    void RefreshTeam();         // Ë¢ÐÂ×é¶Ó½çÃæ
+    void RefreshTeam();         // refreshes the party screen
 
-	// Ë¢ÐÂ×é¶Ó³ÉÔ±Êý¾Ý
+	// refreshes the party member data
 	void RefreshTeamData( CMember* pCurMember );		
 
-    void ClearTeam();           // Çå³ý×é¶Ó½çÃæ
+    void ClearTeam();           // clears the party screen
     int  TeamSend( DWORD dwMsg, void* pData=NULL, DWORD dwParam=0 );
 
 	void SortOnlineFrnd();
@@ -71,18 +71,18 @@ public:
 	static bool		_UpdateFrndInfo(CMember *pMember);
 	//static void		LoadFilterText(const char *text);
 	static bool		_UpdateSelfInfo();
-	static DWORD	_dwSelfID;			// ×Ô¼ºµÄID
-	static DWORD	_dwSelfIcon;			// ×Ô¼ºµÄÍ·Ïñ
-	static std::string	_strSelfMottoName;		// ×Ô¼ºµÄ×ùÓÒÃú
+	static DWORD	_dwSelfID;			// your own ID
+	static DWORD	_dwSelfIcon;			// your own portrait
+	static std::string	_strSelfMottoName;		// your own motto
 	static CMember* _curSelectMember;
 
 
 public:
-	CForm*          frmChatManage;          // Chat½çÃæ
+	CForm*          frmChatManage;          // Chat screen
 	//static CForm*	_frmDetails;
 	CForm*       GetDetailsForm()    { return _frmDetails;    }
-	//×é¶Ó½çÃæ
-	static CForm*          frmTeamMenber[MAX_MEMBER];		// nTag¼ÇÂ¼HummanID
+	//party screen
+	static CForm*          frmTeamMenber[MAX_MEMBER];		// nTag records the HummanID
 	static CProgressBar*   proTeamMenberHP[MAX_MEMBER];
 	static CProgressBar*   proTeamMenberSP[MAX_MEMBER];
 	static CLabelEx*       labMenberName[MAX_MEMBER];
@@ -104,30 +104,30 @@ private:
 
 private:
 
-	static CForm*          _frmQQ;			 // QQ½çÃæ
+	static CForm*          _frmQQ;			 // QQ screen
 
 	static CForm*          _frmAddFriend;	 
 	static CForm*          _frmChangeSytle;
 	static CForm*			_frmEditMotto;
 	static CForm*          _frmDetails;
 	static CForm*          _frmBlockPlayer;
-    static CTeamMgr*       _pTeamMgr;        // ×é¶Ó¹ÜÀíÆ÷
+    static CTeamMgr*       _pTeamMgr;        // party manager
 	CTreeView*		m_pQQTreeView;
-	CTreeGridNode*  _pFrndNode;              // ºÃÓÑ½Úµã
+	CTreeGridNode*  _pFrndNode;              // friend node
 
-    CTreeGridNode*  _pGroupNode;             // ¶ÓÎé½Úµã
-	//ÆÁ±ÎÂ·ÈËÁÄÌì
+    CTreeGridNode*  _pGroupNode;             // party node
+	//blocks bystander chat
 
-    //CTreeGridNode*  _pRoadNode;              // Â·ÈË½Úµã
-	static CTreeGridNode*  _pGuildNode;      // ¹«»á½Úµã
+    //CTreeGridNode*  _pRoadNode;              // è·¯äººèŠ‚ç‚¹
+	static CTreeGridNode*  _pGuildNode;      // guild node
 	static CTreeGridNode*  _pSessionNode;
-	static CTreeGridNode*  _pMasterNode;	// Ê¦¸µ
-	static CTreeGridNode*  _pPrenticeNode;	// Í½µÜ
+	static CTreeGridNode*  _pMasterNode;	// mentor
+	static CTreeGridNode*  _pPrenticeNode;	// apprentice
 	
-	static CTreeGridNode*  _pGMNode;	// Í½µÜ
+	static CTreeGridNode*  _pGMNode;	// apprentice
 	static CTreeGridNode*  _pBlockedNode;
 	
-	static CCharacter2D*   _pCharacter[MAX_MEMBER]; // ×é¶ÓÍâ¹Û
+	static CCharacter2D*   _pCharacter[MAX_MEMBER]; // party appearance
 	static CEdit*	_pEditFrndName;
 
 	static CEdit*	_pEditMotto;

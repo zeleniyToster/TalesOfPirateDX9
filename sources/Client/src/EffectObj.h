@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "SceneNode.h"
 #include "MindPower.h"
@@ -10,14 +10,14 @@
 
 enum	Effect_Type
 {
-	EFF_SCENE,  //³¡¾°ÌØĞ§	
-	EFF_CHA,	//½ÇÉ«°ó¶¨,ĞèÒª½ÇÉ«ID
-	EFF_ITEM,	//ÎäÆ÷°ó¶¨,ĞèÒªitem dummyºÍitem id
-	EFF_STRIP,	//µ¶¹â
-	EFF_SELF,	//×ÔÉíÌØĞ§
-	EFF_HIT,	//ÊÜ»÷ÌØĞ§,ĞèÒªÆğÊ¼µã
-	EFF_MAGIC,	//·ÉĞĞÌØĞ§,ĞèÒªÆğÊ¼µã£¬Ä¿±êµã
-	EFF_FONT,	//·ÉĞĞÌØĞ§,ĞèÒªÆğÊ¼µã£¬Ä¿±êµã
+	EFF_SCENE,  //scene effect
+	EFF_CHA,	//bound to a character, needs a character ID
+	EFF_ITEM,	//bound to a weapon, needs an item dummy and an item ID
+	EFF_STRIP,	//blade flash
+	EFF_SELF,	//effect on self
+	EFF_HIT,	//hit effect, needs a start point
+	EFF_MAGIC,	//flying effect, needs a start point and a target point
+	EFF_FONT,	//flying effect, needs a start point and a target point
 };
 class CCharacter;
 class CGameScene;
@@ -221,7 +221,7 @@ class  CMagicEff;
 ///*CMagicEff*/
 ///************************************************************************/
 
-//¶¨ÒåÁ£×Ó·¢³öµÄÏûÏ¢£¬ÓÉCMPEffectCtrlÀ´·¢³öÕâĞ©ÏûÏ¢£¬
+//defines the messages emitted by particles, emitted by CMPEffectCtrl,
 #define				PARTCTRL_MSG_PLAY			1
 #define				PARTCTRL_MSG_STOP			2	
 #define				PARTCTRL_MSG_MOVE			3	
@@ -229,16 +229,16 @@ class  CMagicEff;
 #define				PARTCTRL_MSG_RENDER			5	
 
 
-//´´½¨Ò»¸öÌØĞ§ËùĞèµÄ²ÎÊı
+//parameters needed to create an effect
 struct Eff_Property
 {
-	int			m_iEffType; //0 =³¡¾°ÌØĞ§£¬1Îª½ÇÉ«°ó¶¨ÌØĞ§,2ÎªÎï¼ş°ó¶¨ÌØĞ§,3ÎªÎäÆ÷ÌØĞ§,4ÎªÄ§·¨¹¥»÷ÌØĞ§
-	s_string	m_strName;  //ÌØĞ§ÎÄ¼şÃû
+	int			m_iEffType; //0 = scene effect, 1 character bound effect, 2 object bound effect, 3 weapon effect, 4 magic attack effect
+	s_string	m_strName;  //effect file name
 
-	int			m_iIdxRender;//Ëã·¨Ë÷Òı
+	int			m_iIdxRender;//algorithm index
 };
 
-//!¿ØÖÆÔË¶¯¹æ¼£µÄËã·¨
+//!algorithm that controls the motion path
 inline  void	Part_bind(CMagicEff* pEffCtrl);
 inline  void	Part_follow(CMagicEff* pEffCtrl);
 inline  void	Part_foldir(CMagicEff* pEffCtrl);
@@ -290,7 +290,7 @@ public:
 protected:
 	void			RenderMagic();
 public:
-	//Ö¸ÏòËã·¨µÄº¯ÊıÖ¸Õë
+	//pointer to the algorithm function
 	void				(*RenderUpdate)(CMagicEff* pEffCtrl);
 
 	friend	void		Part_bind(CMagicEff* pEffCtrl);
@@ -321,7 +321,7 @@ public:
 	int				getOwerID()			 { return _iOwnerID;}
 
 
-	//iType  0: ½ÇÉ«¶ÔÏó£¬ 1£ºItem¶ÔÏó
+	//iType  0: character object, 1: Item object
 	void			setFollowObj(CSceneNode* pObj, NODE_TYPE eType = NODE_CHA, int iDummy = -1, int iDummy2 = -1);
 
 	BOOL            IsSceneEffect()             { return getTypeID() == 0; }
@@ -427,7 +427,7 @@ public:
 
 	DWORD	GetStartTime()					{ return _dwStartTime;		}
 
-	// ÉèÖÃËõ·ÅÌØĞ§Òò×Ó Michael 2005.12.8
+	// sets the scaling effect factor Michael 2005.12.8
 	void	SetScale(float fX, float fY, float fZ) { _UpdateScale(fX, fY, fZ); }
 	void	SetAlpha(float fAlpha) { 	_pEffCtrl->GetPartCtrl()->SetAlpha(fAlpha); }
 
@@ -448,7 +448,7 @@ protected:
 protected:
 	Effect_Type			_eType;
     CEffDelay*          _pEffDelay;
-	CSceneNode*			_pObj;//¸úËæµÄ¶ÔÏó
+	CSceneNode*			_pObj;//the object being followed
 
 	MPTerrain*			_pTerrain;
 	long				_nTag;
@@ -500,7 +500,7 @@ protected:
 	int					_isID;
 	D3DXVECTOR3			_vsBegin;
 	D3DXVECTOR3			_vsEnd;
-	DWORD				_dwStartTime;		// ¼ÇÂ¼·ÉĞĞÌØĞ§µÄÆğÊ¼Ê±¼ä
+	DWORD				_dwStartTime;		// records the start time of a flying effect
 
 };
 
@@ -562,7 +562,7 @@ protected:
 	
     //CGameScene*		_pScene;
 	MPTerrain*      _pTerrain;
-	int				_iChaID;//ÓĞ¿ÉÄÜÊÇ½ÇÉ«£¬»òÎï¼ş£¬»òÎäÆ÷»òÌØĞ§µÄID
+	int				_iChaID;//may be the ID of a character, an object, a weapon or an effect
 
 	int				_iIdxID;
 

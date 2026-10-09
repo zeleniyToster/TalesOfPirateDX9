@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "UIGlobalVar.h"
 #include "NetProtocol.h"
 #include "SkillRecord.h"
@@ -12,7 +12,7 @@ namespace GUI
 {
 class CItemCommand;
 
-// ¼¼ÄÜ£¬µÀ¾ß£¬¿ì½Ý·½Ê½£¬×°±¸
+// skill, item, shortcut, equipment
 class CEquipMgr : public CUIInterface
 {
 public:
@@ -25,23 +25,23 @@ public:
     void            UpdataEquipSpy( const stNetChangeChaPart& SPart, CCharacter* pCha );
     void            UpdataEquipData( const stNetChangeChaPart& SPart, CCharacter* pCha );
 
-    void            UpdateShortCut( stNetShortCut& stShortCut );		// ¸üÐÂ¿ì½ÝÀ¸
-	void			DelFastCommand( CCommandObj* pObj );				// É¾³ýµ±Ç°¿ì½ÝÀ¸
+    void            UpdateShortCut( stNetShortCut& stShortCut );		// updates the shortcut bar
+	void			DelFastCommand( CCommandObj* pObj );				// deletes the current shortcut bar
     bool            ExecFastKey( int key );
 	void			FastChange(int nIndex, short sGridID, char chType,bool update = false);
 
-	void            CloseAllForm();		// ¹Ø±Õ´°Ìå
+	void            CloseAllForm();		// closes the window
 
-	// ½«¿ì½ÝÀ¸ÓëµÀ¾ßÀ¸±È½Ï,Óë·þÎñÆ÷²»ÏàÍ¬µÄ¿ì½ÝÀ¸,Ïò·þÎñÆ÷·¢ËÍÐ­Òé¸üÐÂ¿ì½ÝÀ¸,·µ»Ø¸üÐÂµÄ¸öÊý
-	// ÓÃÓÚµÀ¾ßÔÚµÀ¾ßÀ¸½»»»Ê±
+	// compares the shortcut bar with the item slot and, for shortcuts that differ from the server, sends a protocol to the server to update the shortcut bar; returns the number updated
+	// used when items are swapped inside the item slot
 	int				RefreshServerShortCut();							
 
-	CGoodsGrid* GetGoodsGrid() { return grdItem; }	// ²Ù×÷µÀ¾ßÀ¸±í¸ñ
-	CForm* GetItemForm() { return frmInv; }   // ²Ù×÷µÀ¾ß±íµ¥
+	CGoodsGrid* GetGoodsGrid() { return grdItem; }	// operates on the item slot grid
+	CForm* GetItemForm() { return frmInv; }   // operates on the item form
 
 	CForm* stateDrags;
 
-	// ´Ó×°±¸À¸Ð¶ÔØµÀ¾ßµ½µÀ¾ßÀ¸
+	// unloads an item from the equipment slot into the item slot
 	void			UnfixToGrid( CCommandObj* pItem, int nGridID, int nLink );
 
 	CSkillRecord*	FindSkill( int nID );
@@ -55,14 +55,14 @@ public:
 	
 	void 			UpdateIMP(int imp);
 
-	// »ñµÃµÀ¾ßÔÚµ±Ç°±³°üÖÐ×ÜµÄ¸öÊý
+	// gets the total number of an item in the current bag
 	int				GetItemCount(int nID);
 
 	static CGuiPic*		GetChargePic( unsigned int n );
 
 	void ShowSellPrompt();
-    static void		evtThrowItemEvent(CGuiData *pSender,int id,bool& isThrow);					// ´ÓµÀ¾ßÀ¸ÖÐÈÓ³öµÀ¾ß
-    static void		evtSwapItemEvent(CGuiData *pSender,int nFirst, int nSecond, bool& isSwap); // µÀ¾ßÀ¸ÖÐ½»»»µÀ¾ß
+    static void		evtThrowItemEvent(CGuiData *pSender,int id,bool& isThrow);					// throws an item out of the item slot
+    static void		evtSwapItemEvent(CGuiData *pSender,int nFirst, int nSecond, bool& isSwap); // swaps items inside the item slot
 
 protected:
 	virtual bool Init();
@@ -105,20 +105,20 @@ private:
 	static void		_evtSpyFormShow(CGuiData *pSender);
 
 	static void		_evtSkillUpgrade(CSkillList *pSender, CSkillCommand* pSkill);
-    static void		_evtFastChange(CGuiData *pSender, CCommandObj* pItem, bool& isAccept);		// ¿ì½ÝÀ¸·¢Éú±ä»¯
-	static void		_evtEquipEvent(CGuiData *pSender, CCommandObj* pItem, bool& isAccept);		// ´ÓµÀ¾ßÀ¸ÖÐ×°±¸µ½×°±¸À¸
-	static void		_evtThrowEquipEvent(CGuiData *pSender, CCommandObj* pItem, bool& isThrow);  // ´Ó×°±¸À¸ÈÓ³ö×°±¸
+    static void		_evtFastChange(CGuiData *pSender, CCommandObj* pItem, bool& isAccept);		// the shortcut bar changed
+	static void		_evtEquipEvent(CGuiData *pSender, CCommandObj* pItem, bool& isAccept);		// equips from the item slot into the equipment slot
+	static void		_evtThrowEquipEvent(CGuiData *pSender, CCommandObj* pItem, bool& isThrow);  // throws equipment out of the equipment slot
 
 	static void		_evtButtonClickEvent( CGuiData *pSender, int x, int y, DWORD key);
 	static void		_evtRMouseGridEvent(CGuiData *pSender,CCommandObj* pItem,int nGridID);
 
 	bool			_UpdataEquip( SItemGrid& Item, int nLink );
 	bool			_UpdataEquipSpy( SItemGrid& Item, int nLink );
-    void			_ActiveFast( int num );         // ¼¤»îµÚ¼¸À¸
+    void			_ActiveFast( int num );         // activates which bar
 
 	static void		_evtItemFormMouseEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey);
 
-	// ¼ÓËø MSGBOX È·ÈÏ
+	// lock added, MSGBOX confirm
 	static void		_CheckLockMouseEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey);
 
 	static void _RotateChaLeft(CGuiData *sender, int x, int y, DWORD key );
@@ -137,31 +137,31 @@ private:
 	static int				lIMP;
 	CForm*			frmSkill;
 
-    CLabel*         labPoint;                   // Ê£Óà¼¼ÄÜµãÊý
-    CLabel*         labPointLife;               // Ê£ÓàÉú»î¼¼ÄÜµãÊý
-    CSkillList*     lstFightSkill;              // Õ½¶·¼¼ÄÜÀ¸
-    CSkillList*     lstLifeSkill;               // Éú»î¼¼ÄÜÀ¸
-    CSkillList*     lstSailSkill;               // º½º£¼¼ÄÜÀ¸
+    CLabel*         labPoint;                   // remaining skill points
+    CLabel*         labPointLife;               // remaining life skill points
+    CSkillList*     lstFightSkill;              // combat skill bar
+    CSkillList*     lstLifeSkill;               // life skill bar
+    CSkillList*     lstSailSkill;               // navigation skill bar
 
 	CTextButton* btnOpenTempBag;
 	
 	
 	CCheckBox* chkLinkEqForm;
 	
-	CForm*			frmItemSpy;					// µÀ¾ß±íµ¥
-	CGoodsGrid*     grdItem;					// µÀ¾ßÀ¸
-	COneCommand*    cnmEquip[enumEQUIP_NUM];    // ×°±¸À¸
-	COneCommand*    cnmEquipSpy[enumEQUIP_NUM];    // ×°±¸À¸
+	CForm*			frmItemSpy;					// item form
+	CGoodsGrid*     grdItem;					// item slot
+	COneCommand*    cnmEquip[enumEQUIP_NUM];    // equipment slot
+	COneCommand*    cnmEquipSpy[enumEQUIP_NUM];    // equipment slot
     stNetChangeChaPart    stEquip;
     stNetChangeChaPart    stEquipSpy;
     stNetShortCut         _stShortCut;
 
-    int				_nFastCur;					// ¿ì½ÝÀ¸Ä¿Ç°ÔÚµÚ¼¸Î»
+    int				_nFastCur;					// which slot the shortcut bar is currently on
     CFastCommand**  _pFastCommands;
-	CLabel*			_pActiveFastLabel;			// ÓÃÓÚ¼¤»î¿ì½ÝÀ¸µÄÒ³Âë
+	CLabel*			_pActiveFastLabel;			// the page number used to activate the shortcut bar
 
-	CLabel*			lblGold;					// ½ðÇ®
-	CImage*			imgItem4;					// µÀ¾ßÇ°4¸ñµÄÍ¼Æ¬
+	CLabel*			lblGold;					// money
+	CImage*			imgItem4;					// the pictures for the first 4 item cells
 
 	CImage*			imgLock;
 	CImage*			imgUnLock;
@@ -218,23 +218,23 @@ private:
 	vskill		_skills;
 
 	typedef std::vector<int>	ints;
-	vskill		_cancels;			// ¿É±»»÷»îµÄ¼¼ÄÜ×´Ì¬
+	vskill		_cancels;			// skill states that can be reactivated
 
 	typedef std::vector<CSkillStateRecord*>  states;
-	states		_charges;			// ³äµçµÄ¼¼ÄÜ×´Ì¬
+	states		_charges;			// charging skill states
 
 	static CGuiPic	_imgCharges[enumEQUIP_NUM];
 
 	struct SSplitItem
 	{
-		static void		_evtSplitItemEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey);	// ²ð·ÖµÀ¾ß»Øµ÷
+		static void		_evtSplitItemEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey);	// split item callback
 		int			nFirst;
 		int			nSecond;
 		CCharacter*	pSelf;
 	};
 	static SSplitItem	SSplit;
 
-public:	// ÐÞÀíµÀ¾ßÏà¹Ø
+public:	// item repair related
 	void	ShowRepairMsg( const char* pItemName, long lMoney );
 	void    SetIsShow(bool bShow);
 

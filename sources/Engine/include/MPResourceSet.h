@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 #include "MindPowerAPI.h"
 #include "TableData.h"
 
-//Èç¹û¶¨ÒåÁË¸Ãºê×ÊÔ´ÎÄ¼ş½«°´ÕÕ½Å±¾ÎÄ¼ş¼ÓÔØ
+// with this macro defined, resource files are loaded through the script file
 //#define USE_RESOURCE_SCRIPT
-#define RESOURCE_SCRIPT 0		// 0-²»Ê¹ÓÃ×ÊÔ´½Å±¾£¬1-×ÊÔ´½Å±¾¶¨Òå£¬2-×ÊÔ´½Å±¾Ê¹ÓÃ²âÊÔÊ±£¬ 3-ÕıÊ½Ê¹ÓÃ×ÊÔ´½Å±¾ÎÄ¼ş
+#define RESOURCE_SCRIPT 0		// 0 no resource script, 1 resource script defined, 2 resource script while testing, 3 use the resource script file for real
 
 #pragma warning(disable: 4275)
 
@@ -46,7 +46,7 @@ public:
 		return m_pInstance; 
 	}
 
-	static MPResourceSet* m_pInstance; // Ïàµ±ÓÚµ¥¼ü, °Ñ×Ô¼º¼Ç×¡
+	static MPResourceSet* m_pInstance; // acts like a singleton: keeps a reference to itself
 
 public:
 	MPResourceSet(int nIDStart, int nIDCnt) : CRawDataSet(nIDStart, nIDCnt)

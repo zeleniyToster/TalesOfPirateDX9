@@ -1,14 +1,14 @@
-//----------------------------------------------------------------------
-// Ãû³Æ:¾²Ì¬ÎÄ×Ö
-// ×÷Õß:lh 2004-07-19
-// ×îºóĞŞ¸ÄÈÕÆÚ:2004-10-09
+ï»¿//----------------------------------------------------------------------
+// Name: static text
+// Author: lh 2004-07-19
+// Last modified date: 2004-10-09
 //----------------------------------------------------------------------
 #pragma once
 #include "uicompent.h"
 
 namespace GUI
 {
-// ¼òµ¥ÎÄ×Ö
+// simple text
 class CLabel : public CCompent
 {
 public:
@@ -27,12 +27,12 @@ public:
 	DWORD			GetTextColor() { return _color; }
 
 protected:
-	std::string			_caption;		// ÏÔÊ¾ÔÚ±íÃæµÄÃû³Æ
-	DWORD			_color;			// ×ÖÌåÑÕÉ«
+	std::string			_caption;		// the name shown on the surface
+	DWORD			_color;			// font colour
 
 };
 
-// ¿É´øÒõÓ°,»»×ÖÌå
+// can have a shadow and a different font
 class CLabelEx : public CLabel
 {
 public:

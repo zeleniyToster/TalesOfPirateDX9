@@ -1,4 +1,4 @@
-//------------------------------------------------------------------------
+ï»¿//------------------------------------------------------------------------
 //	2005.3.25	Arcol	create this file
 //	2005.4.7	Arcol	add function : bool GetNameFormString(const string &str,string &name)
 //						add function : string CutFaceText(string &text,size_t cutLimitlen)
@@ -36,7 +36,7 @@ string StringLimit(const string& str,size_t len)
 }
 
 //------------------------------------------------------------------------
-//	´Ó×Ö·û´®ÖÐÈ¡ÈËÎïÃû×Ö£¬ÈËÃû×î´ó³¤¶ÈÎª16¸ö×Ö·û
+//  extract the character name from a string; the name is at most 16 characters
 //------------------------------------------------------------------------
 bool GetNameFormString(const string &str,string &name)
 {
@@ -57,7 +57,7 @@ bool GetNameFormString(const string &str,string &name)
 }
 
 //------------------------------------------------------------------------
-//	·Ö¸îº¬ÓÐ±íÇé±ê¼ÇµÄÖÐÎÄÎÄ×Ö£¬·Ö¸îºó¿ÉÓÃÓÚ·ÖÐÐÏÔÊ¾
+//  split Chinese text containing emoticon markers so it can be wrapped across lines
 //------------------------------------------------------------------------
 string CutFaceText(string &text,size_t cutLimitlen)
 {
@@ -70,7 +70,7 @@ string CutFaceText(string &text,size_t cutLimitlen)
 
 	if(0 == stricmp(g_oLangRec.GetString(0), "English"))
 	{
-		// Ö§³ÖÓ¢ÎÄµ¥´Ê½Ø¶Ï
+		// supports truncating an English word
 		string temp = text.substr(0,cutLimitlen);
 		size_t nPos = temp.find_last_of(" ");
 		if(nPos != string::npos && nPos > 8)
@@ -85,7 +85,7 @@ string CutFaceText(string &text,size_t cutLimitlen)
 	}
 	else
 	{
-		// ÖÐÎÄ½Ø¶Ï
+		// Chinese truncation
 		retStr=text.substr(0,cutLimitlen);
 	}
 
@@ -106,7 +106,7 @@ string CutFaceText(string &text,size_t cutLimitlen)
 }
 
 ////------------------------------------------------------------------------
-////	×Ö·û´®²éÕÒ£¬²¢Ê¹ÓÃ*ºÅÌæ»»×Ö·û´®
+///	find within a string and replace the match with asterisks
 ////------------------------------------------------------------------------
 //void ReplaceText(string &text,const string strRpl)
 //{
@@ -119,7 +119,7 @@ string CutFaceText(string &text,size_t cutLimitlen)
 //}
 //
 ////------------------------------------------------------------------------
-////	¸ù¾Ý×Ö·û´®±í¹ýÂË×Ö·û´®
+///	filter a string using a string table
 ////------------------------------------------------------------------------
 //void FilterText(string &text,vector<char*> *p_strFilterTxt)
 //{
@@ -131,11 +131,11 @@ string CutFaceText(string &text,size_t cutLimitlen)
 //}
 
 //------------------------------------------------------------------------
-//	½âÎö·û×ª»»,´Ó0Æð,Àý:
+//  expand a format specifier, counting from 0, e.g.:
 //	#00 -> </00>
 //	#01 -> </01>
 //	#02 -> </02>
-//	...µ½nMaxCount-1
+//  ... up to nMaxCount-1
 //------------------------------------------------------------------------
 void ChangeParseSymbol(string &text,int nMaxCount)
 {
@@ -155,17 +155,17 @@ void ChangeParseSymbol(string &text,int nMaxCount)
 }
 
 
-// ½«InBufÖÐµÄ×Ö·û´®°´nWidth²å·Å»Ø³µ·ÅÔÚOutBufÖÐ
+// wrap the lines of InBuf at nWidth into OutBuf
 int StringNewLine( char* pOutBuf, unsigned int nWidth, const char* pInBuf, unsigned int nInLen )
 {
 	if(0 == _stricmp(g_oLangRec.GetString(0), "english"))
 	{
-		// Ó¢ÎÄ
+		// English
 		return StringNewLineEng(pOutBuf, nWidth, pInBuf, nInLen);
 	}
 	else
 	{
-		// ÖÐÎÄ
+		// Chinese
 		return StringNewLineChs(pOutBuf, nWidth, pInBuf, nInLen);
 	}
 }

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "STStateObj.h"
 #include <queue>
 #include "NetProtocol.h"
@@ -40,10 +40,10 @@ protected:
 	CCharacter*	_pCha;
 
 	static float			_fMoveRate;
-	static	unsigned long	_ulPreMoveTime;		// Ô¤ÒÆ¶¯Ê±¼ä
+	static	unsigned long	_ulPreMoveTime;		// predicted movement time
 	static DWORD			_dwPreMoveDis;
 
-private:		// Í³¼ÆµÄPingÖµ
+private:		// the ping value that was measured
 	enum  
 	{
 		LAST_NUM = 3,
@@ -52,13 +52,13 @@ private:		// Í³¼ÆµÄPingÖµ
 	static int MinPing;
 	static int LastPing[LAST_NUM];
 	static int LastPingCnt;
-	static int LastPingShow[LAST_NUM];			// ÓÃÓÚÏÔÊ¾×î½üµÄpingÖµ
+	static int LastPingShow[LAST_NUM];			// used to show the most recent ping value
 	static int nTotalPing;
 	static int nTotalPingCnt;
 	static float fAveragePing;
 };
 
-// ×ÔÖ÷ÒÆ¶¯
+// free movement
 class CMoveState : public CWaitMoveState
 {
 public:
@@ -89,13 +89,13 @@ protected:
 protected:
 	int			_nTargetX,		_nTargetY;
 
-    stNetMoveInfo   _stPathInfo;    // ÓÃÓÚ·şÎñÆ÷¶ËµÄÑ°Â·ÁĞ±í
-	bool	        _IsWalkLine;	// ×ßÖ±Ïß
+    stNetMoveInfo   _stPathInfo;    // used for the server side path finding list
+	bool	        _IsWalkLine;	// walk in a straight line
 
 };
 
 
-// Ìı´Ó·şÎñÆ÷µÄÒÆ¶¯
+// obey the movement given by the server
 class CServerMoveState : public CMoveState
 {
 public:
@@ -118,13 +118,13 @@ protected:
 	int			_nLocalTargetX, _nLocalTargetY;
 
 	static DWORD	_dwLastMoveTime;
-	static DWORD	_dwLastEndTime;	// ÓÃÓÚÅĞ¶ÏÊÇ·ñÎª¾²Ö¹×´Ì¬
+	static DWORD	_dwLastEndTime;	// used to decide whether it is in a stationary state
 
 	bool		_IsClientMove;
 
 };
 
-// Ïòºó×ß£¬²»¸Ä±ä·½Ïò,½öÓÃÓÚµ¥»ú²âÊÔ¡¡
+// walk backwards without changing direction; used only for standalone testing
 class CBackMoveState : public CMoveState
 {
 public:
@@ -136,7 +136,7 @@ protected:
 
 };
 
-// Ò»Ìå»¯µÄÒÆ¶¯
+// integrated movement
 class COneMoveState : public CWaitMoveState
 {
 public: 
@@ -155,8 +155,8 @@ public:
 	bool	IsSameServerPos( int x, int y );
 	void    SetRate(float r) { _fRate = r; }
 	float   GetRate() { return _fRate; }
-	// ¶ÔÑ°Â·Â·¾¶·Ö¶Î
-	// ²ÎÊı·Ö±ğÎª:ÊäÈëÁĞ±í,ÊäÈëÂ·¾¶,·Ö¶Î³¤¶È(Ğ¡ÓÚÁã²»·Ö¶Î)
+	// splits the path finding path into segments
+	// the parameters are: input list, input path, segment length (less than zero means no splitting)
 	static void	CompartMoveList( CMoveList& outlist, S_BVECTOR<D3DXVECTOR3>& path, int length );
 
 protected:
@@ -172,26 +172,26 @@ protected:
 	int		GetSyschroDistance();
 
 private:
-	int			_nStartX,	_nStartY;		// ¿ªÊ¼ÒÆ¶¯Ê±µÄÄ¿±êµã  
-	bool		_IsStartWalkLine;			// ¿ªÊ¼ÒÆ¶¯Ê±µÄ²ÎÊı
+	int			_nStartX,	_nStartY;		// the target point when the movement started
+	bool		_IsStartWalkLine;			// the parameters when the movement started
 
 	bool		_IsWalkLine;
 	int			_nTargetX,	_nTargetY;
 
-	CMoveList	_cLocalList;	// ±¾µØÒÆ¶¯ĞòÁĞ
-	int			_nLocalDis;		// ±¾µØ¾àÀë
+	CMoveList	_cLocalList;	// the local movement sequence
+	int			_nLocalDis;		// the local distance
 
-	int			_nServerDis;		// ·şÎñÆ÷ĞèÒªĞĞ×ßµÄ×Ü¾àÀë
-	int			_nServerStepDis;	// ·şÎñÆ÷ÒÑ¾­ĞĞ×ßµÄ¾àÀë
+	int			_nServerDis;		// the total distance the server has to walk
+	int			_nServerStepDis;	// the distance the server has already walked
 
-	int			_nMoveCount;		// ÇëÇóÒÆ¶¯´ÎÊı
-	int			_nStartCount;		// ÒÆ¶¯ÇëÇó´ÎÊı
+	int			_nMoveCount;		// number of movement requests
+	int			_nStartCount;		// number of movement request attempts
 	int			_nSendCount;
-	int			_nEndCount;			// ·şÎñÆ÷·µ»ØµÄ½áÊø´ÎÊı	
+	int			_nEndCount;			// number of completions returned by the server
 	bool		_IsSendCancel;
 
 	DWORD		_dwSendTime;
-	DWORD		_dwEndTime;			// ½áÊøÊ±µÄÊ±¼ä
+	DWORD		_dwEndTime;			// the time when it ended
 
 	float		_fRate;
 
@@ -204,7 +204,7 @@ private:
 		bool	IsLine;
 	};
 	typedef std::list<NeedPath> path;
-	path		_cNeedList;			// ĞèÒªÒÆ¶¯µÄµã
+	path		_cNeedList;			// the points that have to be walked
 
 	static CMoveList	_List;
 

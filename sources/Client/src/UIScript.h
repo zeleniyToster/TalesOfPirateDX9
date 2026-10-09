@@ -1,9 +1,9 @@
-//----------------------------------------------------------------------
-// Ãû³Æ:UI½Å±¾Àà
-// ×÷Õß:lh 2004-10-26
-// ÓÃÍ¾:¸¨ÖúÀà,ÓÃÓÚÖ§³ÖÆäËü¶ÔÏóÄÜ¹»ÓÃÓÚÍâ²¿½Å±¾
-//   ×¢:Ä¿Ç°²»ÄÜÔÚ³ÌĞòÖĞ¶¯Ì¬É¾³ı
-// ×îºóĞŞ¸ÄÈÕÆÚ:
+ï»¿//----------------------------------------------------------------------
+// Name: UI script class
+// Author: lh 2004-10-26
+// Purpose: a helper class so other objects can be used by external scripts
+//   note: cannot currently be deleted dynamically at runtime
+// Last modified date:
 //----------------------------------------------------------------------
 #pragma once
 #include "uiguidata.h"

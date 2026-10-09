@@ -1,4 +1,4 @@
-//=============================================================================
+ï»¿//=============================================================================
 // FileName: LifeLvRecord.h
 // Creater: ZhangXuedong
 // Date: 2005.05.28
@@ -19,9 +19,9 @@ class CLifeLvRecord : public CRawDataInfo
 public:
 	//CLifeLvRecord();
 
-	long	lID;			// ±àºÅ
-	short	sLevel;			// µÈ¼¶
-	unsigned long	ulExp;	// ¾­ÑéÖµ
+	long	lID;			// id
+	short	sLevel;			// level
+	unsigned long	ulExp;	// experience
 };
 
 class CLifeLvRecordSet : public CRawDataSet
@@ -39,7 +39,7 @@ public:
 
 protected:
 
-	static CLifeLvRecordSet* _Instance; // Ïàµ±ÓÚµ¥¼ü, °Ñ×Ô¼º¼Ç×¡
+	static CLifeLvRecordSet* _Instance; // acts like a singleton: keeps a reference to itself
 
 	virtual CRawDataInfo* _CreateRawDataArray(int nCnt)
 	{

@@ -1,57 +1,57 @@
-// stdafx.h : ±ê×¼ÏµÍ³°üº¬ÎÄ¼şµÄ°üº¬ÎÄ¼ş£¬
-// »òÊÇ¾­³£Ê¹ÓÃµ«²»³£¸ü¸ÄµÄ
-// ÏîÄ¿ÌØ¶¨µÄ°üº¬ÎÄ¼ş
+ï»¿// stdafx.h : include file for standard system include files,
+// or for frequently used but rarely changed
+// project specific include files
 
 #pragma once
 
 #ifndef VC_EXTRALEAN
-#define VC_EXTRALEAN        // ´Ó Windows ±êÍ·ÖĞÅÅ³ı²»³£Ê¹ÓÃµÄ×ÊÁÏ
+#define VC_EXTRALEAN        // exclude rarely-used stuff from the Windows headers
 #endif
 
-// Èç¹ûÄú±ØĞëÊ¹ÓÃÏÂÁĞËùÖ¸¶¨µÄÆ½Ì¨Ö®Ç°µÄÆ½Ì¨£¬ÔòĞŞ¸ÄÏÂÃæµÄ¶¨Òå¡£
-// ÓĞ¹Ø²»Í¬Æ½Ì¨µÄÏàÓ¦ÖµµÄ×îĞÂĞÅÏ¢£¬Çë²Î¿¼ MSDN¡£
-#ifndef WINVER              // ÔÊĞíÊ¹ÓÃ Windows 95 ºÍ Windows NT 4 »ò¸ü¸ß°æ±¾µÄÌØ¶¨¹¦ÄÜ¡£
-#define WINVER 0x0400       //Îª Windows98 ºÍ Windows 2000 ¼°¸üĞÂ°æ±¾¸Ä±äÎªÊÊµ±µÄÖµ¡£
+// If you must use a platform older than the ones named below, change the definitions.
+// See MSDN for the latest information on the values for the different platforms.
+#ifndef WINVER              // Allow the specific features of Windows 95 and Windows NT 4 or later.
+#define WINVER 0x0400       // Change to the appropriate value for Windows 98 and Windows 2000 and later.
 #endif
 
-#ifndef _WIN32_WINNT        // ÔÊĞíÊ¹ÓÃ Windows NT 4 »ò¸ü¸ß°æ±¾µÄÌØ¶¨¹¦ÄÜ¡£
-#define _WIN32_WINNT 0x0400     //Îª Windows98 ºÍ Windows 2000 ¼°¸üĞÂ°æ±¾¸Ä±äÎªÊÊµ±µÄÖµ¡£
+#ifndef _WIN32_WINNT        // Allow the specific features of Windows NT 4 or later.
+#define _WIN32_WINNT 0x0400     // Change to the appropriate value for Windows 98 and Windows 2000 and later.
 #endif                      
 
-#ifndef _WIN32_WINDOWS      // ÔÊĞíÊ¹ÓÃ Windows 98 »ò¸ü¸ß°æ±¾µÄÌØ¶¨¹¦ÄÜ¡£
-#define _WIN32_WINDOWS 0x0410 //Îª Windows Me ¼°¸üĞÂ°æ±¾¸Ä±äÎªÊÊµ±µÄÖµ¡£
+#ifndef _WIN32_WINDOWS      // Allow the specific features of Windows 98 or later.
+#define _WIN32_WINDOWS 0x0410 // Change to the appropriate value for Windows Me and later.
 #endif
 
-#ifndef _WIN32_IE           // ÔÊĞíÊ¹ÓÃ IE 4.0 »ò¸ü¸ß°æ±¾µÄÌØ¶¨¹¦ÄÜ¡£
-#define _WIN32_IE 0x0400    //Îª IE 5.0 ¼°¸üĞÂ°æ±¾¸Ä±äÎªÊÊµ±µÄÖµ¡£
+#ifndef _WIN32_IE           // Allow the specific features of Internet Explorer 4.0 or later.
+#define _WIN32_IE 0x0400    // Change to the appropriate value for Internet Explorer 5.0 and later.
 #endif
 
-#define _ATL_CSTRING_EXPLICIT_CONSTRUCTORS  // Ä³Ğ© CString ¹¹Ôìº¯Êı½«ÊÇÏÔÊ½µÄ
+#define _ATL_CSTRING_EXPLICIT_CONSTRUCTORS  // some CString constructors will be explicit
 
-// ¹Ø±Õ MFC ¶ÔÄ³Ğ©³£¼ûµ«¾­³£±»°²È«ºöÂÔµÄ¾¯¸æÏûÏ¢µÄÒş²Ø
+// turn off MFC's hiding of some common and frequently safely ignored warnings
 #define _AFX_ALL_WARNINGS
 
-#include <afxwin.h>         // MFC ºËĞÄºÍ±ê×¼×é¼ş
-#include <afxext.h>         // MFC À©Õ¹
-#include <afxdisp.h>        // MFC ×Ô¶¯»¯Àà
+#include <afxwin.h>         // MFC core and standard components
+#include <afxext.h>         // MFC extensions
+#include <afxdisp.h>        // MFC Automation classes
 #include <afxmt.h>
 
-#include <afxdtctl.h>       // Internet Explorer 4 ¹«¹²¿Ø¼şµÄ MFC Ö§³Ö
+#include <afxdtctl.h>       // MFC support for the Internet Explorer 4 common controls
 #ifndef _AFX_NO_AFXCMN_SUPPORT
-#include <afxcmn.h>         // Windows ¹«¹²¿Ø¼şµÄ MFC Ö§³Ö
+#include <afxcmn.h>         // MFC support for the Windows common controls
 #endif // _AFX_NO_AFXCMN_SUPPORT
 
-#include <afxsock.h>        // MFC Ì×½Ó×ÖÀ©Õ¹
+#include <afxsock.h>        // MFC socket extensions
 
 #include <vector>
 #include <map>
 #include <string>
 
-// ¶¯Ì¬²åÈëLG²Ëµ¥ID»ù×¼Öµ
+// base id used when inserting LG menu items dynamically
 enum {MY_LGMENU_BASE = 6000};
-// ¶¯Ì¬´´½¨¶ÔÓ¦LGµÄListCtrlµÄID»ù×¼Öµ
+// base id used when creating the ListCtrl for an LG dynamically
 enum {MY_LGLIST_BASE = 6500};
-// ¶¯Ì¬²åÈëGPL²Ëµ¥ID»ù×¼Öµ
+// base id used when inserting GPL menu items dynamically
 enum {MY_GPLMENU_BASE = 7000};
 
 #include "util.h"

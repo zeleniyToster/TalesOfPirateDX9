@@ -1,4 +1,4 @@
-// GroupServerApp.cpp : Defines the entry point for the console application.
+ï»¿// GroupServerApp.cpp : Defines the entry point for the console application.
 //
 
 #include "stdafx.h"
@@ -6,7 +6,7 @@
 
 HANDLE hConsole = NULL;
 
-// ³õÊ¼»¯Ë³Ðò
+// initialisation order
 #pragma init_seg( lib )
 pi_LeakReporter pi_leakReporter("groupememleak.log");
 CResourceBundleManage g_ResourceBundleManage("GroupServer.loc"); //Add by alfred.shi 20080130

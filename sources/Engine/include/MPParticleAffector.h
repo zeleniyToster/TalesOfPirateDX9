@@ -1,4 +1,4 @@
-#ifndef MPParticleAffector_H
+ï»¿#ifndef MPParticleAffector_H
 #define MPParticleAffector_H
 
 #include "MindPowerAPI.h"
@@ -6,21 +6,22 @@
 class MPParticleSystem;
 class MPParticle;
 
-/** ÊµÏÖÁ£×ÓÓ°ÏìÒò×Ó½Ó¿Ú³éÏóÀà.
+/** Abstract class implementing the particle affector interface.
 @remarks
-Á£×ÓÓ°ÏìÒò×ÓÊÇÔÚÁ£×ÓÏµÍ³ÖĞÔÚÁ£×ÓµÄÉú´æÆÚÖĞĞŞ¸ÄÁ£×Ó¡£ËûÃÇ´ò°ü³É
-ÀàĞÍ£¬±ÈÈç¡®Á¦£¨vector force£©¡¯Ó°ÏìÒò×Ó£¬¡®Ë¥¼õÆ÷£¨fader£©¡¯Ó°ÏìÒò×Ó£»Ã¿
-¸öÀàĞÍÒÔ²»Í¬µÄ·½Ê½½«ĞŞ¸ÄÁ£×Ó£¬Ê¹ÓÃ²»Í¬µÄ²ÎÊı¡£
+Particle affectors modify particles during their lifetime inside a particle system. They are packaged into
+types, such as a 'vector force' affector or a 'fader' affector; each
+type modifies particles in its own way, using its own parameters.
 @par
-ÒòÎªÄã¿ÉÒÔÊ¹ÓÃºÜ¶àÀàĞÍµÄÓ°ÏìÒò×Ó£¬ÒıÇæÃ»ÓĞ¹æ¶¨ÄÄĞ©¿ÉÓÃÒò×Ó¡£Ëü
-Ìá¹©ÁËÒ»Ğ©ÄÚÔÚµÄÒò×Ó£¬°´ËüÒ²ÔÊĞí²å¼ş»òÓ¦ÓÃ³ÌĞòÀ©Õ¹Ó°ÏìÒò×Ó¡£Õâ¿ÉÒÔ
-Í¨¹ı´´½¨ParticleAffectorµÄ×ÓÀàÓÃÀ´À©Õ¹ÄãĞèÒªµÄ·¢ÉäĞĞÎª£¬µ±È»Í¬Ê±ĞèÒª
-´´½¨ParticleAffectorFactoryµÄ×ÓÀàÓÃÀ´´´½¨ÄãµÄĞÂÓ°ÏìÒò×ÓµÄ¶ÔÏó¡£ÄãÔÚ
-ParticleSystemManagerµ÷ÓÃaddAffectorFactory×¢²áÕâ¸ö¹¤³§,ÕâÑù¾Í¿ÉÒÔÔÚ´ú
-Âë»ò½Å±¾ÎÄ¼şÖĞÍ¨¹ıÃû×Ö´´½¨Õâ¸öĞÂµÄÓ°ÏìÒò×Ó
+Because many affector types are possible, the engine does not fix the set of affectors that are available. It
+provides a few built-in ones, and also allows plugins or applications to extend the affector set. This can
+be done by subclassing ParticleAffector to extend the emission behaviour you need, and at the same time
+subclassing ParticleAffectorFactory to create objects of your new affector. You register this factory by
+calling addAffectorFactory on the ParticleSystemManager, after which the new affector can be created by name
+from code or from a script file
 @par
-Á£×Ó·¢ÉäÆ÷Ò²ÊÇÓÃÏàÍ¬µÄ·½Ê½.ÔÚ´´½¨Á£×ÓÌØĞ§Ê±,ÕâÑùÁ£×ÓÏµÍ³ÓĞºÜ´ó
-µÄÀ©Õ¹ĞÔ,¿ÉÒÔËæÒâ×éºÏÁ£×ÓÓ°ÏìÒò×ÓÀàĞÍºÍËûÃÇµÄ²ÎÊı.
+Particle emitters are extended in the same way. With that, a particle system becomes highly
+extensible when a particle effect is created, since the affector types and their parameters can be combined
+freely.
 */
 class MINDPOWER_API MPParticleAffector
 {
@@ -29,46 +30,44 @@ public:
 
 	virtual ~MPParticleAffector();
 
-	/** ÈÃÓ°ÏìÒò×Ó³õÊ¼»¯ËùÓĞĞÂ´´½¨µÄÁ£×Ó
+	/** Lets the affector initialise every newly created particle
 	@remarks
-	ÕâÀïÊÇÓ°ÏìÒò×ÓÓĞ»ú»á½«ËûµÄÌØĞ§³õÊ¼»¯Á£×Ó.Òò×ÓÏ£Íû³õÊ¼»¯Ò»Ğ©
-	»òËùÒÔÁ£×Ó,ÕâÒÀÀµÓ°ÏìÒò×Ó±¾Éí
+	This is where the affector gets the chance to initialise its effect on the particles. An affector may want to initialise some
+	or all particles, depending on the affector itself
 	@param
-	pParticle ĞèÒª³õÊ¼»¯Á£×ÓµÄÖ¸Õë.
+	pParticle pointer to the particle being initialised.
 	*/
 	virtual void _initParticle(MPParticle* pParticle) { /* by default do nothing */ }
 
-	/** ÔÊĞíÓ°ÏìÒò×ÓµÄÊı¾İ×÷ÓÃÔÚËùÓĞ»î¶¯µÄÁ£×Ó
+	/** Allows the affector data to be applied to all active particles
 	@remarks
-	ÕâÀïÊ¹Ó°ÏìÒò×ÓÓĞ»ú»á½«ËûÃÇµÄÊı¾İ×÷ÓÃµ½ÏµÍ³ÖĞµÄÁ£×Ó.Ó°ÏìÒò×Ó
-	Ï£Íû½«ËûÃÇµÄÌØĞ§×÷ÓÃµ½Ò»Ğ©»òËùÓĞÁ£×Ó,ÕâĞ©ÒÀÀµÁ£×ÓÒò×ÓµÄ·½·¨
+	This is where the affector gets the chance to apply its data to the particles in the system. An affector
+	may want to apply its effect to some or all particles, depending on the affector method
 	@param
-	pSystem Ëù×÷ÓÃµÄÁ£×ÓÏµÍ³µÄÖ¸Õë.
+	pSystem pointer to the particle system being acted on.
 	@param
-	timeElapsed ´ÓÉÏ´Îµ÷ÓÃµ½ÏÖÔÚËù»¨µÄÊ±¼ä(Ãë).
+	timeElapsed time elapsed since the previous call, in seconds.
 	*/
 	virtual void _affectParticles(MPParticleSystem* pSystem, float timeElapsed) = 0;
 
-	/** ·µ»ØÓ°ÏìÒò×ÓµÄÀàĞÍ. 
+	/** Returns the affector type. 
 	@remarks
-	Õâ¸ö²ÎÊı¾ö¶¨ÁËÓ°ÏìÒò×ÓµÄÀàĞÍ,ÕâÑù±ã¿ÉÒÔÍ¨¹ıÕâ¸ö²ÎÊıÀ´´´½¨Ó°
-	ÏìÒò×Ó
+	This parameter determines the affector type, so that the affector can be created from it
 	*/
 	const String &getType(void) const { return m_Type; }
 protected:
-	/** ÄÚ²¿·½·¨ÓÃÀ´Îª×ÓÀàÉèÖÃ»ù±¾²ÎÊı¶¨Òå
+	/** Inner method that sets up the base parameter definitions for subclasses
 	@remarks
-	ÒòÎªStringInterface°üº¬Ã¿¸öÀàµÄ²ÎÊı×Öµä,×ÓÀàĞèÒªµ÷ÓÃËüÀ´ÇëÇó
-	»ùÀàÒ²°ÑËüµÄ²ÎÊı¼ÓÈëµ½×ÖµäÖĞ.²»ÒªÔÚ¹¹Ôìº¯ÊıÖĞ×öÕâ¼şÊÂ,ÒòÎª¹¹Ôì
-	º¯Êı²»ÊÇÒÔĞéº¯ÊıÔËĞĞ,ËüÃ»ÓĞĞéº¯ÊıµÄÉÏÏÂÎÄ
+	Because StringInterface holds the parameter dictionary of every class, a subclass must call it to request
+	that the base class add its parameters to the dictionary as well. Do not do this in the constructor, because the
+	constructor is not run as a virtual function and has no virtual context
 	@par
-	×ÓÀà±ØĞëÔÚµ÷ÓÃÕâ¸ö·½·¨Ö®Ç°µ÷ÓÃËûÃÇ×Ô¼ºµÄcreateParamDictionary
-	·½·¨
+	A subclass must call its own createParamDictionary method before calling this method
 	*/
-	void addBaseParameters(void) { /* Êµ¼ÊÉÏÃ»ÓĞ×öÈÎºÎÊÂ - ½«À´¿ÉÄÜ»á×öÒ»Ğ©ÊÂ */ }
+	void addBaseParameters(void) { /* å®é™…ä¸Šæ²¡æœ‰åšä»»ä½•äº‹ - å°†æ¥å¯èƒ½ä¼šåšä¸€äº›äº‹ */ }
 
 protected:
-	/// Á£×ÓÓ°ÏìÒò×ÓµÄÀàĞÍ, ±ØĞëÓÉ×ÓÀà³õÊ¼»¯
+	/// the particle affector type; must be initialised by the subclass
 	string m_Type;
 
 	MPParticleSystem* m_ParticleSystem;

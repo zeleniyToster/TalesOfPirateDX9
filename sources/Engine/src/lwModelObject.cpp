@@ -1,4 +1,4 @@
-//
+ï»¿//
 #if 1
 
 #include "lwModelObject.h"
@@ -95,7 +95,7 @@ LW_RESULT lwPrimitiveObj_PlayPoseAll(lwIPrimitiveObj* obj, const lwPlayPoseInfo*
     {
         ctrl_obj = anim_agent->GetAnimCtrlObj(i);
 
-        // lwAnimCtrlObjBoneÔÚlwPrimitiveÖĞ×îÎªÈİÆ÷¶ø·Ç¶¯»­¿ØÖÆÆ÷
+        // in an lwPrimitive, lwAnimCtrlObjBone acts as a container rather than as an animation controller
         if(ctrl_obj->GetType() == ANIM_CTRL_TYPE_BONE)
             continue;
 
@@ -370,8 +370,8 @@ LW_RESULT lwPrimitiveObj::Load(lwIGeomObjInfo* geom_info, const char* tex_path, 
     LoadRenderCtrl(&info->rcci);
 
     // base info
-    // warning:×¢Òâ£¬ÕâÀïµÄ_typeÓÃÀ´±íÊ¾MODELNODE_µÄÀàĞÍ
-    // ²»ÄÜÓÃµ¼³öµÄĞÅÏ¢typeÀ´¸²¸Ç£¡£¡£¡
+    // warning: _type here denotes the MODELNODE_ type
+    // it must not be overwritten with the exported type!!!
     //_type = info->type;
 
     _id = info->id;
@@ -1002,13 +1002,13 @@ void lwPrimitiveObj::SetOpacity(float opacity)
     _state_ctrl.SetState(STATE_TRANSPARENT, opacity == 1.0f ? 0 : 1);
 }
 
-// SetParent¶ÔÓÚparentÊÇVertexBlendCtrlÊ±µÄÎÊÌâ
-// 1.µ÷ÕûlwAnimCtrlAgentÖĞANIM_CTRL_TYPE_BONEµÄ¶ÔÏó
-// 2.ÖØÉè_ref_ctrl_obj_bone
-// 3.ÖØÉèlwRenderCtrlAgentÖĞvs_typeºÍvs_ctrl£¬ÒòÎªvs_type¾ßÓĞ×Ô¶¨ÒåĞÔÖÊ
-//   ËùÒÔÎŞ·¨Í¨¹ıfvf»òÕßÆäËû·½Ê½½øĞĞÄÚ²¿Æ¥Åä£¬ÕâÀï½¨Òévs_typeºÍvs_ctrl
-//   ×öÍâ²¿ÏÔÊ¾ÖØÉè
-//   ¿ÉÒÔ²»ĞèÒªÖØÉèvs_type£¨ÖØÉèĞ§ÂÊÂÔ¸ß£©,ĞèÒªÖØÉèvs_ctrl
+// problems with SetParent when parent is a VertexBlendCtrl
+// 1. adjust the ANIM_CTRL_TYPE_BONE objects in lwAnimCtrlAgent
+// 2. reset _ref_ctrl_obj_bone
+// 3. reset vs_type and vs_ctrl in lwRenderCtrlAgent; vs_type is custom,
+//    so it cannot be matched internally by fvf or any other means. Resetting them externally is
+//    recommended. vs_type need not be reset (resetting it is slightly more efficient), but vs_ctrl does
+//    need to be reset
 LW_RESULT lwPrimitiveObj::SetParent(lwIModelNode* parent)
 {
     LW_RESULT ret = LW_RET_FAILED;

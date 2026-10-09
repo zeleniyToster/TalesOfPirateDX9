@@ -1,30 +1,30 @@
-#pragma once
+ï»¿#pragma once
 
-// Raw Data : Ô­Ê¼Êı¾İ
-// Raw Data Set : ÊÊÓÃÓÚÊµ¼ÊÊı¾İÖ»ÓĞÒ»·İ, Ê¹ÓÃ¸ÃÊı¾İµÄÊµÀıÈ´¿ÉÒÔ´´½¨¶à¸öµÄÓ¦ÓÃ³¡ºÏ
-// ÀıÈç : MeshÄ£ĞÍÊı¾İ, ÌùÍ¼Êı¾İ, ¹Ç¼ÜÊı¾İµÈµÈ,  Ò²¿ÉÒÔÓÃÔÚ·ÇÓÎÏ·µÄ¸÷ÖÖÈí¼şÀï
+// Raw Data : the underlying data
+// Raw Data Set : for the case where there is one copy of the real data but many instances that use it
+// e.g. mesh model data, texture data, skeleton data; it is usable outside games as well
 
-// RawDataSetÀàµÄÖ÷Òª¹¦ÄÜ
-//1. Ô­Ê¼Êı¾İµÄ×ÊÔ´ÃèÊö¶ÁÈë(ÎÄ±¾,¶ş½øÖÆ)
-//2. Í¨¹ıIDË÷ÒıÊı¾İ
-//3. ¶¯Ì¬ÊÍ·Å
-//4  ×ÊÔ´´ò°üºÍ°üÊı¾İ´æÈ¡
+// main capabilities of the RawDataSet class
+//1. read the resource description of the raw data (text or binary)
+//2. index the data by id
+//3. release on demand
+//4  resource packing and access to the packed data
 
-// Ä¿Ç°µÄÓ¦ÓÃ»¹Ö»ÄÜÎªÒ»Ğ©×ÊÔ´ÃèÊö¸ñÊ½½ÏÎª¼òµ¥µÄÊı¾İ×ö»ùÀà½Ó¿Ú
-// ÀıÈç:  ID  Êı¾İÀ´Ô´(ÎÄ¼şÃû) ¼òµ¥²ÎÊı¼¯ºÏ ÕâÀàµÄ¸ñÊ½
+// for now this base interface only supports resources whose description format is fairly simple
+// e.g. a format of: id, data source (file name), simple parameter list
 
-// Ë÷Òı·½Ê½:
-// ÀàĞÍID = Êı×éÏÂ±ê
-// Í¨¹ıÀàĞÍIDË÷Òıµ½Ô­Ê¼Êı¾İ
+// indexing scheme:
+// type id = array index
+// reach the raw data through the type id
 
 
-// ×ÓÀàÔÚÊ¹ÓÃÇ°, ±ØĞë¼Ì³ĞÒÔÏÂµÄ·½·¨
-// virtual int				_GetRawDataInfoSize()										      // Ã¿¸ö×ÓÀàµÄRawDataInfo¶¼ÓĞ²»Í¬, È¡µÃRawDataInfoµÄÊı¾İ³ß´ç
-// virtual void*			_CreateNewRawData(CRawDataInfo *pRawInfo)		    		      // È¡µÃĞÂµÄRawDataÊı¾İ, ¿ÉÄÜÄ£ĞÍÊı¾İÖ¸Õë£¬Ò²¿ÉÒÔÊÇÌùÍ¼±íÃæÖ¸Õë
-// virtual void				_ReadRawDataInfo(CRawDataInfo *pRawInfo, list<string> &ParamList) // ×ÊÔ´ÎÄ¼şÃ¿¶Áµ½ĞÂµÄÒ»ĞĞ, ×ÓÀà¿ÉÒÔµÃµ½µÄ»Øµ÷´¦Àí
-// virtual void				_DeleteRawData(void *pData);								      // É¾³ı×ÊÔ´, ×ÊÔ´µÄÉ¾³ı·½Ê½¿ÉÄÜ×ÓÀà¸÷ÓĞ²»Í¬	
+// a subclass must override the following before use
+// virtual int				_GetRawDataInfoSize()										      // æ¯ä¸ªå­ç±»çš„RawDataInfoéƒ½æœ‰ä¸åŒ, å–å¾—RawDataInfoçš„æ•°æ®å°ºå¯¸
+// virtual void*  _CreateNewRawData(CRawDataInfo *pRawInfo)   // returns a new RawData instance; may be a model pointer or a texture surface pointer
+// virtual void _ReadRawDataInfo(CRawDataInfo *pRawInfo, list<string> &ParamList) // callback the subclass gets for every new line of the resource file
+// virtual void				_DeleteRawData(void *pData);								      // åˆ é™¤èµ„æº, èµ„æºçš„åˆ é™¤æ–¹å¼å¯èƒ½å­ç±»å„æœ‰ä¸åŒ	
 
-// ÁíÍâ, ×ÓÀà±ØĞëÔÚ×Ô¼ºµÄ¹¹ÔìÀïµ÷ÓÃ_Init()º¯Êı
+// å¦å¤–, å­ç±»å¿…é¡»åœ¨è‡ªå·±çš„æ„é€ é‡Œè°ƒç”¨_Init()å‡½æ•°
 
 
 #include <fstream>
@@ -39,16 +39,16 @@
 class CRawDataInfo
 {
 public:
-	BOOL	bExist{ false };				// ×ÊÔ´ÊÇ·ñ´æÔÚ
-	int		nIndex{ 0 };				// ÔÚArrayÖĞµÄÎ»ÖÃ				
-	char	szDataName[72]{ "" };		// Êı¾İÀ´Ô´(Í¨³£ÊÇÊı¾İÎÄ¼şÃû)
-	DWORD	dwLastUseTick{ 0 };		// ÉÏ´ÎÊ¹ÓÃµÄÊ±¼ä
-	BOOL	bEnable{ true };			// ÊÇ·ñÓĞĞ§, ¿ÉÒÔ¶¯Ì¬ÉèÖÃ
-	void* pData{ nullptr };				// Êµ¼ÊÊı¾İ
-	DWORD   dwPackOffset{ 0 };		// ÔÚ°üÎÄ¼şÖĞµÄÊı¾İÆ«ÒÆ
-	DWORD   dwDataSize{ 0 };			// Ô­Ê¼Êı¾İ³ß´ç(ÎÄ¼ş³ß´ç)
+	BOOL	bExist{ false };				// whether the resource exists
+	int		nIndex{ 0 };				// position in the array
+	char	szDataName[72]{ "" };		// data source (usually the file name)
+	DWORD	dwLastUseTick{ 0 };		// time of last use
+	BOOL	bEnable{ true };			// whether it is valid; can be set at run time
+	void* pData{ nullptr };				// the real data
+	DWORD   dwPackOffset{ 0 };		// offset of the data inside the package file
+	DWORD   dwDataSize{ 0 };			// raw data size (file size)
 	int     nID{ 0 };				// ID
-	DWORD   dwLoadCnt{ 0 };          // ×ÊÔ´¶ÁÈ¡´ÎÊı
+	DWORD   dwLoadCnt{ 0 };          // number of times the resource was read
 };
 
 
@@ -58,7 +58,7 @@ class CRawDataSet
 
 protected:
 
-	CRawDataSet(int nIDStart, int nIDCnt, int nFieldCnt = DEFAULT_FIELD_CNT) // Ò»¶¨Òª¼Ì³ĞÊ¹ÓÃ
+	CRawDataSet(int nIDStart, int nIDCnt, int nFieldCnt = DEFAULT_FIELD_CNT) // must be overridden
 	:_nIDStart(nIDStart),
 	_nIDCnt(nIDCnt),
     _nIDLast(nIDCnt)
@@ -81,7 +81,7 @@ public:
 	BOOL			IsValidID(int nID);
     int             GetLastID() const {return _nIDLast;}
 	
-	// ¶ÔÓÚ¶¯Ì¬ÊÍ·ÅµÄ²ÎÊıÉèÖÃ
+	// settings for releasing on demand
     void			SetReleaseInterval(DWORD dwInterval)	{ _dwReleaseInterval = dwInterval;	}
 	void			SetMaxRawData(int nDataCnt)				{ _nMaxRawDataCnt	 = nDataCnt;	}
 	
@@ -90,13 +90,13 @@ public:
 	void			Release();
     void            FrameLoad(int nFrameLoad = 2);
 
-	// ´ò°üÓĞ¹Ø
-    void			EnablePack(const char *pszPackName);	// ½öÔÚ¶ÁÈë¶ş½øÖÆ×ÊÔ´ÃèÊöÎÄ¼şºóÓĞĞ§
+	// packing related
+    void			EnablePack(const char *pszPackName);	// only valid after a binary resource description file has been read
 	void            Pack(const char *pszPackName, const char *pszBinName);
     void			PackFromDirectory(std::list<std::string> &DirList, const char *pszPackName, const char *pszBinName);
     BOOL            IsEnablePack()              { return _bEnablePack; } 
 	
-    // ×ÊÔ´¶ÁÈ¡
+    // resource reading
     LPBYTE			LoadRawFileData(CRawDataInfo *pInfo);
 	
     void            EnableRequest(BOOL bEnable)   { _bEnableRequest = bEnable; }
@@ -121,7 +121,7 @@ protected:
 	BOOL		_LoadRawDataInfo_Txt(const char *pszFileName, int nSep = '\t');
 	void		_WriteRawDataInfo_Bin(const char *pszFileName);
     void        _Init();
-    CRawDataInfo*	_GetRawDataInfo(int nID); // ²»×÷Ë÷Òı·¶Î§¼ì²â
+    CRawDataInfo*	_GetRawDataInfo(int nID); // performs no index range check
 
 protected:
 	
@@ -170,7 +170,7 @@ inline CRawDataInfo* CRawDataSet::GetRawDataInfo(int nID)
     else return NULL;
 }
 
-// ²»×÷Ë÷Òı·¶Î§¼ì²â£¬²»Òªµ¥¶Àµ÷ÓÃ
+// performs no index range check; do not call directly
 inline CRawDataInfo* CRawDataSet::_GetRawDataInfo(int nID)
 {
     LPBYTE pbtData = (LPBYTE)_RawDataArray;
@@ -183,7 +183,7 @@ inline CRawDataInfo* CRawDataSet::GetRawDataInfo(const char *pszDataName)
 {
 	std::map<std::string, CRawDataInfo*>::iterator it = _IDIdx.find(pszDataName);
 
-	if(it!=_IDIdx.end()) // ´ËIDÒÑ¾­´æÔÚ
+	if(it!=_IDIdx.end()) // this id already exists
 	{
 		return (*it).second;
     }
@@ -219,13 +219,13 @@ inline void* CRawDataSet::GetRawData(int nID, BOOL bRequest)
 	return pInfo->pData;
 }
 
-inline int CRawDataSet::GetRawDataID(const char *pszDataName) // ´ÓÃû×Ö»ñÈ¡ID, Èç¹ûÃ»ÓĞÔò·ÖÅäÒ»¸ö
+inline int CRawDataSet::GetRawDataID(const char *pszDataName) // look up an id by name, allocating one if there is none
 {
 	CRawDataInfo *pInfo;
 
     std::map<std::string, CRawDataInfo*>::iterator it = _IDIdx.find(pszDataName);
 
-	if(it!=_IDIdx.end()) // ´ËIDÒÑ¾­´æÔÚ
+	if(it!=_IDIdx.end()) // this id already exists
 	{
 		pInfo = (*it).second;
 	}
@@ -392,12 +392,12 @@ inline void CRawDataSet::DynamicRelease(BOOL bClearAll)
 
 inline void CRawDataSet::Release()
 {
-	if( _nLoadedRawDataCnt > 0 ) //°²È«ÊÍ·ÅÄÚ´æ by Waiting 2009-06-18
+	if( _nLoadedRawDataCnt > 0 ) // release the memory safely - by Waiting, 2009-06-18
 	{
 		for(int i = 0; i < _nIDCnt; i++)
 		{
 			CRawDataInfo *pInfo = GetRawDataInfo(_nIDStart + i);
-			if( NULL==pInfo || NULL==pInfo->pData )  //°²È«ÊÍ·ÅÄÚ´æ by Waiting 2009-06-18
+			if( NULL==pInfo || NULL==pInfo->pData )  // release the memory safely - by Waiting, 2009-06-18
 				continue;
 
 			_DeleteRawData(pInfo);
@@ -409,7 +409,7 @@ inline void CRawDataSet::Release()
 			}
 		}
 	}
-    //°²È«ÊÍ·ÅÄÚ´æ by Waiting 2009-06-18
+    // release the memory safely - by Waiting, 2009-06-18
 	if( _RawDataArray )
 	{
 		_DeleteRawDataArray();
@@ -430,8 +430,8 @@ inline BOOL CRawDataSet::_LoadRawDataInfo_Bin(const char *pszFileName)
 	if(fp==NULL) 
 	{
 		LG2("error", "Load Raw Data Info Bin File [%s] Failed!\n", pszFileName);
-		//sprintf(szMsg, "´ò¿ª±í¸ñÎÄ¼şÊ§°Ü£º%s\n³ÌĞò¼´½«ÍË³ö!\n", pszFileName);
-		//MessageBox(NULL, szMsg, "´íÎó", MB_OK | MB_ICONERROR);
+		//sprintf(szMsg, "æ‰“å¼€è¡¨æ ¼æ–‡ä»¶å¤±è´¥ï¼š%s\nç¨‹åºå³å°†é€€å‡º!\n", pszFileName);
+		//MessageBox(NULL, szMsg, "é”™è¯¯", MB_OK | MB_ICONERROR);
 		sprintf(szMsg, "Open table file failed:%s\nProgram will exit!\n", pszFileName);
 		MessageBox(NULL, szMsg, "Error", MB_OK | MB_ICONERROR);
 		return FALSE;
@@ -450,11 +450,11 @@ inline BOOL CRawDataSet::_LoadRawDataInfo_Bin(const char *pszFileName)
 	{
 		//sprintf(szMsg, "dwInfoSize: %d\n_GetRawDataInfoSize: %d!\n", dwInfoSize, _GetRawDataInfoSize());
 		//MessageBox(NULL, szMsg, "Error2", MB_OK | MB_ICONERROR);
-		//LG2("table", "msg¶ÁÈ¡±í¸ñÎÄ¼ş[%s]Ê±, ·¢ÏÖ°æ±¾²»Ò»ÖÂ!\n", pszFileName);
+		//LG2("table", "msgè¯»å–è¡¨æ ¼æ–‡ä»¶[%s]æ—¶, å‘ç°ç‰ˆæœ¬ä¸ä¸€è‡´!\n", pszFileName);
 		LG2("table", "msg read table file [%s], version can't match!\n", pszFileName);
 		fclose(fp);
-		//sprintf(szMsg, "¶ÁÈ¡±í¸ñÎÄ¼ş´íÎó£º%s\n³ÌĞò¼´½«ÍË³ö!\n", pszFileName);
-		//MessageBox(NULL, szMsg, "´íÎó", MB_OK | MB_ICONERROR);
+		//sprintf(szMsg, "è¯»å–è¡¨æ ¼æ–‡ä»¶é”™è¯¯ï¼š%s\nç¨‹åºå³å°†é€€å‡º!\n", pszFileName);
+		//MessageBox(NULL, szMsg, "é”™è¯¯", MB_OK | MB_ICONERROR);
 		sprintf(szMsg, "Open table file failed:%s\nProgram will exit!\n", pszFileName);
 		MessageBox(NULL, szMsg, "Error", MB_OK | MB_ICONERROR);
 		exit(0);
@@ -492,7 +492,7 @@ inline BOOL CRawDataSet::_LoadRawDataInfo_Bin(const char *pszFileName)
         if(!pInfo->bExist) continue;
 		if(IsValidID(i)==FALSE) continue;
 		CRawDataInfo* pCurInfo = _GetRawDataInfo(pInfo->nID);
-		memcpy(pCurInfo, pInfo, nInfoSize); // Ìæ´úÔ­ÓĞµÄĞÅÏ¢
+		memcpy(pCurInfo, pInfo, nInfoSize); // æ›¿ä»£åŸæœ‰çš„ä¿¡æ¯
          _IDIdx[pCurInfo->szDataName] = pCurInfo;
         //vector<string> ParamList; _ReadRawDataInfo(pCurInfo, ParamList);
         _ProcessRawDataInfo(pCurInfo);
@@ -585,22 +585,22 @@ const int LINE_SIZE = 2048;
 		if (n < 2) continue;
 		if (n > _nMaxFieldCnt)
 			{
-			//LG2("error", "msgÔÚ×ÊÔ´ÎÄ¼ş[%s]ÖĞ£¬Êµ¼Ê×Ö¶ÎÊı´óÓÚÔ¤¶¨Òå×Ö¶ÎÊı\n", pszFileName);
+			//LG2("error", "msgåœ¨èµ„æºæ–‡ä»¶[%s]ä¸­ï¼Œå®é™…å­—æ®µæ•°å¤§äºé¢„å®šä¹‰å­—æ®µæ•°\n", pszFileName);
 				LG2("error", "msg in resource [%s], the field num is greater than predefine count \n", pszFileName);
 			bRet = FALSE;
             break;}
 
-		// ¼ÇÂ¼ÏÂÊ×ĞĞ×Ö¶ÎÊıÄ¿
+		// remember how many fields the first line had
 		if (!bSaveFieldCnt)
 			{
 			nFieldCnt = n;
             bSaveFieldCnt = TRUE;}
 		else {
-			// ±È½Ï´ËĞĞ×Ö¶ÎÊıÄ¿ÓëµÚÒ»ĞĞ×Ö¶ÎÊıÄ¿ÊÇ·ñÏàÍ¬
+			// compare this line's field count against the first line's
 			if (nFieldCnt != n)
 				{
-				// Èç¹û²»Í¬£¬ËµÃ÷´Ë×ÊÔ´ÎÄ¼ş´æÔÚÊı¾İ´íÎó
-				//LG2("error", "msg½âÎö×ÊÔ´ÎÄ¼ş[%s]Ê§°Ü,ĞòºÅ[%s], Çë¼ì²é¸ñÊ½ºÍ°æ±¾!\n",
+				// if they differ, the resource file contains a data error
+				//LG2("error", "msgè§£æèµ„æºæ–‡ä»¶[%s]å¤±è´¥,åºå·[%s], è¯·æ£€æŸ¥æ ¼å¼å’Œç‰ˆæœ¬!\n",
 					LG2("error", "msg parse resource file [%s] failed ,No [%s], please chech format and version!\n",
                     pszFileName, pstrList[0].c_str());
 
@@ -611,7 +611,7 @@ const int LINE_SIZE = 2048;
         int	nID = Str2Int(pstrList[0]);
         if (!IsValidID(nID))
             {
-            //LG2("error", "msgË÷Òı[%d]³¬³öÔ¤¶¨·¶Î§£¬Çë¼ì²é×ÊÔ´ÎÄ¼ş[%s]\n", nID, pszFileName);
+            //LG2("error", "msgç´¢å¼•[%d]è¶…å‡ºé¢„å®šèŒƒå›´ï¼Œè¯·æ£€æŸ¥èµ„æºæ–‡ä»¶[%s]\n", nID, pszFileName);
 				LG2("error", "msg index [%d] overflow,please check resource file [%s]\n", nID, pszFileName);
             bRet = FALSE;
             break;}
@@ -628,10 +628,10 @@ const int LINE_SIZE = 2048;
 			ParamList.push_back(pstrList[i + 2]);
 		}
 		for(i = 0; i < 15; i++)
-			ParamList.push_back(""); // ·ÅÖÃ¿Õ´®,Èç¹û±»ºóÃæ´úÂë¶Áµ½, ±íÊ¾¸ñÊ½²»¶Ô
+			ParamList.push_back(""); // place an empty string; if later code reads it, the format is wrong
 
 		//Util_TrimString(pstrList[1]);
-		Util_TrimTabString(pstrList[1]); // ĞŞÕıÓ¢ÎÄ MAKEBIN ¿Õ¸ñ¶ªÊ§ÎÊÌâ  modify by Philip.Wu  2006-07-31
+		Util_TrimTabString(pstrList[1]); // fixed lost spaces in the English MAKEBIN - modified by Philip.Wu, 2006-07-31
 
 		strcpy(pInfo->szDataName, pstrList[1].c_str());
 		// char *pszDataName = _strupr( _strdup( pInfo->szDataName ) );
@@ -650,12 +650,12 @@ const int LINE_SIZE = 2048;
 		}
         //catch (...)
         {
-		//	LG2("error", "msg½âÎö×ÊÔ´ÎÄ¼ş[%s]·¢ÉúÎ´ÖªµÄÒì³£,µ¼ÖÂÊ§°Ü£¬ĞòºÅ[%s], Çë¼ì²é¸ñÊ½!\n", pszFileName, pstrList[0].c_str());
+		//	LG2("error", "msgè§£æèµ„æºæ–‡ä»¶[%s]å‘ç”ŸæœªçŸ¥çš„å¼‚å¸¸,å¯¼è‡´å¤±è´¥ï¼Œåºå·[%s], è¯·æ£€æŸ¥æ ¼å¼!\n", pszFileName, pstrList[0].c_str());
 		//	bRet = FALSE; break;
     	}        
         if(!bRet)
         {
-            //LG2("error", "msg½âÎö×ÊÔ´ÎÄ¼ş[%s]Ê§°Ü,ĞòºÅ[%s], Çë¼ì²é¸ñÊ½ºÍ°æ±¾!\n",
+            //LG2("error", "msgè§£æèµ„æºæ–‡ä»¶[%s]å¤±è´¥,åºå·[%s], è¯·æ£€æŸ¥æ ¼å¼å’Œç‰ˆæœ¬!\n",
 			LG2("error", "msg parse resource file [%s] failed ,No [%s], please chech format and version!\n",
                 pszFileName, pstrList[0].c_str());
 			bRet = FALSE; break;
@@ -669,7 +669,7 @@ const int LINE_SIZE = 2048;
 
 
 //----------------------------------------------------------------------------------------------------------
-//												´ò°üÏà¹Ø´¦Àí
+// packing related handling
 //----------------------------------------------------------------------------------------------------------
 inline LPBYTE Util_LoadFile(const char *pszFileName, DWORD* pdwFileSize)
 {
@@ -724,13 +724,13 @@ inline void CRawDataSet::Pack(const char *pszPackName, const char *pszBinName)
 	}
 	fclose(fp);
 	
-	_WriteRawDataInfo_Bin(pszBinName); // ´ò°üÖ®ºóÖØĞ´RawDataSet BinÎÄ¼ş
+	_WriteRawDataInfo_Bin(pszBinName); // rewrite the RawDataSet Bin file after packing
 }
 
 
 //--------------------------------------------
-//  ´ÓÄ¿Â¼ÖĞ¶ÁÈ¡ÎÄ¼ş, Ã¿¸öÎÄ¼ş×÷ÎªÒ»¸ö×ÊÔ´, ²¢
-//  Éú³É×ÊÔ´ÃèÊöĞÅÏ¢ÎÄ¼ş xxx.bin
+//  read files from a directory, each file becomes one resource, and
+//  generate the resource description file xxx.bin
 //--------------------------------------------
 inline void	CRawDataSet::PackFromDirectory(std::list<std::string> &DirList, const char *pszPackName, const char *pszBinName)
 {
@@ -771,7 +771,7 @@ inline void	CRawDataSet::PackFromDirectory(std::list<std::string> &DirList, cons
 	
 	fclose(fp);
 	
-	_WriteRawDataInfo_Bin(pszBinName); // ´ò°üÖ®ºóÖØĞ´RawDataSet BinÎÄ¼ş
+	_WriteRawDataInfo_Bin(pszBinName); // rewrite the RawDataSet Bin file after packing
 }	
 
 inline void CRawDataSet::EnablePack(const char *pszPackName)
@@ -790,14 +790,14 @@ inline void CRawDataSet::EnablePack(const char *pszPackName)
 
 
 //-----------------------------------------------------------------------------
-// ¶ÁÈ¡RawDataÊı¾İµ½ÄÚ´æ(Ò»°ãÓÃÔÚ°ÑÕû¸öÎÄ¼ş¶ÁÈë, »ò´Ó°üÖĞÈ¡³öÍêÕûÎÄ¼şÄÚÈİµÄ³¡ºÏ
-// ×ÓÀàÊÓ×ÔÉíĞèÒªÀ´Ê¹ÓÃ´Ëº¯Êı, Ò²¿ÉÒÔÍêÈ«²»ÓÃ)
+// read RawData into memory (typically for loading a whole file, or extracting the full file from a package
+// subclasses use it as they see fit, or not at all)
 //-----------------------------------------------------------------------------
 inline LPBYTE CRawDataSet::LoadRawFileData(CRawDataInfo *pInfo)
 {
 	LPBYTE pbtBuf    = NULL;
 	DWORD  dwBufSize = 0;
-	if(_bEnablePack) // ´Ó°üÖĞ¶ÁÈ¡
+	if(_bEnablePack) // read from the package
 	{
 		pbtBuf    = Util_LoadFilePart(_szPackName, pInfo->dwPackOffset, pInfo->dwDataSize);
 		dwBufSize = pInfo->dwDataSize;

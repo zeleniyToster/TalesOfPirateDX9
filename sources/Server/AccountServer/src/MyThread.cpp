@@ -1,4 +1,4 @@
-#define _CRTDBG_MAP_ALLOC
+ï»¿#define _CRTDBG_MAP_ALLOC
 #include "stdafx.h"
 #include <stdlib.h>
 #include <crtdbg.h>
@@ -25,11 +25,11 @@ bool MyThread::Launch()
 	m_hThread = CreateThread(NULL, 0, MyThread::ThreadProc, this, CREATE_SUSPENDED, &m_dwThreadId);
 	if (m_hThread == NULL) return false;
 
-	// ÖÃÐÅºÅÁ¿×´Ì¬
+	// set the semaphore state
 	m_bExitFlag = false;
 	m_bExitThrd = false;
 
-	// Æô¶¯Ïß³Ì
+	// start the thread
 	ResumeThread(m_hThread);
 	return true;
 }
@@ -45,7 +45,7 @@ int MyThread::WaitForExit(int ms)
 		Sleep(1000);
 	}
 
-	// µÃµ½Ïß³ÌÍË³öÂë
+	// retrieve the thread exit code
 	Sleep(5);
 	DWORD dwThreadExitCode = 0;
 	GetExitCodeThread(m_hThread, &dwThreadExitCode);

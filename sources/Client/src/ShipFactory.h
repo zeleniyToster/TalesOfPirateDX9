@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "scene.h"
 #include "MindPower.h"
 #include "CharacterModel.h"
@@ -93,7 +93,7 @@ struct xShipBuilderForm
 	CLabelEx* lbl_ship_level; 
 	CLabelEx* lbl_ship_exp;
 
-	//´ò¿ª¹Ø±Õ´¬Ö»»õ²ÕUI(Michael Chen 2005-05-26)
+	//opens and closes the boat cargo hold UI(Michael Chen 2005-05-26)
 	CCheckBox* chkShip;
 	CTextButton* btn_room_open;
 	CTextButton* btn_room_close;
@@ -141,7 +141,7 @@ public:
     BYTE mt_flag;
     int type;
 
-	DWORD m_dwBoatID;		//Ôö¼Ó´¬µÄID--Michael Chen(2005-05-26)
+	DWORD m_dwBoatID;		//å¢åŠ èˆ¹çš„ID--Michael Chen(2005-05-26)
 	eState m_state;
 
 public:
@@ -151,12 +151,12 @@ public:
 	static void __Proc3DView(C3DCompent *pSender, int x, int y);
     static void __ProcShipName(CGuiData *pSender);
 
-	//´ò¿ª¹Ø±Õ´¬Ö»»õ²ÕUIÊÂ¼ş(Michael Chen 2005-05-26)
+	//open and close boat cargo hold UI event(Michael Chen 2005-05-26)
     static void __ButtonOpenRoom(CGuiData *pSender, int x, int y, DWORD dwKey);
 	static void __ButtonCloseRoom(CGuiData *pSender, int x, int y, DWORD dwKey);
-	//chkShipµã»÷Ñ¡ÖĞÊÂ¼ş(Michael Chen 2005-05-26)
+	//chkShip click selection event(Michael Chen 2005-05-26)
 	static void __CheckShip(CGuiData *pSender);
-	//Ôì´¬Ê±¹Ø±Õ±íµ¥Í¨ÖªÈ¡ÏûÔì´¬(Michael Chen 2005-06-06)
+	//notifying boat construction cancelled closes the form(Michael Chen 2005-06-06)
 	static void __HideForm(CGuiData *pSender);
 
 private:
@@ -183,7 +183,7 @@ public:
     BOOL CheckShipName();
     BOOL Close(CGuiData* sender);
     BOOL IsVisible();
-	//¸ù¾İ´¬µÄIDµÃµ½´¬²Õ Michael Chen (2005-05-26).
+	//gets the cargo hold from the boat ID Michael Chen (2005-05-26).
 	void SetBoatID(DWORD dwBoatID)	{ m_dwBoatID = dwBoatID; }
 	DWORD GetBoatID() { return m_dwBoatID; }
 	BOOL GetCabinByID();
@@ -207,7 +207,7 @@ public:
     CTextButton* btn_close;
     CTextButton* btn_cancel;
 
-	/*Ôö¼Ó±êÖ¾±íÊ¾ÊÇ³öº£Ê±ÏÔÊ¾´¬ÁĞ±í»¹ÊÇ½»Ò×ËùÊ±Ñ¡Ôñ(Michael Chen)*/
+	/*å¢åŠ æ ‡å¿—è¡¨ç¤ºæ˜¯å‡ºæµ·æ—¶æ˜¾ç¤ºèˆ¹åˆ—è¡¨è¿˜æ˜¯äº¤æ˜“æ‰€æ—¶é€‰æ‹©(Michael Chen)*/
 	typedef enum enumFlag
 	{
 		eLaunch,
@@ -229,16 +229,16 @@ public:
     ~xShipLaunchList();
     BOOL Init(CGameScene* s);
     void SelectItem(CGuiData *pSender);
-	/*flag Çø·ÖÊÇ³öº£»¹ÊÇ½»Ò×Ëù(Michael Chen)*/
+	/*flag åŒºåˆ†æ˜¯å‡ºæµ·è¿˜æ˜¯äº¤æ˜“æ‰€(Michael Chen)*/
     void Update(DWORD num, const BOAT_BERTH_DATA* data, const eFlag flag=eLaunch);
-	/*ÉèÖÃNPC ID ½»Ò×ËùĞèÒª(Michael Chen)*/
+	/*è®¾ç½®NPC ID äº¤æ˜“æ‰€éœ€è¦(Michael Chen)*/
 	void SetNpcID(DWORD dwNpcID) { m_dwNpcID = dwNpcID; }
-	/*ÉèÖÃtype ½»Ò×ËùĞèÒª(Michael Chen)*/
+	/*è®¾ç½®type äº¤æ˜“æ‰€éœ€è¦(Michael Chen)*/
 	void SetType(BYTE byType) { m_byType = byType; }
 
     void Test();
 
-	// ¹Ø±ÕÑ¡Ôñ´¬Ö»½çÃæ£¬Áô¸ø xShipMgr ÄÚ²¿µ÷ÓÃ   add by Philip.Wu  2006-06-02
+	// closes the boat selection screen, for internal use by xShipMgr   add by Philip.Wu  2006-06-02
 	void CloseForm(void);
 	
 private:
@@ -261,7 +261,7 @@ public:
     BOOL Init(CGameScene* s);
     void FrameMove();
 
-	// ¹Ø±ÕÑ¡Ôñ´¬Ö»½çÃæ£¬Áô¸øÍâ²¿µ÷ÓÃ   add by Philip.Wu  2006-06-02
+	// closes the boat selection screen, for external use   add by Philip.Wu  2006-06-02
 	void	CloseForm();
 };
 
@@ -302,7 +302,7 @@ public:
 
 protected:
 
-	static xShipSet* _Instance; // Ïàµ±ÓÚµ¥¼ü, °Ñ×Ô¼º¼Ç×¡
+	static xShipSet* _Instance; // ç›¸å½“äºå•é”®, æŠŠè‡ªå·±è®°ä½
 
 	virtual CRawDataInfo* _CreateRawDataArray(int nCnt)
 	{

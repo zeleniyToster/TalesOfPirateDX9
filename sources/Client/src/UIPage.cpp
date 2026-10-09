@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "uipage.h"
 
 using namespace GUI;
@@ -115,7 +115,7 @@ CPage& CPage::operator=(const CPage& rhs)
 CPage::~CPage(void)
 {
 	//delete _pImage;
-	SAFE_DELETE(_pImage); // UIµ±»ú´¦Àí
+	SAFE_DELETE(_pImage); // UI freeze handling
 }
 
 void CPage::Init()

@@ -1,11 +1,11 @@
-//
+ï»¿//
 #pragma once
 
 #include <tchar.h>
 #include "util.h"
 #include "TableData.h"
 
-// ´¬Ìå¸ü»»ÃüÁî°´Å¥Öµ
+// button value for the hull change command
 enum ID_BTN_BOAT
 {
     ID_BTN_HEADLEFT =      0,
@@ -17,17 +17,17 @@ enum ID_BTN_BOAT
 
     ID_BTN_ITEM_NUM,
 };
-#define BOAT_MAXSIZE_MINNAME	2   // ´¬Ö»Ãû³Æ×îÉÙ×Ö·û³¤¶È
-#define BOAT_MAXSIZE_BOATNAME	17	// ´¬Ö»µÄÃû³Æ×î´ó³¤¶È
-#define BOAT_MAXSIZE_NAME		64	// ´¬Ö»²¿¼þÃû³Æ×î´ó³¤¶È
-#define BOAT_MAXSIZE_DESP		128 // ´¬Ö»²¿¼þÐÅÏ¢×î´óÃèÊö×Ö½ÚÊý
-#define BOAT_MAXSIZE_PART		3   // ´¬Ö»×î´ó²¿¼þÊýÁ¿
-#define BOAT_MAXNUM_PARTITEM	16  // ´¬Ö»Ã¿¸ö¿É»»²¿¼þ×î´óµÄÑ¡ÔñÊýÁ¿
-#define BOAT_MAXNUM_MOTOR		4	// Ã¿¸öÒýÇæ×î´ó¿ÉÒÔÓÐ×î´óÂí´ïÊýÁ¿
-#define BOAT_MAXNUM_MODEL		8	// Ã¿¸ö´¬Ö»×î´óÄ£ÐÍÊýÁ¿
-#define MAX_CHAR_BOAT			3	// Ã¿¸ö½ÇÉ«×î´ó¿ÉÒÔÓµÓÐµÄ´¬Ö»ÊýÁ¿
+#define BOAT_MAXSIZE_MINNAME	2   // minimum length of a ship name
+#define BOAT_MAXSIZE_BOATNAME	17	// maximum length of a ship name
+#define BOAT_MAXSIZE_NAME		64	// maximum length of a ship part name
+#define BOAT_MAXSIZE_DESP		128 // maximum description size in bytes for a ship part
+#define BOAT_MAXSIZE_PART		3   // maximum number of parts on a ship
+#define BOAT_MAXNUM_PARTITEM	16  // largest number of options per replaceable ship part
+#define BOAT_MAXNUM_MOTOR		4	// largest number of engines per engine type
+#define BOAT_MAXNUM_MODEL		8	// maximum number of models per ship
+#define MAX_CHAR_BOAT			3	// maximum number of ships a character may own
 
-// ´¬Ö»Ñ¡ÔñÁÐ±íÊý¾Ý
+// ship selection list data
 struct BOAT_BERTH_DATA
 {
 	BYTE byID[MAX_CHAR_BOAT];
@@ -37,149 +37,149 @@ struct BOAT_BERTH_DATA
 
 enum BOAT_STATE
 {
-	BS_GOOD		= 0,				// ×´Ì¬Á¼ºÃ
-	BS_NOSP		= 1,				// ÐèÒª²¹³äSP
-	BS_NOHP		= 2,				// ÐèÒªÐÞÀí
-	BS_DEAD		= 3,				// ´¬Ö»³ÁÃ»
+	BS_GOOD		= 0,				// in good condition
+	BS_NOSP		= 1,				// needs SP replenished
+	BS_NOHP		= 2,				// needs repairs
+	BS_DEAD		= 3,				// ship has sunk
 };
 
-// ½ÇÉ«½¨Ôì¡¢ÉèÖÃÓµÓÐµÄ´¬Ö»
+// the character builds and configures an owned ship
 struct BOAT_DATA
 {
-	char szName[BOAT_MAXSIZE_BOATNAME];		// ´¬Ö»Ãû³Æ
-	USHORT sBoat;				// ´¬Ö»ÐÅÏ¢ID
-	USHORT sHeader;				// ´¬Í·
-	USHORT sBody;				// ´¬Éí
-	USHORT sEngine;				// ´¬Ö»Âí´ï
-	USHORT sCannon;				// ´¬Ö»»ðÅÚ
-	USHORT sEquipment;			// ´¬Ö»×°±¸
-	USHORT sBerth;				// ´¬Ö»Í£²´¸Û¿Ú
-	USHORT sCapacity;			// »õ²ÕÈÝÁ¿
-	DWORD  dwOwnerID;			// ´¬Ö»ÓµÓÐÕßID
+	char szName[BOAT_MAXSIZE_BOATNAME];		// ship name
+	USHORT sBoat;				// ship info id
+	USHORT sHeader;				// bow
+	USHORT sBody;				// hull
+	USHORT sEngine;				// engine
+	USHORT sCannon;				// cannons
+	USHORT sEquipment;			// ship equipment
+	USHORT sBerth;				// port the ship is moored at
+	USHORT sCapacity;			// cargo hold capacity
+	DWORD  dwOwnerID;			// id of the ship's owner
 };
 
-// ½ÇÉ«×°ÔØ´¬Ö»ÊôÐÔ
+// attributes of the ship as loaded by the character
 struct BOAT_LOAD_INFO
 {
-	DWORD  dwID;				// ´¬Ö»Êý¾Ý¿âID
-	char   szName[BOAT_MAXSIZE_BOATNAME];			// ´¬Ö»Ãû³Æ
-	USHORT sHeader;				// ´¬Í·
-	USHORT sBody;				// ´¬Éí
-	USHORT sEngine;				// ´¬Ö»Âí´ï
-	USHORT sCannon;				// ´¬Ö»»ðÅÚ
-	USHORT sEquipment;			// ´¬Ö»×°±¸
-	USHORT sBerth;				// ´¬Ö»Í£²´¸Û¿Ú
+	DWORD  dwID;				// ship database id
+	char   szName[BOAT_MAXSIZE_BOATNAME];			// ship name
+	USHORT sHeader;				// bow
+	USHORT sBody;				// hull
+	USHORT sEngine;				// engine
+	USHORT sCannon;				// cannons
+	USHORT sEquipment;			// ship equipment
+	USHORT sBerth;				// port the ship is moored at
 };
 
 struct xShipBuildInfo
 {
-	char szName[BOAT_MAXSIZE_NAME];			// ´¬Ãû
-	char szDesp[BOAT_MAXSIZE_DESP];			// ÃèÊö£¨µÀ¾ßµÈ¼¶£©
-	char szBerth[BOAT_MAXSIZE_NAME];		// ´¬Ö»Í£²´¸Û¿ÚÃû³Æ
-	char szHeader[BOAT_MAXSIZE_NAME];		// ´¬Í·Ãû³Æ
-	char szBody[BOAT_MAXSIZE_NAME];			// ´¬ÉíÃû³Æ
-	char szEngine[BOAT_MAXSIZE_NAME];		// ´¬Âí´ïÃû³Æ
-	char szCannon[BOAT_MAXSIZE_NAME];		// ´¬×°ÔØ»ðÅÚÃû³Æ
-	char szEquipment[BOAT_MAXSIZE_NAME];	// ´¬Åä¼þÃû³Æ
+	char szName[BOAT_MAXSIZE_NAME];			// ship name
+	char szDesp[BOAT_MAXSIZE_DESP];			// description (item level)
+	char szBerth[BOAT_MAXSIZE_NAME];		// name of the port the ship is moored at
+	char szHeader[BOAT_MAXSIZE_NAME];		// bow name
+	char szBody[BOAT_MAXSIZE_NAME];			// hull name
+	char szEngine[BOAT_MAXSIZE_NAME];		// engine name
+	char szCannon[BOAT_MAXSIZE_NAME];		// name of the mounted cannons
+	char szEquipment[BOAT_MAXSIZE_NAME];	// name of the accessory
 
-	// ´¬Ö»×é³ÉÄ£ÐÍID	
-	USHORT sPosID;				// Ä£ÐÍ¶¯×÷ÐÅÏ¢ID
+	// model id of the ship assembly
+	USHORT sPosID;				// model animation info id
 	union
 	{
 		struct
 		{
-			DWORD dwBody;		// ´¬Éí		
-			DWORD dwHeader;		// ´¬Í·	
-			DWORD dwEngine;		// ´¬Ö»¶¯Á¦
-			DWORD dwFlag;		// ´¬±êÖ¾
+			DWORD dwBody;		// hull
+			DWORD dwHeader;		// bow
+			DWORD dwEngine;		// ship engine
+			DWORD dwFlag;		// ship flag
 			DWORD dwMotor[BOAT_MAXNUM_MOTOR];
 		};
 
 		DWORD dwBuf[BOAT_MAXNUM_MODEL];
 	};
 
-	BYTE  byHeader;	   // ´¬Í·µÄÑ¡ÔñË÷Òý¼ÇÂ¼
-	BYTE  byEngine;	   // ´¬¶¯Á¦µÄÑ¡ÔñË÷Òý¼ÇÂ¼
-	BYTE  byCannon;	   // ´¬»ðÅÚµÄÑ¡ÔñË÷Òý¼ÇÂ¼
-	BYTE  byEquipment; // ´¬Åä¼þµÄÑ¡ÔñË÷Òý¼ÇÂ¼
-	BYTE  byIsUpdate;  // ÊÇ·ñ¿ÉÒÔ¸üÐÂ´¬Ö»²¿¼þ
-	DWORD dwMoney;	   // ¼ÛÖµ
-    DWORD dwMinAttack; // ×îÐ¡¹¥»÷
-    DWORD dwMaxAttack; // ×î´ó¹¥»÷
-    DWORD dwCurEndure; // µ±Ç°ÄÍ¾Ã
-    DWORD dwMaxEndure; // ×î´óÄÍ¾Ã
-    DWORD dwSpeed;	   // ÒÆ¶¯ËÙ¶È
-    DWORD dwDistance;  // ×î´ó¹¥»÷¾àÀë
-    DWORD dwDefence;   // ·ÀÓù
-	DWORD dwCurSupply; // µ±Ç°²¹¸ø
-	DWORD dwMaxSupply; // ×î´ó²¹¸ø
-	DWORD dwConsume;   // ´¬Ö»²¹¸øÏûºÄ
-    DWORD dwAttackTime;// ¹¥»÷¼ä¸ôÊ±¼ä
-	USHORT	sCapacity; // »õ²ÕÈÝÁ¿
+	BYTE  byHeader;	   // selection index record for the bow
+	BYTE  byEngine;	   // selection index record for the engine
+	BYTE  byCannon;	   // selection index record for the cannons
+	BYTE  byEquipment; // selection index record for the accessory
+	BYTE  byIsUpdate;  // whether ship parts may be replaced
+	DWORD dwMoney;	   // value
+    DWORD dwMinAttack; // minimum attack
+    DWORD dwMaxAttack; // maximum attack
+    DWORD dwCurEndure; // current durability
+    DWORD dwMaxEndure; // maximum durability
+    DWORD dwSpeed;	   // movement speed
+    DWORD dwDistance;  // maximum attack range
+    DWORD dwDefence;   // defence
+	DWORD dwCurSupply; // current supplies
+	DWORD dwMaxSupply; // maximum supplies
+	DWORD dwConsume;   // ship supply consumption
+    DWORD dwAttackTime;// attack interval
+	USHORT	sCapacity; // cargo hold capacity
 };
 
 struct xShipAttrInfo
 {
-	// ´¬Ö»½¨Ôì»ù±¾ÊôÐÔ
-	DWORD dwMoney;	   // ¼ÛÖµ
-    DWORD dwMinAttack; // ×îÐ¡¹¥»÷
-    DWORD dwMaxAttack; // ×î´ó¹¥»÷
-    DWORD dwCurEndure; // µ±Ç°ÄÍ¾Ã
-    DWORD dwMaxEndure; // ×î´óÄÍ¾Ã
-    DWORD dwSpeed;	   // ÒÆ¶¯ËÙ¶È
-    DWORD dwDistance;  // ×î´ó¹¥»÷¾àÀë
-    DWORD dwDefence;   // ·ÀÓù
-	DWORD dwCurSupply; // µ±Ç°²¹¸ø
-	DWORD dwMaxSupply; // ×î´ó²¹¸ø
-    DWORD dwAttackTime;// ¹¥»÷¼ä¸ôÊ±¼ä
-	USHORT	sCapacity; // »õ²ÕÈÝÁ¿
+	// base attributes of a ship as built
+	DWORD dwMoney;	   // value
+    DWORD dwMinAttack; // minimum attack
+    DWORD dwMaxAttack; // maximum attack
+    DWORD dwCurEndure; // current durability
+    DWORD dwMaxEndure; // maximum durability
+    DWORD dwSpeed;	   // movement speed
+    DWORD dwDistance;  // maximum attack range
+    DWORD dwDefence;   // defence
+	DWORD dwCurSupply; // current supplies
+	DWORD dwMaxSupply; // maximum supplies
+    DWORD dwAttackTime;// attack interval
+	USHORT	sCapacity; // cargo hold capacity
 
-	// ÆäËûÊôÐÔ	
-	DWORD dwResume;			// ´¬ÄÍ¾Ã»Ö¸´
-	DWORD dwResist;	        // ´¬Ö»¿¹Á¦
-	DWORD dwScope;			// ±¬Õ¨·¶Î§
-	DWORD dwConsume;		// ´¬Ö»²¹¸øÏûºÄ
-	DWORD dwCannonSpeed;	// ÅÚµ¯·ÉÐÐËÙ¶È
+	// other attributes
+	DWORD dwResume;			// ship durability regeneration
+	DWORD dwResist;	        // ship resistance
+	DWORD dwScope;			// blast radius
+	DWORD dwConsume;		// ship supply consumption
+	DWORD dwCannonSpeed;	// shell speed
 
-	// ´¬Ö»ÊôÐÔÏµÊý
+	// ship attribute coefficients
 };
 
 struct xShipInfo: public CRawDataInfo
 {
-	char szName[BOAT_MAXSIZE_NAME];	// ´¬Ö»Ãû³Æ
-	char szDesp[BOAT_MAXSIZE_DESP];	// ÃèÊö£¨µÀ¾ßµÈ¼¶£©
-	USHORT sItemID;					// ´¬³¤Ö¤Ã÷µÀ¾ßID
-	USHORT sCharID;					// ´¬Ö»½ÇÉ«ÊôÐÔID
-	USHORT sPosID;					// Ä£ÐÍ¶¯×÷ÐÅÏ¢ID
-	BYTE byIsUpdate;				// ÊÇ·ñ¿ÉÒÔ¸ü»»´¬¸÷²¿¼þ	
+	char szName[BOAT_MAXSIZE_NAME];	// ship name
+	char szDesp[BOAT_MAXSIZE_DESP];	// description (item level)
+	USHORT sItemID;					// captain's certificate item id
+	USHORT sCharID;					// ship character attribute id
+	USHORT sPosID;					// model animation info id
+	BYTE byIsUpdate;				// whether the ship's parts may be swapped
 	USHORT sNumHeader;
 	USHORT sNumEngine;
 	USHORT sNumCannon;
 	USHORT sNumEquipment;
-	USHORT sHeader[BOAT_MAXNUM_PARTITEM];		// ´¬Í·	
-	USHORT sEngine[BOAT_MAXNUM_PARTITEM];		// ¶¯Á¦
-	USHORT sCannon[BOAT_MAXNUM_PARTITEM];		// »ðÅÚ
-	USHORT sEquipment[BOAT_MAXNUM_PARTITEM];	// Åä¼þ
-	USHORT sBody;			// ´¬Éí	
-	USHORT sLvLimit;		// µÈ¼¶ÏÞÖÆ
+	USHORT sHeader[BOAT_MAXNUM_PARTITEM];		// bow
+	USHORT sEngine[BOAT_MAXNUM_PARTITEM];		// engine
+	USHORT sCannon[BOAT_MAXNUM_PARTITEM];		// cannons
+	USHORT sEquipment[BOAT_MAXNUM_PARTITEM];	// accessory
+	USHORT sBody;			// hull
+	USHORT sLvLimit;		// level limit
 	USHORT sNumPfLimit;
-	USHORT sPfLimit[BOAT_MAXNUM_PARTITEM];		// Ö°ÒµÏÞÖÆ
+	USHORT sPfLimit[BOAT_MAXNUM_PARTITEM];		// job limit
 
-	USHORT sEndure;			// ´¬Ö»ÄÍ¾Ã
-	USHORT sResume;			// ´¬ÄÍ¾Ã»Ö¸´
-	USHORT sDefence;		// ´¬Ö»·ÀÓùÁ¦
-	USHORT sResist;			// ´¬Ö»¿¹Á¦
-    USHORT sMinAttack;		// ×îÐ¡¹¥»÷
-    USHORT sMaxAttack;		// ×î´ó¹¥»÷
-	USHORT sDistance;		// ¹¥»÷¾àÀë
-	USHORT sTime;			// Ìíµ¯Ê±¼ä
-	USHORT sScope;			// ±¬Õ¨·¶Î§
-	USHORT sCapacity;		// »õ²ÕÈÝÁ¿
-	USHORT sSupply;			// ´¬Ö»²¹¸ø
-	USHORT sConsume;		// ´¬Ö»²¹¸øÏûºÄ
-	USHORT sCannonSpeed;	// ÅÚµ¯·ÉÐÐËÙ¶È
-	USHORT sSpeed;			// ´¬ÒÆ¶¯ËÙ¶È
-	USHORT sParam;			// ±¸×¢
+	USHORT sEndure;			// ship durability
+	USHORT sResume;			// ship durability regeneration
+	USHORT sDefence;		// ship defence
+	USHORT sResist;			// ship resistance
+    USHORT sMinAttack;		// minimum attack
+    USHORT sMaxAttack;		// maximum attack
+	USHORT sDistance;		// attack range
+	USHORT sTime;			// reload time
+	USHORT sScope;			// blast radius
+	USHORT sCapacity;		// cargo hold capacity
+	USHORT sSupply;			// ship supplies
+	USHORT sConsume;		// ship supply consumption
+	USHORT sCannonSpeed;	// shell speed
+	USHORT sSpeed;			// ship movement speed
+	USHORT sParam;			// remarks
 
 	xShipInfo()
 	{
@@ -198,7 +198,7 @@ struct xShipInfo: public CRawDataInfo
 		memset( sCannon, 0, sizeof(USHORT)*BOAT_MAXNUM_PARTITEM );
 		memset( sEquipment, 0, sizeof(USHORT)*BOAT_MAXNUM_PARTITEM );
 		sBody = 0;
-		sLvLimit = 0;		// µÈ¼¶ÏÞÖÆ
+		sLvLimit = 0;		// level limit
 		sNumPfLimit = 0;
 		memset( sPfLimit, 0, sizeof(USHORT)*BOAT_MAXNUM_PARTITEM );	
 
@@ -223,27 +223,27 @@ struct xShipInfo: public CRawDataInfo
 
 struct xShipPartInfo: public CRawDataInfo
 {
-	char szName[BOAT_MAXSIZE_NAME];	// ´¬Ö»²¿¼þÃû³Æ
-	char szDesp[BOAT_MAXSIZE_DESP];	// ÃèÊö£¨µÀ¾ßµÈ¼¶£©
-    DWORD dwModel;			// ²¿¼þÄ£ÐÍID
-	USHORT sMotor[BOAT_MAXNUM_MOTOR];	// ´¬Ö»ÒýÇæÂí´ï
-	DWORD  dwPrice;			// ¼Û¸ñ
+	char szName[BOAT_MAXSIZE_NAME];	// ship part name
+	char szDesp[BOAT_MAXSIZE_DESP];	// description (item level)
+    DWORD dwModel;			// part model id
+	USHORT sMotor[BOAT_MAXNUM_MOTOR];	// ship engine
+	DWORD  dwPrice;			// price
 
-	USHORT sEndure;			// ´¬Ö»ÄÍ¾Ã
-	USHORT sResume;			// ´¬ÄÍ¾Ã»Ö¸´
-	USHORT sDefence;		// ´¬Ö»·ÀÓùÁ¦
-	USHORT sResist;			// ´¬Ö»¿¹Á¦
-    USHORT sMinAttack;		// ×îÐ¡¹¥»÷
-    USHORT sMaxAttack;		// ×î´ó¹¥»÷
-	USHORT sDistance;		// ¹¥»÷¾àÀë
-	USHORT sTime;			// Ìíµ¯Ê±¼ä
-	USHORT sScope;			// ±¬Õ¨·¶Î§
-	USHORT sCapacity;		// »õ²ÕÈÝÁ¿
-	USHORT sSupply;			// ´¬Ö»²¹¸ø
-	USHORT sConsume;		// ´¬Ö»²¹¸øÏûºÄ
-	USHORT sCannonSpeed;	// ÅÚµ¯·ÉÐÐËÙ¶È
-	USHORT sSpeed;			// ´¬ÒÆ¶¯ËÙ¶È
-	USHORT sParam;			// ±¸×¢
+	USHORT sEndure;			// ship durability
+	USHORT sResume;			// ship durability regeneration
+	USHORT sDefence;		// ship defence
+	USHORT sResist;			// ship resistance
+    USHORT sMinAttack;		// minimum attack
+    USHORT sMaxAttack;		// maximum attack
+	USHORT sDistance;		// attack range
+	USHORT sTime;			// reload time
+	USHORT sScope;			// blast radius
+	USHORT sCapacity;		// cargo hold capacity
+	USHORT sSupply;			// ship supplies
+	USHORT sConsume;		// ship supply consumption
+	USHORT sCannonSpeed;	// shell speed
+	USHORT sSpeed;			// ship movement speed
+	USHORT sParam;			// remarks
 	
 	xShipPartInfo()
 	{
@@ -270,7 +270,7 @@ struct xShipPartInfo: public CRawDataInfo
 	}
 };
 
-// ´¬Ö»½¨ÔìÊôÐÔ±í
+// ship construction attribute table
 class xShipSet : public CRawDataSet
 {
 public:
@@ -290,7 +290,7 @@ protected:
 		return (CRawDataInfo*)new xShipInfo[nCnt];
 	}
 	
-	static xShipSet* _Instance; // Ïàµ±ÓÚµ¥¼ü, °Ñ×Ô¼º¼Ç×¡
+	static xShipSet* _Instance; // acts like a singleton: keeps a reference to itself
 
 	virtual void _DeleteRawDataArray()
 	{
@@ -315,7 +315,7 @@ protected:
 	virtual BOOL _ReadRawDataInfo(CRawDataInfo *pRawDataInfo, std::vector<std::string> &ParamList);
 };
 
-// ´¬Ö»²¿¼þ»ù±¾ÊôÐÔ±í
+// ship part base attribute table
 class xShipPartSet : public CRawDataSet
 {
 public:

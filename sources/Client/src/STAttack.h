@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "STStateObj.h"
 #include "SkillRecord.h"
 #include "effdelay.h"
@@ -48,7 +48,7 @@ protected:
 	virtual void	_End();
     virtual bool	_IsAllowCancel()				{ return false;						}
 
-	void	CalcSkillSpeed();		// ¿ªÊ¼Ê±Ö´ĞĞ
+	void	CalcSkillSpeed();		// executed at the start
 
 protected:
 	virtual void    _UseSkill();
@@ -61,15 +61,15 @@ protected:
     void    _PopThis();
 
 protected:
-	CCharacter		*_pTarget;				// ¹¥»÷µÄÄ¿±ê
-	CSkillRecord	*_pSkillInfo;			// µ±Ç°¶ÔÓ¦µÄ¼¼ÄÜ
-	int				_nAttackX,  _nAttackY;	// ¹¥»÷Ê±¹¥»÷ÖĞĞÄµã
-	CCharacter		*_pSelf;				// ×Ô¼º,ÓÃÓÚ¿ìËÙ·ÃÎÊ
+	CCharacter		*_pTarget;				// the attack target
+	CSkillRecord	*_pSkillInfo;			// the skill currently corresponding to it
+	int				_nAttackX,  _nAttackY;	// the centre point of the attack
+	CCharacter		*_pSelf;				// itself, for quick access
     int             _nAngle;
     bool            _IsHaveAngle;
     int             _nKeyFrameNum;
-    int             _nSkillPoseID;          // µ±Ç°Ê¹ÓÃµÄPose,ÓÃÓÚÓĞÒ»¸ö¼¼ÄÜÓĞ¶à¸öpose£¬È·¶¨ÊÇÄÇ¸öpose
-	int				_nSkillActionIndex;		// ÓĞ¶à¸öPoseÊ±,ÓÃÓÚË³Ğò²¥·Å
+    int             _nSkillPoseID;          // the Pose currently in use; a skill can have several poses, so this settles which one
+	int				_nSkillActionIndex;		// when there are several poses, used to play them in order
 	float			_fSkillSpeed[ defSKILL_POSE_NUM ];
 	float			_fSkillRate;
 
@@ -95,7 +95,7 @@ namespace GUI
 class CCommandObj;
 };
 
-// ¹¥»÷
+// attack
 class CAttackState : public CWaitAttackState
 {
 public:
@@ -137,12 +137,12 @@ protected:
 protected:
 	virtual void    _UseSkill();
 
-	static stLastAttack  _sLastTarget;	// ÉÏ´Î¹¥»÷µÄÈË
+	static stLastAttack  _sLastTarget;	// the last one to attack
 	static DWORD		 _dwLastAttackTime;
 
 protected:
 	CServerMoveState*	_pMove;
-    int					_nTotalDis;     // ¼¼ÄÜ¿ÉÊ¹ÓÃµÄ¾àÀë
+    int					_nTotalDis;     // the distance within which the skill can be used
 	bool				_IsForce;
 
     bool				_IsMoveOver;
@@ -155,7 +155,7 @@ protected:
 
 };
 
-// ×·É±
+// pursuit
 class CTraceAttackState : public CAttackState
 {
 public:
@@ -175,11 +175,11 @@ protected:
 
 protected:
 	bool		_IsTrace;
-	bool		_IsSuccess;		// ÊÇ·ñ³É¹¦×·»÷
+	bool		_IsSuccess;		// whether the pursuit succeeded
 
 };
 
-// ²âÊÔÎåÁ¬»÷
+// tests a five hit combo
 class CHitAttackState : public CActionState
 {
 public:
@@ -208,12 +208,12 @@ private:
 	CCharacter*		_pSelf;
 	float			_fSpeed;
 
-	int				_nIndex;		// ÕıÔÚ²¥·ÅµÄË÷Òı
+	int				_nIndex;		// the index currently playing
 	int				_nCurPose;
 
 };
 
-// ²âÊÔËùÓĞpose,²¢ÇÒ×Ô¶¯Ñ¡ÔñÏÂÒ»¸ö½ÇÉ«
+// tests all poses and automatically picks the next character
 class CAllPoseState : public CActionState
 {
 public:
@@ -246,7 +246,7 @@ private:
 
 };
 
-// ÄÚÁªº¯Êı
+// inline function
 inline bool CWaitAttackState::_IsPoseValid( DWORD pose_id )
 {
     return _nSkillPoseID==pose_id;

@@ -1,7 +1,7 @@
-#pragma once
+ï»¿#pragma once
 #include "STStateObj.h"
 
-// ±íÇé
+// emote
 class CPoseState : public CActionState
 {
 public:
@@ -29,7 +29,7 @@ protected:
 
 };
 
-// ×øÏÂ×´Ì¬
+// sitting state
 class CInsertState : public CActionState
 {
 public:
@@ -61,7 +61,7 @@ protected:
 
 };
 
-// ¸ü»»×°±¸
+// changing equipment
 struct stNetUseItem;
 struct stNetItemUnfix;
 

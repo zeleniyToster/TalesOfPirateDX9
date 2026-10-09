@@ -1,4 +1,4 @@
-//=============================================================================
+ï»¿//=============================================================================
 // FileName: EventRecord.cpp
 // Creater: ZhangXuedong
 // Date: 2004.11.24
@@ -20,27 +20,27 @@ BOOL CEventRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string
     string strList[80];
 	string strLine;
 
-	// ±àºÅ
+	// id
 	pInfo->lID = pInfo->nID;
-	// Ãû³Æ
+	// name
 	_tcsncpy(pInfo->szName, pInfo->szDataName, defEVENT_NAME_LEN);
 	pInfo->szName[defEVENT_NAME_LEN - 1] = _TEXT('0');
 
-    // ÊÂ¼þÀàÐÍ
+    // event type
     pInfo->sEventType = Str2Int(ParamList[m++]);
-	// ´¥·¢ÀàÐÍ
+	// trigger type
 	pInfo->sArouseType = Str2Int(ParamList[m++]);
-	// ´¥·¢°ë¾¶
+	// trigger radius
 	pInfo->sArouseRadius = Str2Int(ParamList[m++]);
-	// ´¥·¢ÌØÐ§
+	// effect played on trigger
 	pInfo->sEffect = Str2Int(ParamList[m++]);
-	// ´¥·¢ÒôÐ§
+	// sound played on trigger
 	pInfo->sMusic = Str2Int(ParamList[m++]);
-	// ³öÉúÊ±µÄÌØÐ§
+	// effect played on spawn
 	pInfo->sBornEffect = Str2Int(ParamList[m++]);	
-	// ÊÂ¼þÏÔÊ¾µÄ¹â±ê
+	// cursor shown for the event
 	pInfo->sCursor = Str2Int(ParamList[m++]);		
-	// Êó±êÖ¸ÕëÊ²Ã´Çé¿öÓÐÐ§(0-¶¼ÓÐÐ§,1-ÈË£¬2-´¬)
+	// when the mouse cursor is valid (0 both, 1 character, 2 ship)
 	pInfo->chMainChaType = Str2Int(ParamList[m++]);		
 	return TRUE;
 }

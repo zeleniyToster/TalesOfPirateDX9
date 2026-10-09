@@ -28,7 +28,7 @@
 #include <mutex>
 #include <vector>
 
-// 关于 Client 连接部分＝＝＝＝＝＝＝＝＝＝
+// ===== Client connection section =====
 class  ClientConnection;
 class ToClient : public dbc::TcpServerApp, public dbc::RPCMGR
 {
@@ -67,7 +67,7 @@ public:
   
 private:
 	bool		 DoCommand(dbc::DataSocket* datasock, dbc::cChar* cmdline);
-	virtual bool OnConnect(dbc::DataSocket* datasock); // 返回值:true-允许连接,false-不允许连接
+	virtual bool OnConnect(dbc::DataSocket* datasock); // return value: true = allow the connection, false = refuse it
 	virtual void OnConnected(dbc::DataSocket* datasock);
 	virtual void OnDisconnect(dbc::DataSocket* datasock, int reason);
 	virtual void OnProcessData(dbc::DataSocket* datasock, dbc::RPacket& recvbuf);
@@ -81,7 +81,7 @@ private:
 	dbc::InterLockedLong	m_atexit, m_calltotal;
 	volatile dbc::uShort m_maxcon;
 	dbc::uShort m_version;
-	int _comm_enc; // 加密算法索引
+	int _comm_enc; // encryption algorithm index
 
 	volatile dbc::uShort	m_checkSpan;
 	volatile dbc::uShort	m_checkWaring;
@@ -95,7 +95,7 @@ private:
 	IMPLEMENT_CDELETE(ToClient)
 };
 
-// 关于 GameServer 连接部分＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+// ===== GameServer connection section =====
 class ToGameServer;
 
 #define MAX_MAP 100
@@ -112,7 +112,7 @@ private:
 	void Initially();
 	void Finally();
 public:
-	void EnterMap(ClientConnection* ply, dbc::uLong actid, dbc::uLong dbid, dbc::uLong worldid, dbc::cChar* map, dbc::Long lMapCpyNO, dbc::uLong x, dbc::uLong y, char entertype, short swiner);	//角色chaid进入本服务器的地图map中的位置(x,y) winer指定角色是否是乱斗之王。
+	void EnterMap(ClientConnection* ply, dbc::uLong actid, dbc::uLong dbid, dbc::uLong worldid, dbc::cChar* map, dbc::Long lMapCpyNO, dbc::uLong x, dbc::uLong y, char entertype, short swiner);	// the character chaid enters map on this server at position (x,y); winer marks the character as the king of the brawl
 public:
 	dbc::InterLockedLong m_plynum{};
 	std::string gamename;
@@ -135,13 +135,13 @@ public:
 	GameServer* GetGameList() { return _game_list; }
 
 private:
-	virtual bool OnConnect(dbc::DataSocket* datasock); //返回值:true-允许连接,false-不允许连接
+	virtual bool OnConnect(dbc::DataSocket* datasock); // return value: true = allow the connection, false = refuse it
 	virtual void OnDisconnect(dbc::DataSocket* datasock, int reason);
 	virtual	dbc::WPacket OnServeCall(dbc::DataSocket* datasock, dbc::RPacket& in_para);
 	virtual void OnProcessData(dbc::DataSocket* datasock, dbc::RPacket& recvbuf);
 
-	dbc::PreAllocHeap<GameServer> _game_heap; // GameServer 描述对象堆
-	void MT_LOGIN(dbc::DataSocket* datasock, dbc::RPacket& recvbuf); // GameServer 登录 GateServer
+	dbc::PreAllocHeap<GameServer> _game_heap; // pool of GameServer descriptor objects
+	void MT_LOGIN(dbc::DataSocket* datasock, dbc::RPacket& recvbuf); // a GameServer logs in to this GateServer
 	void MT_SWITCHMAP(dbc::DataSocket* datasock, dbc::RPacket& recvbuf);
 	void MT_MAPENTRY(dbc::DataSocket* datasock, dbc::RPacket& recvbuf);
 	void MC_ENTERMAP(dbc::DataSocket* datasock, dbc::RPacket& recvbuf);
@@ -150,7 +150,7 @@ private:
 	void MT_PALYEREXIT(dbc::DataSocket* datasock, dbc::RPacket& recvbuf);
 	void MT_KICKUSER(dbc::DataSocket* datasock, dbc::RPacket& recvbuf);
 
-	GameServer* _game_list; // 存储 GameServer 描述对象的链表
+	GameServer* _game_list; // linked list holding the GameServer descriptor objects
 	short _game_num;
 	void _add_game(GameServer* game);
 	bool _exist_game(char const* game);
@@ -161,7 +161,7 @@ private:
 	IMPLEMENT_CDELETE(ToGameServer)
 };
 
-// 关于 GroupServer 连接部分＝＝＝＝＝＝＝＝＝＝
+// ===== GroupServer connection section =====
 class ToGroupServer;
 class ConnectGroupServer : public dbc::Task
 {
@@ -202,18 +202,18 @@ public:
 	void	SetSync(bool sync = true) { m_bSync = sync; }
 	// End
 
-	// 准备好
+	// ready
 	bool	IsReady() { return (!m_bSync && _connected); }
 
 private:
-	virtual bool OnConnect(dbc::DataSocket* datasock); // 返回值:true-允许连接,false-不允许连接
+	virtual bool OnConnect(dbc::DataSocket* datasock); // return value: true = allow the connection, false = refuse it
 	virtual void OnDisconnect(dbc::DataSocket* datasock, int reason);
 	virtual void OnProcessData(dbc::DataSocket* datasock, dbc::RPacket& recvbuf);
 	virtual dbc::WPacket OnServeCall(dbc::DataSocket* datasock, dbc::RPacket& in_para);
 
 	dbc::InterLockedLong	m_atexit, m_calltotal;
 
-	std::string _myself; // GateServer自己的名字
+	std::string _myself; // this GateServer's own name
 	GroupServer _gs;
 	bool volatile _connected{ false };
 
@@ -266,24 +266,24 @@ public:
 
 	dbc::uLong	volatile	m_actid{};
 	dbc::uLong   volatile    m_loginID{};
-	dbc::uLong	volatile	m_dbid{};		// 当前角色的数据库ID
-	dbc::uLong	volatile	m_worldid{};	// 当前角色的内存唯一ID
+	dbc::uLong	volatile	m_dbid{};		// database id of the current character
+	dbc::uLong	volatile	m_worldid{};	// in-memory unique id of the current character
 	dbc::uLong	volatile	m_pingtime{};
-	dbc::InterLockedLong gm_addr{}; // GameServer 上 Player 对象的指针
-	dbc::InterLockedLong gp_addr{}; // GroupServer 上 Player 对象的指针
-	dbc::DataSocket* volatile m_datasock{}; // 此 Player 的 GateServer <-> Client 连接
-	GameServer* volatile game{}; // 此 Player 当前所在的 GameServer 描述对象
-	volatile bool enc{}; // 是否加密通信数据
+	dbc::InterLockedLong gm_addr{}; // pointer to the Player object on the GameServer side
+	dbc::InterLockedLong gp_addr{}; // pointer to the Player object on the GroupServer side
+	dbc::DataSocket* volatile m_datasock{}; // this player's GateServer <-> Client connection
+	GameServer* volatile game{}; // GameServer descriptor this player is currently on
+	volatile bool enc{}; // whether traffic is encrypted
 
-	// 是否禁言
+	// muted, chat disabled
 	dbc::uLong	volatile m_lestoptick{};
 	bool	volatile m_estop{};
 	short	volatile m_sGarnerWiner{};
 
 	struct
 	{
-		std::recursive_mutex				m_mtxstat;					//0:锁定m_status;
-		Status		m_status{Status::Invalid};					//0:无效;1.选角色期间;2.玩游戏中.
+		std::recursive_mutex				m_mtxstat;					// 0: m_status is locked
+		Status		m_status{Status::Invalid};					// 0: invalid; 1: selecting a character; 2: playing
 		Status		m_exit{Status::Invalid };
 	};
 
@@ -324,17 +324,17 @@ class GateServer
 public:
 	GateServer(char const* fname);
 	~GateServer();
-	void RunLoop(); // 主循环
+	void RunLoop(); // main loop
 	dbc::ThreadPool* m_clproc, * m_clcomm, * m_gpcomm, * m_gpproc, * m_gmcomm;
-	ToGroupServer* gp_conn; // 同GroupServer的连接对象（主动重连机制）
-	ToGameServer* gm_conn; // 同GameServer的连接对象（被动）
-	ToClient* cli_conn; // 同Client的连接对象（被动）
+	ToGroupServer* gp_conn; // connection object to this GroupServer (actively reconnects)
+	ToGameServer* gm_conn; // connection object to this GameServer (passive)
+	ToClient* cli_conn; // connection object to the Client (passive)
 	std::recursive_mutex	_mtxother;
 
-	dbc::PreAllocHeap<ClientConnection>		client_heap; // 玩家对象堆
+	dbc::PreAllocHeap<ClientConnection>		client_heap; // pool of player objects
 
 	// Add by lark.li 20081119 begin
-	dbc::RunBiDirectChain<ClientConnection> 	m_plylst;	// 玩家连表
+	dbc::RunBiDirectChain<ClientConnection> 	m_plylst;	// player linked list
 	// End
 
 	dbc::PreAllocHeap<TransmitCall>	m_tch;
@@ -353,14 +353,14 @@ public:
 
 	void ServiceStart();
 	void ServiceStop();
-	virtual bool CanPaused()const { return true; };	//缺省支持暂停和继续操作
+	virtual bool CanPaused()const { return true; };	// supports pause and resume by default
 
 	int		GetShowMin() { return _nShowMin; }
 	int		GetShowMax() { return _nShowMax; }
 	void	SetShowRange(int min, int max) { _nShowMin = min; _nShowMax = max; }
 
 
-private:	// 用于在未连接前，客户端通过udp获得游戏统计信息Jerry 2006-1-10
+private:	// lets the client obtain game statistics over UDP before it connects - Jerry, 2006-01-10
 	CUdpManage* _pUdpManage;
 	static void _NotifySocketNumEvent(CUdpManage* pManage, CUdpServer* pUdpServer, const char* szClientIP, unsigned int nClientPort, const char* pData, int len);
 	static int	_nShowMin;

@@ -1,11 +1,11 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "Character.h"
 #include "SubMap.h"
 #include "NPC.h"
 #include "TryUtil.h"
 
 //--------------------------------------------------------
-//                   AI¿ØÖÆËùÐèµÄ½Ó¿Úº¯Êý
+//                   interface functions required by AI control
 //--------------------------------------------------------
 
 void CCharacter::SrcFightTar(CFightAble *pTar, dbc::Short sSkillID)

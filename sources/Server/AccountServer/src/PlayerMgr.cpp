@@ -1,4 +1,4 @@
-#define _CRTDBG_MAP_ALLOC
+ï»¿#define _CRTDBG_MAP_ALLOC
 #include "atltime.h"
 #include <stdlib.h>
 #include <crtdbg.h>
@@ -62,7 +62,7 @@ void CPlayerMgr::PlayerLogout(std::string strPlayerName)
 
 	sPlayerData sData=iter->second;
 	CTimeSpan ctSpan=CTime::GetCurrentTime() - sData.ctLoginTime;
-	if (ctSpan > CTimeSpan(5) && ctSpan< CTimeSpan(30, 0, 0, 0))	//¼ÇÂ¼ÓÐÐ§Ê±¼ä5Ãëµ½30Ìì
+	if (ctSpan > CTimeSpan(5) && ctSpan< CTimeSpan(30, 0, 0, 0))	// validity window: from 5 seconds up to 30 days
 	{
 		char lpSQLBuf[200];
 		__int64 i64Span=ctSpan.GetTotalSeconds();
@@ -73,7 +73,7 @@ void CPlayerMgr::PlayerLogout(std::string strPlayerName)
 		}
 		else
 		{
-			//Ô­¼ÆÊ±·½Ê½ÔÚµÇÂ½Ê±ÒÑ¾­ÐÞ¸Ä
+			// the original timing scheme was already changed at login time
 		}
 	}
 	m_mapPlayers.erase(strPlayerName.c_str());

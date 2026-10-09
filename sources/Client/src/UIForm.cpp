@@ -1,8 +1,8 @@
-//------------------------------------------------------------------------
-//	2005/3/26	Arcol	ÐÞÕý¶¨Ê±Æ÷ÔË×÷Ê±ÉèÖÃ¶¨Ê±Æ÷ÒýÆð³ö´íµÄBUG
-//	2005/3/24	Arcol	¼ÓÈë¶¨Ê±Æ÷
-//	2005/4/13	Arcol	ÐÞ¸Ä±íµ¥·ç¸ñ,Ö§³ÖÆÁÄ»¸÷±ßµÄÏà¶ÔÎ»ÖÃÉèÖÃ
-//	2005/5/17	Arcol	É¾³ý¶¨Ê±Æ÷Ïà¹Ø´úÂë£¨¶¨Ê±Æ÷ÒÑ±»×ö³É¶ÀÁ¢¿Ø¼þ£©
+ï»¿//------------------------------------------------------------------------
+//	2005/3/26	Arcol	fixed a BUG where setting the timer while the timer was running caused an error
+//	2005/3/24	Arcol	added the timer
+//	2005/4/13	Arcol	changed the form style and added support for positions relative to each screen edge
+//	2005/5/17	Arcol	removed the timer related code (the timer was made a separate control)
 //------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "uiform.h"
@@ -100,7 +100,7 @@ void CForm::_Copy( const CForm* rhs )
 CForm::~CForm()
 {
 	//delete _pImage;
-	SAFE_DELETE(_pImage); // UIµ±»ú´¦Àí
+	SAFE_DELETE(_pImage); // UI freeze handling
 	_TempleteClear();
 
 	CFormMgr::s_Mgr._DelMemory( this );
@@ -222,7 +222,7 @@ void CForm::Init()
 
 void CForm::OnSetScreen()
 {
-	int sw, sh;     // Êµ¼ÊÏÔÊ¾ÇøÓò
+	int sw, sh;     // the actual display area
 	RECT rc;
 	::GetClientRect( g_pGameApp->GetHWND(), &rc );
 	sw = rc.right  - rc.left;
@@ -240,7 +240,7 @@ void CForm::OnSetScreen()
 		_nOffHeight = 0;
 	}
 
-	//¸ù¾Ý²»Í¬µÄ±íµ¥ÀàÐÍÉè¶¨ÆäÎ»ÖÃ
+	//sets the position according to the form type
 	switch( _formStyle)
 	{
 	case fsNone:
@@ -301,13 +301,13 @@ void CForm::OnSetScreen()
 
 //void CForm::OnSetScreen()
 //{
-//	int sw, sh;     // Êµ¼ÊÏÔÊ¾ÇøÓò
+//	int sw, sh;     // å®žé™…æ˜¾ç¤ºåŒºåŸŸ
 //	RECT rc;
 //	::GetClientRect( g_pGameApp->GetHWND(), &rc );
 //	sw = rc.right  - rc.left;
 //	sh = rc.bottom - rc.top;
 //
-//	//¸ù¾Ý²»Í¬µÄ±íµ¥ÀàÐÍÉè¶¨ÆäÎ»ÖÃ
+//	//sets the position according to the form type
 //	switch( _formStyle)
 //	{
 //	case fsNone:
@@ -499,7 +499,7 @@ bool CForm::SetNextActiveCompent( bool isNext )
     int n = 0;
     int max = (int)_actives.size();
 
-    // ¼¤»îÏÂÒ»¸ö¿Ø¼þ
+    // activates the next control
     if( isNext )
     {
         do
@@ -669,7 +669,7 @@ void CForm::_OnActive()
 	{
         if( _pActive->evtLost ) _pActive->evtLost( this );
 
-		// ÔÚÁ½¸ö·ÇÄ£Ì¬´°¿ÚÇ°ÇÐ»»½¹µã
+		// switches focus between two modeless windows
 		if( !_pActive->GetIsModal() && !GetIsModal() )
 		{
 			CFormMgr::s_Mgr._UpdataShowForm( this );

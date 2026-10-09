@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <string>
 
@@ -14,14 +14,14 @@ class CGameConfig
 public:	
 	CGameConfig();
 	
-	void	Load(const char *pszFileName); // ¶ÁÅäÖÃÎÄ¼ş
-	void	SetDefault();  //Ä¬ÈÏÅäÖÃ
-	void	SetMoveClient( bool v ); //ÊÇ·ñÓë¿Í»§¶ËÍ¬²½
+	void	Load(const char *pszFileName); // read the configuration file
+	void	SetDefault();  //default configuration
+	void	SetMoveClient( bool v ); //whether it is synchronised with the client
 	
 public:
 
-	// Çë×¢Òâ´Ë´¦²»Òª·ÅÖÃÈÎºÎ·Ç¹Ì¶¨ÄÚ´æ³ß´çµÄ±äÁ¿, ±ÈÈçÄ£°å, stringÖ®ÀàµÄ,
-	// ´ËÀà½«±»Ö±½ÓĞ´ÅÌºÍ¶ÁÅÌ
+	// note: do not place any variable of non-fixed memory size here, such as templates or strings,
+	// those are written to and read from disk verbatim
 	BOOL		m_bAutoLogin;
 	BOOL		m_bFullScreen;
 	SPlaceCha	m_ChaList[20];
@@ -46,13 +46,13 @@ public:
     BOOL        m_bEnableMusic;
 	BOOL		m_bCheckOvermax;
 
-	// ÍøÂç
-    BOOL        m_nSendHeartbeat;       // ¶àÉÙÊ±¼ä·¢ËÍÒ»´ÎĞÄÌø,µ¥Î»:s,×îĞ¡Öµ10s,¹Ø±Õ0
-	DWORD		m_nConnectTimeOut;		// ÍøÂçÁ¬½Ó³¬Ê±
+	// network
+    BOOL        m_nSendHeartbeat;       // how often a heartbeat is sent, in seconds; minimum 10s, 0 disables it
+	DWORD		m_nConnectTimeOut;		// network connection timeout
 
-    BOOL        m_bEnableLG;            // ÊÇ·ñÔÊĞíÊä³öLGĞÅÏ¢
-    BOOL        m_bEnableLGMsg;         // ÊÇ·ñÔÊĞíµ¯³öLG-Box
-	BOOL		m_bMThreadRes;			// ¶àÏß³Ì×ÊÔ´ÔØÈë
+    BOOL        m_bEnableLG;            // whether LG output is allowed
+    BOOL        m_bEnableLGMsg;         // whether the LG-Box may pop up
+	BOOL		m_bMThreadRes;			// multithreaded resource loading
 
 
 	int		m_nCreateScene;
@@ -61,7 +61,7 @@ public:
 	float	m_fCameraVel;
 	float	m_fCameraAccl;
 
-	//lemon add@2004.11.26, µÇÂ½×¨ÓÃ
+	//lemon add@2004.11.26, login only
 	float	eyeX;
 	float   eyeY;      
 	float	eyeZ;      
@@ -78,7 +78,7 @@ public:
     float   m_fLgtFactor;
     DWORD   m_dwLgtBkColor;
 
-    // lh add@2004.12.8ÓÃÓÚµ¥»ú¿ÉÒÔÄÃÎäÆ÷
+    // lh add@2004.12.8 used so a standalone game can still get a weapon
     int     nLeftHand;
     int     nRightHand;
 
@@ -93,26 +93,26 @@ public:
 
     DWORD   m_dwFullScreenAntialias;
 
-	// ÓÃÓÚÍøÂçÇĞ»»µØÍ¼Ê±µÄ²ÎÊı
+	// parameters used when switching maps over the network
 	DWORD	m_dwMaxCha;
 	DWORD	m_dwMaxEff;
 	DWORD	m_dwMaxItem;
 	DWORD	m_dwMaxObj;
 
-	char	m_szMD5Pass[48];	// ÌîĞ´µÄMD5ÃÜÂë
+	char	m_szMD5Pass[48];	// the MD5 password entered
 
-	bool	m_IsShowConsole;	// ÊÇ·ñ¿ÉÒÔ²Ù×÷¿Ø¼şÌ¨
-	bool	m_IsTomServer;		// µÇÂ½Tom·şÎñÆ÷
+	bool	m_IsShowConsole;	// whether the console may be operated
+	bool	m_IsTomServer;		// log in to the Tom server
 
-	bool	m_IsMoveClient;		// ÊÇ·ñ¿Í»§¶Ë·ÇÍ¬²½×ßÂ·
+	bool	m_IsMoveClient;		// whether the client walks without synchronisation
 
-	char	m_szVerErrorHTTP[256];	// °æ±¾²»Æ¥ÅäÊ±£¬µ÷ÓÃµÄÍøÒ³
+	char	m_szVerErrorHTTP[256];	// the web page called when the versions do not match
 
 	bool	m_IsBill;
 
-	bool	IsPower()		{ return m_IsShowConsole;	}		// Èç¹ûÊÇ±à¼­Æ÷Ä£Ê½,×Ô¶¯¿ÉÒÔ²Ù×÷¿Ø¼şÌ¨
+	bool	IsPower()		{ return m_IsShowConsole;	}		// in editor mode the console can be operated automatically
 
-	bool	m_IsDoublePwd;	// ÊÇ·ñÓĞ¶ş´ÎÃÜÂë
+	bool	m_IsDoublePwd;	// whether there is a secondary password
 
 	// Add by lark.li 20080429 for res
 	char   m_szLocale[256];

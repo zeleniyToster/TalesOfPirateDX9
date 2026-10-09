@@ -1,4 +1,4 @@
-#ifndef DBCONNECT_H
+ï»¿#ifndef DBCONNECT_H
 #define DBCONNECT_H
 #include "util.h"
 #include "ChaAttrType.h"
@@ -55,23 +55,23 @@ public:
 	bool SetAddr(long atorID,long addr);
 	bool InsertRow(const char *atorNome,int ato_id,const char *birth,const char * map,const char *olhe);
 	bool UpdateInfo(unsigned long atorID,unsigned short icon,const char * motto);
-	//For´´½¨½ÇÉ«
+	// used when creating a character
 	int	FetchRowByChaName(const char *atorNome);
 	int			Getcha_id()			{return atoi(m_buf[0].c_str());}
 	const char *GetMottonByName()	{return		 m_buf[1].c_str() ;}
 	short		GetIconByName()		{return atoi(m_buf[2].c_str());}
-	//ForÆÕÍ¨µÇÂ¼
+	// used for an ordinary login
 	int	FetchRowByChaID(int atorID);
 	int FetchChaIDByCharName(cChar* atorNome);
 	int FetchActIDByCharName(cChar* atorNome);
-	const char *GetChaName()	{return		 m_buf[0].c_str(); }	//½ÇÉ«Ãû
+	const char *GetChaName()	{return		 m_buf[0].c_str(); }	// character name
 	const char *GetMotto()		{return		 m_buf[1].c_str(); }
-	short		GetIcon()		{return	atoi(m_buf[2].c_str());}	//Ð¡Í¼±ê
-	int			GetGuildID()	{return atoi(m_buf[3].c_str());}	//ËùÊô¹«»áID
-	const char *GetGuildName()	{return		 m_buf[4].c_str(); }	//ËùÊô¹«»áÃû
-	const char *GetJob()		{return		 m_buf[5].c_str(); }	//Ö°Òµ
-	short		GetDegree()		{return atoi(m_buf[6].c_str());}	//µÈ¼¶
-	const char *GetMap()		{return		 m_buf[7].c_str(); }	//µØÍ¼Ãû
+	short		GetIcon()		{return	atoi(m_buf[2].c_str());}	// small icon
+	int			GetGuildID()	{return atoi(m_buf[3].c_str());}	// guild id
+	const char *GetGuildName()	{return		 m_buf[4].c_str(); }	// guild name
+	const char *GetJob()		{return		 m_buf[5].c_str(); }	// job
+	short		GetDegree()		{return atoi(m_buf[6].c_str());}	// level
+	const char *GetMap()		{return		 m_buf[7].c_str(); }	// map name
 	int			GetMap_X()		{return atoi(m_buf[8].c_str());}
 	int			GetMap_Y()		{return atoi(m_buf[9].c_str());}
 	const char *GetLook()		{return		 m_buf[10].c_str(); }

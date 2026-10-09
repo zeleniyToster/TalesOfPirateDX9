@@ -1,8 +1,8 @@
-//----------------------------------------------------------------------
-// Ãû³Æ:°´Å¥
-// ×÷Õß:lh 2004-07-19
-// ÓÃÍ¾:¿ÉÏÔÊ¾ÎÄ×Ö
-// ×îºóĞŞ¸ÄÈÕÆÚ:2004-10-09
+ï»¿//----------------------------------------------------------------------
+// Name: button
+// Author: lh 2004-07-19
+// Purpose: can display text
+// Last modified date: 2004-10-09
 //----------------------------------------------------------------------
 #pragma once
 #include "uicompent.h"
@@ -14,7 +14,7 @@ namespace GUI
 class CTextButton : public CCompent
 {
 public:
-	enum eButtonState	// °´Å¥×´Ì¬£ºÕı³££¬Êó±ê¸¡¶¯ÔÚÉÏÃæ£¬ÒÑ¾­°´ÏÂ£¬½ûÓÃ
+	enum eButtonState	// button states: normal, mouse hovering over it, pressed, disabled
 	{
 		csNormal = 0,
 		csHover,
@@ -46,7 +46,7 @@ public:
 
 	virtual	void		SetIsEnabled( bool v );
 
-	// ÎÄ¼şÖĞ´æ´¢¸ñÊ½£ºÒÀ´Î°´csNormal,csHover,csDown,csDisableÅÅÁĞ£¬w£¬hÎªµ¥Ôª¿í¸ß
+	// storage format in the file: in the order csNormal, csHover, csDown, csDisable; w,h are the cell width and height
 	bool				LoadImage( const char* file, int w=32, int h=32, int tx=0, int ty=0, bool isHorizontal=true );
 
 	DWORD				GetTextColor()						{ return _textColor;		}
@@ -56,33 +56,33 @@ public:
     void				SetFormModal( CForm::eModalResult v );
 	CForm::eModalResult GetFormModal()						{ return _eFormModal;		}
 
-	void				DoClick(eMouseState state = Mouse_LUp);		// Íâ²¿Ä£Äâµã»÷ÊÂ¼ş
+	void				DoClick(eMouseState state = Mouse_LUp);		// external simulated click event
 
-	// ÉèÖÃÉÁË¸ÖÜÆÚ£¨ºÁÃë£©£¬Éè 0 ²»ÉÁË¸
+	// sets the blink period (milliseconds); 0 means no blinking
 	void				SetFlashCycle( DWORD dwCycle = 1000 )	{ _dwFlashCycle = dwCycle;  }
 	DWORD				GetFlashCycle()			{ return _dwFlashCycle;		}
 
-public:	// ÊÂ¼ş
-	GuiMouseEvent		evtMouseClick;			// Êó±ê×ó¼üµã»÷ÊÂ¼ş
-	GuiMouseEvent		evtMouseRClick;			// Êó±êÓÒ¼üµã»÷ÊÂ¼ş  add by Philip.Wu 2006/01/23
-	GuiMouseEvent		evtMouseDBClick;		// Êó±ê×ó¼üË«»÷ÊÂ¼ş  add by Philip.Wu 2006/01/23
-	GuiEvent			evtMouseDownContinue;	// Êó±ê³ÖĞø°´ÔÚ°´Å¥
+public:	// events
+	GuiMouseEvent		evtMouseClick;			// left mouse click event
+	GuiMouseEvent		evtMouseRClick;			// right mouse click event  add by Philip.Wu 2006/01/23
+	GuiMouseEvent		evtMouseDBClick;		// left mouse double click event  add by Philip.Wu 2006/01/23
+	GuiEvent			evtMouseDownContinue;	// the mouse is held down on the button
 
 protected:
 	void				_SetState( eButtonState v );
 	void				_ClearOldState();
 
 protected:
-	std::string				_strCaption;	// ÏÔÊ¾ÔÚ±íÃæµÄÃû³Æ
-	DWORD				_textColor;		// ×ÖÌåÑÕÉ«
+	std::string				_strCaption;	// the name shown on the surface
+	DWORD				_textColor;		// font colour
 
-	CGuiPic*			_pImage;		// ±³¾°Í¼,¹²ËÄÖ¡£¬·Ö±ğ¶ÔÓ¦£ºbsNormal,bsHover,bsDown,bsDisable
-	bool				_isDown;		// ÒÔÇ°ÒÑ¾­ÔÚ°´Å¥ÉÏ°´ÏÂ£¬µÈĞĞËÉ¿ªÖ´ĞĞevtMouseClickÊÂ¼ş
+	CGuiPic*			_pImage;		// background image, four frames, corresponding to bsNormal, bsHover, bsDown, bsDisable
+	bool				_isDown;		// already pressed on the button before, waits for the release to run the evtMouseClick event
 
-    CForm::eModalResult _eFormModal;    // ¶ÔÓÚËùÊô±íµ¥ÎªÄ£Ì¬ÏÔÊ¾Ê±£¬¸³ÓÚ±íµ¥µÄ·µ»ØÖµ
+    CForm::eModalResult _eFormModal;    // the value returned to the form when its owning form is shown modally
 
-	DWORD				_dwFlashCycle;	// ÉÁË¸ÖÜÆÚ£¬=0 ²»ÉÁË¸
-	DWORD				_dwLastClick;	// ÉÏÒ»´Îµã»÷µÄÊ±¼ä
+	DWORD				_dwFlashCycle;	// blink period; =0 means no blinking
+	DWORD				_dwLastClick;	// the time of the previous click
 
 	static CTextButton*	m_pCurButton;
 };

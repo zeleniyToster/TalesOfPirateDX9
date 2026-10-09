@@ -1,6 +1,6 @@
-
+ï»¿
 //
-//	¶àÓïÑÔ×Ö·û´®¼ÇÂ¼Àà
+// multi-language string record class
 //
 //	add by Philip.Wu  2006-07-18
 //
@@ -22,33 +22,33 @@ public:
 
 	~CLanguageRecord(void);
 
-	// »ñµÃ×Ö·û´®
+	// fetch a string
 	const char* GetString(int nID);
 
-	// ´ÓÎÄ¼şÖĞ¶ÁÈ¡
+	// read from a file
 	bool LoadFromBinFile(const char* szBinFile);
 
-	// ´ÓÎÄ¼şÖĞ¶ÁÈ¡
+	// read from a file
 	bool LoadFromTxtFile(const char* szTxtFile);
 
-	// »ñµÃ×Ö·û´®¸öÊı
+	// number of strings held
 	int GetRecordCount(void);
 
-	// ¼ÓÃÜ²¢Éú³É¶ş½øÖÆ
+	// encrypt and emit the binary form
 	bool MadeBinFile(const char* szBinFile, const char* szTxtFile);
 
 private:
 
-	// ×Ö·û´® map
+	// string map
 	std::map<int, std::string> m_mapString;
 
-	// Ìí¼ÓÒ»ĞĞ
+	// append a line
 	void Add(char* szLine);
 
-	// Ìæ»»
+	// replace
 	int ReplaceString(char* _str, const char* _old, const char* _new);
 
-	// ²éÕÒ
+	// look up
 	int Find(const char* _str, const char* _find);
 };
 

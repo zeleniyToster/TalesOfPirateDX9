@@ -436,7 +436,7 @@ namespace GUI
 	}
 
 	void CBoothMgr::PullBoothSuccess() const {
-		//终止摆摊动画
+		//ends the stall animation
 
 		for (int i(0); i < g_stUIBooth.m_iBoothItemMaxNum; i++) {
 			if (g_stUIBooth.m_kBoothItems[i]) {
@@ -446,7 +446,7 @@ namespace GUI
 		}
 		g_stUIBooth.ClearBoothItems();
 
-		//关闭表单
+		//closes the form
 		g_stUIBooth.CloseBoothUI();
 	}
 

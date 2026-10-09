@@ -1,6 +1,6 @@
-//#########################
+ï»¿//#########################
 // Mind Power Math Routines
-// ÀúÊ·ÓÆ¾ÃµÄÊý¾Ýº¯Êý¿â
+// a long standing math function library
 // Created By Ryan Wang
 //#########################
 
@@ -25,7 +25,7 @@ inline float GetM2D(float *pfVector)
 }
 
 
-//Ëã·¨£º¹²ÏßµÄÈýµãµÄ¹ØÏµ£¬ p1, p2 ,p ÊÇ·ñÔÚp1,p2Ö®¼ä»¹ÊÇÔÚp1,p2ÔÚÍâ¡£: added by billy
+// algorithm: relation between three collinear points p1, p2, p - whether p lies between p1 and p2 or outside them. added by billy
 inline bool IsPoint3Intersect(D3DXVECTOR3 *p, D3DXVECTOR3* p1, D3DXVECTOR3  *p2  )
 {
 
@@ -34,12 +34,12 @@ inline bool IsPoint3Intersect(D3DXVECTOR3 *p, D3DXVECTOR3* p1, D3DXVECTOR3  *p2 
 	return false ;
 }
 
-//Ëã·¨£º±ßÓëÃæµÄÏà½»Çé¿ö  .: added by billy 
+// algorithm: intersection of an edge with a face. added by billy
 inline  BOOL EdgeIntersectsFace( D3DXVECTOR3* pEdges, D3DXVECTOR3* pFacePoints, 
                          D3DXPLANE* pPlane )
 {
    
-	//Èç¹ûÏß¶Î2µãÔÚÃæµÄÒ»±ß£¬Ôò²»»áÏà½»
+	// if both points of the segment lie on the same side of the plane, there is no intersection
     FLOAT fDist1;
     FLOAT fDist2;
     fDist1 = pPlane->a * pEdges[0].x + pPlane->b * pEdges[0].y +
@@ -52,7 +52,7 @@ inline  BOOL EdgeIntersectsFace( D3DXVECTOR3* pEdges, D3DXVECTOR3* pFacePoints,
         return FALSE;
     }
 
-	//Çó½»µã
+	// compute the intersection point
     D3DXVECTOR3 ptIntersection;
     if( NULL == D3DXPlaneIntersectLine( &ptIntersection, pPlane, &pEdges[0], &pEdges[1] ) )
         return FALSE;

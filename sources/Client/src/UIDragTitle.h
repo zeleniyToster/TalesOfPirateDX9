@@ -1,14 +1,14 @@
-//----------------------------------------------------------------------
-// Ãû³Æ:¾²Ì¬ÎÄ×Ö
-// ×÷Õß:lh 2004-07-19
-// ×îºóĞŞ¸ÄÈÕÆÚ:2004-10-09
+ï»¿//----------------------------------------------------------------------
+// Name: static text
+// Author: lh 2004-07-19
+// Last modified date: 2004-10-09
 //----------------------------------------------------------------------
 #pragma once
 #include "uicompent.h"
 
 namespace GUI
 {
-// ÍÏ¶¯¿Ø¼şÌõ,ÓÃÓÚÖ§³ÖÍâ²¿ÍÏ¶¯¿Ø¼ş
+// drag control bar, used to support dragging a control from outside
 class CDragTitle : public CCompent
 {
 public:

@@ -1,29 +1,29 @@
-// Scene ´ú±íÓÎÏ·³¡¾°, °üÀ¨µØ±í, ½ÇÉ«, Îï¼ş, ÌØĞ§, Ïà¹Ø½çÃæµÈÓÎÏ·ÔªËØµÄ¼¯ºÏ, 
-// ÊÇÍæ¼ÒÖ±½ÓÃæ¶ÔµÄÓÎÏ·¹¦ÄÜµÄ»ù±¾µ¥Î», ±ÈÈçµÇÂ¼Scene, Ñ¡½ÇÉ«Scene, ÓÎÏ·ÊÀ½çScene
-// GameApp¿ÉÒÔSwitchScene(),  ¶øScene¿ÉÒÔSwitchMap
+ï»¿// Scene represents a game scene: the collection of game elements such as the terrain, characters, objects, effects and the related screens,
+// it is the basic unit of the game functionality the player faces directly, such as the login Scene, the character selection Scene and the game world Scene
+// GameAppå¯ä»¥SwitchScene(),  è€ŒSceneå¯ä»¥SwitchMap
 #pragma once
 #include "Script.h"
 #include "MusicSet.h"
 #include "BoolSet.h"
 #include "SceneSign.h"
 
-#define SCENEMSG_CHA_CREATE             1	// ²ÎÊı1:Êı×éID,²ÎÊı2:½ÇÉ«ÀàĞÍ
-#define SCENEMSG_CHA_DESTROY            2	//  ²ÎÊı1:Êı×éID,²ÎÊı2:½ÇÉ«ÀàĞÍ
-#define SCENEMSG_CHA_BEGINMOVE          3	// ²ÎÊı1:½ÇÉ«ÀàĞÍ,²ÎÊı2:Êı×éID
-#define SCENEMSG_CHA_ENDMOVE            4	// ²ÎÊıÍ¬ÉÏ
+#define SCENEMSG_CHA_CREATE             1	// parameter 1: array ID, parameter 2: character type
+#define SCENEMSG_CHA_DESTROY            2	// parameter 1: array ID, parameter 2: character type
+#define SCENEMSG_CHA_BEGINMOVE          3	// parameter 1: character type, parameter 2: array ID
+#define SCENEMSG_CHA_ENDMOVE            4	// parameters as above
 
-#define SCENEMSG_SCENEOBJ_CREATE        6	// ²ÎÊı1:Êı×éID,²ÎÊı2:Îï¼şÀàĞÍ
-#define SCENEMSG_SCENEOBJ_DESTROY       7	// ²ÎÊı1:Êı×éID,²ÎÊı2:Îï¼şÀàĞÍ
-#define SCENEMSG_SCENEOBJ_MOVE	        8	// ²ÎÊı1:Êı×éID,²ÎÊı2:Îï¼şÀàĞÍ
+#define SCENEMSG_SCENEOBJ_CREATE        6	// parameter 1: array ID, parameter 2: object type
+#define SCENEMSG_SCENEOBJ_DESTROY       7	// parameter 1: array ID, parameter 2: object type
+#define SCENEMSG_SCENEOBJ_MOVE	        8	// parameter 1: array ID, parameter 2: object type
 
-#define SCENEMSG_EFFECT_HIT		        9	// ´òÖĞÄ¿±ê
-#define SCENEMSG_EFFECT_VALID	        10	// ÌØĞ§ÎŞĞ§,²ÎÊı1:Êı×éID,
-#define SCENEMSG_EFFECT_CREATE	        11	// ÌØĞ§ÎŞĞ§
+#define SCENEMSG_EFFECT_HIT		        9	// hits the target
+#define SCENEMSG_EFFECT_VALID	        10	// the effect is invalid, parameter 1: array ID,
+#define SCENEMSG_EFFECT_CREATE	        11	// the effect is invalid
 
-#define SCENEMSG_SCENEITEM_CREATE       12	// ²ÎÊı1:Êı×éID,²ÎÊı2:itemÀàĞÍ
-#define SCENEMSG_SCENEITEM_DESTROY      13	// ²ÎÊı1:Êı×éID,²ÎÊı2:itemÀàĞÍ
+#define SCENEMSG_SCENEITEM_CREATE       12	// parameter 1: array ID, parameter 2: item type
+#define SCENEMSG_SCENEITEM_DESTROY      13	// parameter 1: array ID, parameter 2: item type
 
-#define SCENEMSG_SCENEOBJ_UPDATEVALID   15  // ¸üĞÂ²»Í¬ÀàĞÍµÄ³¡¾°Îï¼şÓĞĞ§Ë÷Òı
+#define SCENEMSG_SCENEOBJ_UPDATEVALID   15  // updates the valid indices of the various types of scene objects
 
 struct SceneTranspObjStateDesc
 {
@@ -51,15 +51,15 @@ struct stSceneInitParam
 {
 	stSceneInitParam() : nUITemplete(-1), nMaxCha(0), nMaxObj(0), nMaxItem(0), nMaxEff(0), nTypeID(0) {}
 
-	std::string  strName;		// ³¡¾°Ãû³Æ
-	int		nTypeID;		// ¶ÔÓ¦µÄµØÍ¼ÀàĞÍ
-	std::string	strMapFile;		// µØÍ¼Ãû³Æ
-	int		nUITemplete;	// ³¡¾°¶ÔÓ¦µÄUIÄ£°åºÅ
+	std::string  strName;		// scene name
+	int		nTypeID;		// the corresponding map type
+	std::string	strMapFile;		// map name
+	int		nUITemplete;	// the UI template number the scene corresponds to
 
-	int		nMaxCha;		// ×î´óµÄ½ÇÉ«ÊıÁ¿,Ğ¡ÓÚÁã,Ã»ÓĞ½ÇÉ«
-	int		nMaxObj;		// ×î´óÎï¼şÊı
-	int		nMaxItem;		// ×î´óµÀ¾ßÊı
-	int		nMaxEff;		// ×î´óĞ§¹ûÊı
+	int		nMaxCha;		// the maximum number of characters; less than zero means no characters
+	int		nMaxObj;		// maximum number of objects
+	int		nMaxItem;		// maximum number of items
+	int		nMaxEff;		// maximum number of effects
 };
 
 
@@ -72,23 +72,23 @@ enum
     SCENEOBJ_TYPE_ENVLIGHT   ,
     SCENEOBJ_TYPE_FOG        ,
     SCENEOBJ_TYPE_ENVSOUND	 ,
-	MAX_SCENEOBJ_TYPE		 ,		// ÕâÎªÃµ¾Ù×î´óÖµ
+	MAX_SCENEOBJ_TYPE		 ,		// this is the enumeration maximum
 };
 
 enum e3DMouseState
 {
-	enum3DNone,						// ²»¸úËæ
-	enumFollow,						// ¸úËæÊó±ê×´Ì¬
-	enumClick,						// µã»÷¸úËæ×´Ì¬
+	enum3DNone,						// does not follow
+	enumFollow,						// follows the mouse state
+	enumClick,						// follows on click state
 };
 
-enum eUserLevel						// ²Ù×÷¼¶±ğ
+enum eUserLevel						// operation level
 {
-	LEVEL_CHA_RUN		= 0,		// ¿É²Ù×÷½ÇÉ«ĞĞ¶¯
-    LEVEL_MOUSE_RUN,                // ÊÇ·ñ¿ÉÒÔ²Ù×÷Êó±ê×ßÂ·
+	LEVEL_CHA_RUN		= 0,		// the operable character actions
+    LEVEL_MOUSE_RUN,                // whether walking with the mouse is allowed
 };
 
-// ÈİÄÉÒÑ¾­ÊÍ·ÅµÄ¶ÔÏó£¬ÓÃÓÚÏÂ´Î²éÕÒ¿ÕÏĞ¶ÔÏóÊ±Ö±½Ó·µ»Ø
+// holds the released objects, so that the next search for a free object can return one directly
 template <class T>
 class FreeArray
 {
@@ -157,7 +157,7 @@ class CMapInfo;
 
 class CGameScene : public CScript
 {
-protected:	// CGameApp Ê¹ÓÃ
+protected:	// used by CGameApp
 	friend class CGameApp;
 
 	CGameScene(stSceneInitParam& param);
@@ -180,11 +180,11 @@ protected:	// CGameApp Ê¹ÓÃ
 	virtual void		_KeyDownEvent( int key ){}
 	virtual void		_KeyUpEvent( int key ){}
 
-private:        // ´´½¨ÄÚ´æ
+private:        // creates the memory
     bool		_CreateMemory();        
     bool		_ClearMemory();
 
-protected:      // ÔËĞĞÊ±ÇĞ»»
+protected:      // switched at runtime
     virtual bool		_Init();
     virtual bool		_Clear();
 
@@ -193,7 +193,7 @@ public:
     const int			GetSceneTypeID() const		{ return _stInit.nTypeID;	}
 
 public:	
-    virtual void        LoadingCall();          // ÔÚ×°ÔØloadingºó,Ë¢ĞÂ
+    virtual void        LoadingCall();          // refreshed after loading finishes
 	virtual void		SetMainCha(int nChaID);
 	virtual void		SetScreen( int w, int h, bool IsFull ){}
 
@@ -222,7 +222,7 @@ public:
 	stSceneInitParam*	GetInitParam()    { return &_stInit;                      }
     const char*			GetTerrainName()  { return _stInit.strMapFile.c_str();    }   
 
-	bool				GetIsBlockWalk( CCharacter* pCha, int nX, int nY );	// ÅĞ¶Ï½ÇÉ«ÔÚX,YÊÇ·ñ²»¿É×ß
+	bool				GetIsBlockWalk( CCharacter* pCha, int nX, int nY );	// decides whether the character cannot walk at X,Y
 
 	CEventMgr* GetEventMgr() { return _pEventMgr.get(); }
 
@@ -239,8 +239,8 @@ public:
 	CCharacter*		SelectCharacter();
     CCharacter*     AddCharacter( const LoadChaInfo* info );
 	CCharacter*		AddBoat( stNetChangeChaPart& part );
-	CCharacter*		AddCharacter(int nScriptID);	// Ôö¼Ó½ÇÉ«
-	CCharacter*		GetCha(int nArrayID);			// Í¨¹ıID(Êı×éÏÂ±ê) È¡µÃ½ÇÉ«Êı¾İÖ¸Õë
+	CCharacter*		AddCharacter(int nScriptID);	// adds a character
+	CCharacter*		GetCha(int nArrayID);			// gets the character data pointer by ID (array index)
 	int				GetChaCnt()		    { return _nChaCnt;		}
 
 	static void		ResetMainCha()		{ _pMainCha = NULL;		}
@@ -248,8 +248,8 @@ public:
 
 	CSceneObj*		AddSceneObj(int nScriptID);
 
-    // nType: µÀ¾ß±íÖĞÄ£ĞÍÎÄ¼şµÄË÷ÒıĞèÒª¸ù¾İ²»Í¬µÄ½ÇÉ«ÀàĞÍÀ´×öµ÷Õû
-    // Ä¿Ç°¶¨Òå 0:µôµØÉÏµÄÄ£ĞÍ; 1:ÄĞÖ÷½Ç1ºÅ£»2£ºÄĞÖ÷½Ç2ºÅ£»3£ºÅ®Ö÷½Ç1ºÅ£»4£ºÅ®Ö÷½Ç2ºÅ
+    // nType: the index of the model file in the item table has to be adjusted depending on the character type
+    // ç›®å‰å®šä¹‰ 0:æ‰åœ°ä¸Šçš„æ¨¡å‹; 1:ç”·ä¸»è§’1å·ï¼›2ï¼šç”·ä¸»è§’2å·ï¼›3ï¼šå¥³ä¸»è§’1å·ï¼›4ï¼šå¥³ä¸»è§’2å·
     CSceneItem*     AddSceneItem(int nScriptID, int nType);
     CSceneItem*     AddSceneItem( const char* file );
 
@@ -259,7 +259,7 @@ public:
 	int				GetSceneObjCnt() { return _nSceneObjCnt; }
 	int				GetSceneItemCnt() { return _nSceneItemCnt; }
 
-    CSceneItem*     HitSceneItemText( int nScrX, int nScry );   // µÃµ½µã»÷µÄµÀ¾ßÎÄ×ÖµÄµÀ¾ß
+    CSceneItem*     HitSceneItemText( int nScrX, int nScry );   // gets the item of the clicked item text
     CSceneItem*     HitTestSceneItem( int nScrX, int nScry );
     CSceneObj*      HitTestSceneObj( int nScrX, int nScrY );
     CCharacter*     HitTestCharacter( int nScrX, int nScrY );
@@ -324,10 +324,10 @@ public:
 	int				GetMouseX()			{ return _nMouseX;	   }
 	int				GetMouseY()			{ return _nMouseY;	   }
 
-    float           GetTerrainHeight(float fX, float fY);       // ¾«¶È½Ï¸ß,½ÏÂı,ÓÃÓÚ¾²Ì¬º¯Êı
-    float           GetGridHeight(float fX, float fY);          // ¾«¶È½ÏµÍ,½Ï¿ì,ÓÃÓÚÃ¿Ö¡¶¼µ÷ÓÃµÄº¯Êı
+    float           GetTerrainHeight(float fX, float fY);       // higher precision and slower, used for static functions
+    float           GetGridHeight(float fX, float fY);          // lower precision and faster, used for functions called every frame
 
-	int				GetGridRegion( int x, int y );				// µÃµ½ÇøÓòÊôĞÔ,µ¥Î»:Ã×
+	int				GetGridRegion( int x, int y );				// gets the area attribute, unit: metres
     
     BOOL            IsPointVisible(float fX, float fY);
     void            EnableSceneObjCulling(BOOL bEnable) { _bEnableSceneObjCulling = bEnable; }
@@ -335,11 +335,11 @@ public:
 
 	void			SetFrameMove(DWORD dwTime);
 
-	void			PlayEnvSound( int nX, int nY );					// ²¥·ÅÔÚx,y×ø±ê´¦µÄ»·¾³Òô,Ö¡µ÷ÓÃ
-	static void		PlayEnvSound( char* szFile, int nX, int nY );	// ÊÂ¼şµ÷ÓÃ
-	static void 	PlayEnvSound( int nSoundNo, int nX, int nY );   // ÊÂ¼şµ÷ÓÃ
+	void			PlayEnvSound( int nX, int nY );					// plays the ambient sound at the x,y coordinates; called every frame
+	static void		PlayEnvSound( char* szFile, int nX, int nY );	// called by the event
+	static void 	PlayEnvSound( int nSoundNo, int nX, int nY );   // called by the event
 
-    static void     SetSoundSize( float fVol );         // 0~1,0¾²Òô¾°,1×î´óÒôÁ¿
+    static void     SetSoundSize( float fVol );         // 0~1, 0 mutes the scene, 1 is the maximum volume
     static float    GetSoundSize()                      { return (float)_fSoundSize / 128.0f;   }
 
 	void			OnLostDevice();
@@ -349,7 +349,7 @@ public:
 
     void            RefreshLevel();
 
-    // ´´½¨Ò»¸öÔÚµØÃæÉÏµÄÌØĞ§
+    // creates an effect on the ground
     CEffectObj*     CreateEffect( int nEffectID, int nX, int nY, bool isLoop=false );
 	CPugMgr* GetPugMgr() { return _pcPugMgr.get(); }
 
@@ -367,9 +367,9 @@ public:
 	//CCharacter2D*	GetTeamList(int idx){ return _pCha2D[idx]; }
 
     void            AddAreaEff( CEffectObj* pEffectObj );
-    bool            DelAreaEff( long nAreaID, int nEffectID=0 );    // Èç¹ûnEffectID=0,Çå³ıÕâ¸ö¸ñ×ÓËùÓĞÌØĞ§
+    bool            DelAreaEff( long nAreaID, int nEffectID=0 );    // if nEffectID=0, clears every effect in this cell
 
-public:				// ±¨¸æ³¡¾°×´Ì¬
+public:				// reports the scene state
     DWORD           m_dwValidChaCnt;
     DWORD           m_dwChaPolyCnt;
     DWORD           m_dwChaRenderTime;
@@ -388,11 +388,11 @@ public:				// ±¨¸æ³¡¾°×´Ì¬
 
 	bool			m_bShowTerrain;
 protected:
-	void			_CreateChaArray(int nChaCnt);		// ´´½¨½ÇÉ«¼¯ºÏ
-	void			_CreateSceneObjArray(int nObjCnt);	// ´´½¨³¡¾°Îï¼ş¼¯ºÏ
-	void			_CreateSceneItemArray(int nObjCnt);	// ´´½¨³¡¾°µÀ¾ß¼¯ºÏ
+	void			_CreateChaArray(int nChaCnt);		// creates the character collection
+	void			_CreateSceneObjArray(int nObjCnt);	// creates the scene object collection
+	void			_CreateSceneItemArray(int nObjCnt);	// creates the scene item collection
 	void			_CreateEffectArray(int nEffCnt);
-	void			_CreateShadeArray(int nShadeCnt);		// ´´½¨Ó°×Ó¼¯ºÏ
+	void			_CreateShadeArray(int nShadeCnt);		// creates the shadow collection
 	void			_ClearAllCha();
 	void			_ClearAllSceneObj();
 	void			_ClearAllSceneItem();
@@ -439,7 +439,7 @@ public:
 	std::size_t _nSceneLightCnt{};
 
 	D3DXVECTOR3		    _vMousePos;
-	int					_nMouseX,	_nMouseY;		// Êó±êÔÚÆÁÄ»ÉÏµÄ×ø±ê,ÀåÃ×
+	int					_nMouseX,	_nMouseY;		// the mouse coordinates on the screen, in cm
 
 	static e3DMouseState	_e3DMouseState;
 	static BOOL			_bShowMinimap;
@@ -450,7 +450,7 @@ public:
 	static	CLargerMap	*_pLargerMap;
 //#endif
 	static bool			_IsShowPath;
-    static float        _fSoundSize;                // ÒôĞ§ÒôÁ¿
+    static float        _fSoundSize;                // sound effect volume
     static bool         _IsUseSound;            
 
     BOOL            _bShowTerrain;
@@ -462,7 +462,7 @@ public:
     int             _nShowChair;
     POINT           _HitBuf;
 
-protected:	// ³¡¾°ÇĞ»»±äÁ¿
+protected:	// scene switching variables
 	stSceneInitParam	_stInit;
 	int					_nSceneTypeID;	
 
@@ -472,12 +472,12 @@ protected:
 	//static CCharacter2D*	_pCha2D[4];
 
 	CCharacter*			_pSelCha;
-	CBoolSet			_UserLeve;				// ÓÃ»§¿ÉÒÔ²Ù×÷µÄ¼¶±ğ
+	CBoolSet			_UserLeve;				// the level the user can operate at
 
-    BOOL                _IsShowItemName;    // ÊÇ·ñÏÔÊ¾µÀ¾ßÃû×Ö
-    CSceneItem*         _pMouseInItem;      // Êó±êÒÆ¶¯ÔÚÕâ¸öµÀ¾ßÉÏ,ÕâµÀ¾ßĞèÒªÏÔÊ¾Ãû×Ö
+    BOOL                _IsShowItemName;    // whether item names are shown
+    CSceneItem*         _pMouseInItem;      // the mouse is over this item, so the item needs to show its name
 
-    // µØÃæµÄÌØĞ§
+    // ground effects
     typedef std::list<CEffectObj*>   areaeffs;
     areaeffs            _areaeffs;
 
@@ -485,7 +485,7 @@ protected:
 	std::unique_ptr<CEventMgr> _pEventMgr;//std::make_unique<CEventMgr>(this)
 	CMapInfo*			_pMapInfo;
 
-protected:	// ÁÙÊ±±äÁ¿
+protected:	// temporary variables
 	D3DXVECTOR3			org, ray;
 
 	IDirect3DSurfaceX * windowRenderTarget;
@@ -520,7 +520,7 @@ private:
 	void _ReadRBO();
 };
 
-// ÄÚÁªº¯Êı
+// inline function
 inline void CGameScene::PlayEnvSound( int nSoundNo, int nX, int nY )
 {
 	if( nSoundNo==-1 ) return;

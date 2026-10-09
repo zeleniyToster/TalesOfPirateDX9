@@ -1,4 +1,4 @@
-//
+ï»¿//
 // logutil.cpp
 //
 //  created by claude fan at 2004-8-9
@@ -10,7 +10,7 @@
 
 
 #if 0
-// ÖØ¶¨Ïòprintf
+// redirect printf
 int myprintf(char const* fmt, ...)
     {
     char buf[8192];
@@ -23,7 +23,7 @@ int myprintf(char const* fmt, ...)
     LG2("printf", buf);
     return 1;}
 
-// ÖØ¶¨Ïòfprintf
+// redirect fprintf
 int myfprintf(FILE* fp, char const* fmt, ...)
     {
     char buf[8192];
@@ -38,11 +38,11 @@ int myfprintf(FILE* fp, char const* fmt, ...)
     else LG2("other", buf);
     return 1;}
 
-// ÌØµã£ºÒª¼ÇÂ¼ÏÂÃ¿Ò»¸öÊ±¼äµãÉÏµÄLOG
+// characteristic: keeps a LOG entry for every point in time
 static HWND LG_hwnd = NULL;
 void LG(char const* type, char const* format, ...)
     {
-	// ¼ì²éÊÇ·ñÊ¹ÄÜLOG
+	// check whether logging is enabled
 	CLogMgr* logMgr = CLogMgr::Instance();
 	if (logMgr == NULL || !logMgr->IsEnable()) return;
 	CLog* log = logMgr->Add(type);
@@ -57,7 +57,7 @@ void LG(char const* type, char const* format, ...)
 	if (len >= sizeof buf)
         throw std::logic_error("buf overflow, length > 8K\n");
 
-    // µÃµ½µ±Ç°ÈÕÆÚ
+    // get the current date
     SYSTEMTIME st; char tim[100];
     ::GetLocalTime(&st);
     sprintf(tim, "%02d-%02d %02d:%02d:%02d", st.wMonth, st.wDay, st.wHour,
@@ -71,7 +71,7 @@ void LG(char const* type, char const* format, ...)
 
     //////////////////////////////////////////////////////////////////////////
 	//
-	// Ğ´Èë´ÅÅÌÎÄ¼şµÄLOG
+	// LOG entry written to the file on disk
 #if 0
     string ctx;
     if (strncmp(buf, "msg", 3) != 0)
@@ -93,7 +93,7 @@ void LG(char const* type, char const* format, ...)
 
     //////////////////////////////////////////////////////////////////////////
     //
-    // ·¢ËÍµ½LogviewerµÄLOG
+    // LOG entry sent to the log viewer
     if (LG_hwnd == NULL)
         {LG_hwnd = FindWindow(NULL, "kIng Of pIrAtEs lOgvIEwEr");}
 
@@ -125,7 +125,7 @@ void LG(char const* type, char const* format, ...)
 #endif
 
 #if 1
-// ÌØµã£ºÖ»¼ÇÂ¼ÏÂµ±Ç°Ê±¼äµãÉÏµÄLOG£¨¸üĞÂ£©
+// characteristic: keeps only the LOG for the current point in time (overwritten)
 static HWND GPL_hwnd = NULL;
 void GPL(char const* type, int x, int y, char const* format, ...)
     {
@@ -133,13 +133,13 @@ void GPL(char const* type, int x, int y, char const* format, ...)
 #if 0
     //////////////////////////////////////////////////////////////////////////
     //
-    // ·¢ËÍµ½LogviewerµÄGPL
+    // GPL entry sent to the log viewer
     if (GPL_hwnd == NULL)
         {GPL_hwnd = FindWindow(NULL, "kIng Of pIrAtEs lOgvIEwEr");}
 
     if (GPL_hwnd == NULL) return;
 
-    // µÃµ½LOGÄÚÈİ
+    // get the LOG content
     char buf[1024] = {0};
     va_list args;
     va_start(args, format);
@@ -169,13 +169,13 @@ void GPL(char const* type, int x, int y, char const* format, ...)
 
 #if 0
 
-// Ê¹ÄÜËùÓĞµÄLGÊä³ö
+// enable all LG output
 void EnableAllLG(bool enable /* = true */)
 {
     CLogMgr::Instance()->Enable(enable);
 }
 
-// Ê¹ÄÜÌØ¶¨µÄLGÊä³ö
+// enable a specific LG output
 void EnableLG(char const* type, bool enable /* = true */)
 {
     CLog* pLog = NULL;
@@ -222,7 +222,7 @@ void LG_SetEraseMode(bool bEraseMode /* = true */)
 }
 void LG2(char const* type, char const* format, ...)
 {
-    // ¼ì²éÊÇ·ñÊ¹ÄÜLOG
+    // check whether logging is enabled
     CLog2Mgr* pLogMgr = CLog2Mgr::Inst();
     if (pLogMgr == NULL || !pLogMgr->IsEnable()) return;
 
@@ -246,7 +246,7 @@ void LG2(char const* type, char const* format, ...)
 
 void LG3(char const* type, char const* format, ...)
 {
-	// ¼ì²éÊÇ·ñÊ¹ÄÜLOG
+	// check whether logging is enabled
 	CLog2Mgr* pLogMgr = CLog2Mgr::Inst();
 	if (pLogMgr == NULL || !pLogMgr->IsEnable()) return;
 

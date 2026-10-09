@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 
 #include "terrainattrib.h"
@@ -99,7 +99,7 @@ public:
 	
 	//lemon add@2004.11.4
 	bool		m_bShowLightBrush;
-public:		// ÓÃÓÚÍâ²¿½çÃæµ÷ÓÃ
+public:		// used by external screens to call
 
     DWORD       GetColor() { return _dwColor; }
 	void		SetColor( DWORD color ) { _dwColor=color; }
@@ -144,10 +144,10 @@ protected:
     FILE*           _fp;
     
 	// add by claude for terrain attrib
-	unsigned char _AttribIndex; // ÇøÓòÊôĞÔ°´Å¥µÄ±àºÅ (1...16)
-	unsigned char _getTileAttribMask(unsigned char attrib_btn_index); // ²ÎÊıÊÇÇøÓòÊôĞÔ°´Å¥µÄ±àºÅ
-	unsigned char _IslandIndex; // º£µºµÄ±àºÅ
-    bool _is_erase; // ÊÇÌí¼ÓÊôĞÔ»¹ÊÇÉ¾³ıÊôĞÔ²Ù×÷
+	unsigned char _AttribIndex; // number of the area attribute button (1...16)
+	unsigned char _getTileAttribMask(unsigned char attrib_btn_index); // the parameter is the number of the area attribute button
+	unsigned char _IslandIndex; // number of the island
+    bool _is_erase; // whether it adds an attribute or removes one
 
 	void _renderTileAttrib(int nX, int nY, int nAttribIndex);
 	void _renderTileIsland(int nX, int nY, int nIslandIndex);

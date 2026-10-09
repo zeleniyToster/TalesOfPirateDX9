@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "TableData.h"
 #include "MPRender.h"
@@ -117,7 +117,7 @@ public:
 
 protected:
 
-	static MPTexSet* _Instance; // Ïàµ±ÓÚµ¥¼ü, °Ñ×Ô¼º¼Ç×¡
+	static MPTexSet* _Instance; // acts like a singleton: keeps a reference to itself
     
     virtual CRawDataInfo* _CreateRawDataArray(int nIDCnt)
 	{
@@ -160,7 +160,7 @@ protected:
 
 	virtual BOOL _IsFull()
 	{
-		// Èç¹ûÏÔ´æÕ¼ÓÃ³¬¹ı8M,Ôò¿ªÊ¼½øĞĞ½çÃæÌùÍ¼ºÍµØ±íÌùÍ¼µÄ¶¯Ì¬ÊÍ·Å
+		// once video memory usage exceeds 8M, start releasing UI and terrain textures on demand
 		DWORD dwMem = g_Render.GetRegisteredDevMemSize();
 		if(rand()%100 < 2)
 		{
@@ -225,7 +225,7 @@ protected:
 
 
 
-			// Õë¶ÔddsÎÄ¼ş¸ñÊ½²»ĞèÒªÉèÖÃ£¬Ö»ÅĞ¶Ïtga¸ñÊ½
+			// not needed for the dds format; only tga is examined
 			/*
 			BYTE* pbtBuf = LoadRawFileData(pTexInfo);
 			if(pbtBuf)
@@ -483,7 +483,7 @@ protected:
 };
 
 //--------------
-// ¿ì½İÈ«¾Öº¯Êı:
+// convenience global functions:
 //--------------
 
 inline lwITex* GetTexByID(int nID, BOOL bRequest = FALSE)
@@ -492,7 +492,7 @@ inline lwITex* GetTexByID(int nID, BOOL bRequest = FALSE)
     return tex;
 }
 
-inline IDirect3DTextureX* GetTextureByID(int nID, BOOL bRequest = FALSE) // Í¨¹ıIDÈ¡µÃTexture±íÃæ
+inline IDirect3DTextureX* GetTextureByID(int nID, BOOL bRequest = FALSE) // obtain the texture surface by id
 {
 #ifdef USE_MANAGED_TEXTURE
     lwITex* tex = (lwITex*)MPTexSet::I()->GetRawData(nID, bRequest);
@@ -519,7 +519,7 @@ inline SIZE GetTextureSizeByID(int nID)
     return sz;
 }
 
-inline int GetTextureID(const char *pszDataName)  // Í¨¹ıÃû×ÖÈ¡µÃTexture ID, Èç¹ûÊÇ¶¯Ì¬ID·½Ê½ÓÖÃ»ÓĞ²éÕÒµ½ID, ¾Í»á×Ô¶¯·ÖÅäÒ»¸ö, ·µ»Ø-1±íÊ¾Ê§°Ü
+inline int GetTextureID(const char *pszDataName)  // obtain a texture id by name; with the dynamic id scheme an unmatched name gets one allocated automatically, -1 on failure
 {
     if(MPTexSet::I()!=NULL)
 	{
@@ -529,7 +529,7 @@ inline int GetTextureID(const char *pszDataName)  // Í¨¹ıÃû×ÖÈ¡µÃTexture ID, Èç¹
 	return 0;
 }
 
-inline MPTexInfo* GetTextureInfo(int nID) // Í¨¹ıIDÈ¡µÃTextureÃèÊöĞÅÏ¢
+inline MPTexInfo* GetTextureInfo(int nID) // obtain the texture descriptor by id
 {
 	if(MPTexSet::I()!=NULL)
 	{
@@ -547,7 +547,7 @@ inline BOOL IsAlphaTexture(int nID)
 
 inline BOOL IsTextureExist(const char *pszDataName)
 {
-    if(MPTexSet::I()->IsEnablePack()==FALSE) // ·Ç´ò°ü·½Ê½ÏÂ
+    if(MPTexSet::I()->IsEnablePack()==FALSE) // in the unpacked case
     {
         if(Util_IsFileExist((char*)pszDataName))
         {

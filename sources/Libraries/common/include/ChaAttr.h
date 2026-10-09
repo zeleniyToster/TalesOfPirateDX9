@@ -1,4 +1,4 @@
-//=============================================================================
+Ôªø//=============================================================================
 // FileName: ChaAttr.h
 // Creater: ZhangXuedong
 // Date: 2004.09.01
@@ -25,13 +25,13 @@ public:
 	LONG32	GetAttr(long lNo);
 	long	SetAttr(long lNo, LONG32 lVal);
 	LONG32	GetAttrMaxVal(long lNo);
-	long	DirectSetAttr(long lNo, LONG32 lVal); // ÷±Ω”…Ë÷√◊Ó¥Û÷µ£¨÷ª”√”⁄øÕªß∂À£®“ÚŒ™øÕªß∂Àµƒ ˝æ›¿¥‘¥”⁄∑˛ŒÒ∂À£¨ «∫œ∑® ˝æ›£©
+	long	DirectSetAttr(long lNo, LONG32 lVal); // sets the maximum directly; client side only, because the client receives its values from the server and they are valid by construction
 	long	AddAttr(long lNo, LONG32 lVal);
 	long	ReEvaluation(long lNo);
 
 	void	SetChangeFlag();
 	void	ResetChangeFlag();
-	void	SetChangeFlag(const char *cszChangeFlag, unsigned short usLen = ATTR_SIGN_BYTE_NUM); // ¥ÀΩ”ø⁄≤ª…Ë÷√m_sChangeNumClient
+	void	SetChangeFlag(const char *cszChangeFlag, unsigned short usLen = ATTR_SIGN_BYTE_NUM); // this interface does not touch m_sChangeNumClient
 	char*	GetChangeFlag(unsigned short& usLen);
 	void	SetChangeBitFlag(long lBit);
 	bool	GetChangeBitFlag(long lBit);
@@ -44,8 +44,8 @@ private:
 
 	LONG32	m_lAttribute[ATTR_MAX_NUM];
 
-	char	m_szChangeFlag[ATTR_SIGN_BYTE_NUM]; // ±Í ∂∏ƒ±‰µƒ Ù–‘
-	short	m_sChangeNumClient; // ∏ƒ±‰µƒ÷’∂À Ù–‘∏ˆ ˝
+	char	m_szChangeFlag[ATTR_SIGN_BYTE_NUM]; // marks which attribute changed
+	short	m_sChangeNumClient; // number of leaf attributes that changed
 
 };
 
@@ -65,7 +65,7 @@ inline LONG32 CChaAttr::GetAttrMaxVal(long lNo)
 	return g_lMaxChaAttr[lNo];
 T_E}
 
-// ∑µªÿ÷µ£∫0£¨ ß∞‹°£1£¨≥…π¶…Ë÷√£¨µ´«Î«Ûµƒ÷µ≥¨π˝◊Ó¥Û÷µ°£2£¨≥…π¶…Ë÷√°£
+// return value: 0 = failed; 1 = set, but the requested value exceeded the maximum; 2 = set
 inline long CChaAttr::SetAttr(long lNo, LONG32 lVal)
 {T_B
 	if (lNo >= ATTR_MAX_NUM) return 0;
@@ -77,7 +77,7 @@ inline long CChaAttr::SetAttr(long lNo, LONG32 lVal)
 		//if (!g_IsNosignChaAttr(lNo))
 		{
 			lVal = (int)g_lMaxChaAttr[lNo];
-			//LG("attr_error", "…Ë÷√Cha[%s] Attrib[%d]≥¨π˝◊Ó¥Û÷µ[%d]\n", m_szName, lNo, lVal); 
+			//LG("attr_error", "ËÆæÁΩÆCha[%s] Attrib[%d]Ë∂ÖËøáÊúÄÂ§ßÂÄº[%d]\n", m_szName, lNo, lVal); 
 			LG("attr_error", "set Cha[%s] Attrib[%d] greater than max value [%d]\n", m_szName, lNo, lVal); 
 		}
 	}
@@ -91,7 +91,7 @@ inline long CChaAttr::SetAttr(long lNo, LONG32 lVal)
 	return lRet;
 T_E}
 
-// ÷±Ω”…Ë÷√◊Ó¥Û÷µ£¨÷ª”√”⁄øÕªß∂À£®“ÚŒ™øÕªß∂Àµƒ ˝æ›¿¥‘¥”⁄∑˛ŒÒ∂À£¨ «∫œ∑® ˝æ›£©
+// sets the maximum directly; client side only, because the client receives its values from the server and they are valid by construction
 inline long CChaAttr::DirectSetAttr(long lNo, LONG32 lVal)
 {T_B
 	if (lNo >= ATTR_MAX_NUM) return 0;
@@ -136,7 +136,7 @@ inline void CChaAttr::ResetChangeFlag()
 	m_sChangeNumClient = 0;
 T_E}
 
-// ¥ÀΩ”ø⁄≤ª…Ë÷√m_sChangeNumClient
+// this interface does not touch m_sChangeNumClient
 inline void CChaAttr::SetChangeFlag(const char *cszChangeFlag, unsigned short usLen)
 {T_B
 	if (!cszChangeFlag)

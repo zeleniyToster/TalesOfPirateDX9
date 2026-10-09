@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 #include "packetqueue.h"
 #include "BTIService.h"
 #include "PlayerMgr.h"
 
 
-class CBillService	//Ö»ÔÊÐí´´½¨Ò»¸öÈ«¾Ö¶ÔÏó,²»Ö§³Ö¶àÏß³Ì
+class CBillService	// only one global instance is allowed; not thread safe
 {
 public:
 	CBillService(void);

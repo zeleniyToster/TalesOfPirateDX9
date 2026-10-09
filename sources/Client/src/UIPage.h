@@ -1,8 +1,8 @@
-//----------------------------------------------------------------------
-// Ãû³Æ:»»Ò³Àà
-// ×÷Õß:lh 2004-08-02
-// Éè¼ÆË¼Ïë:CPageItemÊÇ¿Ø¼þÈÝÆ÷,CPageÊÇCPageItemÈÝÆ÷,²¢ÊµÏÖÇÐ»»CPageItem
-// ×îºóÐÞ¸ÄÈÕÆÚ:2004-10-09
+ï»¿//----------------------------------------------------------------------
+// Name: paged class
+// Author: lh 2004-08-02
+// Design: CPageItem is a container for controls and CPage is a container for CPageItem, implementing the switching of CPageItem
+// Last modified date: 2004-10-09
 //----------------------------------------------------------------------
 #pragma once
 #include "uicompent.h"
@@ -13,7 +13,7 @@ namespace GUI
 {
 class CPage;
 
-// »»Ò³ÀàCPageµÄÒ³ÃæÀà
+// the page class of the paged class CPage
 class CPageItem : public CContainer
 {
 	friend class CPage;
@@ -57,21 +57,21 @@ private:
 	void			_OnTitleDown();
 
 protected:
-	CImage			*_pTitle;		// ²Ù×÷ÕâÒ»Ò³µÄ±êÌâÀ¸,ÆäÎ»ÖÃÓÉCPage¾ö¶¨
-	CImage			*_pImage;		// Ò³ÏÔÊ¾±³¾°Í¼Æ¬,³äÂúËùÓÐÇøÓò
-	unsigned int	_nIndex;		// ÔÚPageÀàÀïµÄË÷Òý
+	CImage			*_pTitle;		// operates the title bar of this page; its position is decided by CPage
+	CImage			*_pImage;		// the page shows a background image that fills every region
+	unsigned int	_nIndex;		// the index inside the Page class
 
 };
 
-// »»Ò³Àà
+// the paged class
 class CPage : public CCompent
 {
 public:
-	enum eButtonPos		// ¾ùÎªÒÀ´ÎÅÅÁÐ
+	enum eButtonPos		// all arranged in sequence
 	{
-		bpLeftUp=0,		// ×óÉÏ
-		bpUpFull,		// ³äÂúÉÏ²¿
-        bpCustom,       // ×Ô¶¨Òå
+		bpLeftUp=0,		// top left
+		bpUpFull,		// fills the top
+        bpCustom,       // custom
 		bpEnd,
 	};
 
@@ -94,38 +94,38 @@ public:
     virtual CCompent*       GetHitCommand( int x, int y );
 
 public:
-	void			SetIndex( unsigned int n );		// ¼¤»îÄ³Ò»Ò³
+	void			SetIndex( unsigned int n );		// activates a page
 	int				GetIndex()									{ return _nIndex;				}
 	CPageItem*		GetPage( unsigned int n );
 
-	CPageItem*		NewPage();				// ²úÉúÐÂµÄÒ»Ò³
+	CPageItem*		NewPage();				// produces a new page
 
 	void			SetButtonSize( int w, int h );
 	void			SetButtonPutStyle( eButtonPos style )		{ _eButtonPos=style;			}
 	void			SetButtonMargin( int n )					{ if(n>0) _nButtonMargin=n;		}
 
 public:
-	GuiEvent		evtSelectPage;			// Ñ¡ÔñÁËÐÂµÄÒ»Ò³
+	GuiEvent		evtSelectPage;			// a new page was selected
 
 private:
 	void			_RefreshButtonPos();
 
 protected:
-	unsigned int	_nIndex;				// µ±Ç°Ò³		
-	unsigned int	_nMaxPage;				// µ±Ç°×î´óÒ³
+	unsigned int	_nIndex;				// current page
+	unsigned int	_nMaxPage;				// current maximum page
 
 	CGuiPic*		_pImage;
 
 	typedef std::vector<CPageItem*>	items;
 	items			_pages;
 
-	eButtonPos		_eButtonPos;		// Ò³±êÌâ°´Å¥ÅÅÁÐ·½Ê½
-	int				_nButtonWidth, _nButtonHeight;		// Ò³±êÌâ°´Å¥¿í¸ß
-	int				_nButtonMargin;		// Ò³±êÌâ°´Å¥µÄ±ß¾à
+	eButtonPos		_eButtonPos;		// arrangement of the page title buttons
+	int				_nButtonWidth, _nButtonHeight;		// page title button width and height
+	int				_nButtonMargin;		// page title button margin
 
 };
 
-// ÄÚÁªº¯Êý
+// inline function
 inline void CPageItem::_OnTitleDown(CGuiData *pSender, int x, int y, DWORD key)
 {
 	((CPageItem*)(pSender->GetParent()))->_OnTitleDown();

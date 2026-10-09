@@ -1,6 +1,6 @@
-//--------------------------------------------------------------
-// √˚≥∆:”√ªßΩÁ√Ê“¯––π‹¿Ì¿‡
-// …Ëº∆ÀºœÎ:π‹¿ÌΩÁ√Ê“¯––
+Ôªø//--------------------------------------------------------------
+// Name: user interface bank management class
+// Design: manages the interface bank
 //--------------------------------------------------------------
 
 #ifndef UI_GUILDBANK_FORM_H
@@ -20,22 +20,22 @@ namespace GUI
 	class CGuildBankMgr : public CUIInterface
 	{
 	public:
-		void		ShowBank(); // œ‘ æµ¿æﬂ¿∏ŒÔ∆∑
-		CGoodsGrid* GetBankGoodsGrid() { return grdBank; } // ªÒ»°µ¿æﬂ¿∏∏Ò◊”
+		void		ShowBank(); // shows the item slot items
+		CGoodsGrid* GetBankGoodsGrid() { return grdBank; } // gets an item slot cell
 
-		bool		PushToBank(CGoodsGrid& rkDrag, CGoodsGrid& rkSelf, int nGridID, CCommandObj& rkItem); // Ω´ŒÔ∆∑∑≈»Î“¯––
-		bool		PopFromBank(CGoodsGrid& rkDrag, CGoodsGrid& rkSelf, int nGridID, CCommandObj& rkItem); //¥”“¯––÷–Õœ≥ˆŒÔ∆∑
-		bool		BankToBank(CGoodsGrid& rkDrag, CGoodsGrid& rkSelf, int nGridID, CCommandObj& rkItem);  //Ω´ŒÔ∆∑¥”“ª∏ˆ“¯––“∆µΩ¡Ì“ª∏ˆ“¯––
+		bool		PushToBank(CGoodsGrid& rkDrag, CGoodsGrid& rkSelf, int nGridID, CCommandObj& rkItem); // puts an item into the bank
+		bool		PopFromBank(CGoodsGrid& rkDrag, CGoodsGrid& rkSelf, int nGridID, CCommandObj& rkItem); //drags an item out of the bank
+		bool		BankToBank(CGoodsGrid& rkDrag, CGoodsGrid& rkSelf, int nGridID, CCommandObj& rkItem);  //moves an item from one bank to another
 		void		UpdateGuildGold(const char* value);
 	protected:
-		virtual bool Init(); // ”√ªßΩÁ√Ê“¯–––≈œ¢≥ı ºªØ
-		virtual void CloseForm(); //πÿ±’±Ìµ• 
+		virtual bool Init(); // user interface bank information initialisation
+		virtual void CloseForm(); //closes the form
 
 	private:
-		static void _MoveItemsEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey);  // “∆∂Ø∂‡∏ˆŒÔ∆∑
-		static void _MoveAItemEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey);  //“∆∂Øµ•∏ˆŒÔ∆∑
-		static void _evtBankToBank(CGuiData *pSender,int nFirst, int nSecond, bool& isSwap);  //”√”⁄”√ªß“¯––±Ìµ•÷–µ¿æﬂª•ªª
-		static void _evtOnClose( CForm* pForm, bool& IsClose );//πÿ±’“¯––±Ìµ•
+		static void _MoveItemsEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey);  // moves several items
+		static void _MoveAItemEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey);  //moves a single item
+		static void _evtBankToBank(CGuiData *pSender,int nFirst, int nSecond, bool& isSwap);  //used to swap items inside the user bank form
+		static void _evtOnClose( CForm* pForm, bool& IsClose );//closes the bank form
 		
 		static void _EnterGoldTake(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey);
 		static void _EnterGoldPut(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey);
@@ -43,12 +43,12 @@ namespace GUI
 		static void _OnClickGoldPut(CGuiData *pSender, int x, int y, DWORD key);
 
 	private:
-		stNumBox*		m_pkNumberBox; // —ØŒ ∏ˆ ˝
+		stNumBox*		m_pkNumberBox; // asks for a count
 		stNetBank		m_kNetBank;
 
-		// ΩÁ√Ê
-		CForm*			frmBank; // “¯––±Ìµ•
-		CGoodsGrid*	grdBank; // ∏Ò◊”±Ìµ•
+		// interface
+		CForm*			frmBank; // bank form
+		CGoodsGrid*	grdBank; // cell form
 		CLabel*			labGuildMoney;
 		CTextButton*	btnGoldPut;
 		CTextButton*	btnGoldTake;

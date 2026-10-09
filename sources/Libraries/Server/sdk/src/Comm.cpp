@@ -1,4 +1,4 @@
-//================================================================
+Ôªø//================================================================
 // It must be permitted by Dabo.Zhang that this program is used for
 // any purpose in any situation.
 // Copyright (C) Dabo.Zhang 2000-2003
@@ -37,7 +37,7 @@ void SetCommAppDebug( bool bDebug )
 {
 	g_bCommAppDebug = bDebug;
 }
-//…œ≤„”¶”√÷ÿ∂®“Â:
+// the upper layer application redefines this:
 //static uLong	NetBuffer[]	={400,300,200,100,50,40,30,0};
 
 //=====DispatchThread==============================================================================

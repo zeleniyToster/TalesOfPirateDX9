@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "TableData.h"
 class CSceneItemInfo : public CRawDataInfo
@@ -17,12 +17,12 @@ public:
 	int		nAttachEffectID;
     int     nCharacterID;
     BYTE    btWeaponType;  
-    //  ÎäÆ÷ÀàĞÍ
-    //  0   µ¥ÊÖ½üÕ½ÎäÆ÷(Í¬Í½ÊÖ¹²ÓÃ)	
-    //  1   Ë«ÊÖ½üÕ½ÎäÆ÷	
-    //  2   ÊÖ³ÖÁ½°Ñ½üÕ½ÎäÆ÷	
-    //  3   µ¥ÊÖ³ÖÇ¹ĞµÎäÆ÷	
-    //  4   Ë«ÊÖ³Ö¹­¼ıÀàÎäÆ÷
+    //  weapon type
+    //  0   one handed melee weapon (shared with bare hands)
+    //  1   two handed melee weapon
+    //  2   two melee weapons, one in each hand
+    //  3   one handed firearm
+    //  4   two handed bow and arrow weapon
 
     //int     nShipLinkID;
     //int     nItemLinkID;
@@ -45,7 +45,7 @@ public:
 
 protected:
 
-	static CSceneItemSet* _Instance; // Ïàµ±ÓÚµ¥¼ü, °Ñ×Ô¼º¼Ç×¡
+	static CSceneItemSet* _Instance; // like a single key, remembers itself
    
 	virtual CRawDataInfo* _CreateRawDataArray(int nCnt)
 	{
