@@ -1,4 +1,39 @@
-# ANSI → Unicode ODBC Fix for Wine + Microsoft ODBC Driver 17
+# CHANGES.md
+
+Хронология изменений по датам. Подробности по сборке и диагностике — в
+[`docs/BUILD_NOTES.md`](docs/BUILD_NOTES.md).
+
+---
+
+## 2026-10-09 — Отключены диагностические логи сетевого пакета `[NETLOG]`
+
+Три лога, добавленных при разборе ошибки подключения (клиент получал `ERR_PT_NETEXCP`,
+код 522), выключены по причине размера: `receiver_debug.log` разрастался примерно до 3 МБ
+за одну сессию клиента, остальные — до сотен килобайт. Файлы открывались в рабочем
+каталоге процесса при загрузке.
+
+**Код не удалён.** Все вызовы закомментированы и помечены тегом `[NETLOG]`, конструкция
+`std::ofstream` убрана за `#if`, который по умолчанию выключен.
+
+| Файл | Флаг (было → стало) | Было | Стало |
+|------|--------------------|------|-------|
+| `sources/Libraries/Server/sdk/src/Packet.cpp` | `DEBUG_WPACKET` → `DIAG_WPACKET_LOG` | `1` | `0` |
+| `sources/Libraries/Server/sdk/src/Sender.cpp` | `DEBUG_SENDER` → `DIAG_SENDER_LOG` | `1` | `0` |
+| `sources/Libraries/Server/sdk/src/Receiver.cpp` | `DEBUG_RECEIVER` → `DIAG_RECEIVER_LOG` | `1` | `0` |
+
+Закомментировано 21 строку вызовов: 8 в `Packet.cpp`, 2 в `Sender.cpp`, 11 в `Receiver.cpp`.
+
+Дополнительно в `Packet.cpp` и `Sender.cpp` добавлен `#include <iostream>` — без него ветка
+`#else` (`std::cerr`) не собирается, в исходном варианте заголовка там не было.
+
+Возврат логов: поставить `1` в нужный `DIAG_*_LOG` и снять комментарий со строк,
+помеченных `[NETLOG]`. Подробности в [`docs/BUILD_NOTES.md`](docs/BUILD_NOTES.md).
+
+Причина проблемы, ради которой логи и добавлялись, устранена ранее — см. ниже.
+
+---
+
+## 2026-10-08 — ANSI → Unicode ODBC Fix for Wine + Microsoft ODBC Driver 17
 Сессия от 2026-10-08, ветка `arena/4b0016bf-talesofpiratedx9` (PR #2 → base `recompile_linux`)
 
 ## Проблема
