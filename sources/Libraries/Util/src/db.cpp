@@ -102,6 +102,49 @@ bool cfl_db::handle_err(SQLHANDLE h, SQLSMALLINT t,
 	return false;
 }
 
+// Считывает SQLSTATE последней диагностики по дескриптору.
+// Используется W-вариант, как и в handle_err, иначе под Wine
+// приходят пустые коды состояний.
+static void _read_sqlstate(SQLHANDLE h, SQLSMALLINT t, char* out, size_t n)
+{
+	if (out == NULL || n == 0)
+		return;
+
+	out[0] = '\0';
+
+	SQLWCHAR wstate[SQL_SQLSTATE_SIZE + 1] = { 0 };
+	SQLWCHAR wmsg[SQL_MAX_MESSAGE_LENGTH + 1] = { 0 };
+	SQLINTEGER error = 0;
+	SQLSMALLINT msg_len = 0;
+
+	SQLRETURN sqlret = SQLGetDiagRecW(t, h, 1, wstate, &error, wmsg,
+	                                  SQL_MAX_MESSAGE_LENGTH, &msg_len);
+	if (sqlret == SQL_ERROR || sqlret == SQL_INVALID_HANDLE)
+		return;
+
+	WideCharToMultiByte(CP_ACP, 0, (LPCWSTR)wstate, -1, out,
+	                    (int)(n - 1), NULL, NULL);
+	out[n - 1] = '\0';
+}
+
+// Ошибки, после которых достаточно просто повторить запрос.
+//
+// 40001 - SQL Server выбрал эту сессию жертвой дедлока,
+// 40501 - движок откатил транзакцию из-за конфликта сериализации.
+// Обе означают, что запрос не был выполнен вообще, поэтому
+// переподключение не нужно - достаточно повторить.
+//
+// Прежде здесь был только _needreconn() с кодами обрыва связи
+// (HYT00, HYT01, 01000, 08S01), из-за чего дедлок считался
+// фатальным: CTableCha::Init() возвращал false и сервер не стартовал.
+static bool _is_transient_state(char const* state)
+{
+	if (state == NULL)
+		return false;
+
+	return strcmp(state, "40001") == 0 || strcmp(state, "40501") == 0;
+}
+
 bool cfl_db::_needreconn(char const* state)
 {
 	bool ret = false;
@@ -1234,11 +1277,13 @@ RECONNECT:
 
 SQLRETURN cfl_rs::exec_sql_direct(char const* sql, unsigned short timeout /* = 5 */)
 {
+	int nTransientRetry = 0;
+
 RECONNECT:
 
 	SQLRETURN sqlret;
     SQLHSTMT hstmt = SQL_NULL_HSTMT;
-	//LG2("util_db", "SQL Statement Length: %d\n", strlen(sql));
+    //LG2("util_db", "SQL Statement Length: %d\n", strlen(sql));
 
     printf("[ODBC DEBUG] cfl_rs::exec_sql_direct, SQL='%s', _hdbc=%p\n", sql, (void*)_hdbc);
     fflush(stdout);
@@ -1276,6 +1321,30 @@ RECONNECT:
 
 		case SQL_ERROR:
 			{
+				// Дедлок или конфликт сериализации: запрос не выполнен,
+				// но данные целы. Повторяем его же, без переподключения.
+				char state[SQL_SQLSTATE_SIZE + 1] = {0};
+				_read_sqlstate(hstmt, SQL_HANDLE_STMT, state, sizeof(state));
+				if (_is_transient_state(state))
+				{
+					if (++nTransientRetry <= 3)
+					{
+						printf("[ODBC] transient error %s, retry %d/3\n",
+						       state, nTransientRetry);
+						fflush(stdout);
+						LG2("util_db_error", "transient error %s, retry %d/3\n",
+						    state, nTransientRetry);
+
+						SQLFreeHandle(SQL_HANDLE_STMT, hstmt);
+						hstmt = SQL_NULL_HSTMT;
+						Sleep(200 * nTransientRetry);
+						goto RECONNECT;
+					}
+					printf("[ODBC] transient error %s, retries exhausted\n", state);
+					fflush(stdout);
+					LG2("util_db_error", "transient error %s, retries exhausted\n", state);
+				}
+
 				if( handle_err(hstmt, SQL_HANDLE_STMT, sqlret, sql, true) )
 				{
 					goto RECONNECT;
@@ -1787,40 +1856,64 @@ RECONNECT:
 
 #if 0
 SQLRETURN cfl_rs::exec_sql_direct(char const* sql, bool closecur /* = true */,
-                                  unsigned short timeout /* = 5 */)
-{
-RECONNECT:
-
-    SQLRETURN sqlret;
-	if (g_cchLogUtilDb == 1)
-	    LG2("util_db", "SQL Statement Length: %d\n", strlen(sql));
-
-    do
+unsigned short timeout /* = 5 */)
     {
-        sqlret = SQLSetStmtAttr(_hstmt, SQL_ATTR_QUERY_TIMEOUT, (SQLPOINTER)(SQLULEN)timeout, 0);
-        if (DBFAIL(sqlret))
-        {
-            handle_err(_hdbc, SQL_HANDLE_DBC, sqlret);
-            break;
-        }
+	int nTransientRetry = 0;
 
-        sqlret = exec_direct_w(_hstmt, sql);
-        switch (sqlret)
+    RECONNECT:
+    
+        SQLRETURN sqlret;
+    	if (g_cchLogUtilDb == 1)
+    	    LG2("util_db", "SQL Statement Length: %d\n", strlen(sql));
+    
+        do
         {
-        case SQL_SUCCESS_WITH_INFO:
-            handle_err(_hstmt, SQL_HANDLE_STMT, sqlret, sql);
-            // fall through
-        case SQL_SUCCESS:
-            break;
+            sqlret = SQLSetStmtAttr(_hstmt, SQL_ATTR_QUERY_TIMEOUT, (SQLPOINTER)(SQLULEN)timeout, 0);
+            if (DBFAIL(sqlret))
+            {
+                handle_err(_hdbc, SQL_HANDLE_DBC, sqlret);
+                break;
+            }
+    
+            sqlret = exec_direct_w(_hstmt, sql);
+            switch (sqlret)
+            {
+            case SQL_SUCCESS_WITH_INFO:
+                handle_err(_hstmt, SQL_HANDLE_STMT, sqlret, sql);
+                // fall through
+            case SQL_SUCCESS:
+                break;
+    
+            case SQL_ERROR:
+    			{
+					// Дедлок или конфликт сериализации: запрос не выполнен.
+					// Переподключение не нужно, повторяем тот же запрос.
+					char state[SQL_SQLSTATE_SIZE + 1] = {0};
+					_read_sqlstate(_hstmt, SQL_HANDLE_STMT, state, sizeof(state));
+					if (_is_transient_state(state))
+					{
+						if (++nTransientRetry <= 3)
+						{
+							printf("[ODBC] transient error %s, retry %d/3\n",
+							       state, nTransientRetry);
+							fflush(stdout);
+							LG2("util_db_error", "transient error %s, retry %d/3\n",
+							    state, nTransientRetry);
+							SQLFreeStmt(_hstmt, SQL_CLOSE);
+							Sleep(200 * nTransientRetry);
+							goto RECONNECT;
+						}
+						printf("[ODBC] transient error %s, retries exhausted\n", state);
+						fflush(stdout);
+						LG2("util_db_error", "transient error %s, retries exhausted\n", state);
+					}
 
-        case SQL_ERROR:
-			{
-				if( handle_err(_hstmt, SQL_HANDLE_STMT, sqlret, sql, true) )
-				{
-					goto RECONNECT;
-				}
-			}
-            break;
+    				if( handle_err(_hstmt, SQL_HANDLE_STMT, sqlret, sql, true) )
+    				{
+    					goto RECONNECT;
+    				}
+    			}
+                break;
 
         case SQL_NO_DATA: // update or delete
             break;

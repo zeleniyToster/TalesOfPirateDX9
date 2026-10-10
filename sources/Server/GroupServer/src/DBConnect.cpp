@@ -36,56 +36,52 @@ SQLRETURN Exec_sql_direct(const char *pszSQL, cfl_rs *pTable)
 bool TBLAccounts::IsReady()
 {
 	char sql[SQL_MAXLEN];
-	strcpy(sql,"drop trigger [TR_D_Character_Friends]");
-	SQLRETURN l_ret =Exec_sql_direct(sql, this);
+
+	// Trigger creation on the table character is DDL. It takes a Sch-M lock
+	// on the table, which is incompatible with the Sch-S lock that GameServer
+	// requests at startup with "select ... where 1=2" while validating the
+	// schema. Four GameServer instances do that check at the same moment,
+	// so SQL Server picked them as deadlock victims (error 1205),
+	// CTableCha::Init() returned false and the server refused to start.
+	//
+	// The trigger is now created only when it is missing. A normal restart
+	// performs no DDL, takes no Sch-M, and the race is gone.
+	// Side effect: editing the trigger body in the source no longer
+	// updates an already provisioned database by itself.
+	strcpy(sql, "IF OBJECT_ID('TR_I_Character','TR') IS NULL\r\n\
+		\t\tEXEC('CREATE TRIGGER TR_I_Character ON character\n\
+		\t\tFOR INSERT\n\
+	\t\tAS\n\
+	\t\tBEGIN\n\
+	\t\t\tdeclare @l_icon smallint\n\
+	\t\t\tselect @l_icon =convert(smallint,SUBSTRING(inserted.olhe,5,1)) from inserted\n\
+	\t\t\tupdate character set icon =@l_icon where atorID in (select atorID from inserted)\n\
+	\t\tEND\n')");
+	SQLRETURN l_ret = Exec_sql_direct(sql, this);
 	if(!DBOK(l_ret))
 	{
 		LogLine l_line(g_LogDB);
-		//l_line<<newln<<"SQLÓï¾ä:"<<sql<<"Ö´ÐÐÊ§°Ü£¡";
-		l_line<<newln<<"SQL:"<<sql<<" execute failed !";
-	}
-	strcpy(sql,"drop trigger [TR_I_Character]");
-	l_ret =Exec_sql_direct(sql, this);
-	if(!DBOK(l_ret))
-	{
-		LogLine l_line(g_LogDB);
-		//l_line<<newln<<"SQLÓï¾ä:"<<sql<<"Ö´ÐÐÊ§°Ü£¡";
-		l_line<<newln<<"SQL:"<<sql<<" execute failed !";
-	}
-	strcpy(sql,"CREATE TRIGGER TR_D_Character_Friends ON character \n\
-				FOR DELETE \n\
-				AS\n\
-				BEGIN\n\
-					declare @@stat tinyint\n\
-					declare @@gid  int\n\
-					select @@stat =guild_stat,@@gid =guild_id from deleted\n\
-					DELETE friends where friends.cha_id1 IN(select atorID from deleted)\n\
-					if(@@gid >0)\n\
-					BEGIN\n\
-						update guild set try_total =try_total -(case when @@stat>0 then 1 else 0 end),\n\
-								member_total =member_total -(case when @@stat >0 then 0 else 1 end)\n\
-							where guild_id >0 and guild_id =@@gid\n\
-					END\n\
-				END\n\
-		");
-	l_ret =Exec_sql_direct(sql, this);
-	if(!DBOK(l_ret))
-	{
-		LogLine l_line(g_LogDB);
-		//l_line<<newln<<"SQLÓï¾ä:"<<sql<<"Ö´ÐÐÊ§°Ü£¡";
 		l_line<<newln<<"SQL:"<<sql<<" execute failed !";
 		return false;
 	}
-	strcpy(sql,"CREATE TRIGGER TR_I_Character ON character\n\
-				FOR INSERT\n\
-				AS\n\
-				BEGIN\n\
-					declare @l_icon smallint\n\
-					select @l_icon =convert(smallint,SUBSTRING(inserted.olhe,5,1)) from inserted\n\
-					update character set icon =@l_icon where atorID in (select atorID from inserted)\n\
-				END\n\
-		");
-	l_ret =Exec_sql_direct(sql, this);
+
+	strcpy(sql, "IF OBJECT_ID('TR_D_Character_Friends','TR') IS NULL\r\n\
+	\t\tEXEC('CREATE TRIGGER TR_D_Character_Friends ON character\n\
+	\t\tFOR DELETE\n\
+	\t\tAS\n\
+	\t\tBEGIN\n\
+	\t\t\tdeclare @@stat tinyint\n\
+	\t\t\tdeclare @@gid  int\n\
+	\t\t\tselect @@stat =guild_stat,@@gid =guild_id from deleted\n\
+	\t\t\tDELETE friends where friends.cha_id1 IN(select atorID from deleted)\n\
+	\t\t\tif(@@gid >0)\n\
+	\t\t\tBEGIN\n\
+	\t\t\t\tupdate guild set try_total =try_total -(case when @@stat>0 then 1 else 0 end),\n\
+	\t\t\t\t\tmember_total =member_total -(case when @@stat >0 then 0 else 1 end)\n\
+	\t\t\t\t\twhere guild_id >0 and guild_id =@@gid\n\
+	\t\t\tEND\n\
+	\t\tEND\n')");
+	l_ret = Exec_sql_direct(sql, this);
 	if(!DBOK(l_ret))
 	{
 		LogLine l_line(g_LogDB);
