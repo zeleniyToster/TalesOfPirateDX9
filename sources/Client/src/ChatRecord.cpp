@@ -19,7 +19,7 @@ bool CChatRecord::Save(const string name, DWORD number, const string chatData)
 	if (name.length()==0 || chatData.length()==0) return false;
 	__time64_t t;
 	_time64(&t);
-	tm *ltime=_gmtime64(&t);
+	tm *ltime=_localtime64(&t);
 	char buf[_MAX_PATH+1];
 	char folder[_MAX_PATH+1];
 	sprintf(folder,"chats\\%d-%d-%d",ltime->tm_year+1900,ltime->tm_mon+1,ltime->tm_mday);

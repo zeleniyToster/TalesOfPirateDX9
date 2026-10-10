@@ -264,13 +264,21 @@ void CMiniMapMgr::SetClockStringClientSide()
 {
 	std::time_t rawtime = std::time(nullptr);
 	struct std::tm* ptm;
-	ptm = gmtime(&rawtime);
+
+	// Раньше здесь стоял gmtime() плюс жёстко зашитое смещение +8:
+	// автор исходил из того, что сервер всегда в китайском часовом поясе.
+	// На машине с UTC+4 часы показывали время на 4 часа больше правильного.
+	// gmtime даёт UTC, поэтому поверх него ещё накладывалось смещение.
+	// Теперь берём местное время и ничего не прибавляем.
+	ptm = localtime(&rawtime);
+
+	// mktime() берёт поля из struct tm, поэтому считать его нужно
+	// до того, как что-либо в этой структуре будет изменено.
+	tServerTime = mktime(ptm);
+
 	static char buf[26];
-	const int UTC = (+8);
-	ptm->tm_hour = (ptm->tm_hour + UTC) % 24;
 	std::strftime(buf, sizeof(buf), "%T", ptm);
 	labClock->SetCaption(buf);
-	tServerTime = mktime(ptm);
 }
 
 void CMiniMapMgr::_MiniFormMouseEvent(CCompent *pSender, int nMsgType, int x, int y, DWORD dwKey)

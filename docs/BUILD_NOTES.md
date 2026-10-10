@@ -367,3 +367,60 @@ DDL выполнится — в этот момент GameServer ещё не з�
 ```sql
 SELECT name, is_disabled FROM sys.triggers WHERE parent_id = OBJECT_ID('dbo.character');
 ```
+
+---
+
+## Где лежат реквизиты подключения к базе
+
+Пароли хранятся открытым текстом в четырёх разных файлах, и **синтаксис
+ключей различается**. При смене пароля в базе менять надо все четыре
+места, иначе серверы перестанут подключаться.
+
+| Файл | Раздел | Ключи |
+|---|---|---|
+| `server/GameServer/GameServer00..03.cfg` | `[Database]` | `db_usr`, `db_pass` |
+| `server/GroupServer/GroupServer.cfg` | `[Database]` | `Login`, `Password` |
+| `server/AccountServer/AccountServer.cfg` | `[db]` | `userid`, `passwd` |
+| `pko-deploy/.env` | — | `MSSQL_SA_PASSWORD` |
+
+Разделы тоже называются по-разному: `[Database]`, `[db]`. В
+`AccountServer.cfg` это именно `[db]`, без слова Database.
+
+### Порядок смены
+
+1. `ALTER LOGIN` в базе под старым паролем.
+2. Правите `.cfg` на сервере. **Контейнеры не перезапускаете.**
+3. `ALTER LOGIN sa`.
+4. Правите `.env`.
+5. `docker compose down` + `docker compose up -d` в `pko-deploy` —
+   переменные окружения не подхватываются на `restart`, только пересозданием.
+6. Поднимаете игровые контейнеры.
+
+### База не пропадёт
+
+В `pko-deploy/docker-compose.yml` база лежит на именованном томе
+`pko_mssql`, смонтированном в `/var/opt/mssql`. `docker compose down`
+тома **не трогает**, данные сохраняются. Удаляет том только
+`docker compose down -v` — его использовать не надо.
+
+Поле `name: pko` в compose фиксирует имя проекта, от которого зависит
+имя тома (`pko_pko_mssql`). Если запустить compose из другого каталога
+и без этого поля, проект получит имя по каталогу, том окажется другим,
+и SQL Server поднимется пустым. Старые данные при этом никуда не
+денутся, просто сервер на них не посмотрит.
+
+### Подключение к базе руками
+
+```bash
+cd ~/top_repo/pko-deploy
+set -a; . ./.env; set +a
+docker exec -it pko-mssql /opt/mssql-tools18/bin/sqlcmd \
+  -S localhost -U sa -P "$MSSQL_SA_PASSWORD" -C -d GameDB
+```
+
+Флаг `-C` обязателен: ODBC Driver 18 по умолчанию требует шифрование
+и проверяет сертификат, а в контейнере он самоподписанный.
+
+В интерактивном `sqlcmd` запрос не выполняется, пока не набрать
+`GO` на отдельной строке — точка с запятой пакет не завершает. Либо
+выполнять разовым запросом через `-Q`.

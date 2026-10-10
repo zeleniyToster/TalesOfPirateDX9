@@ -889,9 +889,9 @@ void CTalkSessionForm::_OnMouseSendButton(CGuiData *pSender, int x, int y, DWORD
 	string strMotto = CGameScene::GetMainCha()->getSecondName();
 	__time64_t t;
 	_time64(&t);
-	tm *ltime=_gmtime64(&t);
+	tm *ltime=_localtime64(&t);
 	char ch[12];
-	sprintf(ch,"  %d:%d:%d",ltime->tm_hour+8,ltime->tm_min,ltime->tm_sec);
+	sprintf(ch,"  %d:%d:%d",ltime->tm_hour,ltime->tm_min,ltime->tm_sec);
 	string time = ch;
 	if ( strMotto.size() == 0 )
 	{
@@ -1111,9 +1111,9 @@ void CTalkSessionForm::GetMsg(DWORD chaID,string talkMsg)
 		string strName =pMsg->name;
 		__time64_t t;
 		_time64(&t);
-		tm *ltime=_gmtime64(&t);
+		tm *ltime=_localtime64(&t);
 		char ch[12];
-		sprintf(ch,"  %d:%d:%d",ltime->tm_hour+8,ltime->tm_min,ltime->tm_sec);
+		sprintf(ch,"  %d:%d:%d",ltime->tm_hour,ltime->tm_min,ltime->tm_sec);
 		string time = ch;
 		if ( pMsg->motto.size() == 0 )
 		{
