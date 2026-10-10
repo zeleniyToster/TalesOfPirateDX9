@@ -1238,9 +1238,13 @@ void CStartMgr::RefreshMainLifeNum( long num, long max )
 	}
 }
 
-void CStartMgr::RefreshMainExperience(long num, long curlev, long nextlev)
+void CStartMgr::RefreshMainExperience(LONG64 num, LONG64 curlev, LONG64 nextlev)
 {
-	LG("exp", g_oLangRec.GetString(763), num, curlev, nextlev, 100.0f * (float)(num - curlev) / (float)(nextlev - curlev));
+	char szLogBuf[256];
+	_i64toa(num, szLogBuf, 10);
+	LG("exp", g_oLangRec.GetString(763), szLogBuf,
+		(LONG32)curlev, (LONG32)nextlev,
+		100.0f * (float)(num - curlev) / (float)(nextlev - curlev));
 	
 	//// EXP�ı仯
 	//long max = nextlev - curlev;
@@ -1256,9 +1260,8 @@ void CStartMgr::RefreshMainExperience(long num, long curlev, long nextlev)
 	//_pShowExp->SetCaption( szBuf );
 	if ( proMainExp )
 	{
-		
-		proMainExp->SetRange(0, nextlev - curlev);
-		proMainExp->SetPosition(num - curlev);
+		proMainExp->SetRange(0, (int)(nextlev - curlev));
+		proMainExp->SetPosition((int)(num - curlev));
 	}
 /*
 	if ( proMainExp )

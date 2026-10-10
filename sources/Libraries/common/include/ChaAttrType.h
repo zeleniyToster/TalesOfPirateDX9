@@ -8,6 +8,16 @@
 #ifndef ATTRTYPE_H
 #define ATTRTYPE_H
 
+// Опыт хранится в 64 битах: общий массив атрибутов остаётся LONG32,
+// но для опыта используется отдельное 64-битное поле (см. ChaAttr.h).
+// Причина: потолок 150 уровней требует накопленного опыта порядка 10^11,
+// что не помещается в 32 бита.
+#define ATTR_IS_EXP64(lNo) \
+	((lNo) == ATTR_CEXP || (lNo) == ATTR_CLEXP || (lNo) == ATTR_NLEXP || \
+	 (lNo) == ATTR_CLV_SAILEXP || (lNo) == ATTR_NLV_SAILEXP || \
+	 (lNo) == ATTR_CLV_LIFEEXP || (lNo) == ATTR_NLV_LIFEEXP || \
+	 (lNo) == ATTR_CLIFEEXP || (lNo) == ATTR_CSAILEXP)
+
 const long	ATTR_COUNT_BASE0    = 0;
 const long	ATTR_LV             = ATTR_COUNT_BASE0 + 0; // character level
 const long	ATTR_HP             = ATTR_COUNT_BASE0 + 1; // current HP (durability, for a ship)

@@ -175,6 +175,9 @@ public:
 
 	dbc::Long		setAttr(int nIdx, LONG32 lValue, int nType = 0);
 	dbc::Long		getAttr(int nIdx) {return m_CChaAttr.GetAttr(nIdx);}
+	// 64-битный доступ к опыту (см. ChaAttr.h, ATTR_IS_EXP64)
+	LONG64			getAttr64(int nIdx) {return m_CChaAttr.GetAttr64(nIdx);}
+	dbc::Long		setAttr64(int nIdx, LONG64 lValue, int nType = 0);
 	virtual void	AfterAttrChange(int nIdx, dbc::Long lOldVal, dbc::Long lNewVal) {};
 	void			SetDie(CCharacter *pCSkillSrcCha);
 	virtual void	Die(){};

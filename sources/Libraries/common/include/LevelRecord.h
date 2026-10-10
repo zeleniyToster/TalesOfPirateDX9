@@ -21,7 +21,9 @@ public:
 
 	long	lID;			// id
 	short	sLevel;			// level
-	unsigned int	ulExp;	// experience
+	// Опыт накопленный. 64 бита: потолок 150 уровней требует
+	// значений порядка 10^11, что не помещается в 32 бита.
+	unsigned __int64	ulExp;	// experience
 };
 
 class CLevelRecordSet : public CRawDataSet

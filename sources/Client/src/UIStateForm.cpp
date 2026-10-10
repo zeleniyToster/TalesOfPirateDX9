@@ -156,11 +156,11 @@ void CStateMgr::RefreshStateFrm()
 	}
 
 	// ��Ҿ���
-	int num = pCChaAttr->get(ATTR_CEXP);
-	int curlev = pCChaAttr->get( ATTR_CLEXP);
-	int nextlev = pCChaAttr->get( ATTR_NLEXP);
+	LONG64 num = pCChaAttr->get64(ATTR_CEXP);
+	LONG64 curlev = pCChaAttr->get64( ATTR_CLEXP);
+	LONG64 nextlev = pCChaAttr->get64( ATTR_NLEXP);
 
-	int max = nextlev - curlev;
+	LONG64 max = nextlev - curlev;
 	num = num - curlev;
 	if ( num < 0 ) num = 0;
 

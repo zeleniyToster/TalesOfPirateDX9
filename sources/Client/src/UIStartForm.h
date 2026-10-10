@@ -64,7 +64,7 @@ public:
 	void			MainChaDied();
 
     void            RefreshMainLifeNum( long num, long max );
-	void			RefreshMainExperience(long num, long curlev, long nextlev);
+	void			RefreshMainExperience(LONG64 num, LONG64 curlev, LONG64 nextlev);
 	
 	void			RefreshMainSP(long num, long max );
 	void			RefreshMainName(const char* szName );

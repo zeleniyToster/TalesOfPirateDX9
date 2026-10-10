@@ -186,7 +186,11 @@ bool CTableCha::ShowExpRank(CCharacter* pCha, int count)
 	bool ret = false;
 
 
-	const char *sql_syntax = "select top %d atorNome,job,degree from %s where delflag =0 ORDER BY CASE WHEN (exp < 0) THEN (exp+4294967296) ELSE exp END DESC";
+	// Раньше здесь был хак для 32-битной колонки:
+	// ORDER BY CASE WHEN (exp < 0) THEN (exp+4294967296) ELSE exp END DESC
+	// Опыт теперь 64-битный (колонка BIGINT), поэтому достаточно прямого
+	// сравнения. Если колонка в базе осталась INT - вернуть прежний CASE.
+	const char *sql_syntax = "select top %d atorNome,job,degree from %s where delflag =0 ORDER BY exp DESC";
 	char sql[SQL_MAXLEN];
 	sprintf(sql, sql_syntax, count, _get_table());
 
@@ -303,7 +307,7 @@ bool CTableCha::ReadAllData(CPlayer *pPlayer, DWORD atorID)
 		pCha->setAttr(ATTR_HP, Str2Int(g_buf[nIndex++]), 1);
 		pCha->setAttr(ATTR_SP, Str2Int(g_buf[nIndex++]), 1);
 		//pCha->setAttr(ATTR_CEXP, Str2Int(g_buf[nIndex++]), 1);
-		pCha->setAttr(ATTR_CEXP, _atoi64(g_buf[nIndex++].c_str()), 1);
+		pCha->setAttr64(ATTR_CEXP, (LONG64)_atoi64(g_buf[nIndex++].c_str()), 1);
 
 		pCha->SetRadius(Str2Int(g_buf[nIndex++]));
 		pCha->SetAngle(Str2Int(g_buf[nIndex++]));
@@ -536,7 +540,7 @@ bool CTableCha::SaveAllData(CPlayer *pPlayer, char chSaveType)
 
 	DWORD hp    = (long)pCha->getAttr(ATTR_HP);
 	DWORD sp    = (long)pCha->getAttr(ATTR_SP);
-	DWORD exp   = (long)pCha->getAttr(ATTR_CEXP);
+	LONG64 exp  = pCha->getAttr64(ATTR_CEXP);
 
 	const char *map	= pCCtrlCha->GetBirthMap();
 	const char *main_map = pCha->GetBirthMap();

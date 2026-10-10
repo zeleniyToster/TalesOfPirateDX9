@@ -882,12 +882,13 @@ BOOL SC_CharacterAction(LPRPACKET pk)
 					SSkillInfo.SEffect.Resize( lResNum );
 					for (long i = 0; i < lResNum; i++)
 					{
-						SSkillInfo.SEffect[i].lAttrID = pk.ReadChar();
-						SSkillInfo.SEffect[i].lVal = pk.ReadLong();
-						/*if(SSkillInfo.SEffect[i].lAttrID==ATTR_CEXP||SSkillInfo.SEffect[i].lAttrID==ATTR_NLEXP ||SSkillInfo.SEffect[i].lAttrID==ATTR_CLEXP)
-							SSkillInfo.SEffect[i].lVal= pk.ReadLongLong();
+						short sAttrID = (short)pk.ReadChar();
+						SSkillInfo.SEffect[i].lAttrID = sAttrID;
+						// опыт приходит в 64 битах (см. FightAble.cpp, WRITE_LONGLONG)
+						if (ATTR_IS_EXP64(sAttrID))
+							SSkillInfo.SEffect[i].lVal = pk.ReadLongLong();
 						else
-							SSkillInfo.SEffect[i].lVal = (long)pk.ReadLong();*/
+							SSkillInfo.SEffect[i].lVal = (LONG64)pk.ReadLong();
 					}
 				}
 

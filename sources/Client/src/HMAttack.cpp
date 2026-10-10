@@ -153,6 +153,7 @@ void CAttackEffect::ExecHarm( CSizeArray<stEffect>& Value, CCharacter* pTarget, 
 
     int type;
     long val = 0;
+    LONG64 valExp = 0;
     DWORD dwDelay = 0;
 
 	static CChaAttrChange Change;
@@ -168,6 +169,7 @@ void CAttackEffect::ExecHarm( CSizeArray<stEffect>& Value, CCharacter* pTarget, 
 		//::OutputDebugStr(str);
 
         val = p[i].lVal - pAttr->get( (short)p[i].lAttrID );
+        valExp = p[i].lVal - pAttr->get64( (short)p[i].lAttrID );
 
         pAttr->set( (short)p[i].lAttrID, p[i].lVal );
 		Change.SetChangeBitFlag( p[i].lAttrID );
@@ -192,29 +194,22 @@ void CAttackEffect::ExecHarm( CSizeArray<stEffect>& Value, CCharacter* pTarget, 
 					{
 						g_pGameApp->SysInfo( g_oLangRec.GetString(144), val );
 					}
-					else if(val > 0)
+					else if(valExp > 0)
 					{
-						//g_pGameApp->SysInfo( g_oLangRec.GetString(145), val );
-
-						// ������80��þ�����ʾ����BUG����
-						DWORD dwLastExp	 = g_stUIBoat.GetHuman()->getGameAttr()->get(ATTR_CEXP);
-						DWORD dwLv80Exp  = 2425349810;	// ���ֵ�ǲ߻�������
-						if(dwLastExp < dwLv80Exp && dwLv80Exp <= (DWORD)p[i].lVal)
-						{
-							DWORD dwObtainExp;
-							dwObtainExp  = ((DWORD)p[i].lVal - dwLv80Exp) * LEVEL80_EXP;// 80 ���Ժ�ľ���
-							dwObtainExp += (dwLv80Exp - dwLastExp);						// 79 ���ľ���
-
-							g_pGameApp->SysInfo( g_oLangRec.GetString(145), dwObtainExp );
-						}
-						else if( pTarget->getGameAttr()->get( ATTR_LV )>=80 )
-						{
-							g_pGameApp->SysInfo( g_oLangRec.GetString(145), val * LEVEL80_EXP );
-						}
-						else
-						{
-							g_pGameApp->SysInfo( g_oLangRec.GetString(145), val );
-						}
+						// Деление опыта на 50 после 80-го уровня снято
+						// (см. CFightAble::AddExp), поэтому показываем
+						// реально полученное значение без поправок.
+						// Опыт 64-битный, а формат "%d" в StringSet[145]
+						// рассчитан на 32 бита - подставляем число строкой.
+						char szExpNum[32];
+						_i64toa(valExp, szExpNum, 10);
+						char szFmtBuf[256];
+						strncpy(szFmtBuf, g_oLangRec.GetString(145), sizeof(szFmtBuf) - 1);
+						szFmtBuf[sizeof(szFmtBuf) - 1] = 0;
+						char *pFmt = strstr(szFmtBuf, "%d");
+						if (pFmt)
+							strncpy(pFmt, "%s", sizeof(szFmtBuf) - (pFmt - szFmtBuf) - 1);
+						g_pGameApp->SysInfo( szFmtBuf, szExpNum );
 					}
 				}
 				break;
@@ -241,7 +236,7 @@ void CAttackEffect::ExecHarm( CSizeArray<stEffect>& Value, CCharacter* pTarget, 
 
 	if( Change.GetChangeBitFlag(ATTR_CEXP) && pTarget==g_stUIBoat.GetHuman() )
 	{
-		g_stUIStart.RefreshMainExperience( pAttr->get(ATTR_CEXP), pAttr->get(ATTR_CLEXP), pAttr->get(ATTR_NLEXP) );
+		g_stUIStart.RefreshMainExperience( pAttr->get64(ATTR_CEXP), pAttr->get64(ATTR_CLEXP), pAttr->get64(ATTR_NLEXP) );
 	}
 
 	if( Change.GetChangeBitFlag(ATTR_LV) )
@@ -431,42 +426,35 @@ void CAttribSynchro::_Exec()
 	Change.Reset();
 
 	bool isMain = pCha==g_stUIBoat.GetHuman();
-	static long val = 0;
+	static LONG64 val = 0;
 	if( isMain && enumATTRSYN_INIT!=_nType )
 	{
 		for( int i=0; i<count; i++ )
 		{
 			if( p[i].lAttrID==ATTR_CEXP )
 			{
-		        val = p[i].lVal - pAttr->get( (short)p[i].lAttrID );
+		        val = p[i].lVal - pAttr->get64( (short)p[i].lAttrID );
 
 				if( pCha->IsBoat() )
 				{
-					g_pGameApp->SysInfo( g_oLangRec.GetString(144), val );
+					char szProf[32];
+					_i64toa(val, szProf, 10);
+					g_pGameApp->SysInfo( g_oLangRec.GetString(144), (long)val );
 				}
 				else if(val > 0)
 				{
-					//g_pGameApp->SysInfo( g_oLangRec.GetString(145), val );
-
-					// ������80��þ�����ʾ����BUG����
-					DWORD dwLastExp	 = g_stUIBoat.GetHuman()->getGameAttr()->get(ATTR_CEXP);
-					DWORD dwLv80Exp  = 2425349810;	// ���ֵ�ǲ߻�������
-					if(dwLastExp < dwLv80Exp && dwLv80Exp <= (DWORD)p[i].lVal)
-					{
-						DWORD dwObtainExp;
-						dwObtainExp  = ((DWORD)p[i].lVal - dwLv80Exp) * LEVEL80_EXP;// 80 ���Ժ�ľ���
-						dwObtainExp += (dwLv80Exp - dwLastExp);						// 79 ���ľ���
-
-						g_pGameApp->SysInfo( g_oLangRec.GetString(145), dwObtainExp );
-					}
-					else if( g_stUIBoat.GetHuman()->getGameAttr()->get( ATTR_LV )>=80 )
-					{
-						g_pGameApp->SysInfo( g_oLangRec.GetString(145), val * LEVEL80_EXP );
-					}
-					else
-					{
-						g_pGameApp->SysInfo( g_oLangRec.GetString(145), val );
-					}
+					// Деление опыта на 50 снято, показываем реальное значение.
+					// Опыт 64-битный, а формат "%d" в StringSet[145] рассчитан
+					// на 32 бита, поэтому подставляем число строкой через "%s".
+					char szExpNum[32];
+					_i64toa(val, szExpNum, 10);
+					char szFmtBuf[256];
+					strncpy(szFmtBuf, g_oLangRec.GetString(145), sizeof(szFmtBuf) - 1);
+					szFmtBuf[sizeof(szFmtBuf) - 1] = 0;
+					char *pFmt = strstr(szFmtBuf, "%d");
+					if (pFmt)
+						strncpy(pFmt, "%s", sizeof(szFmtBuf) - (pFmt - szFmtBuf) - 1);
+					g_pGameApp->SysInfo( szFmtBuf, szExpNum );
 				}
 			}
 

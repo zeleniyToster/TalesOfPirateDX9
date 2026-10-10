@@ -519,6 +519,31 @@ Long CFightAble::setAttr(int nIdx, LONG32 lValue, int nType)
 	return lRet;
 }
 
+Long CFightAble::setAttr64(int nIdx, LONG64 lValue, int nType)
+{
+	if (!ATTR_IS_EXP64(nIdx))
+		return setAttr(nIdx, (LONG32)lValue, nType);
+
+	LONG64	lOldVal = m_CChaAttr.GetAttr64(nIdx);
+	Long	lRet = m_CChaAttr.SetAttr64(nIdx, lValue);
+	if (lRet != 2)
+		return lRet;
+	if (nType != 0)
+		return lRet;
+	if (IsCharacter() != IsCharacter()->GetPlyMainCha())
+		return lRet;
+	if (nIdx == ATTR_CEXP)
+		CountLevel();
+	else if (nIdx == ATTR_CSAILEXP)
+		CountSailLevel();
+	else if (ATTR_CLIFEEXP == nIdx )
+		CountLifeLevel();
+
+	AfterAttrChange(nIdx, (LONG32)lOldVal, m_CChaAttr.GetAttr(nIdx));
+
+	return lRet;
+}
+
 void CFightAble::SetDie(CCharacter *pCSkillSrcCha)
 {
 	SetItemHostObj(0);
@@ -635,8 +660,8 @@ void CFightAble::NotiSkillSrcToEyeshot(Short sExecTime)
 					//MessageBox(0, "属性变化个数的两个统计值不吻合", "错误", MB_OK);
 					MessageBox(0, RES_STRING(GM_FIGHTALBE_CPP_00001), RES_STRING(GM_FIGHTALBE_CPP_00002), MB_OK);
 				WRITE_CHAR(pk, i);
-				if(i == ATTR_NLEXP ||i == ATTR_CLEXP||i == ATTR_CEXP)
-					WRITE_LONG(pk, m_CChaAttr.GetAttr(i));
+				if (ATTR_IS_EXP64(i))
+					WRITE_LONGLONG(pk, m_CChaAttr.GetAttr64(i));
 				else
 					WRITE_LONG(pk, (unsigned long)m_CChaAttr.GetAttr(i));
 				sTempChangeNum++;
@@ -747,9 +772,9 @@ void CFightAble::NotiSkillSrcToSelf(Short sExecTime)
 					//MessageBox(0, "属性变化个数的两个统计值不吻合", "错误", MB_OK);
 					MessageBox(0, RES_STRING(GM_FIGHTALBE_CPP_00001), RES_STRING(GM_FIGHTALBE_CPP_00002), MB_OK);
 				WRITE_CHAR(pk, i);
-				if (i==ATTR_NLEXP ||i==ATTR_CLEXP||i ==ATTR_CEXP)
+				if (ATTR_IS_EXP64(i))
 				{
-					WRITE_LONG(pk, m_CChaAttr.GetAttr(i));
+					WRITE_LONGLONG(pk, m_CChaAttr.GetAttr64(i));
 				}else
 					WRITE_LONG(pk, (unsigned long)m_CChaAttr.GetAttr(i));
 				sTempChangeNum++;
@@ -1851,7 +1876,7 @@ void CFightAble::CountLevel()
 		return;
 
 	LONG32	lOldLevel, lCurLevel;
-	unsigned int	lCurExp = (unsigned int)m_CChaAttr.GetAttr(ATTR_CEXP);
+	LONG64	lCurExp = m_CChaAttr.GetAttr64(ATTR_CEXP);
 
 	lOldLevel = lCurLevel = m_CChaAttr.GetAttr(ATTR_LV);
 	CLevelRecord	*pCLvRec = 0, *pNLvRec = 0;
@@ -1864,15 +1889,15 @@ void CFightAble::CountLevel()
 			LG("level_err", "Unable to find Lv%d record\n", lCurLevel + 1);
 			break;
 		}
-		if (lCurExp >= pCLvRec->ulExp)
+		if (lCurExp >= (LONG64)pCLvRec->ulExp)
 		{
 			lCurLevel++;
 			setAttr(ATTR_LV, lCurLevel);
-			setAttr(ATTR_CLEXP, pCLvRec->ulExp);
+			setAttr64(ATTR_CLEXP, (LONG64)pCLvRec->ulExp);
 			pNLvRec = GetLevelRecordInfo((int)lCurLevel + 1);
 			if (pNLvRec)
 			{
-				setAttr(ATTR_NLEXP, pNLvRec->ulExp);
+				setAttr64(ATTR_NLEXP, (LONG64)pNLvRec->ulExp);
 			}
 			g_CParser.DoString("Shengji_Shuxingchengzhang", enumSCRIPT_RETURN_NONE, 0, enumSCRIPT_PARAM_LIGHTUSERDATA, 1, this->IsCharacter(), DOSTRING_PARAM_END); // 升级计算（配置基本属性，设置属性点）
 			OnLevelUp( (USHORT)lCurLevel );
@@ -1982,32 +2007,18 @@ void CFightAble::AddExp(dbc::uLong ulAddExp)
 	if (!this || !GetPlayer())
 		return;
 
-	uLong lCurExp = (uLong)m_CChaAttr.GetAttr(ATTR_CEXP);
+	LONG64 lCurExp = m_CChaAttr.GetAttr64(ATTR_CEXP);
 	Long lCurLevel = m_CChaAttr.GetAttr(ATTR_LV);
 
 	CLevelRecord* pCLvRec = GetLevelRecordInfo((int)lCurLevel + 1);
 	if (!pCLvRec)
 		return;
 
-	if (!GetPlayer()->GetCtrlCha()->IsBoat())
-	{
-		if (lCurLevel < 80)
-		{
-			uLong lTotalExp = lCurExp + ulAddExp;
-			Long lTotalLevel = CalculateLevelByExp(lCurLevel, lTotalExp);
-			if (lTotalLevel >= 80)
-			{
-				uLong ulNeed = GetLevelRecordInfo(80)->ulExp - lCurExp;
-				ulAddExp = /* needed for 80 */ ulNeed + /* remaining / 50 */((ulAddExp-ulNeed) / 50);
-			}
-		}
-		else
-		{
-			ulAddExp = floor(ulAddExp/50);
-		}
-	}
-	lCurExp = floor(lCurExp+ulAddExp);
-	setAttr(ATTR_CEXP, lCurExp);
+	// The /50 division after level 80 was overflow protection for 32-bit
+	// experience (see QianAddExp). In 64 bits there is no overflow,
+	// so the limit is removed.
+	lCurExp += (LONG64)ulAddExp;
+	m_CChaAttr.SetAttr64(ATTR_CEXP, lCurExp);
 	//m_CChaAttr.SetAttr(ATTR_CEXP, lCurExp);
 }
 

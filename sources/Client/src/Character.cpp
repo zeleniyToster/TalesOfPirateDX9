@@ -696,7 +696,7 @@ void CCharacter::RefreshUI(int nParam)
 		g_stUIStart.RefreshMainLifeNum( _Attr.get(ATTR_HP), _Attr.get(ATTR_MXHP)) ;
 		g_stUIStart.RefreshMainSP(_Attr.get(ATTR_SP), _Attr.get(ATTR_MXSP) );
 
-		g_stUIStart.RefreshMainExperience(_Attr.get(ATTR_CEXP), _Attr.get(ATTR_CLEXP),_Attr.get(ATTR_NLEXP) );
+		g_stUIStart.RefreshMainExperience(_Attr.get64(ATTR_CEXP), _Attr.get64(ATTR_CLEXP),_Attr.get64(ATTR_NLEXP) );
 
 		g_stUIStart.RefreshLv( _Attr.get(ATTR_LV) );
 	}

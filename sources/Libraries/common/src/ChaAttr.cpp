@@ -24,6 +24,7 @@ T_E}
 void CChaAttr::Clear()
 {	
 	memset(m_lAttribute, 0, sizeof(LONG32) * ATTR_MAX_NUM);
+	memset(m_lAttribute64, 0, sizeof(LONG64) * ATTR_MAX_NUM);
 }
 
 void CChaAttr::Init(long lID, bool bFromFile)
@@ -60,8 +61,8 @@ void CChaAttr::Init(long lID, bool bFromFile)
 		m_lAttribute[ATTR_LV] = (LONG32)pCChaRecord->lLv;
 		m_lAttribute[ATTR_HP] = (LONG32)pCChaRecord->lMxHp;
 		m_lAttribute[ATTR_SP] = (LONG32)pCChaRecord->lMxSp;
-		m_lAttribute[ATTR_CEXP] = pCChaRecord->lCExp;
-		m_lAttribute[ATTR_NLEXP] = pCChaRecord->lNExp;
+		m_lAttribute64[ATTR_CEXP] = (LONG64)pCChaRecord->lCExp;
+		m_lAttribute64[ATTR_NLEXP] = (LONG64)pCChaRecord->lNExp;
 		m_lAttribute[ATTR_FAME] = (LONG32)pCChaRecord->lFame;
 		m_lAttribute[ATTR_AP] = (LONG32)pCChaRecord->lAp;
 		m_lAttribute[ATTR_TP] = (LONG32)pCChaRecord->lTp;

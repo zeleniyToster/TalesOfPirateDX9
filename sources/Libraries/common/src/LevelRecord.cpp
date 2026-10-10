@@ -25,7 +25,7 @@ BOOL CLevelRecordSet::_ReadRawDataInfo(CRawDataInfo *pRawDataInfo, vector<string
 	// level
 	pInfo->sLevel = Str2Int(pInfo->szDataName);
 	// experience
-	pInfo->ulExp = _atoi64(ParamList[m++].c_str()); //Str2Int(ParamList[m++]);
+	pInfo->ulExp = (unsigned __int64)_atoi64(ParamList[m++].c_str()); //Str2Int(ParamList[m++]);
 
 	return TRUE;
 }

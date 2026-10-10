@@ -31,14 +31,28 @@ enum NODE_TYPE
 struct SGameAttr
 {
     long lAttr[MAX_ATTR_CLIENT];
+    // Опыт в 64 битах: потолок 150 уровней требует накопленного опыта
+    // порядка 10^11, что не помещается в long. Массив дублирует значения:
+    // lAttr нужен старому коду, lAttr64 - точной работе с опытом.
+    LONG64 lAttr64[MAX_ATTR_CLIENT];
     SGameAttr()
     {
         clear();
     }
-    void    set(short sType, long lValue) { lAttr[sType] = lValue; }
-    void    add(short sType, long lValue) { lAttr[sType] += lValue;}
-    long    get(short sType)              { return lAttr[sType];   }
-    void    clear()                       { memset(lAttr, 0, sizeof(lAttr)); }
+    void    set(short sType, LONG64 lValue)
+    {
+        lAttr[sType] = (long)lValue;
+        lAttr64[sType] = lValue;
+    }
+    void    set32(short sType, long lValue) { lAttr[sType] = lValue; lAttr64[sType] = lValue; }
+    void    add(short sType, LONG64 lValue)
+    {
+        lAttr64[sType] += lValue;
+        lAttr[sType] = (long)lAttr64[sType];
+    }
+    LONG64  get64(short sType)               { return lAttr64[sType]; }
+    long    get(short sType)                 { return lAttr[sType];   }
+    void    clear()                       { memset(lAttr, 0, sizeof(lAttr)); memset(lAttr64, 0, sizeof(lAttr64)); }
 };
 
 class CGameScene;

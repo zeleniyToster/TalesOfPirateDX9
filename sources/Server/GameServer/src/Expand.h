@@ -164,6 +164,8 @@ inline int lua_GetChaAttr(lua_State *pLS)
 	bool	bSuccess = true;
 	int		nAttrVal;
 	LONG32  lAttrVal;
+	LONG64  lExpVal = 0;
+	bool	bExpAttr = false;
 
 	int nParaNum = lua_gettop(pLS); // 取得参数个数
 	short sAttrIndex = -1;
@@ -190,7 +192,17 @@ inline int lua_GetChaAttr(lua_State *pLS)
 			lAttrVal = pCCha->getAttr(sAttrIndex);
 		else */
 		//nAttrVal = (long)pCCha->getAttr(sAttrIndex);
-		nAttrVal = pCCha->getAttr(sAttrIndex);
+		// Read experience in 64 bits, otherwise scripts see a truncated
+		// value for anything above 2^31-1.
+		if (ATTR_IS_EXP64(sAttrIndex))
+		{
+			lExpVal = pCCha->getAttr64(sAttrIndex);
+			bExpAttr = true;
+		}
+		else
+		{
+			nAttrVal = pCCha->getAttr(sAttrIndex);
+		}
 
 	}
 	End:
@@ -205,7 +217,9 @@ inline int lua_GetChaAttr(lua_State *pLS)
 		}
 		else
 		{*/
-		if (nAttrVal < 0 && g_IsNosignChaAttr(sAttrIndex))
+		if (bExpAttr)
+			lua_pushnumber(pLS, (double)lExpVal);
+		else if (nAttrVal < 0 && g_IsNosignChaAttr(sAttrIndex))
 			lua_pushnumber(pLS, (double)(unsigned int)nAttrVal);
 		else
 			lua_pushnumber(pLS, (double)nAttrVal);
@@ -231,7 +245,7 @@ inline int lua_SetChaAttr(lua_State *pLS)
 	{
 		CCharacter* pCCha = static_cast<CCharacter*>(lua_touserdata(pLS, 1));
 		short sAttrIndex = static_cast<int64_t>(lua_tonumber(pLS, 2));
-		LONG32 lValue = static_cast<int64_t>(lua_tonumber(pLS, 3));
+		LONG64 lValue = static_cast<int64_t>(lua_tonumber(pLS, 3));
 
 		if (!pCCha)
 		{
@@ -244,7 +258,11 @@ inline int lua_SetChaAttr(lua_State *pLS)
 			goto End;
 		}
 
-		long	lSetRet = pCCha->setAttr(sAttrIndex, lValue);
+		// Experience (ATTR_CEXP and friends) is stored in 64 bits, so it needs
+		// setAttr64 - otherwise the value is truncated to 32 bits.
+		long	lSetRet = ATTR_IS_EXP64(sAttrIndex)
+			? pCCha->setAttr64(sAttrIndex, lValue)
+			: pCCha->setAttr(sAttrIndex, (LONG32)lValue);
 		if (lSetRet == 0)
 		{
 			bSuccess = false;
