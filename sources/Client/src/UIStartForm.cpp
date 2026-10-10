@@ -1260,8 +1260,8 @@ void CStartMgr::RefreshMainExperience(LONG64 num, LONG64 curlev, LONG64 nextlev)
 	//_pShowExp->SetCaption( szBuf );
 	if ( proMainExp )
 	{
-		proMainExp->SetRange(0, (int)(nextlev - curlev));
-		proMainExp->SetPosition((int)(num - curlev));
+		proMainExp->SetRange(0.0f, (float)(nextlev - curlev));
+		proMainExp->SetPosition((float)(num - curlev));
 	}
 /*
 	if ( proMainExp )

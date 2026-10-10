@@ -5822,7 +5822,7 @@ end
 function AddExpPer(role, value)
     local CLv = GetChaAttr(role, ATTR_LV)
     local CExp = GetChaAttrI(role, ATTR_CEXP)
-    local GExp = (CalExp[CLv + 1] - CalExp[CLv]) * (value / 100)
+    local GExp = (DEXP[CLv + 1] - DEXP[CLv]) * (value / 100)
     local FExp = math.floor(CExp + GExp)
     SetChaAttrI(role, ATTR_CEXP, FExp)
     return LUA_TRUE
@@ -5846,13 +5846,13 @@ function AddExpAll(role, value1, value2, type)
         local lv = GetChaAttr(role, ATTR_LV)
         if lv < 80 then
             local lv_next = lv + 1
-            local exp_up = CalExp[lv_next] - CalExp[lv]
+            local exp_up = DEXP[lv_next] - DEXP[lv]
             local exp_add = math.floor((exp_up * per_exp) / 100)
             exp_new = exp_now + exp_add
             SetChaAttrI(role, ATTR_CEXP, exp_new)
         elseif lv >= 80 and lv < 100 then
             local lv_next = lv + 1
-            local exp_up = CalExp[lv_next] - CalExp[lv]
+            local exp_up = DEXP[lv_next] - DEXP[lv]
             local exp_add = math.floor((exp_up * per_exp) / 5000)
             exp_new = exp_now + exp_add
             SetChaAttrI(role, ATTR_CEXP, exp_new)
@@ -6787,107 +6787,10 @@ function MissingLines()
     LogFile(Path, File, "A total of " .. Value .. " free lines.")
 end
 
-GetExp = {}
-GetExp[1] = 0
-GetExp[2] = 5
-GetExp[3] = 15
-GetExp[4] = 35
-GetExp[5] = 101
-GetExp[6] = 250
-GetExp[7] = 500
-GetExp[8] = 1000
-GetExp[9] = 1974
-GetExp[10] = 3208
-GetExp[11] = 4986
-GetExp[12] = 7468
-GetExp[13] = 10844
-GetExp[14] = 15338
-GetExp[15] = 21210
-GetExp[16] = 28766
-GetExp[17] = 38356
-GetExp[18] = 50382
-GetExp[19] = 65306
-GetExp[20] = 83656
-GetExp[21] = 106032
-GetExp[22] = 133112
-GetExp[23] = 165668
-GetExp[24] = 204564
-GetExp[25] = 250780
-GetExp[26] = 305412
-GetExp[27] = 369692
-GetExp[28] = 444998
-GetExp[29] = 532870
-GetExp[30] = 635026
-GetExp[31] = 753378
-GetExp[32] = 890062
-GetExp[33] = 1047438
-GetExp[34] = 1228138
-GetExp[35] = 1435074
-GetExp[36] = 1671470
-GetExp[37] = 1940892
-GetExp[38] = 2247288
-GetExp[39] = 2595010
-GetExp[40] = 2988860
-GetExp[41] = 3434132
-GetExp[42] = 3936658
-GetExp[43] = 4502856
-GetExp[44] = 5139778
-GetExp[45] = 5855180
-GetExp[46] = 6657576
-GetExp[47] = 7556310
-GetExp[48] = 8561630
-GetExp[49] = 9684764
-GetExp[50] = 10938016
-GetExp[51] = 12334856
-GetExp[52] = 13890020
-GetExp[53] = 15619622
-GetExp[54] = 17541282
-GetExp[55] = 19674240
-GetExp[56] = 22039516
-GetExp[57] = 24660044
-GetExp[58] = 27560852
-GetExp[59] = 30769230
-GetExp[60] = 37746418
-GetExp[61] = 45876427
-GetExp[62] = 59571153
-GetExp[63] = 75703638
-GetExp[64] = 94615279
-GetExp[65] = 116688304
-GetExp[66] = 155291059
-GetExp[67] = 186418013
-GetExp[68] = 238159614
-GetExp[69] = 298622278
-GetExp[70] = 368975850
-GetExp[71] = 450525549
-GetExp[72] = 568409779
-GetExp[73] = 679324744
-GetExp[74] = 806544569
-GetExp[75] = 952091724
-GetExp[76] = 1188099236
-GetExp[77] = 1480429211
-GetExp[78] = 1776125584
-GetExp[79] = 2091634902
-GetExp[80] = 2425349810
-GetExp[81] = 2440895086
-GetExp[82] = 2458896515
-GetExp[83] = 2479742169
-GetExp[84] = 2503881436
-GetExp[85] = 2531834707
-GetExp[86] = 2564204594
-GetExp[87] = 2601688923
-GetExp[88] = 2645095775
-GetExp[89] = 2695360909
-GetExp[90] = 2753567934
-GetExp[91] = 2820971668
-GetExp[92] = 2899025191
-GetExp[93] = 2989411170
-GetExp[94] = 3094078133
-GetExp[95] = 3215282476
-GetExp[96] = 3355637105
-GetExp[97] = 3518167765
-GetExp[98] = 3706378269
-GetExp[99] = 3924326032
-GetExp[100] = 4176709541
+-- GetExp[] was a copy of character_lvup that stopped at level 100,
+-- so AddExp_1..6 failed with nil above that. DEXP in variable.lua
+-- holds the same table for all levels up to Server.Level.Limit.
+GetExp = DEXP
 
 HexatlonActive = true
 function HexatlonTime(character)
