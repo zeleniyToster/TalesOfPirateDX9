@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arbah — база данных Pirates of the Caribbean Online</title>
+<link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="logo">Arbah</span>
+    <span class="tagline">база данных Pirates of the Caribbean Online</span>
+  </div>
+  <div class="counts" id="counts"></div>
+</header>
+
+<nav class="tabs">
+  <button class="tab active" data-view="items">Предметы</button>
+  <button class="tab" data-view="monsters">Монстры</button>
+  <button class="tab" data-view="creatures">Существа</button>
+  <button class="tab" data-view="npcs">NPC</button>
+  <button class="tab" data-view="levels">Опыт</button>
+  <button class="tab" data-view="calculator">Калькулятор</button>
+</nav>
+
+<main>
+
+  <!-- ================= КАРТОЧКА ПРЕДМЕТА ================= -->
+  <section class="view hidden" id="view-item">
+    <button class="btn back" data-back="items" id="item-back">← Назад к каталогу</button>
+    <div id="item-card" class="cardwrap"></div>
+  </section>
+
+  <!-- ================= КАРТОЧКА СУЩЕСТВА ================= -->
+  <section class="view hidden" id="view-creature">
+    <button class="btn back" data-back="monsters" id="creature-back">← Назад</button>
+    <div id="creature-card" class="cardwrap"></div>
+  </section>
+
+  <!-- ================= АССОРТИМЕНТ NPC ================= -->
+  <section class="view hidden" id="view-shop">
+    <button class="btn back" data-back="npcs" id="shop-back">← Назад к NPC</button>
+    <div id="shop-card" class="cardwrap"></div>
+  </section>
+
+  <!-- ================= ПРЕДМЕТЫ ================= -->
+  <section class="view" id="view-items">
+    <div class="filters">
+      <input type="search" id="items-q" placeholder="Поиск по названию или ID…">
+      <select id="items-type"><option value="">Все типы</option></select>
+      <label>Уровень с <input type="number" id="items-minlvl" min="0" placeholder="0"></label>
+      <label>по <input type="number" id="items-maxlvl" min="0" placeholder="150"></label>
+      <label class="sort">Сортировка
+        <select id="items-sort">
+          <option value="id">по ID</option>
+          <option value="name">по названию</option>
+          <option value="level">по уровню</option>
+          <option value="price">по цене</option>
+        </select>
+      </label>
+      <button class="reset" data-reset="items">Сбросить</button>
+    </div>
+
+    <div class="tablewrap">
+      <table>
+        <thead><tr>
+          <th></th><th>ID</th><th>Название</th><th>Тип</th>
+          <th class="num">Ур.</th><th class="num">Цена</th><th>GM-команда</th>
+        </tr></thead>
+        <tbody id="items-body"></tbody>
+      </table>
+    </div>
+    <div class="pager" id="items-pager"></div>
+  </section>
+
+  <!-- ================= МОНСТРЫ ================= -->
+  <section class="view hidden" id="view-monsters">
+    <div class="filters">
+      <input type="search" id="mon-q" placeholder="Поиск по названию или ID…">
+      <select id="mon-region"><option value="">Все регионы</option></select>
+      <label>Уровень с <input type="number" id="mon-minlvl" min="0"></label>
+      <label>по <input type="number" id="mon-maxlvl" min="0"></label>
+      <button class="reset" data-reset="monsters">Сбросить</button>
+    </div>
+    <div class="tablewrap">
+      <table>
+        <thead><tr>
+          <th>ID</th><th>Название</th><th class="num">Ур.</th>
+          <th>Регион</th><th class="num">X</th><th class="num">Y</th>
+        </tr></thead>
+        <tbody id="mon-body"></tbody>
+      </table>
+    </div>
+    <div class="pager" id="mon-pager"></div>
+  </section>
+
+  <!-- ================= NPC ================= -->
+  <section class="view hidden" id="view-npcs">
+    <div class="filters">
+      <input type="search" id="npc-q" placeholder="Поиск по названию или ID…">
+      <select id="npc-region"><option value="">Все регионы</option></select>
+      <label class="check"><input type="checkbox" id="npc-shop"> только торговцы</label>
+      <button class="reset" data-reset="npcs">Сбросить</button>
+    </div>
+    <div class="tablewrap">
+      <table>
+        <thead><tr>
+          <th>ID</th><th>Название</th><th>Место</th>
+          <th>Регион</th><th class="num">X</th><th class="num">Y</th>
+        </tr></thead>
+        <tbody id="npc-body"></tbody>
+      </table>
+    </div>
+    <div class="pager" id="npc-pager"></div>
+  </section>
+
+  <!-- ================= ПОИСК СУЩЕСТВ ================= -->
+  <section class="view hidden" id="view-creatures">
+    <div class="filters">
+      <input type="search" id="cr-q" placeholder="Поиск существа по названию…">
+      <label class="check"><input type="checkbox" id="cr-spawned" checked> только спавнящиеся</label>
+    </div>
+    <div class="chips" id="cr-list"></div>
+  </section>
+
+  <!-- ================= ОПЫТ ================= -->
+  <section class="view hidden" id="view-levels">
+    <div class="filters">
+      <label>Уровень с <input type="number" id="lvl-min" min="1" value="1"></label>
+      <label>по <input type="number" id="lvl-max" min="1" value="150"></label>
+      <button class="btn" id="lvl-load">Показать</button>
+    </div>
+    <div class="tablewrap">
+      <table>
+        <thead><tr>
+          <th class="num">Уровень</th>
+          <th class="num">Накоплено опыта</th>
+          <th class="num">Стоимость уровня</th>
+          <th class="num">Прирост, %</th>
+        </tr></thead>
+        <tbody id="lvl-body"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ================= КАЛЬКУЛЯТОР ================= -->
+  <section class="view hidden" id="view-calculator">
+    <p class="hint">
+      Считает статы «голого» персонажа — без экипировки и баффов —
+      по формулам сервера. Впишите значения из окна характеристик.
+    </p>
+    <div class="calcgrid">
+      <div class="calcform">
+        <label>Профессия <select id="calc-job"></select></label>
+        <label>Уровень <input type="number" id="calc-level" value="100" min="1" max="150"></label>
+        <label>Сила (STR) <input type="number" id="calc-str" value="60" min="0"></label>
+        <label>Ловкость (DEX) <input type="number" id="calc-dex" value="60" min="0"></label>
+        <label>Проворство (AGI) <input type="number" id="calc-agi" value="60" min="0"></label>
+        <label>Телосложение (CON) <input type="number" id="calc-con" value="60" min="0"></label>
+        <label>Выносливость (STA) <input type="number" id="calc-sta" value="60" min="0"></label>
+        <label>Удача (LUK) <input type="number" id="calc-luk" value="20" min="0"></label>
+        <label>Уровень корабля <input type="number" id="calc-ship" value="30" min="0"></label>
+        <button class="btn" id="calc-go">Рассчитать</button>
+      </div>
+      <div class="calcresult" id="calc-result"></div>
+    </div>
+  </section>
+
+</main>
+
+<div class="toast" id="toast"></div>
+<script src="/static/js/app.js"></script>
+</body>
+</html>

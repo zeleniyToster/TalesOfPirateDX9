@@ -1,0 +1,23 @@
+# Исключаем из контекста сборки всё, что не нужно в образе.
+# Уменьшает размер кеша и не даёт случайно запечь артефакты Windows.
+
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# База собирается внутри образа, локальная копия не нужна
+data/*.db
+data/*.db-wal
+data/*.db-shm
+
+tests/
+backend/tests/
+*.md
+!README.md
+
+.git/
+.gitignore

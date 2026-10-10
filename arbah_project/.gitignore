@@ -1,0 +1,20 @@
+# Виртуальное окружение внутри проекта
+.venv/
+venv/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Собранная база и выгруженные коэффициенты — пересоздаются из data/
+data/arbah.db
+data/arbah.db-wal
+data/arbah.db-shm
+backend/app/data/coefficients.json
+
+# Локальное окружение
+.env

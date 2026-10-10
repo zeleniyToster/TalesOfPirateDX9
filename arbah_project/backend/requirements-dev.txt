@@ -1,0 +1,6 @@
+# Файл сборки зависимостей для разработки (тесты, линтеры).
+# В образ попадает только backend/requirements.txt.
+-r requirements.txt
+
+pytest==8.3.4
+httpx==0.28.1

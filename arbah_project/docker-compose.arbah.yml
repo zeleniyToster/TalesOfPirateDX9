@@ -1,0 +1,57 @@
+# Разворачивается рядом с игровыми серверами.
+#
+#   docker compose -f docker-compose.arbah.yml up -d --build
+#
+# По умолчанию ставится в общую внешнюю сеть pko_default, поэтому
+# контейнер видит mssql по имени контейнера и адресуется как
+# http://arbah:8000 с любого другого сервиса этой сети.
+# Наружу (на хост) порт публикуется опционально — если база нужна
+# только внутри Docker-сети, оставьте publish_ports пустым.
+
+name: pko-vanilla
+
+services:
+  arbah:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: pko-arbah:latest
+    container_name: pko-arbah
+    restart: unless-stopped
+
+    environment:
+      # Каталог с игровыми таблицами .txt внутри контейнера.
+      ARBAH_DATA_DIR: /app/data
+      ARBAH_DB_PATH: /app/data/arbah.db
+      # Ресурсы клиента: иконки предметов и текстуры.
+      # Укажите путь к Client/texture на своей машине.
+      ARBAH_ASSETS_DIR: /app/assets
+      TZ: ${TZ:-Europe/Moscow}
+
+    volumes:
+      # Только база: переживает пересборку образа.
+      # Сами .txt лежат в образе — если таблицы обновились,
+      # образ пересобирают через --build.
+      - arbah-data:/app/data
+      # Ресурсы клиента монтируются на read-only: несколько тысяч
+      # мелких файлов, в образ класть их незачем.
+      - ${CLIENT_TEXTURE:-../Client/texture}:/app/assets:ro
+      - /etc/localtime:/etc/localtime:ro
+
+    ports:
+      # Уберите блок ports целиком, если доступ извне не нужен.
+      - "127.0.0.1:8100:8000"
+
+    networks:
+      - pko
+
+volumes:
+  arbah-data:
+
+networks:
+  pko:
+    name: pko_default
+    external: true
+    # Если сети ещё нет (серверы не поднимались), создайте её:
+    #   docker network create pko_default
+    # Либо закомментируйте external и позвольте compose создать сеть сам.
