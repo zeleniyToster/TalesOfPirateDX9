@@ -1,0 +1,119 @@
+name: pko-vanilla
+
+services:
+  account:
+    image: pko-vanilla-win32
+    container_name: pko-vanilla-account
+    restart: unless-stopped
+    stdin_open: true
+    volumes:
+      - ./server/AccountServer:/app
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      pko:
+        ipv4_address: 172.21.0.3
+    command: ["AccountServer.exe", "AccountServer.cfg"]
+
+  group:
+    image: pko-vanilla-win32
+    container_name: pko-vanilla-group
+    restart: unless-stopped
+    stdin_open: true
+    volumes:
+      - ./server/GroupServer:/app
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      pko:
+        ipv4_address: 172.21.0.4
+    depends_on:
+      - account
+    command: ["GroupServer.exe", "GroupServer.cfg"]
+
+  gate:
+    image: pko-vanilla-win32
+    container_name: pko-vanilla-gate
+    restart: unless-stopped
+    stdin_open: true
+    ports:
+      - "1973:1973"
+    volumes:
+      - ./server/GateServer:/app
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      pko:
+        ipv4_address: 172.21.0.5
+    depends_on:
+      - group
+    command: ["GateServer.exe", "GateServer.cfg"]
+
+  gameserver00:
+    image: pko-vanilla-win32
+    container_name: pko-vanilla-gameserver00
+    restart: unless-stopped
+    stdin_open: true
+    volumes:
+      - ./server/GameServer:/app
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      pko:
+        ipv4_address: 172.21.0.6
+    depends_on:
+      - gate
+    command: ["GameServer.exe", "GameServer00.cfg"]
+
+  gameserver01:
+    image: pko-vanilla-win32
+    container_name: pko-vanilla-gameserver01
+    restart: unless-stopped
+    stdin_open: true
+    volumes:
+      - ./server/GameServer:/app
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      pko:
+        ipv4_address: 172.21.0.7
+    depends_on:
+      - gate
+    command: ["GameServer.exe", "GameServer01.cfg"]
+
+  gameserver02:
+    image: pko-vanilla-win32
+    container_name: pko-vanilla-gameserver02
+    restart: unless-stopped
+    stdin_open: true
+    volumes:
+      - ./server/GameServer:/app
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      pko:
+        ipv4_address: 172.21.0.8
+    depends_on:
+      - gate
+    command: ["GameServer.exe", "GameServer02.cfg"]
+
+  gameserver03:
+    image: pko-vanilla-win32
+    container_name: pko-vanilla-gameserver03
+    restart: unless-stopped
+    stdin_open: true
+    volumes:
+      - ./server/GameServer:/app
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      pko:
+        ipv4_address: 172.21.0.9
+    depends_on:
+      - gate
+    command: ["GameServer.exe", "GameServer03.cfg"]
+
+networks:
+  pko:
+    name: pko_default
+    external: true
