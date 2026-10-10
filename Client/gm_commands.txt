@@ -13,6 +13,7 @@
     4 - Исследователь (Explorer) 12 - Стрелок (Sharpshooter)
 
 --- [ Создание и выдача предметов (Спавн) ] ---
+make <item-id>, <count>, [<quality>] Gives you a certain item (see below for more infos) 99 &make 1092,99
 &additem <ID_предмета> <кол-во> <качество> <заточка> 
   - Добавить вещь в инвентарь персонажа.
   * Качество (цвет): white (белый), green (зеленый), blue (синий), golden (золотой)
