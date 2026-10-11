@@ -14,6 +14,7 @@ import json
 import re
 import sqlite3
 import sys
+from datetime import datetime
 from pathlib import Path
 from typing import Iterable
 
@@ -457,6 +458,7 @@ def build(data_dir: Path, db_path: Path) -> dict[str, int]:
                 ("creature_stat_count", str(counts.get("creature_stats", 0))),
                 ("drop_count", str(counts.get("creature_drops", 0))),
                 ("dungeon_count", str(counts.get("dungeons", 0))),
+                ("built_at", datetime.now().astimezone().isoformat(timespec="seconds")),
             ],
         )
         conn.commit()

@@ -301,3 +301,20 @@ p.dialogue {
   background: var(--bg-alt); border-left: 3px solid var(--accent-dim);
   color: var(--fg-dim); font-style: italic; font-size: 13px;
 }
+/* ===================== ДАНЖИ ===================== */
+#dungeons-hour { margin: 0 0 10px; }
+
+#view-dungeons td { vertical-align: middle; }
+#view-dungeons tr.open td { background: rgba(143, 201, 143, .06); }
+
+tr.grp td {
+    padding: 10px 8px 6px;
+    color: var(--fg-dim);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    border-bottom: 1px solid var(--line);
+}
+
+/* Ячейка дропа: иконка предмета рядом с названием. */
+td > img.ic { vertical-align: middle; margin-right: 8px; }

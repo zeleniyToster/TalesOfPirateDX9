@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from datetime import datetime
 from typing import Any
 
 from fastapi import APIRouter, Depends, Query
@@ -241,3 +242,51 @@ def list_maps() -> list[MapOut]:
         )
         for r in rows
     ]
+
+
+def _open_now(hours: str, hour: int) -> bool:
+    """Открыт ли данж в указанный час.
+
+    Пустой список часов означает свободный вход. Время серверное
+    локальное — то же, что использует ``can_open_entry_*`` через
+    ``GetNowTime()``, поэтому сверка идёт без поправки на часовой
+    пояс: хости сам выставлен на нужный.
+    """
+    if not hours:
+        return True
+    return hour in {int(h) for h in hours.split(",") if h.strip()}
+
+
+@router.get("/dungeons", summary="Расписание входа в данжи")
+def list_dungeons() -> dict[str, Any]:
+    """Расписание из ``<карта>/ctrl.lua`` плюс отметка «открыт сейчас».
+
+    Карты, у которых нет функции ``can_open_entry_<карта>``, в
+    таблицу не попадают: их вход ничем не ограничен, и перечислять
+    их бессмысленно — в ответе они отмечены ``always_open``.
+    """
+    hour = datetime.now().hour
+
+    rows = db.query(
+        "SELECT d.map_file, d.always_open, d.hours, "
+        "       (SELECT name FROM maps m WHERE m.file = d.map_file) AS name "
+        "FROM dungeons d ORDER BY d.always_open, d.map_file"
+    )
+
+    dungeons = [
+        {
+            "map_file": r["map_file"],
+            "name": r["name"] or r["map_file"],
+            "always_open": bool(r["always_open"]),
+            "hours": [int(h) for h in (r["hours"] or "").split(",") if h.strip()],
+            "open_now": bool(r["always_open"]) or _open_now(r["hours"] or "", hour),
+        }
+        for r in rows
+    ]
+
+    return {
+        "hour": hour,
+        "total": len(dungeons),
+        "scheduled": sum(1 for d in dungeons if not d["always_open"]),
+        "dungeons": dungeons,
+    }

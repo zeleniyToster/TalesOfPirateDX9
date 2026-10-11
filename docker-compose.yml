@@ -113,7 +113,38 @@ services:
       - gate
     command: ["GameServer.exe", "GameServer03.cfg"]
 
+# Справочник по игре: предметы, монстры, существа, NPC, дроп,
+  # расписание данжей. Отдельный образ, собирается один раз.
+  # Правка игровых таблиц пересборки не требует — entrypoint
+  # пересобирает базу из примонтированной папки при старте, либо
+  # по POST /api/admin/refresh.
+  arbah:
+    build:
+      context: ./arbah_project
+      dockerfile: Dockerfile
+    image: pko-arbah:latest
+    container_name: pko-arbah
+    restart: unless-stopped
+    ports:
+      - "8100:8000"
+    volumes:
+      # Источник истины: папка ресурсов GameServer. Только чтение —
+      # справочник ничего не пишет в игровые файлы.
+      - ./server/GameServer/resource:/srv/resource:ro
+      # Иконки предметов и текстуры существ из клиента.
+      - ./Client/texture:/srv/assets:ro
+      # Собранная база. Именованный том переживает пересоздание
+      # контейнера, поэтому база не пересобирается при каждом up.
+      - arbah-db:/var/lib/arbah
+    networks:
+      pko:
+        ipv4_address: 172.21.0.10
+
 networks:
   pko:
     name: pko_default
     external: true
+
+volumes:
+  arbah-db:
+    name: pko_arbah_db

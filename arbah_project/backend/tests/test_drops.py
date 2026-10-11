@@ -9,12 +9,15 @@
 from __future__ import annotations
 
 import sqlite3
+from dataclasses import replace
 from pathlib import Path
 
 import pytest
+from fastapi.testclient import TestClient
 
 from app.etl import game_scripts, parsers
 from app.etl.cha_columns import C_DROP_ITEMS, C_DROP_RATES, C_LEVEL, C_MAX_HP
+from app.main import app
 
 DATA_DIR = Path(__file__).resolve().parents[2] / "data"
 DB_PATH = DATA_DIR / "arbah.db"
@@ -224,3 +227,122 @@ def test_database_dungeons_loaded(db: sqlite3.Connection) -> None:
     ).fetchone()[0]
     assert total > 0, "данные о расписании не загружены"
     assert scheduled > 0
+
+
+# ------------------------------------------------------------------- API
+@pytest.fixture(scope="module")
+def client() -> TestClient:
+    return TestClient(app)
+
+
+def test_creature_card_exposes_stats(client: TestClient) -> None:
+    body = client.get("/api/catalog/creatures/252/full").json()
+    stats = body["stats"]
+    assert stats is not None
+    for key, expected in KILLER_SHROOM_STATS.items():
+        assert stats[key] == expected, f"{key}: {stats[key]} != {expected}"
+        assert stats[f"{key}_title"], f"нет подписи для {key}"
+
+
+def test_creature_card_exposes_drops_with_raw_rate(client: TestClient) -> None:
+    """Частота отдаётся сырой: пересчитывать её в проценты на сервере
+    нельзя, потому что отображаемое значение зависит от рейта."""
+    drops = client.get("/api/catalog/creatures/252/full").json()["drops"]
+    assert len(drops) == 7
+    assert [d["slot"] for d in drops] == list(range(7))
+    assert drops[0]["item_id"] == 4345
+    assert drops[0]["rate"] == 196
+    for d in drops:
+        assert d["rate"] > 0
+        assert d["name"], f"предмет {d['item_id']} не разрешился"
+
+
+def test_creature_without_stats_returns_null(client: TestClient) -> None:
+    """Существо-не-монстр (например, класс игрока) не должно падать:
+    характеристик у него нет, возвращаем null."""
+    body = client.get("/api/catalog/creatures/1/full").json()
+    assert "stats" in body
+
+
+def test_dungeons_endpoint_lists_schedule(client: TestClient) -> None:
+    body = client.get("/api/catalog/dungeons").json()
+    assert body["total"] > 0
+    by_map = {d["map_file"]: d for d in body["dungeons"]}
+
+    assert by_map["abandonedcity"]["hours"] == [2, 6, 10, 14, 18, 22]
+    assert by_map["abandonedcity"]["always_open"] is False
+    assert by_map["hell"]["hours"] == [15]
+    assert by_map["binglang2"]["hours"] == [13, 19]
+
+    for d in body["dungeons"]:
+        assert d["always_open"] or d["hours"], f"{d['map_file']}: пустое расписание"
+
+
+def test_dungeons_open_now_follows_hour(client: TestClient) -> None:
+    """Отметка «открыт сейчас» обязана согласовываться с часом
+    сервера, который эндпоинт возвращает рядом."""
+    body = client.get("/api/catalog/dungeons").json()
+    hour = body["hour"]
+    for d in body["dungeons"]:
+        if d["always_open"]:
+            assert d["open_now"] is True
+        else:
+            assert d["open_now"] == (hour in d["hours"]), d["map_file"]
+
+
+def test_dungeons_resolve_map_names(client: TestClient) -> None:
+    """Имя карты подтягивается из mapinfo.txt: без него в интерфейсе
+    остались бы английские идентификаторы папок."""
+    body = client.get("/api/catalog/dungeons").json()
+    by_map = {d["map_file"]: d for d in body["dungeons"]}
+    assert by_map["abandonedcity"]["name"] != "abandonedcity"
+
+
+# -------------------------------------------------- обслуживание базы
+@pytest.fixture
+def isolated_db(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
+    """Подменяет путь к базе на временный.
+
+    Пересборка перезаписывает файл целиком, поэтому тесты обслуживания
+    не должны трогать общую базу: собранную из плоского каталога
+    ``arbah_project/data``, она лишилась бы расписания данжей, для
+    которого нужны подкаталоги карт.
+    """
+    from app.config import settings as real_settings
+    from app.routers import admin
+
+    fake = replace(real_settings, db_path=tmp_path / "arbah.db")
+    monkeypatch.setattr(admin, "settings", fake)
+    return fake
+
+
+def test_refresh_status_works_before_first_build(client: TestClient) -> None:
+    """Статус должен отвечать и когда файла базы ещё нет: иначе
+    сразу после старта контейнера он недоступен."""
+    body = client.get("/api/admin/refresh/status").json()
+    assert "data_dir" in body
+    assert "in_progress" in body
+
+
+def test_refresh_rebuilds_from_data_dir(
+    client: TestClient, isolated_db: Path
+) -> None:
+    """Пересборка обязана читать игровые таблицы заново и возвращать
+    счётчики — это и есть механизм синхронизации после правки
+    дропа или расписания данжей."""
+    assert not isolated_db.db_path.exists()
+
+    payload = client.post("/api/admin/refresh").json()
+    assert payload["status"] == "ok"
+    assert payload["seconds"] >= 0
+    assert payload["counts"]["items"] > 6000
+    assert payload["counts"]["creature_drops"] > 0
+    assert isolated_db.db_path.is_file()
+
+
+def test_refresh_records_build_time(client: TestClient, isolated_db: Path) -> None:
+    client.post("/api/admin/refresh")
+    status = client.get("/api/admin/refresh/status").json()
+    assert status["database_ready"] is True
+    assert status["updated_at"], "в meta нет отметки времени сборки"
+    assert status["in_progress"] is False

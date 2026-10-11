@@ -16,6 +16,7 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 from fastapi.responses import FileResponse
 
 from .. import db
+from ..etl import cha_columns as cha
 from ..etl.item_columns import EQUIP_SLOTS, JOB_RU
 from ..schemas import Item, ItemList, Page
 from .common import Paging, paging
@@ -228,6 +229,57 @@ def monster_detail(monster_id: int) -> dict[str, Any]:
     return payload
 
 
+def _creature_stats(creature_id: int) -> dict[str, Any] | None:
+    """Боевые характеристики из ``CharacterInfo.txt``.
+
+    Названия ключей совпадают с ``cha_columns.STAT_FIELDS``, поэтому
+    таблица значений совпадает по подписям с тем, что показывает
+    панель Mob Info в игре.
+    """
+    row = db.query_one(
+        "SELECT * FROM creature_stats WHERE creature_id = ?", (creature_id,)
+    )
+    if row is None:
+        return None
+
+    stats: dict[str, Any] = {}
+    for field, _column in cha.STAT_FIELDS:
+        value = row[field]
+        stats[field] = value
+        stats[field + "_title"] = cha.STAT_RU.get(field, field)
+    return stats
+
+
+def _creature_drops(creature_id: int) -> list[dict[str, Any]]:
+    """Дроп существа с присоединёнными данными предметов.
+
+    ``rate`` отдаётся сырым: в игре это обратная величина, где
+    10000 соответствует 100 %, а отображаемый процент дополнительно
+    умножается на серверный рейт дропа. Пересчёт в проценты намеренно
+    не делаем — на сайте нужны исходные значения, иначе цифры
+    разойдутся с игровыми при любом рейте.
+    """
+    return [
+        {
+            "slot": r["slot"],
+            "item_id": r["item_id"],
+            "rate": r["rate"],
+            "name": r["name"],
+            "icon": r["icon"],
+            "price": r["price"],
+            "required_level": r["required_level"],
+        }
+        for r in db.query(
+            "SELECT d.slot, d.item_id, d.rate, "
+            "       i.name, i.icon, i.price, i.required_level "
+            "FROM creature_drops d "
+            "LEFT JOIN items i ON i.item_id = d.item_id "
+            "WHERE d.creature_id = ? ORDER BY d.slot",
+            (creature_id,),
+        )
+    ]
+
+
 @router.get("/creatures/{creature_id}/full", summary="Карточка существа")
 def creature_detail(creature_id: int) -> dict[str, Any]:
     creature = db.query_one(
@@ -321,6 +373,8 @@ def creature_detail(creature_id: int) -> dict[str, Any]:
         "respawns": sorted({s["respawn"] for s in spawns}),
         "spawns": spawns[:400],
         "spawns_truncated": len(spawns) > 400,
+        "stats": _creature_stats(creature_id),
+        "drops": _creature_drops(creature_id),
     }
 
 

@@ -8,7 +8,7 @@ from fastapi.staticfiles import StaticFiles
 
 from . import db
 from .config import settings
-from .routers import calculator, cards, catalog, levels
+from .routers import admin, calculator, cards, catalog, levels
 from .routers.cards import assets_dir
 
 api = APIRouter(prefix=settings.api_prefix)
@@ -16,6 +16,7 @@ api.include_router(catalog.router)
 api.include_router(cards.router)
 api.include_router(levels.router)
 api.include_router(calculator.router)
+api.include_router(admin.router)
 
 
 @api.get("/health", tags=["system"], summary="Проверка живости")

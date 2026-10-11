@@ -22,36 +22,38 @@ RUN pip install -r /app/backend/requirements.txt
 
 COPY backend /app/backend
 COPY frontend /app/frontend
+COPY entrypoint.sh /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh
 
-# Исходные игровые таблицы. По умолчанию копируются из репозитория,
-# но на проде каталог переопределяется через ARBAH_DATA_DIR (том).
-COPY data/ /app/data/
-
-# Ресурсы клиента (иконки, текстуры) НЕ копируются в образ:
-# их десятки тысяч файлов, и они лежат на сервере рядом с игрой.
-# Каталог подключается томом, путь задаётся через ARBAH_ASSETS_DIR.
-
-ENV ARBAH_DATA_DIR=/app/data \
-    ARBAH_DB_PATH=/app/data/arbah.db \
+# Игровые таблицы в образ НЕ запекаются. Они приходят томом из
+# server/GameServer/resource, поэтому правка предметов, дропа или
+# расписания данжей не требует пересборки образа: достаточно
+# перезапустить контейнер или вызвать POST /api/admin/refresh.
+# Копия таблиц в каталоге data/ остаётся только для разработки
+# на Windows, где контейнера нет.
+ENV ARBAH_DATA_DIR=/srv/resource \
+    ARBAH_DB_PATH=/var/lib/arbah/arbah.db \
     ARBAH_FRONTEND_DIR=/app/frontend \
-    ARBAH_ASSETS_DIR=/app/assets \
+    ARBAH_ASSETS_DIR=/srv/assets \
     PYTHONPATH=/app/backend
 
-# База собирается на этапе сборки образа: контейнер стартует
-# уже с готовыми данными, ETL при старте не нужен.
-RUN python -m app.etl.coefficients \
- && python -m app.etl.ingest \
- && chmod -R a+rX /app/data
-
-RUN useradd --system --uid 10001 --no-create-home arbah \
- && mkdir -p /app/data /app/assets \
- && chown -R arbah:arbah /app
+# Каталог базы создаётся до смены пользователя: Docker переносит
+# владельца из образа в свежий именованный том, иначе arbah не смог бы
+# создать файл базы. Ресурсы клиента (иконки, текстуры) не копируются:
+# их десятки тысяч файлов, они приходят томом.
+RUN mkdir -p /var/lib/arbah /srv/assets \
+ && useradd --system --uid 10001 --no-create-home arbah \
+ && chown -R arbah:arbah /app /var/lib/arbah
 USER arbah
+
+# Именованный том переживает пересоздание контейнера: база не
+# пересобирается при каждом docker compose up.
+VOLUME ["/var/lib/arbah"]
 
 EXPOSE 8000
 
-HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+HEALTHCHECK --interval=30s --timeout=5s --start-period=30s --retries=3 \
   CMD python -c "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8000/api/health', timeout=4).status==200 else 1)"
 
-ENTRYPOINT ["/usr/bin/tini", "--"]
+ENTRYPOINT ["/app/entrypoint.sh"]
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--proxy-headers", "--forwarded-allow-ips", "*"]

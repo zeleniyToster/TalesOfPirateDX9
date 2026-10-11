@@ -406,6 +406,47 @@ function renderCreatureCard(box, d) {
        </div>`
     : "";
 
+  // Боевые характеристики приходят с русскими подписями из БД:
+  // ключ "level" -> значение в "level", подпись в "level_title".
+  const STAT_ORDER = [
+    "level", "max_hp", "max_sp", "min_atk", "max_atk", "phys_res",
+    "defense", "hit", "dodge", "atk_speed", "move_speed", "exp",
+  ];
+
+  const stats = d.stats
+    ? `<h2 class="sect">Боевые характеристики</h2>
+       <table class="grid">
+         ${STAT_ORDER.map((k, i) => {
+           const cell = `<th>${d.stats[k + "_title"]}</th>` +
+                        `<td>${fmt(d.stats[k])}</td>`;
+           return i % 2 === 0 ? `<tr>${cell}` : `${cell}</tr>`;
+         }).join("")}
+       </table>
+       <p class="dim">Значения взяты из таблицы существ без учёта рейтов
+          сервера — это базовые характеристики.</p>`
+    : "";
+
+  const drops = d.drops && d.drops.length
+    ? `<h2 class="sect">Дроп (${d.drops.length})</h2>
+       <div class="tablewrap">
+         <table class="spawns">
+           <thead><tr><th class="num">#</th><th>Предмет</th>
+             <th class="num">ID</th><th class="num">Частота</th>
+             <th class="num">Ур.</th></tr></thead>
+           <tbody>${d.drops.map((x, i) => `
+             <tr><td class="num dim">${i + 1}</td>
+                 <td>${iconHtml(x.icon)}<span>${x.name || `предмет ${x.item_id}`}</span></td>
+                 <td class="num dim">${x.item_id}</td>
+                 <td class="num">${fmt(x.rate)}</td>
+                 <td class="num">${x.required_level || "—"}</td></tr>`).join("")}
+           </tbody>
+         </table>
+       </div>
+       <p class="dim">Частота указана так, как хранится в игре: 10000
+          соответствует 100 %, а отображаемый в клиенте процент
+          дополнительно умножается на рейт дропа сервера.</p>`
+    : "";
+
   box.innerHTML = `
     <div class="cchead">
       ${d.image_url ? `<img class="portrait" src="${d.image_url}.bmp" alt=""
@@ -424,6 +465,9 @@ function renderCreatureCard(box, d) {
       <tr><th>Восстановление</th><td>${respawn}</td>
           <th>ID существа</th><td>${d.creature_id ?? "—"}</td></tr>
     </table>
+
+    ${stats}
+    ${drops}
 
     <h2 class="sect">Где обитает</h2>
     ${areas}
@@ -552,10 +596,40 @@ async function searchCreatures() {
 }
 
 /* -------------------------------------------------------------- запуск */
+async function loadDungeons() {
+  const box = $("#dungeons-body");
+  box.innerHTML = '<tr><td colspan="4"><div class="loading">Загрузка…</div></td></tr>';
+
+  const d = await api("/catalog/dungeons");
+  $("#dungeons-hour").textContent =
+    `сейчас ${String(d.hour).padStart(2, "0")}:00 · ` +
+    `${d.scheduled} из ${d.total} карт с расписанием`;
+
+  const rows = d.dungeons.filter((x) => !x.always_open);
+  const free = d.dungeons.filter((x) => x.always_open);
+
+  const render = (x) => `<tr class="${x.open_now ? "open" : ""}">
+      <td>${x.name}</td>
+      <td class="dim">${x.map_file}</td>
+      <td>${x.always_open ? "в любое время"
+        : x.hours.map((h) => String(h).padStart(2, "0") + ":00").join(", ")}</td>
+      <td><span class="flag ${x.open_now ? "yes" : "no"}">
+        ${x.open_now ? "открыт" : "закрыт"}</span></td>
+    </tr>`;
+
+  box.innerHTML =
+    rows.map(render).join("") +
+    (free.length
+      ? `<tr class="grp"><td colspan="4">Свободный вход (${free.length})</td></tr>`
+        + free.map(render).join("")
+      : "");
+}
+
 function load() {
   const loaders = {
     items: loadItems, monsters: loadMonsters, npcs: loadNpcs,
-    levels: loadLevels, creatures: null, calculator: null,
+    levels: loadLevels, dungeons: loadDungeons,
+    creatures: null, calculator: null,
     item: null, creature: null, shop: null,
   };
   const fn = loaders[state.view];
