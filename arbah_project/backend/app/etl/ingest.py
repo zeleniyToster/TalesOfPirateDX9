@@ -17,6 +17,7 @@ import sys
 from pathlib import Path
 from typing import Iterable
 
+from . import cha_columns as cha
 from . import game_scripts, parsers
 
 # Файлы, без которых импорт бессмыслен.
@@ -158,6 +159,42 @@ CREATE TABLE level_costs (
     level     INTEGER PRIMARY KEY,
     exp_total INTEGER NOT NULL,
     exp_cost  INTEGER NOT NULL
+);
+
+DROP TABLE IF EXISTS creature_stats;
+CREATE TABLE creature_stats (
+    creature_id INTEGER PRIMARY KEY,
+    level       INTEGER,
+    max_hp      INTEGER,
+    max_sp      INTEGER,
+    min_atk     INTEGER,
+    max_atk     INTEGER,
+    phys_res    INTEGER,
+    defense     INTEGER,
+    hit         INTEGER,
+    dodge       INTEGER,
+    atk_speed   INTEGER,
+    move_speed  INTEGER,
+    exp         INTEGER
+);
+CREATE INDEX idx_creature_stats_level ON creature_stats(level);
+
+DROP TABLE IF EXISTS creature_drops;
+CREATE TABLE creature_drops (
+    creature_id INTEGER NOT NULL,
+    slot        INTEGER NOT NULL,
+    item_id     INTEGER NOT NULL,
+    rate        INTEGER NOT NULL,
+    PRIMARY KEY (creature_id, slot)
+);
+CREATE INDEX idx_creature_drops_item    ON creature_drops(item_id);
+CREATE INDEX idx_creature_drops_creature ON creature_drops(creature_id);
+
+DROP TABLE IF EXISTS dungeons;
+CREATE TABLE dungeons (
+    map_file    TEXT PRIMARY KEY,
+    always_open INTEGER NOT NULL,
+    hours       TEXT
 );
 
 DROP TABLE IF EXISTS meta;
@@ -302,9 +339,11 @@ def build(data_dir: Path, db_path: Path) -> dict[str, int]:
         npc_rows = list(parsers.parse_npcs(data_dir / "npclist.txt"))
         npc_names = {n["npc_id"]: n["name"] for n in npc_rows}
 
+        npc_script_dir = game_scripts.find_npc_script_dir(data_dir)
+
         dialogues = (
-            game_scripts.shop_dialogue(data_dir / "npc", npc_names)
-            if (data_dir / "npc").is_dir()
+            game_scripts.shop_dialogue(npc_script_dir, npc_names)
+            if npc_script_dir is not None
             else {}
         )
 
@@ -321,18 +360,18 @@ def build(data_dir: Path, db_path: Path) -> dict[str, int]:
             npc_rows_iter(),
         )
 
-        if (data_dir / "spawns").is_dir():
+        if game_scripts.find_spawns_dir(data_dir) is not None:
             counts["monster_spawns"] = _insert_many(
                 conn,
                 "INSERT INTO monster_spawns VALUES (?,?,?,?,?,?,?)",
-                game_scripts.parse_spawns(data_dir / "spawns"),
+                game_scripts.parse_spawns(data_dir),
             )
 
-        if (data_dir / "npc").is_dir():
+        if npc_script_dir is not None:
             counts["shop_items"] = _insert_many(
                 conn,
                 "INSERT OR IGNORE INTO shop_items VALUES (?,?)",
-                game_scripts.parse_shops(data_dir / "npc", npc_names),
+                game_scripts.parse_shops(npc_script_dir, npc_names),
             )
 
         if (data_dir / "CharacterInfo.txt").is_file():
@@ -345,6 +384,32 @@ def build(data_dir: Path, db_path: Path) -> dict[str, int]:
                     for c in parsers.parse_creatures(data_dir / "CharacterInfo.txt")
                 ),
             )
+
+            # Боевые характеристики читаются из тех же строк, поэтому
+            # файл открывается ещё раз — держать его в памяти ради
+            # одного разбора дороже, чем повторное чтение с диска.
+            counts["creature_stats"] = _insert_many(
+                conn,
+                "INSERT OR REPLACE INTO creature_stats VALUES ({})".format(
+                    ", ".join("?" * (1 + len(cha.STAT_FIELDS)))
+                ),
+                parsers.parse_creature_stats(data_dir / "CharacterInfo.txt"),
+            )
+
+            counts["creature_drops"] = _insert_many(
+                conn,
+                "INSERT OR REPLACE INTO creature_drops VALUES (?,?,?,?)",
+                parsers.parse_creature_drops(data_dir / "CharacterInfo.txt"),
+            )
+
+        counts["dungeons"] = _insert_many(
+            conn,
+            "INSERT OR REPLACE INTO dungeons VALUES (?,?,?)",
+            (
+                (d["map_file"], int(d["always_open"]), d["hours"])
+                for d in game_scripts.parse_dungeon_schedules(data_dir)
+            ),
+        )
 
         if (data_dir / "AreaSet.txt").is_file():
             counts["areas"] = _insert_many(
@@ -389,6 +454,9 @@ def build(data_dir: Path, db_path: Path) -> dict[str, int]:
                 ("npc_count", str(counts.get("npcs", 0))),
                 ("spawn_count", str(counts.get("monster_spawns", 0))),
                 ("shop_count", str(counts.get("shop_items", 0))),
+                ("creature_stat_count", str(counts.get("creature_stats", 0))),
+                ("drop_count", str(counts.get("creature_drops", 0))),
+                ("dungeon_count", str(counts.get("dungeons", 0))),
             ],
         )
         conn.commit()

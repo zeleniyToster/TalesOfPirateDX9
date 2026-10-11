@@ -16,6 +16,7 @@ import io
 from pathlib import Path
 from typing import Iterator, Sequence
 
+from . import cha_columns as cha
 from . import item_columns as col
 
 # Кодировки, в которых в этом проекте встречаются таблицы.
@@ -276,6 +277,55 @@ def parse_creatures(path: Path) -> Iterator[dict]:
             "model_type": to_int(_cell(row, 3)),
             "logic_type": to_int(_cell(row, 4)),
         }
+
+
+def _drop_pairs(row: Sequence[str]) -> Iterator[tuple[int, int, int]]:
+    """Пары дропа из ячеек 46 и 47: ``(слот, ID предмета, частота)``.
+
+    В ячейках значения перечислены через запятую, причём ведущие нули
+    не проставлены (``0467``), а длины списков могут не совпадать —
+    берём минимум и молча отбрасываем остаток.
+
+    Частота хранится «обратной»: 10000 означает 100 %. На сайте
+    показываем сырое число, поэтому пересчёт в проценты живёт
+    только в интерфейсе и намеренно не выполняется тут.
+    """
+    items = to_int_list(_cell(row, cha.C_DROP_ITEMS))
+    rates = to_int_list(_cell(row, cha.C_DROP_RATES))
+    for slot, (item_id, rate) in enumerate(zip(items, rates)):
+        if item_id <= 0:
+            continue
+        yield slot, item_id, rate
+
+
+def parse_creature_drops(path: Path) -> Iterator[tuple[int, int, int, int]]:
+    """``CharacterInfo.txt`` -> ``(ID существа, слот, ID предмета, частота)``."""
+    for row in read_table(path):
+        creature_id = to_int(_cell(row, cha.C_ID))
+        if creature_id <= 0:
+            continue
+        for slot, item_id, rate in _drop_pairs(row):
+            if slot >= cha.DROP_SLOTS:
+                break
+            yield creature_id, slot, item_id, rate
+
+
+def parse_creature_stats(path: Path) -> Iterator[tuple]:
+    """``CharacterInfo.txt`` -> боевая строка существа.
+
+    Порядок полей задан :data:`cha_columns.STAT_FIELDS` и совпадает
+    с порядком колонок в таблице ``creature_stats``. Только монстры:
+    у игроков и NPC эти поля не заполнены, и в базе они не нужны.
+    """
+    for row in read_table(path):
+        creature_id = to_int(_cell(row, cha.C_ID))
+        if creature_id <= 0:
+            continue
+        if to_int(_cell(row, cha.C_LOGIC_TYPE)) != cha.LOGIC_MONSTER:
+            continue
+        yield (creature_id,) + tuple(
+            to_int(_cell(row, column)) for _field, column in cha.STAT_FIELDS
+        )
 
 
 def parse_ship_items(path: Path) -> Iterator[dict]:

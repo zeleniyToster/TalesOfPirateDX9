@@ -42,6 +42,11 @@ SHOP_ITEM = re.compile(
 )
 TALK_TEXT = re.compile(r'Talk\s*\(\s*\d+\s*,\s*"([^"]*)"')
 
+# Расписание входа в данж: в каждом каталоге карты есть функция
+# can_open_entry_<карта>. Если часов нет — вход свободный.
+DUNGEON_FUNC = re.compile(r"function\s+can_open_entry_(\w+)\s*\([^)]*\)")
+DUNGEON_HOUR = re.compile(r"\bHour\s*==\s*(\d{1,2})")
+
 
 def build_npc_name_index(npcs: dict[int, str]) -> dict[str, int]:
     """Строит индекс «имя из реплики -> ID NPC».
@@ -86,15 +91,43 @@ def _read_lua(path: Path) -> str:
     return ""
 
 
-def parse_spawns(spawns_dir: Path) -> Iterator[dict]:
+def find_spawns_dir(resource_dir: Path) -> Path | None:
+    """Где лежат конфиги спавнов.
+
+    Поддерживаются две раскладки: плоская ``<resources>/spawns/*.lua``
+    (так собран каталог внутри проекта) и штатная серверная
+    ``<resources>/<карта>/<карта>monster_conf.lua``. Вторая нужна,
+    когда серверная папка смонтирована в контейнер.
+    """
+    if any((resource_dir / "spawns").glob("*.lua")):
+        return resource_dir / "spawns"
+    if any(resource_dir.glob("*/*monster_conf.lua")):
+        return resource_dir
+    return None
+
+
+def find_npc_script_dir(resource_dir: Path) -> Path | None:
+    """Где лежат ``NpcScript*.lua``: ``<resources>/npc`` в проекте
+    либо ``<resources>/script/MisScript`` в поставке сервера."""
+    for candidate in (resource_dir / "npc", resource_dir / "script" / "MisScript"):
+        if candidate.is_dir() and any(candidate.glob("NpcScript*.lua")):
+            return candidate
+    return None
+
+
+def parse_spawns(resource_dir: Path) -> Iterator[dict]:
     """Все ``CreateCha`` со всех карт.
 
-    Поддерживаются обе раскладки: файлы прямо в каталоге
-    (``data/spawns/garnermonster_conf.lua``) и в подкаталогах
-    по картам (``server/.../garner/garnermonster_conf.lua``).
-    Имя карты берётся из суффикса ``<карта>monster_conf.lua``.
+    Принимает каталог с ресурсами, а не каталог со спавнами: путь
+    ищется сам, см. :func:`find_spawns_dir`. Регион берётся из
+    ``mapinfo.txt`` того же каталога. Имя карты — из суффикса
+    ``<карта>monster_conf.lua``.
     """
-    regions = _load_regions(spawns_dir.parent)
+    spawns_dir = find_spawns_dir(resource_dir)
+    if spawns_dir is None:
+        return
+
+    regions = _load_regions(resource_dir)
 
     confs = sorted(spawns_dir.glob("*.lua")) + sorted(
         spawns_dir.glob("*/*monster_conf.lua")
@@ -151,6 +184,45 @@ def io_lines(path: Path) -> list[str]:
         for line in text.splitlines()
         if line.strip() and not line.strip().startswith("//")
     ]
+
+
+def parse_dungeon_schedules(resource_dir: Path) -> Iterator[dict]:
+    """Расписание входа в данжи из ``<карта>/ctrl.lua``.
+
+    Функция ``can_open_entry_<карта>`` сравнивает текущий час с
+    перечислением: ``if Hour == 02 or Hour == 06 then``. Если
+    сравнений нет, вход свободен в любое время.
+
+    Время берётся из ``GetNowTime()`` — это серверное локальное
+    время (``os.date`` без ``!Z``), то есть часовой пояс машины.
+    Отдельно от расписания спавня боссов в ``DreamIsland`` ничего
+    не разбираем: там другой механизм, на ``can_open_entry`` он не
+    влияет.
+
+    Отдаёт ``{'map_file', 'always_open', 'hours'}``; ``hours`` —
+    строка ``"2,6,10,14,18,22"``, как принято для прочих списков.
+    """
+    if not resource_dir.is_dir():
+        return
+
+    for ctrl in sorted(resource_dir.glob("*/ctrl.lua")):
+        text = _read_lua(ctrl)
+        if not text:
+            continue
+
+        match = DUNGEON_FUNC.search(text)
+        if not match:
+            continue
+
+        nxt = text.find("\nfunction", match.start() + 1)
+        body = text[match.start(): nxt if nxt > 0 else len(text)]
+
+        hours = sorted({int(h) for h in DUNGEON_HOUR.findall(body)})
+        yield {
+            "map_file": ctrl.parent.name,
+            "always_open": not hours,
+            "hours": ",".join(str(h) for h in hours),
+        }
 
 
 def parse_shops(
