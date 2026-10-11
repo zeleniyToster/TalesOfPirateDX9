@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#include "TextChar.h"
 #include "uimemo.h"
 #include "uigraph.h"
 #include "uitextparse.h"
@@ -1457,8 +1458,8 @@ BOOL CMemoEx::ParseScript( char* pszTemp, USHORT& sNumLine, USHORT& sRow, USHORT
 		}
 
 		// �ж��Ƿ�һ��GBK
-		BOOL bFlag1 = 0x81 <= (BYTE)pszTemp[0] && (BYTE)pszTemp[0] <= 0xFE;
-		BOOL bFlag2 = (0x40 <= (BYTE)pszTemp[1] && (BYTE)pszTemp[1] <= 0x7E) || (0x7E <= (BYTE)pszTemp[1] && (BYTE)pszTemp[1] <= 0xFE);
+		BOOL bFlag1 = IsLeadByte((BYTE)pszTemp[0]);
+		BOOL bFlag2 = IsTrailByte((BYTE)pszTemp[1]);
 		if( bFlag1 && bFlag2 )
 		{
 			if( sMaxCom - sCom >= 2 )
@@ -2145,8 +2146,8 @@ void CRichMemo::ParseScript( const char szInfo[], DWORD dwDefColor, BYTE byFont,
 		}
 
 		// �ж��Ƿ�һ��GBK
-		BOOL bFlag1 = 0x81 <= (BYTE)pszTemp[0] && (BYTE)pszTemp[0] <= 0xFE;
-		BOOL bFlag2 = (0x40 <= (BYTE)pszTemp[1] && (BYTE)pszTemp[1] <= 0x7E) || (0x7E <= (BYTE)pszTemp[1] && (BYTE)pszTemp[1] <= 0xFE);
+		BOOL bFlag1 = IsLeadByte((BYTE)pszTemp[0]);
+		BOOL bFlag2 = IsTrailByte((BYTE)pszTemp[1]);
 		if( bFlag1 && bFlag2 )
 		{
 			if( sMaxCom - sCom >= 2 )

@@ -1,4 +1,5 @@
 ﻿#include "StdAfx.h"
+#include "TextChar.h"
 #include "uiitem.h"
 #include "uitextparse.h"
 
@@ -182,8 +183,8 @@ void CColorItem::ParseScript( const char szScript[], USHORT sStartCom, DWORD dwD
 		}
 
 		// decides whether it is a GBK character
-		BOOL bFlag1 = 0x81 <= (BYTE)pszTemp[0] && (BYTE)pszTemp[0] <= 0xFE;
-		BOOL bFlag2 = (0x40 <= (BYTE)pszTemp[1] && (BYTE)pszTemp[1] <= 0x7E) || (0x7E <= (BYTE)pszTemp[1] && (BYTE)pszTemp[1] <= 0xFE);
+		BOOL bFlag1 = IsLeadByte((BYTE)pszTemp[0]);
+		BOOL bFlag2 = IsTrailByte((BYTE)pszTemp[1]);
 		if( bFlag1 && bFlag2 )
 		{
 			szData[0] = pszTemp[0];

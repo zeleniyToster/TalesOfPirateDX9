@@ -95,24 +95,28 @@ bool CEdit::OnKeyDown( int key )
 	case VK_LEFT:
 		{
 			//begin:��������		
-			if ( _nCursorCol >=3 )
+if ( _nCursorCol >=3 )
 			{
-				if (! (s[_nCursorCol-1] & 0x80) )
-				{				
+				if ( !IsLeadByte( (unsigned char)s[_nCursorCol-1] ) )
+				{
 					if ( isdigit( s[_nCursorCol-1])  && _nCursorCol >=3)
 					{
-						if ( isdigit( s[_nCursorCol-2])  &&(s[_nCursorCol-3]=='#')) 
+						if ( isdigit( s[_nCursorCol-2])  &&(s[_nCursorCol-3]=='#'))
 						{
 							_nCursorCol -=3;
 							break;
-						}					
+						}
 					}
 				}
 			}
-			//end:��������
+			//end:结束
 
 			--_nCursorCol;
-			if( _str[_nCursorCol] & 0x80 )	--_nCursorCol;
+			// Курсор перескакивал через букву: любой байт со старшим
+			// битом считался второй половиной двухбайтового символа, и
+			// сдвиг делался на лишний символ. Теперь решение принимает
+			// кодировка игры, см. TextChar.h.
+			if(_nCursorCol > 0 && IsLeadByte( (unsigned char)_str[_nCursorCol] ) )	--_nCursorCol;
 			
 
 			if(_nCursorCol%13 == 0){

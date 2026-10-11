@@ -41,8 +41,13 @@ void CTextParse::Render( string str, int x, int y,  DWORD color, ALLIGN allign, 
 	{
 		if ( str[i]  & 0x80)  //a Chinese character
 		{
-			strLine += str.substr(i ,2) ;
-			i+=2;		 		
+			// см. комментарий в Render(): при русской раскладке это
+			// одиночный байт, а не начало двухбайтовой пары
+			int n = CharBytes(str.c_str(), i);
+			if (n > length - i)
+				n = length - i;
+			strLine += str.substr(i , n) ;
+			i += n;
 		}			
 		else if (str[i] == _cBoxOff)
 		{
@@ -100,9 +105,16 @@ void CTextParse::RenderEx( string str, int x, int y, DWORD color, float scale )
 	{
 		if ( str[i]  & 0x80)  //a Chinese character
 		{
-			strLine += str.substr(i ,2) ;
-			i+=2;		 		
-		}			
+			// Шаг берём из общей функции: при русской раскладке
+			// одиночный байт 0x80 и выше — это сама буква, а не
+			// начало пары. Раньше здесь всегда шли два байта, и
+			// вторая буква слова терялась прямо в чате.
+			int n = CharBytes(str.c_str(), i);
+			if (n > length - i)
+				n = length - i;
+			strLine += str.substr(i , n) ;
+			i += n;
+		}
 		else if (str[i] == _cBoxOff)
 		{
 			string _strTwoChar = "";

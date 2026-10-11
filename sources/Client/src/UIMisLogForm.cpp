@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#include "TextChar.h"
 #include "UIMisLogForm.h"
 #include "uiform.h"
 #include "UITreeView.h"
@@ -210,8 +211,8 @@ BOOL CMisLogForm::AddNode( WORD wMisID, BYTE byState, BYTE& byType )
 	while( pszTemp[0] )
 	{
 		// �ж��Ƿ�һ��GBK
-		BOOL bFlag1 = 0x81 <= (BYTE)pszTemp[0] && (BYTE)pszTemp[0] <= 0xFE;
-		BOOL bFlag2 = (0x40 <= (BYTE)pszTemp[1] && (BYTE)pszTemp[1] <= 0x7E) || (0x7E <= (BYTE)pszTemp[1] && (BYTE)pszTemp[1] <= 0xFE);
+		BOOL bFlag1 = IsLeadByte((BYTE)pszTemp[0]);
+		BOOL bFlag2 = IsTrailByte((BYTE)pszTemp[1]);
 		if( bFlag1 && bFlag2 )
 		{			
 			if( sNum + 2 > 18 )

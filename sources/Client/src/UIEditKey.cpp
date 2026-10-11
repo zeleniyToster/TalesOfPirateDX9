@@ -5,6 +5,7 @@
 #include "uifont.h"
 #include "uieditstrategy.h"
 #include "uieditdata.h"
+#include "TextChar.h"
 
 using namespace GUI;
 //---------------------------------------------------------------------------
@@ -89,10 +90,13 @@ bool CEditKey::OnChar( char c )
 			if( _nEnterPos==1 )
 			{
 				IsError = false;
-				if( _ismbslead( (unsigned char*)_szEnter, (unsigned char*)&_szEnter[0] )==0 
-					&& _ismbstrail( (unsigned char*)_szEnter, (unsigned char*)&_szEnter[0] )==0 )
+// Раньше здесь стояли _ismbslead/_ismbstrail: они смотрят в
+				// системную локаль, а не в кодировку игры. При чужой локали
+				// русская буква считалась началом китайского символа,
+				// ждала второго байта и терялась. Решение принимает TextChar.h.
+				if( !IsLeadByte( (unsigned char)c ) && !IsTrailByte( (unsigned char)c ) )
 				{
-					// it is English or a control character
+					// it is a single-byte character
 					_nEnterPos = 0;
 
 					AddChar( new CEditChar( c ) );
@@ -100,9 +104,9 @@ bool CEditKey::OnChar( char c )
 			}
 			else if( _nEnterPos==2 )
 			{
-				if( _ismbslead( (unsigned char*)_szEnter, (unsigned char*)&_szEnter[0] )==-1 && _ismbstrail( (unsigned char*)_szEnter, (unsigned char*)&_szEnter[1] )==-1 )
-				{
-					// a Chinese character
+if( IsLeadByte( (unsigned char)_szEnter[0] ) && IsTrailByte( (unsigned char)_szEnter[1] ) )
+			{
+				// a two-byte character
 					AddChar( new CEditChar( _szEnter[0], _szEnter[1] ) );
 
 

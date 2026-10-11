@@ -10,6 +10,7 @@
 
 #include "lwIUtil.h"
 #include "lwPredefinition.h"
+#include "TextChar.h"
 
 using namespace std;
 
@@ -323,13 +324,17 @@ SIZE* CMPFont::GetTextSize(char* szText, SIZE* pSize ,float fScale)
 			continue;
 		}
 
-		if ( *ch & 0x80 )
+		if ( IsLeadByte((unsigned char)*ch) )
 		{
 			ch++;
 			offset = w * 2 + ASSIZE;
 		}
 		else
 		{
+			// Раньше здесь стояло «*ch & 0x80», и любая русская буква
+			// попадала в ветку двухбайтового символа и получала двойную
+			// ширину — из-за этого текст разъезжался. Теперь решение
+			// принимает TextChar.h по кодировке игры.
 			SIZE size;
 			::GetTextExtentPoint(_hDc,&ch[0],1,&size);
 			offset = size.cx + HLSIZE ;
@@ -374,7 +379,7 @@ bool CMPFont::TextToTexture( char c1, char c2, float & tX, float & tY )
 
 		FillRect( _hDc, &rect, (HBRUSH)GetStockObject(BLACK_BRUSH) );
 
-		::TextOut( _hDc, 0, 0, sz, c1 & 0x80 ? 2 : 1 );
+		::TextOut( _hDc, 0, 0, sz, IsLeadByte((unsigned char)c1) ? 2 : 1 );
 
 		D3DLOCKED_RECT d3dlr;
 
@@ -448,7 +453,7 @@ void CMPFont::DrawTextClipOnce(char* szText, int nLen, LPRECT psrc, LPRECT pclip
 			continue;
 		}
 
-		if ( ch[0] & 0x80 )
+		if ( IsLeadByte((unsigned char)ch[0]) )
 		{
 			n++;
 			ch[1] = szText[n];
@@ -471,7 +476,7 @@ void CMPFont::DrawTextClipOnce(char* szText, int nLen, LPRECT psrc, LPRECT pclip
 
 		float a, b;
 
-		if(!(ch[0] & 0x80) &&FindTextFromTex(ch[0], ch[1], tx1, ty1 ,tx2,ty2))
+		if(!IsLeadByte((unsigned char)ch[0]) &&FindTextFromTex(ch[0], ch[1], tx1, ty1 ,tx2,ty2))
 		{
 			bExit = true;
 		}
@@ -636,7 +641,7 @@ bool CMPFont::DrawTextClip( char* szText, int nLen, LPRECT psrc, LPRECT pclip,D3
 			continue;
 		}
 
-		if ( ch[0] & 0x80 )
+		if ( IsLeadByte((unsigned char)ch[0]) )
 		{
 			n++;
 			ch[1] = szText[n];
@@ -650,7 +655,7 @@ bool CMPFont::DrawTextClip( char* szText, int nLen, LPRECT psrc, LPRECT pclip,D3
 
 		float a, b;
 
-		if(!(ch[0] & 0x80) &&FindTextFromTex(ch[0], ch[1], tx1, ty1 ,tx2,ty2))
+		if(!IsLeadByte((unsigned char)ch[0]) &&FindTextFromTex(ch[0], ch[1], tx1, ty1 ,tx2,ty2))
 		{
 			if(_lpCurTex  != _pTexFast)
 			{
@@ -858,7 +863,7 @@ __ret:
 			continue;
 		}
 
-		if ( ch[0] & 0x80 )
+		if ( IsLeadByte((unsigned char)ch[0]) )
 		{
 			n++;
 			ch[1] = szText[n];
@@ -883,7 +888,7 @@ __ret:
 		bool bExit;
 
 
-		if(!(ch[0] & 0x80) && FindTextFromTex(ch[0], ch[1], tx1, ty1 ,tx2,ty2))
+		if(!IsLeadByte((unsigned char)ch[0]) && FindTextFromTex(ch[0], ch[1], tx1, ty1 ,tx2,ty2))
 		{
 			bExit = true;
 		}
@@ -1280,7 +1285,7 @@ __ret:
 			continue;
 		}
 
-		if ( ch[0] & 0x80 )
+		if ( IsLeadByte((unsigned char)ch[0]) )
 		{
 			n++;
 			ch[1] = szText[n];
@@ -1294,7 +1299,7 @@ __ret:
 
 		float a, b;
 		bool bExit;
-		if(!(ch[0] & 0x80) &&FindTextFromTex(ch[0], ch[1], tx1, ty1 ,tx2,ty2))
+		if(!IsLeadByte((unsigned char)ch[0]) &&FindTextFromTex(ch[0], ch[1], tx1, ty1 ,tx2,ty2))
 		{
 			bExit = true;
 		}
@@ -1464,7 +1469,7 @@ bool CMPFont::Draw3DText(char* szText,D3DXVECTOR3& vPos, D3DXCOLOR color,float f
 			continue;
 		}
 
-		if ( ch[0] & 0x80 )
+		if ( IsLeadByte((unsigned char)ch[0]) )
 		{
 			n++;
 			ch[1] = szText[n];
@@ -1477,7 +1482,7 @@ bool CMPFont::Draw3DText(char* szText,D3DXVECTOR3& vPos, D3DXCOLOR color,float f
 		}
 
 		float a, b;
-		if(!(ch[0] & 0x80) &&FindTextFromTex(ch[0], ch[1], tx1, ty1 ,tx2,ty2))
+		if(!IsLeadByte((unsigned char)ch[0]) &&FindTextFromTex(ch[0], ch[1], tx1, ty1 ,tx2,ty2))
 		{
 			if(_lpCurTex && _lpCurTex  != _pTexFast)
 			{
@@ -1640,7 +1645,7 @@ skip:
 			continue;
 		}
 
-		if ( ch[0] & 0x80 )
+		if ( IsLeadByte((unsigned char)ch[0]) )
 		{
 			n++;
 			ch[1] = szText[n];
@@ -1682,7 +1687,7 @@ skip:
 
 			FillRect( _hDc, &rect, (HBRUSH)GetStockObject(BLACK_BRUSH) );
 
-			::TextOut( _hDc, 0, 0, sz, ch[0] & 0x80 ? 2 : 1 );
+			::TextOut( _hDc, 0, 0, sz, IsLeadByte((unsigned char)ch[0]) ? 2 : 1 );
 
 			D3DLOCKED_RECT d3dlr;
 #ifdef USE_RENDER

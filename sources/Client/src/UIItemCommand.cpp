@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#include "TextChar.h"
 #include "uiitemcommand.h"
 #include "ItemRecord.h"
 #include "uicompent.h"
@@ -217,10 +218,14 @@ void CItemCommand::SaleRender( int x, int y, int nWidth, int nHeight )
 		static char szBuf2[128] = { 0 };
 		static int nEnter = 0;
 		strncpy( szBuf1, _pItem->szName, sizeof(szBuf1) );
-		nEnter = (int)strlen( szBuf1 ) / 2;
-		if( _ismbslead( (unsigned char*)szBuf1, (unsigned char*)&szBuf1[nEnter] ) )
+		// Режем по символам: середина названия не должна попасть
+		// внутрь двухбайтового символа. Раньше здесь стоял
+		// _ismbslead, который смотрит в системную локаль, а не
+		// в кодировку игры.
 		{
-			nEnter--;
+			int nLen  = (int)strlen( szBuf1 );
+			int nHalf = CharCount( szBuf1, nLen ) / 2;
+			nEnter   = CharOffset( szBuf1, nLen, nHalf );
 		}
 		if( nEnter<0 ) return;
 
@@ -412,10 +417,14 @@ void CItemCommand::OwnDefRender( int x, int y, int nWidth, int nHeight )
 		static char szBuf2[128] = { 0 };
 		static int nEnter = 0;
 		strncpy( szBuf1, _pItem->szName, sizeof(szBuf1) );
-		nEnter = (int)strlen( szBuf1 ) / 2;
-		if( _ismbslead( (unsigned char*)szBuf1, (unsigned char*)&szBuf1[nEnter] ) )
+		// Режем по символам: середина названия не должна попасть
+		// внутрь двухбайтового символа. Раньше здесь стоял
+		// _ismbslead, который смотрит в системную локаль, а не
+		// в кодировку игры.
 		{
-			nEnter--;
+			int nLen  = (int)strlen( szBuf1 );
+			int nHalf = CharCount( szBuf1, nLen ) / 2;
+			nEnter   = CharOffset( szBuf1, nLen, nHalf );
 		}
 		if( nEnter<0 ) return;
 

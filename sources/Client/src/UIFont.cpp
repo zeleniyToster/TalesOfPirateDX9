@@ -3,6 +3,7 @@
 #include "gameapp.h"
 
 #include "GlobalVar.h"
+#include "TextChar.h"
 
 
 using namespace std;
@@ -410,7 +411,11 @@ void CTextScrollHint::Render()
 				else if( m>(int)(CopyHints.length()-scrollneedspace-1) )
 				{
 					char c = (*it)->hint.at(m);
-					if((unsigned char)c >=(unsigned char)0x80)
+					// Проверка старшего бита заменена на обращение к
+					// кодировке игры: при русской раскладке русская буква
+					// — одиночный символ и не должна сдвигать прокрутку
+					// на два байта.
+					if(IsLeadByte( (unsigned char)c ))
 					{
 						if(m>=(int)CopyHints.length())  m = 0;
 						(*it)->hint = (*it)->hint.erase(0,m);
@@ -423,7 +428,7 @@ void CTextScrollHint::Render()
 				{
 					char c = (*it)->hint.at(m);
 					char d = (*it)->hint.at(m+scrollneedspace-1);
-					if((unsigned char)c >=(unsigned char)0x80||(unsigned char)d >=(unsigned char)0x80)
+					if(IsLeadByte( (unsigned char)c ) || IsLeadByte( (unsigned char)d ))
 					{
 						(*it)->hint = (*it)->hint.substr(m,scrollneedspace-1);
 						m+=1;

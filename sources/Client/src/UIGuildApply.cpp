@@ -3,6 +3,7 @@
 //------------------------------------------------------------------------
 
 #include "stdafx.h"
+#include "TextChar.h"
 #include "uiguildapply.h"
 #include "netguild.h"
 #include "UIFormMgr.h"
@@ -58,6 +59,8 @@ void CUIGuildApply::ShowForm()
 inline bool IsValidGuildName(const char *name,unsigned short len, bool bEng)
 {
 	const unsigned char *l_name =reinterpret_cast<const unsigned char *>(name);
+
+#if ARBAH_TEXT_CP == 936
 	bool l_ishan	=false;
 	for(unsigned short i=0;i<len;i++)
 	{
@@ -66,7 +69,7 @@ inline bool IsValidGuildName(const char *name,unsigned short len, bool bEng)
 			return false;
 		}else if(l_ishan)
 		{
-			if(l_name[i-1] ==0xA1 && l_name[i] ==0xA1)	//¹ýÂËÈ«½Ç¿Õ¸ñ
+			if(l_name[i-1] ==0xA1 && l_name[i] ==0xA1)
 			{
 				return false;
 			}
@@ -82,7 +85,7 @@ inline bool IsValidGuildName(const char *name,unsigned short len, bool bEng)
 			l_ishan	=true;
 		}else if((l_name[i] >='A' && l_name[i] <='Z') ||(l_name[i] >='a' && l_name[i] <='z') ||(l_name[i] >='0' && l_name[i] <='9'))
 		{
-			
+
 		}
 		else if( bEng && l_name[i] == ' ' )
 		{
@@ -93,6 +96,19 @@ inline bool IsValidGuildName(const char *name,unsigned short len, bool bEng)
 		}
 	}
 	return !l_ishan;
+#else
+	// Single-byte layout: every byte >= 0x80 stands alone (Cyrillic in
+	// cp1251). The old '>0x80' test rejected Cyrillic names because the
+	// first letter was taken as the lead byte of a Chinese character.
+	for(unsigned short i=0;i<len;i++)
+	{
+		unsigned char c = l_name[i];
+		if(!c)			return false;
+		if(c < 0x20)	return false;
+		if(c == 0x7F)	return false;
+	}
+	return true;
+#endif
 }
 
 void CUIGuildApply::OnEscClose(CForm* pForm)

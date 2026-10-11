@@ -9,6 +9,7 @@
 #ifndef COMMFUNC_H
 #define COMMFUNC_H
 
+#include "TextChar.h"
 #include "CompCommand.h"
 #include "SkillRecord.h"
 #include "CharacterRecord.h"
@@ -423,9 +424,10 @@ inline bool isEmail(const char* email) {
 inline bool IsValidName(const char *name,unsigned short len)
 {
 	const unsigned char *l_name =reinterpret_cast<const unsigned char *>(name);
+
+#if ARBAH_TEXT_CP == 936
+	// Китайская сборка: байт 0x81..0xFE — ведущий, следующий хвостовой.
 	bool l_ishan	=false;
-	//if (len == 0)
-	//	return 0;
 	for(unsigned short i=0;i<len;i++)
 	{
 		if(!l_name[i])
@@ -433,7 +435,7 @@ inline bool IsValidName(const char *name,unsigned short len)
 			return false;
 		}else if(l_ishan)
 		{
-			if(l_name[i-1] ==0xA1 && l_name[i] ==0xA1)	//����ȫ�ǿո�
+			if(l_name[i-1] ==0xA1 && l_name[i] ==0xA1)	// 全角空格
 			{
 				return false;
 			}
@@ -449,13 +451,27 @@ inline bool IsValidName(const char *name,unsigned short len)
 			l_ishan	=true;
 		}else if((l_name[i] >='A' && l_name[i] <='Z') ||(l_name[i] >='a' && l_name[i] <='z') ||(l_name[i] >='0' && l_name[i] <='9'))
 		{
-			
+
 		}else
 		{
 			return false;
 		}
 	}
 	return !l_ishan;
+#else
+	// Однобайтовая раскладка. Раньше здесь стояло «>0x80»: русская буква
+	// считалась началом китайского символа, следующая проверялась как
+	// хвостовая и имя из двух букв отвергалось. Теперь каждый байт с
+	// 0x80 и выше — самостоятельный символ (кириллица в cp1251).
+	for(unsigned short i=0;i<len;i++)
+	{
+		unsigned char c = l_name[i];
+		if(!c)			return false;	// обрыв строки
+		if(c < 0x20)	return false;	// управляющие символы
+		if(c == 0x7F)	return false;
+	}
+	return true;
+#endif
 }
 
 inline const char* g_GetUseItemFailedInfo(short sErrorID)

@@ -2,6 +2,7 @@
 #include "uirichedit.h"
 #include "gameapp.h"
 #include "uieditkey.h"
+#include "TextChar.h"
 
 using namespace GUI;
 //---------------------------------------------------------------------------
@@ -125,10 +126,12 @@ bool CRichEdit::OnChar( char c )
 			if( _nEnterPos==1 )
 			{
 				IsError = false;
-				if( _ismbslead( (unsigned char*)_szEnter, (unsigned char*)&_szEnter[0] )==0 
-					&& _ismbstrail( (unsigned char*)_szEnter, (unsigned char*)&_szEnter[0] )==0 )
+// см. UIEditKey.cpp: _ismbslead смотрит в системную локаль,
+				// а не в кодировку игры, и при чужой локали русская буква
+				// считалась началом китайского символа
+				if( !IsLeadByte( (unsigned char)c ) && !IsTrailByte( (unsigned char)c ) )
 				{
-					// it is English or a control character
+					// it is a single-byte character
 					_nEnterPos = 0;
 
 					_cArticle.AddChar( c );
@@ -136,9 +139,9 @@ bool CRichEdit::OnChar( char c )
 			}
 			else if( _nEnterPos==2 )
 			{
-				if( _ismbslead( (unsigned char*)_szEnter, (unsigned char*)&_szEnter[0] )==-1 && _ismbstrail( (unsigned char*)_szEnter, (unsigned char*)&_szEnter[1] )==-1 )
+				if( IsLeadByte( (unsigned char)_szEnter[0] ) && IsTrailByte( (unsigned char)_szEnter[1] ) )
 				{
-					// a Chinese character
+					// a two-byte character
 					_cArticle.AddChar(_szEnter[0], _szEnter[1] );
 
 					IsError = false;

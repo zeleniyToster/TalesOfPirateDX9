@@ -2,6 +2,7 @@
 #ifndef GUILD_H
 #define GUILD_H
 //#include "stdafx.h"
+#include "TextChar.h"
 
 #include "character.h"
 
@@ -26,44 +27,56 @@ public:
 	static void cmd_GuildChallenge( CCharacter* pCha, BYTE byLevel, DWORD dwMoney );
 	static void cmd_GuildLeizhu( CCharacter* pCha, BYTE byLevel, DWORD dwMoney );
 	static bool IsValidGuildName(const char *name,unsigned short len)
-	{
-		const unsigned char *l_name =reinterpret_cast<const unsigned char *>(name);
-		bool l_ishan	=false;
-		for(unsigned short i=0;i<len;i++)
-		{
-			if(!l_name[i])
-			{
-				return false;
-			}else if(l_ishan)
-			{
-				if(l_name[i-1] ==0xA1 && l_name[i] ==0xA1)	//filters out full-width spaces
-				{
-					return false;
-				}
-				if(l_name[i] >0x3F && l_name[i] <0xFF && l_name[i] !=0x7F)
-				{
-					l_ishan =false;
-				}else
-				{
-					return false;
-				}
-			}else if(l_name[i]>0x80 && l_name[i] <0xFF)
-			{
-				l_ishan	=true;
-			}else if((l_name[i] >='A' && l_name[i] <='Z') ||(l_name[i] >='a' && l_name[i] <='z') ||(l_name[i] >='0' && l_name[i] <='9'))
-			{
+{
+	const unsigned char *l_name =reinterpret_cast<const unsigned char *>(name);
 
-			}
-			else if( l_name[i] == ' ' )
-			{
-			}
-			else
+#if ARBAH_TEXT_CP == 936
+	bool l_ishan	=false;
+	for(unsigned short i=0;i<len;i++)
+	{
+		if(!l_name[i])
+		{
+			return false;
+		}else if(l_ishan)
+		{
+			if(l_name[i-1] ==0xA1 && l_name[i] ==0xA1)
 			{
 				return false;
 			}
+			if(l_name[i] >0x3F && l_name[i] <0xFF && l_name[i] !=0x7F)
+			{
+				l_ishan =false;
+			}else
+			{
+				return false;
+			}
+		}else if(l_name[i]>0x80 && l_name[i] <0xFF)
+		{
+			l_ishan	=true;
+		}else if((l_name[i] >='A' && l_name[i] <='Z') ||(l_name[i] >='a' && l_name[i] <='z') ||(l_name[i] >='0' && l_name[i] <='9'))
+		{
+
 		}
-		return !l_ishan;
+		else
+		{
+			return false;
+		}
 	}
+	return !l_ishan;
+#else
+	// Single-byte layout: every byte >= 0x80 stands alone (Cyrillic in
+	// cp1251). The old '>0x80' test rejected Cyrillic names because the
+	// first letter was taken as the lead byte of a Chinese character.
+	for(unsigned short i=0;i<len;i++)
+	{
+		unsigned char c = l_name[i];
+		if(!c)			return false;
+		if(c < 0x20)	return false;
+		if(c == 0x7F)	return false;
+	}
+	return true;
+#endif
+}
 };
 
 

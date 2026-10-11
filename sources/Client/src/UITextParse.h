@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include "UIFont.h"
+#include "TextChar.h"
 
 namespace GUI
 {
@@ -73,38 +74,30 @@ inline std::string  GetSelfString(std::string str , int n , bool flag )
 	std::string strReturn;
 	const char* s =  str.c_str() ;
 
-	if ( (int)strlen(s) <=n )
+	int len = (int) strlen(s);
+
+	if ( len <=n )
 	{
 		strReturn = s ;
 		return strReturn ;
 	}
-	
+
+	// Шаг по символам, а не по байтам. Раньше здесь стояло
+	// «если байт со старшим битом — i += 2», из-за чего русская
+	// буква съедала соседнюю, а длина строки считалась вдвое.
 	int i ;
 	if ( flag )
 	{
-		i=0;
-		while ( i< n )
-		{
-			if  (s[i] & 0x80)
-				i+=2;
-			else
-				i+=1;
-		}
+		i = CharOffset(s, len, n);
 		strReturn  = str.substr( 0 , i );
 
 	}
-	else 
+	else
 	{
-		i=0;
-		int len = (int) str.length() -1 ;
-		while ( i< n	)
-		{			
-			if  (s[len-i] & 0x80)
-				i+=2;
-			else 
-				i +=1;
-		}
-		strReturn  = str.substr( len +1- i   , i );
+		int total = CharCount(s, len);
+		int keep  = (total > n) ? total - n : 0;
+		i = CharOffset(s, len, keep);
+		strReturn  = str.substr( i );
 	}
 
 	return strReturn ;
