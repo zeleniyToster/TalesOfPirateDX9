@@ -161,6 +161,29 @@ bool CMPFont::CreateFont( LPDIRECT3DDEVICE8 pd3dDevice, char szFontName[], int n
 	_hBmpOld  = SelectObject( _hDc, _hBmp );
 	_hFontOld = (HFONT)SelectObject( _hDc, _hFont );
 
+	// Ячейка глифа в атласе ровно _TextSize на _TextSize, и шрифт
+	// запрошен высотой _TextSize. Но lfHeight в GDI — это высота
+	// знакоместа, а восходящий и нисходящий элементы вместе обычно
+	// выше: у Courier New нисходящий элемент глубокий. В итоге хвост
+	// буквы «р» и нижняя половина скобок уходили за нижний край ячейки
+	// и обрезались. Замеряем фактическое знакоместо и при нехватке
+	// пересоздаём шрифт пропорционально меньше.
+	{
+		TEXTMETRIC tm;
+		if ( ::GetTextMetrics( _hDc, &tm ) && tm.tmHeight > _TextSize )
+		{
+			LogFont.lfHeight = -( _TextSize * _TextSize / tm.tmHeight );
+			HFONT hSmaller = CreateFontIndirect( &LogFont );
+			if ( NULL != hSmaller )
+			{
+				SelectObject( _hDc, hSmaller );
+				DeleteObject( _hFont );
+				_hFont = hSmaller;
+				_hFontOld = (HFONT)SelectObject( _hDc, _hFont );
+			}
+		}
+	}
+
 	SetTextColor( _hDc, RGB(255,255,255) );
 	SetBkColor( _hDc, 0x00000000 );
 	SetTextAlign( _hDc, TA_TOP );
