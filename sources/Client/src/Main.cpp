@@ -1145,50 +1145,48 @@ void StdoutRedirect()
 int InstallFont(const char* pszPath)
 {
 	int nRet = 0;
-	char szWindow[256] = {0};
-	char szBuffer[256] = {0};
 
-	// �ж��Ƿ��Ѿ���װ�������壬���û�а�װ���Զ����?
-	GetWindowsDirectory(szWindow, sizeof(szWindow) / sizeof(szWindow[0]));// ��ȡWindowsĿ¼������·����
-	sprintf(szBuffer, "%s\\fonts\\simsun.ttc", szWindow); 
-	if(-1 !=access(szBuffer, 0))
+	// Клиент подгружает все шрифты из своей папки (.\Font). Раньше здесь
+	// грузился только simsun.ttc, и то лишь если его нет в системной
+	// папке Windows, а перебор остальных файлов был закомментирован.
+	// Из-за этого шрифт, положенный в папку клиента, не подхватывался
+	// вообще, а игра зависела от того, что случайно установлено в
+	// системе. Для контейнера с Wine это особенно неудобно: префикс
+	// внутри контейнера, и править его неудобно. Теперь шрифты едут
+	// вместе с клиентом.
+	//
+	// pszPath ожидается с завершающим разделителем, иначе имя склеится.
+	char szDir[512] = {0};
+	sprintf(szDir, "%s%s", pszPath,
+			( pszPath[0] && pszPath[strlen(pszPath) - 1] != '\\' ) ? "\\" : "" );
+
+	char szMask[600] = {0};
+	sprintf(szMask, "%s*.*", szDir);
+
+	WIN32_FIND_DATA oFinder;
+
+	HANDLE hFind = FindFirstFile(szMask, &oFinder);
+	if( hFind != INVALID_HANDLE_VALUE )
 	{
-		return nRet;
+		char szFull[768] = {0};
+		do
+		{
+			if( oFinder.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY )
+				continue;
+
+			sprintf(szFull, "%s%s", szDir, oFinder.cFileName);
+			nRet += AddFontResource(szFull);
+		}
+		while( FindNextFile(hFind, &oFinder) );
+
+		FindClose(hFind);
 	}
-	else
-	{
-		sprintf(szBuffer, "%s\\simsun.ttc", pszPath);
-		nRet += AddFontResource(szBuffer);
-	}
-
-
-	//WIN32_FIND_DATA oFinder;
-
-	//sprintf(szBuffer, "%s%s", pszPath, "*.*");
-	//HANDLE hFind = FindFirstFile(szBuffer, &oFinder);
-
-	//if(hFind == INVALID_HANDLE_VALUE)
-	//{
-	//	return 0;
-	//}
-
-	//// �����������Ŀ�?
-	//while(FindNextFile(hFind, &oFinder) != 0) 
-	//{
-	//	if(oFinder.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
-	//	{
-	//		continue;
-	//	}
-
-	//	sprintf(szBuffer, "%s%s", pszPath, oFinder.cFileName);
-	//	nRet += AddFontResource(szBuffer);	//AddFontResourceEx(szBuffer, FR_NOT_ENUM, 0);
-	//}
-
-	//FindClose(hFind);
 
 	if(nRet)
 	{
-		SendMessage(HWND_BROADCAST,WM_FONTCHANGE,0,0);  // �㲥֪ͨϵͳ
+		// шрифты добавились в процесс — сообщаем окнам, чтобы они
+		// пересчитали раскладки
+		SendMessage(HWND_BROADCAST,WM_FONTCHANGE,0,0);
 	}
 
 	return nRet;
