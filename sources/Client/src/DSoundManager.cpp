@@ -28,7 +28,9 @@ DSoundManager::DSoundManager(HWND theHWnd)
 		mSourceSounds[i] = NULL;
 		mBaseVolumes[i] = 1;
 		mBasePans[i] = 0;
+		mSourceLastUse[i] = 0;
 	}
+	mSourceUseTick = 0;
 
 	for (i = 0; i < MAX_CHANNELS; i++)
 		mPlayingSounds[i] = NULL;
@@ -142,9 +144,18 @@ bool DSoundManager::Initialized()
 
 int DSoundManager::VolumeToDB(double theVolume)
 {
+	// Ползунок в нуле — настоящая тишина, а не нижний предел шкалы:
+	// иначе выключить звук было бы нечем.
+	if (theVolume <= 0.0)
+		return -10000;
+
 	int aVol = (int) ((log10(1 + theVolume*9) - 1.0) * 2333);
+	// Раньше здесь стояло -10000: всё, что тише примерно -20 дБ,
+	// уходило в абсолютную тишину. Порог попадал на первые два
+	// деления ползунка, поэтому звук сначала пропадал, а потом
+	// сразу выскакивал на ~11% амплитуды.
 	if (aVol < -2000)
-		aVol = -10000;
+		aVol = -2000;
 
 	return aVol;
 }
@@ -585,9 +596,20 @@ bool DSoundManager::LoadSound(int theSfxID, const string& theFilename)
 int DSoundManager::LoadSound(const string& theFilename)
 {
 	int i;
+
+	// Заметка времени своевременна: счётчик бегущий, поэтому
+	// одинаковые метки у двух источников невозможны, и «самый старый»
+	// определяется однозначно.
+	mSourceUseTick++;
+
+	// Кеш: файл уже загружен. Обновляем метку — недавно востребованный
+	// источник удерживается от вытеснения.
 	for (i = 0; i < MAX_SOURCE_SOUNDS; i++)
 		if (mSourceFileNames[i] == theFilename)
+		{
+			mSourceLastUse[i] = mSourceUseTick;
 			return i;
+		}
 
 	for (i = MAX_SOURCE_SOUNDS-1; i >= 0; i--)
 	{		
@@ -600,7 +622,53 @@ int DSoundManager::LoadSound(const string& theFilename)
 		}
 	}	
 
-	return -1;
+	// Пул заполнен. Раньше здесь просто возвращался -1, и с этого момента
+	// новые звуки не проигрывались вообще: каждый файл навсегда занимал
+	// слот, а освобождать его было некому. Теперь жертвует самый давно
+	// не востребованный источник — он всё равно молчит, тогда как
+	// свежий нужен прямо сейчас.
+	//
+	// Перебираем все источники, потому что самый старый может сейчас
+	// играть: обрывать звук на середине нельзя, поэтому играющие
+	// пропускаются и жертвой выбирается самый старый из молчащих.
+	int iOldest = -1;
+	for (i = 0; i < MAX_SOURCE_SOUNDS; i++)
+	{
+		if (IsSourceInUse(i))
+			continue;
+		if (iOldest < 0 || mSourceLastUse[i] < mSourceLastUse[iOldest])
+			iOldest = i;
+	}
+
+	if (iOldest < 0)
+		return -1;          // все источники заняты — звук не взять
+
+	ReleaseSound((unsigned int)iOldest);
+
+	if (!LoadSound(iOldest, theFilename))
+		return -1;
+	mSourceLastUse[iOldest] = mSourceUseTick;
+	return iOldest;
+}
+
+bool DSoundManager::IsSourceInUse(int theSfxID)
+{
+	if (theSfxID < 0 || theSfxID >= MAX_SOURCE_SOUNDS)
+		return false;
+
+	LPDIRECTSOUNDBUFFER aBuffer = mSourceSounds[theSfxID];
+	if (aBuffer == NULL)
+		return false;
+
+	// Экземпляр хранит указатель на исходный буфер, поэтому сверяем
+	// именно его: иначе нельзя отличить источник, который сейчас
+	// играет, от молчащего.
+	for (int ch = 0; ch < MAX_CHANNELS; ch++)
+		if (mPlayingSounds[ch] != NULL && mPlayingSounds[ch]->IsPlaying())
+			if (mPlayingSounds[ch]->mSourceSoundBuffer == aBuffer)
+				return true;
+
+	return false;
 }
 
 void DSoundManager::ReleaseSound(unsigned int theSfxID)

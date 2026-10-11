@@ -27,15 +27,21 @@ unsigned int CAudioThread::Run()
     {
         if(_nCurMusicID)
         {
+            // Идентификатор забираем ДО воспроизведения. Раньше он
+            // обнулялся после вызова play(), и запрос, пришедший в это
+            // окно, затирался: смена музыки терялась, и трек новой
+            // локации не запускался — старая продолжала крутиться.
+            DWORD aMusicID = _nCurMusicID;
+            bool  aLoop    = _bLoop;
+            _nCurMusicID   = 0;
+
             try
             {
-                AudioSDL::get_instance()->play(_nCurMusicID, _bLoop);
+                AudioSDL::get_instance()->play(aMusicID, aLoop);
             }
             catch(...)
             {
             }
-
-            _nCurMusicID = 0;
         }
         _nLastTime = GetTickCount();
         Sleep(30);

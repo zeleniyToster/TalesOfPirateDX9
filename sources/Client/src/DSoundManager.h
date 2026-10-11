@@ -18,13 +18,22 @@ protected:
 	ulong					mSourceDataSizes[MAX_SOURCE_SOUNDS];
 	double					mBaseVolumes[MAX_SOURCE_SOUNDS];
 	int						mBasePans[MAX_SOURCE_SOUNDS];
-	DSoundInstance*			mPlayingSounds[MAX_CHANNELS];	
+	DSoundInstance*			mPlayingSounds[MAX_CHANNELS];
 	double					mMasterVolume;
 	DWORD					mLastReleaseTick;
+	// Метка последнего обращения к источнику. По ней выбирается,
+	// какой из загруженных звуков вытесняется, когда пул заполнен:
+	// жертвует самый давно не востребованный, а не тот, что попался
+	// первым при загрузке.
+	DWORD					mSourceLastUse[MAX_SOURCE_SOUNDS];
+	DWORD					mSourceUseTick;
 
 protected:
 	int						FindFreeChannel();
 	int						VolumeToDB(double theVolume);
+	// Играет ли сейчас источник на каком-либо канале. Источник, который
+	// сейчас звучит, вытеснять нельзя — иначе звук оборвётся.
+	bool					IsSourceInUse(int theSfxID);
 	bool					LoadOGGSound(unsigned int theSfxID, const std::string& theFilename);
 	bool					LoadWAVSound(unsigned int theSfxID, const std::string& theFilename);
 	bool					LoadAUSound(unsigned int theSfxID, const std::string& theFilename);

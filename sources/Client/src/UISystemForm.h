@@ -36,7 +36,10 @@ public:
 		int nMusicSound;
 		int nMusicEffect;
 
-		Audio() : nMusicSound(0), nMusicEffect(0) {}
+		// Шкала ползунка 0..10. Раньше здесь стоял ноль, из-за чего
+		// свежая установка стартовала с полностью выключенным звуком,
+		// и игрок слышал его только после того, как сам дёрнет ползунок.
+		Audio() : nMusicSound(10), nMusicEffect(10) {}
 	} m_audioProp;
 
 	struct SGameOption {

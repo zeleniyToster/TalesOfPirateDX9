@@ -17,7 +17,10 @@ public:
     void FrameMove();
 
 private:
-    DWORD   _nCurMusicID;
-    bool    _bLoop;
+    // Пишет play() из игрового потока, читает Run() из звукового,
+    // поэтому volatile: без него компилятор вправе закэшировать
+    // значение в регистре и не увидеть новый запрос.
+    volatile DWORD   _nCurMusicID;
+    volatile bool    _bLoop;
     DWORD   _nLastTime;
 };
