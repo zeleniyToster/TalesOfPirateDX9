@@ -1,25 +1,24 @@
-// [Gemini.Datasets(v = 2.5, t = Gemini.Datasets.ItemType6C, s = 108, n = 100)]
 0	0
-1	Mammoth 
-2	Precise 
-3	Colossus 
-4	Tempest 
-5	Sage 
+1	Мамонт 
+2	Точность 
+3	Колосс 
+4	Буря 
+5	Мудрец 
 6	0
 7	0
 8	0
 9	0
 10	0
-11	Black Dragon 
-12	Red Dragon 
-13	Blue Dragon 
-14	Silver Dragon 
-15	Draconic 
-16	Emerald Dragon 
-17	Amber Dragon 
-18	Gold Dragon 
-19	Sacred Dragon 
-20	Demonic Dragon 
+11	Черный дракон
+12	Красный дракон
+13	Синий дракон
+14	Серебряный дракон
+15	Драконий
+16	Изумрудный дракон
+17	Янтарный дракон
+18	Золотой дракон
+19	Священный дракон
+20	Дьявольский дракон
 21	0
 22	0
 23	0
@@ -29,17 +28,17 @@
 27	0
 28	0
 29	0
-30	Trash 
-31	Noob 
-32	Unholy 
-33	Cursed 
-34	Unlucky 
-35	Normal 
-36	Uncommon 
-37	Remarkable 
-38	Epic 
-39	Eldritch 
-40	Legendary 
+30	Trash
+31	Noob
+32	Unholy
+33	Cursed
+34	Unlucky
+35	Normal
+36	Uncommon
+37	Remarkable
+38	Epic
+39	Eldritch
+40	Legendary
 41	0
 42	0
 43	0
@@ -49,16 +48,16 @@
 47	0
 48	0
 49	0
-50	Cardic 
-51	Cardic 
-52	Cardic 
-53	Cardic 
-54	Cardic 
-55	Cardic 
-56	Cardic 
-57	Cardic 
-58	Cardic 
-59	Cardic 
+50	Кардик
+51	Кардик
+52	Кардик
+53	Кардик
+54	Кардик
+55	Кардик
+56	Кардик
+57	Кардик
+58	Кардик
+59	Кардик
 60	0
 61	0
 62	0
@@ -69,34 +68,33 @@
 67	0
 68	0
 69	0
-70	Offensive 
-71	Defensive 
-72	Enhanced 
-73	Awakened 
-74	Red 
-75	Blue 
-76	Green 
-77	Orange 
-78	Black 
-79	Purple 
-80	Cyan 
-81	Brown 
-82	Pink 
-83	Silver 
+70	Offensive
+71	Defensive
+72	Enhanced
+73	Awakened
+74	Red
+75	Blue
+76	Green
+77	Orange
+78	Black
+79	Purple
+80	Cyan
+81	Brown
+82	Pink
+83	Silver
 84	0
 85	0
 86	0
 87	0
 88	0
 89	0
-90	Xoebe 
-91	Xoebe 
-92	Xoebe 
-93	Xoebe 
-94	Xoebe 
-95	Aero 
+90	Виль
+91	Виль
+92	Виль
+93	Виль
+94	Виль
+95	Aero
 96	0
 97	0
 98	0
 99	0
-// [Gemini Decompiler] End of data.

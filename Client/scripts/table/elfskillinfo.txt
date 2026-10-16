@@ -1,29 +1,27 @@
-// [Gemini.Datasets(v = 2.5, t = Gemini.Datasets.ElfSkillInfo74, s = 116, n = 27)]
-1	Novice Protection	1	1
-2	Standard Protection	1	2
-3	Expert Protection	1	3
-4	Novice Berserk	2	1
-5	Standard Berserk	2	2
-6	Expert Berserk	2	3
-7	Novice Magic	3	1
-8	Standard Magic	3	2
-9	Expert Magic	3	3
-10	Novice Recover	4	1
-11	Standard Recover	4	2
-12	Expert Recover	4	3
-13	Novice Meditation	5	1
-14	Standard Meditation	5	2
-15	Expert Meditation	5	3
-16	Novice Manufacturing	13	1
-17	Standard Manufacturing	13	2
-18	Advance Manufacturing	13	3
-19	Novice Crafting	14	1
-20	Standard Crafting	14	2
-21	Advance Crafting	14	3
-22	Novice Analyze	15	1
-23	Standard Analyze	15	2
-24	Advance Analyze	15	3
-25	Novice Cooking	16	1
-26	Standard Cooking	16	2
-27	Advanced Cooking	16	3
-// [Gemini Decompiler] End of data.
+1	Начальная Защита	1	1
+2	Стандартная Защита	1	2
+3	Продвинутая Защита	1	3
+4	Начальный Берсерк	2	1
+5	Стандартный Берсерк	2	2
+6	Продвинутый Берсерк	2	3
+7	Начальная Магия	3	1
+8	Стандартная Магия	3	2
+9	Продвинутая Магия	3	3
+10	Начальное Восстановление	4	1
+11	Стандартное Восстановление	4	2
+12	Продвинутое Восстановление	4	3
+13	Начальная Медитация	5	1
+14	Стандартная Медитация	5	2
+15	Продвинутая Медитация	5	3
+16	Производство нач. ур.	13	1
+17	Обычное производство	13	2
+18	Продвинутое производство	13	3
+19	Ремесло нач. ур.	14	1
+20	"Ремесло" станд. ур.	14	2
+21	"Ремесло", продвинутый уровень	14	3
+22	Простой анализ	15	1
+23	Обычный анализ	15	2
+24	Анализ прогресса	15	3
+25	Кулинария для начинающих	16	1
+26	Обычная Кулинария	16	2
+27	Кулинария повышенного уровня	16	3

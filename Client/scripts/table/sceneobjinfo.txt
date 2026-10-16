@@ -1,661 +1,660 @@
-//ID	ДЈРНОДјюГы	ЦРОДГыіЖ	АаРН	АаРНІОКэ1	АаРНІОКэ2	Special Parameter	ЖЅРР№вУ°Пм	µг№вФґУ°Пм	·зёс	Sign	±іѕ°Й«їЄ№Ш	КЬµШ±нТхУ°УЎПу
-1	by-bd001.lmo	Argent Palace 0	0	0	0	0	1	0	1	0	1	0
-2	by-bd002.lmo	Argent Navy Adm	0	0	0	0	1	0	1	0	1	0
-3	by-bd003.lmo	Argent Bank HQ 	0	0	0	0	1	0	1	0	1	0
-4	by-bd004.lmo	Argent Commerce	0	0	0	0	1	0	1	0	1	0
-5	by-bd005.lmo	Argent Blacksmi	0	0	0	0	1	0	1	0	1	1
-6	nml-bd141.lmo	Whirlpool 01	0	0	0	0	0	0	9	0	1	0
-7	by-bd007.lmo	Argent Trading 	0	0	0	0	1	0	1	0	1	0
-8	by-bd008.lmo	Argent Shipyard	0	0	0	0	1	0	1	0	1	0
-9	by-bd009.lmo	Argent Deep Blu	0	0	0	0	1	0	1	0	1	0
-10	by-bd010.lmo	Argent Bar 01	0	0	0	0	0	0	1	0	1	0
-11	by-bd011.lmo	Argent Church 0	0	0	0	0	1	0	1	0	1	0
-12	nml-bd150.lmo	Broken Bridge 0	0	0	0	0	1	0	9	0	1	1
-13	by-bd013.lmo	Argent Lighthou	0	0	0	0	0	0	1	0	1	0
-14	by-bd014-1.lmo	Argent Harbor M	0	0	0	0	1	0	1	0	1	0
-15	by-bd014-2.lmo	Argent Harbor M	0	0	0	0	1	0	1	0	1	0
-16	by-bd014-3.lmo	Argent Harbor C	0	0	0	0	1	0	1	0	1	0
-17	by-bd014-4.lmo	Argent Harbor C	0	0	0	0	1	0	1	0	1	0
-18	by-bd014-5.lmo	Argent Harbor H	0	0	0	0	1	0	1	0	1	0
-19	by-bd014-6.lmo	Argent Harbor S	0	0	0	0	1	0	1	0	1	0
-20	by-bd014-7.lmo	Argent Harbor C	0	0	0	0	1	0	1	0	1	0
-21	by-bd014-8.lmo	Argent Harbor C	0	0	0	0	1	0	1	0	1	0
-22	by-bd015.lmo	Argent Bell Tow	0	0	0	0	0	0	1	0	1	0
-23	by-bd016.lmo	Argent House 01	0	0	0	0	1	0	1	0	1	0
-24	by-bd017.lmo	Argent House 02	0	0	0	0	1	0	1	0	1	0
-25	by-bd018.lmo	Argent Guardhou	0	0	0	0	1	0	1	0	1	0
-26	nml-bd151.lmo	Volcano 01	0	0	0	0	0	0	9	0	1	1
-27	by-bd020.lmo	Argent Warehous	0	0	0	0	1	0	1	0	1	0
-28	nml-bd152.lmo	Aquatic Rock 01	0	0	0	0	1	0	9	0	1	1
-29	by-bd022.lmo	Argent Waterwhe	0	0	0	0	1	0	1	0	1	0
-30	by-bd023.lmo	Argent Harbor S	0	0	0	0	1	0	1	0	1	0
-31	by-bd024.lmo	Argent Harbor S	0	0	0	0	1	0	1	0	1	0
-32	by-bd025.lmo	Argent Harbor S	0	0	0	0	1	0	1	0	1	0
-33	by-bd026.lmo	Argent Harbor C	0	0	0	0	1	0	1	0	1	0
-34	by-bd027.lmo	Argent Church B	0	0	0	0	1	0	1	0	1	0
-35	nml-bd153.lmo	Underwater Stat	0	0	0	0	1	0	9	0	1	1
-36	by-bd036.lmo	Argent Street L	0	0	0	0	1	0	1	0	1	0
-37	by-bd037.lmo	Argent City Fen	0	0	0	0	1	0	1	0	1	0
-38	by-bd038.lmo	Argent Gate Pil	0	0	0	0	1	0	1	0	1	0
-39	by-bd039.lmo	Argent City Wal	0	0	0	0	1	0	1	0	1	0
-40	by-bd040.lmo	Argent Gate 01	0	0	0	0	1	0	1	0	1	0
-41	lt-bd038.lmo	Thundoria Harbo	0	0	0	0	1	0	2	0	1	0
-42	lt-bd002.lmo	Thundoria Navy 	0	0	0	0	1	0	2	0	1	0
-43	lt-bd001-01.lmo	Thundoria Palac	0	0	0	0	1	0	2	0	1	0
-44	lt-bd001-02.lmo	Thundoria Palac	0	0	0	0	1	0	2	0	1	0
-45	lt-bd005.lmo	Thundoria Black	0	0	0	0	1	0	2	0	1	0
-46	sl-bd038.lmo	Old Shaitan Wal	0	0	0	0	1	0	3	0	1	1
-47	lt-bd007.lmo	Thundoria Bank 	0	0	0	0	1	0	2	0	1	0
-48	sl-bd039.lmo	Old Shaitan Wal	0	0	0	0	1	0	3	0	1	1
-49	lt-bd009.lmo	Thundoria Castl	0	0	0	0	1	0	2	0	1	0
-50	lt-bd011.lmo	Thundoria Statu	0	0	0	0	1	0	2	0	1	0
-51	lt-bd012.lmo	Thundoria Memor	0	0	0	0	1	0	2	0	1	0
-52	lt-bd018-11.lmo	Thundoria Castl	0	0	0	0	1	0	2	0	1	0
-53	lt-bd036-03.lmo	Thundoria Harbo	0	0	0	0	1	0	2	0	1	0
-54	lt-bd014.lmo	Thundoria Castl	0	0	0	0	1	0	2	0	1	0
-55	lt-bd015.lmo	Thundoria Castl	0	0	0	0	1	0	2	0	1	0
-56	lt-bd016.lmo	Thundoria Castl	0	0	0	0	1	0	2	0	1	0
-57	lt-bd017.lmo	Thundoria Apron	0	0	0	0	1	0	2	0	1	0
-58	lt-bd018-01.lmo	Thundoria Castl	0	0	0	0	1	0	2	0	1	0
-59	lt-bd018-02.lmo	Thundoria Castl	0	0	0	0	1	0	2	0	1	0
-60	lt-bd018-03.lmo	Thundoria Castl	0	0	0	0	1	0	2	0	1	0
-61	lt-bd018-04.lmo	Thundoria Castl	0	0	0	0	1	0	2	0	1	0
-62	lt-bd018-05.lmo	Thundoria Castl	0	0	0	0	1	0	2	0	1	0
-63	lt-bd018-06.lmo	Thundoria Castl	0	0	0	0	1	0	2	0	1	0
-64	lt-bd018-07.lmo	Thundoria Castl	0	0	0	0	1	0	2	0	1	0
-65	lt-bd018-08.lmo	Thundoria Castl	0	0	0	0	1	0	2	0	1	0
-66	lt-bd019.lmo	Thundoria 3m St	0	0	0	0	1	0	2	0	1	1
-67	lt-bd020.lmo	Thundoria Castl	0	0	0	0	1	0	2	0	1	1
-68	lt-bd021.lmo	Thundoria Stree	0	0	0	0	1	0	2	0	1	0
-69	lt-bd022.lmo	Thundoria Pond 	0	0	0	0	0	0	2	0	1	0
-70	lt-bd024.lmo	Thundoria Castl	0	0	0	0	1	0	2	0	1	0
-71	lt-bd025-01.lmo	Camp 01	0	0	0	0	1	0	2	0	1	0
-72	lt-bd025-02.lmo	Camp 02	0	0	0	0	1	0	2	0	1	0
-73	lt-bd025-03.lmo	Camp 03	0	0	0	0	1	0	2	0	1	0
-74	lt-bd025-04.lmo	Camp 04	0	0	0	0	1	0	2	0	1	0
-75	lt-bd025-05.lmo	Camp 05	0	0	0	0	1	0	2	0	1	0
-76	lt-bd025-06.lmo	Camp 06	0	0	0	0	1	0	2	0	1	0
-77	lt-bd025-07.lmo	Camp 07	0	0	0	0	1	0	2	0	1	0
-78	lt-bd025-08.lmo	Camp 08	0	0	0	0	1	0	2	0	1	0
-79	lt-bd013-01.lmo	Thundoria Navy 	0	0	0	0	1	0	2	0	1	1
-80	lt-bd013-02.lmo	Thundoria Navy 	0	0	0	0	1	0	2	0	1	1
-81	lt-bd013-03.lmo	Thundoria Navy 	0	0	0	0	1	0	2	0	1	1
-82	lt-bd013-04.lmo	Thundoria Navy 	0	0	0	0	1	0	2	0	1	1
-83	lt-bd025-09.lmo	Military Tent 0	0	0	0	0	1	0	2	0	1	0
-84	lt-bd026.lmo	Cannon 01	0	0	0	0	1	0	2	0	1	0
-85	lt-bd018-09.lmo	Thundoria Gate 	0	0	0	0	1	0	2	0	1	0
-86	lt-bd018-10.lmo	Thundoria Gate 	0	0	0	0	1	0	2	0	1	0
-87	lt-bd027.lmo	Cannon 02	0	0	0	0	1	0	2	0	1	0
-88	lt-bd028.lmo	Thundoria Inn 0	0	0	0	0	1	0	2	0	1	0
-89	lt-bd029.lmo	Thundoria Arrow	0	0	0	0	1	0	2	0	1	0
-90	lt-bd030.lmo	Lone Tower 01	0	0	0	0	1	0	7	0	1	1
-91	lt-bd031.lmo 	Thundoria Table	0	0	0	0	1	0	2	0	1	0
-92	lt-bd032.lmo 	Thundoria Chair	0	0	0	0	1	0	2	0	1	0
-93	lt-bd033.lmo	Thundoria Harbo	0	0	0	0	1	0	2	0	1	0
-94	lt-bd034.lmo	Thundoria Harbo	0	0	0	0	1	0	2	0	1	0
-95	lt-bd035.lmo	Thundoria Harbo	0	0	0	0	1	0	2	0	1	0
-96	lt-bd036-01.lmo	Thundoria Harbo	0	0	0	0	1	0	2	0	1	0
-97	lt-bd036-02.lmo	Thundoria Harbo	0	0	0	0	1	0	2	0	1	0
-98	lt-bd037.lmo	Thundoria Harbo	0	0	0	0	1	0	2	0	1	0
-99	nml-bd138.lmo	Floating Leaf 0	0	0	0	0	1	0	8	0	1	0
-100	nml-bd139.lmo	Fence 01	0	0	0	0	1	0	9	0	1	1
-101	nml-bd140.lmo	Snowy Fence 01	0	0	0	0	1	0	9	0	1	1
-102	sl-bd001.lmo	New Kara Shrine	0	0	0	0	1	0	3	0	1	0
-103	sl-bd005.lmo	Shaitan Bank 01	0	0	0	0	1	0	3	0	1	0
-104	sl-bd008.lmo	Shaitan Grocery	0	0	0	0	1	0	3	0	1	0
-105	sl-bd009.lmo	Shaitan Bar 01	0	0	0	0	1	0	3	0	1	0
-106	sl-bd012.lmo	Shaitan Blacksm	0	0	0	0	1	0	3	0	1	0
-107	sl-bd006.lmo	Shaitan Crab St	0	0	0	0	1	0	3	0	1	0
-108	sl-bd010.lmo	Shaitan Commerc	0	0	0	0	1	0	3	0	1	0
-109	sl-bd007.lmo	Shaitan Inn 01	0	0	0	0	1	0	3	0	1	0
-110	sl-bd003.lmo	Shaitan Commerc	0	0	0	0	1	0	3	0	1	0
-111	sl-bd004.lmo	Shaitan Navy Of	0	0	0	0	1	0	3	0	1	0
-112	sl-bd013.lmo	Shaitan Lightho	0	0	0	0	1	0	3	0	1	0
-113	sl-bd026-01.lmo	Shaitan Canal 0	0	0	0	0	0	0	3	0	1	0
-114	sl-bd026-02.lmo	Shaitan Aqueduc	0	0	0	0	0	0	3	0	1	0
-115	sl-bd026-03.lmo	Shaitan Aqueduc	0	0	0	0	0	0	3	0	1	0
-116	sl-bd026-04.lmo	Shaitan Aqueduc	0	0	0	0	0	0	3	0	1	0
-117	sl-bd026-05.lmo	Shaitan Aqueduc	0	0	0	0	0	0	3	0	1	0
-118	sl-bd026-06.lmo	Shaitan Aqueduc	0	0	0	0	0	0	3	0	1	0
-119	sl-bd026-07.lmo	Shaitan Aqueduc	0	0	0	0	0	0	3	0	1	0
-120	sl-bd026-08.lmo	Shaitan Aqueduc	0	0	0	0	0	0	3	0	1	0
-121	sl-bd015.lmo	Shaitan Waterwh	0	0	0	0	0	0	3	0	1	0
-122	sl-bd019.lmo	Shaitan Room 01	0	0	0	0	1	0	3	0	1	0
-123	sl-bd020.lmo	Shaitan Bungalo	0	0	0	0	1	0	3	0	1	0
-124	sl-bd025.lmo	Shaitan Fruit C	0	0	0	0	1	0	3	0	1	0
-125	sl-bd011.lmo	Shaitan Flame T	0	0	0	0	1	0	3	0	1	0
-126	sl-bd021.lmo	Shaitan Tent 01	0	0	0	0	1	0	3	0	1	1
-127	sl-bd032-01.lmo	Shaitan Stave 0	0	0	0	0	1	0	3	0	1	0
-128	sl-bd032-02.lmo	Shaitan Stave 0	0	0	0	0	1	0	3	0	1	0
-129	sl-bd032-03.lmo	Shaitan Stave 0	0	0	0	0	1	0	3	0	1	0
-130	sl-bd014-01.lmo	Shaitan Harbor 	0	0	0	0	1	0	3	0	1	0
-131	sl-bd014-02.lmo	Shaitan Harbor 	0	0	0	0	1	0	3	0	1	0
-132	sl-bd014-03.lmo	Shaitan Harbor 	0	0	0	0	1	0	3	0	1	0
-133	sl-bd014-04.lmo	Shaitan Harbor 	0	0	0	0	1	0	3	0	1	0
-134	sl-bd014-05.lmo	Shaitan Harbor 	0	0	0	0	1	0	3	0	1	0
-135	sl-bd017-01.lmo	Shaitan Wall 01	0	0	0	0	1	0	3	0	1	0
-136	sl-bd017-02.lmo	Shaitan Wall 02	0	0	0	0	1	0	3	0	1	0
-137	sl-bd017-03.lmo	Shaitan Wall 03	0	0	0	0	1	0	3	0	1	0
-138	sl-bd032.lmo	Shaitan Chair 0	0	0	0	0	1	0	3	0	1	0
-139	sl-bd033.lmo	Shaitan Table 0	0	0	0	0	1	0	3	0	1	0
-140	sl-bd034.lmo	Shaitan Parasol	0	0	0	0	1	0	3	0	1	0
-141	sl-bd026-09.lmo	Shaitan Aqueduc	0	0	0	0	1	0	3	0	1	1
-142	sl-bd030.lmo	Old Shaitan Rub	0	0	0	0	1	0	3	0	1	1
-143	sl-bd028-01.lmo	Shaitan Abandon	0	0	0	0	1	0	3	0	1	1
-144	sl-bd028-02.lmo	Shaitan Abandon	0	0	0	0	1	0	3	0	1	1
-145	sl-bd031.lmo	Shaitan Broken 	0	0	0	0	1	0	3	0	1	1
-146	sl-bd028-03.lmo	Shaitan Abandon	0	0	0	0	1	0	3	0	1	1
-147	sl-bd028-04.lmo	Shaitan Abandon	0	0	0	0	1	0	3	0	1	1
-148	sl-bd035.lmo	Shaitan Wooden 	0	0	0	0	1	0	3	0	1	1
-149	sl-bd036.lmo	Shaitan Ship Fa	0	0	0	0	1	0	3	0	1	1
-150	sl-bd037.lmo	Shaitan Pond 01	0	0	0	0	0	0	3	0	1	0
-151	bl-bd001.lmo	Icicle Grocery 	0	0	0	0	1	0	4	0	1	1
-152	bl-bd002.lmo	Icicle Commerce	0	0	0	0	1	0	4	0	1	1
-153	bl-bd003.lmo	Icicle Rampart 	0	0	0	0	1	0	4	0	1	1
-154	bl-bd004.lmo	Icicle House 01	0	0	0	0	1	0	4	0	1	1
-155	bl-bd005-01.lmo	Icicle Rubbles 	0	0	0	0	1	0	4	0	1	1
-156	bl-bd005-02.lmo	Icicle Rubbles 	0	0	0	0	1	0	4	0	1	1
-157	bl-bd005-03.lmo	Icicle Rubbles 	0	0	0	0	1	0	4	0	1	1
-158	bl-bd006.lmo	Icicle Blacksmi	0	0	0	0	1	0	4	0	1	1
-159	bl-bd007.lmo	Icicle Hotel 01	0	0	0	0	1	0	4	0	1	1
-160	bl-bd008-01.lmo	Icicle Wall 01	0	0	0	0	1	0	4	0	1	1
-161	bl-bd008-02.lmo	Icicle Wall 02	0	0	0	0	1	0	4	0	1	1
-162	bl-bd008-03.lmo	Icicle Wall 03	0	0	0	0	1	0	4	0	1	1
-163	bl-bd008-04.lmo	Icicle Wall 04	0	0	0	0	1	0	4	0	1	1
-164	bl-bd009.lmo	Snowy Crate 01	0	0	0	0	1	0	4	0	1	1
-165	bl-bd010.lmo	Snow Crate 01	0	0	0	0	1	0	4	0	1	1
-166	bl-bd011.lmo	Snow Barrel 01	0	0	0	0	1	0	4	0	1	1
-167	bl-bd012.lmo	Snow Stump 01	0	0	0	0	1	0	4	0	1	1
-168	bl-bd013.lmo	Icicle Castle 0	0	0	0	0	1	0	4	0	1	1
-169	bl-bd014.lmo	Icicle Statue 0	0	0	0	0	0	0	4	0	1	1
-170	bl-bd015.lmo	Icicle Statue 0	0	0	0	0	0	0	4	0	1	1
-171	bl-bd016.lmo	Icicle Pool 01	0	0	0	0	0	0	4	0	1	0
-172	bl-bd017.lmo	Icicle Castle P	0	0	0	0	1	0	4	0	1	1
-173	nml-bd142.lmo	Fog 01	0	0	0	0	0	0	9	0	1	0
-174	nml-bd143.lmo	Fire 01	0	0	0	0	0	0	9	0	1	0
-175	nml-bd144.lmo	Ice Tree 01	0	0	0	0	0	0	8	0	1	1
-176	nml-bd145.lmo	Autumn Hut 01	0	0	0	0	1	0	9	0	1	1
-177	nml-bd146.lmo	Autumn Altar 01	0	0	0	0	1	0	9	0	1	1
-178	nml-bd147.lmo	Mini Tent 01	0	0	0	0	1	0	9	0	1	1
-179	nml-bd148-01.lmo	Number two maze	0	0	0	0	1	0	9	0	1	1
-180	nml-bd148-02.lmo	Number two laby	0	0	0	0	1	0	9	0	1	1
-181	nml-bd149.lmo	Falling Bamboo 	0	0	0	0	1	0	9	0	1	1
-182	nml-bd136.lmo	Yellow Flowery 	0	0	0	0	1	0	8	0	1	1
-183	nml-bd135.lmo	Fat Green Tree 	0	0	0	0	1	0	8	0	1	1
-184	nml-bd137.lmo	Fat Tree 01	0	0	0	0	1	0	8	0	1	1
-185	mz-bd025.lmo	Mine Labyrinth 	0	0	0	0	0	0	7	0	1	1
-186	mz-bd024.lmo	Lamp 01	0	0	0	0	1	0	7	0	1	1
-187	nml-bd134.lmo	Green Twin Tree	0	0	0	0	1	0	8	0	1	1
-188	nml-bd133.lmo	Crimson Twin Tr	0	0	0	0	1	0	8	0	1	1
-189	nml-bd132.lmo	Red Coconut Tre	0	0	0	0	1	0	8	0	1	1
-190	nml-bd131.lmo	Red Coconut Tre	0	0	0	0	1	0	8	0	1	1
-191	mz-bd023.lmo	Mini Tramcar 01	0	0	0	0	1	0	7	0	1	1
-192	mz-bd022.lmo	Labyrinth Black	0	0	0	0	0	0	7	0	1	1
-193	mz-bd021.lmo	Mine Labyrinth 	0	0	0	0	0	0	7	0	1	1
-194	mz-bd020.lmo	Mine Labyrinth 	0	0	0	0	0	0	7	0	1	1
-195	mz-bd019.lmo	Mine Labyrinth 	0	0	0	0	0	0	7	0	1	1
-196	mz-bd018.lmo	Mine Labyrinth 	0	0	0	0	0	0	7	0	1	1
-197	mz-bd017.lmo	Mine Labyrinth 	0	0	0	0	0	0	7	0	1	1
-198	mz-bd016.lmo	Mine Labyrinth 	0	0	0	0	0	0	7	0	1	1
-199	mz-bd015.lmo	Mine Labyrinth 	0	0	0	0	0	0	7	0	1	1
-200	mz-bd014.lmo	Mine Labyrinth 	0	0	0	0	0	0	7	0	1	1
-201	mz-bd013.lmo	Mine Labyrinth 	0	0	0	0	0	0	7	0	1	1
-202	mz-bd011-06.lmo	Mine Labyrinth 	0	0	0	0	1	0	7	0	1	0
-203	mz-bd011-05.lmo	Mine Labyrinth 	0	0	0	0	1	0	7	0	1	0
-204	mz-bd011-04.lmo	Mine Labyrinth 	0	0	0	0	1	0	7	0	1	1
-205	mz-bd011-03.lmo	Mine Labyrinth 	0	0	0	0	1	0	7	0	1	1
-206	mz-bd011-02.lmo	Mine Labyrinth 	0	0	0	0	1	0	7	0	1	0
-207	mz-bd011-01.lmo	Mine Labyrinth 	0	0	0	0	1	0	7	0	1	0
-208	nml-bd130.lmo	Conch 01	0	0	0	0	1	0	9	0	1	1
-209	nml-bd129.lmo	Firepile 01	0	0	0	0	1	0	9	0	1	1
-210	nml-bd128-04.lmo	Snow Mountain M	0	0	0	0	0	0	9	0	1	0
-211	nml-bd128-03.lmo	Snow Mountain M	0	0	0	0	0	0	9	0	1	0
-212	nml-bd128-02.lmo	Snow Mountain M	0	0	0	0	0	0	9	0	1	0
-213	nml-bd128-01.lmo	Snow Mountain M	0	0	0	0	0	0	9	0	1	0
-214	nml-bd127.lmo	Thundra Snowy T	0	0	0	0	1	0	8	0	1	1
-215	nml-bd126.lmo	Red Maple 01	0	0	0	0	1	0	8	0	1	1
-216	nml-bd125.lmo	Snow Maple Tree	0	0	0	0	1	0	8	0	1	1
-217	nml-bd124.lmo	New Snow Grass 	0	0	0	0	0	0	8	0	0	1
-218	nml-bd123.lmo	Forest Snow Tre	0	0	0	0	1	0	8	0	1	1
-219	nml-bd122.lmo	Forest Snow Tre	0	0	0	0	1	0	8	0	1	1
-220	nml-bd121.lmo	Withered Snow T	0	0	0	0	1	0	8	0	1	1
-221	nml-bd120.lmo	Special Effect 	0	0	0	0	1	0	9	0	1	1
-222	nml-bd119.lmo	Snowy Weird Tre	0	0	0	0	1	0	8	0	1	1
-223	nml-bd118.lmo	Tundra Snowy Tr	0	0	0	0	1	0	8	0	1	1
-224	nml-bd117.lmo	Tundra Snowball	0	0	0	0	1	0	8	0	1	1
-225	nml-bd116.lmo	Sand Grass Tree	0	0	0	0	1	0	8	0	1	1
-226	nml-bd115.lmo	Fern Grass 01	0	0	0	0	1	0	8	0	1	1
-227	nml-bd114.lmo	Sand Strange Tr	0	0	0	0	1	0	8	0	1	1
-228	nml-bd113.lmo	Cactus 01	0	0	0	0	1	0	8	0	1	1
-229	nml-bd112.lmo	Big Sand Rock 0	0	0	0	0	1	0	9	0	1	1
-230	nml-bd111.lmo	Sand 01	0	0	0	0	1	0	9	0	1	1
-231	nml-bd110.lmo	Sand Grass 02	0	0	0	0	0	0	8	0	0	1
-232	nml-bd109.lmo	Sand Grass 01	0	0	0	0	0	0	8	0	0	1
-233	mz-bd005.lmo	Pool 03	0	0	0	0	0	0	7	0	1	1
-234	nml-bd108.lmo	New Barrel Grou	0	0	0	0	1	0	9	0	1	1
-235	nml-bd107.lmo	New Cask 01	0	0	0	0	1	0	9	0	1	1
-236	nml-bd106.lmo	Grass Fence 02	0	0	0	0	1	0	7	0	1	1
-237	nml-bd105.lmo	Grass Wall 01	0	0	0	0	1	0	7	0	1	1
-238	nml-bd104.lmo	Keel 01	0	0	0	0	1	0	9	0	1	1
-239	nml-bd103.lmo	Dragon Bone 01	0	0	0	0	1	0	9	0	1	1
-240	nml-bd102.lmo	Dragon Bone 01	0	0	0	0	1	0	9	0	1	1
-241	nml-bd101.lmo	Big Stump01	0	0	0	0	1	0	8	0	1	1
-242	nml-bd100.lmo	Desert Flower 0	0	0	0	0	1	0	8	0	1	1
-243	nml-bd099.lmo	Desert Tree 01	0	0	0	0	1	0	8	0	1	1
-244	nml-bd098.lmo	Tree Ball Flowe	0	0	0	0	1	0	8	0	1	1
-245	nml-bd097.lmo	New Grass 04	0	0	0	0	1	0	8	0	1	1
-246	mz-bd010.lmo	Pillar 01	0	0	0	0	0	0	7	0	1	1
-247	nml-bd096.lmo	Lumber Mill 01	0	0	0	0	1	0	9	0	1	0
-248	nml-bd095.lmo	Blossom 02	0	0	0	0	1	0	8	0	1	0
-249	mz-bd009.lmo	Pool 06	0	0	0	0	0	0	7	0	1	1
-250	mz-bd008.lmo	Pool 05	0	0	0	0	0	0	7	0	1	1
-251	mz-bd007.lmo	Palace Statue 0	0	0	0	0	0	0	7	0	1	1
-252	mz-bd006.lmo	Pool 04	0	0	0	0	0	0	7	0	1	1
-253	mz-bd011.lmo	Maze Wall 03	0	0	0	0	0	0	7	0	1	1
-254	mz-bd004.lmo	Pool 02	0	0	0	0	0	0	7	0	1	1
-255	mz-bd003.lmo	Pool 01	0	0	0	0	0	0	7	0	1	1
-256	mz-bd002.lmo	Wall 02	0	0	0	0	0	0	7	0	1	1
-257	mz-bd001.lmo	Wall 01	0	0	0	0	0	0	7	0	1	1
-258	nml-bd094.lmo	Flower 01	0	0	0	0	1	0	8	0	1	0
-259	nml-bd093.lmo	New Grass 03	0	0	0	0	1	0	8	0	1	1
-260	nml-bd092.lmo	New Tree 01	0	0	0	0	1	0	8	0	1	1
-261	nml-bd091.lmo	Grass 01	0	0	0	0	1	0	8	0	1	0
-262	nml-bd090.lmo	Fountain 01	0	0	0	0	0	0	9	0	1	0
-263	nml-bd089.lmo	Stone Bench 01	0	0	0	0	1	0	9	0	1	1
-264	nml-bd088.lmo	Peach Tree 02	0	0	0	0	1	0	8	0	1	0
-265	nml-bd087.lmo	Cherry Tree 01	0	0	0	0	1	0	8	0	1	0
-266	nml-bd086.lmo	New Grass 02	0	0	0	0	1	0	8	0	1	1
-267	nml-bd085.lmo	New Grass 01	0	0	0	0	1	0	8	0	1	1
-268	nml-bd084.lmo	Flower 07	0	0	0	0	0	0	8	0	0	1
-269	nml-bd083.lmo	Crimson Tree 01	0	0	0	0	1	0	8	0	1	1
-270	nml-bd082.lmo	Thousand Old Tr	0	0	0	0	1	0	8	0	1	0
-271	nml-bd081.lmo	Oil Barrel 01	0	0	0	0	1	0	9	0	1	0
-272	nml-bd080.lmo	Little Yellow L	0	0	0	0	1	0	9	0	1	0
-273	nml-bd079.lmo	Traffic Lamp 01	0	0	0	0	1	0	9	0	1	0
-274	nml-bd078.lmo	Turning Edge 01	0	0	0	0	1	0	9	0	1	0
-275	nml-bd077.lmo	6m Step 01	0	0	0	0	1	0	9	0	1	0
-276	nml-bd076.lmo	2m Stave 01	0	0	0	0	1	0	9	0	1	0
-277	nml-bd075.lmo	Small Icicle 01	0	0	0	0	0	0	9	0	1	1
-278	nml-bd074.lmo	Big Ice Pillar 	0	0	0	0	0	0	9	0	1	1
-279	nml-bd073.lmo	Old Tree 01	0	0	0	0	1	0	8	0	1	1
-280	nml-bd072.lmo	Bamboo 02	0	0	0	0	1	0	8	0	1	1
-281	nml-bd071.lmo	Bamboo 01	0	0	0	0	1	0	8	0	1	1
-282	nml-bd070.lmo	Revolving Light	0	0	0	0	1	0	9	0	1	1
-283	nml-bd069.lmo	Ocean Canteen	0	0	0	0	1	0	9	0	1	0
-284	nml-bd068.lmo	Snowy Stone 01	0	0	0	0	1	0	9	0	1	1
-285	nml-bd067.lmo	Boat 02	0	0	0	0	1	0	9	0	1	1
-286	nml-bd066.lmo	Snowy Rock 01	0	0	0	0	1	0	9	0	1	1
-287	sl-bd040.lmo	Old Shaitan Wal	0	0	0	0	1	0	3	0	1	1
-288	sl-bd041.lmo	Old Shaitan Wal	0	0	0	0	1	0	3	0	1	1
-289	nml-bd063.lmo	Red Mango Grass	0	0	0	0	1	0	8	0	1	0
-290	nml-bd062.lmo	Forest Trees 02	0	0	0	0	1	0	8	0	1	1
-291	nml-bd061.lmo	Forest Tree 01	0	0	0	0	1	0	8	0	1	1
-292	nml-bd060.lmo	Flower 06	0	0	0	0	0	0	8	0	0	1
-293	nml-bd059.lmo	Bridge 01	0	0	0	0	1	0	9	0	1	1
-294	nml-bd058.lmo	Small Bench 01	0	0	0	0	1	0	9	0	1	0
-295	nml-bd057.lmo	Rock 02	0	0	0	0	1	0	9	0	1	1
-296	nml-bd056.lmo	Rock 01	0	0	0	0	1	0	9	0	1	1
-297	nml-bd055.lmo	Flower 05	0	0	0	0	0	0	8	0	0	1
-298	nml-bd054.lmo	Tree 12	0	0	0	0	1	0	8	0	1	1
-299	nml-bd053.lmo	Tree 11	0	0	0	0	0	0	8	0	1	0
-300	nml-bd052.lmo	Tree 10	0	0	0	0	0	0	8	0	1	0
-301	nml-bd051.lmo	Fore 01	0	0	0	0	1	0	9	0	1	1
-302	nml-bd048.lmo	Bench 02	0	0	0	0	1	0	9	0	1	1
-303	nml-bd047.lmo	Market 01	0	0	0	0	1	0	1	0	1	0
-304	nml-bd046.lmo	Signpost 02	0	0	0	0	1	0	9	0	1	0
-305	nml-bd045.lmo	Singpost 01	0	0	0	0	1	0	9	0	1	0
-306	nml-bd044.lmo	Barrel Board Im	0	0	0	0	1	0	9	0	1	1
-307	nml-bd043.lmo	Barrel Board Im	0	0	0	0	1	0	9	0	1	1
-308	nml-bd042.lmo	Barrel Board Im	0	0	0	0	1	0	9	0	1	1
-309	nml-bd041.lmo	Metal Fence Pil	0	0	0	0	1	0	9	0	1	0
-310	nml-bd040.lmo	Metal Fence 01	0	0	0	0	1	0	9	0	1	0
-311	nml-bd039.lmo	Pergola 01	0	0	0	0	1	0	9	0	1	0
-312	nml-bd038.lmo	Table 01	0	0	0	0	1	0	9	0	1	0
-313	nml-bd037.lmo	Rattan Chair 01	0	0	0	0	1	0	9	0	1	0
-314	nml-bd036.lmo	Bench 01	0	0	0	0	1	0	1	0	1	0
-315	nml-bd035.lmo	Flower 04	0	0	0	0	1	0	8	0	1	0
-316	nml-bd034.lmo	Grass 06	0	0	0	0	0	0	8	0	0	1
-317	nml-bd033.lmo	Blossom 02	0	0	0	0	1	0	8	0	1	1
-318	nml-bd032.lmo	Flower 01	0	0	0	0	1	0	8	0	1	1
-319	nml-bd031.lmo	Flower Grass 01	0	0	0	0	1	0	8	0	1	0
-320	nml-bd030.lmo	Flower Pot 03	0	0	0	0	1	0	9	0	1	1
-321	nml-bd029.lmo	Flower Pot 02	0	0	0	0	1	0	9	0	1	1
-322	nml-bd028.lmo	Flower Pot 01	0	0	0	0	1	0	9	0	1	1
-323	nml-bd027.lmo	Garden 01	0	0	0	0	1	0	9	0	1	0
-324	nml-bd026.lmo	Withered Trunk 	0	0	0	0	1	0	8	0	1	1
-325	nml-bd025.lmo	Grass 04	0	0	0	0	0	0	8	0	0	1
-326	nml-bd024.lmo	Grass 03	0	0	0	0	1	0	8	0	1	0
-327	nml-bd023.lmo	Grass 02	0	0	0	0	1	0	8	0	1	0
-328	nml-bd022.lmo	Grass 01	0	0	0	0	0	0	8	0	1	0
-329	nml-bd021.lmo	Tree 09	0	0	0	0	1	0	8	0	1	0
-330	nml-bd020.lmo	Tree 08	0	0	0	0	1	0	8	0	1	0
-331	nml-bd019.lmo	Tree 07	0	0	0	0	1	0	8	0	1	0
-332	nml-bd018.lmo	Flower 08	0	0	0	0	1	0	8	0	1	0
-333	nml-bd017.lmo	Tree 05	0	0	0	0	1	0	8	0	1	0
-334	nml-bd049.lmo	Sand Shop01	0	0	0	0	1	0	9	0	1	0
-335	nml-bd015.lmo	Tree 03	0	0	0	0	1	0	8	0	1	0
-336	nml-bd014.lmo	Tree 02	0	0	0	0	1	0	8	0	1	0
-337	nml-bd013.lmo	Tree 01	0	0	0	0	1	0	8	0	1	0
-338	nml-bd012.lmo	Road Notice 03	0	0	0	0	1	0	9	0	1	0
-339	nml-bd011.lmo	Road Strip 02	0	0	0	0	1	0	9	0	1	0
-340	nml-bd010.lmo	Road Strip 01	0	0	0	0	1	0	9	0	1	0
-341	nml-bd009.lmo	Wooden Crate 01	0	0	0	0	1	0	9	0	1	1
-342	nml-bd008.lmo	Big Chest 01	0	0	0	0	1	0	9	0	1	1
-343	nml-bd007.lmo	Birdship 01	0	0	0	0	1	0	9	0	1	1
-344	nml-bd050.lmo	Stump 01	0	0	0	0	1	0	8	0	1	0
-345	nml-bd006.lmo	Fruit Cart 01	0	0	0	0	1	0	1	0	1	0
-346	nml-bd005.lmo	Wine Barrel 01	0	0	0	0	1	0	9	0	1	0
-347	nml-bd004.lmo	Wooden Barrel 0	0	0	0	0	1	0	9	0	1	0
-348	nml-bd003.lmo	Crate Swarm 01	0	0	0	0	1	0	9	0	1	1
-349	nml-bd002.lmo	Fruit Crate 01	0	0	0	0	1	0	9	0	1	0
-350	nml-bd001.lmo	Small Crate 01	0	0	0	0	1	0	9	0	1	0
-351	yyyy001.lmo	Sit 1	1	0	0	0	1	0	200	0	1	0
-352	yyyy002.lmo	Lean 1	1	0	0	0	1	0	200	0	1	0
-353	yyyy003.lmo	Impassable 7	2	0	0	0	1	0	200	0	1	0
-354	yyyy004.lmo	Passable 7	2	0	0	0	1	0	200	0	1	0
-355	yyyy005.lmo	Passable 3	2	0	0	0	1	0	200	0	1	0
-356	yyyy006.lmo	Impassable 3	2	0	0	0	1	0	200	0	1	0
-400	yyyy007.lmo	Lamp 01	3	0,255,0	10,1.0,2	0	1	0	200	0	1	0
-401	yyyy007.lmo	Lamp 02	3	0,255,0	10,1.0,0	0	1	0	200	0	1	0
-402	yyyy007.lmo	Lamp 03	3	0,18,255	10,1.0,3	0	1	0	200	0	1	0
-403	yyyy007.lmo	Lamp 04	3	27,80,250	10,1.0,1	0	1	0	200	0	1	0
-404	yyyy007.lmo	Lmap 05	3	248,228,137	3,1.0,6	0	1	0	200	0	1	0
-405	yyyy007.lmo	Lamp 06	3	60,69,137	10,1.0,5	0	1	0	200	0	1	0
-406	yyyy007.lmo	Lamp 07	3	248,228,137	3,1.0,4	0	1	0	200	0	1	0
-407	yyyy007.lmo	Lamp 08	3	250,120,50	6,1.0,7	0	1	0	200	0	1	0
-408	yyyy007.lmo	Lamp 09	3	25,226,153	3,1.0,8	0	1	0	200	0	1	0
-421	nml-bd154.lmo	Wooden Harbor M	0	0	0	0	1	0	9	0	1	1
-422	nml-bd155.lmo	Wooden Harbor M	0	0	0	0	1	0	9	0	1	1
-423	nml-bd156.lmo	Wooden Harbor M	0	0	0	0	1	0	9	0	1	1
-424	nml-bd157.lmo	Wooden Harbor M	0	0	0	0	1	0	9	0	1	1
-425	nml-bd158.lmo	Icy Mountain 01	0	0	0	0	1	0	9	0	1	1
-426	nml-bd159.lmo	Icy Mountain 02	0	0	0	0	1	0	9	0	1	1
-427	nml-bd160.lmo	Ocean Graveyard	0	0	0	0	1	0	9	0	1	1
-428	nml-bd161.lmo	Ocean Graveyard	0	0	0	0	1	0	9	0	1	1
-429	nml-bd162.lmo	Ocean Graveyard	0	0	0	0	1	0	9	0	1	1
-430	nml-bd163.lmo	Abandoned Mine 	0	7	0	0	0	0	9	0	1	0
-431	nml-bd164.lmo	Floating Ball 0	0	0	0	0	1	0	9	0	1	1
-432	nml-bd165.lmo	Floating Plank 	0	0	0	0	1	0	9	0	1	1
-433	nml-bd166.lmo	Turning Tree 01	0	0	0	0	1	0	8	0	1	1
-434	nml-bd167.lmo	Fish Swarm 01	0	0	0	0	1	0	9	0	1	1
-435	login.lmo	Login Interface	0	0	0	0	0	0	0	0	1	0
-436	nml-bd169.lmo	Dried Wood 01	0	0	0	0	1	0	8	0	1	1
-437	nml-bd170.lmo	Mushroom 01	0	0	0	0	1	0	8	0	1	1
-438	nml-bd171.lmo	Fluorescent Gra	0	0	0	0	1	0	8	0	1	1
-439	nml-bd168.lmo	Yellow Grass 01	0	0	0	0	1	0	8	0	1	1
-440	mz-bd026.lmo	Desert Labyrint	0	9,7,8,9,10,11,12,13,14,15	0	0	0	0	7	0	1	0
-441	nml-bd172.lmo	Desert Labyrint	0	0	0	0	0	0	8	0	1	1
-442	mz-bd027.lmo	Desert Labyrint	0	0	0	0	0	0	7	0	1	1
-443	mz-bd028.lmo	Desert Labyrint	0	0	0	0	0	0	7	0	1	1
-444	mz-bd029.lmo	Desert Labyrint	0	0	0	0	0	0	7	0	1	1
-445	mz-bd030.lmo	Desert Labyrint	0	0	0	0	0	0	7	0	1	1
-446	nml-bd173.lmo	Big Leave Tree 	0	0	0	0	1	0	8	0	1	1
-447	nml-bd174.lmo	Withered Tree 0	0	0	0	0	1	0	8	0	1	1
-448	nml-bd175.lmo	Small Tree 01	0	0	0	0	1	0	8	0	1	1
-449	by-bd041.lmo	Argent Harbor B	0	11,16,17,18,19,20,21,22,23,24,25,26	0	0	0	0	1	0	1	0
-450	nml-bd176.lmo	Forest Labyrint	0	0	0	0	1	0	7	0	1	1
-451	nml-bd177.lmo	Forest Labyrint	0	0	0	0	1	0	7	0	1	1
-452	nml-bd178.lmo	Forest Labyrint	0	0	0	0	1	0	7	0	1	1
-453	nml-bd179.lmo	Forest Maze Mod	0	0	0	0	1	0	7	0	1	1
-454	nml-bd180.lmo	Forest Maze Mod	0	0	0	0	1	0	7	0	1	1
-455	nml-bd181.lmo	Forest Labyrint	0	0	0	0	1	0	7	0	1	1
-456	nml-bd182.lmo	Forest Labyrint	0	0	0	0	1	0	7	0	1	1
-457	nml-bd183.lmo	Yellow Grass 01	0	0	0	0	1	0	8	0	1	1
-458	nml-bd184.lmo	Little Grass 01	0	0	0	0	0	0	8	0	0	1
-459	nml-bd185.lmo	Rosebush 01	0	0	0	0	1	0	8	0	1	1
-460	nml-bd186.lmo	Autumn Grass 01	0	0	0	0	0	0	8	0	0	1
-461	nml-bd187.lmo	Erected Small T	0	0	0	0	1	0	8	0	1	1
-462	nml-bd188.lmo	Summer Island H	0	0	0	0	1	0	9	0	1	1
-463	nml-bd189.lmo	Summer Island W	0	0	0	0	0	0	9	0	1	0
-464	nml-bd190.lmo	Summer Island W	0	0	0	0	0	0	9	0	1	0
-465	nml-bd191.lmo	Summer Island W	0	0	0	0	0	0	9	0	1	0
-466	nml-bd192.lmo	Fallen Leaf 01	0	0	0	0	0	0	9	0	1	0
-467	nml-bd193.lmo	Fallen Leaf 02	0	0	0	0	0	0	9	0	1	0
-468	nml-bd194.lmo	Fallen Leaf 03	0	0	0	0	0	0	9	0	1	0
-469	by-bd019.lmo	Argent Harbor G	0	0	0	0	1	0	1	0	1	0
-470	nml-bd195.lmo	Harbor Statue 0	0	0	0	0	1	0	9	0	1	0
-471	by-bd028.lmo	Argent Pier 01	0	0	0	0	1	0	1	0	1	0
-472	by-bd029.lmo	Argent Bank Sig	0	0	0	0	1	0	1	0	1	0
-473	by-bd030.lmo	Argent Bar Sign	0	0	0	0	1	0	1	0	1	0
-474	by-bd031.lmo	Argent Weaponry	0	0	0	0	1	0	1	0	1	0
-475	by-bd032.lmo	Argent Herb Sig	0	0	0	0	1	0	1	0	1	0
-476	by-bd033.lmo	Argent Grocery 	0	0	0	0	1	0	1	0	1	0
-477	by-bd034.lmo	Argent Tailor S	0	0	0	0	1	0	1	0	1	0
-478	by-bd035.lmo	Argent Commerce	0	0	0	0	1	0	1	0	1	0
-480	yyyy080.lmo	Wave Sound Effe	6	env_surf	2500	0	1	0	200	0	1	0
-481	yyyy080.lmo	Worm Sound Effe	6	env_insect	2500	0	1	0	200	0	1	0
-482	yyyy080.lmo	Cicada Sound Ef	6	env_cicada	2500	0	1	0	200	0	1	0
-483	yyyy080.lmo	Chirping Sound 	6	env_bird1	2500	0	1	0	200	0	1	0
-484	yyyy080.lmo	Chirping Sound 	6	env_bird2	2500	0	1	0	200	0	1	0
-485	yyyy080.lmo	Chilling Sound 	6	env_bise	2500	0	1	0	200	0	1	0
-486	yyyy080.lmo	Shipyard Sound 	6	env_ship	2500	0	1	0	200	0	1	0
-487	yyyy080.lmo	Factory Sound E	6	env_BlackS	2500	0	1	0	200	0	1	0
-488	yyyy080.lmo	Fountain Sound 	6	env_founta	2500	0	1	0	200	0	1	0
-489	yyyy080.lmo	River Sound Eff	6	env_ghyll	2500	0	1	0	200	0	1	0
-501	by-bd042.lmo	New Road Sign 0	0	0	0	0	1	0	1	0	1	0
-502	by-bd043.lmo	Argent Ship Fac	0	0	0	0	1	0	1	0	1	0
-503	by-bd044.lmo	Navy Admin Post	0	0	0	0	1	0	1	0	1	0
-504	bl-bd018.lmo	Icicle Harbor M	0	0	0	0	1	0	4	0	1	1
-505	bl-bd019.lmo	Icicle Harbor M	0	0	0	0	1	0	4	0	1	1
-506	bl-bd020.lmo	Icicle Harbor M	0	0	0	0	1	0	4	0	1	1
-507	by-bd045.lmo	Argent Navy Rec	0	0	0	0	1	0	1	0	1	0
-508	by-bd046.lmo	Argent Bounty T	0	0	0	0	1	0	1	0	1	0
-509	nml-bd196.lmo	Lighthouse 01	0	0	0	0	1	0	9	0	1	0
-510	nml-bd197.lmo	Buoy 01	0	0	0	0	1	0	9	0	1	0
-511	nml-bd198.lmo	Ball Float 01	0	0	0	0	1	0	9	0	1	0
-512	login02.lmo	Login Interface	0	0	0	0	0	0	0	0	1	0
-513	nml-bd199.lmo	Butterfly 01	0	0	0	0	1	0	9	0	1	0
-514	nml-bd200.lmo	Buoy 02	0	0	0	0	1	0	9	0	1	0
-515	by-bd047.lmo	Argent City Tra	0	8	0	0	1	0	1	0	1	0
-516	by-bd048.lmo	Argent Trading 	0	0	0	0	1	0	1	0	1	0
-517	sl-bd042.lmo	Shaitan Trading	0	10	0	0	1	0	3	0	1	0
-518	nml-bd201.lmo	Harbor Sign 01	0	0	0	0	1	0	9	0	1	0
-519	lt-bd039.lmo	Thundoria Tradi	0	9	0	0	0	0	2	0	1	0
-520	bl-bd021.lmo	Icicle Trading 	0	8	0	0	1	0	4	0	1	1
-521	sl-bd043.lmo	Shaitan Harbor 	0	0	0	0	1	0	3	0	1	0
-522	sl-bd044.lmo	Shaitan Harbor 	0	0	0	0	1	0	3	0	1	0
-523	cc-bd001.lmo	Spring Town Bel	0	0	0	0	1	0	5	0	1	0
-524	cc-bd002.lmo	Spring Town Tav	0	0	0	0	1	0	5	0	1	0
-525	cc-bd003.lmo	Spring Town Wal	0	0	0	0	1	0	5	0	1	0
-526	cc-bd004.lmo	Spring Town Wal	0	0	0	0	1	0	5	0	1	0
-527	cc-bd005.lmo	Spring Town Wal	0	0	0	0	1	0	5	0	1	0
-528	cc-bd006.lmo	Spring Town Wal	0	0	0	0	1	0	5	0	1	0
-529	cc-bd007.lmo	Spring Town Win	0	0	0	0	1	0	5	0	1	0
-530	cc-bd008.lmo	Spring Town Hou	0	0	0	0	1	0	5	0	1	0
-531	cc-bd009.lmo	Spring Town Pin	0	0	0	0	1	0	5	0	1	0
-532	cc-bd010.lmo	Spring Town Lam	0	0	0	0	1	0	5	0	1	0
-533	cc-bd011.lmo	Spring Town Mas	0	0	0	0	1	0	5	0	1	0
-534	cc-bd012.lmo	Spring Town Pin	0	0	0	0	1	0	5	0	1	0
-535	cc-bd013.lmo	Spring Town Tem	0	0	0	0	1	0	5	0	1	0
-536	cc-bd014.lmo	Spring Town Bri	0	0	0	0	1	0	5	0	1	0
-537	cc-bd015.lmo	Spring Town Bun	0	0	0	0	1	0	5	0	1	0
-538	cc-bd016.lmo	Spring Town But	0	0	0	0	1	0	5	0	1	0
-539	cc-bd017.lmo	Spring Town Roc	0	0	0	0	1	0	5	0	1	0
-540	cc-bd018.lmo	Spring Town Lan	0	0	0	0	1	0	5	0	1	0
-541	cc-bd019.lmo	Spring Town Lan	0	0	0	0	1	0	5	0	1	0
-542	cc-bd020.lmo	Spring Town San	0	0	0	0	1	0	5	0	1	1
-543	cc-bd021.lmo	Spring Town Ped	0	0	0	0	1	0	5	0	1	1
-544	cc-bd022.lmo	Spring Town Pap	0	0	0	0	1	0	5	0	1	0
-545	cc-bd023.lmo	Spring Town Hou	0	0	0	0	1	0	5	0	1	0
-546	cc-bd024.lmo	Spring Town Bri	0	0	0	0	1	0	5	0	1	0
-547	cc-bd025.lmo	Spring Town Pav	0	0	0	0	1	0	5	0	1	1
-548	cc-bd026.lmo	Spring Town Pav	0	0	0	0	1	0	5	0	1	0
-549	cc-bd027.lmo	Spring Town Pil	0	0	0	0	1	0	5	0	1	0
-550	cc-bd028.lmo	Spring Town Par	0	0	0	0	1	0	5	0	1	0
-551	cc-bd029.lmo	Spring Town Tra	0	1,2	0	0	0	0	5	0	1	0
-552	cc-bd030.lmo	Spring Town Pea	0	0	0	0	1	0	5	0	1	0
-553	cc-bd031.lmo	Spring Town Blo	0	0	0	0	1	0	5	0	1	0
-554	cc-bd032.lmo	Spring Town Hou	0	0	0	0	1	0	5	0	1	0
-555	cc-bd033.lmo	Spring Town Fen	0	0	0	0	1	0	5	0	1	0
-556	cc-bd034.lmo	Spring Town Fen	0	0	0	0	1	0	5	0	1	0
-557	cc-bd035.lmo	Spring Town Fen	0	0	0	0	1	0	5	0	1	0
-558	cc-bd036.lmo	Spring Town Lil	0	0	0	0	1	0	5	0	1	0
-559	cc-bd037.lmo	Spring Town Bam	0	0	0	0	1	0	5	0	1	1
-560	cc-bd038.lmo	Spring Town Bam	0	0	0	0	1	0	5	0	1	1
-561	cc-bd039.lmo	Spring Town Fen	0	0	0	0	1	0	5	0	1	1
-562	cc-bd040.lmo	Spring Harbor 0	0	0	0	0	1	0	5	0	1	1
-563	cc-bd041.lmo	Spring Town Lan	0	0	0	0	1	0	5	0	1	1
-564	cc-bd042.lmo	Spring Town Shi	0	0	0	0	1	0	5	0	1	0
-565	cc-bd043.lmo	Spring Town Shi	0	0	0	0	1	0	5	0	1	0
-566	cc-bd044.lmo	Spring Town Und	0	0	0	0	0	0	5	0	1	1
-567	cc-bd045.lmo	Spring Town Und	0	0	0	0	0	0	5	0	1	1
-568	cc-bd046.lmo	Spring Town Und	0	0	0	0	0	0	5	0	1	1
-569	cc-bd047.lmo	Spring Town Und	0	0	0	0	0	0	5	0	1	1
-570	mz-bd099.lmo	Labyrinth Black	0	0	0	0	0	0	7	0	1	1
-571	cc-bd049.lmo	Spring Town Und	0	0	0	0	0	0	5	0	1	1
-572	cc-bd050.lmo	Underwater Junk	0	0	0	0	0	0	5	0	1	1
-573	cc-bd051.lmo	Underground Tun	0	0	0	0	0	0	5	0	1	1
-574	cc-bd052.lmo	Underground Tun	0	0	0	0	0	0	5	0	1	1
-575	cc-bd053.lmo	Dirty Bottle 01	0	0	0	0	0	0	5	0	1	1
-576	cc-bd054.lmo	Carcass 01	0	0	0	0	0	0	5	0	1	1
-577	cc-bd055.lmo	Spring Town Shi	0	0	0	0	1	0	5	0	1	0
-578	cc-bd056.lmo	Spring Town Sma	0	0	0	0	1	0	5	0	1	0
-579	cc-bd057.lmo	Spring Town Woo	0	0	0	0	1	0	5	0	1	0
-580	cc-bd058.lmo	Underwater Tunn	0	0	0	0	0	0	5	0	1	1
-581	cc-bd059.lmo	Underwater Tunn	0	0	0	0	0	0	5	0	1	1
-582	cc-bd060.lmo	Fish Swarm 02	0	0	0	0	0	0	5	0	1	1
-583	cc-bd061.lmo	Underwater Tunn	0	0	0	0	0	0	5	0	1	1
-584	cc-bd062.lmo	Underwater Tunn	0	0	0	0	0	0	5	0	1	1
-585	cc-bd063.lmo	Underwater Tunn	0	0	0	0	0	0	5	0	1	1
-586	cc-bd064.lmo	Underwater Tunn	0	0	0	0	0	0	5	0	1	1
-587	nml-bd202.lmo	Swamp Tree 01	0	0	0	0	1	0	8	0	1	1
-588	nml-bd203.lmo	Swamp Stump 01	0	0	0	0	1	0	8	0	1	1
-589	cc-bd067.lmo	Spring Town Par	0	0	0	0	1	0	5	0	1	0
-590	cc-bd068.lmo	Footprint 01	0	0	0	0	1	0	5	0	1	1
-591	cc-bd069.lmo	Spring Town Aqu	0	0	0	0	1	0	5	0	1	0
-592	nml-bd204.lmo	Swamp Stone 01	0	0	0	0	1	0	9	0	1	1
-593	nml-bd205.lmo	City of Cripple	0	0	0	0	1	0	7	0	1	1
-594	nml-bd206.lmo	City of Cripple	0	0	0	0	1	0	7	0	1	1
-595	nml-bd207.lmo	City of Cripple	0	0	0	0	1	0	7	0	1	1
-596	nml-bd208.lmo	City of Cripple	0	0	0	0	1	0	7	0	1	1
-597	nml-bd209.lmo	City of Cripple	0	0	0	0	1	0	7	0	1	1
-598	nml-bd210.lmo	City of Cripple	0	0	0	0	1	0	7	0	1	1
-599	cc-bd077.lmo	Tree 013	0	0	0	0	1	0	8	0	1	1
-600	nml-bd211.lmo	Demonic Wall 01	0	0	0	0	0	0	7	0	1	1
-601	nml-bd212.lmo	Demonic Wall 03	0	0	0	0	0	0	7	0	1	1
-602	nml-bd213.lmo	Demonic Spike 0	0	0	0	0	0	0	7	0	1	1
-603	nml-bd214.lmo	Demonic Wall 05	0	0	0	0	0	0	7	0	1	1
-604	nml-bd215.lmo	Demonic Wall 04	0	0	0	0	0	0	7	0	1	1
-605	nml-bd216.lmo	Demonic Wall 06	0	0	0	0	0	0	7	0	1	1
-606	nml-bd217.lmo	Demonic Statue 	0	0	0	0	0	0	7	0	1	1
-607	nml-bd218.lmo	Demonic Pool 01	0	0	0	0	0	0	7	0	1	1
-608	nml-bd219.lmo	Demonic Pool 02	0	0	0	0	0	0	7	0	1	1
-609	nml-bd220.lmo	Demonic Pool 03	0	0	0	0	0	0	7	0	1	1
-610	nml-bd221.lmo	Demonic Pool 04	0	0	0	0	0	0	7	0	1	1
-611	nml-bd222.lmo	Demonic Wall 02	0	0	0	0	0	0	7	0	1	1
-612	cc-bd065.lmo	Spring Town Und	0	0	0	0	0	0	5	0	1	1
-613	cc-bd066.lmo	Spring Town Und	0	0	0	0	0	0	5	0	1	1
-614	cc-bd071.lmo	Spring Town Bar	0	0	0	0	1	0	5	0	1	0
-615	cc-bd072.lmo	Spring Town Hai	0	0	0	0	1	0	5	0	1	0
-616	cc-bd073.lmo	Spring Town Acc	0	0	0	0	1	0	5	0	1	0
-617	cc-bd074.lmo	Spring Town Ban	0	0	0	0	1	0	5	0	1	0
-618	cc-bdhq.lmo	Underwater Blac	0	0	0	0	0	0	5	0	1	1
-619	hlcx02.lmo	Black Dragon La	0	0	0	0	0	0	5	0	1	1
-620	hlcx03.lmo	Black Dragon La	0	0	0	0	0	0	5	0	1	1
-621	hlcx04.lmo	Black Dragon La	0	0	0	0	0	0	5	0	1	1
-622	hlcx05.lmo	Black Dragon La	0	0	0	0	0	0	5	0	1	1
-623	hlcx06.lmo	Black Dragon La	0	0	0	0	0	0	5	0	1	1
-624	hlcx07.lmo	Black Dragon La	0	0	0	0	0	0	5	0	1	1
-625	hlcx08.lmo	Black Dragon La	0	0	0	0	0	0	5	0	1	1
-626	hlcx09.lmo	Black Dragon La	0	0	0	0	0	0	5	0	1	1
-627	hlcx-gh.lmo	Ghost Flame	0	0	0	0	0	0	5	0	1	0
-628	hlcx-rk.lmo	Black Dragon La	0	0	0	0	1	0	5	0	1	0
-629	hlcx-bx.lmo	Treasure Chest	0	0	0	0	0	0	5	0	1	1
-630	hdsd01.lmo	Seabed Tunnel E	0	0	0	0	1	0	5	0	1	1
-631	long001.lmo	Black Dragon La	0	0	0	0	0	0	5	0	1	0
-632	hlcx-ck.lmo	Black Dragon La	0	0	0	0	1	0	5	0	1	0
-633	cc-bddxsdrk.lmo	Underwater Tunn	0	0	0	0	1	0	5	0	1	1
-634	cc-bd075.lmo	Gate of Spring 	0	0	0	0	1	0	5	0	1	0
-635	hdmgrk01.lmo	Pirate Base Ent	0	1,2	0	0	1	0	5	0	1	1
-636	hdwjsj001.lmo	Calculator	0	0	0	0	1	0	5	0	1	1
-637	hdwblg001.lmo	Glass Bottle	0	0	0	0	1	0	5	0	1	1
-638	hdjd-cbd01.lmo	Treasure pile 0	0	0	0	0	1	0	5	0	1	1
-639	ys_jiaotang.lmo	Cathedral	0	0	0	0	1	0	5	0	1	1
-640	jtsn.lmo	In the Cathedra	0	0	0	0	1	0	5	0	1	1
-641	sbm.lmo	Drape	0	0	0	0	1	0	5	0	1	0
-642	ys_ditan.lmo	yy carpet	0	0	0	0	1	0	5	0	1	0
-643	07hdw_hualanbai.lmo	Corbeil	0	0	0	0	1	0	5	0	1	0
-644	xmas_hengfu.lmo	Xmas Banner	0	0	0	0	1	0	5	0	1	0
-645	xmas_caidai.lmo	Christmas Ribbo	0	0	0	0	1	0	5	0	1	0
-646	dd_bd001.lmo	Winter Island H	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	5	0	1	1
-647	dd_bd002.lmo	Winter Island D	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	5	0	1	1
-648	dd_bd003.lmo	Snow Grass	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	5	0	1	1
-649	dd_bd004.lmo	Snow Gravel	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	5	0	1	1
-650	dd_bd006.lmo	Snow Stone	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	5	0	1	1
-651	dd_bd007.lmo	Snow Tree	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	5	0	1	1
-652	dd_bd008.lmo	Winter Island B	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	5	0	1	1
-653	dd_bd009.lmo	Winter Island G	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	5	0	1	1
-654	dd_bd010.lmo	Winter Island L1	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	5	0	1	1
-655	dd_bd011.lmo	Winter Island L2	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	5	0	1	1
-656	dd_bd012.lmo	Winter Island L3	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	5	0	1	1
-657	dd_bd013.lmo	Winter Island L4	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	5	0	1	1
-658	dd_bd014.lmo	Winter Island L5	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	5	0	1	1
-659	dd_bd015.lmo	Winter Island L6	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	5	0	1	1
-660	MY_bd001.lmo	Treasure Room	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	5	0	1	1
-661	ns_gangdian.lmo	Goddes' Palace	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	0	0	1	1
-662	kyjj-bd01-01.lmo	Roman Column01	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
-663	kyjj-bd01-21.lmo	Roman Column02	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
-664	kyjj-bd01-22.lmo	Roman Column03	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
-665	kyjj-bd01-23.lmo	Roman Column04	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
-666	kyjj-bd01-31.lmo	Roman Column05	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
-667	kyjj-bd01-32.lmo	Roman Column06	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
-668	kyjj-bd01-33.lmo	Roman Column07	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
-669	kyjj-bd01-34.lmo	Roman Column08	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
-670	kyjj-bd02-01.lmo	The fence01	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
-671	kyjj-bd02-02.lmo	The fence02	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
-672	kyjj-bd02-21.lmo	The fence01_01	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
-673	kyjj-bd02-22.lmo	The fence01_02	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
-674	kyjj-bd02-23.lmo	The fence01_03	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
-675	kyjj-bd02-24.lmo	The fence01_04	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
-676	kyjj-bd02-31.lmo	The fence02_01	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
-677	kyjj-bd02-32.lmo	The fence02_02	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
-678	kyjj-bd02-33.lmo	The fence02_03	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
-679	kyjj-bd02-34.lmo	The fence02_04	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
-680	kyjj-bd02-41.lmo	The fence01_02_1	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
-681	kyjj-bd02-42.lmo	The fence01_02_2	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
-682	kyjj-bd02-43.lmo	The fence01_02_3	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
-683	kyjj-bd02-51.lmo	The fence02_02_4	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
-684	kyjj-bd02-52.lmo	The fence01_02_5	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
-685	kyjj-bd02-53.lmo	The fence01_02_6	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
-686	kyjj-bd03-01.lmo	Fence Post01	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
-687	kyjj-bd03-21.lmo	Fence Column02_0	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
-688	kyjj-bd03-22.lmo	Fence Column02_1	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
-689	kyjj-bd03-31.lmo	Fence Column03_2	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
-690	kyjj-bd03-32.lmo	Fence Column03_3	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
-691	kyjj-bd04-01.lmo	The walls01	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	6	0	1	0
-692	kyjj-bd04-21.lmo	The walls02	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	6	0	1	0
-693	kyjj-bd05-01.lmo	The statue01	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	6	0	1	0
-694	kyjj-bd05-21.lmo	The statue02_01	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	6	0	1	0
-695	kyjj-bd05-22.lmo	The statue02_02	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	6	0	1	0
-696	kyjj-bd05-23.lmo	The statue02_03	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	6	0	1	0
-697	kyjj-bd05-31.lmo	The statue03_01	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	6	0	1	0
-698	kyjj-bd05-32.lmo	The statue03_02	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	6	0	1	0
-699	kyjj-bd05-33.lmo	The statue03_03	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	6	0	1	0
-700	kyjj-bd05-34.lmo	The statue03_04	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	6	0	1	0
-701	kyjj-bd06-01.lmo	ornaments01	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	6	0	1	0
-702	kyjj-bd06-21.lmo	ornaments02	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	6	0	1	1
-703	kyjj-bd06-22.lmo	ornaments03	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	6	0	1	1
-704	kyjj-bd05-22.lmo	The statue02_02	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
-705	kyjj-bd01-41.lmo	Roman column fr1	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	1
-706	kyjj-bd01-42.lmo	Roman column fr2	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	1
-707	kyjj-bd01-43.lmo	Roman column fr3	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	1
-708	kyjj-bd04-31.lmo	The walls03	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
-709	kyjj-bd04-41.lmo	The walls4	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
-710	kyjj-bd07-01.lmo	Fire	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
-711	kyjj-bd07-02.lmo	The light effect	0	0,0,0,0,0,0,0,0,0,0,0,0	0	1	0	0	6	0	1	0
-712	kyjj-bd07-03.lmo	The light effec1	0	0,0,0,0,0,0,0,0,0,0,0,0	0	1	0	0	6	0	1	0
-713	kyjj-bd06-23.lmo	gravel head_1	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	6	0	1	1
-714	kyjj-bd06-24.lmo	gravel head_2	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	1
-715	kyjj-bd06-25.lmo	gravel head_3	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	1
-716	kyjj-bd06-26.lmo	gravel head_4	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	1
-717	kyjj-bd06-27.lmo	gravel head_5	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	1
-718	kyjj-bd06-28.lmo	gravel head_6	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	6	0	1	0
-719	kyjj-bd06-29.lmo	gravel head_7	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	6	0	1	0
-720	sw_louti.lmo	Star stairs	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	6	0	1	0
-721	sw_weiqiang.lmo	Star wall	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	6	0	1	0
-722	sw_ta.lmo	Star tower	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	6	0	1	0
-723	sw_yabian.lmo	Star BHF	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	6	0	1	0
-724	sw_louti2.lmo	Star step width	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	6	0	1	0
+1	by-bd001.lmo	Дворец Аргента 	0	0	0	0	1	0	1	0	1	0
+2	by-bd002.lmo	Флотская админи	0	0	0	0	1	0	1	0	1	0
+3	by-bd003.lmo	Офис Серебряног	0	0	0	0	1	0	1	0	1	0
+4	by-bd004.lmo	Торговый центр 	0	0	0	0	1	0	1	0	1	0
+5	by-bd005.lmo	Кузница Аргента	0	0	0	0	1	0	1	0	1	1
+6	nml-bd141.lmo	Водоворот 01	0	0	0	0	0	0	9	0	1	0
+7	by-bd007.lmo	Торговая фактор	0	0	0	0	1	0	1	0	1	0
+8	by-bd008.lmo	Верфь Аргента 0	0	0	0	0	1	0	1	0	1	0
+9	by-bd009.lmo	Гостиница 'Вели	0	0	0	0	1	0	1	0	1	0
+10	by-bd010.lmo	Бар Аргента 01	0	0	0	0	0	0	1	0	1	0
+11	by-bd011.lmo	Церковь Аргента	0	0	0	0	1	0	1	0	1	0
+12	nml-bd150.lmo	Сломанный мост 	0	0	0	0	1	0	9	0	1	1
+13	by-bd013.lmo	Маяк Аргента 01	0	0	0	0	0	0	1	0	1	0
+14	by-bd014-1.lmo	Насыпь гавани А	0	0	0	0	1	0	1	0	1	0
+15	by-bd014-2.lmo	Насыпь гавани А	0	0	0	0	1	0	1	0	1	0
+16	by-bd014-3.lmo	Угол бухты Арге	0	0	0	0	1	0	1	0	1	0
+17	by-bd014-4.lmo	Угол бухты Арге	0	0	0	0	1	0	1	0	1	0
+18	by-bd014-5.lmo	Впадина бухты А	0	0	0	0	1	0	1	0	1	0
+19	by-bd014-6.lmo	Уличный фонарь 	0	0	0	0	1	0	1	0	1	0
+20	by-bd014-7.lmo	Пушечная башня 	0	0	0	0	1	0	1	0	1	0
+21	by-bd014-8.lmo	Кран гавани Арг	0	0	0	0	1	0	1	0	1	0
+22	by-bd015.lmo	Колокольня Арге	0	0	0	0	0	0	1	0	1	0
+23	by-bd016.lmo	Дом Аргента 01	0	0	0	0	1	0	1	0	1	0
+24	by-bd017.lmo	Дом Аргента 02	0	0	0	0	1	0	1	0	1	0
+25	by-bd018.lmo	Караульное поме	0	0	0	0	1	0	1	0	1	0
+26	nml-bd151.lmo	Вулкан 01	0	0	0	0	0	0	9	0	1	1
+27	by-bd020.lmo	Амбар Аргента 0	0	0	0	0	1	0	1	0	1	0
+28	nml-bd152.lmo	Морской камень 	0	0	0	0	1	0	9	0	1	1
+29	by-bd022.lmo	Водяная мельниц	0	0	0	0	1	0	1	0	1	0
+30	by-bd023.lmo	Шаг Аргента 01	0	0	0	0	1	0	1	0	1	0
+31	by-bd024.lmo	Шаг гавани Арге	0	0	0	0	1	0	1	0	1	0
+32	by-bd025.lmo	Шаг Аргента 01	0	0	0	0	1	0	1	0	1	0
+33	by-bd026.lmo	Шаг центра Арге	0	0	0	0	1	0	1	0	1	0
+34	by-bd027.lmo	Колокольня церк	0	0	0	0	1	0	1	0	1	0
+35	nml-bd153.lmo	Подводная стату	0	0	0	0	1	0	9	0	1	1
+36	by-bd036.lmo	Городской фонар	0	0	0	0	1	0	1	0	1	0
+37	by-bd037.lmo	Ограда Аргента 	0	0	0	0	1	0	1	0	1	0
+38	by-bd038.lmo	Колонна ворот А	0	0	0	0	1	0	1	0	1	0
+39	by-bd039.lmo	Стена Аргента 0	0	0	0	0	1	0	1	0	1	0
+40	by-bd040.lmo	Врата Аргента 0	0	0	0	0	1	0	1	0	1	0
+41	lt-bd038.lmo	Мост бухты Гром	0	0	0	0	1	0	2	0	1	0
+42	lt-bd002.lmo	Штаб флота Гром	0	0	0	0	1	0	2	0	1	0
+43	lt-bd001-01.lmo	Дворец Громогра	0	0	0	0	1	0	2	0	1	0
+44	lt-bd001-02.lmo	Дворец Громогра	0	0	0	0	1	0	2	0	1	0
+45	lt-bd005.lmo	Скобяной магази	0	0	0	0	1	0	2	0	1	0
+46	sl-bd038.lmo	Шайтанская стар	0	0	0	0	1	0	3	0	1	1
+47	lt-bd007.lmo	Банк Громограда	0	0	0	0	1	0	2	0	1	0
+48	sl-bd039.lmo	Шайтанская стар	0	0	0	0	1	0	3	0	1	1
+49	lt-bd009.lmo	Лодочный сарай 	0	0	0	0	1	0	2	0	1	0
+50	lt-bd011.lmo	Статуя Громогра	0	0	0	0	1	0	2	0	1	0
+51	lt-bd012.lmo	Мемориальная до	0	0	0	0	1	0	2	0	1	0
+52	lt-bd018-11.lmo	Замковая стена 	0	0	0	0	1	0	2	0	1	0
+53	lt-bd036-03.lmo	Тело порта Гром	0	0	0	0	1	0	2	0	1	0
+54	lt-bd014.lmo	Житель замка Гр	0	0	0	0	1	0	2	0	1	0
+55	lt-bd015.lmo	Житель замка Гр	0	0	0	0	1	0	2	0	1	0
+56	lt-bd016.lmo	Житель замка Гр	0	0	0	0	1	0	2	0	1	0
+57	lt-bd017.lmo	Защитный вал Гр	0	0	0	0	1	0	2	0	1	0
+58	lt-bd018-01.lmo	Замковые врата 	0	0	0	0	1	0	2	0	1	0
+59	lt-bd018-02.lmo	Замковая стена 	0	0	0	0	1	0	2	0	1	0
+60	lt-bd018-03.lmo	Замковая стена 	0	0	0	0	1	0	2	0	1	0
+61	lt-bd018-04.lmo	Замковая стена 	0	0	0	0	1	0	2	0	1	0
+62	lt-bd018-05.lmo	Замковая стена 	0	0	0	0	1	0	2	0	1	0
+63	lt-bd018-06.lmo	Замковая стена 	0	0	0	0	1	0	2	0	1	0
+64	lt-bd018-07.lmo	Замковая стена 	0	0	0	0	1	0	2	0	1	0
+65	lt-bd018-08.lmo	Замковая стена 	0	0	0	0	1	0	2	0	1	0
+66	lt-bd019.lmo	3m шаг Громогра	0	0	0	0	1	0	2	0	1	1
+67	lt-bd020.lmo	Замковые врата 	0	0	0	0	1	0	2	0	1	1
+68	lt-bd021.lmo	Городской фонар	0	0	0	0	1	0	2	0	1	0
+69	lt-bd022.lmo	Пруд Громограда	0	0	0	0	0	0	2	0	1	0
+70	lt-bd024.lmo	Металлические з	0	0	0	0	1	0	2	0	1	0
+71	lt-bd025-01.lmo	Лагерь 01	0	0	0	0	1	0	2	0	1	0
+72	lt-bd025-02.lmo	Лагерь 02	0	0	0	0	1	0	2	0	1	0
+73	lt-bd025-03.lmo	Лагерь 03	0	0	0	0	1	0	2	0	1	0
+74	lt-bd025-04.lmo	Лагерь 04	0	0	0	0	1	0	2	0	1	0
+75	lt-bd025-05.lmo	Лагерь 05	0	0	0	0	1	0	2	0	1	0
+76	lt-bd025-06.lmo	Лагерь 06	0	0	0	0	1	0	2	0	1	0
+77	lt-bd025-07.lmo	Лагерь 07	0	0	0	0	1	0	2	0	1	0
+78	lt-bd025-08.lmo	Лагерь 08	0	0	0	0	1	0	2	0	1	0
+79	lt-bd013-01.lmo	Военный порт Гр	0	0	0	0	1	0	2	0	1	1
+80	lt-bd013-02.lmo	Военный порт Гр	0	0	0	0	1	0	2	0	1	1
+81	lt-bd013-03.lmo	Военный порт Гр	0	0	0	0	1	0	2	0	1	1
+82	lt-bd013-04.lmo	Военный порт Гр	0	0	0	0	1	0	2	0	1	1
+83	lt-bd025-09.lmo	Армейский шатер	0	0	0	0	1	0	2	0	1	0
+84	lt-bd026.lmo	Пушка 01	0	0	0	0	1	0	2	0	1	0
+85	lt-bd018-09.lmo	Врата Громоград	0	0	0	0	1	0	2	0	1	0
+86	lt-bd018-10.lmo	Врата Громоград	0	0	0	0	1	0	2	0	1	0
+87	lt-bd027.lmo	Пушка 02	0	0	0	0	1	0	2	0	1	0
+88	lt-bd028.lmo	Таверна Громогр	0	0	0	0	1	0	2	0	1	0
+89	lt-bd029.lmo	Стрелковая башн	0	0	0	0	1	0	2	0	1	0
+90	lt-bd030.lmo	Одинокая башня 	0	0	0	0	1	0	7	0	1	1
+91	lt-bd031.lmo	Стол Громограда	0	0	0	0	1	0	2	0	1	0
+92	lt-bd032.lmo	Трон Громограда	0	0	0	0	1	0	2	0	1	0
+93	lt-bd033.lmo	Корпус порта Гр	0	0	0	0	1	0	2	0	1	0
+94	lt-bd034.lmo	Хвост порта Гро	0	0	0	0	1	0	2	0	1	0
+95	lt-bd035.lmo	Устье бухты Гро	0	0	0	0	1	0	2	0	1	0
+96	lt-bd036-01.lmo	Тело порта Гром	0	0	0	0	1	0	2	0	1	0
+97	lt-bd036-02.lmo	Тело порта Гром	0	0	0	0	1	0	2	0	1	0
+98	lt-bd037.lmo	Металло-шелкова	0	0	0	0	1	0	2	0	1	0
+99	nml-bd138.lmo	Парящий лист 01	0	0	0	0	1	0	8	0	1	0
+100	nml-bd139.lmo	Изгородь 01	0	0	0	0	1	0	9	0	1	1
+101	nml-bd140.lmo	Снежный забор 0	0	0	0	0	1	0	9	0	1	1
+102	sl-bd001.lmo	Новая часовня К	0	0	0	0	1	0	3	0	1	0
+103	sl-bd005.lmo	Шайтанский банк	0	0	0	0	1	0	3	0	1	0
+104	sl-bd008.lmo	Шайтанская лавк	0	0	0	0	1	0	3	0	1	0
+105	sl-bd009.lmo	Шайтанский бар 	0	0	0	0	1	0	3	0	1	0
+106	sl-bd012.lmo	Шайтанская кузн	0	0	0	0	1	0	3	0	1	0
+107	sl-bd006.lmo	Шайтанская краб	0	0	0	0	1	0	3	0	1	0
+108	sl-bd010.lmo	Шайтанская торг	0	0	0	0	1	0	3	0	1	0
+109	sl-bd007.lmo	Шайтанская гост	0	0	0	0	1	0	3	0	1	0
+110	sl-bd003.lmo	Шайтанский торг	0	0	0	0	1	0	3	0	1	0
+111	sl-bd004.lmo	Шайтанский штаб	0	0	0	0	1	0	3	0	1	0
+112	sl-bd013.lmo	Маяк Шайтана 01	0	0	0	0	1	0	3	0	1	0
+113	sl-bd026-01.lmo	Шайтанский кана	0	0	0	0	0	0	3	0	1	0
+114	sl-bd026-02.lmo	Шайтанский акве	0	0	0	0	0	0	3	0	1	0
+115	sl-bd026-03.lmo	Шайтанский акве	0	0	0	0	0	0	3	0	1	0
+116	sl-bd026-04.lmo	Шайтанский акве	0	0	0	0	0	0	3	0	1	0
+117	sl-bd026-05.lmo	Шайтанский акве	0	0	0	0	0	0	3	0	1	0
+118	sl-bd026-06.lmo	Шайтанский акве	0	0	0	0	0	0	3	0	1	0
+119	sl-bd026-07.lmo	Шайтанский акве	0	0	0	0	0	0	3	0	1	0
+120	sl-bd026-08.lmo	Шайтанский акве	0	0	0	0	0	0	3	0	1	0
+121	sl-bd015.lmo	Шайтанская водя	0	0	0	0	0	0	3	0	1	0
+122	sl-bd019.lmo	Шайтанская комн	0	0	0	0	1	0	3	0	1	0
+123	sl-bd020.lmo	Шайтанское бунг	0	0	0	0	1	0	3	0	1	0
+124	sl-bd025.lmo	Шайтанский фрук	0	0	0	0	1	0	3	0	1	0
+125	sl-bd011.lmo	Шайтанский огне	0	0	0	0	1	0	3	0	1	0
+126	sl-bd021.lmo	Шайтанский наве	0	0	0	0	1	0	3	0	1	1
+127	sl-bd032-01.lmo	Шайтанский шест	0	0	0	0	1	0	3	0	1	0
+128	sl-bd032-02.lmo	Шайтанский шест	0	0	0	0	1	0	3	0	1	0
+129	sl-bd032-03.lmo	Шайтанский шест	0	0	0	0	1	0	3	0	1	0
+130	sl-bd014-01.lmo	Шайтанская гава	0	0	0	0	1	0	3	0	1	0
+131	sl-bd014-02.lmo	Шайтанская гава	0	0	0	0	1	0	3	0	1	0
+132	sl-bd014-03.lmo	Шайтанская гава	0	0	0	0	1	0	3	0	1	0
+133	sl-bd014-04.lmo	Парапет Шайтанс	0	0	0	0	1	0	3	0	1	0
+134	sl-bd014-05.lmo	Колонна Шайтанс	0	0	0	0	1	0	3	0	1	0
+135	sl-bd017-01.lmo	Шайтанская стен	0	0	0	0	1	0	3	0	1	0
+136	sl-bd017-02.lmo	Шайтанская стен	0	0	0	0	1	0	3	0	1	0
+137	sl-bd017-03.lmo	Шайтанская стен	0	0	0	0	1	0	3	0	1	0
+138	sl-bd032.lmo	Шайтанский стул	0	0	0	0	1	0	3	0	1	0
+139	sl-bd033.lmo	Шайтанский стол	0	0	0	0	1	0	3	0	1	0
+140	sl-bd034.lmo	Шайтанский тент	0	0	0	0	1	0	3	0	1	0
+141	sl-bd026-09.lmo	Шайтанский акве	0	0	0	0	1	0	3	0	1	1
+142	sl-bd030.lmo	Шайтанская стар	0	0	0	0	1	0	3	0	1	1
+143	sl-bd028-01.lmo	Шайтанский забр	0	0	0	0	1	0	3	0	1	1
+144	sl-bd028-02.lmo	Шайтанская забр	0	0	0	0	1	0	3	0	1	1
+145	sl-bd031.lmo	Сломанная шайта	0	0	0	0	1	0	3	0	1	1
+146	sl-bd028-03.lmo	Шайтанский забр	0	0	0	0	1	0	3	0	1	1
+147	sl-bd028-04.lmo	Шайтанский забр	0	0	0	0	1	0	3	0	1	1
+148	sl-bd035.lmo	Шайтанский дере	0	0	0	0	1	0	3	0	1	1
+149	sl-bd036.lmo	Верфь города Ша	0	0	0	0	1	0	3	0	1	1
+150	sl-bd037.lmo	Шайтанский пруд	0	0	0	0	0	0	3	0	1	0
+151	bl-bd001.lmo	Бакалейная лавк	0	0	0	0	1	0	4	0	1	1
+152	bl-bd002.lmo	Торговец Ледыни	0	0	0	0	1	0	4	0	1	1
+153	bl-bd003.lmo	Крепостной вал 	0	0	0	0	1	0	4	0	1	1
+154	bl-bd004.lmo	Дом Ледыни 01	0	0	0	0	1	0	4	0	1	1
+155	bl-bd005-01.lmo	Кладка Ледыни 0	0	0	0	0	1	0	4	0	1	1
+156	bl-bd005-02.lmo	Кладка Ледыни 0	0	0	0	0	1	0	4	0	1	1
+157	bl-bd005-03.lmo	Снежные валуны 	0	0	0	0	1	0	4	0	1	1
+158	bl-bd006.lmo	Кузница Ледыни 	0	0	0	0	1	0	4	0	1	1
+159	bl-bd007.lmo	Гостиница Ледын	0	0	0	0	1	0	4	0	1	1
+160	bl-bd008-01.lmo	Стена Ледыни 01	0	0	0	0	1	0	4	0	1	1
+161	bl-bd008-02.lmo	Стена Ледыни 02	0	0	0	0	1	0	4	0	1	1
+162	bl-bd008-03.lmo	Стена Ледыни 03	0	0	0	0	1	0	4	0	1	1
+163	bl-bd008-04.lmo	Стена Ледыни 04	0	0	0	0	1	0	4	0	1	1
+164	bl-bd009.lmo	Заснеженный ящи	0	0	0	0	1	0	4	0	1	1
+165	bl-bd010.lmo	Заснеженный ящи	0	0	0	0	1	0	4	0	1	1
+166	bl-bd011.lmo	Снежная бочка 0	0	0	0	0	1	0	4	0	1	1
+167	bl-bd012.lmo	Заснеженный пен	0	0	0	0	1	0	4	0	1	1
+168	bl-bd013.lmo	Ледынь	0	0	0	0	1	0	4	0	1	1
+169	bl-bd014.lmo	Статуя Ледыни 0	0	0	0	0	0	0	4	0	1	1
+170	bl-bd015.lmo	Статуя Ледыни 0	0	0	0	0	0	0	4	0	1	1
+171	bl-bd016.lmo	Пруд Ледыни 01	0	0	0	0	0	0	4	0	1	0
+172	bl-bd017.lmo	Столп замка Лед	0	0	0	0	1	0	4	0	1	1
+173	nml-bd142.lmo	Туман 01	0	0	0	0	0	0	9	0	1	0
+174	nml-bd143.lmo	Огонь 01	0	0	0	0	0	0	9	0	1	0
+175	nml-bd144.lmo	Ледяное дерево 	0	0	0	0	0	0	8	0	1	1
+176	nml-bd145.lmo	Лачуга Осеннего	0	0	0	0	1	0	9	0	1	1
+177	nml-bd146.lmo	Осенний алтарь 	0	0	0	0	1	0	9	0	1	1
+178	nml-bd147.lmo	Мини-навес 01	0	0	0	0	1	0	9	0	1	1
+179	nml-bd148-01.lmo	Внешняя ветвь л	0	0	0	0	1	0	9	0	1	1
+180	nml-bd148-02.lmo	Внешние ворота 	0	0	0	0	1	0	9	0	1	1
+181	nml-bd149.lmo	Падающий бамбук	0	0	0	0	1	0	9	0	1	1
+182	nml-bd136.lmo	Желтая трава с 	0	0	0	0	1	0	8	0	1	1
+183	nml-bd135.lmo	Толстое зеленое	0	0	0	0	1	0	8	0	1	1
+184	nml-bd137.lmo	Толстое дерево 	0	0	0	0	1	0	8	0	1	1
+185	mz-bd025.lmo	Внутренняя ветв	0	0	0	0	0	0	7	0	1	1
+186	mz-bd024.lmo	Лампа 01	0	0	0	0	1	0	7	0	1	1
+187	nml-bd134.lmo	Двойное зеленое	0	0	0	0	1	0	8	0	1	1
+188	nml-bd133.lmo	Двойное малинов	0	0	0	0	1	0	8	0	1	1
+189	nml-bd132.lmo	Красное кокосов	0	0	0	0	1	0	8	0	1	1
+190	nml-bd131.lmo	Красное кокосов	0	0	0	0	1	0	8	0	1	1
+191	mz-bd023.lmo	Минитрамвай 01	0	0	0	0	1	0	7	0	1	1
+192	mz-bd022.lmo	Черная стена ла	0	0	0	0	0	0	7	0	1	1
+193	mz-bd021.lmo	Шахтный лабирин	0	0	0	0	0	0	7	0	1	1
+194	mz-bd020.lmo	Шахтный лабирин	0	0	0	0	0	0	7	0	1	1
+195	mz-bd019.lmo	Шахтный лабирин	0	0	0	0	0	0	7	0	1	1
+196	mz-bd018.lmo	Шахтный лабирин	0	0	0	0	0	0	7	0	1	1
+197	mz-bd017.lmo	Шахтный лабирин	0	0	0	0	0	0	7	0	1	1
+198	mz-bd016.lmo	Шахтный лабирин	0	0	0	0	0	0	7	0	1	1
+199	mz-bd015.lmo	Шахтный лабирин	0	0	0	0	0	0	7	0	1	1
+200	mz-bd014.lmo	Шахтный лабирин	0	0	0	0	0	0	7	0	1	1
+201	mz-bd013.lmo	Шахтный лабирин	0	0	0	0	0	0	7	0	1	1
+202	mz-bd011-06.lmo	Шахтный лабирин	0	0	0	0	1	0	7	0	1	0
+203	mz-bd011-05.lmo	Шахтный лабирин	0	0	0	0	1	0	7	0	1	0
+204	mz-bd011-04.lmo	Шахтный лабирин	0	0	0	0	1	0	7	0	1	1
+205	mz-bd011-03.lmo	Шахтный лабирин	0	0	0	0	1	0	7	0	1	1
+206	mz-bd011-02.lmo	Шахтный лабирин	0	0	0	0	1	0	7	0	1	0
+207	mz-bd011-01.lmo	Шахтный лабирин	0	0	0	0	1	0	7	0	1	0
+208	nml-bd130.lmo	Моллюск 01	0	0	0	0	1	0	9	0	1	1
+209	nml-bd129.lmo	Костровая груда	0	0	0	0	1	0	9	0	1	1
+210	nml-bd128-04.lmo	Снежная гора мо	0	0	0	0	0	0	9	0	1	0
+211	nml-bd128-03.lmo	Снежная гора мо	0	0	0	0	0	0	9	0	1	0
+212	nml-bd128-02.lmo	Снежная гора мо	0	0	0	0	0	0	9	0	1	0
+213	nml-bd128-01.lmo	Снежная гора мо	0	0	0	0	0	0	9	0	1	0
+214	nml-bd127.lmo	Снежное дерево 	0	0	0	0	1	0	8	0	1	1
+215	nml-bd126.lmo	Красный клен 01	0	0	0	0	1	0	8	0	1	1
+216	nml-bd125.lmo	Снежный клен 01	0	0	0	0	1	0	8	0	1	1
+217	nml-bd124.lmo	Новая снежная т	0	0	0	0	0	0	8	0	0	1
+218	nml-bd123.lmo	Лесное снежное 	0	0	0	0	1	0	8	0	1	1
+219	nml-bd122.lmo	Лесное снежное 	0	0	0	0	1	0	8	0	1	1
+220	nml-bd121.lmo	Сухое снежное д	0	0	0	0	1	0	8	0	1	1
+221	nml-bd120.lmo	Звезда особого 	0	0	0	0	1	0	9	0	1	1
+222	nml-bd119.lmo	Снежное причудл	0	0	0	0	1	0	8	0	1	1
+223	nml-bd118.lmo	Снежное дерево 	0	0	0	0	1	0	8	0	1	1
+224	nml-bd117.lmo	Снежковое дерев	0	0	0	0	1	0	8	0	1	1
+225	nml-bd116.lmo	Дерево песчаной	0	0	0	0	1	0	8	0	1	1
+226	nml-bd115.lmo	Папоротниковая 	0	0	0	0	1	0	8	0	1	1
+227	nml-bd114.lmo	Странное песчан	0	0	0	0	1	0	8	0	1	1
+228	nml-bd113.lmo	Кактус 01	0	0	0	0	1	0	8	0	1	1
+229	nml-bd112.lmo	Большой песчаны	0	0	0	0	1	0	9	0	1	1
+230	nml-bd111.lmo	Песок 01	0	0	0	0	1	0	9	0	1	1
+231	nml-bd110.lmo	Песчаная трава 	0	0	0	0	0	0	8	0	0	1
+232	nml-bd109.lmo	Песчаная трава 	0	0	0	0	0	0	8	0	0	1
+233	mz-bd005.lmo	Пруд 03	0	0	0	0	0	0	7	0	1	1
+234	nml-bd108.lmo	Новая группа бо	0	0	0	0	1	0	9	0	1	1
+235	nml-bd107.lmo	Новая бочка 01	0	0	0	0	1	0	9	0	1	1
+236	nml-bd106.lmo	Травяная ограда	0	0	0	0	1	0	7	0	1	1
+237	nml-bd105.lmo	Травяная стена 	0	0	0	0	1	0	7	0	1	1
+238	nml-bd104.lmo	Киль 01	0	0	0	0	1	0	9	0	1	1
+239	nml-bd103.lmo	Драконья кость 	0	0	0	0	1	0	9	0	1	1
+240	nml-bd102.lmo	Драконья кость 	0	0	0	0	1	0	9	0	1	1
+241	nml-bd101.lmo	Большой обрубок	0	0	0	0	1	0	8	0	1	1
+242	nml-bd100.lmo	Пустынный цвето	0	0	0	0	1	0	8	0	1	1
+243	nml-bd099.lmo	Пустынное дерев	0	0	0	0	1	0	8	0	1	1
+244	nml-bd098.lmo	Цветок шародрев	0	0	0	0	1	0	8	0	1	1
+245	nml-bd097.lmo	Новая трава 04	0	0	0	0	1	0	8	0	1	1
+246	mz-bd010.lmo	Колонна 01	0	0	0	0	0	0	7	0	1	1
+247	nml-bd096.lmo	Лесопилка 01	0	0	0	0	1	0	9	0	1	0
+248	nml-bd095.lmo	Букет 02	0	0	0	0	1	0	8	0	1	0
+249	mz-bd009.lmo	Пруд 06	0	0	0	0	0	0	7	0	1	1
+250	mz-bd008.lmo	Пруд 05	0	0	0	0	0	0	7	0	1	1
+251	mz-bd007.lmo	Дворцовая стату	0	0	0	0	0	0	7	0	1	1
+252	mz-bd006.lmo	Пруд 04	0	0	0	0	0	0	7	0	1	1
+253	mz-bd011.lmo	Стена лабиринта	0	0	0	0	0	0	7	0	1	1
+254	mz-bd004.lmo	Пруд 02	0	0	0	0	0	0	7	0	1	1
+255	mz-bd003.lmo	Пруд 01	0	0	0	0	0	0	7	0	1	1
+256	mz-bd002.lmo	Стена 02	0	0	0	0	0	0	7	0	1	1
+257	mz-bd001.lmo	Стена 01	0	0	0	0	0	0	7	0	1	1
+258	nml-bd094.lmo	Цветок 01	0	0	0	0	1	0	8	0	1	0
+259	nml-bd093.lmo	Новая трава 03	0	0	0	0	1	0	8	0	1	1
+260	nml-bd092.lmo	Новое дерево 01	0	0	0	0	1	0	8	0	1	1
+261	nml-bd091.lmo	Трава 01	0	0	0	0	1	0	8	0	1	0
+262	nml-bd090.lmo	Фонтан 01	0	0	0	0	0	0	9	0	1	0
+263	nml-bd089.lmo	Каменная скамья	0	0	0	0	1	0	9	0	1	1
+264	nml-bd088.lmo	Персиковые дере	0	0	0	0	1	0	8	0	1	0
+265	nml-bd087.lmo	Вишневое дерево	0	0	0	0	1	0	8	0	1	0
+266	nml-bd086.lmo	Новая трава 02	0	0	0	0	1	0	8	0	1	1
+267	nml-bd085.lmo	Новая трава 01	0	0	0	0	1	0	8	0	1	1
+268	nml-bd084.lmo	Цветочек 07	0	0	0	0	0	0	8	0	0	1
+269	nml-bd083.lmo	Малиновое дерев	0	0	0	0	1	0	8	0	1	1
+270	nml-bd082.lmo	Тысячелетнее де	0	0	0	0	1	0	8	0	1	0
+271	nml-bd081.lmo	Бочка с маслом 	0	0	0	0	1	0	9	0	1	0
+272	nml-bd080.lmo	Маленькая желта	0	0	0	0	1	0	9	0	1	0
+273	nml-bd079.lmo	Дорожный фонарь	0	0	0	0	1	0	9	0	1	0
+274	nml-bd078.lmo	Угол для развор	0	0	0	0	1	0	9	0	1	0
+275	nml-bd077.lmo	6м ступень 01	0	0	0	0	1	0	9	0	1	0
+276	nml-bd076.lmo	2-м шест 01	0	0	0	0	1	0	9	0	1	0
+277	nml-bd075.lmo	Небольшая Сосул	0	0	0	0	0	0	9	0	1	1
+278	nml-bd074.lmo	Большая ледяная	0	0	0	0	0	0	9	0	1	1
+279	nml-bd073.lmo	Старое дерево 0	0	0	0	0	1	0	8	0	1	1
+280	nml-bd072.lmo	Бамбук 02	0	0	0	0	1	0	8	0	1	1
+281	nml-bd071.lmo	Бамбук 01	0	0	0	0	1	0	8	0	1	1
+282	nml-bd070.lmo	Вращающийся фон	0	0	0	0	1	0	9	0	1	1
+283	nml-bd069.lmo	Океанская лавка	0	0	0	0	1	0	9	0	1	0
+284	nml-bd068.lmo	Снежный камень 	0	0	0	0	1	0	9	0	1	1
+285	nml-bd067.lmo	Судно 02	0	0	0	0	1	0	9	0	1	1
+286	nml-bd066.lmo	Снежная скала 0	0	0	0	0	1	0	9	0	1	1
+287	sl-bd040.lmo	Шайтанская стар	0	0	0	0	1	0	3	0	1	1
+288	sl-bd041.lmo	Шайтанская стар	0	0	0	0	1	0	3	0	1	1
+289	nml-bd063.lmo	Красная трава м	0	0	0	0	1	0	8	0	1	0
+290	nml-bd062.lmo	Лесные деревья 	0	0	0	0	1	0	8	0	1	1
+291	nml-bd061.lmo	Лесное дерево 0	0	0	0	0	1	0	8	0	1	1
+292	nml-bd060.lmo	Цветок 06	0	0	0	0	0	0	8	0	0	1
+293	nml-bd059.lmo	Мост 01	0	0	0	0	1	0	9	0	1	1
+294	nml-bd058.lmo	Маленькая скамь	0	0	0	0	1	0	9	0	1	0
+295	nml-bd057.lmo	Скала 02	0	0	0	0	1	0	9	0	1	1
+296	nml-bd056.lmo	Камень 01	0	0	0	0	1	0	9	0	1	1
+297	nml-bd055.lmo	Цветок 05	0	0	0	0	0	0	8	0	0	1
+298	nml-bd054.lmo	Дерево 12	0	0	0	0	1	0	8	0	1	1
+299	nml-bd053.lmo	Дерево 11	0	0	0	0	0	0	8	0	1	0
+300	nml-bd052.lmo	Дерево 10	0	0	0	0	0	0	8	0	1	0
+301	nml-bd051.lmo	Нос 01	0	0	0	0	1	0	9	0	1	1
+302	nml-bd048.lmo	Скамья 02	0	0	0	0	1	0	9	0	1	1
+303	nml-bd047.lmo	Рынок 01	0	0	0	0	1	0	1	0	1	0
+304	nml-bd046.lmo	Указатель 02	0	0	0	0	1	0	9	0	1	0
+305	nml-bd045.lmo	Указатель 01	0	0	0	0	1	0	9	0	1	0
+306	nml-bd044.lmo	Изображение боч	0	0	0	0	1	0	9	0	1	1
+307	nml-bd043.lmo	Изображение боч	0	0	0	0	1	0	9	0	1	1
+308	nml-bd042.lmo	Изображение боч	0	0	0	0	1	0	9	0	1	1
+309	nml-bd041.lmo	Столб металичес	0	0	0	0	1	0	9	0	1	0
+310	nml-bd040.lmo	Металлическая и	0	0	0	0	1	0	9	0	1	0
+311	nml-bd039.lmo	Арка 01	0	0	0	0	1	0	9	0	1	0
+312	nml-bd038.lmo	Стол 01	0	0	0	0	1	0	9	0	1	0
+313	nml-bd037.lmo	Ротанговый стул	0	0	0	0	1	0	9	0	1	0
+314	nml-bd036.lmo	Скамья 01	0	0	0	0	1	0	1	0	1	0
+315	nml-bd035.lmo	Цветок 04	0	0	0	0	1	0	8	0	1	0
+316	nml-bd034.lmo	Трава 06	0	0	0	0	0	0	8	0	0	1
+317	nml-bd033.lmo	Букет 02	0	0	0	0	1	0	8	0	1	1
+318	nml-bd032.lmo	Цветок 01	0	0	0	0	1	0	8	0	1	1
+319	nml-bd031.lmo	Трава с цветами	0	0	0	0	1	0	8	0	1	0
+320	nml-bd030.lmo	Цветочный горшо	0	0	0	0	1	0	9	0	1	1
+321	nml-bd029.lmo	Цветочный горшо	0	0	0	0	1	0	9	0	1	1
+322	nml-bd028.lmo	Цветочный горшо	0	0	0	0	1	0	9	0	1	1
+323	nml-bd027.lmo	Сад 01	0	0	0	0	1	0	9	0	1	0
+324	nml-bd026.lmo	Высушенный побе	0	0	0	0	1	0	8	0	1	1
+325	nml-bd025.lmo	Трава 04	0	0	0	0	0	0	8	0	0	1
+326	nml-bd024.lmo	Трава 03	0	0	0	0	1	0	8	0	1	0
+327	nml-bd023.lmo	Трава 02	0	0	0	0	1	0	8	0	1	0
+328	nml-bd022.lmo	Трава 01	0	0	0	0	0	0	8	0	1	0
+329	nml-bd021.lmo	Дерево 09	0	0	0	0	1	0	8	0	1	0
+330	nml-bd020.lmo	Дерево 08	0	0	0	0	1	0	8	0	1	0
+331	nml-bd019.lmo	Дерево 07	0	0	0	0	1	0	8	0	1	0
+332	nml-bd018.lmo	Цветок 08	0	0	0	0	1	0	8	0	1	0
+333	nml-bd017.lmo	Дерево 05	0	0	0	0	1	0	8	0	1	0
+334	nml-bd049.lmo	Песчаная лавка 	0	0	0	0	1	0	9	0	1	0
+335	nml-bd015.lmo	Дерево 03	0	0	0	0	1	0	8	0	1	0
+336	nml-bd014.lmo	Дерево 02	0	0	0	0	1	0	8	0	1	0
+337	nml-bd013.lmo	Дерево 01	0	0	0	0	1	0	8	0	1	0
+338	nml-bd012.lmo	Дорожный знак 0	0	0	0	0	1	0	9	0	1	0
+339	nml-bd011.lmo	Фрагмент дороги	0	0	0	0	1	0	9	0	1	0
+340	nml-bd010.lmo	Фрагмент дороги	0	0	0	0	1	0	9	0	1	0
+341	nml-bd009.lmo	Деревянный ящик	0	0	0	0	1	0	9	0	1	1
+342	nml-bd008.lmo	Большой сундук 	0	0	0	0	1	0	9	0	1	1
+343	nml-bd007.lmo	Птичья опека 01	0	0	0	0	1	0	9	0	1	1
+344	nml-bd050.lmo	Обрубок 01	0	0	0	0	1	0	8	0	1	0
+345	nml-bd006.lmo	Повозка с фрукт	0	0	0	0	1	0	1	0	1	0
+346	nml-bd005.lmo	Винная бочка 01	0	0	0	0	1	0	9	0	1	0
+347	nml-bd004.lmo	Деревянная бочк	0	0	0	0	1	0	9	0	1	0
+348	nml-bd003.lmo	Кипа ящиков 01	0	0	0	0	1	0	9	0	1	1
+349	nml-bd002.lmo	Ящик с фруктами	0	0	0	0	1	0	9	0	1	0
+350	nml-bd001.lmo	Маленький ящик 	0	0	0	0	1	0	9	0	1	0
+351	yyyy001.lmo	Место 1	1	0	0	0	1	0	200	0	1	0
+352	yyyy002.lmo	Пристройка 1	1	0	0	0	1	0	200	0	1	0
+353	yyyy003.lmo	Непроходимый 7	2	0	0	0	1	0	200	0	1	0
+354	yyyy004.lmo	Проходимый 7	2	0	0	0	1	0	200	0	1	0
+355	yyyy005.lmo	Проходимый 3	2	0	0	0	1	0	200	0	1	0
+356	yyyy006.lmo	Непроходимый 3	2	0	0	0	1	0	200	0	1	0
+400	yyyy007.lmo	Лампа 01	3	0,255,0	10,1.0,2	0	1	0	200	0	1	0
+401	yyyy007.lmo	Лампа 02	3	0,255,0	10,1.0,0	0	1	0	200	0	1	0
+402	yyyy007.lmo	Лампа 03	3	0,18,255	10,1.0,3	0	1	0	200	0	1	0
+403	yyyy007.lmo	Лампа 04	3	27,80,250	10,1.0,1	0	1	0	200	0	1	0
+404	yyyy007.lmo	Lкарта 05	3	248,228,137	3,1.0,6	0	1	0	200	0	1	0
+405	yyyy007.lmo	Лампа 06	3	60,69,137	10,1.0,5	0	1	0	200	0	1	0
+406	yyyy007.lmo	Факел 07	3	248,228,137	3,1.0,4	0	1	0	200	0	1	0
+407	yyyy007.lmo	Лампа 08	3	250,120,50	6,1.0,7	0	1	0	200	0	1	0
+408	yyyy007.lmo	Лампа 09	3	25,226,153	3,1.0,8	0	1	0	200	0	1	0
+421	nml-bd154.lmo	Деревянная гава	0	0	0	0	1	0	9	0	1	1
+422	nml-bd155.lmo	Деревянная гава	0	0	0	0	1	0	9	0	1	1
+423	nml-bd156.lmo	Деревянная гава	0	0	0	0	1	0	9	0	1	1
+424	nml-bd157.lmo	Деревянная гава	0	0	0	0	1	0	9	0	1	1
+425	nml-bd158.lmo	Ледяная гора 01	0	0	0	0	1	0	9	0	1	1
+426	nml-bd159.lmo	Ледяная гора 02	0	0	0	0	1	0	9	0	1	1
+427	nml-bd160.lmo	Океанское кладб	0	0	0	0	1	0	9	0	1	1
+428	nml-bd161.lmo	Океанское кладб	0	0	0	0	1	0	9	0	1	1
+429	nml-bd162.lmo	Океанское кладб	0	0	0	0	1	0	9	0	1	1
+430	nml-bd163.lmo	Вход в заброшен	0	7	0	0	0	0	9	0	1	0
+431	nml-bd164.lmo	Парящий шар 01	0	0	0	0	1	0	9	0	1	1
+432	nml-bd165.lmo	Парящая доска 0	0	0	0	0	1	0	9	0	1	1
+433	nml-bd166.lmo	Оборачивающееся	0	0	0	0	1	0	8	0	1	1
+434	nml-bd167.lmo	Рыбный косяк 01	0	0	0	0	1	0	9	0	1	1
+435	login.lmo	Интерфейс подкл	0	0	0	0	0	0	0	0	1	0
+436	nml-bd169.lmo	Сухая древесина	0	0	0	0	1	0	8	0	1	1
+437	nml-bd170.lmo	Гриб 01	0	0	0	0	1	0	8	0	1	1
+438	nml-bd171.lmo	Флуоресцентная 	0	0	0	0	1	0	8	0	1	1
+439	nml-bd168.lmo	Желтая трава 01	0	0	0	0	1	0	8	0	1	1
+440	mz-bd026.lmo	Пустынные лабир	0	9,7,8,9,10,11,12,13,14,15	0	0	0	0	7	0	1	0
+441	nml-bd172.lmo	Пустынное лабир	0	0	0	0	0	0	8	0	1	1
+442	mz-bd027.lmo	Пустынный лабир	0	0	0	0	0	0	7	0	1	1
+443	mz-bd028.lmo	Пустынный лабир	0	0	0	0	0	0	7	0	1	1
+444	mz-bd029.lmo	Пустынный лабир	0	0	0	0	0	0	7	0	1	1
+445	mz-bd030.lmo	Пустынный лабир	0	0	0	0	0	0	7	0	1	1
+446	nml-bd173.lmo	Большое листвен	0	0	0	0	1	0	8	0	1	1
+447	nml-bd174.lmo	Засохшее дерево	0	0	0	0	1	0	8	0	1	1
+448	nml-bd175.lmo	Маленькое дерев	0	0	0	0	1	0	8	0	1	1
+449	by-bd041.lmo	Бар Серебрянной	0	11,16,17,18,19,20,21,22,23,24,25,26	0	0	0	0	1	0	1	0
+450	nml-bd176.lmo	Лесной лабиринт	0	0	0	0	1	0	7	0	1	1
+451	nml-bd177.lmo	Лесной лабиринт	0	0	0	0	1	0	7	0	1	1
+452	nml-bd178.lmo	Лесной лабиринт	0	0	0	0	1	0	7	0	1	1
+453	nml-bd179.lmo	Лесной лабиринт	0	0	0	0	1	0	7	0	1	1
+454	nml-bd180.lmo	Лесной лабиринт	0	0	0	0	1	0	7	0	1	1
+455	nml-bd181.lmo	Лесной лабиринт	0	0	0	0	1	0	7	0	1	1
+456	nml-bd182.lmo	Лесной лабиринт	0	0	0	0	1	0	7	0	1	1
+457	nml-bd183.lmo	Желтая трава 01	0	0	0	0	1	0	8	0	1	1
+458	nml-bd184.lmo	Маленькая трава	0	0	0	0	0	0	8	0	0	1
+459	nml-bd185.lmo	Розовый куст 01	0	0	0	0	1	0	8	0	1	1
+460	nml-bd186.lmo	Осенняя трава 0	0	0	0	0	0	0	8	0	0	1
+461	nml-bd187.lmo	Маленькое высок	0	0	0	0	1	0	8	0	1	1
+462	nml-bd188.lmo	Хижина острова 	0	0	0	0	1	0	9	0	1	1
+463	nml-bd189.lmo	Водопад острова	0	0	0	0	0	0	9	0	1	0
+464	nml-bd190.lmo	Водопад острова	0	0	0	0	0	0	9	0	1	0
+465	nml-bd191.lmo	Водопад острова	0	0	0	0	0	0	9	0	1	0
+466	nml-bd192.lmo	Опавший лист 01	0	0	0	0	0	0	9	0	1	0
+467	nml-bd193.lmo	Опавший лист 02	0	0	0	0	0	0	9	0	1	0
+468	nml-bd194.lmo	Опавший лист 03	0	0	0	0	0	0	9	0	1	0
+469	by-bd019.lmo	Врата в гавань 	0	0	0	0	1	0	1	0	1	0
+470	nml-bd195.lmo	Статуя в бухте 	0	0	0	0	1	0	9	0	1	0
+471	by-bd028.lmo	Пирс Аргента 01	0	0	0	0	1	0	1	0	1	0
+472	by-bd029.lmo	Вывеска Серебря	0	0	0	0	1	0	1	0	1	0
+473	by-bd030.lmo	Вывеска Серебря	0	0	0	0	1	0	1	0	1	0
+474	by-bd031.lmo	Указатель на ор	0	0	0	0	1	0	1	0	1	0
+475	by-bd032.lmo	Вывеска торговц	0	0	0	0	1	0	1	0	1	0
+476	by-bd033.lmo	Вывеска зеленщи	0	0	0	0	1	0	1	0	1	0
+477	by-bd034.lmo	Вывеска портног	0	0	0	0	1	0	1	0	1	0
+478	by-bd035.lmo	Указатель на то	0	0	0	0	1	0	1	0	1	0
+480	yyyy080.lmo	Звуковой эффект	6	env_surf	2500	0	1	0	200	0	1	0
+481	yyyy080.lmo	Звуковой эффект	6	env_insect	2500	0	1	0	200	0	1	0
+482	yyyy080.lmo	Звуковой эффект	6	env_cicada	2500	0	1	0	200	0	1	0
+483	yyyy080.lmo	Звуковой эффект	6	env_bird1	2500	0	1	0	200	0	1	0
+484	yyyy080.lmo	Звук чириканья 	6	env_bird2	2500	0	1	0	200	0	1	0
+485	yyyy080.lmo	Звуковой эффект	6	env_bise	2500	0	1	0	200	0	1	0
+486	yyyy080.lmo	Звуковой эффект	6	env_ship	2500	0	1	0	200	0	1	0
+487	yyyy080.lmo	Звуковой эффект	6	env_BlackS	2500	0	1	0	200	0	1	0
+488	yyyy080.lmo	Звуковой эффект	6	env_founta	2500	0	1	0	200	0	1	0
+489	yyyy080.lmo	Звуковой эффект	6	env_ghyll	2500	0	1	0	200	0	1	0
+501	by-bd042.lmo	Указатель на но	0	0	0	0	1	0	1	0	1	0
+502	by-bd043.lmo	Указатель на ве	0	0	0	0	1	0	1	0	1	0
+503	by-bd044.lmo	Указатель флотс	0	0	0	0	1	0	1	0	1	0
+504	bl-bd018.lmo	Бухта Ледыни мо	0	0	0	0	1	0	4	0	1	1
+505	bl-bd019.lmo	Бухта Ледыни мо	0	0	0	0	1	0	4	0	1	1
+506	bl-bd020.lmo	Бухта Ледыни мо	0	0	0	0	1	0	4	0	1	1
+507	by-bd045.lmo	Объявление о на	0	0	0	0	1	0	1	0	1	0
+508	by-bd046.lmo	Серебряный кост	0	0	0	0	1	0	1	0	1	0
+509	nml-bd196.lmo	Маяк 01	0	0	0	0	1	0	9	0	1	0
+510	nml-bd197.lmo	Буй 01	0	0	0	0	1	0	9	0	1	0
+511	nml-bd198.lmo	Сверический поп	0	0	0	0	1	0	9	0	1	0
+512	login02.lmo	Интерфейс входа	0	0	0	0	0	0	0	0	1	0
+513	nml-bd199.lmo	Бабочка 01	0	0	0	0	1	0	9	0	1	0
+514	nml-bd200.lmo	Буй 02	0	0	0	0	1	0	9	0	1	0
+515	by-bd047.lmo	Торговая фактор	0	8	0	0	1	0	1	0	1	0
+516	by-bd048.lmo	Вывеска торгово	0	0	0	0	1	0	1	0	1	0
+517	sl-bd042.lmo	Шайтанская торг	0	10	0	0	1	0	3	0	1	0
+518	nml-bd201.lmo	Знак бухты 01	0	0	0	0	1	0	9	0	1	0
+519	lt-bd039.lmo	Торговая фактор	0	9	0	0	0	0	2	0	1	0
+520	bl-bd021.lmo	Торговая фактор	0	8	0	0	1	0	4	0	1	1
+521	sl-bd043.lmo	Шайтанская гава	0	0	0	0	1	0	3	0	1	0
+522	sl-bd044.lmo	Шайтанская гава	0	0	0	0	1	0	3	0	1	0
+523	cc-bd001.lmo	Колокольня Весн	0	0	0	0	1	0	5	0	1	0
+524	cc-bd002.lmo	Таверна Весногр	0	0	0	0	1	0	5	0	1	0
+525	cc-bd003.lmo	Стена Весноград	0	0	0	0	1	0	5	0	1	0
+526	cc-bd004.lmo	Стена Весноград	0	0	0	0	1	0	5	0	1	0
+527	cc-bd005.lmo	Стена Весноград	0	0	0	0	1	0	5	0	1	0
+528	cc-bd006.lmo	Стена Весноград	0	0	0	0	1	0	5	0	1	0
+529	cc-bd007.lmo	Ветряная мельни	0	0	0	0	1	0	5	0	1	0
+530	cc-bd008.lmo	Дом Веснограда 	0	0	0	0	1	0	5	0	1	0
+531	cc-bd009.lmo	Сосновые перила	0	0	0	0	1	0	5	0	1	0
+532	cc-bd010.lmo	Фонарный сундук	0	0	0	0	1	0	5	0	1	0
+533	cc-bd011.lmo	Мачта Весноград	0	0	0	0	1	0	5	0	1	0
+534	cc-bd012.lmo	Сосна Весноград	0	0	0	0	1	0	5	0	1	0
+535	cc-bd013.lmo	Храм Веснограда	0	0	0	0	1	0	5	0	1	0
+536	cc-bd014.lmo	Мост Веснограда	0	0	0	0	1	0	5	0	1	0
+537	cc-bd015.lmo	Кондитерская ла	0	0	0	0	1	0	5	0	1	0
+538	cc-bd016.lmo	Мясник Весногра	0	0	0	0	1	0	5	0	1	0
+539	cc-bd017.lmo	Скала Весноград	0	0	0	0	1	0	5	0	1	0
+540	cc-bd018.lmo	Фонарь Весногра	0	0	0	0	1	0	5	0	1	0
+541	cc-bd019.lmo	Фонарь Весногра	0	0	0	0	1	0	5	0	1	0
+542	cc-bd020.lmo	Мешок с песком 	0	0	0	0	1	0	5	0	1	1
+543	cc-bd021.lmo	Пешеходная доро	0	0	0	0	1	0	5	0	1	1
+544	cc-bd022.lmo	Бумажная лампа 	0	0	0	0	1	0	5	0	1	0
+545	cc-bd023.lmo	Дом Веснограда 	0	0	0	0	1	0	5	0	1	0
+546	cc-bd024.lmo	Кирпич Весногра	0	0	0	0	1	0	5	0	1	0
+547	cc-bd025.lmo	Павильон Весног	0	0	0	0	1	0	5	0	1	1
+548	cc-bd026.lmo	Мост павильона 	0	0	0	0	1	0	5	0	1	0
+549	cc-bd027.lmo	Столп Весноград	0	0	0	0	1	0	5	0	1	0
+550	cc-bd028.lmo	Парапет Весногр	0	0	0	0	1	0	5	0	1	0
+551	cc-bd029.lmo	Торговая фактор	0	1,2	0	0	0	0	5	0	1	0
+552	cc-bd030.lmo	Жемчужное дерев	0	0	0	0	1	0	5	0	1	0
+553	cc-bd031.lmo	Блок Веснограда	0	0	0	0	1	0	5	0	1	0
+554	cc-bd032.lmo	Дом Веснограда 	0	0	0	0	1	0	5	0	1	0
+555	cc-bd033.lmo	Ограда Весногра	0	0	0	0	1	0	5	0	1	0
+556	cc-bd034.lmo	Ограда Весногра	0	0	0	0	1	0	5	0	1	0
+557	cc-bd035.lmo	Ограда Весногра	0	0	0	0	1	0	5	0	1	0
+558	cc-bd036.lmo	Лилия Весноград	0	0	0	0	1	0	5	0	1	0
+559	cc-bd037.lmo	Бамбуковый побе	0	0	0	0	1	0	5	0	1	1
+560	cc-bd038.lmo	Бамбуковый побе	0	0	0	0	1	0	5	0	1	1
+561	cc-bd039.lmo	Ограда Весногра	0	0	0	0	1	0	5	0	1	1
+562	cc-bd040.lmo	Бухта о. Весны 	0	0	0	0	1	0	5	0	1	1
+563	cc-bd041.lmo	Фонарь Весногра	0	0	0	0	1	0	5	0	1	1
+564	cc-bd042.lmo	Верфь Весноград	0	0	0	0	1	0	5	0	1	0
+565	cc-bd043.lmo	Верфь Весноград	0	0	0	0	1	0	5	0	1	0
+566	cc-bd044.lmo	Подводный тунне	0	0	0	0	0	0	5	0	1	1
+567	cc-bd045.lmo	Подводный тунне	0	0	0	0	0	0	5	0	1	1
+568	cc-bd046.lmo	Подводный тонне	0	0	0	0	0	0	5	0	1	1
+569	cc-bd047.lmo	Подводный тунне	0	0	0	0	0	0	5	0	1	1
+570	mz-bd099.lmo	Черная стена ла	0	0	0	0	0	0	7	0	1	1
+571	cc-bd049.lmo	Подводный тунне	0	0	0	0	0	0	5	0	1	1
+572	cc-bd050.lmo	Подводный мусор	0	0	0	0	0	0	5	0	1	1
+573	cc-bd051.lmo	Подземный тунне	0	0	0	0	0	0	5	0	1	1
+574	cc-bd052.lmo	Подземный тунне	0	0	0	0	0	0	5	0	1	1
+575	cc-bd053.lmo	Грязная бутылка	0	0	0	0	0	0	5	0	1	1
+576	cc-bd054.lmo	Тело 01	0	0	0	0	0	0	5	0	1	1
+577	cc-bd055.lmo	Верфь Весноград	0	0	0	0	1	0	5	0	1	0
+578	cc-bd056.lmo	Малая бочка Вес	0	0	0	0	1	0	5	0	1	0
+579	cc-bd057.lmo	Поленница Весно	0	0	0	0	1	0	5	0	1	0
+580	cc-bd058.lmo	Подводный тонне	0	0	0	0	0	0	5	0	1	1
+581	cc-bd059.lmo	Подводный тонне	0	0	0	0	0	0	5	0	1	1
+582	cc-bd060.lmo	Рыбный косяк 02	0	0	0	0	0	0	5	0	1	1
+583	cc-bd061.lmo	Подводный тонне	0	0	0	0	0	0	5	0	1	1
+584	cc-bd062.lmo	Подводный тонне	0	0	0	0	0	0	5	0	1	1
+585	cc-bd063.lmo	Подводный тонне	0	0	0	0	0	0	5	0	1	1
+586	cc-bd064.lmo	Подводный тонне	0	0	0	0	0	0	5	0	1	1
+587	nml-bd202.lmo	Подводный тонне	0	0	0	0	1	0	8	0	1	1
+588	nml-bd203.lmo	Болотный обрубо	0	0	0	0	1	0	8	0	1	1
+589	cc-bd067.lmo	Парапет Весногр	0	0	0	0	1	0	5	0	1	0
+590	cc-bd068.lmo	След 01	0	0	0	0	1	0	5	0	1	1
+591	cc-bd069.lmo	Водяной камень 	0	0	0	0	1	0	5	0	1	0
+592	nml-bd204.lmo	Болотный камень	0	0	0	0	1	0	9	0	1	1
+593	nml-bd205.lmo	Город Калек мод	0	0	0	0	1	0	7	0	1	1
+594	nml-bd206.lmo	Город Калек мод	0	0	0	0	1	0	7	0	1	1
+595	nml-bd207.lmo	Город Калек мод	0	0	0	0	1	0	7	0	1	1
+596	nml-bd208.lmo	Город Испорченн	0	0	0	0	1	0	7	0	1	1
+597	nml-bd209.lmo	Город Испорченн	0	0	0	0	1	0	7	0	1	1
+598	nml-bd210.lmo	Город Испорченн	0	0	0	0	1	0	7	0	1	1
+599	cc-bd077.lmo	Дерево 013	0	0	0	0	1	0	8	0	1	1
+600	nml-bd211.lmo	Адская стена 01	0	0	0	0	0	0	7	0	1	1
+601	nml-bd212.lmo	Адская стена 03	0	0	0	0	0	0	7	0	1	1
+602	nml-bd213.lmo	Дьявольский шип	0	0	0	0	0	0	7	0	1	1
+603	nml-bd214.lmo	Адская стена 05	0	0	0	0	0	0	7	0	1	1
+604	nml-bd215.lmo	Адская стена 04	0	0	0	0	0	0	7	0	1	1
+605	nml-bd216.lmo	Адская стена 06	0	0	0	0	0	0	7	0	1	1
+606	nml-bd217.lmo	Дьявольская ста	0	0	0	0	0	0	7	0	1	1
+607	nml-bd218.lmo	Дьявольское озе	0	0	0	0	0	0	7	0	1	1
+608	nml-bd219.lmo	Дьявольское озе	0	0	0	0	0	0	7	0	1	1
+609	nml-bd220.lmo	Адский пруд 03	0	0	0	0	0	0	7	0	1	1
+610	nml-bd221.lmo	Дьявольское озе	0	0	0	0	0	0	7	0	1	1
+611	nml-bd222.lmo	Адская стена 02	0	0	0	0	0	0	7	0	1	1
+612	cc-bd065.lmo	Подводный тунне	0	0	0	0	0	0	5	0	1	1
+613	cc-bd066.lmo	Подводный тунне	0	0	0	0	0	0	5	0	1	1
+614	cc-bd071.lmo	Указатель на ба	0	0	0	0	1	0	5	0	1	0
+615	cc-bd072.lmo	Указатель на па	0	0	0	0	1	0	5	0	1	0
+616	cc-bd073.lmo	Указатель на юв	0	0	0	0	1	0	5	0	1	0
+617	cc-bd074.lmo	Указатель на ба	0	0	0	0	1	0	5	0	1	0
+618	cc-bdhq.lmo	Подводная черна	0	0	0	0	0	0	5	0	1	1
+619	hlcx02.lmo	Лабиринт логова	0	0	0	0	0	0	5	0	1	1
+620	hlcx03.lmo	Лабиринт логова	0	0	0	0	0	0	5	0	1	1
+621	hlcx04.lmo	Лабиринт логова	0	0	0	0	0	0	5	0	1	1
+622	hlcx05.lmo	Лабиринт логова	0	0	0	0	0	0	5	0	1	1
+623	hlcx06.lmo	Лабиринт логова	0	0	0	0	0	0	5	0	1	1
+624	hlcx07.lmo	Лабиринт логова	0	0	0	0	0	0	5	0	1	1
+625	hlcx08.lmo	Лабиринт логова	0	0	0	0	0	0	5	0	1	1
+626	hlcx09.lmo	Лампа логова че	0	0	0	0	0	0	5	0	1	1
+627	hlcx-gh.lmo	Призрачное плам	0	0	0	0	0	0	5	0	1	0
+628	hlcx-rk.lmo	Вход в логово ч	0	0	0	0	1	0	5	0	1	0
+629	hlcx-bx.lmo	Сундук с сокров	0	0	0	0	0	0	5	0	1	1
+630	hdsd01.lmo	Вход в Подводны	0	0	0	0	1	0	5	0	1	1
+631	long001.lmo	Логово черного 	0	0	0	0	0	0	5	0	1	0
+632	hlcx-ck.lmo	Выход из логова	0	0	0	0	1	0	5	0	1	0
+633	cc-bddxsdrk.lmo	Вход в подводны	0	0	0	0	1	0	5	0	1	1
+634	cc-bd075.lmo	Врата города Ве	0	0	0	0	1	0	5	0	1	0
+635	hdmgrk01.lmo	Вход в логово п	0	1,2	0	0	1	0	5	0	1	1
+636	hdwjsj001.lmo	Калькулятор	0	0	0	0	1	0	5	0	1	1
+637	hdwblg001.lmo	Стеклянная буты	0	0	0	0	1	0	5	0	1	1
+638	hdjd-cbd01.lmo	Сокровища 01	0	0	0	0	1	0	5	0	1	1
+639	ys_jiaotang.lmo	Собор	0	0	0	0	1	0	5	0	1	1
+640	jtsn.lmo	В Соборе	0	0	0	0	1	0	5	0	1	1
+641	sbm.lmo	Портьеры	0	0	0	0	1	0	5	0	1	0
+642	ys_ditan.lmo	yy ковер	0	0	0	0	1	0	5	0	1	0
+643	07hdw_hualanbai.lmo	Лепной карниз	0	0	0	0	1	0	5	0	1	0
+644	xmas_hengfu.lmo	Рождественское 	0	0	0	0	1	0	5	0	1	0
+645	xmas_caidai.lmo	Рождественские 	0	0	0	0	1	0	5	0	1	0
+646	dd_bd001.lmo	Гавань острова 	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	5	0	1	1
+647	dd_bd002.lmo	Кость Дракона о	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	5	0	1	1
+648	dd_bd003.lmo	Снежная трава	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	5	0	1	1
+649	dd_bd004.lmo	Снежная галька	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	5	0	1	1
+650	dd_bd006.lmo	Снежный Камень	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	5	0	1	1
+651	dd_bd007.lmo	Снежное дерево	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	5	0	1	1
+652	dd_bd008.lmo	Мост острова Зи	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	5	0	1	1
+653	dd_bd009.lmo	Гавань острова 	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	5	0	1	1
+654	dd_bd010.lmo	Лабиринтный мод	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	5	0	1	1
+655	dd_bd011.lmo	Лабиринтный мод	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	5	0	1	1
+656	dd_bd012.lmo	Лабиринтный мод	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	5	0	1	1
+657	dd_bd013.lmo	Лабиринтный мод	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	5	0	1	1
+658	dd_bd014.lmo	Лабиринтный мод	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	5	0	1	1
+659	dd_bd015.lmo	Лабиринтный мод	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	5	0	1	1
+660	MY_bd001.lmo	Комната сокрови	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	5	0	1	1
+661	ns_gangdian.lmo	Дворец Богини	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	0	0	1	1
+662	kyjj-bd01-01.lmo	Римская Колонна	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
+663	kyjj-bd01-21.lmo	Римская Колонна	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
+664	kyjj-bd01-22.lmo	Римская Колонна	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
+665	kyjj-bd01-23.lmo	Римская Колонна	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
+666	kyjj-bd01-31.lmo	Римская Колонна	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
+667	kyjj-bd01-32.lmo	Римская Колонна	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
+668	kyjj-bd01-33.lmo	Римская Колонна	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
+669	kyjj-bd01-34.lmo	Римская Колонна	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
+670	kyjj-bd02-01.lmo	Забор01	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
+671	kyjj-bd02-02.lmo	Забор02	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
+672	kyjj-bd02-21.lmo	Забор01_01	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
+673	kyjj-bd02-22.lmo	Забор01_02	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
+674	kyjj-bd02-23.lmo	Забор01_03	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
+675	kyjj-bd02-24.lmo	Забор01_04	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
+676	kyjj-bd02-31.lmo	Забор02_01	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
+677	kyjj-bd02-32.lmo	Забор02_02	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
+678	kyjj-bd02-33.lmo	Забор02_03	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
+679	kyjj-bd02-34.lmo	Забор02_04	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
+680	kyjj-bd02-41.lmo	Забор01_02_01	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
+681	kyjj-bd02-42.lmo	Забор01_02_02	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
+682	kyjj-bd02-43.lmo	Забор01_02_03	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
+683	kyjj-bd02-51.lmo	Забор02_02_01	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
+684	kyjj-bd02-52.lmo	Забор01_02_02	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
+685	kyjj-bd02-53.lmo	Забор01_02_03	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
+686	kyjj-bd03-01.lmo	Колонна забора0	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
+687	kyjj-bd03-21.lmo	Колонна забора0	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
+688	kyjj-bd03-22.lmo	Колонна забора0	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
+689	kyjj-bd03-31.lmo	Колонна забора0	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
+690	kyjj-bd03-32.lmo	Колонна забора0	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
+691	kyjj-bd04-01.lmo	Стена01	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	6	0	1	0
+692	kyjj-bd04-21.lmo	Стена02	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	6	0	1	0
+693	kyjj-bd05-01.lmo	Статуя01	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	6	0	1	0
+694	kyjj-bd05-21.lmo	Статуя02_01	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	6	0	1	0
+695	kyjj-bd05-22.lmo	Статуя02_02	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	6	0	1	0
+696	kyjj-bd05-23.lmo	Статуя02_03	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	6	0	1	0
+697	kyjj-bd05-31.lmo	Статуя03_01	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	6	0	1	0
+698	kyjj-bd05-32.lmo	Статуя03_02	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	6	0	1	0
+699	kyjj-bd05-33.lmo	Статуя03_03	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	6	0	1	0
+700	kyjj-bd05-34.lmo	Статуя03_04	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	6	0	1	0
+701	kyjj-bd06-01.lmo	Декорация01	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	6	0	1	0
+702	kyjj-bd06-21.lmo	Декорация02	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	6	0	1	1
+703	kyjj-bd06-22.lmo	Декорация03	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	6	0	1	1
+704	kyjj-bd05-22.lmo	Статуя02_02	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
+705	kyjj-bd01-41.lmo	Осколок колонны	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	1
+706	kyjj-bd01-42.lmo	Осколок колонны	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	1
+707	kyjj-bd01-43.lmo	Осколок колонны	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	1
+708	kyjj-bd04-31.lmo	Стена03	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
+709	kyjj-bd04-41.lmo	Стена04	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
+710	kyjj-bd07-01.lmo	Огоно	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	0
+711	kyjj-bd07-02.lmo	Вспышки	0	0,0,0,0,0,0,0,0,0,0,0,0	0	1	0	0	6	0	1	0
+712	kyjj-bd07-03.lmo	Вспышки_1	0	0,0,0,0,0,0,0,0,0,0,0,0	0	1	0	0	6	0	1	0
+713	kyjj-bd06-23.lmo	Каменная голова	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	6	0	1	1
+714	kyjj-bd06-24.lmo	Каменная голова	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	1
+715	kyjj-bd06-25.lmo	Каменная голова	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	1
+716	kyjj-bd06-26.lmo	Каменная голова	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	1
+717	kyjj-bd06-27.lmo	Каменная голова	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	0	0	6	0	1	1
+718	kyjj-bd06-28.lmo	Каменная голова	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	6	0	1	0
+719	kyjj-bd06-29.lmo	Каменная голова	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	6	0	1	0
+720	sw_louti.lmo	Следы звезд	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	6	0	1	0
+721	sw_weiqiang.lmo	Стена звезд	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	6	0	1	0
+722	sw_ta.lmo	Звездная башня	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	6	0	1	0
+723	sw_yabian.lmo	Чистое небо	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	6	0	1	0
+724	sw_louti2.lmo	Следы звезд2	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	6	0	1	0
 725	tsrj_wjbayi01.lmo	Sky bar chair	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	101	0	1	0
 726	tsrj_yinxiang.lmo	Audio	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	101	0	1	0
 727	tsrj_caideng.lmo	DiscoBall	0	0,0,0,0,0,0,0,0,0,0,0,0	0	0	1	0	101	0	1	1
