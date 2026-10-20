@@ -19,7 +19,7 @@ end
 
 function init_entry(map)
 	SetMapEntryMapName(map, "jialebi")
-	SetMapEntryTime(map, "2005/8/30/15/0", "1/0/0", "0/1/0", "0/6/0")
+	SetMapEntryTime(map, "2005/8/30/5/0", "0/12/0", "0/8/0", "0/11/0")
 end
 
 function after_enter_hell(role, map_copy)

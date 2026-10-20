@@ -19,7 +19,7 @@ end
 
 function init_entry(map)
 	SetMapEntryMapName(map, "darkblue")
-	SetMapEntryTime(map, "2006/10/18/4/0", "0/12/0", "0/0/30", "0/0/45")
+	SetMapEntryTime(map, "2006/10/18/4/0", "0/1/45", "0/0/45", "0/0/45")
 end
 
 ChaosArgentAlt = {}

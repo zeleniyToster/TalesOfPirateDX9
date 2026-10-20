@@ -19,7 +19,7 @@ end
 
 function init_entry(map)
     SetMapEntryMapName(map, "hell3")
-    SetMapEntryTime(map, "2007/1/20/0/0", "1/0/0", "0/1/0", "0/3/0")
+    SetMapEntryTime(map, "2005/8/30/5/0", "0/12/0", "0/8/0", "0/11/0")
 end
 
 function after_enter_hell4(role, map_copy)

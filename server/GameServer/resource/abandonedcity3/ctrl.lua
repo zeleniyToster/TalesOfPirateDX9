@@ -19,7 +19,7 @@ end
 
 function init_entry(map)
     SetMapEntryMapName(map, "abandonedcity2")
-    SetMapEntryTime(map, "2005/8/30/2/0", "0/4/0", "0/1/0", "0/2/0")
+    SetMapEntryTime(map, "2005/8/30/0/0", "0/2/0", "0/0/40", "0/1/50")
 end
 
 function after_enter_abandonedcity3(role, map_copy)

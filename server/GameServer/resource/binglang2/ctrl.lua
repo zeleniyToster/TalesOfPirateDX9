@@ -19,7 +19,7 @@ end
 
 function init_entry(map)
     SetMapEntryMapName(map, "darkblue")
-    SetMapEntryTime(map, "2005/8/30/13/0", "0/6/0", "0/4/0", "0/4/0")
+    SetMapEntryTime(map, "2005/8/30/13/0", "0/4/30", "0/4/0", "0/4/0")
 end
 
 function after_enter_binglang2(role, map_copy)
