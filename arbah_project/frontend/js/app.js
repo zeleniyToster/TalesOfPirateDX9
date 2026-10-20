@@ -289,6 +289,23 @@ function iconHtml(icon) {
                onerror="this.style.visibility='hidden'">`;
 }
 
+// Поля, у которых коэффициент показывается в игре процентом.
+const PCT_BONUS = new Set(["ASPD", "ADIS", "MSPD", "COL", "HREC", "SREC", "MF", "CRT"]);
+
+// Коэффициенты хранятся в десятых: 50 -> +5%, 340 -> +34%.
+const tenths = (n) => (n / 10).toFixed(1).replace(/\.0$/, "");
+
+function fmtBonus(b) {
+  const unit = (v) => (PCT_BONUS.has(b.field) ? `${tenths(v)}%` : tenths(v));
+  const flat = b.min || b.max;
+  const coef = b.coef_min || b.coef_max;
+  const sign = (v) => (v > 0 ? `+${unit(v)}` : unit(v));
+
+  if (flat && coef) return `${sign(b.min)}–${sign(b.max)} и ${unit(b.coef_min)}–${unit(b.coef_max)} за ед.`;
+  if (coef) return `${sign(b.coef_min)}–${sign(b.coef_max)} за ед.`;
+  return `${sign(b.min)}–${sign(b.max)}`;
+}
+
 function flagRow(flags) {
   const names = {
     trade: "Торгуется", pickup: "Подбирается", throw: "Выбрасывается",
@@ -316,7 +333,7 @@ async function openItem(itemId, back = "items") {
 
   const bonuses = d.bonuses.length
     ? `<table class="kv"><tbody>${d.bonuses.map((b) =>
-        `<tr><td>${b.title}</td><td class="num">${b.min}–${b.max}</td></tr>`).join("")}</tbody></table>`
+        `<tr><td>${b.title}</td><td class="num">${fmtBonus(b)}</td></tr>`).join("")}</tbody></table>`
     : '<p class="dim">Нет бонусов</p>';
 
   const shops = d.sold_by.length
@@ -595,34 +612,120 @@ async function searchCreatures() {
   }
 }
 
-/* -------------------------------------------------------------- запуск */
-async function loadDungeons() {
+/* -------------------------------------------------------------- данжи */
+// Часы приходят с сервера готовыми строками: клиент не переводит epoch
+// сам, поэтому часовой пояс машины на отображение не влияет.
+
+const fmtLeft = (sec) => {
+  const s = Math.max(0, Math.floor(sec));
+  const h = Math.floor(s / 3600);
+  const m = Math.floor((s % 3600) / 60);
+  return h ? `${h} ч ${String(m).padStart(2, "0")} мин`
+           : `${m} мин ${String(s % 60).padStart(2, "0")} с`;
+};
+
+// Стенные часы: сервер отдал HH:MM, дальше прибавляем секунды,
+// прошедшие с момента ответа. Разница в миллисекундах делится на 1000.
+let serverClockBase = "00:00";
+let serverClockBaseMs = Date.now();
+const serverClock = () => {
+  const [h, m] = serverClockBase.split(":").map(Number);
+  const sec = Math.floor((Date.now() - serverClockBaseMs) / 1000);
+  const s = (h * 3600 + m * 60 + sec + 86400) % 86400;
+  return `${String(Math.floor(s / 3600)).padStart(2, "0")}:${String(
+    Math.floor((s % 3600) / 60)).padStart(2, "0")}`;
+};
+
+// Состояние живёт между перерисовками: ответ сервера запрашивается один раз,
+// таймер тикает на клиенте.
+let dungeonState = null;
+
+function renderDungeons() {
+  if (!dungeonState) return;
   const box = $("#dungeons-body");
-  box.innerHTML = '<tr><td colspan="4"><div class="loading">Загрузка…</div></td></tr>';
+  const now = dungeonState.now;
 
-  const d = await api("/catalog/dungeons");
-  $("#dungeons-hour").textContent =
-    `сейчас ${String(d.hour).padStart(2, "0")}:00 · ` +
-    `${d.scheduled} из ${d.total} карт с расписанием`;
+  const phaseOf = (ev) => {
+    if (now < ev.open_at) return "wait";
+    if (now < ev.entry_closed_at) return "open";
+    if (now < ev.closed_at) return "inside";
+    return "done";
+  };
 
-  const rows = d.dungeons.filter((x) => !x.always_open);
-  const free = d.dungeons.filter((x) => x.always_open);
+  const describe = (d) => {
+    const ev = d.events.find((e) => phaseOf(e) !== "done");
+    if (!ev) return ["—", ""];
+    switch (phaseOf(ev)) {
+      case "wait":
+        return ["открытие", `через ${fmtLeft(ev.open_at - now)}`];
+      case "open":
+        return ["открытие", `вход ещё ${fmtLeft(ev.entry_closed_at - now)}`];
+      case "inside":
+        return ["закрытие", `карта ещё ${fmtLeft(ev.closed_at - now)}`];
+      default:
+        return ["—", ""];
+    }
+  };
 
-  const render = (x) => `<tr class="${x.open_now ? "open" : ""}">
-      <td>${x.name}</td>
-      <td class="dim">${x.map_file}</td>
-      <td>${x.always_open ? "в любое время"
-        : x.hours.map((h) => String(h).padStart(2, "0") + ":00").join(", ")}</td>
-      <td><span class="flag ${x.open_now ? "yes" : "no"}">
-        ${x.open_now ? "открыт" : "закрыт"}</span></td>
-    </tr>`;
+  const rows = dungeonState.dungeons.filter((x) => !x.always_open);
+  const free = dungeonState.dungeons.filter((x) => x.always_open);
+
+  const render = (d) => {
+    const [phase, left] = d.always_open ? ["свободный вход", ""] : describe(d);
+    const ev = d.events[0];
+    return `<tr class="${phase === "открытие" ? "open" : ""}">
+        <td>${d.name}</td>
+        <td class="dim">${d.map_file}</td>
+        <td>${d.first_open_hm || "—"}</td>
+        <td class="dim">${(ev && ev.open_hm) || "—"}</td>
+        <td class="dim">${(ev && ev.entry_closed_hm) || "—"}</td>
+        <td class="dim">${(ev && ev.closed_hm) || "—"}</td>
+        <td>${phase}${left ? ` · ${left}` : ""}</td>
+      </tr>`;
+  };
 
   box.innerHTML =
     rows.map(render).join("") +
     (free.length
-      ? `<tr class="grp"><td colspan="4">Свободный вход (${free.length})</td></tr>`
+      ? `<tr class="grp"><td colspan="7">Свободный вход (${free.length})</td></tr>`
         + free.map(render).join("")
       : "");
+}
+
+async function loadDungeons() {
+  const box = $("#dungeons-body");
+  box.innerHTML = '<tr><td colspan="7"><div class="loading">Загрузка…</div></td></tr>';
+
+  const d = await api("/catalog/dungeons");
+  // выравниваем клиентские часы по серверным, чтобы таймер не уезжал
+  // Разница между стенными часами сервера и epoch по модулю суток.
+  // Всё дальше показываем в часовом поясе сервера, а не в UTC.
+  serverClockBase = d.server_clock || "00:00";
+  serverClockBaseMs = Date.now();
+
+  dungeonState = {
+    dungeons: d.dungeons,
+    base: d.server_time,
+    baseMs: Date.now(),   // Date.now() в миллисекундах
+    now: d.server_time,
+  };
+
+  $("#dungeons-hour").textContent =
+    `сейчас ${serverClock()} · ` +
+    `${d.scheduled} из ${d.total} карт с расписанием`;
+
+  renderDungeons();
+  clearInterval(window.__dungeonTimer);
+  window.__dungeonTimer = setInterval(() => {
+    if (!dungeonState) return;
+    dungeonState.now = dungeonState.base
+      + Math.floor((Date.now() - dungeonState.baseMs) / 1000);
+    $("#dungeons-hour").textContent =
+      `сейчас ${serverClock()} · ` +
+      `${dungeonState.dungeons.filter((x) => !x.always_open).length} из ` +
+      `${dungeonState.dungeons.length} карт с расписанием`;
+    renderDungeons();
+  }, 1000);
 }
 
 function load() {

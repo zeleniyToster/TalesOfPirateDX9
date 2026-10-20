@@ -1,9 +1,12 @@
 /Celestial Test
 
 
+actual_transfer
 debug_files
 debug_python_project
+tools
 opencode.exe
+docs/context
 lib/
 bin/
 tmp/

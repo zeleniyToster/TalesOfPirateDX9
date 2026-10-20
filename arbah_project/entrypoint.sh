@@ -7,7 +7,8 @@
 # POST /api/admin/refresh.
 set -e
 
-: "${ARBAH_DATA_DIR:=/srv/resource}"
+: "${ARBAH_DATA_DIR:=/srv/arbah}"
+: "${ARBAH_MAP_DIR:=/srv/resource}"
 : "${ARBAH_DB_PATH:=/var/lib/arbah/arbah.db}"
 
 if [ ! -d "$ARBAH_DATA_DIR" ]; then
@@ -29,7 +30,7 @@ else
 fi
 
 echo "[arbah] собираю базу из $ARBAH_DATA_DIR"
-python -m app.etl.ingest "$ARBAH_DATA_DIR"
+ARBAH_MAP_DIR="$ARBAH_MAP_DIR" python -m app.etl.ingest "$ARBAH_DATA_DIR"
 
 echo "[arbah] база готова: $ARBAH_DB_PATH"
 echo "[arbah] запускаю веб-сервер"

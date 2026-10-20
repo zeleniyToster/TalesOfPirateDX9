@@ -1,354 +1,354 @@
-//ID	Name	Level	Coordinates	Map
-0	Monster Name 	Monster Level 	0,0	Region 
-1	Mystic Shrub	1	2092,2654	Ascaron 
-2	Sleepy Snail	2	2108,2694	Ascaron 
-3	Forest Spirit	3	2046,2611	Ascaron 
-4	Little Squirt	3	2077,2811	Ascaron 
-5	Mystic Flower	4	2210,2612	Ascaron 
-6	Mini Bee	5	2077,2772	Ascaron 
-7	Little Squidy	5	2294,2548	Ascaron 
-8	Greedy Shroom	6	2218,2594	Ascaron 
-9	Grass Tortoise	7	2066,2555	Ascaron 
-10	Cuddly Lamb	8	1968,2697	Ascaron 
-11	Bubble Clam	9	2191,2514	Ascaron 
-12	Marsh Spirit	9	1998,2625	Ascaron 
-13	Piglet	10	1950,2563	Ascaron 
-14	Bear Cub	12	1899,2825	Ascaron 
-15	Oyster	13	1800,2472	Ascaron 
-16	Whacky Lamb	14	1972,2683	Ascaron 
-17	Armored Crab	15	1766,2536	Ascaron 
-18	Sentry Crab	16	1784,2508	Ascaron 
-19	Angelic Panda	17	1693,2579	Ascaron 
-20	Killer Shroom	19	1589,2668	Ascaron 
-21	Smuggler	20	1624,3017	Ascaron 
-22	Barbaric Bee	20	1667,3140	Ascaron 
-23	Owlie	21	1490,2712	Ascaron 
-24	Tusk Battle Boar	23	1296,2977	Ascaron 
-25	Air Porky	23	1357,2864	Ascaron 
-26	Bandit	25	1038,3062	Ascaron 
-27	Meadow Deer	25	1469,2671	Ascaron 
-28	Seaweed	25	899,580	Ascaron 
-29	Wild Seaweed	25	1448,1602	Ascaron 
-30	Stramonium	26	1381,2904	Ascaron 
-31	Sea Jelly	26	1573,1200	Ascaron 
-32	Floating Seaweed	26	1573,1200	Ascaron 
-33	Rookie Boxeroo	27	1152,2908	Ascaron 
-34	Skeleton Fish	27	3697,1156	Ascaron 
-35	Icky Seaweed	27	3930,3150	Ascaron 
-36	Mature Grass Tortoise	28	1199,3117	Ascaron 
-37	Mad Boar	30	911,2972	Ascaron 
-38	Berserk Mad Boar	30	882,2967	Ascaron 
-39	Grassland Elk	31	1360,2684	Ascaron 
-40	White Owlie 	32	1360,2684	Ascaron 
-41	Electric Sea Jelly	32	2005,2110	Ascaron 
-42	Grassland Wolf	33	1144,2705	Ascaron 
-43	Grassland Wolf Champion	33	1143,2705	Ascaron 
-44	Ocean Water Dancer	33	1910,3604	Ascaron 
-45	Vicious Baby Squid	33	1479,550	Ascaron 
-46	Berserk Boxeroo	34	1162,2639	Ascaron 
-47	Evil Water Dancer	34	2005,2110	Ascaron 
-48	Slowpoke Snail	35	1227,2743	Ascaron 
-49	Mermaid	35	1350,2200	Ascaron 
-50	Poisonous Sea Jelly	35	1350,1980	Ascaron 
-51	Mud Monster	36	935,2748	Ascaron 
-52	Tempest Sea Jelly	36	1350,2200	Ascaron 
-53	Berserk Sea Jelly	36	1310,3604	Ascaron 
-54	Stinging Beak	37	863,2632	Ascaron 
-55	Ruby Dolphin	37	1310,3604	Ascaron 
-56	Blackout Squid	37	1350,1980	Ascaron 
-57	Fearsome Tortoise	38	970,2588	Ascaron 
-58	Fish Bone	38	2557,169	Ascaron 
-59	Octopus	38	571,390	Ascaron 
-60	Thickskin Lizard	39	733,2697	Ascaron 
-61	Great Polliwog	39	571,750	Ascaron 
-62	Chameleon Squid	39	571,750	Ascaron 
-63	Rock Golem 	40	683,2592	Ascaron 
-64	Malicious Azure Siren	40	3050,400	Ascaron 
-65	Azure Siren	40	3050,400	Ascaron 
-66	Wolf	41	755,2942	Ascaron 
-67	Evil Skeleton Fish	41	3050,400	Ascaron 
-68	Needle of Stramonium	42	560,1599	Ascaron 
-69	Werewolf Warrior	42	755,2942	Ascaron 
-70	Tribal Villager	43	824,2305	Ascaron 
-71	Crimson Siren	45	2050,400	Ascaron 
-72	Pumpkin Knight	46	622,2864	Ascaron 
-73	Elite Tribal Warrior	46	821,2121	Ascaron 
-74	Shocking Sea Jelly	46	2550,400	Ascaron 
-75	Evil Blood Polliwog	47	2050,400	Ascaron 
-76	Treant	48	792,1857	Ascaron 
-77	Feral Blood Polliwog	48	2550,400	Ascaron 
-78	Prowling Blood Polliwog	48	2550,400	Ascaron 
-79	Dark Mud Monster	49	667,1896	Ascaron 
-80	Wandering Mermaid	50	3692,323	Ascaron 
-81	Sturdy Rock Golem	51	737,1718	Ascaron 
-82	Old Sawtooth Shark	51	2738,3508	Ascaron 
-83	Undead Warrior	52	512,1722	Ascaron 
-84	White Finned Shark	52	3538,3508	Ascaron 
-85	Iron Mummy	53	556,1558	Ascaron 
-86	Elite Werewolf Warrior	53	556,1439	Ascaron 
-87	Spearhead Shark	53	3538,3508	Ascaron 
-88	Black Finned Shark	53	2738,3508	Ascaron 
-89	Huge Spiky Stramonium	54	440,1320	Ascaron 
-90	Sakura 13 Support Ship	54	1950,1287	Ascaron 
-91	Tribal Shaman	55	626,1289	Ascaron 
-92	Guardian Angel	55	886,1284	Ascaron 
-93	Sakura 13 Warship	55	1950,1287	Ascaron 
-94	Agile Tribal Villager	56	736,1289	Ascaron 
-95	Tempest Sea Jelly	56	3149,3836	Ascaron 
-96	Silk Shark	56	3149,3836	Ascaron 
-97	Vicious Undead Warrior	57	831,1126	Ascaron 
-98	Forest Hunter	58	920,1582	Ascaron 
-99	Deadly Skeletal Archer	58	945,1595	Ascaron 
-100	Sakura 13 Pirate Command Ship	58	1950,1287	Ascaron 
-101	Cursed Corpse	59	360,1440	Ascaron 
-102	Skeletal Warrior Leader	59	360,1440	Ascaron 
-103	Terra Soldier Leader	60	546,2726	Ascaron 
-104	Lizard Warrior	60	382,2726	Ascaron 
-105	Iron Golem	60	546,2590	Ascaron 
-106	Stone Golem	60	546,2590	Ascaron 
-107	Bloodthirsty Hunter	60	440,1587	Ascaron 
-108	Small Treant	62	683,2385	Ascaron 
-109	Giant Lizard	62	731,2074	Ascaron 
-110	Horrific Cursed Corpse	63	360,1340	Ascaron 
-111	Vicious Pumpkin Knight	63	622,3018	Ascaron 
-112	Chimera	64	663,2460	Ascaron 
-113	Elite Tribal Warrior	64	646,2310	Ascaron 
-114	Treant Terror	64	663,2460	Ascaron 
-115	Terra Captain	65	373,2590	Ascaron 
-116	Elite Werewolf Archer	65	472,2484	Ascaron 
-117	Mad Tribal Villager	66	561,2334	Ascaron 
-118	Evil Undead Warrior	66	580,2122	Ascaron 
-119	Evil Pumpkin Knight	67	340,1581	Ascaron 
-120	Werewolf Warrior Leader	67	472,2484	Ascaron 
-121	Shadow Hunter	68	468,2102	Ascaron 
-122	Palace Guard	68	436,1690	Ascaron 
-123	Lumbering Treant	68	475,2085	Ascaron 
-124	Corrupted Guardian Angel	69	335,2122	Ascaron 
-125	Lizard Warrior Leader	71	412,2334	Ascaron 
-126	Terra Warrior Leader	72	375,2422	Ascaron 
-127	Melon	1	1027,3551	Magical Ocean 
-128	Dry Mystic Shrub	1	1027,3551	Magical Ocean 
-129	Baby Scorpion	3	1187,3540	Magical Ocean 
-130	Cactus	4	1032,3556	Magical Ocean 
-131	Humpy Camel	6	967,3367	Magical Ocean 
-132	Big Scorpion	8	1185,3557	Magical Ocean 
-133	Hopping Lizard	10	856,3237	Magical Ocean 
-134	Aberrance Hopping Lizard	10	919,3282	Magical Ocean 
-135	Wolf Cub	11	684,3066	Magical Ocean 
-136	Killer Cactus	14	1513,3286	Magical Ocean 
-137	Gigantic Melon	15	687,3094	Magical Ocean 
-138	Phantom Tree	17	885,3029	Magical Ocean 
-139	Starving Wolf	20	653,2925	Magical Ocean 
-140	Sand Brigand	20	740,3298	Magical Ocean 
-141	Sandy Tortoise	21	1197,3270	Magical Ocean 
-142	Ancient Sandy Tortoise	21	1225,3220	Magical Ocean 
-143	Sand Bandit	22	1339,3301	Magical Ocean 
-144	Sandy Shroom	23	1334,3438	Magical Ocean 
-145	Mudman	24	1413,3419	Magical Ocean 
-146	Sand Raider	25	1027,3011	Magical Ocean 
-147	Seaweed	25	1792,2528	Magical Ocean 
-148	Sea Jelly	26	3351,759	Magical Ocean 
-149	Feral Wolf	26	1473,3296	Magical Ocean 
-150	Skeleton Fish	27	587,1936	Magical Ocean 
-151	Man-Eating Spider	27	1093,2948	Magical Ocean 
-152	Man-Eating Spider Queen	27	1094,2953	Magical Ocean 
-153	Sand Bandit Leader - Garet	28	1172,3027	Magical Ocean 
-154	Baby Squid	28	3204,898	Magical Ocean 
-155	Cursed Seaweed	28	1950,3126	Magical Ocean 
-156	Cavalier	29	1256,2974	Magical Ocean 
-157	Blackarrow Squid	30	2519,3164	Magical Ocean 
-158	Water Dancer	30	2680,3126	Magical Ocean 
-159	Jack the Pirate's Sailor	30	1506,3436	Magical Ocean 
-160	Lizard King	30	1507,2971	Magical Ocean 
-161	Captain Fickle 	30	1506,3436	Magical Ocean 
-162	Swift Skeleton Fish	31	2681,3684	Magical Ocean 
-163	Tanned Skeleton Fish	31	1498,2528	Magical Ocean 
-164	Electric Sea Jelly	32	2681,3684	Magical Ocean 
-165	Sluggish Squid	32	1523,2454	Magical Ocean 
-166	Tempest Sea Jelly	36	635,1908	Magical Ocean 
-167	Elite Tempest Sea Jelly	36	1950,3126	Magical Ocean 
-168	Fish Bone	38	635,1908	Magical Ocean 
-169	Azure Siren	40	2322,1670	Magical Ocean 
-170	Crimson Siren	45	2756,2002	Magical Ocean 
-171	Sand Crab	47	1381,3134	Magical Ocean 
-172	Jack the Pirate's Support Ship	49	2092,2528	Magical Ocean 
-173	Jack the Pirate's Warship	50	2092,2528	Magical Ocean 
-174	Jack the Pirate's Command Ship	52	2092,2528	Magical Ocean 
-175	Big Eyed Polliwog	61	3723,3338	Magical Ocean 
-176	Scavenger Fish Bone	61	3828,3114	Magical Ocean 
-177	Evil Great Polliwog	62	3828,3714	Magical Ocean 
-178	Great Feral Polliwog	62	3828,3714	Magical Ocean 
-179	Swift Cyclonic Sea Jelly	63	3750,1275	Magical Ocean 
-180	Cursed Mermaid	64	3750,1275	Magical Ocean 
-181	Raging Electric Sea Jelly	64	3750,2475	Magical Ocean 
-182	Old Ruby Dolphin	65	3750,2475	Magical Ocean 
-183	Feral Fish Bone	65	900,1308	Magical Ocean 
-184	Stealth Great Polliwog	66	900,1308	Magical Ocean 
-185	Feral Ruby Dolphin	66	900,2000	Magical Ocean 
-186	Bewitching Siren	67	1014,2550	Magical Ocean 
-187	Amethyst Dolphin	67	900,2000	Magical Ocean 
-188	Old Ruby Dolphin	68	3750,2075	Magical Ocean 
-189	Terra Artificer	70	1381,3134	Magical Ocean 
-190	Terra Elder	70	1403,3190	Magical Ocean 
-191	Terra Captain	70	1381,3134	Magical Ocean 
-192	Berserk Mermaid Protector	71	1065,1308	Magical Ocean 
-193	Terra Warrior Leader	72	1381,3134	Magical Ocean 
-194	Berserk Siren Guard	72	1114,1308	Magical Ocean 
-195	Ancient Siren	72	3750,1675	Magical Ocean 
-196	Ancient Siren Archer	73	3122,1298	Magical Ocean 
-197	Tanned Mermaid Protector	74	2822,1970	Magical Ocean 
-198	Tanned Siren Guard	74	1990,1366	Magical Ocean 
-199	Horrific Mermaid Protector	75	2822,1970	Magical Ocean 
-200	Horrific Siren Guard	75	1965,1424	Magical Ocean 
-201	Shadow Siren	76	3122,1298	Magical Ocean 
-202	Feral Siren	76	1502,1970	Magical Ocean 
-203	Ancient Bewitching Siren	77	961,1817	Magical Ocean 
-204	Ancient Mermaid Protector	79	2092,2117	Magical Ocean 
-205	Ancient Siren Guard	80	1014,2182	Magical Ocean 
-206	Mermaid Queen	100	2822,1970	Magical Ocean 
-207	Siren Queen	100	2002,1298	Magical Ocean 
-208	Ancient Behemoth	100	2000,2000	Magical Ocean 
-209	Mystic Shrub	1	3373,2494	Deep Blue
-210	Snowy Mystic Shrub	1	1018,492	Deep Blue
-211	Purple Mystic Shrub	1	3453,3348	Deep Blue
-212	Orange Mystic Shrub	1	3003,2771	Deep Blue
-213	Snowy Mystic Shrub	1	995,372	Deep Blue
-214	Red Mystic Shrub	1	3387,3259	Deep Blue
-215	Dry Mystic Shrub	1	3703,2765	Deep Blue
-216	Sleepy Snail	2	3360,2510	Deep Blue
-217	Snow Squirt	2	1466,402	Deep Blue
-218	Snow Squidy	4	1466,402	Deep Blue
-219	Mystic Flower	4	3373,2494	Deep Blue
-220	Snowy Piglet	6	1180,372	Deep Blue
-221	Little Deer	7	1164,305	Deep Blue
-222	Strong Little Deer	7	1126,313	Deep Blue
-223	Little White Deer	9	1349,313	Deep Blue
-224	Sailor Penguin	10	1102,642	Deep Blue
-225	Naiad	11	1079,521	Deep Blue
-226	Oyster	13	945,415	Deep Blue
-227	Sharp Beak	13	858,500	Deep Blue
-228	Elk	14	885,333	Deep Blue
-229	Vampiric Elk	14	888,323	Deep Blue
-230	Sailor Squirt	15	756,291	Deep Blue
-231	Sailor Squirt	15	738,427	Deep Blue
-232	Horned Penguin	15	808,303	Deep Blue
-233	Sailor Squidy	16	817,292	Deep Blue
-234	Snowy Bat	16	743,358	Deep Blue
-235	Snowy Shroom	17	952,551	Deep Blue
-236	Snowy Snail	19	657,332	Deep Blue
-237	Snowy Snail Monarch	19	652,315	Deep Blue
-238	Naive Snow Doll 	21	1074,735	Deep Blue
-239	Snowy Bear Cub	22	2120,466	Deep Blue
-240	Snow Lady	23	873,646	Deep Blue
-241	Snowy Wolf	24	965,775	Deep Blue
-242	War Tortoise	25	891,750	Deep Blue
-243	Seaweed	25	2153,3904	Deep Blue
-244	Fallen Naiad	26	891,750	Deep Blue
-245	Armored Crab	26	970,846	Deep Blue
-246	Sea Jelly	26	2915,1842	Deep Blue
-247	Skeleton Fish	27	435,1016	Deep Blue
-248	Northern Snail	27	802,750	Deep Blue
-249	Baby Squid	28	388,3844	Deep Blue
-250	Snow Spirit	28	1060,806	Deep Blue
-251	Cavalier	29	3704,2781	Deep Blue
-252	White Cap Sea Jelly	29	385,822	Deep Blue
-253	Fragile Snow Doll	29	907,842	Deep Blue
-254	Man Eating Sea Jelly	29	385,1190	Deep Blue
-255	Combat Piglet	30	1456,561	Deep Blue
-256	Yeti	31	1496,667	Deep Blue
-257	Ocean Water Dancer	33	1495,1000	Deep Blue
-258	Blood Polliwog	34	2141,3788	Deep Blue
-259	Playful Snow Doll	34	1588,566	Deep Blue
-260	Playful Snow Doll	34	1746,530	Deep Blue
-261	Aberrance Blood Polliwog	34	3584,3758	Deep Blue
-262	Battle Tortoise	35	2165,462	Deep Blue
-263	Atrocious Yeti King	35	880,891	Deep Blue
-264	Skeletal Archer	36	2267,470	Deep Blue
-265	Fearsome Skeletal Archer	36	2213,435	Deep Blue
-266	Ruby Dolphin	37	1495,1000	Deep Blue
-267	Snowy Tortoise	37	2165,462	Deep Blue
-268	Crazy Sheep	37	2267,590	Deep Blue
-269	Ferocious Scorpion	38	2471,508	Deep Blue
-270	Fish Bone	38	3664,469	Deep Blue
-271	Ferocious Scorpion	38	2374,552	Deep Blue
-272	Polar Bear	38	1983,530	Deep Blue
-273	Snowy Tusk Boar	39	2267,590	Deep Blue
-274	Chameleon Squid	39	1495,1000	Deep Blue
-275	Great Polliwog	39	823,2089	Deep Blue
-276	Skeletal Warrior	40	2267,470	Deep Blue
-277	Decaying Fish Bone	40	2092,1298	Deep Blue
-278	Cumbersome Snowman	41	2471,503	Deep Blue
-279	Swift Baby Squid	42	3814,469	Deep Blue
-280	Werewolf Warrior	42	2595,555	Deep Blue
-281	Sawtooth Shark	42	3132,1292	Deep Blue
-282	Rapid Squid	43	3132,998	Deep Blue
-283	Snowman	43	2595,455	Deep Blue
-284	Crystalline Dolphin	43	3814,469	Deep Blue
-285	Swift Water Dancer	44	3211,1732	Deep Blue
-286	Steel-shell Snail	44	2737,651	Deep Blue
-287	Cumbersome Yeti	44	2811,566	Deep Blue
-288	Midnight Water Dancer	44	3211,1815	Deep Blue
-289	Feral Skeleton Fish	45	3206,1268	Deep Blue
-290	Cumbersome Yeti	45	2855,451	Deep Blue
-291	Undead Archer	45	2746,451	Deep Blue
-292	Thunder Sea Jelly	46	3747,1248	Deep Blue
-293	Evil Blood Polliwog	47	3746,1292	Deep Blue
-294	Swift Electric Sea Jelly	47	3746,998	Deep Blue
-295	Elite Skeletal Archer	47	2714,372	Deep Blue
-296	Infant Icy Dragon	47	2852,651	Deep Blue
-297	Water Fairy	49	2998,560	Deep Blue
-298	Great Polar Bear	49	3101,667	Deep Blue
-299	Vicious Mermaid	49	3746,998	Deep Blue
-300	Werewolf Archer 	50	2681,795	Deep Blue
-301	Horrific Snowman	50	3126,588	Deep Blue
-302	Wandering Mermaid	50	1265,3634	Deep Blue
-303	Horrific Yeti	51	2591,795	Deep Blue
-304	Shadow Mermaid	51	2996,2345	Deep Blue
-305	Elite Skeletal Warrior	52	2598,831	Deep Blue
-306	Spearhead Shark	53	441,2957	Deep Blue
-307	Black Finned Shark	53	1265,3634	Deep Blue
-308	Berserk Electric Sea Jelly	54	371,1762	Deep Blue
-309	Lizardman	55	2588,900	Deep Blue
-310	Vampiric Polliwog	55	428,2399	Deep Blue
-311	Tempest Sea Jelly	56	441,2957	Deep Blue
-312	Tornado Sea Jelly	57	371,1762	Deep Blue
-313	Topaz Dolphin	57	2631,2048	Deep Blue
-314	Mature Ruby Dolphin	58	429,2957	Deep Blue
-315	Mature Ruby Dolphin	58	3785,1975	Deep Blue
-316	Spiny Fish Bone	59	371,2317	Deep Blue
-317	Hungry Fish Bone	60	429,2957	Deep Blue
-318	Pirate 006	65	2736,3042	Deep Blue
-319	Fox Spirit	65	3194,2433	Deep Blue
-320	Pirate 007	68	2736,3042	Deep Blue
-321	Dark Blue Siren	68	1038,2317	Deep Blue
-322	Siren Archer	69	3634,3808	Deep Blue
-323	Beardy Pirate Support Ship	69	1038,1762	Deep Blue
-324	Beardy Pirate Warship	70	761,1561	Deep Blue
-325	Feral Diamond Dolphin	70	2141,3788	Deep Blue
-326	Pirate 008	70	2823,2815	Deep Blue
-327	Elite Lizardman Warrior	71	3650,2967	Deep Blue
-328	Frenzied Siren	71	3003,3711	Deep Blue
-329	Evil Tribal Warrior	72	3528,3469	Deep Blue
-330	Beardy Pirate Command Ship	73	1038,1762	Deep Blue
-331	Evil Tribal Shaman	76	3660,3279	Deep Blue
-332	Frantic Lizardman	77	3274,3302	Deep Blue
-333	Ancient Dark Blue Siren	78	2082,2348	Deep Blue
-334	King Tortoise	90	197,901	Winter Island 
-335	Stone Dragon	92	404,1340	Winter Island 
-336	Red Stone	94	451,1288	Winter Island 
-337	Violent Bear	95	661,1230	Winter Island 
-338	Soul Killer	96	839,1160	Winter Island 
-339	Royal Beast	98	632,459	Winter Island 
-340	Half-beast Man	99	815,493	Winter Island 
-341	Frost Chimera	100	354,454	Winter Island 
-342	Snow Leopard	102	549,528	Winter Island 
-343	Pumpkin General	103	966,272	Winter Island 
-344	Blooding Warrior	103	1035,39	Winter Island 
-345	Icy Dragon	104	1454,369	Winter Island 
-346	Crazy Snow Demon	105	1364,1239	Winter Island 
-347	Sword Demon	105	1807,614	Winter Island 
-348	Jack Pirate	106	1651,674	Winter Island 
-349	Demonic Soul	107	1676,800	Winter Island 
-350	Nightmare	109	1640,1083	Winter Island 
-351	Evil Snow Leopard	110	1119,347	Winter Island 
-352	Icy Soul Lord	110	1595,687	Winter Island 
+0	Имя чудовища	Monster Level	0,0	Region
+1	Волшебный куст	1	2092,2654	Ascaron
+2	Сонная улитка	2	2108,2694	Ascaron
+3	Лесной дух	3	2046,2611	Ascaron
+4	Креветочка	3	2077,2811	Ascaron
+5	Волшебный цветок (Чудоцвет) 	4	2210,2612	Ascaron
+6	Пчелка	5	2077,2772	Ascaron
+7	Маленький кальмарчик	5	2294,2548	Ascaron
+8	Гриб-жадобец	6	2218,2594	Ascaron
+9	Травяная черепаха	7	2066,2555	Ascaron
+10	Милая овечка	8	1988,2833	Ascaron
+11	Пузырчатый моллюск	8	1968,2697	Ascaron
+12	Болотный дух	9	2191,2514	Ascaron
+13	Свинокрыл	9	1998,2625	Ascaron
+14	Медвежонок	10	1950,2563	Ascaron
+15	Устрица	12	1899,2825	Ascaron
+16	Чокнутая овца	13	1800,2472	Ascaron
+17	Бронекраб	14	1972,2683	Ascaron
+18	Караул	15	1766,2536	Ascaron
+19	Небесная панда	16	1784,2508	Ascaron
+20	Убойный грибочек	17	1693,2579	Ascaron
+21	Контрабандист	19	1589,2668	Ascaron
+22	Дикая пчела	20	1624,3017	Ascaron
+23	Совеныш	20	1667,3140	Ascaron
+24	Клыкастый боевой кабан	21	1490,2712	Ascaron
+25	Свин-летун	23	1296,2977	Ascaron
+26	Бандит	23	1357,2864	Ascaron
+27	Луговой олень	25	1038,3062	Ascaron
+28	Водоросль	25	1469,2671	Ascaron
+29	Дикая водоросль	25	899,580	Ascaron
+30	Дурман	25	1448,1602	Ascaron
+31	Медуза	26	1381,2904	Ascaron
+32	Водоросль-плавунец	26	1573,1200	Ascaron
+33	Боксеру-новичок	26	1573,1200	Ascaron
+34	Рыба-скелет	27	1152,2908	Ascaron
+35	Мерзкие водоросли	27	3697,1156	Ascaron
+36	Взрослая травяная черепаха	27	3930,3150	Ascaron
+37	Безумный кабан	28	1199,3117	Ascaron
+38	Безумный кабан	30	911,2972	Ascaron
+39	Луговой лось	30	882,2967	Ascaron
+40	Белый совеныш	31	1360,2684	Ascaron
+41	Электрическая медуза	32	1360,2684	Ascaron
+42	Луговой волк	32	2005,2110	Ascaron
+43	Луговой волк Чемпион	33	1144,2705	Ascaron
+44	Океаническая танцовщица	33	1143,2705	Ascaron
+45	Ужасный кальмарчик	33	1910,3604	Ascaron
+46	Боксеру-берсерк	33	1479,550	Ascaron
+47	Зловещая танцовщица	34	1162,2639	Ascaron
+48	Глупая улитка	34	2005,2110	Ascaron
+49	Русалка	35	1227,2743	Ascaron
+50	Ядовитая медуза	35	1350,2200	Ascaron
+51	Грязилище	35	1350,1980	Ascaron
+52	Кровожадная медуза	36	935,2748	Ascaron
+53	Разъяренная Медуза	36	1350,2200	Ascaron
+54	Жалоклюв	36	1310,3604	Ascaron
+55	Рубиновый дельфин	37	863,2632	Ascaron
+56	Затмевающая каракатица	37	1310,3604	Ascaron
+57	Зловещая черепаха	37	1350,1980	Ascaron
+58	Рыба-кость	38	970,2588	Ascaron
+59	Спрут	38	2557,169	Ascaron
+60	Толстокожий ящер	38	571,390	Ascaron
+61	Большой выползень	39	733,2697	Ascaron
+62	Кальмар-хамелеон	39	571,750	Ascaron
+63	Скальный голем	39	571,750	Ascaron
+64	Злая Лазурная сирена	40	683,2592	Ascaron
+65	Лазурная сирена	40	3050,400	Ascaron
+66	Волк	40	3050,400	Ascaron
+67	Ужасная рыба-скелет	41	755,2942	Ascaron
+68	Игла дурмана	41	3050,400	Ascaron
+69	Вервольф-воин	42	560,1599	Ascaron
+70	Туземец	42	755,2942	Ascaron
+71	Малиновая сирена	43	824,2305	Ascaron
+72	Рыцарь тыквы	45	2050,400	Ascaron
+73	Опытный туземный воин	46	622,2864	Ascaron
+74	Жалящая медуза	46	821,2121	Ascaron
+75	Зловещий выползень	46	2550,400	Ascaron
+76	Энт	47	2050,400	Ascaron
+77	Жестокий кровавый выползень	48	792,1857	Ascaron
+78	Бродячий кровавый выползень	48	2550,400	Ascaron
+79	Темное грязилище	48	2550,400	Ascaron
+80	Блуждающая русалка	49	667,1896	Ascaron
+81	Гранитные Големы	50	3692,323	Ascaron
+82	Старая рыба-пила	51	737,1718	Ascaron
+83	Неупокоенный воин	51	2738,3508	Ascaron
+84	Белоперая акула	52	512,1722	Ascaron
+85	Железная мумия	52	3538,3508	Ascaron
+86	Непобедимый Вервольф-воин	53	556,1558	Ascaron
+87	Рыба-меч	53	556,1439	Ascaron
+88	Черноперая акула	53	3538,3508	Ascaron
+89	Жалящий дурманище	53	2738,3508	Ascaron
+90	Корабль поддержки Сакуры XIII	54	440,1320	Ascaron
+91	Туземные шаманы	54	1950,1287	Ascaron
+92	Ангел-хранитель	55	626,1289	Ascaron
+93	Фрегат Сакуры XIII	55	886,1284	Ascaron
+94	Неуловимый туземец	55	1950,1287	Ascaron
+95	Кровожадная медуза	56	736,1289	Ascaron
+96	Шелковистая акула	56	3149,3836	Ascaron
+97	Адский неупокоенный воин	56	3149,3836	Ascaron
+98	Лесной охотник	57	831,1126	Ascaron
+99	Смертоносный скелет-лучник	58	920,1582	Ascaron
+100	Командный корабль Сакуры XIII	58	945,1595	Ascaron
+101	Проклятое тело	58	1950,1287	Ascaron
+102	Предводитель скелетов-воинов	59	360,1440	Ascaron
+103	Вожак терранских солдат	59	360,1440	Ascaron
+104	Боевой ящер	60	546,2726	Ascaron
+105	Железный голем	60	382,2726	Ascaron
+106	Каменный голем	60	546,2590	Ascaron
+107	Кровожадный охотник	60	546,2590	Ascaron
+108	Энтик	60	440,1587	Ascaron
+109	Гигантский ящер	62	683,2385	Ascaron
+110	Кошмарный проклятый труп	62	731,2074	Ascaron
+111	Ужасный рыцарь тыквы	63	360,1340	Ascaron
+112	Химера	63	622,3018	Ascaron
+113	Опытный туземный воин	64	663,2460	Ascaron
+114	Зловещий энт	64	646,2310	Ascaron
+115	Терранский капитан	64	663,2460	Ascaron
+116	Опытный Вервольф-стрелок	65	373,2590	Ascaron
+117	Безумный туземец	65	472,2484	Ascaron
+118	Зловещий неупокоенный воин	66	561,2334	Ascaron
+119	Зловещий рыцарь тыквы	66	580,2122	Ascaron
+120	Главарь Вервольфов-воинов	67	340,1581	Ascaron
+121	Призрачный охотник	67	472,2484	Ascaron
+122	Дворцовый страж	68	468,2102	Ascaron
+123	Тысячелетний энт	68	436,1690	Ascaron
+124	Падший ангел-хранитель	68	475,2085	Ascaron
+125	Вожак ящеров-воинов	69	335,2122	Ascaron
+126	Вожак терранских штурмовиков	71	412,2334	Ascaron
+127	Злободыня	72	375,2422	Ascaron
+128	Засохший волшебный куст	1	1027,3551	Magical Ocean
+129	Скорпионыш	1	1027,3551	Magical Ocean
+130	Кактус	3	1187,3540	Magical Ocean
+131	Горбатый верблюд	4	1032,3556	Magical Ocean
+132	Большой скорпион	6	967,3367	Magical Ocean
+133	Ящер-попрыгун	8	1185,3557	Magical Ocean
+134	Aberrance Ящер-попрыгун	10	856,3237	Magical Ocean
+135	Волчонок	10	919,3282	Magical Ocean
+136	Кактус-Убийца	11	684,3066	Magical Ocean
+137	Гигантская злободыня	14	845,3111	Magical Ocean
+138	Древопризрак	15	687,3094	Magical Ocean
+139	Голодный волк	17	885,3029	Magical Ocean
+140	Песчаный разбойник	20	653,2925	Magical Ocean
+141	Пустынная черепаха	20	740,3298	Magical Ocean
+142	Древний Пустынная черепаха	21	1197,3270	Magical Ocean
+143	Песчаный бандит	21	1225,3220	Magical Ocean
+144	Песчаный гриб	22	1339,3301	Magical Ocean
+145	Грязедемон	23	1334,3438	Magical Ocean
+146	Песчаный всадник	24	1413,3419	Magical Ocean
+147	Водоросль	25	1027,3011	Magical Ocean
+148	Медуза	25	1792,2528	Magical Ocean
+149	Дикий волк	26	3351,759	Magical Ocean
+150	Рыба-скелет	26	1473,3296	Magical Ocean
+151	Паук-людоед	27	587,1936	Magical Ocean
+152	Королева Пауков-каннибалов	27	1093,2948	Magical Ocean
+153	Предводитель песчаных бандитов - Гарет	27	1094,2953	Magical Ocean
+154	Кальмарчик	28	1172,3027	Magical Ocean
+155	Проклятые водоросли	28	3204,898	Magical Ocean
+156	Всадник	28	1950,3126	Magical Ocean
+157	Чернильный кальмар	29	1256,2974	Magical Ocean
+158	Водяная танцовщица	30	2519,3164	Magical Ocean
+159	Моряк Джека-пирата	30	2680,3126	Magical Ocean
+160	Король ящеров	30	1506,3436	Magical Ocean
+161	Капитан Фикл	30	1507,2971	Magical Ocean
+162	Юркая рыба-скелет	30	1506,3436	Magical Ocean
+163	Черная рыба-скелет	31	2681,3684	Magical Ocean
+164	Электрическая медуза	31	1498,2528	Magical Ocean
+165	Ленивый кальмар	32	2681,3684	Magical Ocean
+166	Кровожадная медуза	32	1523,2454	Magical Ocean
+167	Элитная Кровожадная медуза	36	635,1908	Magical Ocean
+168	Рыба-кость	36	1950,3126	Magical Ocean
+169	Лазурная сирена	38	635,1908	Magical Ocean
+170	Малиновая сирена	40	2322,1670	Magical Ocean
+171	Краб	45	2756,2002	Magical Ocean
+172	Корабль поддержки Джека-пирата	47	1381,3134	Magical Ocean
+173	Фрегат Джека-пирата	49	2092,2528	Magical Ocean
+174	Командный корабль Джека-пирата	50	2092,2528	Magical Ocean
+175	Пучеглазый выползень	52	2092,2528	Magical Ocean
+176	Скелет рыбы чистильщика	61	3723,3338	Magical Ocean
+177	Зловещий большой выползень	61	3828,3114	Magical Ocean
+178	Большой жестокий выползень	62	3828,3714	Magical Ocean
+179	Циклоническая медуза	62	3828,3714	Magical Ocean
+180	Проклятая русалка	63	3750,1275	Magical Ocean
+181	Разъяренная электрическая медуза	64	3750,1275	Magical Ocean
+182	Старый рубиновый дельфин	64	3750,2475	Magical Ocean
+183	Кровожадная рыба-кость	65	3750,2475	Magical Ocean
+184	Скрытный большой выползень	65	900,1308	Magical Ocean
+185	Свирепый рубиновый дельфин	66	900,1308	Magical Ocean
+186	Сирена	66	900,2000	Magical Ocean
+187	Аметистовый дельфин	67	1014,2550	Magical Ocean
+188	Старый рубиновый дельфин	67	900,2000	Magical Ocean
+189	Терранский оружейник	68	3750,2075	Magical Ocean
+190	Терранский старейшина	70	1381,3134	Magical Ocean
+191	Терранский капитан	70	1403,3190	Magical Ocean
+192	Сумасшедший страж Русалки	70	1381,3134	Magical Ocean
+193	Вожак терранских штурмовиков	71	1065,1308	Magical Ocean
+194	Бесноватая стражница-сирена	72	1381,3134	Magical Ocean
+195	Древняя сирена	72	1114,1308	Magical Ocean
+196	Древняя лучница-сирена	72	3750,1675	Magical Ocean
+197	Черная защитница-русалка	73	3122,1298	Magical Ocean
+198	Черная стражница-сирена	74	2822,1970	Magical Ocean
+199	Ужасающая русалка-защитница	74	1990,1366	Magical Ocean
+200	Ужасающая стражница-сирена	75	2822,1970	Magical Ocean
+201	Призрачная сирена	75	1965,1424	Magical Ocean
+202	Зловещая сирена	76	3122,1298	Magical Ocean
+203	Древняя ведьма-сирена	76	1502,1970	Magical Ocean
+204	Древняя русалка-защитница	77	961,1817	Magical Ocean
+205	Древняя сирена-стражница	79	2092,2117	Magical Ocean
+206	Королева русалок	80	1014,2182	Magical Ocean
+207	Королева сирен	100	2822,1970	Magical Ocean
+208	Древний бехамот	100	2002,1298	Magical Ocean
+209	Волшебный куст	100	2000,2000	Magical Ocean
+210	Снежные Волшебные Кусты	1	3373,2494	Deep Blue
+211	Пурпурный волшебный куст	1	1018,492	Deep Blue
+212	Оранжевый волшебный куст	1	3453,3348	Deep Blue
+213	Снежные Волшебные Кусты	1	3003,2771	Deep Blue
+214	Красный волшебный куст	1	995,372	Deep Blue
+215	Засохший волшебный куст	1	3387,3259	Deep Blue
+216	Сонная улитка	1	3703,2765	Deep Blue
+217	Снегоплюй	2	3360,2510	Deep Blue
+218	Снежный кальмарчик	2	1466,402	Deep Blue
+219	Волшебный цветок (Чудоцвет) 	4	1466,402	Deep Blue
+220	Снежные Свинокрылы	4	3373,2494	Deep Blue
+221	Олененок	6	1180,372	Deep Blue
+222	Сильный Олененок	7	1164,305	Deep Blue
+223	Белый олененок	7	1126,313	Deep Blue
+224	Пингвин-морячок	9	1349,313	Deep Blue
+225	Наяда	10	1102,642	Deep Blue
+226	Устрица	11	1079,521	Deep Blue
+227	Острый клюв	13	945,415	Deep Blue
+228	Лось	13	858,500	Deep Blue
+229	Лось-вампир	14	885,333	Deep Blue
+230	Креветка-матрос	14	888,323	Deep Blue
+231	Креветка-матрос	15	756,291	Deep Blue
+232	Рогатый пингвин	15	738,427	Deep Blue
+233	Кальмарчик-моряк	15	808,303	Deep Blue
+234	Снежная летучая мышь	16	817,292	Deep Blue
+235	Снежный грибочек	16	743,358	Deep Blue
+236	Снежная улитка	17	952,551	Deep Blue
+237	Монарх снежных улиток	19	657,332	Deep Blue
+238	Наивная снегурка	19	652,315	Deep Blue
+239	Снежный медвежонок	21	1074,735	Deep Blue
+240	Снежная королева	22	2120,466	Deep Blue
+241	Снежный волк	23	873,646	Deep Blue
+242	Военная черепаха	24	965,775	Deep Blue
+243	Водоросль	25	891,750	Deep Blue
+244	Падшая наяда	25	2153,3904	Deep Blue
+245	Твердокраб	26	891,750	Deep Blue
+246	Медуза	26	970,846	Deep Blue
+247	Рыба-скелет	26	2915,1842	Deep Blue
+248	Северная улитка	27	435,1016	Deep Blue
+249	Кальмарчик	27	802,750	Deep Blue
+250	Снежный дух	28	388,3844	Deep Blue
+251	Всадник	28	1060,806	Deep Blue
+252	Белоголовая медуза	29	3704,2781	Deep Blue
+253	Хрупкая снегурка	29	385,822	Deep Blue
+254	Морская медуза-людоед	29	907,842	Deep Blue
+255	Боевой свинокрыл	29	385,1190	Deep Blue
+256	Йети	30	1456,561	Deep Blue
+257	Океаническая танцовщица	31	1496,667	Deep Blue
+258	Кровавый выползень	33	1495,1000	Deep Blue
+259	непослушный снежный ребенок	34	2141,3788	Deep Blue
+260	непослушный снежный ребенок	34	1588,566	Deep Blue
+261	Испорченный кровавый выползень	34	1746,530	Deep Blue
+262	Боевые черепахи	34	3584,3758	Deep Blue
+263	Король йети Великий и ужасный	35	2165,462	Deep Blue
+264	Меткие скелеты-лучники	35	880,891	Deep Blue
+265	Ужасающий Скелет-лучник	36	2267,470	Deep Blue
+266	Рубиновый дельфин	36	2213,435	Deep Blue
+267	Снежная черепаха	37	1495,1000	Deep Blue
+268	Безумная овца	37	2165,462	Deep Blue
+269	Свирепый скорпион	37	2267,590	Deep Blue
+270	Рыба-кость	38	2471,508	Deep Blue
+271	Свирепый скорпион	38	3664,469	Deep Blue
+272	Полярный медведь	38	2374,552	Deep Blue
+273	Снежная свинья	38	1983,530	Deep Blue
+274	Кальмар-хамелеон	39	2267,590	Deep Blue
+275	Большой выползень	39	1495,1000	Deep Blue
+276	Скелет-воин	39	823,2089	Deep Blue
+277	Гнилая рыба-кость	40	2267,470	Deep Blue
+278	Снежный человечище	40	2092,1298	Deep Blue
+279	Проворный кальмар	41	2471,503	Deep Blue
+280	Вервольф-воин	42	3814,469	Deep Blue
+281	Рыба-пила	42	2595,555	Deep Blue
+282	Реактивный кальмар	42	3132,1292	Deep Blue
+283	Снежный человек	43	3132,998	Deep Blue
+284	Кристальный дельфин	43	2595,455	Deep Blue
+285	Проворная танцовщица	43	3814,469	Deep Blue
+286	Стальные Улитки	44	3211,1732	Deep Blue
+287	Гигантский йети	44	2737,651	Deep Blue
+288	Полуночная танцовщица	44	2811,566	Deep Blue
+289	Беспощадная рыба-скелет	44	3211,1815	Deep Blue
+290	Гигантский йети	45	3206,1268	Deep Blue
+291	Неупокоенный лучник	45	2855,451	Deep Blue
+292	Громовая медуза	45	2746,451	Deep Blue
+293	Зловещий выползень	46	3747,1248	Deep Blue
+294	Проворная электрическая медуза	47	3746,1292	Deep Blue
+295	Меткие скелеты-лучники	47	3746,998	Deep Blue
+296	Ледяной дракончик	47	2714,372	Deep Blue
+297	Водяная фея	47	2852,651	Deep Blue
+298	Огромный полярный медведь	49	2998,560	Deep Blue
+299	Зловещая русалка	49	3101,667	Deep Blue
+300	Вервольф лучник	49	3746,998	Deep Blue
+301	Снежный ужас	50	2681,795	Deep Blue
+302	Блуждающая русалка	50	3126,588	Deep Blue
+303	Кровожадный йети	50	1265,3634	Deep Blue
+304	Русалка-призрак	51	2591,795	Deep Blue
+305	Скелет-воитель	51	2996,2345	Deep Blue
+306	Рыба-меч	52	2598,831	Deep Blue
+307	Черноперая акула	53	441,2957	Deep Blue
+308	Безумная электромедуза	53	1265,3634	Deep Blue
+309	Ящер	54	371,1762	Deep Blue
+310	Выползень-вампир	55	2588,900	Deep Blue
+311	Кровожадная медуза	55	428,2399	Deep Blue
+312	Буйная медуза	56	441,2957	Deep Blue
+313	Топазовый дельфин	57	371,1762	Deep Blue
+314	Матерый рубиновый дельфин	57	2631,2048	Deep Blue
+315	Матерый рубиновый дельфин	58	429,2957	Deep Blue
+316	Колючая рыба-кость	58	3785,1975	Deep Blue
+317	Прожорливая рыба-кость	59	371,2317	Deep Blue
+318	Пират 006	60	429,2957	Deep Blue
+319	Кицуне	65	2736,3042	Deep Blue
+320	Пират 007	65	3194,2433	Deep Blue
+321	Глубоководная сирена	68	2736,3042	Deep Blue
+322	Сирена-стрелок	68	1038,2317	Deep Blue
+323	Корабль поддержки бородачей	69	3634,3808	Deep Blue
+324	Фрегат бородачей	69	1038,1762	Deep Blue
+325	Свирепый алмазный дельфин	70	761,1561	Deep Blue
+326	Пират 008	70	2141,3788	Deep Blue
+327	Опытный ящер-воин	70	2823,2815	Deep Blue
+328	Безумная сирена	71	3650,2967	Deep Blue
+329	Злой туземный воин	71	3003,3711	Deep Blue
+330	Командный корабль бородачей	72	3528,3469	Deep Blue
+331	Зловещий туземный шаман	73	1038,1762	Deep Blue
+332	Неистовый ящер	76	3660,3279	Deep Blue
+333	Древняя глубоководная сирена	77	3274,3302	Deep Blue
+334	Королевская черепаха	78	2082,2348	Deep Blue
+335	Каменный Дракон	90	197,901	Winter Island
+336	Красный камень	92	404,1340	Winter Island
+337	Ярый Медведь	94	451,1288	Winter Island
+338	Убийца Душ	95	661,1230	Winter Island
+339	Королевский Зверь	96	839,1160	Winter Island
+340	Полузверь	98	632,459	Winter Island
+341	Ледяная химера	99	815,493	Winter Island
+342	Снежный Леопард	100	354,454	Winter Island
+343	Генерал тыквы	102	549,528	Winter Island
+344	Окровавленный Воин	103	966,272	Winter Island
+345	Ледяной дракон	103	1035,39	Winter Island
+346	Бешенный Снежный Демон	104	1454,369	Winter Island
+347	Демон Меча	105	1364,1239	Winter Island
+348	Пират Джека	105	1807,614	Winter Island
+349	Демоническая Душа	106	1651,674	Winter Island
+350	Кошмар	107	1676,800	Winter Island
+351	Злой Снежный Леопард	109	1640,1083	Winter Island
+352	Лорд Душ Стужи	110	1119,347	Winter Island
+353	Icy Soul Lord	110	1595,687	Winter Island 

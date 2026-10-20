@@ -31,7 +31,8 @@ RUN chmod +x /app/entrypoint.sh
 # перезапустить контейнер или вызвать POST /api/admin/refresh.
 # Копия таблиц в каталоге data/ остаётся только для разработки
 # на Windows, где контейнера нет.
-ENV ARBAH_DATA_DIR=/srv/resource \
+ENV ARBAH_DATA_DIR=/srv/arbah \
+    ARBAH_MAP_DIR=/srv/resource \
     ARBAH_DB_PATH=/var/lib/arbah/arbah.db \
     ARBAH_FRONTEND_DIR=/app/frontend \
     ARBAH_ASSETS_DIR=/srv/assets \

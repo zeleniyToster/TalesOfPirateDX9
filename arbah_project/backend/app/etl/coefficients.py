@@ -109,14 +109,26 @@ def extract(lua_path: Path, jobtype_path: Path | None = None) -> dict:
 def main(argv: list[str] | None = None) -> int:
     argv = sys.argv[1:] if argv is None else argv
 
+    # Каталог данных нужен в любом случае: по нему ищем файл,
+    # когда путь не передан аргументом, и запасным вариантом.
+    from ..etl.ingest import resolve_data_dir
+
+    _data = resolve_data_dir()
+
     if argv:
         lua_path = Path(argv[0])
     else:
         # В контейнере исходники лежат рядом с таблицами в ARBAH_DATA_DIR,
         # при разработке — в репозитории с игровыми скриптами.
-        from ..etl.ingest import resolve_data_dir
+        lua_path = _data / "script" / "calculate" / "AttrCalculate.lua"
 
-        lua_path = resolve_data_dir() / "AttrCalculate.lua"
+    # Сначала вложенный путь — так его ищет контейнер, потом плоский.
+    if not lua_path.is_file():
+        nested = _data / "script" / "calculate" / "AttrCalculate.lua"
+        if nested.is_file():
+            lua_path = nested
+    if not lua_path.is_file():
+        lua_path = _data / "AttrCalculate.lua"
 
     if not lua_path.is_file():
         print(f"Не найден {lua_path}", file=sys.stderr)

@@ -11,6 +11,7 @@
 from __future__ import annotations
 
 import json
+import os
 import re
 import sqlite3
 import sys
@@ -19,7 +20,7 @@ from pathlib import Path
 from typing import Iterable
 
 from . import cha_columns as cha
-from . import game_scripts, parsers
+from . import dungeon_schedule, game_scripts, parsers
 
 # Файлы, без которых импорт бессмыслен.
 REQUIRED_FILES = ("ItemInfo.txt", "monsterlist.txt", "npclist.txt")
@@ -62,11 +63,13 @@ CREATE INDEX idx_items_level   ON items(required_level);
 
 DROP TABLE IF EXISTS item_bonuses;
 CREATE TABLE item_bonuses (
-    item_id INTEGER NOT NULL,
-    field   TEXT    NOT NULL,
-    title   TEXT    NOT NULL,
-    min_val INTEGER NOT NULL,
-    max_val INTEGER NOT NULL
+    item_id  INTEGER NOT NULL,
+    field    TEXT    NOT NULL,
+    title    TEXT    NOT NULL,
+    min_val  INTEGER NOT NULL,
+    max_val  INTEGER NOT NULL,
+    coef_min INTEGER NOT NULL,
+    coef_max INTEGER NOT NULL
 );
 CREATE INDEX idx_item_bonuses_item ON item_bonuses(item_id);
 
@@ -193,9 +196,13 @@ CREATE INDEX idx_creature_drops_creature ON creature_drops(creature_id);
 
 DROP TABLE IF EXISTS dungeons;
 CREATE TABLE dungeons (
-    map_file    TEXT PRIMARY KEY,
-    always_open INTEGER NOT NULL,
-    hours       TEXT
+    map_file     TEXT PRIMARY KEY,
+    always_open  INTEGER NOT NULL,
+    hours        TEXT,
+    first_sec    INTEGER NOT NULL DEFAULT 0,
+    interval_sec INTEGER NOT NULL DEFAULT 0,
+    entry_sec    INTEGER NOT NULL DEFAULT 0,
+    life_sec     INTEGER NOT NULL DEFAULT 0
 );
 
 DROP TABLE IF EXISTS meta;
@@ -320,11 +327,12 @@ def build(data_dir: Path, db_path: Path) -> dict[str, int]:
             for item in parsers.parse_items(data_dir / "ItemInfo.txt"):
                 for bonus in item["bonuses"]:
                     yield (item["item_id"], bonus["field"],
-                           bonus["title"], bonus["min"], bonus["max"])
+                           bonus["title"], bonus["min"], bonus["max"],
+                           bonus["coef_min"], bonus["coef_max"])
 
         counts["item_bonuses"] = _insert_many(
             conn,
-            "INSERT INTO item_bonuses VALUES (?,?,?,?,?)",
+            "INSERT INTO item_bonuses VALUES (?,?,?,?,?,?,?)",
             bonus_rows(),
         )
 
@@ -403,12 +411,31 @@ def build(data_dir: Path, db_path: Path) -> dict[str, int]:
                 parsers.parse_creature_drops(data_dir / "CharacterInfo.txt"),
             )
 
+        # Расписание данжей лежит в <карта>/ctrl.lua рядом с ресурсами
+        # GameServer. Если каталог данных отдельный (ARBAH_DATA_DIR=/srv/arbah),
+        # берём карты из ARBAH_MAP_DIR, иначе ищем рядом с таблицами.
+        map_dir = data_dir
+        if not any(map_dir.glob("*/ctrl.lua")):
+            env_map = os.environ.get("ARBAH_MAP_DIR")
+            if env_map:
+                candidate = Path(env_map)
+                if any(candidate.glob("*/ctrl.lua")):
+                    map_dir = candidate
+
         counts["dungeons"] = _insert_many(
             conn,
-            "INSERT OR REPLACE INTO dungeons VALUES (?,?,?)",
+            "INSERT OR REPLACE INTO dungeons VALUES (?,?,?,?,?,?,?)",
             (
-                (d["map_file"], int(d["always_open"]), d["hours"])
-                for d in game_scripts.parse_dungeon_schedules(data_dir)
+                (
+                    d["map_file"],
+                    int(d["always_open"]),
+                    d["hours"],
+                    d["first_sec"],
+                    d["interval_sec"],
+                    d["entry_sec"],
+                    d["life_sec"],
+                )
+                for d in dungeon_schedule.parse_dungeon_schedules(map_dir)
             ),
         )
 

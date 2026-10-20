@@ -142,7 +142,8 @@ def parse_items(path: Path) -> Iterator[dict]:
         bonuses: list[dict] = []
         for i, field in enumerate(col.BONUS_FIELDS):
             low, high = to_pair(_cell(row, col.VALU_START + i))
-            if not low and not high:
+            c_low, c_high = to_pair(_cell(row, col.COEF_START + i))
+            if not low and not high and not c_low and not c_high:
                 continue
             bonuses.append(
                 {
@@ -150,6 +151,8 @@ def parse_items(path: Path) -> Iterator[dict]:
                     "title": col.BONUS_RU.get(field, field),
                     "min": low,
                     "max": high,
+                    "coef_min": c_low,
+                    "coef_max": c_high,
                 }
             )
 

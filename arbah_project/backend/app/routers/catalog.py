@@ -244,48 +244,112 @@ def list_maps() -> list[MapOut]:
     ]
 
 
-def _open_now(hours: str, hour: int) -> bool:
-    """Открыт ли данж в указанный час.
+def _hm_clock(sec: int) -> str:
+    """Часы из секунд от полуночи (значение first_sec из ctrl.lua)."""
+    s = ((sec % 86400) + 86400) % 86400
+    return "%02d:%02d" % (s // 3600, (s % 3600) // 60)
 
-    Пустой список часов означает свободный вход. Время серверное
-    локальное — то же, что использует ``can_open_entry_*`` через
-    ``GetNowTime()``, поэтому сверка идёт без поправки на часовой
-    пояс: хости сам выставлен на нужный.
+
+def _hm_epoch(sec: int) -> str:
+    """Часы машины из абсолютного момента.
+
+    Именно fromtimestamp, а не sec % 86400: модуль даёт UTC, и на
+    сервере восточноевропейской зоны таблица уезжала на несколько часов.
     """
-    if not hours:
-        return True
-    return hour in {int(h) for h in hours.split(",") if h.strip()}
+    return datetime.fromtimestamp(sec).strftime("%H:%M")
+
+
+def _local_midnight(epoch: int) -> int:
+    """Полночь по времени машины, заданная тем же epoch."""
+    dt = datetime.fromtimestamp(epoch)
+    return int(dt.replace(hour=0, minute=0, second=0, microsecond=0).timestamp())
+
+
+def _events(first: int, interval: int, entry: int, life: int,
+            now: int, horizon: int = 86400) -> list[dict[str, Any]]:
+    """Готовые события расписания на ближайшие сутки.
+
+    Считается от ``first`` — минуты суток, с которой открывается вход.
+    Период повтора — ``interval``. Вход живёт ``entry`` секунд с
+    момента открытия, карта — ``life``.
+    """
+    out: list[dict[str, Any]] = []
+    day = _local_midnight(now)
+    # начинаем с последнего открытия, случившегося не позже текущей секунды
+    k = (now - first - day) // interval
+    while (first + day + k * interval) > now:
+        k -= 1
+    t0 = first + day + k * interval
+
+    while t0 < now + horizon:
+        out.append({
+            "open_at": t0,
+            "entry_closed_at": t0 + entry,
+            "closed_at": t0 + life,
+            "open_hm": _hm_epoch(t0),
+            "entry_closed_hm": _hm_epoch(t0 + entry),
+            "closed_hm": _hm_epoch(t0 + life),
+        })
+        t0 += interval
+    return out
+
+
+def _hhmm(sec: int) -> str:
+    sec %= 86400
+    return "%02d:%02d" % (sec // 3600, (sec % 3600) // 60)
+
+
+def _phase(now: int, ev: dict[str, Any]) -> str:
+    """Состояние на момент now: wait — до открытия, open — идёт приём,
+    inside — вход закрыт, но карта ещё жива, done — всё кончилось."""
+    if now < ev["open_at"]:
+        return "wait"
+    if now < ev["entry_closed_at"]:
+        return "open"
+    if now < ev["closed_at"]:
+        return "inside"
+    return "done"
 
 
 @router.get("/dungeons", summary="Расписание входа в данжи")
 def list_dungeons() -> dict[str, Any]:
-    """Расписание из ``<карта>/ctrl.lua`` плюс отметка «открыт сейчас».
+    """Расписание из ``SetMapEntryTime`` в ``<карта>/ctrl.lua``.
 
-    Карты, у которых нет функции ``can_open_entry_<карта>``, в
-    таблицу не попадают: их вход ничем не ограничен, и перечислять
-    их бессмысленно — в ответе они отмечены ``always_open``.
+    Отдаются сразу посчитанные события на ближайшие сутки, чтобы
+    странице не приходилось опрашивать сервер раз в полсекунды.
     """
-    hour = datetime.now().hour
+    now = int(datetime.now().timestamp())
 
     rows = db.query(
-        "SELECT d.map_file, d.always_open, d.hours, "
+        "SELECT d.map_file, d.always_open, d.hours, d.first_sec, "
+        "       d.interval_sec, d.entry_sec, d.life_sec, "
         "       (SELECT name FROM maps m WHERE m.file = d.map_file) AS name "
         "FROM dungeons d ORDER BY d.always_open, d.map_file"
     )
 
-    dungeons = [
-        {
+    dungeons = []
+    for r in rows:
+        events = _events(r["first_sec"], r["interval_sec"],
+                         r["entry_sec"], r["life_sec"], now)
+        current = next((e for e in events if _phase(now, e) != "done"), None)
+        dungeons.append({
             "map_file": r["map_file"],
             "name": r["name"] or r["map_file"],
             "always_open": bool(r["always_open"]),
-            "hours": [int(h) for h in (r["hours"] or "").split(",") if h.strip()],
-            "open_now": bool(r["always_open"]) or _open_now(r["hours"] or "", hour),
-        }
-        for r in rows
-    ]
+            "first_open": r["first_sec"],
+            "first_open_hm": _hm_clock(r["first_sec"]),
+            "interval": r["interval_sec"],
+            "entry_lifetime": r["entry_sec"],
+            "map_lifetime": r["life_sec"],
+            "events": events,
+            "phase": _phase(now, current) if current else "done",
+        })
 
     return {
-        "hour": hour,
+        "server_time": now,
+        # epoch не несёт часового пояса, поэтому отдаём ещё и стенное
+        # время сервера: клиент считает от него, а не от epoch % 86400
+        "server_clock": datetime.now().strftime("%H:%M"),
         "total": len(dungeons),
         "scheduled": sum(1 for d in dungeons if not d["always_open"]),
         "dungeons": dungeons,

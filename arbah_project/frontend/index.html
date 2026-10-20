@@ -152,18 +152,22 @@
     <div class="tablewrap">
       <table>
         <thead><tr>
-          <th>Карта</th>
+          <th>Название</th>
           <th>Файл</th>
-          <th>Вход</th>
+          <th>Первое открытие</th>
+          <th>Следующее открытие</th>
+          <th>Вход закрыт</th>
+          <th>Карта закрыта</th>
           <th>Состояние</th>
         </tr></thead>
         <tbody id="dungeons-body"></tbody>
       </table>
     </div>
-    <p class="dim">Расписание читается из функции
-      <code>can_open_entry_&lt;карта&gt;</code> в файле
-      <code>&lt;карта&gt;/ctrl.lua</code>. Часы серверные локальные —
-      те же, что использует <code>GetNowTime()</code>.</p>
+    <p class="dim">Расписание берётся из вызова
+      <code>SetMapEntryTime</code> в <code>&lt;карта&gt;/ctrl.lua</code> —
+      это то же значение, по которому сервер реально открывает и закрывает
+      вход. Обновляется при перезапуске GameServer, страница считает
+      таймер сама.</p>
   </section>
 
   <!-- ================= КАЛЬКУЛЯТОР ================= -->
