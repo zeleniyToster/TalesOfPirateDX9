@@ -1550,6 +1550,8 @@ function MsgProc(character, npc, rpk, page, trade, missionlist, exchangeData)
             return Garner2RequestReorder(character, npc)
         elseif item.func == Transfer_TeamStar then
             return Transfer_TeamStar(character, item.p1)
+        elseif item.func == Transfer_ExcellenceStar then
+            return Transfer_ExcellenceStar(character, item.p1)
         elseif item.func == LifeSkillBegin then
             return LifeSkillBegin(character, npc, item.p1)
         elseif item.func == Change_shanyao then

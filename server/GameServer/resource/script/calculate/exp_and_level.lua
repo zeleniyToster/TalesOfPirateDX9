@@ -292,6 +292,27 @@ function ShareTeamExp(DEAD, ATKER, DEAD_EXP, KILLER)
 					end
 					SetItemAttr(ptnItem, ITEMATTR_URE, expItemNow)
 					SynLook(t[i])
+				elseif IdItem == 8953 and lvPerson >= 41 then
+					-- Star of Excellence: solo only, normalized by the exp table.
+					-- The kill exp goes to the character AND to the ring.
+					if IsInTeam(t[i]) ~= LUA_TRUE then
+						local expNeeded = DEXP[lvPerson + 1] - DEXP[lvPerson]
+						local XpDivider = expNeeded / 60000
+						local gainedRingExp = math.floor(expGetNow / XpDivider)
+						local expItemNow = GetItemAttr(ptnItem, ITEMATTR_URE)
+						local expItemMax = GetItemAttr(ptnItem, ITEMATTR_MAXURE)
+						expItemNow = expItemNow + gainedRingExp
+						if expItemNow > expItemMax then
+							expItemNow = expItemMax
+						end
+						if expItemNow >= expItemMax then
+							SystemNotice(t[i], GetItemName(IdItem)..' is full!')
+						else
+							SystemNotice(t[i], GetItemName(IdItem)..' charged up...')
+						end
+						SetItemAttr(ptnItem, ITEMATTR_URE, expItemNow)
+						SynLook(t[i])
+					end
 				end
 				ExpSystem(t[i], ExpAdd)
 			end

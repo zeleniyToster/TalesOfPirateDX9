@@ -13143,3 +13143,301 @@ function r_talk76 ()
 	Talk( 2, "Anne: Sorry, Healing requires 200G. You do not have enough?-" )
 	Talk( 3, "Anne: Sorry! Healing requires 50G?-You do not have enough?-" )
 end 
+
+
+function arb_trade_chest ()
+
+	Talk(1, "Ardwin: Chests, sealed by the old tides. Pick the set that suits you.")
+	Text(1, "Trade", BuyPage)
+	Text(1, "Nothing...", CloseTalk)
+	InitTrade()
+	Other(3400)
+	Other(3401)
+	Other(3402)
+	Other(3403)
+	Other(3404)
+	Other(3405)
+	Other(3406)
+	Other(3407)
+	Other(3408)
+	Other(3409)
+	Other(3410)
+	Other(3411)
+	Other(3412)
+	Other(3413)
+	Other(3414)
+	Other(3415)
+	Other(3416)
+	Other(3417)
+	Other(3418)
+	Other(3419)
+	Other(3420)
+	Other(3421)
+end
+
+function arb_trade_relic ()
+
+	Talk(1, "Marisha: Relics of the old sea, sealed by ancient hands. Printed and sealed alike, every level is here. Take your pick.")
+	Text(1, "Trade", BuyPage)
+	Text(1, "Nothing...", CloseTalk)
+	InitTrade()
+	Weapon(763)
+	Weapon(770)
+	Weapon(777)
+	Weapon(781)
+	Weapon(785)
+	Weapon(789)
+	Weapon(799)
+	Weapon(803)
+	Weapon(764)
+	Weapon(767)
+	Weapon(771)
+	Weapon(774)
+	Weapon(778)
+	Weapon(782)
+	Weapon(786)
+	Weapon(790)
+	Weapon(793)
+	Weapon(796)
+	Weapon(800)
+	Weapon(804)
+	Weapon(765)
+	Weapon(768)
+	Weapon(772)
+	Weapon(775)
+	Weapon(779)
+	Weapon(783)
+	Weapon(787)
+	Weapon(791)
+	Weapon(794)
+	Weapon(797)
+	Weapon(801)
+	Weapon(805)
+	Weapon(807)
+	Weapon(808)
+	Weapon(809)
+	Weapon(810)
+	Weapon(811)
+	Weapon(812)
+	Weapon(813)
+	Weapon(814)
+	Weapon(815)
+	Weapon(877)
+	Weapon(766)
+	Weapon(769)
+	Weapon(773)
+	Weapon(776)
+	Weapon(780)
+	Weapon(784)
+	Weapon(788)
+	Weapon(792)
+	Weapon(795)
+	Weapon(798)
+	Weapon(802)
+	Weapon(806)
+	Weapon(6091)
+	Weapon(6093)
+	Weapon(6094)
+	Other(1887)
+	Other(1890)
+	Other(1894)
+	Other(1897)
+	Other(1901)
+	Other(1905)
+	Other(1909)
+	Other(1913)
+	Other(1916)
+	Other(1919)
+	Other(1923)
+	Other(1927)
+end
+
+function arb_trade_coral ()
+
+	Talk(1, "Naima: Corals and unique jewels. Voyage-captain specialities, and vouchers for the rings and necklaces you cannot buy anywhere else. Bring me a voucher.")
+	Text(1, "Trade", BuyPage)
+	Text(1, "Nothing...", CloseTalk)
+	InitTrade()
+	Other(635)
+	Other(636)
+	Other(637)
+	Other(638)
+	Other(639)
+	Other(817)
+	Other(818)
+	Other(819)
+	Other(820)
+	Other(821)
+	Other(867)
+	Other(868)
+	Other(869)
+	Other(870)
+	Other(871)
+	Other(872)
+	Other(873)
+	Other(874)
+	Other(875)
+	Other(876)
+	Other(582)
+	Other(6447)
+	Other(1103)
+	Other(1104)
+	Other(1105)
+	Other(1106)
+	Other(1107)
+	Other(1108)
+	Other(1109)
+	Other(1110)
+	Other(1111)
+	Other(1112)
+end
+
+-- Star of Excellence: weapon table by tier and class.
+-- tier 1..4 unlocked at Lv 51/61/71/81. Slots 5/6 are the bow
+-- for Sharpshooter only, available from tier 3 onwards.
+EXCELLENCE_LEVEL = {}
+EXCELLENCE_LEVEL[1] = 51
+EXCELLENCE_LEVEL[2] = 61
+EXCELLENCE_LEVEL[3] = 71
+EXCELLENCE_LEVEL[4] = 81
+
+EXCELLENCE_EQ = {}
+EXCELLENCE_EQ[1] = {}
+EXCELLENCE_EQ[1][8]  = 1387
+EXCELLENCE_EQ[1][9]  = 23
+EXCELLENCE_EQ[1][12] = 45
+EXCELLENCE_EQ[1][13] = 1441
+EXCELLENCE_EQ[1][14] = 1438
+EXCELLENCE_EQ[1][16] = 84
+
+EXCELLENCE_EQ[2] = {}
+EXCELLENCE_EQ[2][8]  = 4210
+EXCELLENCE_EQ[2][9]  = 4213
+EXCELLENCE_EQ[2][12] = 4214
+EXCELLENCE_EQ[2][13] = 4201
+EXCELLENCE_EQ[2][14] = 4207
+EXCELLENCE_EQ[2][16] = 4216
+
+EXCELLENCE_EQ[3] = {}
+EXCELLENCE_EQ[3][8]  = 116
+EXCELLENCE_EQ[3][9]  = 114
+EXCELLENCE_EQ[3][12] = 120
+EXCELLENCE_EQ[3][13] = 110
+EXCELLENCE_EQ[3][14] = 112
+EXCELLENCE_EQ[3][16] = 151
+
+EXCELLENCE_EQ[4] = {}
+EXCELLENCE_EQ[4][8]  = 6133
+EXCELLENCE_EQ[4][9]  = 6128
+EXCELLENCE_EQ[4][12] = 43
+EXCELLENCE_EQ[4][13] = 6135
+EXCELLENCE_EQ[4][14] = 6134
+EXCELLENCE_EQ[4][16] = 6132
+
+EXCELLENCE_BOW = {}
+EXCELLENCE_BOW[3] = 118
+EXCELLENCE_BOW[4] = 6130
+
+function Transfer_ExcellenceStar(role, slot)
+    local cha = TurnToCha(role)
+    local JOB = GetChaAttr(role, ATTR_JOB)
+    local Level = GetChaAttr(cha, ATTR_LV)
+
+    local tier = 0
+    local bow = 0
+    if slot == 1 then tier = 1
+    elseif slot == 2 then tier = 2
+    elseif slot == 3 then tier = 3
+    elseif slot == 4 then tier = 4
+    elseif slot == 5 then tier = 3 bow = 1
+    elseif slot == 6 then tier = 4 bow = 1
+    else return end
+
+    if Level < EXCELLENCE_LEVEL[tier] then
+        SystemNotice(role, "Please come back after Lv" .. EXCELLENCE_LEVEL[tier] .. ".")
+        return
+    end
+
+    local ItemCount = CheckBagItem(cha, 8953)
+    if ItemCount < 1 then
+        SystemNotice(cha, "Need to possess Star of Excellence to receive")
+        return
+    end
+    if ItemCount > 1 then
+        SystemNotice(cha, "Too many Star of Excellence was found!")
+        return
+    end
+    -- The ring must be full to be exchanged.
+    local ringFull = false
+    for i = 0, GetKbCap(cha) do
+        local pRing = GetChaItem(cha, 2, i)
+        if pRing and GetItemID(pRing) == 8953 then
+            if GetItemAttr(pRing, ITEMATTR_URE) >= GetItemAttr(pRing, ITEMATTR_MAXURE) then
+                ringFull = true
+            end
+            break
+        end
+    end
+    if not ringFull then
+        SystemNotice(cha, "The Star of Excellence is not full yet.")
+        return
+    end
+
+    if BankNoItem(role, 8953, 1) ~= LUA_TRUE then
+        SystemNotice(cha, "Existing Star of Excellence was found in bank!")
+        return
+    end
+    if EquipNoItem(role, 8953, 1) ~= LUA_TRUE then
+        SystemNotice(cha, "Existing Star of Excellence was found in equipment slot!")
+        return
+    end
+
+    local ItemID = nil
+    if bow == 1 then
+        if JOB ~= 12 then
+            SystemNotice(role, "Only a Sharpshooter may exchange for a bow.")
+            return
+        end
+        ItemID = EXCELLENCE_BOW[tier]
+    else
+        ItemID = EXCELLENCE_EQ[tier][JOB]
+    end
+
+    if ItemID == nil then
+        SystemNotice(role, "This weapon is not available for your class.")
+        return
+    end
+
+    local x_del = DelBagItem(cha, 8953, 1)
+    if x_del == 1 then
+        GiveItem(role, 0, ItemID, 1, 22)
+    else
+        SystemNotice(cha, "Unable to deduct Star of Excellence")
+    end
+end
+
+function arb_star ()
+	InitTrigger()
+	TriggerCondition(1, NoItem, 8953, 1)
+	TriggerCondition(1, NoItem, 8954, 1)
+	TriggerCondition(1, BankNoItem, 8953, 1)
+	TriggerCondition(1, BankNoItem, 8954, 1)
+	TriggerCondition(1, EquipNoItem, 8953, 1)
+	TriggerCondition(1, EquipNoItem, 8954, 1)
+	TriggerAction(1, GiveItem, 8954, 1, 4)
+
+	Talk(1, "Ilorin: Star of Excellence is an improved Star of Unity. Unlike its predecessor it charges from Lv 41 onward and never stops charging. Wear it and every level you gain fills it further.")
+	Text(1, "Redeem Star of Excellence", MultiTrigger, GetMultiTrigger(), 1)
+	Text(1, "Weapon exchange", JumpPage, 2)
+	Text(1, "Nothing...", CloseTalk)
+
+	Talk(2, "Ilorin: A filled ring is worth one weapon. Each level you reach unlocks a better weapon, and everything you already qualified for stays available. Weapons come out purple.")
+	Text(2, "Lv 55 weapon", Transfer_ExcellenceStar, 1)
+	Text(2, "Lv 65 weapon", Transfer_ExcellenceStar, 2)
+	Text(2, "Lv 75 weapon", Transfer_ExcellenceStar, 3)
+	Text(2, "Lv 85 weapon", Transfer_ExcellenceStar, 4)
+	Text(2, "Lv 75 bow (Sharpshooter)", Transfer_ExcellenceStar, 5)
+	Text(2, "Lv 85 bow (Sharpshooter)", Transfer_ExcellenceStar, 6)
+	Text(2, "Back", JumpPage, 1)
+	Text(2, "Nothing...", CloseTalk)
+end

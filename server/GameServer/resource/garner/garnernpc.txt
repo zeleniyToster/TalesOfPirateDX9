@@ -125,7 +125,7 @@
 123	Island Teleporter - Andrea	1	11	7	326626,326695	326626,326695	174	Zephyr Isle	32	0	TeleportIsland	0
 124	Island Teleporter - Arsene	1	11	7	227257,111622	227257,111622	144	Glacier Isle	36	0	TeleportIsland	0
 125	Island Teleporter - Shayala	1	11	7	361161,72801	361161,72801	264	Outlaw Isle	35	0	TeleportIsland	0
-126	Coral Vendor - Lamon	1	450	4	219325,272125	219325,272125	90	Argent City	3	0	r_talk221	0
+126	Coral Vendor - Lamon	1	450	4	225300,278900	225300,278900	270	Argent City	3	0	r_talk221	0
 127	Tailor - Bebe	1	30	4	226531,270475	226531,270475	180	Argent City	1	0	r_talk222	0
 128	Simon Gilter	1	19	0	64672,208875	64672,208875	-95	Chaldea Haven	54	0	r_talk228	0
 129	Azur Breeze	1	452	0	62275,210610	62275,210610	0	Chaldea Haven	54	0	r_talk229	0
@@ -154,3 +154,7 @@
 152	Weird Hat Seller	1	449	0	224000,276932	224000,276932	180	Argent City	1	0	dina_talk08	0
 //153	CTF Waiting Room	1	760	8	221075,288175	221075,288175	270	Argent City	1	0	CTF_NPC	0
 //152	Jackpot Machine	1	838	0	221075,270525	221075,270525	480	Argent Bar	1	0	JackpotMachine	0
+188	Chest Vendor - Ardwin	1	17	0	219200,278900	219200,278900	0	Argent City	1	0	arb_trade_chest	0
+189	Relic Vendor - Marisha	1	17	0	218500,278700	218500,278700	15	Argent City	1	0	arb_trade_relic	0
+190	Jeweler Vendor - Naima	1	17	0	218200,277900	218200,277900	90	Argent City	1	0	arb_trade_coral	0
+191	Excellence Keeper - Ilorin	1	17	0	220200,278000	220200,278000	270	Argent City	1	0	arb_star	0

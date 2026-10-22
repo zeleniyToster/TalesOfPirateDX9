@@ -322,3 +322,8 @@ RegTrigger(52, 1)
 InitTrigger()
 TriggerAction(1, UpdateGoodsKinds)
 RegTrigger(53, 1)
+-- §Ý§Ñ§Ó§à§é§ß§Ú§Ü§Ú §Ñ§â§Ò§Ñ§ç§Ñ
+AddNpcInfo(188, "Chest Vendor - Ardwin", 1, 1)
+AddNpcInfo(189, "Relic Vendor - Marisha", 1, 1)
+AddNpcInfo(190, "Jeweler Vendor - Naima", 1, 1)
+AddNpcInfo(191, "Excellence Keeper - Ilorin", 1, 1)

@@ -703,15 +703,21 @@ const char* GetCharacterDescription(int index)
 	}();
 }
 
+// Protocol identifier, not a UI string. The server matches this value
+// against GroupServer's birthplace map (RES_STRING GP_GROUPSERVERAPP_CPP_00001..3
+// = "Argent City" / "Shaitan City" / "Icicle Castle") and GameServer's
+// birth_conf.lua. A localized name ("Аргент" / ...) is not found and the
+// server rejects character creation with ERR_PT_INVALIDBIRTH.
+// The city shown in the UI comes from GetCityDescription (strings 42..44).
 const char* GetCityName(int index)
 {
 	return [&]
 	{
 		switch (index)
 		{
-		case 0: return g_oLangRec.GetString(39);
-		case 1: return g_oLangRec.GetString(40);
-		case 2: return g_oLangRec.GetString(41);
+		case 0: return "Argent City";
+		case 1: return "Shaitan City";
+		case 2: return "Icicle Castle";
 		default: return "";
 		}
 	}();

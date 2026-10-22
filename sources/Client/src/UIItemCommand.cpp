@@ -525,6 +525,15 @@ void CItemCommand::AddHint( int x, int y ){
 			PushHint( buf, COLOR_WHITE, 5, 1 );
 			//return;
 		}
+
+		// Star of Excellence (8953). The stored value is already normalized by
+		// the server (exp_and_level.lua), so the client only shows it as is.
+		// No level table is needed here.
+		if( _pItem->lID == 8953 ){
+			sprintf(buf, g_oLangRec.GetString(862),
+				_ItemData.sEndure[0] * 10, _ItemData.sEndure[1] * 10);
+			PushHint( buf, COLOR_WHITE, 5, 1 );
+		}
 		
 		if( _pItem->sType==2 ){
 			PushHint( g_oLangRec.GetString(624), COLOR_WHITE, 5, 1 );
@@ -556,7 +565,7 @@ void CItemCommand::AddHint( int x, int y ){
 		
 		
 		//if ( _ItemData.GetItemLevel() > 0 ){
-		if (_pItem->nID != 1034) {
+		if (_pItem->nID != 1034 && _pItem->nID != 8953) {
 			sprintf(buf, "Effectiveness (%d%%)", _ItemData.GetItemLevel());
 			PushHint(buf, GENERIC_COLOR);
 		}

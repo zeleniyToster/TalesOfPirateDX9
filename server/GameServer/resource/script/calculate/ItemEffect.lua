@@ -2786,6 +2786,16 @@ function ItemUse_MHDYSD(role, Item)
 
     SetChaLifeTime(new, life)
 end
+
+
+function ItemUse_ExcellenceStar(role, Item)
+	local r1 = 0
+	local r2 = 0
+	r1, r2 = MakeItem ( role , 8953 , 1 , 4 )
+	local Itemnew = GetChaItem ( role , 2 , r2 )
+	SetItemAttr(Itemnew, ITEMATTR_MAXURE, 30000)
+	SetItemAttr(Itemnew, ITEMATTR_URE, 100)
+end
 function ItemUse_TunDuiZhiXing(role, Item)
    	local r1 = 0
 	local r2 = 0

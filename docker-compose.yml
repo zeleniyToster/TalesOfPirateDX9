@@ -131,11 +131,18 @@ services:
       # Источник истины: папка ресурсов GameServer. Только чтение —
       # справочник ничего не пишет в игровые файлы.
       - ./server/GameServer/resource:/srv/resource:ro
+      # Отдельные русские таблицы для сайта. Ресурсы GameServer
+      # (/srv/resource) остаются нетронутыми — иначе движок получает
+      # файлы, которых не ждёт, и падает при загрузке карт.
+      - ./arbah_project/data:/srv/arbah:ro
       # Иконки предметов и текстуры существ из клиента.
       - ./Client/texture:/srv/assets:ro
       # Собранная база. Именованный том переживает пересоздание
       # контейнера, поэтому база не пересобирается при каждом up.
       - arbah-db:/var/lib/arbah
+      # Синхронизация времени контейнера со временем сервера
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
     networks:
       pko:
         ipv4_address: 172.21.0.10
